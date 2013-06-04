@@ -423,4 +423,8 @@ TESTS COVERED
   <tr>
     <td  align=center>6038</td><td  align=left>[SMS] CLONE - Verify that If the name of the contact is not empty The type of the phone and the phone carrier (as defined in the address book) as the secondary header.</td>
   </tr>
+
+  <tr>
+    <td  align=center>99</td><td  align=left></td>
+  </tr>
 </table>
