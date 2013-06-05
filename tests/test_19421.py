@@ -75,12 +75,6 @@ class test_19421(GaiaTestCase):
         time.sleep(2)
         self.marionette.switch_to_frame()
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
-
-        #
-        # TEST: this automatically opens the 'send SMS' screen, so
-        # check the correct name is in the header of this sms.
-        #
-        self.UTILS.headerCheck("New message")
     
         #
         # Create SMS.
