@@ -23,7 +23,6 @@ class test_19180(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.contacts   = AppContacts(self)
         self.facebook   = AppFacebook(self)
-        self.settings   = AppSettings(self)
                 
         #
         #
