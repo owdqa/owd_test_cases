@@ -90,7 +90,6 @@ class test_19193(GaiaTestCase):
         # TEST: this automatically opens the 'send SMS' screen, so
         # check the correct name is in the "To:" field of this sms.
         #
-        self.UTILS.headerCheck("1 recipient")
         self.messages.checkIsInToField(self.contact_1['name'])
         
         #
@@ -115,7 +114,5 @@ class test_19193(GaiaTestCase):
         sms_text = returnedSMS.text
         self.UTILS.TEST((sms_text.lower() == self._TestMsg.lower()), 
             "SMS text = '" + self._TestMsg + "' (it was '" + sms_text + "').")
-        x = self.UTILS.screenShot("19193")
-        self.UTILS.logResult("info", "(see screenshot " + x + " for more details.)")
 
 
