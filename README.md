@@ -37,7 +37,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19180</td><td  align=left>[FACEBOOK] Unlink all Facebook contacts in the address book in a single step and verify the contacts who was linked to a facebook contacts.</td>
+    <td  align=center>19180</td><td  align=left>[FACEBOOK] (BLOCKED BY BUG 879823) Unlink all Facebook contacts in the address book in a single step and verify the contacts who was linked to a facebook contacts.</td>
   </tr>
 
   <tr>
@@ -109,11 +109,11 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19198</td><td  align=left>[SMS] Delete all SMS in a conversation with several sms.</td>
+    <td  align=center>19198</td><td  align=left>[SMS] (BLOCKED BY BUG 879816) Delete all SMS in a conversation with several sms.</td>
   </tr>
 
   <tr>
-    <td  align=center>19199</td><td  align=left>[SMS] Delete a SMS in a conversation with several sms.</td>
+    <td  align=center>19199</td><td  align=left>[SMS] (BLOCKED BY BUG 879816) Delete a SMS in a conversation with several sms.</td>
   </tr>
 
   <tr>
@@ -121,11 +121,11 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19201</td><td  align=left>[SMS] Select some conversations and press delete.</td>
+    <td  align=center>19201</td><td  align=left>[SMS] (BLOCKED BY BUG 879816) Select some conversations and press delete.</td>
   </tr>
 
   <tr>
-    <td  align=center>19202</td><td  align=left>[SMS] Delete a sms conversation.</td>
+    <td  align=center>19202</td><td  align=left>[SMS] (BLOCKED BY BUG 879816) Delete a sms conversation.</td>
   </tr>
 
   <tr>
@@ -173,7 +173,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19245</td><td  align=left>[CAMERA] Delete a video just recorded.</td>
+    <td  align=center>19245</td><td  align=left>[CAMERA] (BLOCKED BY BUG 879816) Delete a video just recorded.</td>
   </tr>
 
   <tr>
@@ -181,11 +181,11 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19247</td><td  align=left>[CAMERA] Delete a picture just taken.</td>
+    <td  align=center>19247</td><td  align=left>[CAMERA] (BLOCKED BY BUG 879816) Delete a picture just taken.</td>
   </tr>
 
   <tr>
-    <td  align=center>19253</td><td  align=left>[Gallery] Select multiple pictures and delete them.</td>
+    <td  align=center>19253</td><td  align=left>[Gallery] (BLOCKED BY BUG 879816) Select multiple pictures and delete them.</td>
   </tr>
 
   <tr>
@@ -233,7 +233,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19392</td><td  align=left>[BASIC][FACEBOOK] Import Facebook contacts from contacts app settings.</td>
+    <td  align=center>19392</td><td  align=left>[BASIC][FACEBOOK] (BLOCKED BY BUG 879823) Import Facebook contacts from contacts app settings.</td>
   </tr>
 
   <tr>
