@@ -41,12 +41,14 @@ class test_19199(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
+        
+        self.UTILS.TEST(self.data_layer.delete_all_sms(), "Delete all SMS's.")
+        time.sleep(2)
+
         #
-        # Launch messages app & delete all Threads
+        # Launch messages app.
         #
         self.messages.launch()
-        
-        self.messages.deleteAllThreads()
            
         #
         # Create and send some new tests messages.
