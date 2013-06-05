@@ -313,7 +313,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19421</td><td  align=left>(BLOCKED BY BUG 867119) [BASIC][CONTACTS] Send an sms from a contact detail - Verify the contact receives the SMS.</td>
+    <td  align=center>19421</td><td  align=left>[BASIC][CONTACTS] Send an sms from a contact detail - Verify the contact receives the SMS.</td>
   </tr>
 
   <tr>
