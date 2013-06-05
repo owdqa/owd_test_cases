@@ -62,6 +62,7 @@ class test_19180(GaiaTestCase):
         #
         # View the contact details.
         #
+        self.contacts.launch()
         self.contacts.viewContact(self.Contact_1['name'])
          
         #
@@ -79,7 +80,7 @@ class test_19180(GaiaTestCase):
         #
         # Check we're back at our contact.
         #
-        self.UTILS.TEST(self.UTILS.headerCheck(self.Contact_1['name']), "Header is '"+ self.Contact_1['name'] +"'.")
+        self.UTILS.headerCheck(self.Contact_1['name'])
  
         #
         # Verify that we're now linked.
