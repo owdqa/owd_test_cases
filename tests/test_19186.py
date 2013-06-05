@@ -43,7 +43,7 @@ class test_19186(GaiaTestCase):
         self.contacts.startCreateNewContact()
         
         
-        #####################################
+        #####################################True
         #
         # Given name ...
         #
@@ -51,7 +51,14 @@ class test_19186(GaiaTestCase):
         #
         # Add some info. to the field.
         #
-        self.UTILS.typeThis(DOM.Contacts.given_name_field, "Given name field", self._testName)
+        self.UTILS.typeThis(DOM.Contacts.given_name_field, 
+                            "Given name field", 
+                            self._testName,
+                            p_no_keyboard=False, 
+                            p_clear=True, 
+                            p_enter=False, 
+                            p_validate=True,
+                            p_remove_keyboard=False)
         
         #
         # Press the 'x'.
@@ -62,7 +69,7 @@ class test_19186(GaiaTestCase):
         #
         # Click the header, then verify that the field contains nothing.
         #
-        self.marionette.find_element("tag name", "h1".tap())
+        self.marionette.find_element("tag name", "h1").tap()
         x = self.UTILS.getElement(DOM.Contacts.given_name_field, "Given name field")
         self.UTILS.TEST(x.text == "", "Given name field is empty after being cleared.")
         
@@ -75,7 +82,14 @@ class test_19186(GaiaTestCase):
         #
         # Add some info. to the field.
         #
-        self.UTILS.typeThis(DOM.Contacts.family_name_field, "Surname field", self._testSurname)
+        self.UTILS.typeThis(DOM.Contacts.family_name_field, 
+                            "Surname field", 
+                            self._testSurname,
+                            p_no_keyboard=False, 
+                            p_clear=True, 
+                            p_enter=False, 
+                            p_validate=True,
+                            p_remove_keyboard=False)
         
         #
         # Press the 'x'.
@@ -86,7 +100,7 @@ class test_19186(GaiaTestCase):
         #
         # Click the header, then verify that the field contains nothing.
         #
-        self.marionette.find_element("tag name", "h1".tap())
+        self.marionette.find_element("tag name", "h1").tap()
         x = self.UTILS.getElement(DOM.Contacts.family_name_field, "Surname field")
         self.UTILS.TEST(x.text == "", "Surname field is empty after being cleared.")
                 

@@ -13,7 +13,7 @@ from tests.mock_data.contacts import MockContacts
 import time
 
 class test_19180(GaiaTestCase):
-    _Description = "[FACEBOOK] Unlink all Facebook contacts in the address book in a single step and verify the contacts who was linked to a facebook contacts."
+    _Description = "[FACEBOOK] (BLOCKED BY BUG 879823) Unlink all Facebook contacts in the address book in a single step and verify the contacts who was linked to a facebook contacts."
 
     def setUp(self):
         #
@@ -23,7 +23,6 @@ class test_19180(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.contacts   = AppContacts(self)
         self.facebook   = AppFacebook(self)
-        self.settings   = AppSettings(self)
                 
         #
         #
@@ -62,6 +61,7 @@ class test_19180(GaiaTestCase):
         #
         # View the contact details.
         #
+        self.contacts.launch()
         self.contacts.viewContact(self.Contact_1['name'])
          
         #
@@ -79,7 +79,7 @@ class test_19180(GaiaTestCase):
         #
         # Check we're back at our contact.
         #
-        self.UTILS.TEST(self.UTILS.headerCheck(self.Contact_1['name']), "Header is '"+ self.Contact_1['name'] +"'.")
+        self.UTILS.headerCheck(self.Contact_1['name'])
  
         #
         # Verify that we're now linked.

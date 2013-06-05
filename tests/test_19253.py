@@ -12,7 +12,7 @@ from OWDTestToolkit import *
 import os, time
 
 class test_19253(GaiaTestCase):
-    _Description = "[Gallery] Select multiple pictures and delete them."
+    _Description = "[Gallery] (BLOCKED BY BUG 879816) Select multiple pictures and delete them."
     
     _img_list = ('img1.jpg',
                  'img2.jpg',

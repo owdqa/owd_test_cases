@@ -11,7 +11,7 @@ from OWDTestToolkit import *
 #
 
 class test_19198(GaiaTestCase):
-    _Description = "[SMS] Delete all SMS in a conversation with several sms."    
+    _Description = "[SMS] (BLOCKED BY BUG 879816) Delete all SMS in a conversation with several sms."    
     _TestMsg1 = "First message."
     _TestMsg2 = "Second message"
     _TestMsg3 = "Third message"
@@ -61,23 +61,25 @@ class test_19198(GaiaTestCase):
         #
         # Go into edit mode..
         #
-        x= self.UTILS.getElement( ("id","icon-edit"), "Edit button" )
+        x= self.UTILS.getElement(DOM.Messages.edit_messages_icon, "Edit button" )
         x.tap()
         
         #
         # Tap Selected all
         #
-        x = self.UTILS.getElement( ("id","messages-check-all-button"), "Sellect all")
+        x = self.UTILS.getElement(DOM.Messages.edit_msgs_sel_all_btn, "Select all button")
         x.tap()
 
         #
         # Tap delete
         #
-        x= self.UTILS.getElement( ("id","messages-delete-button"), "Delete message" )
+        x= self.UTILS.getElement(DOM.Messages.edit_msgs_delete_btn, "Delete messages button" )
         x.tap()
+        
         self.marionette.switch_to_frame()        
-        x = self.UTILS.getElement(DOM.Messages.confirm_delete_threads, "OK button in question dialog")
+        x = self.UTILS.getElement(DOM.GLOBAL.modal_ok_button, "OK button in question dialog")
         x.tap()
+        
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
         time.sleep(2)
         

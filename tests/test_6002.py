@@ -53,4 +53,4 @@ class test_6002(GaiaTestCase):
         # Check that the delete button is not enabled.
         #
         x = self.UTILS.getElement(DOM.Messages.delete_threads_button, "Delete button")
-        self.UTILS.TEST(not x.is_enabled(), "Delete button is not enabled.")
+        self.UTILS.TEST(x.get_attribute("class") == "disabled", "Delete button is not enabled.")

@@ -11,7 +11,7 @@ from OWDTestToolkit import *
 #
 
 class test_19199(GaiaTestCase):
-    _Description = "[SMS] Delete a SMS in a conversation with several sms."
+    _Description = "[SMS] (BLOCKED BY BUG 879816) Delete a SMS in a conversation with several sms."
     
     _TestMsg1 = "First message."
     _TestMsg2 = "Second message"
@@ -41,12 +41,14 @@ class test_19199(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
+        
+        self.UTILS.TEST(self.data_layer.delete_all_sms(), "Delete all SMS's.")
+        time.sleep(2)
+
         #
-        # Launch messages app & delete all Threads
+        # Launch messages app.
         #
         self.messages.launch()
-        
-        self.messages.deleteAllThreads()
            
         #
         # Create and send some new tests messages.

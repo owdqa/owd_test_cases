@@ -12,7 +12,7 @@ from OWDTestToolkit import *
 from tests.mock_data.contacts import MockContacts
 
 class test_19201(GaiaTestCase):
-    _Description = "[SMS] Select some conversations and press delete."
+    _Description = "[SMS] (BLOCKED BY BUG 879816) Select some conversations and press delete."
     
     _TestMsg     = "Test message."
     
