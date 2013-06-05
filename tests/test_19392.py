@@ -12,7 +12,7 @@ from OWDTestToolkit import *
 from tests.mock_data.contacts import MockContacts
 
 class test_19392(GaiaTestCase):
-    _Description = "[BASIC][FACEBOOK] Import Facebook contacts from contacts app settings."
+    _Description = "[BASIC][FACEBOOK] (BLOCKED BY BUG 879823) Import Facebook contacts from contacts app settings."
 
     def setUp(self):
         #
