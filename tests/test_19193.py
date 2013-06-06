@@ -23,8 +23,8 @@ class test_19193(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.contacts   = AppContacts(self)
-        self.messages   = AppMessages(self)
+        self.contacts   = Contacts(self)
+        self.messages   = Messages(self)
         
 
         #

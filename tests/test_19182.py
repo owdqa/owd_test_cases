@@ -21,8 +21,8 @@ class test_19182(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.contacts   = AppContacts(self)
-        self.settings   = AppSettings(self)
+        self.contacts   = Contacts(self)
+        self.settings   = Settings(self)
                 
         #
         #

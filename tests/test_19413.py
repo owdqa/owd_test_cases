@@ -19,7 +19,7 @@ class test_19413(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.Browser    = AppBrowser(self)
+        self.Browser    = Browser(self)
         self.testURL    = self.UTILS.get_os_variable("GLOBAL_TEST_URL")
         
         

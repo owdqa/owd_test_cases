@@ -23,7 +23,7 @@ class test_19403(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.contacts   = AppContacts(self)
+        self.contacts   = Contacts(self)
 
         
     def tearDown(self):

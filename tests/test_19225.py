@@ -20,8 +20,8 @@ class test_19225(GaiaTestCase):
         GaiaTestCase.setUp(self)
         
         self.UTILS      = UTILS(self)
-        self.EME        = AppEverythingMe(self)
-        self.Settings   = AppSettings(self)
+        self.EME        = EverythingMe(self)
+        self.Settings   = Settings(self)
         
         self.data_layer.disable_cell_data()
         self.data_layer.disable_wifi()

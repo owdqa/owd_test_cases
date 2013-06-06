@@ -20,7 +20,7 @@ class test_19226(GaiaTestCase):
         GaiaTestCase.setUp(self)
         
         self.UTILS      = UTILS(self)
-        self.EME        = AppEverythingMe(self)
+        self.EME        = EverythingMe(self)
         
         
         

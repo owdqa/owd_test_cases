@@ -21,7 +21,7 @@ class test_6033(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.messages   = AppMessages(self)
+        self.messages   = Messages(self)
         
         #
         # Remove number and add contact.

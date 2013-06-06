@@ -22,7 +22,7 @@ class test_19186(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.contacts   = AppContacts(self)
+        self.contacts   = Contacts(self)
                 
         #
         #

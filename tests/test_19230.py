@@ -22,8 +22,8 @@ class test_19230(GaiaTestCase):
         GaiaTestCase.setUp(self)
         
         self.UTILS      = UTILS(self)
-        self.Settings   = AppSettings(self)
-        self.EME        = AppEverythingMe(self)
+        self.Settings   = Settings(self)
+        self.EME        = EverythingMe(self)
         
         
         

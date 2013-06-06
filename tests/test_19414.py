@@ -17,8 +17,8 @@ class test_19414(GaiaTestCase):
         # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.Settings   = AppSettings(self)
-        self.Browser    = AppBrowser(self)
+        self.Settings   = Settings(self)
+        self.Browser    = Browser(self)
         self.wifi_name  = self.UTILS.get_os_variable("GLOBAL_WIFI_NAME")
         self.testURL    = self.UTILS.get_os_variable("GLOBAL_TEST_URL")
         self.wifi_user  = self.UTILS.get_os_variable("GLOBAL_WIFI_USERNAME")
