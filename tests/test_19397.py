@@ -24,23 +24,18 @@ class test_19397(GaiaTestCase):
         self.clock      = AppClock(self)
         self.settings   = AppSettings(self)
                 
-        #
-        #
-        
-
     def tearDown(self):
         self.UTILS.reportResults()
         
     def test_run(self):
+        self.UTILS.logResult(False, "Not attempting because it takes too long to fail!")
+        return
+    
     
         #
         # Set the volume to be low (no need to wake up the office! ;o)
         #
-        self.settings.setAlarmVolume(1)
-
-        #        
-        # Make sure the date and timezone are correct before setting alarms.
-        #
+        self.settings.setAlarmVolume(0)
 
         #
         # Launch clock app.
