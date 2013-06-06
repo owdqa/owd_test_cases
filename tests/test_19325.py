@@ -31,6 +31,8 @@ class test_19325(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
+        self.UTILS.logResult(False, "Not attempting because it takes too long to fail!")
+        return
     
         #
         # Set the volume to be low (no need to wake up the office! ;o)
