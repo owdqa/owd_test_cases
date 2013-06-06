@@ -22,20 +22,11 @@ class test_19328(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.clock      = AppClock(self)
-                
-        #
-        #
-        
-        
+                        
     def tearDown(self):
         self.UTILS.reportResults()
         
     def test_run(self):
-    
-        #        
-        # Make sure the date and timezone are correct before setting alarms.
-        #
-
         #
         # Launch clock app.
         #
