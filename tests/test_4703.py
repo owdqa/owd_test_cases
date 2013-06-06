@@ -22,8 +22,8 @@ class test_4703(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.messages   = AppMessages(self)
-        self.phone      = AppPhone(self)
+        self.messages   = Messages(self)
+        self.phone      = Phone(self)
         
         #
         # Establish which phone number to use.

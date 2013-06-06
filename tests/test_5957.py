@@ -20,7 +20,7 @@ class test_5957(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.messages   = AppMessages(self)
+        self.messages   = Messages(self)
         
         #
         # Establish which phone number to use and add contact with that number.

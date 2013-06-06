@@ -22,8 +22,8 @@ class test_4700(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.messages   = AppMessages(self)
-        self.browser    = AppBrowser(self)
+        self.messages   = Messages(self)
+        self.browser    = Browser(self)
         
         #
         # Establish which phone number to use.

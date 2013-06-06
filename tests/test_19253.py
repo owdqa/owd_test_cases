@@ -27,7 +27,7 @@ class test_19253(GaiaTestCase):
         # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.gallery    = AppGallery(self)
+        self.gallery    = Gallery(self)
 
         
         

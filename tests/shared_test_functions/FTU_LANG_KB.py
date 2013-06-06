@@ -27,7 +27,7 @@ class main():
         self.parent     = p_parent
         self.marionette = self.parent.marionette
         
-        self.FTU        = AppFTU(self.parent)
+        self.FTU        = Ftu(self.parent)
         
         # (just to get autocomplete to work in my IDE!)
         self.UTILS      = UTILS(self.parent)

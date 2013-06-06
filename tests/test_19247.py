@@ -19,8 +19,8 @@ class test_19247(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.camera     = AppCamera(self)
-        self.gallery    = AppGallery(self)
+        self.camera     = Camera(self)
+        self.gallery    = Gallery(self)
         
     
         

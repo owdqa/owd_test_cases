@@ -20,9 +20,9 @@ class test_19231(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.actions    = Actions(self.marionette)
-        self.settings   = AppSettings(self)
-#         self.market     = AppMarket(self)
-        self.eme        = AppEverythingMe(self)
+        self.settings   = Settings(self)
+#         self.market     = Market(self)
+        self.eme        = EverythingMe(self)
                 
         #
         #

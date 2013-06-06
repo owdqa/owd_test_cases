@@ -21,8 +21,8 @@ class test_19397(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.clock      = AppClock(self)
-        self.settings   = AppSettings(self)
+        self.clock      = Clock(self)
+        self.settings   = Settings(self)
                 
     def tearDown(self):
         self.UTILS.reportResults()

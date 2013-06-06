@@ -23,8 +23,8 @@ class test_19401(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.Settings   = AppSettings(self)
-        self.Browser    = AppBrowser(self)
+        self.Settings   = Settings(self)
+        self.Browser    = Browser(self)
         
         
         

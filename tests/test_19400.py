@@ -23,7 +23,7 @@ class test_19400(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.Browser    = AppBrowser(self)
+        self.Browser    = Browser(self)
         
         
         
