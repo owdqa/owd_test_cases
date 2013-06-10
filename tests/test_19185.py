@@ -22,9 +22,6 @@ class test_19185(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.contacts   = Contacts(self)
-                
-        #
-        #
 
         #
         # Launch contacts app.

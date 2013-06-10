@@ -26,11 +26,6 @@ class test_19398(GaiaTestCase):
         self.locatStr   = "Right here"
         
         
-        #
-        # Set the timeout for element searches.
-        #
-        
-        
     def tearDown(self):
         self.UTILS.reportResults()
 

@@ -22,7 +22,6 @@ class test_19419(GaiaTestCase):
         self.gallery    = Gallery(self)
         self.camera     = Camera(self)
 
-            
         
     def tearDown(self):
         self.UTILS.reportResults()

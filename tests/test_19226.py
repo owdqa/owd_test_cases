@@ -22,8 +22,6 @@ class test_19226(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.EME        = EverythingMe(self)
         
-        
-        
     def tearDown(self):
         self.UTILS.reportResults()
         

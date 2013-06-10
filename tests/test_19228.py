@@ -23,8 +23,6 @@ class test_19228(GaiaTestCase):
         self.Settings   = Settings(self)
         self.EME        = EverythingMe(self)
         
-        
-        
     def tearDown(self):
         self.UTILS.reportResults()
         

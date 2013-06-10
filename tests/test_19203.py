@@ -22,8 +22,6 @@ class test_19203(GaiaTestCase):
         self.messages   = Messages(self)
         
         
-        
-        
     def tearDown(self):
         self.UTILS.reportResults()
         

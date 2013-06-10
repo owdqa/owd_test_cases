@@ -22,9 +22,6 @@ class test_19181(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.contacts   = Contacts(self)
-                
-        #
-        #
  
         #
         # Get details of our test contacts.

@@ -26,7 +26,7 @@ class test_19204(GaiaTestCase):
         
         
         #
-        # Prepare the contact we're going to insert.
+        # Prepare the contact we're going to import.
         #
         self.contact_1 = MockContacts().Contact_1
 

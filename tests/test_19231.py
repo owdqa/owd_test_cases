@@ -21,12 +21,7 @@ class test_19231(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.actions    = Actions(self.marionette)
         self.settings   = Settings(self)
-#         self.market     = Market(self)
         self.eme        = EverythingMe(self)
-                
-        #
-        #
-        
         
     def tearDown(self):
         self.UTILS.reportResults()
