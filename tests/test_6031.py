@@ -22,7 +22,7 @@ class test_6031(GaiaTestCase):
         self.messages   = Messages(self)
         
         #
-        # Add contact (with the correct number).
+        # Import contact (adjust to the correct number).
         #
         self.telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.logComment("Using target telephone number " + self.telNum)

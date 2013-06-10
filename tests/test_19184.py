@@ -24,15 +24,10 @@ class test_19184(GaiaTestCase):
         self.contacts   = Contacts(self)
                 
         #
-        #
-
-        #
-        # Get details of our test contacts.
+        # Import details of our test contacts.
         #
         self.Contact_1 = MockContacts().Contact_1
         self.data_layer.insert_contact(self.Contact_1)
-        
-        
     
     def tearDown(self):
         self.UTILS.reportResults()

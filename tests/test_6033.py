@@ -24,7 +24,7 @@ class test_6033(GaiaTestCase):
         self.messages   = Messages(self)
         
         #
-        # Remove number and add contact.
+        # Remove number and import contact.
         #
         self.telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.logComment("Sending sms to telephone number " + self.telNum)

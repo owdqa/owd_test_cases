@@ -12,7 +12,7 @@ from OWDTestToolkit import *
 import time
 
 class test_19355(GaiaTestCase):
-    _Description = "[UTILITY TRAY] Activate/Deactivate ariplane  mode from Utility tray icon."
+    _Description = "[UTILITY TRAY] Activate/Deactivate ariplane mode from Utility tray icon."
 
     def setUp(self):
         #
@@ -20,11 +20,6 @@ class test_19355(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS     = UTILS(self)
-                
-        #
-        #
-
-    
         
     def tearDown(self):
         self.UTILS.reportResults()

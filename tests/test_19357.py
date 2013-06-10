@@ -24,7 +24,6 @@ class test_19193(GaiaTestCase):
         self.contacts   = Contacts(self)
         self.messages   = Messages(self)
         
-
         #
         # Prepare the contact we're going to insert.
         #

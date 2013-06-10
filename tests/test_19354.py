@@ -21,11 +21,6 @@ class test_19354(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS     = UTILS(self)
                 
-        #
-        #
-
-    
-        
     def tearDown(self):
         self.UTILS.reportResults()
         

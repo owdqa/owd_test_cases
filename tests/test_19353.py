@@ -21,11 +21,11 @@ class test_19353(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS     = UTILS(self)
         self.Browser   = Browser(self)
-                
+        
         #
+        # Use a Gaiatest method to quickly disable cell data.
         #
-
-    
+        self.data_layer.disable_cell_data()
         
     def tearDown(self):
         self.UTILS.reportResults()

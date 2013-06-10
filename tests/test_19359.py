@@ -24,9 +24,6 @@ class test_19359(GaiaTestCase):
         self.email      = Email(self)
                 
         #
-        #
-
-        #
         # Get details of our test contacts.
         #
         self.Contact_1 = MockContacts().Contact_multipleEmails

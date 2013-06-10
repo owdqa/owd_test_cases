@@ -23,11 +23,6 @@ class test_19241(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.Email      = Email(self)
         
-        #
-        # Set the timeout for element searches.
-        #
-
-        
     def tearDown(self):
         self.UTILS.reportResults()
 

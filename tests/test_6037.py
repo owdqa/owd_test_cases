@@ -23,7 +23,7 @@ class test_6037(GaiaTestCase):
         self.messages   = Messages(self)
         
         #
-        # Add contact (with the correct number).
+        # Import contact (adjust to the correct number).
         #
         self.Contact_1 = MockContacts().Contact_1
         self.Contact_1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")

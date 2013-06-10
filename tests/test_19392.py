@@ -25,9 +25,6 @@ class test_19392(GaiaTestCase):
         self.settings   = Settings(self)
                 
         #
-        #
-
-        #
         # Get details of our test contacts.
         #
         self.Contact_1 = MockContacts().Contact_1

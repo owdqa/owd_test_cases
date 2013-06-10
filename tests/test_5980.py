@@ -24,7 +24,7 @@ class test_5980(GaiaTestCase):
         self.contacts   = Contacts(self)
         
         #
-        # Remove number and add contact.
+        # Remove number and import contact.
         #
         self.Contact_1 = MockContacts().Contact_1
         self.Contact_1["tel"] = None

@@ -38,7 +38,7 @@ class test_19421(GaiaTestCase):
         self.UTILS.logComment("Using target telephone number " + self.contact_1["tel"]["value"])
         
         #
-        # Add this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
+        # Import this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
         #
         self.data_layer.insert_contact(self.contact_1)
 

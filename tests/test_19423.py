@@ -25,10 +25,6 @@ class test_19423(GaiaTestCase):
         self.contacts   = Contacts(self)
         
         #
-        # Set the timeout for element searches.
-        #
-
-        #
         # Get details of our test contact.
         #
         self.Contact_1 = MockContacts().Contact_1

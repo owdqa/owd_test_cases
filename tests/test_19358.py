@@ -22,9 +22,6 @@ class test_19358(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.contacts   = Contacts(self)
         self.messages   = Messages(self)
-                
-        #
-        #
 
         #
         # Get details of our test contacts.

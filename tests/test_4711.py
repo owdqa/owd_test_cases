@@ -25,7 +25,7 @@ class test_4711(GaiaTestCase):
         self.messages   = Messages(self)
         
         #
-        # Establish which phone number to use.
+        # Import contacts (adjust to the correct numbers.
         #
         self.Contact_1 = MockContacts().Contact_1
         self.Contact_2 = MockContacts().Contact_2
