@@ -47,7 +47,7 @@ class test_19420(GaiaTestCase):
         #
         # Delete all threads.
         #
-        self.messages.deleteAllThreads()
+#         self.messages.deleteAllThreads()
           
         #
         # Create and send a new test message (don't use api - I want to be back in homepage
