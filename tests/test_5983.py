@@ -13,7 +13,7 @@ import time
 from tests.mock_data.contacts import MockContacts
 
 class test_5983(GaiaTestCase):
-    _Description = "[SMS] (BLOCKED BY BUG 876641) CLONE - Press delete all text button in contact name field."
+    _Description = "(BLOCKED BY BUG 876641) [SMS] CLONE - Press delete all text button in contact name field."
     
     def setUp(self):
         #
@@ -21,11 +21,11 @@ class test_5983(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.contacts   = AppContacts(self)
-        self.messages   = AppMessages(self)
+        self.contacts   = Contacts(self)
+        self.messages   = Messages(self)
         
         #
-        # Establish which phone number to use.
+        # Import contact (adjust the correct number).
         #
         self.Contact_1 = MockContacts().Contact_1
         self.Contact_1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")

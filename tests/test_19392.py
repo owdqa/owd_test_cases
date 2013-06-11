@@ -12,7 +12,7 @@ from OWDTestToolkit import *
 from tests.mock_data.contacts import MockContacts
 
 class test_19392(GaiaTestCase):
-    _Description = "[BASIC][FACEBOOK] Import Facebook contacts from contacts app settings."
+    _Description = "(BLOCKED BY BUG 879823) [BASIC][FACEBOOK] Import Facebook contacts from contacts app settings."
 
     def setUp(self):
         #
@@ -20,13 +20,10 @@ class test_19392(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.contacts   = AppContacts(self)
-        self.facebook   = AppFacebook(self)
-        self.settings   = AppSettings(self)
+        self.contacts   = Contacts(self)
+        self.facebook   = Facebook(self)
+        self.settings   = Settings(self)
                 
-        #
-        #
-
         #
         # Get details of our test contacts.
         #
@@ -68,7 +65,12 @@ class test_19392(GaiaTestCase):
         self.contacts.switchToFacebook()
         friend_count = self.facebook.importAll()
  
-        x = self.UTILS.getElements(DOM.Contacts.social_network_contacts, "Social network contact list", True, 30, False)
+        x = self.UTILS.getElements(DOM.Contacts.social_network_contacts, "Social network contact list", True, 20, False)
+        self.UTILS.logResult("info", "Leaving early since this is blocked!!")
+        return
+    
+    
+    
         self.UTILS.TEST(len(x) == friend_count, 
                         str(friend_count) + " social network friends listed (there were " + str(len(x)) + ").")
          

@@ -19,9 +19,7 @@ class test_19203(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.messages   = AppMessages(self)
-        
-        
+        self.messages   = Messages(self)
         
         
     def tearDown(self):

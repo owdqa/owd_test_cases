@@ -41,8 +41,8 @@ class main(GaiaTestCase):
         self.UTILS.logComment("Using password 2 '" + self.PASS2 + "'")
         self.UTILS.logComment("Using email    2 '" + self.EMAIL2 + "'")
 
-        self.Email      = AppEmail(self)
-        self.settings   = AppSettings(self)
+        self.Email      = Email(self)
+        self.settings   = Settings(self)
         
         #
         # Set up specific folder names.

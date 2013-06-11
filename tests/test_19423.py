@@ -22,12 +22,8 @@ class test_19423(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.contacts   = AppContacts(self)
+        self.contacts   = Contacts(self)
         
-        #
-        # Set the timeout for element searches.
-        #
-
         #
         # Get details of our test contact.
         #

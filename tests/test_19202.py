@@ -11,7 +11,7 @@ from OWDTestToolkit import *
 #
 
 class test_19202(GaiaTestCase):
-    _Description = "[SMS] Delete a sms conversation."
+    _Description = "(BLOCKED BY BUG 879816) [SMS] Delete a sms conversation."
     
     _TestMsg1 = "First message."
     _TestMsg2 = "Second message"
@@ -23,7 +23,7 @@ class test_19202(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
-        self.messages = AppMessages(self)
+        self.messages = Messages(self)
          
          
         #

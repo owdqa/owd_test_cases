@@ -20,15 +20,10 @@ class test_19398(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.calendar   = AppCalendar(self)
-        self.settings   = AppSettings(self)
+        self.calendar   = Calendar(self)
+        self.settings   = Settings(self)
         self.titleStr   = "Test event " + str(datetime.now().time())
         self.locatStr   = "Right here"
-        
-        
-        #
-        # Set the timeout for element searches.
-        #
         
         
     def tearDown(self):

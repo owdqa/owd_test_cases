@@ -23,8 +23,8 @@ class test_19410(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.Market     = AppMarket(self)
-        self.Settings   = AppSettings(self)
+        self.Market     = Marketplace(self)
+        self.Settings   = Settings(self)
         
         
         

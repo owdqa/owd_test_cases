@@ -20,10 +20,8 @@ class test_19227(GaiaTestCase):
         GaiaTestCase.setUp(self)
         
         self.UTILS      = UTILS(self)
-        self.Settings   = AppSettings(self)
-        self.EME        = AppEverythingMe(self)
-        
-        
+        self.Settings   = Settings(self)
+        self.EME        = EverythingMe(self)
         
     def tearDown(self):
         self.UTILS.reportResults()

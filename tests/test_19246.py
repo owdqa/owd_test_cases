@@ -19,11 +19,9 @@ class test_19246(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.gallery    = AppGallery(self)
-        self.camera     = AppCamera(self)
+        self.gallery    = Gallery(self)
+        self.camera     = Camera(self)
 
-            
-        
     def tearDown(self):
         self.UTILS.reportResults()
         

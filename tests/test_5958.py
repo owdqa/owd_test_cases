@@ -20,8 +20,8 @@ class test_5958(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.messages   = AppMessages(self)
-        self.contacts   = AppContacts(self)
+        self.messages   = Messages(self)
+        self.contacts   = Contacts(self)
         
         #
         # Import some contacts.
@@ -32,7 +32,7 @@ class test_5958(GaiaTestCase):
         self.Contact_4 = MockContacts().Contact_multiplePhones
         self.Contact_5 = MockContacts().Contact_multipleEmails
 
-        # Set the one we'll match to have a valie phone number.
+        # Set the one we'll match to have a valid phone number.
         self.Contact_1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.logComment("Using target telephone number " + self.Contact_1["tel"]["value"])
         

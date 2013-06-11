@@ -12,7 +12,7 @@ from OWDTestToolkit import *
 import os, time
 
 class test_19253(GaiaTestCase):
-    _Description = "[Gallery] Select multiple pictures and delete them."
+    _Description = "(BLOCKED BY BUG 879816) [Gallery] Select multiple pictures and delete them."
     
     _img_list = ('img1.jpg',
                  'img2.jpg',
@@ -27,7 +27,7 @@ class test_19253(GaiaTestCase):
         # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.gallery    = AppGallery(self)
+        self.gallery    = Gallery(self)
 
         
         

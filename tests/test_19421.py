@@ -13,7 +13,7 @@ import time
 from tests.mock_data.contacts import MockContacts
 
 class test_19421(GaiaTestCase):
-    _Description = "(BLOCKED BY BUG 867119) [BASIC][CONTACTS] Send an sms from a contact detail - Verify the contact receives the SMS."
+    _Description = "[BASIC][CONTACTS] Send an sms from a contact detail - Verify the contact receives the SMS."
     
     _TestMsg     = "Test."
 
@@ -23,8 +23,8 @@ class test_19421(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.contacts   = AppContacts(self)
-        self.messages   = AppMessages(self)
+        self.contacts   = Contacts(self)
+        self.messages   = Messages(self)
         
         #
         # Prepare the contact we're going to insert.
@@ -38,7 +38,7 @@ class test_19421(GaiaTestCase):
         self.UTILS.logComment("Using target telephone number " + self.contact_1["tel"]["value"])
         
         #
-        # Add this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
+        # Import this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
         #
         self.data_layer.insert_contact(self.contact_1)
 
@@ -49,8 +49,8 @@ class test_19421(GaiaTestCase):
         #
         # Clear out any current messages.
         #
-        self.messages.launch()
-        self.messages.deleteAllThreads()
+#         self.messages.launch()
+#         self.messages.deleteAllThreads()
         
        #
         # Launch contacts app.
@@ -75,12 +75,6 @@ class test_19421(GaiaTestCase):
         time.sleep(2)
         self.marionette.switch_to_frame()
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
-
-        #
-        # TEST: this automatically opens the 'send SMS' screen, so
-        # check the correct name is in the header of this sms.
-        #
-        self.UTILS.headerCheck(self.contact_1['name'])
     
         #
         # Create SMS.
@@ -105,10 +99,4 @@ class test_19421(GaiaTestCase):
         self.UTILS.TEST((sms_text.lower() == self._TestMsg.lower()), 
             "SMS text = '" + self._TestMsg + "' (it was '" + sms_text + "').")
 
-#         #
-#         # The message notifier returned by the weird 'you have sent a text' text
-#         # remains in the header unless we clear it.
-#         #
-#         time.sleep(10)
-#         self.UTILS.clearAllStatusBarNotifs()
 

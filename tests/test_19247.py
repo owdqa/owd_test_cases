@@ -11,7 +11,7 @@ from OWDTestToolkit import *
 #
 
 class test_19247(GaiaTestCase):
-    _Description = "[CAMERA] Delete a picture just taken."
+    _Description = "(BLOCKED BY BUG 879816) [CAMERA] Delete a picture just taken."
     
     def setUp(self):
         #
@@ -19,10 +19,8 @@ class test_19247(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.camera     = AppCamera(self)
-        self.gallery    = AppGallery(self)
-        
-    
+        self.camera     = Camera(self)
+        self.gallery    = Gallery(self)
         
     def tearDown(self):
         self.UTILS.reportResults()

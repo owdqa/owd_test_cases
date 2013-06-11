@@ -37,7 +37,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19180</td><td  align=left>[FACEBOOK] Unlink all Facebook contacts in the address book in a single step and verify the contacts who was linked to a facebook contacts.</td>
+    <td  align=center>19180</td><td  align=left>(BLOCKED BY BUG 879823) [FACEBOOK] Unlink all Facebook contacts in the address book in a single step and verify the contacts who was linked to a facebook contacts.</td>
   </tr>
 
   <tr>
@@ -101,7 +101,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19196</td><td  align=left>[SMS] Send/Receive a new SMS when the conversation thread is empty.</td>
+    <td  align=center>19196</td><td  align=left>(BLOCKED BY BUG 879816) [SMS] Send/Receive a new SMS when the conversation thread is empty.</td>
   </tr>
 
   <tr>
@@ -109,11 +109,11 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19198</td><td  align=left>[SMS] Delete all SMS in a conversation with several sms.</td>
+    <td  align=center>19198</td><td  align=left>(BLOCKED BY BUG 879816) [SMS] Delete all SMS in a conversation with several sms.</td>
   </tr>
 
   <tr>
-    <td  align=center>19199</td><td  align=left>[SMS] Delete a SMS in a conversation with several sms.</td>
+    <td  align=center>19199</td><td  align=left>(BLOCKED BY BUG 879816) [SMS] Delete a SMS in a conversation with several sms.</td>
   </tr>
 
   <tr>
@@ -121,11 +121,11 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19201</td><td  align=left>[SMS] Select some conversations and press delete.</td>
+    <td  align=center>19201</td><td  align=left>(BLOCKED BY BUG 879816) [SMS] Select some conversations and press delete.</td>
   </tr>
 
   <tr>
-    <td  align=center>19202</td><td  align=left>[SMS] Delete a sms conversation.</td>
+    <td  align=center>19202</td><td  align=left>(BLOCKED BY BUG 879816) [SMS] Delete a sms conversation.</td>
   </tr>
 
   <tr>
@@ -173,7 +173,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19245</td><td  align=left>[CAMERA] Delete a video just recorded.</td>
+    <td  align=center>19245</td><td  align=left>(BLOCKED BY BUG 879816) [CAMERA] Delete a video just recorded.</td>
   </tr>
 
   <tr>
@@ -181,11 +181,11 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19247</td><td  align=left>[CAMERA] Delete a picture just taken.</td>
+    <td  align=center>19247</td><td  align=left>(BLOCKED BY BUG 879816) [CAMERA] Delete a picture just taken.</td>
   </tr>
 
   <tr>
-    <td  align=center>19253</td><td  align=left>[Gallery] Select multiple pictures and delete them.</td>
+    <td  align=center>19253</td><td  align=left>(BLOCKED BY BUG 879816) [Gallery] Select multiple pictures and delete them.</td>
   </tr>
 
   <tr>
@@ -213,7 +213,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19355</td><td  align=left>[UTILITY TRAY] Activate/Deactivate ariplane  mode from Utility tray icon.</td>
+    <td  align=center>19355</td><td  align=left>[UTILITY TRAY] Activate/Deactivate ariplane mode from Utility tray icon.</td>
   </tr>
 
   <tr>
@@ -233,7 +233,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19392</td><td  align=left>[BASIC][FACEBOOK] Import Facebook contacts from contacts app settings.</td>
+    <td  align=center>19392</td><td  align=left>(BLOCKED BY BUG 879823) [BASIC][FACEBOOK] Import Facebook contacts from contacts app settings.</td>
   </tr>
 
   <tr>
@@ -313,7 +313,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19421</td><td  align=left>(BLOCKED BY BUG 867119) [BASIC][CONTACTS] Send an sms from a contact detail - Verify the contact receives the SMS.</td>
+    <td  align=center>19421</td><td  align=left>[BASIC][CONTACTS] Send an sms from a contact detail - Verify the contact receives the SMS.</td>
   </tr>
 
   <tr>
@@ -381,7 +381,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>5983</td><td  align=left>[SMS] (BLOCKED BY BUG 876641) CLONE - Press delete all text button in contact name field.</td>
+    <td  align=center>5983</td><td  align=left>(BLOCKED BY BUG 876641) [SMS] CLONE - Press delete all text button in contact name field.</td>
   </tr>
 
   <tr>
@@ -389,7 +389,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>6002</td><td  align=left>[SMS] CLONE - Press delete without any conversation selected.</td>
+    <td  align=center>6002</td><td  align=left>(BLOCKED BY BUG 879843) [SMS] CLONE - Press delete without any conversation selected.</td>
   </tr>
 
   <tr>

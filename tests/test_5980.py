@@ -20,11 +20,11 @@ class test_5980(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.messages   = AppMessages(self)
-        self.contacts   = AppContacts(self)
+        self.messages   = Messages(self)
+        self.contacts   = Contacts(self)
         
         #
-        # Remove number and add contact.
+        # Remove number and import contact.
         #
         self.Contact_1 = MockContacts().Contact_1
         self.Contact_1["tel"] = None

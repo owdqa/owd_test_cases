@@ -11,7 +11,7 @@ from OWDTestToolkit import *
 #
 
 class test_19196(GaiaTestCase):
-    _Description = "[SMS] Send/Receive a new SMS when the conversation thread is empty."
+    _Description = "(BLOCKED BY BUG 879816) [SMS] Send/Receive a new SMS when the conversation thread is empty."
     
     _TestMsg     = "Test message."
     
@@ -21,7 +21,7 @@ class test_19196(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.messages   = AppMessages(self)
+        self.messages   = Messages(self)
         
         
         #
@@ -35,6 +35,9 @@ class test_19196(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
+
+        # Could use this, but it doesn't seem to be working.        
+#         self.UTILS.TEST(self.data_layer.delete_all_sms(), "Delete all SMS's.")
         
         #
         # Launch messages app.
@@ -45,7 +48,7 @@ class test_19196(GaiaTestCase):
         # Delete all threads.
         #
         self.messages.deleteAllThreads()
-          
+        
         #
         # Create and send a new test message.
         #

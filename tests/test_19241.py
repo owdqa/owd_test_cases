@@ -21,12 +21,7 @@ class test_19241(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.Email      = AppEmail(self)
-        
-        #
-        # Set the timeout for element searches.
-        #
-
+        self.Email      = Email(self)
         
     def tearDown(self):
         self.UTILS.reportResults()

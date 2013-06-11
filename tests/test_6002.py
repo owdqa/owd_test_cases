@@ -12,7 +12,7 @@ import time
 #
 
 class test_6002(GaiaTestCase):
-    _Description = "[SMS] CLONE - Press delete without any conversation selected."
+    _Description = "(BLOCKED BY BUG 879843) [SMS] CLONE - Press delete without any conversation selected."
     
     def setUp(self):
         #
@@ -20,8 +20,8 @@ class test_6002(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.contacts   = AppContacts(self)
-        self.messages   = AppMessages(self)
+        self.contacts   = Contacts(self)
+        self.messages   = Messages(self)
         
         #
         # Establish which phone number to use.
@@ -53,4 +53,4 @@ class test_6002(GaiaTestCase):
         # Check that the delete button is not enabled.
         #
         x = self.UTILS.getElement(DOM.Messages.delete_threads_button, "Delete button")
-        self.UTILS.TEST(not x.is_enabled(), "Delete button is not enabled.")
+        self.UTILS.TEST(x.get_attribute("class") == "disabled", "Delete button is not enabled.")

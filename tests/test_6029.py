@@ -19,10 +19,10 @@ class test_6029(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.messages   = AppMessages(self)
+        self.messages   = Messages(self)
         
         #
-        # Add contact (with the correct number).
+        # Import contact (adjust the correct number).
         #
         self.telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.logComment("Using target telephone number " + self.telNum)

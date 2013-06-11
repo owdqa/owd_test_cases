@@ -22,11 +22,11 @@ class test_19204(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
-        self.messages   = AppMessages(self)
+        self.messages   = Messages(self)
         
         
         #
-        # Prepare the contact we're going to insert.
+        # Prepare the contact we're going to import.
         #
         self.contact_1 = MockContacts().Contact_1
 
