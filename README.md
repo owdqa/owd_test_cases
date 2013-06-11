@@ -425,6 +425,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>6050</td><td  align=left>CLONE - Verify that the SMS conversation window shows the message preview (only one outgoing SMS message in the conversation thread).</td>
+  </tr>
+
+  <tr>
     <td  align=center>6058</td><td  align=left>Try send a sms creating a new thread while airplane is enabled.</td>
   </tr>
 </table>
