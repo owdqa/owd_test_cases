@@ -35,7 +35,7 @@ class test_6049(GaiaTestCase):
         # Launch messages app.
         #
         self.messages.launch()
-        
+
         #
         # Send a message to an invalid number to create a thread with just an
         # outgoing message..
