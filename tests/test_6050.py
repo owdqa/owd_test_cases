@@ -45,6 +45,7 @@ class test_6050(GaiaTestCase):
         #
         # Click ok in the alert.
         #
+        time.sleep(5)
         self.marionette.switch_to_frame()
         x = self.UTILS.getElement(DOM.GLOBAL.modal_ok_button, "OK button in question dialog")
         x.tap()
