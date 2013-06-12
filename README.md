@@ -434,6 +434,8 @@ TESTS COVERED
 
   <tr>
     <td  align=center>6056</td><td  align=left>CLONE - Try send a sms to a contact while airplane is enabled.</td>
+  </tr>
+
   <tr>
     <td  align=center>6057</td><td  align=left>CLONE - Try send a sms to a phone number (no contact) while airplane is enabled</td>
   </tr>
