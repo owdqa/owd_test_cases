@@ -431,4 +431,8 @@ TESTS COVERED
   <tr>
     <td  align=center>6058</td><td  align=left>Try send a sms creating a new thread while airplane is enabled.</td>
   </tr>
+
+  <tr>
+    <td  align=center>6059</td><td  align=left>Try send a sms in an existing thread while airplane is enabled.</td>
+  </tr>
 </table>
