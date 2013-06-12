@@ -431,4 +431,8 @@ TESTS COVERED
   <tr>
     <td  align=center>6058</td><td  align=left>Try send a sms creating a new thread while airplane is enabled.</td>
   </tr>
+
+  <tr>
+    <td  align=center>6060</td><td  align=left>CLONE - Try send a sms (after enabled and disabled airplane mode)</td>
+  </tr>
 </table>
