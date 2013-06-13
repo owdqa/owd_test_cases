@@ -10,9 +10,10 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 import time
+from tests.mock_data.contacts import MockContacts
 
-class test_6058(GaiaTestCase):
-    _Description = "Try send a sms creating a new thread while airplane is enabled."
+class test_6060(GaiaTestCase):
+    _Description = "CLONE - Try send a sms (after enabled and disabled airplane mode)"
     
     _TestMsg     = "Test."
 
@@ -23,11 +24,18 @@ class test_6058(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS     = UTILS(self)
         self.messages   = Messages(self)
+        self.contacts   = Contacts(self)
         
         #
         # Put the phone into airplane mode.
         #
         self.data_layer.set_setting('ril.radio.disabled', True)
+        self.data_layer.set_setting('ril.radio.disabled', False)
+         
+        self.Contact_1 = MockContacts().Contact_1
+        self.Contact_1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        
+        self.data_layer.insert_contact(self.Contact_1)
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -37,19 +45,16 @@ class test_6058(GaiaTestCase):
         #
         # Open sms app and delete every thread to start a new one
         #
-        self.messages.launch()
-        self.messages.deleteAllThreads()
-
-        #
-        # Create a new SMS
-        #
-        self.messages.startNewSMS()
+        self.contacts.launch()
+        self.contacts.viewContact(self.Contact_1["name"])
+        x = self.UTILS.getElement(DOM.Contacts.sms_button, "SMS button")
+        x.tap()
         
-        #
-        # Insert the phone number in the To field
-        #
-        self.messages.addNumberInToField(self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM"))
+        time.sleep(2)
+        self.marionette.switch_to_frame()
+        self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
 
+              
         #
         # Create SMS.
         #
@@ -59,11 +64,4 @@ class test_6058(GaiaTestCase):
         # Click send.
         #
         self.messages.sendSMS()
-        
-        time.sleep(3)
-
-
-        #
-        # Check that popup appears.
-        #
-        self.messages.checkAirplaneModeWarning()
+        self.messages.waitForReceivedMsgInThisThread()
