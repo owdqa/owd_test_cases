@@ -1,33 +1,3 @@
-WARNING: USING THESE TESTS WILL RESULT IN ALL DATA BEING REMOVED FROM THE DEVICE!
-=================================================================================
-
-
-
-#Instructions for setting up and running automated test cases.
-
-<b>1.</b> Clone and install the OWD_TEST_TOOLKIT repository (https://github.com/roydude/OWD_TEST_TOOLKIT).
-
-<b>2.</b> Type:
-
-<pre>
-./run_tests.sh
-</pre>
-
-... or specify particular test suites, like this:
-
-<pre>
-./run_tests.sh {REGRESSION}
-</pre>
-
-... or specify particular test numbers, like this:
-
-<pre>
-./run_tests.sh 7 8 21 40 41
-</pre>
-
-For more details, please refer to the README.md for OWD_TEST_TOOLKIT.
-
-
 <!--testcoverage-->
 TESTS COVERED
 =============
@@ -425,6 +395,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>6044</td><td  align=left>CLONE - Add a contact and verify that the SMS list now shows the name</td>
+  </tr>
+
+  <tr>
     <td  align=center>6049</td><td  align=left>CLONE - Verify that the SMS conversation window shows the message preview (only one incoming SMS message in the conversation thread)</td>
   </tr>
 
@@ -442,6 +416,10 @@ TESTS COVERED
 
   <tr>
     <td  align=center>6058</td><td  align=left>Try send a sms creating a new thread while airplane is enabled.</td>
+  </tr>
+
+  <tr>
+    <td  align=center>6059</td><td  align=left>Try send a sms in an existing thread while airplane is enabled.</td>
   </tr>
 
   <tr>
