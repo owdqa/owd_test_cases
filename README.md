@@ -399,6 +399,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>6045</td><td  align=left>CLONE - Edit a contact name and verify that the SMS list now shows the new name</td>
+  </tr>
+
+  <tr>
     <td  align=center>6049</td><td  align=left>CLONE - Verify that the SMS conversation window shows the message preview (only one incoming SMS message in the conversation thread)</td>
   </tr>
 
