@@ -12,7 +12,7 @@ import time
 #
 
 class test_6002(GaiaTestCase):
-    _Description = "(BLOCKED BY BUG 879843) [SMS] CLONE - Press delete without any conversation selected."
+    _Description = "[SMS] CLONE - Press delete without any conversation selected."
     
     def setUp(self):
         #
