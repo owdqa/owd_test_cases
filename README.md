@@ -63,7 +63,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19194</td><td  align=left>(BLOCKED BY BUG 876344) [SMS] Try send a sms to a contact while airplane is enabled (from sms app - use contact option).</td>
+    <td  align=center>19194</td><td  align=left>[SMS] Try send a sms to a contact while airplane is enabled (from sms app - use contact option).</td>
   </tr>
 
   <tr>
@@ -115,7 +115,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19225</td><td  align=left>(BLOCKED BY BUG 874362) [HOME SCREEN] Verify that if no connection available when selecting a category in everything.me the user will be notified about the need to have a network connection to use this functionality.</td>
+    <td  align=center>19225</td><td  align=left>[HOME SCREEN] Verify that if no connection available when selecting a category in everything.me the user will be notified about the need to have a network connection to use this functionality.</td>
   </tr>
 
   <tr>
@@ -359,7 +359,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>6002</td><td  align=left>(BLOCKED BY BUG 879843) [SMS] CLONE - Press delete without any conversation selected.</td>
+    <td  align=center>6002</td><td  align=left>[SMS] CLONE - Press delete without any conversation selected.</td>
   </tr>
 
   <tr>
