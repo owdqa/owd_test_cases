@@ -12,7 +12,7 @@ from OWDTestToolkit import *
 from tests.mock_data.contacts import MockContacts
 
 class test_19194(GaiaTestCase):
-    _Description = "(BLOCKED BY BUG 876344) [SMS] Try send a sms to a contact while airplane is enabled (from sms app - use contact option)."
+    _Description = "[SMS] Try send a sms to a contact while airplane is enabled (from sms app - use contact option)."
     
     _TestMsg     = "Test."
     

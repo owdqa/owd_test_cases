@@ -11,7 +11,7 @@ from OWDTestToolkit import *
 #
 
 class test_19225(GaiaTestCase):
-    _Description = "(BLOCKED BY BUG 874362) [HOME SCREEN] Verify that if no connection available when selecting a category in everything.me the user will be notified about the need to have a network connection to use this functionality."
+    _Description = "[HOME SCREEN] Verify that if no connection available when selecting a category in everything.me the user will be notified about the need to have a network connection to use this functionality."
     
     def setUp(self):
         #
