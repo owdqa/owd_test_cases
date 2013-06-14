@@ -4,19 +4,21 @@
 #
 # NOTE: The report must be in the 'cache' (i.e. via quick link).
 #
-BASE_URL="http://qacore02.hi.inet/sites/jira/reports/user-story-coverage-OWD-Regression_Automated_"
-BRANCH=${1:?"Syntax: $0 <branch>"}
+BASE_URL="http://qacore02.hi.inet/sites/jira/reports/user-story-coverage-OWD-Regression_Automated"
+BRANCH=${1:+"_$1"}
 
-export TMPFILE=/tmp/jira_report_${BRANCH}.html
+TMP=/tmp/jira_report${BRANCH}
+export WGET_OUTPUT=${TMP}.html
+export RESULT_FILE=${TMP}.result
 
 #
 # Get the report html into a temporary file.
 #
-wget -O ${TMPFILE} --no-check-certificate ${BASE_URL}${BRANCH}.html > /dev/null 2>&1
+wget -O ${WGET_OUTPUT} --no-check-certificate ${BASE_URL}${BRANCH}.html > /dev/null 2>&1
 
 if [ $? -ne 0 ]
 then
-	printf "\nReport for \"$BRANCH\" wasn't in the 'cache' in JIRA - please manually run the report in JIRA then try this again.\n\n"
+	printf "\nReport for \"$BRANCH\" wasn't in the 'cache' in JIRA - please manually run the report in JIRA then try this again.\n\n" >&2
     exit 1
 fi
 
@@ -25,14 +27,14 @@ fi
 #
 awk '
 BEGIN{
-	TMPFILE   = ENVIRON["TMPFILE"]
-	TEST_NUM  = ""
-	TEST_DESC = ""
-	TEST_CASE = ""
-	TD_COUNT  = 0
-	TD_DESC   = 4
+	WGET_OUTPUT = ENVIRON["WGET_OUTPUT"]
+	TEST_NUM    = ""
+	TEST_DESC   = ""
+	TEST_CASE   = ""
+	TD_COUNT    = 0
+	TD_DESC     = 4
 	
-	while (getline < TMPFILE){
+	while (getline < WGET_OUTPUT){
 		if ( /<td>Test Case<\/td>/ ){
 			# We are in a test case.
 			TEST_CASE = "Y"
@@ -58,7 +60,9 @@ BEGIN{
             TEST_DESC = TEST_DESC $0
             gsub(/<td>/  , "" , TEST_DESC)
             gsub(/<\/td>/, "" , TEST_DESC)
+            gsub(/\[.*\]/, "" , TEST_DESC)
             gsub(/^ */   , "" , TEST_DESC)
+            gsub(/^- */  , "" , TEST_DESC)
             gsub(/  */   , " ", TEST_DESC)
         }
 
@@ -69,4 +73,7 @@ BEGIN{
         	printf "%s\t%s\n", TEST_NUM, TEST_DESC
         }
 	}
-}'
+}' > $RESULT_FILE
+
+echo "$RESULT_FILE"
+exit 0
