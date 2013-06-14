@@ -9,7 +9,7 @@ from marionette import Actions
 
 
 class test_19231(GaiaTestCase):
-    _Description = "[HOME SCREEN] Verify that the user can uninstall a everything.me app through the grid edit mode."
+    _Description = "(BLOCKED BY BUG 879816) [HOME SCREEN] Verify that the user can uninstall a everything.me app through the grid edit mode."
     
     _appName = "Wikipedia"
 
@@ -42,6 +42,9 @@ class test_19231(GaiaTestCase):
         
         self.UTILS.TEST(x, "Icon for " + self._appName + " is found.", True)
         
+        #
+        # Long-press the app to install it to the homescreen.
+        #
         x = self.UTILS.getElement( ("xpath", DOM.EME.search_result_icon_xpath % self._appName),
                                    self._appName + " icon")
         
