@@ -34,7 +34,8 @@ class test_19180(GaiaTestCase):
     def tearDown(self):
         self.UTILS.reportResults()
         
-    def test_run(self):        
+    def test_run(self):
+    
         self.UTILS.getNetworkConnection()
         
         #
