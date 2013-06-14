@@ -7,7 +7,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19180</td><td  align=left>(BLOCKED BY BUG 879823) [FACEBOOK] Unlink all Facebook contacts in the address book in a single step and verify the contacts who was linked to a facebook contacts.</td>
+    <td  align=center>19180</td><td  align=left>(BLOCKED BY BUG 879830) [FACEBOOK] Unlink all Facebook contacts in the address book in a single step and verify the contacts who was linked to a facebook contacts.</td>
   </tr>
 
   <tr>
@@ -135,7 +135,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19231</td><td  align=left>[HOME SCREEN] Verify that the user can uninstall a everything.me app through the grid edit mode.</td>
+    <td  align=center>19231</td><td  align=left>(BLOCKED BY BUG 879816) [HOME SCREEN] Verify that the user can uninstall a everything.me app through the grid edit mode.</td>
   </tr>
 
   <tr>
@@ -419,7 +419,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>6058</td><td  align=left>Try send a sms creating a new thread while airplane is enabled.</td>
+    <td  align=center>6058</td><td  align=left>CLONE - Try send a sms creating a new thread while airplane is enabled.</td>
   </tr>
 
   <tr>

@@ -1,0 +1,126 @@
+OWD-4700	x	Receive an SMS with a link to a web site and open it
+OWD-4703		Receive an SMS with a phone number and call to it
+OWD-4708	x	Receive an SMS with a phone number and store it
+OWD-4711	x	Send an SMS to multiple contacts
+OWD-4713		Characters counter is showing the charcters written and left
+OWD-4714		Verify that 7 bit codification is working fine
+OWD-4715		Receive a call while writing an SMS and take it
+OWD-4716		Receive a call while writing an SMS but do not take it
+OWD-4717		Receive a call while writing an SMS and reject it
+OWD-4718		Incoming SMS while a call is ongoing
+OWD-4719		Incoming SMS while a call is ongoing, read it
+OWD-4720		Receive an SMS while writing an SMS and read it
+OWD-4721		Receive an SMS while writing an SMS and dismiss it
+OWD-4722		Resend/Forward an SMS
+OWD-5842		[Operator] Sending an SMS to 8000 to check balance account
+OWD-5896		Verify that an SMS just sent appears after closing Messaging app by sliding it up
+OWD-5897		Verify that an SMS just received appears after closing Messaging app by sliding it up
+OWD-5942	x	CLONE - Send a new SMS by entering manually the phone number
+OWD-5949	x	CLONE - Send a new SMS by entering manually the phone number (contact number)
+OWD-5952	x	CLONE - Try to send empty SMS
+OWD-5953	x	CLONE - Introduce a valid SMS and click on Back option
+OWD-5954	x	CLONE - Try to send SMS without any contact
+OWD-5955	x	CLONE - Try to send an SMS when the introduced text has been deleted.
+OWD-5956		CLONE - Send a new SMS by entering manually the phone number without prefix (contact number stored with international prefix)
+OWD-5957	x	CLONE - Try to send an SMS when in the contact list window the end-user click on back (in contact list window) without selecting the contact.
+OWD-5958	x	CLONE - Send a new SMS using the option of reduced list of favourite contacts
+OWD-5959	x	CLONE - Send a new SMS using the search option (in contact list window) in order to select an existing contact
+OWD-5960	x	CLONE - Try to send a new SMS using the search option (in contact list window) in order to select an inexisting contact
+OWD-5961	x	CLONE - Verify that If the contact has more than one phone number, it opens a list of numbers. Clicking on a number in the list, returns the user to the compose SMS app with the contacts name filled-in in the To Field.
+OWD-5962	x	CLONE - Send a SMS with more than 160 characteres
+OWD-5963	x	CLONE - Send/Receive a new SMS when the conversation thread is empty
+OWD-5965	x	CLONE - Send/Receive a new SMS when the conversation thread already has some messages
+OWD-5967		CLONE - Send a new SMS when the device contains a roaming SIM (Use +XX prefix)
+OWD-5968	x	CLONE - Verify characters in text box above the keyboard when typing a sms
+OWD-5969		CLONE - Try Send a SMS (Device without SIM inserted)
+OWD-5971		CLONE - Send a new SMS when the device contains a roaming SIM (Use 00XX prefix)
+OWD-5976		CLONE - Press cancel button in the screen for select a contact phone number
+OWD-5977		CLONE - Access to selection of contact phone number and verify that the carrier is shows
+OWD-5978	x	CLONE - Verify that If the contact only has a phone number, that phone number is automatically selected and the user is returned to the compose SMS screenwidth the contacts name filled-in in the To Field..
+OWD-5979	x	CLONE - Verify that If the contact has more than one phone number, it opens a list of numbers. Clicking on a number in the list, returns the user to the compose SMS app with the contacts name filled-in in the To Field.(second phone number)
+OWD-5980	x	CLONE - Verify that If the contact has no phone number, a message stating that contact does not have a phone number is open up, and user is returned the contact list.
+OWD-5982	x	CLONE - Receive a SMS with more than 160 characteres
+OWD-5983	x	CLONE - Press delete all text button in contact name field
+OWD-5984	x	CLONE - Receive sms while the user is in the SMS app (vibration alert)
+OWD-5985		CLONE - Receive sms while the user is in the SMS app (sound alert)
+OWD-5986		CLONE - Receive sms while the user is in app (e.g browser) different of the SMS app (sound alert)
+OWD-5987	x	CLONE - Receive sms while the user is in app different (e.g browser) of the SMS app (Vibration alert)
+OWD-5988		CLONE - Receive a sms during a call
+OWD-5989		CLONE - Receive a sms while device is locked(sound alert)
+OWD-5990	x	CLONE - Receive a sms while device is locked(Vibration alert)
+OWD-5991		CLONE - Receive a text message while the device is off
+OWD-5992		CLONE - Receive sms while the user is in the desktop (sound alert)
+OWD-5993	?????	CLONE - Receive sms while the user is in the desktop (Vibration alert)
+OWD-5994	x	CLONE - Delete a SMS in a conversation with several sms
+OWD-5995	x	CLONE - Delete all SMS in a conversation with several sms
+OWD-5996		CLONE - Access and exit the edit mode in a conversation
+OWD-5997	x	CLONE - Delete a SMS in a conversation with only one sms
+OWD-5998	x	CLONE - Delete all SMS in a conversation with only one sms
+OWD-5999		CLONE - Access and exit edit mode
+OWD-6000	x	CLONE - Delete a sms conversation
+OWD-6001	x	CLONE - Select some conversations and press delete
+OWD-6002	x	CLONE - Press delete without any conversation selected
+OWD-6003		CLONE - Delete all sms from a date (today) and verify the structure of conversations
+OWD-6004		CLONE - Receiving SMS while the user is in edit mode(conversation list)
+OWD-6006		CLONE - Delete all sms from a date (yesterday) and verify the structure of conversations
+OWD-6007		CLONE - Delete all sms from a date (Then weekdays for same week) and verify the structure of conversations
+OWD-6008		CLONE - Delete all sms from a date (<month><date> e.g. May 21) and verify the structure of conversations
+OWD-6009	x	CLONE - Delete all conversations by pressing the delete all button
+OWD-6010		CLONE - Delete a sms conversation that includes a sms in pending state
+OWD-6011		CLONE - Open SMS app after all sms were deleted or there is any sms
+OWD-6012		CLONE - Open SMS app after send some SMS to different numbers (no contacts)
+OWD-6013		CLONE - Open SMS app after send and receive some SMS from different numbers (no contacts)
+OWD-6016		CLONE - Open SMS app after receive some SMS from different numbers (no contacts)
+OWD-6017		CLONE - Open SMS app after send some SMS to different numbers (contacts)
+OWD-6018		CLONE - Open SMS app after send and receive some SMS from different numbers (contacts)
+OWD-6019		CLONE - Open SMS app after receive some SMS from different numbers (contacts)
+OWD-6020		CLONE - Open SMS app after send some SMS to different numbers (contacts and no contacts)
+OWD-6021		CLONE - Open SMS app after send and receive some SMS from different numbers (contacts and no contacts)
+OWD-6022		CLONE - Open SMS app after receive some SMS from different numbers (contacts and no contacts)
+OWD-6023		CLONE - Open SMS app after receive an SMS from a roaming SIM
+OWD-6024	x	CLONE - Verify The phone number displayed in a conversation
+OWD-6025		CLONE - Open SMS app after send and receive some SMS from different numbers (no contacts) and view details to a conversation
+OWD-6026		CLONE - Open SMS app after send and receive some SMS from different numbers (contacts) and view details to a conversation
+OWD-6027		CLONE - Verify that the structure of the conversation is correct
+OWD-6029	x	CLONE - Verify the textfield item
+OWD-6030	x	CLONE - Verify that the Carrier of number appears in the conversation head
+OWD-6031		CLONE - Receive a text message from number XXX while we are in the conversation details with that number
+OWD-6032	x	CLONE - Write and send a sms with line break
+OWD-6033	x	CLONE - Write a sms with multiple spaces between words (ex; 1 2 3 4 5)
+OWD-6034	(use different times)	CLONE - Verify the order of sms sent and received in a conversation
+OWD-6035		CLONE - Verify that If the name of the contact is empty: Phone Number as the main header.
+OWD-6036		CLONE - Verify that If the name of the contact is empty: The type of the phone (as defined in the address book) and the phone carrier (if available) as the secondary header.
+OWD-6037	x	CLONE - Verify that If the name of the contact is not empty: The name of the contact as the main header
+OWD-6038	x	CLONE - Verify that If the name of the contact is not empty: The type of the phone and the phone carrier (as defined in the address book) as the secondary header
+OWD-6039		CLONE - Verify that If the name of the contact is not empty: No carrier information is linked to the phone: Phone Number is shown instead of carrier as the secondary header
+OWD-6040		CLONE - Verify that The contact has two unique phone numbers with the same type and carrier than the one used for the conversation: show Phone number instead of carrier.
+OWD-6041		CLONE - Open SMS app after send and receive some SMS from different numbers (no contacts)
+OWD-6042		CLONE - Open SMS app after send and receive some SMS from different numbers (contacts)
+OWD-6043		CLONE - Open SMS app after send and receive some SMS from different numbers (contacts and no contacts)
+OWD-6044		CLONE - Add a contact and verify that the SMS list now shows the name
+OWD-6045		CLONE - Edit a contact name and verify that the SMS list now shows the new name
+OWD-6046		CLONE - Delete a contact and verify that the SMS list now shows the number
+OWD-6047		CLONE - Reset the device and verify that the date/time shows in conversations are correct
+OWD-6048		CLONE - Remove and replace the battery from the device and check the date/time shown in the conversations are correct
+OWD-6049		CLONE - Verify that the SMS conversation window shows the message preview (only one incoming SMS message in the conversation thread)
+OWD-6050		CLONE - Verify that the SMS conversation window shows the message preview (only one outgoing SMS message in the conversation thread)
+OWD-6051		CLONE - Verify that the SMS conversation window shows the message preview (more than one SMS message in the conversation thread)
+OWD-6052		CLONE - Verify that the SMS message thread shows the timestamp with AM or PM
+OWD-6053		CLONE - Verify the timestamp (received message) when the SMS has been sent from a different timezone
+OWD-6054		CLONE - Verify that SMS message thread listing highlight modules when the thread contains unread incoming SMS
+OWD-6055		CLONE - Verify that when the end-user select the edit mode option the 'SMS Edit mode' window must be open
+OWD-6056	x	CLONE - Try send a sms to a contact while airplane is enabled
+OWD-6057	x	CLONE - Try send a sms to a phone number (no contact) while airplane is enabled
+OWD-6058	x	CLONE - Try send a sms creating a new thread while airplane is enabled
+OWD-6059	x	CLONE - Try send a sms in an existing thread while airplane is enabled
+OWD-6060	x	CLONE - Try send a sms (after enabled and disabled airplane mode)
+OWD-6061		CLONE - Send a sms to a device who has airplane mode is enabled
+OWD-7190		Send an SMS to an nonexistent number
+OWD-7548		Receiving SMS while the user is in edit mode(sms list in a conversation)
+OWD-7820		Verify that the date/time shows in the conversations are corrects
+OWD-8910	x	Receive an SMS from a contact with long name
+OWD-8946		[Operator] Send an SMS to 7000 with PIN to receive credit
+OWD-9085	x	Verify that when searching a contact with very long name in order to select it to send an SMS, the name is shown correctly
+OWD-9142		SMS management when sending an SMS from one of two contacts with the same number
+OWD-9143		Verify if It is possible to edit the last part of a name (last name, email, address) when it is longer that the text field given
+OWD-9144		Introduce a long text (contact name) in the SMS search bar
