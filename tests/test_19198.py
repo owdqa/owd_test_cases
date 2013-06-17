@@ -73,15 +73,7 @@ class test_19198(GaiaTestCase):
         #
         # Tap delete
         #
-        x= self.UTILS.getElement(DOM.Messages.edit_msgs_delete_btn, "Delete messages button" )
-        x.tap()
-        
-        self.marionette.switch_to_frame()        
-        x = self.UTILS.getElement(DOM.GLOBAL.modal_ok_button, "OK button in question dialog")
-        x.tap()
-        
-        self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
-        time.sleep(2)
+        self.messages.deleteSelectedMessages()
         
         #
         # Check conversation isn't there anymore.
