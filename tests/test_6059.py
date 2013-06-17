@@ -24,12 +24,10 @@ class test_6059(GaiaTestCase):
         self.UTILS     = UTILS(self)
         self.messages   = Messages(self)
 
-        #
-        # Open sms app and delete every thread to start a new one
-        #
-        self.messages.launch()
-        self.messages.deleteAllThreads()
-
+    def tearDown(self):
+        self.UTILS.reportResults()
+        
+    def test_run(self):
         #
         # Create a new SMS
         #
@@ -62,10 +60,6 @@ class test_6059(GaiaTestCase):
         #
         self.UTILS.toggleViaStatusBar('airplane')
         
-    def tearDown(self):
-        self.UTILS.reportResults()
-        
-    def test_run(self):
         #
         # Open sms app and go to the previous thread
         #
