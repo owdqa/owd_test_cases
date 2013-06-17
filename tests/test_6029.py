@@ -13,6 +13,8 @@ from OWDTestToolkit import *
 class test_6029(GaiaTestCase):
     _Description = "[SMS] CLONE - Verify the textfield item."
     
+    _RESTART_DEVICE = True
+
     def setUp(self):
         #
         # Set up child objects...
@@ -32,9 +34,10 @@ class test_6029(GaiaTestCase):
     def test_run(self):
         #
         # Launch messages app.
+        # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
         #
         self.messages.launch()
-        self.messages.deleteThreads([self._num])
+#         self.messages.deleteThreads([self._num])
   
         #
         # Send a message to create a thread (use number, not name as this
