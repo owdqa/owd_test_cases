@@ -63,6 +63,21 @@ class MockContacts(dict):
                 "jobTitle"  : "Dancer number two",
                 "comment"   : "Mock test contact 2"
             }
+        self.Contact_twoPhones = {
+                "givenName" : "Bobby",
+                "familyName": "Bobson",
+                "name"      : "Bobby Bobson",
+                "email"     : {"type": "", "value": "bobby.bobson@nowhere.com"},
+                "tel"       : ({"type": "Mobile 1", "carrier": "MoviStar1", "value": "444444444"},
+                               {"type": "Mobile 2", "carrier": "MoviStar2", "value": "555555555"}),
+                "adr"       : {"streetAddress"    : "Two Street",
+                               "postalCode"       : "00002",
+                               "locality"      : "City Two",
+                               "countryName"   : "Country Two"},
+                "bday"      : "1982-02-22",
+                "jobTitle"  : "Dancer number two",
+                "comment"   : "Mock test contact 2"
+            }
         self.Contact_multipleEmails = {
                 "givenName" : "Holy",
                 "familyName": "Moley",

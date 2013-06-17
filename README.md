@@ -347,6 +347,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>5976</td><td  align=left>CLONE - Press cancel button in the screen for select a contact phone number</td>
+  </tr>
+
+  <tr>
     <td  align=center>5980</td><td  align=left>[SMS] CLONE - Verify that If the contact has no phone number, a message stating that contact does not have a phone number is open up, and user is returned the contact list.</td>
   </tr>
 
