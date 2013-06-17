@@ -16,6 +16,8 @@ class test_6058(GaiaTestCase):
     
     _TestMsg     = "Test."
 
+    _RESTART_DEVICE = True
+
     def setUp(self):
         #
         # Set up child objects...
@@ -36,9 +38,10 @@ class test_6058(GaiaTestCase):
       
         #
         # Open sms app and delete every thread to start a new one
+        # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
         #
         self.messages.launch()
-        self.messages.deleteAllThreads()
+#         self.messages.deleteAllThreads()
 
         #
         # Create a new SMS

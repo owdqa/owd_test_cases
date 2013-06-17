@@ -17,6 +17,8 @@ class test_19190(GaiaTestCase):
     
     _TestMsg     = "Test."
 
+    _RESTART_DEVICE = True
+
     def setUp(self):
         #
         # Set up child objects...
@@ -49,11 +51,11 @@ class test_19190(GaiaTestCase):
         
     def test_run(self):
         #
-        # Launch messages app & delete all Threads
+        # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
         #
-        self.messages.launch()
-        self.messages.deleteAllThreads()
-        self.UTILS.touchHomeButton()
+#         self.messages.launch()
+#         self.messages.deleteAllThreads()
+#         self.UTILS.touchHomeButton()
 
         #
         # Launch contacts app.

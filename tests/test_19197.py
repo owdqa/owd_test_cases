@@ -15,6 +15,8 @@ class test_19197(GaiaTestCase):
     
     _TestMsg     = "Test message."
     
+    _RESTART_DEVICE = True
+
     def setUp(self):
         #
         # Set up child objects...
@@ -32,18 +34,14 @@ class test_19197(GaiaTestCase):
         
     def test_run(self):
         #
-        # Make sure phone is using the current timezone.
-        #
-        
-        #
         # Launch messages app.
         #
         self.messages.launch()
         
         #
-        # Make sure there are no other threads (makes this test easier!).
+        # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
         #
-        self.messages.deleteAllThreads()
+#         self.messages.deleteAllThreads()
         
         #
         # Create and send a new test message.
