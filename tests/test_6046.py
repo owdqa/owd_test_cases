@@ -92,5 +92,16 @@ class test_6046(GaiaTestCase):
         sms_text = returnedSMS.text
         self.UTILS.TEST((sms_text.lower() == self._TestMsg.lower()), 
             "SMS text = '" + self._TestMsg + "' (it was '" + sms_text + "').")
-
+        
+        #
+        # Delete the contact
+        #
+        self.contacts.launch()
+        self.contacts.deleteContact(self.contact_1["name"])
+        
+        #
+        # Go back to SMS app and try to open the thread by phone number
+        #
+        self.messages.launch()
+        self.messages.openThread(self.contact_1["tel"]["value"])
 

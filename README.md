@@ -391,6 +391,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>6035</td><td  align=left>CLONE - Verify that If the name of the contact is empty: Phone Number as the main header.</td>
+  </tr>
+
+  <tr>
     <td  align=center>6037</td><td  align=left>[SMS] CLONE - Verify that If the name of the contact is not empty The name of the contact as the main header.</td>
   </tr>
 
