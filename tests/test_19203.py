@@ -13,6 +13,8 @@ from OWDTestToolkit import *
 class test_19203(GaiaTestCase):
     _Description = "[SMS] Open SMS app after all sms were deleted or there is any sms."
     
+    _RESTART_DEVICE = True
+    
     def setUp(self):
         #
         # Set up child objects...
@@ -33,9 +35,9 @@ class test_19203(GaiaTestCase):
         self.messages.launch()
         
         #
-        # Make sure we have no threads.
+        # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
         #
-        self.messages.deleteAllThreads()
+#         self.messages.deleteAllThreads()
         
         #
         # Restart the app.

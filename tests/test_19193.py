@@ -49,12 +49,6 @@ class test_19193(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
-        # Hack around BUG 867119 ....
-#         #
-#         # Clear out any current messages.
-#         #
-#         self.messages.launch()
-#         self.messages.deleteAllThreads()
         self.messages.launch()
         
         

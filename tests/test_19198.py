@@ -16,6 +16,8 @@ class test_19198(GaiaTestCase):
     _TestMsg2 = "Second message"
     _TestMsg3 = "Third message"
     
+    _RESTART_DEVICE = True
+
     def setUp(self):
         #
         # Set up child objects...
@@ -34,17 +36,15 @@ class test_19198(GaiaTestCase):
         
         
     def tearDown(self):
-#         self.messages.waitForSMSNotifier("222000",5)
-#         self.UTILS.clearAllStatusBarNotifs()
-
         self.UTILS.reportResults()
         
     def test_run(self):
         #
         # Launch messages app & delete all Threads
+        # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
         #
         self.messages.launch()
-        self.messages.deleteAllThreads()
+#         self.messages.deleteAllThreads()
         
         #
         # Create and send some new tests messages.

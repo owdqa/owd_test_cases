@@ -39,11 +39,6 @@ class test_4703(GaiaTestCase):
         # Launch messages app.
         #
         self.messages.launch()
-        
-        #
-        # Make sure it's empty first.
-        #
-        self.messages.deleteAllThreads()
           
         #
         # Create and send a new test message.

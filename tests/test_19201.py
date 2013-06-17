@@ -15,6 +15,7 @@ class test_19201(GaiaTestCase):
     _Description = "(BLOCKED BY BUG 879816) [SMS] Select some conversations and press delete."
     
     _TestMsg     = "Test message."
+    _RESTART_DEVICE = True
     
     def setUp(self):
         #
@@ -52,9 +53,9 @@ class test_19201(GaiaTestCase):
         self.messages.launch()
         
         #
-        # Make sure we have no threads before we start.
+        # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
         #
-        self.messages.deleteAllThreads()
+#         self.messages.deleteAllThreads()
         
         #
         # Create and send a new test message.
