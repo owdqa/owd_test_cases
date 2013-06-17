@@ -38,7 +38,6 @@ class test_6037(GaiaTestCase):
         # Launch messages app.
         #
         self.messages.launch()
-        self.messages.deleteAllThreads()
 
         #
         # Send a message to create a thread (use number, not name as this

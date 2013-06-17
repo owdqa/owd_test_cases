@@ -46,13 +46,8 @@ class test_19421(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
-        #
-        # Clear out any current messages.
-        #
-#         self.messages.launch()
-#         self.messages.deleteAllThreads()
         
-       #
+        #
         # Launch contacts app.
         #
         self.contacts.launch()

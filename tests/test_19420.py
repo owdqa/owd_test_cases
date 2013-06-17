@@ -45,11 +45,6 @@ class test_19420(GaiaTestCase):
         self.messages.launch()
          
         #
-        # Delete all threads.
-        #
-#         self.messages.deleteAllThreads()
-          
-        #
         # Create and send a new test message (don't use api - I want to be back in homepage
         # before the sms has finshed sending and the api waits).
         #
