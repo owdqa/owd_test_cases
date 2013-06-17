@@ -31,6 +31,7 @@ class test_6059(GaiaTestCase):
         #
         # Create a new SMS
         #
+        self.messages.launch()
         self.messages.startNewSMS()
         
         #
