@@ -33,7 +33,6 @@ class test_19200(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
-        return
         
         #
         # Launch messages app.

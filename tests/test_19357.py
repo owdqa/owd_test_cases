@@ -49,7 +49,6 @@ class test_19193(GaiaTestCase):
         # View the details of our contact.
         #
         self.contacts.viewContact(self.contact_1['name'])
-        return
         
         #
         # Tap the sms button in the view details screen to go to the sms page.

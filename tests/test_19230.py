@@ -29,7 +29,6 @@ class test_19230(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
-        return
         #
         # Make sure 'things' are as we expect them to be first.
         #
