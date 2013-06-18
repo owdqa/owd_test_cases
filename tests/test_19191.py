@@ -40,13 +40,6 @@ class test_19191(GaiaTestCase):
         # Launch contacts app.
         #
         self.contacts.launch()
-        
-#         x = self.UTILS.getElement(DOM.Contacts.search_field, "Search field")
-#         x.tap()
-#         self.keyboard.send("A")
-#         self.marionette.switch_to_frame()
-#         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
-#         return
 
         #
         # Search for our new contact.
