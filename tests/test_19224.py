@@ -11,7 +11,7 @@ from OWDTestToolkit import *
 #
 
 class test_19224(GaiaTestCase):
-    _Description = "[HOME SCREEN] Add and remove categories to everything.me grid."
+    _Description = "(BLOCKED BY BUG 885238) [HOME SCREEN] Add and remove categories to everything.me grid."
     
     _newGroup = "Sports"
     

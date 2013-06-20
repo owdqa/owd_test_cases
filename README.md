@@ -71,7 +71,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19196</td><td  align=left>(BLOCKED BY BUG 879816) [SMS] Send/Receive a new SMS when the conversation thread is empty.</td>
+    <td  align=center>19196</td><td  align=left>[SMS] Send/Receive a new SMS when the conversation thread is empty.</td>
   </tr>
 
   <tr>
@@ -111,7 +111,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19224</td><td  align=left>[HOME SCREEN] Add and remove categories to everything.me grid.</td>
+    <td  align=center>19224</td><td  align=left>(BLOCKED BY BUG 885238) [HOME SCREEN] Add and remove categories to everything.me grid.</td>
   </tr>
 
   <tr>
@@ -131,7 +131,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19230</td><td  align=left>[HOME SCREEN] Verify that user can click on 'Add more categories' in everything.me grid so I am shown again the list and can add more categories.</td>
+    <td  align=center>19230</td><td  align=left>(BLOCKED BY BUG 885238) [HOME SCREEN] Verify that user can click on 'Add more categories' in everything.me grid so I am shown again the list and can add more categories.</td>
   </tr>
 
   <tr>
@@ -203,7 +203,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>19392</td><td  align=left>(BLOCKED BY BUG 879823) [BASIC][FACEBOOK] Import Facebook contacts from contacts app settings.</td>
+    <td  align=center>19392</td><td  align=left>(BLOCKED BY BUG 883344 and 879823) [BASIC][FACEBOOK] Import Facebook contacts from contacts app settings.</td>
   </tr>
 
   <tr>
@@ -440,5 +440,9 @@ TESTS COVERED
 
   <tr>
     <td  align=center>6060</td><td  align=left>CLONE - Try send a sms (after enabled and disabled airplane mode)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>roy</td><td  align=left>blah </td>
   </tr>
 </table>
