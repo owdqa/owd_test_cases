@@ -67,8 +67,6 @@ class test_19397(GaiaTestCase):
         _minute = t.minute
         _title  = "Test alarm"
 
-        self.UTILS.logResult(False, "(Quitting here because this needs development and is blocked.)")
-
         self.clock.createAlarm(_hour, _minute, _title)
         
         #
