@@ -81,4 +81,5 @@ class test_19198(GaiaTestCase):
         self.UTILS.waitForNotElements(("xpath", DOM.Messages.thread_selector_xpath % self.target_telNum),"Thread")
  
         time.sleep(1)
-        self.UTILS.screenShotOnErr()  
+        fnam = self.UTILS.screenShotOnErr()
+        self.UTILS.logResult("info", "Screenshot of final position:", fnam)  
