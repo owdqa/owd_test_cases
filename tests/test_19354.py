@@ -30,5 +30,6 @@ class test_19354(GaiaTestCase):
         #
         self.UTILS.openSettingFromStatusbar()
         
-        self.UTILS.screenShotOnErr()
-        
+        fnam = self.UTILS.screenShotOnErr()
+        self.UTILS.logResult("info", "Screenshot of final position:", fnam)  
+       

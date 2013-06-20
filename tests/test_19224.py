@@ -30,7 +30,7 @@ class test_19224(GaiaTestCase):
     def tearDown(self):
         self.UTILS.reportResults()
         
-    def test_run(self):
+    def test_run(self):    
         #
         # Make sure 'things' are as we expect them to be first.
         #
