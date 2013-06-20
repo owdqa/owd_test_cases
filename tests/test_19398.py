@@ -31,10 +31,6 @@ class test_19398(GaiaTestCase):
 
     def test_run(self):
         #
-        # Make sure we have the correct time.
-        #
-
-        #
         # Launch contacts app.
         #
         self.calendar.launch()
