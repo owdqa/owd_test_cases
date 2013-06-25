@@ -18,10 +18,10 @@ read ans
 # Loop through each test, presening the description and asking for the new number
 #
 TESTDIR=${OWD_TEST_TOOLKIT_DIR}/../owd_test_cases/tests
-NEW_TESTDIR=${TESTDIR}.new_$(date "+%H%M%S")
+NEW_TESTDIR=/tmp/tests.new_$(date "+%H%M%S")
 [ ! -d "$NEW_TESTDIR" ] && mkdir $NEW_TESTDIR
 
-echo "\n*** CHANGED TESTS WILL BE SAVED TO $NEW_TESTDIR. ***\n\n"
+printf "\n*** CHANGED TESTS WILL BE SAVED TO $NEW_TESTDIR. ***\n\n"
 
 declare -a test_arr
 counter=0
@@ -49,8 +49,13 @@ do
     printf "New desc    : "
     read new_desc
     
+    OLD_TEST=$TESTDIR/test_${NUM}.py
+    NEW_TEST=$NEW_TESTDIR/test_${new_num}.py
+    
     #
     # Do the change.
     #
-    
+    sed -e "s/^\([ \t]*class *test_\)[^(]*\((GaiaTestCase):\)/\1$new_num\2/" $OLD_TEST > ${NEW_TEST}.tmp
+    sed -e "s/^\([ \t]*_Description *= *\"\)[^\"]*\(\"\)/\1$new_desc\2/" ${NEW_TEST}.tmp > $NEW_TEST
+    rm ${NEW_TEST}.tmp
 done
