@@ -9,6 +9,7 @@ BRANCH=$1
 
 # First, get the test numbers from JIRA into a temp file (with single spaces).
 TMPFILE=$(${OWD_TEST_TOOLKIT_DIR}/../owd_test_cases/bin/get_test_list_from_jira.sh $BRANCH)
+TESTDIR=${OWD_TEST_TOOLKIT_DIR}/../owd_test_cases
 
 if [ $? -ne 0 ]
 then
@@ -22,7 +23,7 @@ printf "%0.1s" "="{1..80}
 printf "\n"
 
 # Now scan each of our tests and report the equivalent test numbers (removing 'clutter').
-grep "_Description" tests/test_*.py     | \
+grep "_Description" $TESTDIR/test_*.py  | \
 sed -e "s/tests\/test_//"               | \
 sed -e "s/\.py: *_Description = \"/\t/" | \
 sed -e "s/\[.*\]//g"                    | \
