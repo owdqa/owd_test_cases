@@ -55,6 +55,7 @@ class test_19183(GaiaTestCase):
         
         # Jumping out here while I try to figure out how to
         # put > 1 phone number in via the mock object!
+        self.UTILS.logResult("info", "Quitting test early!")
         return
 
         #

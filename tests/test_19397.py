@@ -28,9 +28,6 @@ class test_19397(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
-        self.UTILS.logResult(False, "Not attempting because it takes too long to fail!")
-        return
-    
     
         #
         # Set the volume to be low (no need to wake up the office! ;o)
@@ -69,8 +66,6 @@ class test_19397(GaiaTestCase):
         _hour   = t.hour
         _minute = t.minute
         _title  = "Test alarm"
-
-        self.UTILS.logResult(False, "(Quitting here because this needs development and is blocked.)")
 
         self.clock.createAlarm(_hour, _minute, _title)
         

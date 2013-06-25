@@ -11,9 +11,9 @@ from OWDTestToolkit import *
 #
 
 class test_19230(GaiaTestCase):
-    _Description = "[HOME SCREEN] Verify that user can click on 'Add more categories' in everything.me grid so I am shown again the list and can add more categories."
+    _Description = "(BLOCKED BY BUG 885238) [HOME SCREEN] Verify that user can click on 'Add more categories' in everything.me grid so I am shown again the list and can add more categories."
     
-    _newGroup = "Baby"
+    _newGroup = "News"
     
     def setUp(self):
         #
@@ -29,8 +29,6 @@ class test_19230(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
-        return
-        #
         # Make sure 'things' are as we expect them to be first.
         #
         self.UTILS.getNetworkConnection()

@@ -33,7 +33,6 @@ class test_19200(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
-        return
         
         #
         # Launch messages app.
@@ -43,14 +42,12 @@ class test_19200(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        newMsgBtn = self.UTILS.getElement(DOM.Messages.create_new_message_btn, "Create new message button")
-        newMsgBtn.tap()
+        self.messages.startNewSMS()
         
         #
         # Enter the number.
         #
-        numInput = self.UTILS.getElement(DOM.Messages.target_number, "Target number field")
-        numInput.send_keys(self.target_telNum)
+        self.messages.addNumberInToField(self.target_telNum)
          
         #
         # Enter the message.
@@ -60,8 +57,7 @@ class test_19200(GaiaTestCase):
         #
         # Send the SMS.
         #
-        sendBtn = self.UTILS.getElement(DOM.Messages.send_message_button, "Send sms button")
-        sendBtn.tap()
+        self.messages.sendSMS()
         
         #
         # Lock the phone immediately.

@@ -31,10 +31,6 @@ class test_19398(GaiaTestCase):
 
     def test_run(self):
         #
-        # Make sure we have the correct time.
-        #
-
-        #
         # Launch contacts app.
         #
         self.calendar.launch()
@@ -58,9 +54,6 @@ class test_19398(GaiaTestCase):
         startTime = t_h1 + ":" + t_m1 + ":" + t_s
         endTime   = t_h2 + ":" + t_m2 + ":" + t_s        
         self.calendar.createEvent(self.titleStr, self.locatStr, False, False, startTime, False, endTime, "Some test notes")
-        
-        self.UTILS.logResult(False, "Blocked (and not fully developed) - bailing early!")
-        return
                 
         #
         # Check the event is listed as expected in MONTH view.

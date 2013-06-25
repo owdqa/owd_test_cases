@@ -30,7 +30,7 @@ class test_5952(GaiaTestCase):
     def tearDown(self):
         self.UTILS.reportResults()
         
-    def test_run(self):        
+    def test_run(self):  
         #
         # Launch messages app.
         #

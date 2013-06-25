@@ -49,7 +49,6 @@ class test_19193(GaiaTestCase):
         # View the details of our contact.
         #
         self.contacts.viewContact(self.contact_1['name'])
-        return
         
         #
         # Tap the sms button in the view details screen to go to the sms page.
@@ -67,8 +66,7 @@ class test_19193(GaiaTestCase):
 
         #
         # TEST: this automatically opens the 'send SMS' screen, so
-        # check the correct name is in the header of this sms.
+        # check the correct name is in the 'to' field of this sms.
         #
-        self.UTILS.TEST(self.UTILS.headerCheck(self.contact_1['name']),
-                        "'Send message' header = '" + self.contact_1['name'] + "'.")
+        self.messages.checkIsInToField(self.contact_1['name'])
     

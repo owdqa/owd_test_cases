@@ -48,7 +48,7 @@ class test_5983(GaiaTestCase):
         #
         # Verify the contact name is present before removing it.
         #
-        self.messages.checkisintofield(self.contact_1["name"], True)
+        self.messages.checkIsInToField(self.Contact_1["name"], True)
         
         #
         # Remove it.
