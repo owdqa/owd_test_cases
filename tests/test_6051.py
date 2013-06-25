@@ -35,16 +35,15 @@ class test_6051(GaiaTestCase):
         self.messages.launch()
 
         #
-        # Send a message to an invalid number to create a thread with just an
-        # outgoing message..
+        # Send a message to a valid number to create a thread with just an
+        # outgoing message
         #
         _msg_text = str(time.time())
         self.messages.createAndSendSMS([self._num], _msg_text)
         self.messages.waitForReceivedMsgInThisThread()
 
         #
-        # Send a message to an invalid number to create a thread with just an
-        # outgoing message..
+        # Add another message to the same thread
         #
         _msg_text = str(time.time())
         self.messages.enterSMSMsg(_msg_text)
