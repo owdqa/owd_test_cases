@@ -13,7 +13,7 @@ import time
 from tests.mock_data.contacts import MockContacts
 
 class test_4711(GaiaTestCase):
-    _Description = "[SMS] ** Diffrent numbers but same device! ** Send an SMS to multiple contacts."
+    _Description = "(BLOCKED BY LONG NUMBER USAGE - can only use one number now) [SMS] ** Diffrent numbers but same device! ** Send an SMS to multiple contacts."
     
     def setUp(self):
         #
