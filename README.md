@@ -423,6 +423,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>6051</td><td  align=left>CLONE - Verify that the SMS conversation window shows the message preview (more than one SMS message in the conversation thread) </td>
+  </tr>
+
+  <tr>
     <td  align=center>6056</td><td  align=left>CLONE - Try send a sms to a contact while airplane is enabled.</td>
   </tr>
 
@@ -440,9 +444,5 @@ TESTS COVERED
 
   <tr>
     <td  align=center>6060</td><td  align=left>CLONE - Try send a sms (after enabled and disabled airplane mode)</td>
-  </tr>
-
-  <tr>
-    <td  align=center>roy</td><td  align=left>blah </td>
   </tr>
 </table>
