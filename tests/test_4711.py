@@ -31,7 +31,7 @@ class test_4711(GaiaTestCase):
         self.Contact_2 = MockContacts().Contact_2
         
         self.Contact_1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.Contact_2["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM_LONG")
+        self.Contact_2["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
 
         self.UTILS.logComment("Using target telephone number " + self.Contact_1["tel"]["value"])
         self.UTILS.logComment("Using target telephone number " + self.Contact_2["tel"]["value"])
@@ -67,7 +67,7 @@ class test_4711(GaiaTestCase):
         #
         self.marionette.switch_to_frame()
         statusBarCheck = (DOM.Messages.statusbar_new_sms[0], 
-                          DOM.Messages.statusbar_new_sms[1] % self.Contact_2["name"])
+                          DOM.Messages.statusbar_new_sms[1] % self.Contact_1["name"])
         
         # Loop for 2 minutes (the 2nd one can take a long time!).
         boolOK = False
