@@ -403,6 +403,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>6039</td><td  align=left>[SMS] CLONE - Verify that If the name of the contact is not empty No carrier information is linked to the phone Phone Number is shown instead of carrier as the secondary header.</td>
+  </tr>
+
+  <tr>
     <td  align=center>6044</td><td  align=left>CLONE - Add a contact and verify that the SMS list now shows the name</td>
   </tr>
 
