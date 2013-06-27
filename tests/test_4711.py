@@ -13,7 +13,7 @@ import time
 from tests.mock_data.contacts import MockContacts
 
 class test_4711(GaiaTestCase):
-    _Description = "(BLOCKED BY LONG NUMBER USAGE - can only use one number now) [SMS] ** Diffrent numbers but same device! ** Send an SMS to multiple contacts."
+    _Description = "[SMS] ** Diffrent numbers but same device! ** Send an SMS to multiple contacts."
     
     def setUp(self):
         #
@@ -67,7 +67,7 @@ class test_4711(GaiaTestCase):
         #
         self.marionette.switch_to_frame()
         statusBarCheck = (DOM.Messages.statusbar_new_sms[0], 
-                          DOM.Messages.statusbar_new_sms[1] % self.Contact_1["name"])
+                          DOM.Messages.statusbar_new_sms[1] % self.Contact_2["name"])
         
         # Loop for 2 minutes (the 2nd one can take a long time!).
         boolOK = False
