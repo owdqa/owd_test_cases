@@ -94,6 +94,7 @@ class MockContacts(dict):
                 "jobTitle"  : "Dancer number two",
                 "comment"   : "Mock test contact 2"
             }
+        
 
     # allow getting items as if they were attributes
     def __getattr__(self, attr):
