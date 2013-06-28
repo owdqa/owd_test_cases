@@ -12,7 +12,7 @@ from OWDTestToolkit import *
 from marionette.keys import Keys
 
 class test_19410(GaiaTestCase):
-    _Description = "[BASIC][APP INSTALL] Install a market installed hosted app - verify the app is installed with the right icon."
+    _Description = "(BLOCKED BY DEV SERVER ALWAYS BEING DOWN)[BASIC][APP INSTALL] Install a market installed hosted app - verify the app is installed with the right icon."
     
     APP_NAME    = 'Wikipedia'
     APP_AUTHOR  = 'tfinc'
