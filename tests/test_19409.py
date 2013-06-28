@@ -12,7 +12,7 @@ from OWDTestToolkit import *
 from marionette.keys import Keys
 
 class test_19409(GaiaTestCase):
-    _Description = "[BASIC][HOMESCREEN] Launch market installed hosted app - verify the app is launched successfully from the homescreen."
+    _Description = "(BLOCKED BY DEV SERVER ALWAYS BEING DOWN)[BASIC][HOMESCREEN] Launch market installed hosted app - verify the app is launched successfully from the homescreen."
     
     APP_NAME    = 'Wikipedia'
     APP_AUTHOR  = 'tfinc'
