@@ -10,8 +10,7 @@ TESTS COVERED
   <tr>
     <th>Test Case</th><th>Description</th>
   </tr>"
-  
-ls tests/test_*.py | while read fnam
+find . -name "test_*.py" | while read fnam
 do
 	TEST_NAME=$(echo $fnam | sed -e "s/^.*\/test_\(.*\).py$/\1/")
 	TEST_DESC=$(grep -i "_Description" $fnam | sed -e "s/^.*= *\"\([^\"]*\)\".*/\1/")
