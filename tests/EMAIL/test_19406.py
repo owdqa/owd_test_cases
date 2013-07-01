@@ -9,7 +9,7 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests.shared_test_functions import EMAILING
+from tests.EMAIL.shared_test_functions import EMAILING
 
 class test_19406(EMAILING.main):
     _Description = "[BASIC][EMAIL] Receive email with gmail."
