@@ -9,7 +9,7 @@ BRANCH=$1
 
 # First, get the test numbers from JIRA into a temp file (with single spaces).
 TMPFILE=$(${OWD_TEST_TOOLKIT_DIR}/../owd_test_cases/bin/get_test_list_from_jira.sh $BRANCH)
-TESTDIR=${OWD_TEST_TOOLKIT_DIR}/../owd_test_cases
+TESTDIR=${OWD_TEST_TOOLKIT_DIR}/../owd_test_cases/tests
 
 if [ $? -ne 0 ]
 then
