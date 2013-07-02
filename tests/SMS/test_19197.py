@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19197(GaiaTestCase):
-    _Description = "[SMS] Verify the timestamp (received message) when the SMS has been sent from a different timezone."
+class test_main(GaiaTestCase):
     
     _TestMsg     = "Test message."
     

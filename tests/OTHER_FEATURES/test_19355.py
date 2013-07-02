@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 import time
 
-class test_19355(GaiaTestCase):
-    _Description = "[UTILITY TRAY] Activate/Deactivate ariplane mode from Utility tray icon."
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #

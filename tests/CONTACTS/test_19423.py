@@ -12,8 +12,7 @@ from OWDTestToolkit import *
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_19423(GaiaTestCase):
-    _Description = "[BASIC][CONTACTS] Add new contact filling all the fields - verify the contact is added with the correct values for each field."
+class test_main(GaiaTestCase):
  
     def setUp(self):
             

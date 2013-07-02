@@ -12,7 +12,6 @@ from OWDTestToolkit import *
 from tests.EMAIL.shared_test_functions import EMAILING
 
 class test_19406(EMAILING.main):
-    _Description = "[BASIC][EMAIL] Receive email with gmail."
     
     def setUp(self):
         self.testNum  = self.__class__.__name__

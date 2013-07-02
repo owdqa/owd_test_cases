@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19203(GaiaTestCase):
-    _Description = "[SMS] Open SMS app after all sms were deleted or there is any sms."
+class test_main(GaiaTestCase):
     
     _RESTART_DEVICE = True
     

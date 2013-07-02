@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_6038(GaiaTestCase):
-    _Description = "[SMS] CLONE - Verify that If the name of the contact is not empty The type of the phone and the phone carrier (as defined in the address book) as the secondary header."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

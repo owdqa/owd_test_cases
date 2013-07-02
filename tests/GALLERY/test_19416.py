@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 import os, time
 
-class test_19416(GaiaTestCase):
-    _Description = "[BASIC][GALLERY] Browse photos in gallery - verify you can see each picture of your sdcard."
+class test_main(GaiaTestCase):
     
     _img_list = ('img1.jpg',
                  'img2.jpg',

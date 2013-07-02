@@ -12,8 +12,7 @@ from OWDTestToolkit import *
 #from datetime 
 import datetime, time   
 
-class test_19397(GaiaTestCase):
-    _Description = "(BLOCKED BY BUG 867987) [BASIC][CLOCK] Add an alarm - verify the alarm was added with the correct date and time."
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #

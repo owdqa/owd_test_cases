@@ -12,8 +12,7 @@ import time
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_6035(GaiaTestCase):
-    _Description = "CLONE - Verify that If the name of the contact is empty: Phone Number as the main header."
+class test_main(GaiaTestCase):
     
     _TestMsg     = "Test."
 

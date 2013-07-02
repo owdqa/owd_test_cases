@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19417(GaiaTestCase):
-    _Description = "[BASIC][VIDEO] Play the video you recorded, check for video and sound to verify the video could be successfully played."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

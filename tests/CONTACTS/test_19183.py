@@ -12,8 +12,7 @@ from OWDTestToolkit import *
 from tests._mock_data.contacts import MockContacts
 import time
 
-class test_19183(GaiaTestCase):
-    _Description = "[CONTACTS] **INCOMPLETE** Verify that when looking at the details of a contact, the user can make a call to the contact with several phone numbers added."
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #

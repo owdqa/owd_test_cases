@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_19356(GaiaTestCase):
-    _Description = "[SMS] Verify that If the contact has more than one phone number, it opens a list of numbers. Clicking on a number in the list, returns the user to the compose SMS app with the contacts name filled-in in the To Field."
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #

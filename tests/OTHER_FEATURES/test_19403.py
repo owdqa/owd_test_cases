@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_19403(GaiaTestCase):
-    _Description = "[BASIC][SYSTEM] With two apps already running, launch the card view, kill one app process, and launch the other - verify the app killed is stopped and the other app starts up."
+class test_main(GaiaTestCase):
 
     _test_apps = ["Gallery", "FM Radio"]
     _img_list  = ('img1.jpg', 'img2.jpg')

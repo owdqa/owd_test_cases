@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 import time
 
-class test_19353(GaiaTestCase):
-    _Description = "[UTILITY TRAY] As a user, I want to be able to enable/disable Data from the utility tray."
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #

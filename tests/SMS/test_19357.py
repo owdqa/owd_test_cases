@@ -12,8 +12,7 @@ import time
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_19193(GaiaTestCase):
-    _Description = "[SMS] CLONE - Verify that If the contact only has a phone number, that phone number is automatically selected and the user is returned to the compose SMS screenwidth the contacts name filled-in in the To Field..."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

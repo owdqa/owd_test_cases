@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19186(GaiaTestCase):
-    _Description = "[CONTACTS] Delete all characters to the name and surname fields."
+class test_main(GaiaTestCase):
     
     _testName    = "Obi"
     _testSurname = "Wan"

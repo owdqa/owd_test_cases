@@ -12,8 +12,7 @@ from OWDTestToolkit import *
 from tests._mock_data.contacts import MockContacts
 import time
 
-class test_19184(GaiaTestCase):
-    _Description = "[CONTACTS] Delete a contact from the contact details(all the fields filled)."
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #

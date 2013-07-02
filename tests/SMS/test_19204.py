@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_19204(GaiaTestCase):
-    _Description = "[SMS] Send a new SMS by entering manually the phone number (contact number)."
+class test_main(GaiaTestCase):
     
     _TestMsg     = "Test."
     

@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_6030(GaiaTestCase):
-    _Description = "[SMS] CLONE - Verify that the Carrier of number appears in the conversation head."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

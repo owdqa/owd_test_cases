@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 import time
 
-class test_6057(GaiaTestCase):
-    _Description = "CLONE - Try send a sms to a phone number (no contact) while airplane is enabled"
+class test_main(GaiaTestCase):
     
     _TestMsg     = "Test."
 

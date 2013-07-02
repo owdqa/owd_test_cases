@@ -12,8 +12,7 @@ import time
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_6046(GaiaTestCase):
-    _Description = "CLONE - Delete a contact and verify that the SMS list now shows the number"
+class test_main(GaiaTestCase):
     
     _TestMsg     = "Test."
 

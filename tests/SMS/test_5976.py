@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_5976(GaiaTestCase):
-    _Description = "CLONE - Press cancel button in the screen for select a contact phone number"
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19401(GaiaTestCase):
-    _Description = "[BASIC][HOMESCREEN] Launch a packaged app - verify the app launches successfully to the correct content."
+class test_main(GaiaTestCase):
     
     _URL         = "http://everlong.org/mozilla/packaged/"
     _appName     = "cool packaged app"

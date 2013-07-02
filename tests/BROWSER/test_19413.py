@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19413(GaiaTestCase):
-    _Description = "[BASIC][BROWSER] Load a website via Cellular Data - verify the site loads in the browser correctly."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

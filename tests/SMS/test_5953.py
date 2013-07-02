@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_5953(GaiaTestCase):
-    _Description = "[SMS] CLONE - Introduce a valid SMS and click on Back option."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

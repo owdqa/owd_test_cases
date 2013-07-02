@@ -12,8 +12,7 @@ from OWDTestToolkit import *
 #from datetime 
 import datetime, time   
 
-class test_19328(GaiaTestCase):
-    _Description = "[CLOCK] Clock in different modes (analog, digital)."
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #

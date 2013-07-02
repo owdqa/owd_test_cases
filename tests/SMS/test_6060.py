@@ -12,8 +12,7 @@ from OWDTestToolkit import *
 import time
 from tests._mock_data.contacts import MockContacts
 
-class test_6060(GaiaTestCase):
-    _Description = "CLONE - Try send a sms (after enabled and disabled airplane mode)"
+class test_main(GaiaTestCase):
     
     _TestMsg     = "Test."
 

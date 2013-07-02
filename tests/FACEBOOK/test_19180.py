@@ -12,8 +12,7 @@ from OWDTestToolkit import *
 from tests._mock_data.contacts import MockContacts
 import time
 
-class test_19180(GaiaTestCase):
-    _Description = "(BLOCKED BY BUG 879830) [FACEBOOK] Unlink all Facebook contacts in the address book in a single step and verify the contacts who was linked to a facebook contacts."
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #

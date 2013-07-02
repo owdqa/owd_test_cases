@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 #paloma rules!
-class test_4700(GaiaTestCase):
-    _Description = "[SMS] Receive an SMS with a link to a web site and open it."
+class test_main(GaiaTestCase):
     
     _link        = "www.google.com"
     _TestMsg     = "Test " + _link + " this."

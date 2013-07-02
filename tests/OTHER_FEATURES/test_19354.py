@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 import time
 
-class test_19354(GaiaTestCase):
-    _Description = "[UTILITY TRAY] Open settings app from utility tray."
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #

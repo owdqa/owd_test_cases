@@ -8,8 +8,7 @@ from OWDTestToolkit import *
 from marionette import Actions
 
 
-class test_19231(GaiaTestCase):
-    _Description = "(BLOCKED BY BUG 879816) [HOMESCREEN] Verify that the user can uninstall a everything.me app through the grid edit mode."
+class test_main(GaiaTestCase):
     
     _appName = "Wikipedia"
 

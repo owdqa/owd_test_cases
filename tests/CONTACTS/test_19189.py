@@ -12,8 +12,7 @@ from OWDTestToolkit import *
 from tests._mock_data.contacts import MockContacts
 import time
 
-class test_19189(GaiaTestCase):
-    _Description = "[CONTACTS] Add multiple emails addresses."
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #

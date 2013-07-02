@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19420(GaiaTestCase):
-    _Description = "[BASIC][SMS] Receive a sms with vibration (device unlocked) & confirm notification - verify that the notification is fired and that you can see the message received from the other phone."
+class test_main(GaiaTestCase):
     
     _TestMsg     = "Test message."
     

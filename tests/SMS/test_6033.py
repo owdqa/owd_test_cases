@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_6033(GaiaTestCase):
-    _Description = "[SMS] CLONE - Write a sms with multiple spaces between words."
+class test_main(GaiaTestCase):
     
     _testMsg     = "This text has multiple spaces 1 2 3 4 5."
     

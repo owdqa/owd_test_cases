@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_5980(GaiaTestCase):
-    _Description = "[SMS] CLONE - Verify that If the contact has no phone number, a message stating that contact does not have a phone number is open up, and user is returned the contact list."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_5968(GaiaTestCase):
-    _Description = "[SMS] CLONE - Verify characters in text box above the keyboard when typing a sms."
+class test_main(GaiaTestCase):
     
     _testStr = "abcdefghijklmnopqrstuvwxyz"
     

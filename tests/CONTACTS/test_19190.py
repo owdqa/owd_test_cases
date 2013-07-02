@@ -12,8 +12,7 @@ import time
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_19190(GaiaTestCase):
-    _Description = "[CONTACTS] Verify that the user can send a SMS from a contact details - SMS conversation doesn't exist."
+class test_main(GaiaTestCase):
     
     _TestMsg     = "Test."
 

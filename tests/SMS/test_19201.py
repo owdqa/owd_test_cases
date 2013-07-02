@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_19201(GaiaTestCase):
-    _Description = "(BLOCKED BY BUG 879816) [SMS] Select some conversations and press delete."
+class test_main(GaiaTestCase):
     
     _TestMsg     = "Test message."
     _RESTART_DEVICE = True

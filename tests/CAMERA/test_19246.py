@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19246(GaiaTestCase):
-    _Description = "[CAMERA] Go to Gallery from Camera."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

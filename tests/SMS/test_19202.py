@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19202(GaiaTestCase):
-    _Description = "(BLOCKED BY BUG 879816) [SMS] Delete a sms conversation."
+class test_main(GaiaTestCase):
     
     _TestMsg1 = "First message."
     _TestMsg2 = "Second message"

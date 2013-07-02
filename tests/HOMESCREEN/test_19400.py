@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19400(GaiaTestCase):
-    _Description = "[BASIC][HOMESCREEN] Delete a packaged app - verify the app was successfully removed from the homescreen."
+class test_main(GaiaTestCase):
     
     _URL         = "http://everlong.org/mozilla/packaged/"
     _appName     = "cool packaged app"

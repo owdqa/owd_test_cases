@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_6037(GaiaTestCase):
-    _Description = "[SMS] CLONE - Verify that If the name of the contact is not empty The name of the contact as the main header."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

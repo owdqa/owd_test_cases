@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19224(GaiaTestCase):
-    _Description = "(BLOCKED BY BUG 885238) [HOMESCREEN] Add and remove categories to everything.me grid."
+class test_main(GaiaTestCase):
     
     _newGroup = "Sports"
     

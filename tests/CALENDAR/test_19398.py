@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 from datetime import datetime
 
-class test_19398(GaiaTestCase):
-    _Description = "(BLOCKED BY BUG 867987) [BASIC][CALENDAR] Add and view an event to an offline calendar in each calendar view - verify the event is shown on each calendar view with the correct title, location, and event time length."
+class test_main(GaiaTestCase):
  
     def setUp(self):
         #

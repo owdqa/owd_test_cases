@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_6032(GaiaTestCase):
-    _Description = "[SMS] CLONE - Write and send a sms with line break."
+class test_main(GaiaTestCase):
     
     _testMsg     = "Test message\n\nwith line breaks."
     

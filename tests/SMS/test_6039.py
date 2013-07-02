@@ -12,8 +12,7 @@ import time
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_6039(GaiaTestCase):
-    _Description = "[SMS] CLONE - Verify that If the name of the contact is not empty No carrier information is linked to the phone Phone Number is shown instead of carrier as the secondary header."
+class test_main(GaiaTestCase):
     
     _TestMsg     = "Test."
 

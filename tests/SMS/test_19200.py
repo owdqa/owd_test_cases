@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19200(GaiaTestCase):
-    _Description = "[SMS] Receive a sms while device is locked(Vibration alert), screen off."
+class test_main(GaiaTestCase):
     
     _TestMsg     = "Test message."
     

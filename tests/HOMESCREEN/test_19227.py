@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19227(GaiaTestCase):
-    _Description = "[HOMESCREEN] Verify that when the user navigates from everything.me page to the grid, dock is shown again."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

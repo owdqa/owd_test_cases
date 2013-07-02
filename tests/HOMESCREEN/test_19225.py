@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19225(GaiaTestCase):
-    _Description = "[HOMESCREEN] Verify that if no connection available when selecting a category in everything.me the user will be notified about the need to have a network connection to use this functionality."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #
