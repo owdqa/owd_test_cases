@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19241(GaiaTestCase):
-    _Description = "[EMAIL] Basic: Deleting of a e-mail in Inbox."
+class test_main(GaiaTestCase):
  
     def setUp(self):
             

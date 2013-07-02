@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_19359(GaiaTestCase):
-    _Description = "[CONTACTS] Send an email to a contact from the contact details (Contact with multiple emails)"
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #

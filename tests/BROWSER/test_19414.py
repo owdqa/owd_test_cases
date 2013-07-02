@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19414(GaiaTestCase):
-    _Description = "[BASIC][BROWSER] Load a website via Wifi - verify the site loads in the browser correctly."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         # Set up child objects...

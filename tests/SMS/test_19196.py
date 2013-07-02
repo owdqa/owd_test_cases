@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19196(GaiaTestCase):
-    _Description = "[SMS] Send/Receive a new SMS when the conversation thread is empty."
+class test_main(GaiaTestCase):
     
     _TestMsg     = "Test message."
     

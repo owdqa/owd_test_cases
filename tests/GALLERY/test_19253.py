@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 import os, time
 
-class test_19253(GaiaTestCase):
-    _Description = "(BLOCKED BY BUG 879816) [GALLERY] Select multiple pictures and delete them."
+class test_main(GaiaTestCase):
     
     _img_list = ('img1.jpg',
                  'img2.jpg',

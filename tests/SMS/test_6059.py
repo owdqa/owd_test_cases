@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 import time
 
-class test_6059(GaiaTestCase):
-    _Description = "Try send a sms in an existing thread while airplane is enabled."
+class test_main(GaiaTestCase):
     
     _TestMsg     = "Test."
 

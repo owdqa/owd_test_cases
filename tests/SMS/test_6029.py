@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_6029(GaiaTestCase):
-    _Description = "[SMS] CLONE - Verify the textfield item."
+class test_main(GaiaTestCase):
     
     _RESTART_DEVICE = True
 

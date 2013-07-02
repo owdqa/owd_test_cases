@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_6050(GaiaTestCase):
-    _Description = "CLONE - Verify that the SMS conversation window shows the message preview (only one outgoing SMS message in the conversation thread)."
+class test_main(GaiaTestCase):
     
     _fake_num    = "12435"
     

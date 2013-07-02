@@ -12,8 +12,7 @@ from OWDTestToolkit import *
 from tests._mock_data.contacts import MockContacts
 import time
 
-class test_19188(GaiaTestCase):
-    _Description = "[CONTACTS] Configure a contact as a favourite."
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #

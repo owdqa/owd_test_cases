@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 import time
 
-class test_19245(GaiaTestCase):
-    _Description = "(BLOCKED BY BUG 879816) [CAMERA] Delete a video just recorded."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

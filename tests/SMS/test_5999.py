@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_5999(GaiaTestCase):
-    _Description = "[SMS] CLONE - Access and exit edit mode."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

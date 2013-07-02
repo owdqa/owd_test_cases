@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_4708(GaiaTestCase):
-    _Description = "[SMS] Receive an SMS with a phone number and store it."
+class test_main(GaiaTestCase):
 
     _testNum = "089123456"
     _TestMsg = "Testing " + _testNum + " number."

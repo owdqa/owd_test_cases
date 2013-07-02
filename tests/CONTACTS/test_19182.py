@@ -12,8 +12,7 @@ from OWDTestToolkit import *
 from tests._mock_data.contacts import MockContacts
 import time
 
-class test_19182(GaiaTestCase):
-    _Description = "[CONTACTS] Search a contact after edit contact name."
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #

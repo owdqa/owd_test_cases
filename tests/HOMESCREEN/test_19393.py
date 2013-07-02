@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19393(GaiaTestCase):
-    _Description = "[BASIC][EVERYTHING.ME] Install and launch an everything.me app - verify the everything.me app launches successfully to the right web content."
+class test_main(GaiaTestCase):
     
     _GROUP_NAME  = "Games"
     _APP_NAME    = "Tetris"

@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_5958(GaiaTestCase):
-    _Description = "[SMS] CLONE - Send a new SMS using the option of reduced list of favourite contacts."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

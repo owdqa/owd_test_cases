@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19230(GaiaTestCase):
-    _Description = "(BLOCKED BY BUG 885238) [HOMESCREEN] Verify that user can click on 'Add more categories' in everything.me grid so I am shown again the list and can add more categories."
+class test_main(GaiaTestCase):
     
     _newGroup = "News"
     

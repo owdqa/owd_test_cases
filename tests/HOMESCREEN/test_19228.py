@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19228(GaiaTestCase):
-    _Description = "(BLOCKED BY BUG 865232) [HOMESCREEN] Verify that when the user navigates to everything.me page, dock is hidden."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

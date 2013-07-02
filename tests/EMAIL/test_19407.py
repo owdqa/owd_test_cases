@@ -12,7 +12,6 @@ from OWDTestToolkit import *
 from tests.EMAIL.shared_test_functions import EMAILING
 
 class test_19407(EMAILING.main):
-    _Description = "[BASIC][EMAIL] Send email with hotmail."
     
     def setUp(self):
         self.testNum  = self.__class__.__name__

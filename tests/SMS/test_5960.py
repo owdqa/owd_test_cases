@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_5960(GaiaTestCase):
-    _Description = "[SMS] CLONE - Try to send a new SMS using the search option (in contact list window) in order to select an inexisting contact."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

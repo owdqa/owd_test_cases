@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_5957(GaiaTestCase):
-    _Description = "[SMS] CLONE - Try to send an SMS when in the contact list window the end-user click on back (in contact list window) without selecting the contact."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

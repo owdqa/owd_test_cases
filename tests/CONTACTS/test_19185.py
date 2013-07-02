@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19185(GaiaTestCase):
-    _Description = "[CONTACTS] The 'done' button in new contact mode (email parameter)."
+class test_main(GaiaTestCase):
     
     _email_addy = "one_two@myemail.com"
 

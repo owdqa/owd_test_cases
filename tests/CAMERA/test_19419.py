@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19419(GaiaTestCase):
-    _Description = "[BASIC][CAMERA] Take a picture with camera - verify the picture is successfully taken and added to the gallery."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

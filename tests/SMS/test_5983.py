@@ -12,8 +12,7 @@ import time
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_5983(GaiaTestCase):
-    _Description = "(BLOCKED BY BUG 876641) [SMS] CLONE - Press delete all text button in contact name field."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_6044(GaiaTestCase):
-    _Description = "CLONE - Add a contact and verify that the SMS list now shows the name"
+class test_main(GaiaTestCase):
     
     _TestMsg     = "Test."
     

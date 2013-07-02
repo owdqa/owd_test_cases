@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19205(GaiaTestCase):
-    _Description = "[SMS] Received a SMS with more than 160 characteres."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

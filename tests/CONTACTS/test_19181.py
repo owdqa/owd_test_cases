@@ -12,8 +12,7 @@ from OWDTestToolkit import *
 from tests._mock_data.contacts import MockContacts
 import time
 
-class test_19181(GaiaTestCase):
-    _Description = "[CONTACTS] Remove a photo,a phone number, an email, an address and a comment from a contact and restore the phone number and the comment."
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #

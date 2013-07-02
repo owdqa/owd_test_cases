@@ -1,0 +1,113 @@
+4703|Receive an SMS with a phone number and call to it
+4708|Receive an SMS with a phone number and store it
+4711|Send an SMS to multiple contacts
+5952|CLONE - Try to send empty SMS
+5953|CLONE - Introduce a valid SMS and click on Back option
+5954|CLONE - Try to send SMS without any contact
+5955|CLONE - Try to send an SMS when the introduced text has been deleted.
+5957|CLONE - Try to send an SMS when in the contact list window the end-user click on back (in contact list window) without selecting the contact.
+5958|CLONE - Send a new SMS using the option of reduced list of favourite contacts
+5959|CLONE - Send a new SMS using the search option (in contact list window) in order to select an existing contact
+5960|CLONE - Try to send a new SMS using the search option (in contact list window) in order to select an inexisting contact
+5968|CLONE - Verify characters in text box above the keyboard when typing a sms
+5976|CLONE - Press cancel button in the screen for select a contact phone number
+5980|CLONE - Verify that If the contact has no phone number, a message stating that contact does not have a phone number is open up, and user is returned the contact list.
+5983|CLONE - Press delete all text button in contact name field
+5999|CLONE - Access and exit edit mode
+6002|CLONE - Press delete without any conversation selected
+6024|CLONE - Verify The phone number displayed in a conversation
+6029|CLONE - Verify the textfield item
+6030|CLONE - Verify that the Carrier of number appears in the conversation head
+6031|CLONE - Receive a text message from number XXX while we are in the conversation details with that number
+6032|CLONE - Write and send a sms with line break
+6033|CLONE - Write a sms with multiple spaces between words (ex; 1 2 3 4 5)
+6035|CLONE - Verify that  If the name of the contact is empty: Phone Number as the main header.
+6037|CLONE - Verify that If the name of the contact is not empty: The name of the contact as the main header
+6038|CLONE - Verify that If the name of the contact is not empty: The type of the phone and the phone carrier (as defined in the address book) as the secondary header
+6039|CLONE - Verify that If the name of the contact is not empty:  No carrier information is linked to the phone: Phone Number is shown instead of carrier as the secondary header
+6044|CLONE - Add a contact and verify that the SMS list now shows the name
+6045|CLONE - Edit a contact name and verify that the SMS list now shows the new name
+6046|CLONE - Delete a contact and verify that the SMS list now shows the number
+6049|CLONE - Verify that the SMS conversation window shows the message preview (only one incoming SMS message in the conversation thread)
+6050|CLONE - Verify that the SMS conversation window shows the message preview (only one outgoing SMS message in the conversation thread) 
+6051|CLONE - Verify that the SMS conversation window shows the message preview (more than one SMS message in the conversation thread) 
+6056|CLONE - Try send a sms to a contact while airplane is enabled
+6057|CLONE - Try send a sms to a phone number (no contact) while airplane is enabled
+6058|CLONE - Try send a sms creating a new thread while airplane is enabled
+6059|CLONE - Try send a sms in an existing thread while airplane is enabled
+6060|CLONE - Try send a sms (after enabled and disabled airplane mode) 
+19180|Unlink all Facebook contacts in the address book in a single step and verify the contacts who was linked to a facebook contacts
+19181|Remove a photo,a phone number, an email, an address and a comment from a contact and restore the phone number and the comment
+19182|Search a contact after edit contact name
+19183|Verify that when looking at the details of a contact, the user can make a call to the contact with several phone numbers added
+19184|Delete a contact from the contact details(all the fields filled)
+19185|The &quot;done&quot; button in new contact mode (email parameter)
+19186|Delete all characters to the name and surname fields
+19187|Remove a contact from the favorites list
+19188|Configure a contact as a favourite
+19189|Add multiple emails addresses
+19190|Verify that the user can send a SMS from a contact details - SMS conversation doesn&#39;t exist
+19191|Search by text string (UPPER CASE) that matches the last name
+19192|Search by text string that not matches with any contact name/last name
+19193|Receive an SMS from a contact with long name
+19194|Try send a sms to a contact while airplane is enabled (from sms app - use contact option)
+19195|Verify the Carrier of number from which the contact is sending message to the user
+19196|Send/Receive a new SMS when the conversation thread is empty
+19197|Verify the timestamp (received message) when the SMS has been sent from a different timezone
+19198|Delete all SMS in a conversation with several sms
+19199|Delete a SMS in a conversation with several sms
+19200|Receive a sms while device is locked(Vibration alert), screen off
+19201|Select some conversations and press delete
+19202|Delete a sms conversation
+19203|Open SMS app after all sms were deleted or there is any sms
+19204|Send a new SMS by entering manually the phone number (contact number)
+19205|Send a new SMS by entering manually the phone number
+19224|Add and remove categories to everything.me grid
+19225|Verify that if no connection available when selecting a category in everything.me the user will be notified about the need to have a network connection to use this functionality
+19226|Verify that when first launch a search-box is shown as well as a list of application categories
+19227|Verify that when the user navigates from everything.me page to the grid, dock is shown again
+19228|Verify that when the user navigates to everything.me page, dock is hidden
+19230|Verify that user can click on &quot;Add more categories&quot; in everything.me grid so I am shown again the list and can add more categories
+19231|Verify that the user can uninstall a everything.me app through the grid edit mode
+19241|Basic: Deleting of a e-mail in Inbox
+19245|Delete a video just recorded
+19246|Go to Gallery from Camera
+19247|Delete a picture just taken
+19253|Select multiple pictures and delete them
+19325|Alarm- Delete an alarm
+19328|Clock in different modes (analog, digital)
+19350|Send a SMS with more than 160 characteres
+19351|Received a SMS with more than 160 characteres
+19353|As a user, I want to be able to enable/disable Data from the utility tray
+19354|Open settings app from utility tray
+19355|Activate/Deactivate ariplane  mode from Utility tray icon
+19356|Verify that If the contact has more than one phone number, it opens a list of numbers. Clicking on a number in the list, returns the user to the compose SMS app with the contacts name filled-in in the To Field.
+19357|CLONE - Verify that If the contact only has a phone number, that phone number is automatically selected and the user is returned to the compose SMS screenwidth the contacts name filled-in in the To Field..
+19358|Verify that If the contact has more than one phone number, it opens a list of numbers. Clicking on a number in the list, returns the user to the compose SMS app with the contacts name filled-in in the To Field.(second phone number)
+19359|Send an email to a contact from the contact details (Contact with multiple emails)
+19392|Import Facebook contacts from contacts app settings
+19393|Install and launch an everything.me app - verify the everything.me app launches successfully to the right web content
+19397|Add an alarm - verify the alarm was added with the correct date and time
+19398|Add and view an event to an offline calendar in each calendar view - verify the event is shown on each calendar view with the correct title, location, and event time length
+19400|Delete a packaged app - verify the app was successfully removed from the homescreen
+19401|Launch a packaged app - verify the app launches successfully to the correct content
+19403|With two apps already running, launch the card view, kill one app process, and launch the other - verify the app killed is stopped and the other app starts up
+19405|Receive email via imap with gmail.com - verify the email is received from the correct account the email was sent from
+19406|Send email via imap with gmail.com - verify the email is sent to the respective account
+19407|Receive email via activesync with hotmail.com - verify the email is received from the correct account the email was sent from
+19408|Send email via activesync with hotmail.com - verify the email is sent to the respective account
+19409|Launch market installed hosted app - verify the app is launched successfully from the homescreen
+19410|Install a market installed hosted app - verify the app is installed with the right icon
+19413|Load a website via Cellular Data - verify the site loads in the browser correctly
+19414|Load a website via Wifi - verify the site loads in the browser correctly
+19416|Browse photos in gallery - verify you can see each picture of your sdcard
+19417|Play the video you recorded, check for video and sound to verify the video could be successfully played
+19418|Make a video recording - verify the recording is successful and added to the gallery
+19419|Take a picture with camera - verify the picture is successfully taken and added to the gallery
+19420|Receive a sms with vibration (device unlocked) &amp; confirm notification - verify that the notification is fired and that you can see the message received from the other phone
+19421|Send an sms from a contact detail - Verify the contact receives the SMS
+19422|Edit a contact changing the name and the phone number - verify that the values modified in the contact appear when viewing the updated contact
+19423|Add new contact filling all the fields - verify the contact is added with the correct values for each field
+26967|Verify that when tapping on the highlighted URL the browser is opened with the selected URL
+roy|(No description found in https://jirapdi.tid.es/browse/OWD-roy)
+4700|Receive an SMS with a link to a web site and open it

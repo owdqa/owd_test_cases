@@ -12,8 +12,7 @@ from OWDTestToolkit import *
 from tests._mock_data.contacts import MockContacts
 import time
 
-class test_19192(GaiaTestCase):
-    _Description = "[CONTACTS] Search by text string that not matches with any contact name/last name."
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #

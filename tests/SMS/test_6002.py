@@ -11,8 +11,7 @@ import time
 # Imports particular to this test case.
 #
 
-class test_6002(GaiaTestCase):
-    _Description = "[SMS] CLONE - Press delete without any conversation selected."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

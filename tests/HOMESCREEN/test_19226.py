@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_19226(GaiaTestCase):
-    _Description = "[HOMESCREEN] Verify that when first launch a search-box is shown as well as a list of application categories."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

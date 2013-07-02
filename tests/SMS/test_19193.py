@@ -12,8 +12,7 @@ import time
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_19193(GaiaTestCase):
-    _Description = "[SMS] Receive an SMS from a contact with long name."
+class test_main(GaiaTestCase):
     
     _TestMsg     = "Test."
 

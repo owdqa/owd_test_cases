@@ -10,8 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
-class test_6024(GaiaTestCase):
-    _Description = "[SMS] CLONE - Verify The phone number displayed in a conversation."
+class test_main(GaiaTestCase):
     
     def setUp(self):
         #

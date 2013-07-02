@@ -11,8 +11,7 @@ from OWDTestToolkit import *
 #
 from tests._mock_data.contacts import MockContacts
 
-class test_19422(GaiaTestCase):
-    _Description = "[BASIC][CONTACTS] Edit a contact changing the name and the phone number - verify that the values modified in the contact appear when viewing the updated contact."
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #

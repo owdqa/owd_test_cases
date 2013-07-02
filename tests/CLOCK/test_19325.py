@@ -12,8 +12,7 @@ from OWDTestToolkit import *
 #from datetime 
 import datetime, time   
 
-class test_19325(GaiaTestCase):
-    _Description = "(BLOCKED BY BUG 867987) [CLOCK] Alarm- Delete an alarm."
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #
