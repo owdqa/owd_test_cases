@@ -109,5 +109,5 @@
 19422|Edit a contact changing the name and the phone number - verify that the values modified in the contact appear when viewing the updated contact
 19423|Add new contact filling all the fields - verify the contact is added with the correct values for each field
 26967|Verify that when tapping on the highlighted URL the browser is opened with the selected URL
-roy|(Description not found for this id in https://jirapdi.tid.es/browse/OWD-roy.)
+roy|(No description found in https://jirapdi.tid.es/browse/OWD-roy)
 4700|Receive an SMS with a link to a web site and open it

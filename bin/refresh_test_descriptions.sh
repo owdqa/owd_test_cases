@@ -41,7 +41,7 @@ do
 
     DONESOME="Y"
     printf "."
-    $THISDIR/get_test_description.sh $num >> $DESC_FILE.new
+    echo "$num|$($THISDIR/get_test_description.sh $num)" >> $DESC_FILE.new
 
     # (In case there is a problem...)
     [ $? -ne 0 ] && exit 1
