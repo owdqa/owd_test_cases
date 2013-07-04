@@ -34,8 +34,6 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
-        self.UTILS.TEST(True, "blah")
-        return
         self.UTILS.getNetworkConnection()
         
         #
