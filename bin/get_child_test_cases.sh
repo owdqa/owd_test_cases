@@ -14,7 +14,7 @@ USER_STORIES_BASEURL="https://jirapdi.tid.es/browse/OWD-"
 # These 'types' and ids need to match the Jira parent item id's
 # (the ones that contain a list of 'is tested by' test cases).
 #
-PARENTS=(
+JIRA_PARENTS=(
 "CONTACTS   27032"
 "FTU        27067"
 "DIALLER    27004"
@@ -37,7 +37,7 @@ else
     	   #
     	   # Run 'everything'.
     	   #
-    	   for i in "${PARENTS[@]}"
+    	   for i in "${JIRA_PARENTS[@]}"
            do
                $0 $(echo "$i" | awk '{print $1}')
            done;;
@@ -51,9 +51,9 @@ else
            
         *)
            #
-           # Run this particular type.
+           # Run all test cases for this particular type.
            #           
-           for i in "${PARENTS[@]}"
+           for i in "${JIRA_PARENTS[@]}"
            do
                PARENT=$(echo "$i" | awk '{print $1}')
                if [ "$PARENT" = "$TYPE" ]
