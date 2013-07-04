@@ -8,7 +8,7 @@ P=$(egrep "^P" $HOME/.jira_login | awk '{print $2}')
 #
 # Parameters for Jira items.
 #
-USER_STORIES_BASEURL="https://jirapdi.tid.es/browse/OWD-"
+[ ! "$USER_STORIES_BASEURL" ] && export USER_STORIES_BASEURL="https://jirapdi.tid.es/browse/OWD-"
 
 #
 # These 'types' and ids need to match the Jira parent item id's
