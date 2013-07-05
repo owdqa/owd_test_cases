@@ -1,3 +1,4 @@
+|
 roy|(No description found in https://jirapdi.tid.es/browse/OWD-roy)
 4700|Receive an SMS with a link to a web site and open it
 4703|Receive an SMS with a phone number and call to it
@@ -110,4 +111,113 @@ roy|(No description found in https://jirapdi.tid.es/browse/OWD-roy)
 19421|Send an sms from a contact detail - Verify the contact receives the SMS
 19422|Edit a contact changing the name and the phone number - verify that the values modified in the contact appear when viewing the updated contact
 19423|Add new contact filling all the fields - verify the contact is added with the correct values for each field
+23887|Accept creating a new contact, editing some other fields
+26317|Send an email to a contact from the contact details (Contact with multiple emails)
+26323|Add new contact filling all the fields - verify the contact is added with the correct values for each field
+26324|Edit a contact changing the name and the phone number - verify that the values modified in the contact appear when viewing the updated contact
+26325|Send an sms from a contact detail - Verify the contact receives the SMS
+26326|Receive a sms with vibration (device unlocked) &amp; confirm notification - verify that the notification is fired and that you can see the message received from the other phone
+26327|Take a picture with camera - verify the picture is successfully taken and added to the gallery
+26328|Make a video recording - verify the recording is successful and added to the gallery
+26329|Play the video you recorded, check for video and sound to verify the video could be successfully played
+26330|Browse photos in gallery - verify you can see each picture of your sdcard
+26332|Load a website via Wifi - verify the site loads in the browser correctly
+26333|Load a website via Cellular Data - verify the site loads in the browser correctly
+26336|Install a market installed hosted app - verify the app is installed with the right icon
+26337|Launch market installed hosted app - verify the app is launched successfully from the homescreen
+26338|Send email via activesync with hotmail.com - verify the email is sent to the respective account
+26339|Receive email via activesync with hotmail.com - verify the email is received from the correct account the email was sent from
+26340|Send email via imap with gmail.com - verify the email is sent to the respective account
+26341|Receive email via imap with gmail.com - verify the email is received from the correct account the email was sent from
+26343|With two apps already running, launch the card view, kill one app process, and launch the other - verify the app killed is stopped and the other app starts up
+26345|Launch a packaged app - verify the app launches successfully to the correct content
+26346|Delete a packaged app - verify the app was successfully removed from the homescreen
+26347|Add and view an event to an offline calendar in each calendar view - verify the event is shown on each calendar view with the correct title, location, and event time length
+26348|Add an alarm - verify the alarm was added with the correct date and time
+26352|Install and launch an everything.me app - verify the everything.me app launches successfully to the right web content
+26353|Import Facebook contacts from contacts app settings
+26403|Verify that If the contact has more than one phone number, it opens a list of numbers. Clicking on a number in the list, returns the user to the compose SMS app with the contacts name filled-in in the To Field.(second phone number)
+26404|CLONE - Verify that If the contact only has a phone number, that phone number is automatically selected and the user is returned to the compose SMS screenwidth the contacts name filled-in in the To Field..
+26405|Press cancel button in the screen for select a contact phone number
+26406|Press delete all text button in contact name field
+26407|Verify that If the contact has more than one phone number, it opens a list of numbers. Clicking on a number in the list, returns the user to the compose SMS app with the contacts name filled-in in the To Field.
+26408|Activate/Deactivate airplane mode from Utility tray icon
+26409|Open settings app from utility tray
+26411|As a user, I want to be able to enable/disable Data from the utility tray
+26414|Received a SMS with more than 160 characteres
+26415|Send a SMS with more than 160 characteres
+26467|Clock in different modes (analog, digital)
+26473|Alarm- Delete an alarm
+26711|Select multiple pictures and delete them
+26727|Delete a picture just taken
+26728|Go to Gallery from Camera
+26731|Delete a video just recorded
+26741|Email containing a URL
+26750|Basic: Deleting of a e-mail in Inbox
+26773|Verify that the user can uninstall a everything.me app through the grid edit mode
+26774|Verify that user can click on &quot;Add more categories&quot; in everything.me grid so I am shown again the list and can add more categories
+26776|Verify that when the user navigates to everything.me page, dock is hidden
+26777|Verify that when the user navigates from everything.me page to the grid, dock is shown again
+26778|Verify that when first launch a search-box is shown as well as a list of application categories
+26779|Verify that if no connection available when selecting a category in everything.me the user will be notified about the need to have a network connection to use this functionality
+26781|Add and remove categories to everything.me grid
+26839|Send a new SMS by entering manually the phone number
+26840|Send a new SMS by entering manually the phone number (contact number)
+26845|Add a contact and verify that the SMS list now shows the name
+26846|Delete a sms conversation
+26847|Select some conversations and press delete
+26851|Receive a sms while device is locked(Vibration alert), screen off
+26852|Delete a SMS in a conversation with several sms
+26853|Delete all SMS in a conversation with several sms
+26856|Try to send empty SMS
+26857|Verify that the SMS conversation window shows the message preview (more than one SMS message in the conversation thread)
+26859|Verify the timestamp (received message) when the SMS has been sent from a different timezone
+26860|Send/Receive a new SMS when the conversation thread is empty
+26861|Verify the Carrier of number from which the contact is sending message to the user
+26862|Try send a sms creating a new thread while airplane is enabled
+26863|Try send a sms in an existing thread while airplane is enabled
+26864|Try send a sms to a contact while airplane is enabled (from sms app - use contact option)
+26865|Receive an SMS from a contact with long name
+26874|Search by text string that not matches with any contact name/last name
+26882|Search by text string (UPPER CASE) that matches the last name
+26883|Verify that the user can send a SMS from a contact details - SMS conversation doesn&#39;t exist
+26885|Add multiple emails addresses
+26886|Configure a contact as a favourite
+26890|Delete all characters to the name and surname fields
+26895|The &quot;done&quot; button in new contact mode (email parameter)
+26899|Delete a contact from the contact details(all the fields filled)
+26900|Verify that when looking at the details of a contact, the user can make a call to the contact with several phone numbers added
+26901|Search a contact after edit contact name
+26907|Remove a photo,a phone number, an email, an address and a comment from a contact and restore the phone number and the comment
+26918|Unlink all Facebook contacts in the address book in a single step and verify the contacts who was linked to a facebook contacts
 26967|Verify that when tapping on the highlighted URL the browser is opened with the selected URL
+27735|Verify that If the name of the contact is not empty:  No carrier information is linked to the phone: Phone Number is shown instead of carrier as the secondary header
+27736|Press delete without any conversation selected
+27737|Try to send a new SMS using the search option (in contact list window) in order to select an inexisting contact
+27739|Try send a sms to a phone number (no contact) while airplane is enabled
+27740|Verify that the SMS conversation window shows the message preview (only one outgoing SMS message in the conversation thread) 
+27741|Receive a text message from number XXX while we are in the conversation details with that number
+27742|Write a sms with multiple spaces between words (ex; 1 2 3 4 5)
+27743|Edit a contact name and verify that the SMS list now shows the new name
+27744|Introduce a valid SMS and click on Back option
+27745|Try to send SMS without any contact
+27746|Verify that If the name of the contact is not empty: The type of the phone and the phone carrier (as defined in the address book) as the secondary header
+27747|Verify that  If the name of the contact is empty: Phone Number as the main header.
+27748|Verify the textfield item
+27749|Receive an SMS with a phone number and store it
+27750|Verify characters in text box above the keyboard when typing a sms
+27751|Try send a sms (after enabled and disabled airplane mode) 
+27752|Receive an SMS with a link to a web site and open it
+27753|Delete a contact and verify that the SMS list now shows the number
+27754|Send an SMS to multiple contacts
+27755|Verify that the SMS conversation window shows the message preview (only one incoming SMS message in the conversation thread)
+27756|Send a new SMS using the option of reduced list of favourite contacts
+27757|Verify The phone number displayed in a conversation
+27758|Access and exit edit mode
+27759|Verify that If the contact has no phone number, a message stating that contact does not have a phone number is open up, and user is returned the contact list.
+27760|Try to send an SMS when the introduced text has been deleted.
+27761|Try to send an SMS when in the contact list window the end-user click on back (in contact list window) without selecting the contact.
+27762|Receive an SMS with a phone number and call to it
+27763|Verify that If the name of the contact is not empty: The name of the contact as the main header
+27764|Write and send a sms with line break
+27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
