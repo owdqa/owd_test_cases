@@ -1,7 +1,9 @@
 #!/bin/bash
-
-OUTFILE=/tmp/roytest
+MYNAME=$(basename $0)
+OUTFILE=/tmp/$MYNAME.log
 BASE_URL="https://jirapdi.tid.es/browse/OWD-"
+
+rm -rf $OUTFILE 2>/dev/null
 
 I=${1:?"Syntax: $0 <JIRA issue>"}
 U=$(egrep "^U" ~/.jira_login 2>/dev/null| awk '{print $2}')
