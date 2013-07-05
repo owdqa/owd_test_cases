@@ -17,7 +17,7 @@ then
 fi
 
 # Make sure nothing else is running first.
-wait_for_no_other_test_run.sh $$
+$OWD_TEST_TOOLKIT_BIN/wait_for_no_other_test_run.sh $$
 
 # Now run the tests.
-run_all_tests.sh $@
+$OWD_TEST_TOOLKIT_BIN/execute_tests.sh $@
