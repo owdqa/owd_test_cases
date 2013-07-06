@@ -21,4 +21,4 @@ class test_19408(EMAILING.main):
         self.UTILS.reportResults()
         
     def test_run(self):
-        self.receive_email()
+        self.send_email()
