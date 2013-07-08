@@ -27,6 +27,8 @@ fi
 DONESOME=""
 while read num
 do
+	[ ! "$num" ] && continue
+
     if [ "$1" ]
     then
         #

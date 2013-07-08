@@ -50,41 +50,4 @@ class test_main(GaiaTestCase):
         # Takes a few seconds for the thumbs to appear...
         #
         self.gallery.waitForThumbnails(len(self._img_list))
-        
-        # Problemtic - commented out for now.
-#         #
-#         # Open each picture ...
-#         #
-#         x = self.gallery.thumbCount()
-#         if x > 0:
-#             self.UTILS.logComment("PLEASE VERIFY THE FOLLOWING " + str(x) + " IMAGES ....")
-#             for i in range(0, x):
-#                 # Click this thumbnail.
-#                 self.gallery.clickThumb(i)
-#                 
-#                 # Take a screenshot (and update the comment).
-#                 imgnam = self.UTILS.screenShot("14_" + str(i+1))
-#                 self.UTILS.logComment("-> " + imgnam)
-#                 
-#                 # Check the size of the screenshot.
-#                 # (because we can't guarentee the order, or match the filenames, we have to just loop through our
-#                 # known sizes to see if this one's in there.
-#                 img_size     = os.path.getsize(imgnam)
-#                 size_matched = False
-#                 for this_size in self._img_sizes:
-#                     if img_size == this_size:
-#                         size_matched = True
-#                         break
-#                         
-#                 self.UTILS.TEST(size_matched,
-#                     "Image size is as expected (it was " + str(self._img_sizes[i]) + " bytes). Please visually check the screenshots.")
-#                 
-#                 # Wait a second (or this test is done too quickly to see!)
-#                 time.sleep(0.5)
-#                 
-#                 # Go back to the thumbnails.
-#                 backBTN = self.UTILS.getElement(DOM.Gallery.fullscreen_back_button, "Back button")
-#                 backBTN.tap()
-#                 self.UTILS.waitForElements(DOM.Gallery.thumbnail_items, "Thumbnails")
-        
 
