@@ -61,7 +61,7 @@ class test_main(GaiaTestCase):
         _title  = "Test alarm"
 
         self.clock.createAlarm(_hour, _minute, _title)
-
+        
         #
         # Restart the Clock app.
         #
