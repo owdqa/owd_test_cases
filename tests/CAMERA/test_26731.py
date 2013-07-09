@@ -44,7 +44,7 @@ class test_main(GaiaTestCase):
         #
         # Tap the trash icon.
         #
-        x = self.UTILS.getElement(DOM.Camera.trash_icon, "Trash icon", True, 10, True)
+        x = self.UTILS.getElement(DOM.Camera.trash_icon, "Trash icon", True, 5, False)
         x.tap()
          
         #
@@ -53,7 +53,7 @@ class test_main(GaiaTestCase):
         myIframe = self.UTILS.currentIframe()
          
         self.marionette.switch_to_frame()
-        x = self.UTILS.getElement( ("id", "modal-dialog-confirm-ok"), "Confirm deletion button")
+        x = self.UTILS.getElement(DOM.GLOBAL.modal_ok_button1, "OK button")
         x.tap()
          
         self.UTILS.switchToFrame("src", myIframe)
