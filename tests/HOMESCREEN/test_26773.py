@@ -51,7 +51,7 @@ class test_main(GaiaTestCase):
         self.actions.perform()
         
         self.marionette.switch_to_frame()
-        x = self.UTILS.getElement(DOM.GLOBAL.modal_ok_button, "OK button")
+        x = self.UTILS.getElement(DOM.GLOBAL.modal_ok_button1, "OK button")
         x.tap()
         
         time.sleep(2)
