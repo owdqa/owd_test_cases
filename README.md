@@ -398,10 +398,6 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center></td><td  align=left></td>
-  </tr>
-
-  <tr>
     <td  align=center>26839</td><td  align=left>Send a new SMS by entering manually the phone number</td>
   </tr>
 
@@ -415,6 +411,10 @@ TESTS COVERED
 
   <tr>
     <td  align=center>27760</td><td  align=left>Try to send an SMS when the introduced text has been deleted.</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26975</td><td  align=left>Click on an email address, press on &quot;Add to existing contact&quot; (contacts lists is empty)</td>
   </tr>
 
   <tr>
