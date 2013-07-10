@@ -9,11 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-#paloma rules!
+
 class test_main(GaiaTestCase):
-    
-    _link        = "www.google.com"
-    _TestMsg     = "Test " + _link + " this."
     
     def setUp(self):
         #
@@ -23,19 +20,24 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.messages   = Messages(self)
         self.browser    = Browser(self)
+        self.actions    = Actions(self.marionette)
+
         
         #
         # Establish which phone number to use.
         #
         self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Sending sms to telephone number " + self.target_telNum)
+        self.target_email = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
+        
+        self.msg = "Testing email link with " + self.target_email
         
     def tearDown(self):
         self.UTILS.reportResults()
         
     def test_run(self):
-        self.UTILS.getNetworkConnection()
         
+        self.UTILS.getNetworkConnection()
+                
         #
         # Launch messages app.
         #
@@ -44,7 +46,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.target_telNum], self._TestMsg)
+        self.messages.createAndSendSMS([self.target_telNum], self.msg)
           
         #
         # Wait for the last message in this thread to be a 'recieved' one
@@ -53,17 +55,21 @@ class test_main(GaiaTestCase):
         x = self.messages.waitForReceivedMsgInThisThread()
         self.UTILS.TEST(x, "Received a message.", True)
         
-        x.find_element("tag name", "a").tap()
+        #
+        # Long-press the link.
+        #
+        email_link = x.find_element("tag name", "a")
+        self.actions.press(email_link).wait(2).release().perform()
+
+        x = self.UTILS.getElement(DOM.Messages.header_add_to_contact_btn, "'Add to an existing contact' button")
+        x.tap()
                 
         #
-        # Give the browser time to start up, then
-        # switch to the browser frame and check the page loaded.
+        # Check for warning message.
         #
-        time.sleep(2)
         self.marionette.switch_to_frame()
-        self.UTILS.switchToFrame(*DOM.Browser.frame_locator)
+        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator_dfo)
         
-        self.UTILS.TEST(self.browser.check_page_loaded(self._link),
-                        "Web page loaded correctly.")
+        self.UTILS.waitForElements( ("xpath", "//p[contains(text(),'contact list is empty')]"), "Warning message")
         
 
