@@ -67,9 +67,9 @@ class test_main(GaiaTestCase):
         #
         # Check for warning message.
         #
-        self.marionette.switch_to_frame()
-        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator_dfo)
+        self.UTILS.switchToFrame("src", "contacts")
         
         self.UTILS.waitForElements( ("xpath", "//p[contains(text(),'contact list is empty')]"), "Warning message")
         
-
+        fnam = self.UTILS.screenShot("26975")
+        self.UTILS.logResult("info", "Screenshot of final position", fnam)
