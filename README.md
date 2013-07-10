@@ -231,6 +231,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26966</td><td  align=left>Verify in a received SMS thread view that only valid URL appears highlighted</td>
+  </tr>
+
+  <tr>
     <td  align=center>26967</td><td  align=left>Verify that when tapping on the highlighted URL the browser is opened with the selected URL</td>
   </tr>
 

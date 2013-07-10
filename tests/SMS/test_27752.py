@@ -9,7 +9,6 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-#paloma rules!
 class test_main(GaiaTestCase):
     
     _link        = "www.google.com"

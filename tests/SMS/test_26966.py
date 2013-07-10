@@ -47,11 +47,13 @@ class test_main(GaiaTestCase):
         # Create and send a new test message.
         #
         self.messages.createAndSendSMS([self.target_telNum], self._TestMsg)
-          
+         
         #
-        # Get the link of the first message
-        #    
-        x = self.UTILS.getElement( ("id", "message-1"), "Message sent")
+        # Wait for the last message in this thread to be a 'recieved' one
+        # and click the link.
+        #
+        x = self.messages.waitForReceivedMsgInThisThread()
+        self.UTILS.TEST(x, "Received a message.", True) 
         
         #
         #Verify that a valid URL appears highlight
