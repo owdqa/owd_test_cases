@@ -59,8 +59,7 @@ class test_main(GaiaTestCase):
         
         time.sleep(5)
         
-        self.marionette.switch_to_frame()
-        self.UTILS.switchToFrame(*DOM.Phone.frame_locator_from_sms)
+        self.UTILS.switchToFrame(*DOM.Phone.frame_locator)
         
         #
         # Create a contact from this number.
