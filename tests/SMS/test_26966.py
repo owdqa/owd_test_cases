@@ -10,9 +10,11 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 class test_main(GaiaTestCase):
-    
+        
     _link        = "www.google.com"
     _TestMsg     = "Test " + _link + " this."
+    
+    _RESTART_DEVICE = True
     
     def setUp(self):
         #
@@ -35,34 +37,27 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.UTILS.getNetworkConnection()
         
+        
         #
         # Launch messages app.
         #
         self.messages.launch()
-          
+        self.messages.deleteAllThreads() 
         #
         # Create and send a new test message.
         #
         self.messages.createAndSendSMS([self.target_telNum], self._TestMsg)
-          
+         
         #
         # Wait for the last message in this thread to be a 'recieved' one
         # and click the link.
         #
         x = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.TEST(x, "Received a message.", True)
+        self.UTILS.TEST(x, "Received a message.", True) 
         
-        x.find_element("tag name", "a").tap()
+        #
+        #Verify that a valid URL appears highlight
+        #
+        y=x.find_element("tag name", "a")
+        self.UTILS.TEST(y.text==self._link , "The web link is in the text message")
                 
-        #
-        # Give the browser time to start up, then
-        # switch to the browser frame and check the page loaded.
-        #
-        time.sleep(2)
-        self.marionette.switch_to_frame()
-        self.UTILS.switchToFrame(*DOM.Browser.frame_locator)
-        
-        self.UTILS.TEST(self.browser.check_page_loaded(self._link),
-                        "Web page loaded correctly.")
-        
-
