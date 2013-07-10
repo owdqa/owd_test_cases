@@ -207,6 +207,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26968</td><td  align=left>Verify in a  SMS thread view that not valid URL (incompleted domain) doesn&#39;t appear highlighted</td>
+  </tr>
+
+  <tr>
     <td  align=center>26860</td><td  align=left>Send/Receive a new SMS when the conversation thread is empty</td>
   </tr>
 
