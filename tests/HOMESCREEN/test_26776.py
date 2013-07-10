@@ -34,7 +34,7 @@ class test_main(GaiaTestCase):
         #
         # Veriy that the dock is displayed.
         #
-        self.UTILS.switchToFrame(*DOM.Home.homescreen_iframe)
+        self.UTILS.switchToFrame(*DOM.Home.frame_locator)
         self.UTILS.waitForElements(DOM.Home.dock, "Dock (before EME is opened)", True, 2, False)
                 
         #

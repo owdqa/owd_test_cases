@@ -99,8 +99,7 @@ class test_main(GaiaTestCase):
         #
         # Check the keyboard is now present.
         #
-        self.marionette.switch_to_frame()
-        self.UTILS.switchToFrame(*DOM.GLOBAL.keyboard_iframe)
+        self.UTILS.switchToFrame(*DOM.Keyboard.frame_locator)
             
     def checkMsg(self, p_list, p_pos, p_str, p_direction):
         #
