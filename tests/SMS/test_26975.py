@@ -11,10 +11,6 @@ from OWDTestToolkit import *
 #
 
 class test_main(GaiaTestCase):
-
-    _testNum = "089123456"
-    _TestMsg = "Testing " + _testNum + " number."
-    
     
     def setUp(self):
         #
@@ -23,31 +19,35 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.messages   = Messages(self)
-        self.phone      = Phone(self)
-        self.contacts   = Contacts(self)
+        self.browser    = Browser(self)
+        self.actions    = Actions(self.marionette)
+
         
         #
         # Establish which phone number to use.
         #
         self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Sending sms to telephone number " + self.target_telNum)
+        self.target_email = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
+        
+        self.msg = "Testing email link with " + self.target_email
         
     def tearDown(self):
         self.UTILS.reportResults()
         
     def test_run(self):
-        self.UTILS.getNetworkConnection()
         
+        self.UTILS.getNetworkConnection()
+                
         #
         # Launch messages app.
         #
         self.messages.launch()
-         
+          
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.target_telNum], self._TestMsg)
-        
+        self.messages.createAndSendSMS([self.target_telNum], self.msg)
+          
         #
         # Wait for the last message in this thread to be a 'recieved' one
         # and click the link.
@@ -55,20 +55,21 @@ class test_main(GaiaTestCase):
         x = self.messages.waitForReceivedMsgInThisThread()
         self.UTILS.TEST(x, "Received a message.", True)
         
-        x.find_element("tag name", "a").click()        
-        
-        time.sleep(5)
-        
-        self.UTILS.switchToFrame(*DOM.Phone.frame_locator)
-        
         #
-        # Create a contact from this number.
+        # Long-press the link.
         #
-        self.phone.createContactFromThisNum()
+        email_link = x.find_element("tag name", "a")
+        self.actions.press(email_link).wait(2).release().perform()
 
+        x = self.UTILS.getElement(DOM.Messages.header_add_to_contact_btn, "'Add to an existing contact' button")
+        x.tap()
+                
         #
-        # Make sure the number is automatically in the contact details.
-        #        
-        x = self.UTILS.getElement( ("id", "number_0"), "Mobile number field")
-        self.UTILS.TEST(x.get_attribute("value") == self._testNum, 
-                        "The correct number is automatically entered in the new contact's number field.")
+        # Check for warning message.
+        #
+        self.UTILS.switchToFrame("src", "contacts")
+        
+        self.UTILS.waitForElements( ("xpath", "//p[contains(text(),'contact list is empty')]"), "Warning message")
+        
+        fnam = self.UTILS.screenShot("26975")
+        self.UTILS.logResult("info", "Screenshot of final position", fnam)

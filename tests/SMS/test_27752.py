@@ -53,7 +53,7 @@ class test_main(GaiaTestCase):
         x = self.messages.waitForReceivedMsgInThisThread()
         self.UTILS.TEST(x, "Received a message.", True)
         
-        x.find_element("tag name", "a").click()
+        x.find_element("tag name", "a").tap()
                 
         #
         # Give the browser time to start up, then

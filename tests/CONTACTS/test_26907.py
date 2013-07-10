@@ -142,7 +142,6 @@ class test_main(GaiaTestCase):
             boolED=False
         self.UTILS.TEST(boolED == p_boolEditable, _comment + "editable.")
             
-        self.marionette.switch_to_frame()
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
 
         
@@ -165,8 +164,8 @@ class test_main(GaiaTestCase):
         boolKBD=False
         self.marionette.switch_to_frame()
         x = self.marionette.find_element("xpath", 
-                                         "//iframe[@" + DOM.GLOBAL.keyboard_iframe[0]+ \
-                                         "='" + DOM.GLOBAL.keyboard_iframe[1] + "']")
+                                         "//iframe[contains(@" + DOM.Keyboard.frame_locator[0]+ \
+                                         ",'" + DOM.Keyboard.frame_locator[1] + "')]")
         if x.is_displayed():
             boolKBD = True
         else:
@@ -176,7 +175,6 @@ class test_main(GaiaTestCase):
         #
         # Return to the contacts iframe.
         #
-        self.marionette.switch_to_frame()
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
          
         #

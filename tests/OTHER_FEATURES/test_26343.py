@@ -91,5 +91,4 @@ class test_main(GaiaTestCase):
         x.tap()
         
         time.sleep(3)
-        self.marionette.switch_to_frame()
         self.UTILS.switchToFrame(*DOM.Gallery.frame_locator)
