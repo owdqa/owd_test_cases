@@ -55,11 +55,10 @@ class test_main(GaiaTestCase):
         x = self.messages.waitForReceivedMsgInThisThread()
         self.UTILS.TEST(x, "Received a message.", True)
         
-        x.find_element("tag name", "a").click()        
+        y= x.find_element("tag name", "a")
+        y.tap()
         
         time.sleep(5)
-        
-        self.UTILS.switchToFrame(*DOM.Phone.frame_locator)
         
         #
         # Create a contact from this number.

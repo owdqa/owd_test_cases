@@ -94,7 +94,7 @@ class test_main(GaiaTestCase):
         # Tap the message area.
         #
         x = self.UTILS.getElement(DOM.Messages.input_message_area, "Message area")
-        x.click()
+        x.tap()
         
         #
         # Check the keyboard is now present.

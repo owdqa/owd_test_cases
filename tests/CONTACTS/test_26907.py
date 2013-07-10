@@ -159,7 +159,7 @@ class test_main(GaiaTestCase):
         # The problem is that the keyboard frame is always present
         # once it's been launched, so I need a way to either KILL
         # the keyboard, or see what's currently displayed.
-        x.click()
+        x.tap()
         
         boolKBD=False
         self.marionette.switch_to_frame()
@@ -181,7 +181,7 @@ class test_main(GaiaTestCase):
         # Tap the header to remove the keyboard.
         #
         x = self.marionette.find_element(*DOM.GLOBAL.app_head)
-        x.click()
+        x.tap()
         
         
         

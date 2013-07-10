@@ -51,7 +51,7 @@ class test_main(GaiaTestCase):
         x = self.messages.waitForReceivedMsgInThisThread()
         self.UTILS.TEST(x, "Received a message.", True)
         
-        x.find_element("tag name", "a").click()        
+        x.find_element("tag name", "a").tap()        
         
         time.sleep(5)
         
