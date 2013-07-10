@@ -53,8 +53,6 @@ class test_main(GaiaTestCase):
         x = self.messages.waitForReceivedMsgInThisThread()
         self.UTILS.TEST(x, "Received a message.", True)
         
-        self.UTILS.savePageHTML("/tmp/paloma.html")
-        
         x.find_element("tag name", "a").click()
                 
         #

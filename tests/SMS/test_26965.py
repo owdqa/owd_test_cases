@@ -50,28 +50,13 @@ class test_main(GaiaTestCase):
         self.messages.createAndSendSMS([self.target_telNum], self._TestMsg)
           
         #
-        # Wait for the last message in this thread to be a 'recieved' one
-        # and click the link.
-        #
-        #x = self.messages.waitForReceivedMsgInThisThread()
-        #self.UTILS.TEST(x, "Received a message.", True)
-        
+        # Get the link of the first message
+        #    
         x = self.UTILS.getElement( ("id", "message-1"), "Message sent")
         
-        self.UTILS.savePageHTML("/tmp/paloma.html")
-        
-        
-        x.find_element("tag name", "a").click()
+        #
+        #Verify that a valid URL appears highlight
+        #
+        y=x.find_element("tag name", "a")
+        self.UTILS.TEST(y.text==self._link , "The web link is in the text message")
                 
-        #
-        # Give the browser time to start up, then
-        # switch to the browser frame and check the page loaded.
-        #
-        time.sleep(2)
-        self.marionette.switch_to_frame()
-        self.UTILS.switchToFrame(*DOM.Browser.frame_locator)
-        
-        self.UTILS.TEST(self.browser.check_page_loaded(self._link),
-                        "Web page loaded correctly.")
-        
-
