@@ -11,9 +11,11 @@ from OWDTestToolkit import *
 #
 #paloma rules!
 class test_main(GaiaTestCase):
-    
+        
     _link        = "www.google.com"
     _TestMsg     = "Test " + _link + " this."
+    
+    _RESTART_DEVICE = True
     
     def setUp(self):
         #
@@ -36,11 +38,12 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.UTILS.getNetworkConnection()
         
+        
         #
         # Launch messages app.
         #
         self.messages.launch()
-          
+        self.messages.deleteAllThreads() 
         #
         # Create and send a new test message.
         #
@@ -50,10 +53,13 @@ class test_main(GaiaTestCase):
         # Wait for the last message in this thread to be a 'recieved' one
         # and click the link.
         #
-        x = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.TEST(x, "Received a message.", True)
+        #x = self.messages.waitForReceivedMsgInThisThread()
+        #self.UTILS.TEST(x, "Received a message.", True)
+        
+        x = self.UTILS.getElement( ("id", "message-1"), "Message sent")
         
         self.UTILS.savePageHTML("/tmp/paloma.html")
+        
         
         x.find_element("tag name", "a").click()
                 

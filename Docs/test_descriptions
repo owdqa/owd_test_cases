@@ -189,6 +189,7 @@
 26901|Search a contact after edit contact name
 26907|Remove a photo,a phone number, an email, an address and a comment from a contact and restore the phone number and the comment
 26918|Unlink all Facebook contacts in the address book in a single step and verify the contacts who was linked to a facebook contacts
+26965|Verify in a sent SMS thread view that only valid URL appears highlighted
 26967|Verify that when tapping on the highlighted URL the browser is opened with the selected URL
 27735|Verify that If the name of the contact is not empty:  No carrier information is linked to the phone: Phone Number is shown instead of carrier as the secondary header
 27736|Press delete without any conversation selected
