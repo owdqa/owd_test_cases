@@ -92,7 +92,7 @@ class main():
         #
         # Click the email area to display the keyboard.
         x = self.UTILS.getElement(DOM.FTU.privacy_email, "Privacy policy email address")
-        x.click()
+        x.tap()
         self.parent.keyboard._switch_to_keyboard()
         
         #
