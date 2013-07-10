@@ -57,14 +57,8 @@ class test_main(GaiaTestCase):
         boolOK=False
         try:
             x.find_element("tag name", "a")
-            boolOK=True
         except:
-                pass
-        if boolOK:
-        # We found the element.
-            var="elementFound"
-        else:
-        # We didn't find the element.
-            var="elementNotFound"
+            boolOK=True
+
         
-        self.UTILS.TEST(var=="elementNotFound", "The web link is in the text message")
+        self.UTILS.TEST(boolOK, "The web link is in the text message")
