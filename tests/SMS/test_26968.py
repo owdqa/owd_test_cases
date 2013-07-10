@@ -61,4 +61,4 @@ class test_main(GaiaTestCase):
             boolOK=True
 
         
-        self.UTILS.TEST(boolOK, "The web link is in the text message")
+        self.UTILS.TEST(boolOK, "The web address is not a link in the text message")
