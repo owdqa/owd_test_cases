@@ -64,5 +64,8 @@ class test_main(GaiaTestCase):
         self.UTILS.TEST(z.text=="1 selected", "Into edit mode, if you tap on link, the browser is not open and the message is selected.")
         
         
+        self.marionette.switch_to_frame()
+        time.sleep(5) #(give the browser time to launch)
+        self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@src,'browser')]"), "Browser iframe")
               
         
