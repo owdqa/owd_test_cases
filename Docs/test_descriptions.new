@@ -193,6 +193,7 @@
 26966|Verify in a received SMS thread view that only valid URL appears highlighted
 26967|Verify that when tapping on the highlighted URL the browser is opened with the selected URL
 26968|Verify in a  SMS thread view that not valid URL (incompleted domain) doesn&#39;t appear highlighted
+26970|Verify that when tapping on the URL in the &quot;Edit Mode&quot;, the Browser APP is not launched 
 26975|Click on an email address, press on &quot;Add to existing contact&quot; (contacts lists is empty)
 27735|Verify that If the name of the contact is not empty:  No carrier information is linked to the phone: Phone Number is shown instead of carrier as the secondary header
 27736|Press delete without any conversation selected
@@ -224,4 +225,4 @@
 27763|Verify that If the name of the contact is not empty: The name of the contact as the main header
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
-26970|Verify that when tapping on the URL in the &quot;Edit Mode&quot;, the Browser APP is not launched 
+26971|Verify that in the sms thread view, valid e-mail addresses will be highlighted or shown with a special visual indication

@@ -67,6 +67,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26971</td><td  align=left>Verify that in the sms thread view, valid e-mail addresses will be highlighted or shown with a special visual indication</td>
+  </tr>
+
+  <tr>
     <td  align=center>26846</td><td  align=left>Delete a sms conversation</td>
   </tr>
 
