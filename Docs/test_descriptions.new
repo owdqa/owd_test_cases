@@ -224,3 +224,4 @@
 27763|Verify that If the name of the contact is not empty: The name of the contact as the main header
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
+26970|Verify that when tapping on the URL in the &quot;Edit Mode&quot;, the Browser APP is not launched 

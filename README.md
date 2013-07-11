@@ -143,6 +143,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26970</td><td  align=left>Verify that when tapping on the URL in the &quot;Edit Mode&quot;, the Browser APP is not launched </td>
+  </tr>
+
+  <tr>
     <td  align=center>26407</td><td  align=left>Verify that If the contact has more than one phone number, it opens a list of numbers. Clicking on a number in the list, returns the user to the compose SMS app with the contacts name filled-in in the To Field.</td>
   </tr>
 
