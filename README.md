@@ -67,6 +67,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26971</td><td  align=left>Verify that in the sms thread view, valid e-mail addresses will be highlighted or shown with a special visual indication</td>
+  </tr>
+
+  <tr>
     <td  align=center>26846</td><td  align=left>Delete a sms conversation</td>
   </tr>
 
@@ -140,6 +144,10 @@ TESTS COVERED
 
   <tr>
     <td  align=center>26852</td><td  align=left>Delete a SMS in a conversation with several sms</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26970</td><td  align=left>Verify that when tapping on the URL in the &quot;Edit Mode&quot;, the Browser APP is not launched </td>
   </tr>
 
   <tr>
