@@ -171,6 +171,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26969</td><td  align=left>Verify that when tapping on different valid URL&#39;s contained in the same SMS,  the browser is opened each time with the selected URL</td>
+  </tr>
+
+  <tr>
     <td  align=center>26847</td><td  align=left>Select some conversations and press delete</td>
   </tr>
 
