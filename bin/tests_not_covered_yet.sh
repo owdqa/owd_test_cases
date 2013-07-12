@@ -14,7 +14,7 @@ do
     num=$( echo "$line" | awk '{FS="\t"}{print $1}' | awk 'BEGIN{FS="-"}{print $NF}')
     desc=$(echo "$line" | awk 'BEGIN{FS="\t"}{print $NF}' | sed -e "s/(/\\\(/g" | sed -e "s/)/\\\)/g")
 
-    x=$(egrep -l "_Description *.*\]* *$desc\.*\"$" test_*.py)
+    x=$(egrep -l "_Description *.*\]* *$desc\.*\"$" $(find ../tests -name "test_*.py"))
 
     [ ! "$x" ] && printf "$num\t$desc\n"
 done | while read line2
