@@ -43,7 +43,7 @@ class test_main(GaiaTestCase):
         #
         # Enter a number in the target field.
         #
-        self.messages.addNumberInToField(self.target_telNum)
+        self.messages.addNumbersInToField([self.target_telNum])
 
         #
         # Tap the message area.

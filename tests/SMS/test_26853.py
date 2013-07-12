@@ -38,6 +38,7 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
+    
         #
         # Launch messages app & delete all Threads
         # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).

@@ -77,7 +77,6 @@ class test_main(GaiaTestCase):
         # 'Contacts' app!).
         #
         time.sleep(2)
-        self.marionette.switch_to_frame()
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
 
 #         #
@@ -90,6 +89,8 @@ class test_main(GaiaTestCase):
         #
         # Create SMS.
         #
+        x=self.UTILS.screenShotOnErr()
+        self.UTILS.logResult("info", "frame", x)
         self.messages.enterSMSMsg(self._TestMsg)
         
         #

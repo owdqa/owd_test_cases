@@ -41,7 +41,7 @@ class test_main(GaiaTestCase):
         # Send a message containing the required string 
         #
         self.messages.startNewSMS()
-        self.messages.addNumberInToField(self.telNum)
+        self.messages.addNumbersInToField([self.telNum])
         self.messages.enterSMSMsg(self._testMsg)
         self.messages.sendSMS()
         
