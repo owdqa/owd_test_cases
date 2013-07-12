@@ -46,7 +46,7 @@ class test_main(GaiaTestCase):
         #
         # Enter the number.
         #
-        self.messages.addNumberInToField(self.target_telNum)
+        self.messages.addNumbersInToField([self.target_telNum])
          
         #
         # Enter the message.
