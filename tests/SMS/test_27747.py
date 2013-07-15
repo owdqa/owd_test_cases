@@ -56,7 +56,7 @@ class test_main(GaiaTestCase):
         # Create SMS.
         #
         self.messages.startNewSMS()
-        self.messages.addNumberInToField(self.contact_1["tel"]["value"])
+        self.messages.addNumbersInToField([ self.contact_1["tel"]["value"] ])
         self.messages.enterSMSMsg(self._TestMsg)
         
         #

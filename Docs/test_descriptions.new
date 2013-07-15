@@ -162,6 +162,7 @@
 26781|Add and remove categories to everything.me grid
 26839|Send a new SMS by entering manually the phone number
 26840|Send a new SMS by entering manually the phone number (contact number)
+26841|Open SMS app after all sms were deleted or there is any sms
 26845|Add a contact and verify that the SMS list now shows the name
 26846|Delete a sms conversation
 26847|Select some conversations and press delete

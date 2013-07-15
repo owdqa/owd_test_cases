@@ -42,7 +42,7 @@ class test_main(GaiaTestCase):
         #
         self.messages.startNewSMS()
         self.messages.enterSMSMsg("Test message.")
-        self.messages.addNumberInToField(self.Contact_1["name"])
+        self.messages.addNumbersInToField( [ self.Contact_1["name"] ] )
 
         #
         # Verify the contact name is present before removing it.

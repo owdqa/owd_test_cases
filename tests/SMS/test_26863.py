@@ -36,7 +36,7 @@ class test_main(GaiaTestCase):
         #
         # Insert the phone number in the To field
         #
-        self.messages.addNumberInToField(self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM"))
+        self.messages.addNumbersInToField([ self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM") ])
 
         #
         # Create SMS.
