@@ -11,8 +11,11 @@ from OWDTestToolkit import *
 #
 class test_main(GaiaTestCase):
     
-    _link        = "www.google.com"
-    _TestMsg     = "Test " + _link + " this."
+    _link1        = "www.google.com"
+    _link2        = "www.hotmail.com"
+    _link3        = "www.wikipedia.org"
+    _TestMsg     = "Test " + _link1 +" "+ _link2 +" "+_link3 + " this."
+    
     
     def setUp(self):
         #
@@ -50,19 +53,44 @@ class test_main(GaiaTestCase):
         # and click the link.
         #
         x = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.TEST(x, "Received a message.", True)
+        self.UTILS.TEST(x, "Received a message.", True)         
         
-        x.find_element("tag name", "a").tap()
-                
+
+
+        self.tryTheLink(0, self._link1)
+        self.tryTheLink(1, self._link2)
+        self.tryTheLink(2, self._link3)
+
+    def tryTheLink(self, p_linkNum, p_link):
+        #
+        # Switch to messaging app.
+        #
+        self.messages.launch()
+        
+        self.messages.openThread(self.target_telNum)
+        #
+        # Get last message.
+        #
+        x = self.messages.waitForReceivedMsgInThisThread()
+ 
+        #
+        # Find all URLs
+        #
+        y=x.find_elements("tag name", "a")
+ 
+        #
+        # Tap on required link.
+        #
+        y[p_linkNum].tap()
+ 
         #
         # Give the browser time to start up, then
         # switch to the browser frame and check the page loaded.
         #
         time.sleep(2)
-        self.marionette.switch_to_frame()
         self.UTILS.switchToFrame(*DOM.Browser.frame_locator)
+    
+        self.UTILS.TEST(self.browser.check_page_loaded(p_link),
+                 "Web page " + str(p_linkNum+1) + " loaded correctly.")
         
-        self.UTILS.TEST(self.browser.check_page_loaded(self._link),
-                        "Web page loaded correctly.")
         
-

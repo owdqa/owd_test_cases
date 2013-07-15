@@ -165,6 +165,7 @@
 26841|Open SMS app after all sms were deleted or there is any sms
 26842|Open SMS app after send and receive some SMS from different numbers (no contacts)
 26843|Open SMS app after send and receive some SMS from different numbers (contacts)
+26844|Open SMS app after send and receive some SMS from different numbers (contacts and no contacts)
 26845|Add a contact and verify that the SMS list now shows the name
 26846|Delete a sms conversation
 26847|Select some conversations and press delete
@@ -196,6 +197,7 @@
 26966|Verify in a received SMS thread view that only valid URL appears highlighted
 26967|Verify that when tapping on the highlighted URL the browser is opened with the selected URL
 26968|Verify in a  SMS thread view that not valid URL (incompleted domain) doesn&#39;t appear highlighted
+26969|Verify that when tapping on different valid URL&#39;s contained in the same SMS,  the browser is opened each time with the selected URL
 26970|Verify that when tapping on the URL in the &quot;Edit Mode&quot;, the Browser APP is not launched 
 26971|Verify that in the sms thread view, valid e-mail addresses will be highlighted or shown with a special visual indication
 26975|Click on an email address, press on &quot;Add to existing contact&quot; (contacts lists is empty)
@@ -229,4 +231,4 @@
 27763|Verify that If the name of the contact is not empty: The name of the contact as the main header
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
-26844|Open SMS app after send and receive some SMS from different numbers (contacts and no contacts)
+26849|Receive sms while the user is in the SMS app (vibration alert)
