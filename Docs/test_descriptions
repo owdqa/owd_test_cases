@@ -163,9 +163,13 @@
 26839|Send a new SMS by entering manually the phone number
 26840|Send a new SMS by entering manually the phone number (contact number)
 26841|Open SMS app after all sms were deleted or there is any sms
+26842|Open SMS app after send and receive some SMS from different numbers (no contacts)
+26843|Open SMS app after send and receive some SMS from different numbers (contacts)
+26844|Open SMS app after send and receive some SMS from different numbers (contacts and no contacts)
 26845|Add a contact and verify that the SMS list now shows the name
 26846|Delete a sms conversation
 26847|Select some conversations and press delete
+26849|Receive sms while the user is in the SMS app (vibration alert)
 26851|Receive a sms while device is locked(Vibration alert), screen off
 26852|Delete a SMS in a conversation with several sms
 26853|Delete all SMS in a conversation with several sms

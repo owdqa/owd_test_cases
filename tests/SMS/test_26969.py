@@ -54,92 +54,43 @@ class test_main(GaiaTestCase):
         #
         x = self.messages.waitForReceivedMsgInThisThread()
         self.UTILS.TEST(x, "Received a message.", True)         
-             
+        
+
+
+        self.tryTheLink(0, self._link1)
+        self.tryTheLink(1, self._link2)
+        self.tryTheLink(2, self._link3)
+
+    def tryTheLink(self, p_linkNum, p_link):
+        #
+        # Switch to messaging app.
+        #
+        self.messages.launch()
+        
+        self.messages.openThread(self.target_telNum)
+        #
+        # Get last message.
+        #
+        x = self.messages.waitForReceivedMsgInThisThread()
+ 
         #
         # Find all URLs
         #
         y=x.find_elements("tag name", "a")
-        
+ 
         #
-        # Tap on first link
+        # Tap on required link.
         #
-        y[0].tap()
-                   
-        #
-        # Give the browser time to start up, then
-        # switch to the browser frame and check the page loaded.
-        #
-        time.sleep(2)
-        self.marionette.switch_to_frame()
-        self.UTILS.switchToFrame(*DOM.Browser.frame_locator)
-        
-        self.UTILS.TEST(self.browser.check_page_loaded(self._link1),
-                        "Web page 1 loaded correctly.")
-        
-        #
-        # Go to Homescreen
-        #
-        time.sleep(3)
-        self.UTILS.touchHomeButton()
-        
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
-        
-        #
-        # Go to the thread and received SMS.
-        #
-        self.messages.openThread(self.target_telNum)
-        x = self.messages.waitForReceivedMsgInThisThread()
-        y=x.find_elements("tag name", "a")
-        
-        #
-        # Tap on second link
-        #       
-        y[1].tap()
-        
+        y[p_linkNum].tap()
+ 
         #
         # Give the browser time to start up, then
         # switch to the browser frame and check the page loaded.
         #
         time.sleep(2)
-        self.marionette.switch_to_frame()
         self.UTILS.switchToFrame(*DOM.Browser.frame_locator)
+    
+        self.UTILS.TEST(self.browser.check_page_loaded(p_link),
+                 "Web page " + str(p_linkNum+1) + " loaded correctly.")
         
-        self.UTILS.TEST(self.browser.check_page_loaded(self._link2),
-                        "Web page 2 loaded correctly.")
         
-        #
-        # Go to Homescreen
-        #
-        time.sleep(3)
-        self.UTILS.touchHomeButton()
-        
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
-        
-        #
-        # Go to the thread and received SMS.
-        #
-        self.messages.openThread(self.target_telNum)
-        x = self.messages.waitForReceivedMsgInThisThread()
-        y=x.find_elements("tag name", "a")
-        
-        #
-        # Tap on third link
-        #       
-        y[2].tap()
-        
-        #
-        # Give the browser time to start up, then
-        # switch to the browser frame and check the page loaded.
-        #
-        time.sleep(2)
-        self.marionette.switch_to_frame()
-        self.UTILS.switchToFrame(*DOM.Browser.frame_locator)
-        
-        self.UTILS.TEST(self.browser.check_page_loaded(self._link3),
-                        "Web page 3 loaded correctly.")
