@@ -163,6 +163,7 @@
 26839|Send a new SMS by entering manually the phone number
 26840|Send a new SMS by entering manually the phone number (contact number)
 26841|Open SMS app after all sms were deleted or there is any sms
+26842|Open SMS app after send and receive some SMS from different numbers (no contacts)
 26845|Add a contact and verify that the SMS list now shows the name
 26846|Delete a sms conversation
 26847|Select some conversations and press delete
@@ -227,4 +228,4 @@
 27763|Verify that If the name of the contact is not empty: The name of the contact as the main header
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
-26842|Open SMS app after send and receive some SMS from different numbers (no contacts)
+26843|Open SMS app after send and receive some SMS from different numbers (contacts)
