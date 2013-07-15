@@ -339,6 +339,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26842</td><td  align=left>Open SMS app after send and receive some SMS from different numbers (no contacts)</td>
+  </tr>
+
+  <tr>
     <td  align=center>27735</td><td  align=left>Verify that If the name of the contact is not empty:  No carrier information is linked to the phone: Phone Number is shown instead of carrier as the secondary header</td>
   </tr>
 
