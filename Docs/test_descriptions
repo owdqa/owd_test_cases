@@ -165,6 +165,7 @@
 26841|Open SMS app after all sms were deleted or there is any sms
 26842|Open SMS app after send and receive some SMS from different numbers (no contacts)
 26843|Open SMS app after send and receive some SMS from different numbers (contacts)
+26844|Open SMS app after send and receive some SMS from different numbers (contacts and no contacts)
 26845|Add a contact and verify that the SMS list now shows the name
 26846|Delete a sms conversation
 26847|Select some conversations and press delete
