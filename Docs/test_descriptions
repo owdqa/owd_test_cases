@@ -175,6 +175,7 @@
 26853|Delete all SMS in a conversation with several sms
 26856|Try to send empty SMS
 26857|Verify that the SMS conversation window shows the message preview (more than one SMS message in the conversation thread)
+26858|Verify that the SMS message thread shows the timestamp with AM or PM
 26859|Verify the timestamp (received message) when the SMS has been sent from a different timezone
 26860|Send/Receive a new SMS when the conversation thread is empty
 26861|Verify the Carrier of number from which the contact is sending message to the user
@@ -201,6 +202,7 @@
 26969|Verify that when tapping on different valid URL&#39;s contained in the same SMS,  the browser is opened each time with the selected URL
 26970|Verify that when tapping on the URL in the &quot;Edit Mode&quot;, the Browser APP is not launched 
 26971|Verify that in the sms thread view, valid e-mail addresses will be highlighted or shown with a special visual indication
+26972|Click on an email address and create a new contact fillings all fileds
 26975|Click on an email address, press on &quot;Add to existing contact&quot; (contacts lists is empty)
 27735|Verify that If the name of the contact is not empty:  No carrier information is linked to the phone: Phone Number is shown instead of carrier as the secondary header
 27736|Press delete without any conversation selected
