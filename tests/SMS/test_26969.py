@@ -65,6 +65,7 @@ class test_main(GaiaTestCase):
         #
         # Switch to messaging app.
         #
+        self.apps.kill_all()
         self.messages.launch()
         
         self.messages.openThread(self.target_telNum)
