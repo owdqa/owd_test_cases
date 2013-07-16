@@ -93,6 +93,10 @@ class test_main(GaiaTestCase):
         self.contacts.addGalleryImageToContact(0)
 
         #
+        # Check the fields have been updated correctly.
+        #
+
+        #
         # Add another email address.
         #
         self.contacts.addAnotherEmailAddress(self.cont["email"]["value"])
