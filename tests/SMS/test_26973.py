@@ -29,7 +29,8 @@ class test_main(GaiaTestCase):
         
         self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
         
-        self.cont = MockContacts().Contact_1
+        self.cont = MockContacts().Contact_multipleEmails
+        self.data_layer.insert_contact(self.cont)
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -59,9 +60,9 @@ class test_main(GaiaTestCase):
         self.actions.long_press(_link,2).perform()
         
         #
-        # Click 'create new contact'.
+        # Click 'Add to an existing contact'.
         #
-        x = self.UTILS.getElement( ("xpath", "//button[text()='Create new contact']"),
+        x = self.UTILS.getElement( ("xpath", "//button[text()='Add to an existing contact']"),
                                    "Create new contact button")
         x.tap()
         
@@ -69,38 +70,22 @@ class test_main(GaiaTestCase):
         # Verify that the email is in the email field.
         #
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
-        x = self.UTILS.getElement(("id","email_0"), "Email field")
-        x_txt = x.get_attribute("value")
-        self.UTILS.TEST(x_txt == self.emailAddy, "Email is '" + self.emailAddy + "' (it was '" + x_txt + "')")
+        x = self.UTILS.getElement( ("xpath", "//p[@data-order='%s']" % self.cont["name"].replace(" ", "")),
+                                   "Search item")
+        x.tap()
+        
+        self.UTILS.waitForElements(("xpath","//input[@type='email' and @value='%s']" % self.emailAddy), "New email address")
         
         #
-        # Fill out all the other details.
+        # Add gallery image.
         #
-        contFields = self.contacts.getContactFields()
-        
-        #
-        # Put the contact details into each of the fields (this method
-        # clears each field first).
-        #
-        self.contacts.replaceStr(contFields['givenName'  ] , self.cont["givenName"])
-        self.contacts.replaceStr(contFields['familyName' ] , self.cont["familyName"])
-        self.contacts.replaceStr(contFields['tel'        ] , self.cont["tel"]["value"])
-        self.contacts.replaceStr(contFields['street'     ] , self.cont["adr"]["streetAddress"])
-        self.contacts.replaceStr(contFields['zip'        ] , self.cont["adr"]["postalCode"])
-        self.contacts.replaceStr(contFields['city'       ] , self.cont["adr"]["locality"])
-        self.contacts.replaceStr(contFields['country'    ] , self.cont["adr"]["countryName"])
-        self.contacts.replaceStr(contFields['comment'    ] , self.cont["comment"])
         self.contacts.addGalleryImageToContact(0)
 
-        #
-        # Add another email address.
-        #
-        self.contacts.addAnotherEmailAddress(self.cont["email"]["value"])
         
         #
-        # Press the Done button.
+        # Press the Update button.
         #
-        done_button = self.UTILS.getElement(DOM.Contacts.done_button, "'Done' button")
+        done_button = self.UTILS.getElement(DOM.Contacts.edit_update_button, "'Update' button")
         done_button.tap()
 
         #
