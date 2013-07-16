@@ -169,6 +169,7 @@
 26845|Add a contact and verify that the SMS list now shows the name
 26846|Delete a sms conversation
 26847|Select some conversations and press delete
+26849|Receive sms while the user is in the SMS app (vibration alert)
 26851|Receive a sms while device is locked(Vibration alert), screen off
 26852|Delete a SMS in a conversation with several sms
 26853|Delete all SMS in a conversation with several sms
@@ -231,4 +232,5 @@
 27763|Verify that If the name of the contact is not empty: The name of the contact as the main header
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
-26849|Receive sms while the user is in the SMS app (vibration alert)
+26972|Click on an email address and create a new contact fillings all fileds
+26858|Verify that the SMS message thread shows the timestamp with AM or PM
