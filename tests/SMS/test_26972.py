@@ -9,6 +9,7 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
+from tests._mock_data.contacts import MockContacts
 
 class test_main(GaiaTestCase):
     
@@ -21,9 +22,12 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.messages   = Messages(self)
+        self.contacts   = Contacts(self)
         
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
+        
+        self.cont = MockContacts().Contact_1
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -50,5 +54,60 @@ class test_main(GaiaTestCase):
         #
         _link = x.find_element("tag name", "a")
         self.actions    = Actions(self.marionette)
-        self.actions.long_press(_link).perform()
+        self.actions.long_press(_link,2).perform()
         
+        #
+        # Click 'create new contact'.
+        #
+        x = self.UTILS.getElement( ("xpath", "//button[text()='Create new contact']"),
+                                   "Create new contact button")
+        x.tap()
+        
+        #
+        # Verify that the email is in the email field.
+        #
+        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
+        x = self.UTILS.getElement(("id","email_0"), "Email field")
+        x_txt = x.get_attribute("value")
+        self.UTILS.TEST(x_txt == self.emailAddy, "Email is '" + self.emailAddy + "' (it was '" + x_txt + "')")
+        
+        #
+        # Fill out all the other details.
+        #
+        contFields = self.contacts.getContactFields()
+        
+        #
+        # Put the contact details into each of the fields (this method
+        # clears each field first).
+        #
+        self.contacts.replaceStr(contFields['givenName'  ] , self.cont["givenName"])
+        self.contacts.replaceStr(contFields['familyName' ] , self.cont["familyName"])
+        self.contacts.replaceStr(contFields['tel'        ] , self.cont["tel"]["value"])
+        self.contacts.replaceStr(contFields['street'     ] , self.cont["adr"]["streetAddress"])
+        self.contacts.replaceStr(contFields['zip'        ] , self.cont["adr"]["postalCode"])
+        self.contacts.replaceStr(contFields['city'       ] , self.cont["adr"]["locality"])
+        self.contacts.replaceStr(contFields['country'    ] , self.cont["adr"]["countryName"])
+        self.contacts.replaceStr(contFields['comment'    ] , self.cont["comment"])
+
+        #
+        # Add another email address.
+        #
+        self.contacts.addAnotherEmailAddress(self.cont["email"]["value"])
+        
+        #
+        # Press the Done button.
+        #
+        done_button = self.UTILS.getElement(DOM.Contacts.done_button, "'Done' button")
+        done_button.tap()
+
+        #
+        # Check that the contacts iframe is now gone.
+        #
+        self.marionette.switch_to_frame()
+        self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@src,'contacts')]"),
+                                       "Contact app iframe")
+        
+        #
+        # Now return to the SMS app.
+        #
+        self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
