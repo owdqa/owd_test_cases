@@ -36,6 +36,11 @@ class test_main(GaiaTestCase):
         
     def test_run(self):
         #
+        # Make sure we have no contacts.
+        #
+        self.data_layer.remove_all_contacts()
+        
+        #
         # Set up email account.
         #
         self.UTILS.getNetworkConnection()        

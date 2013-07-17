@@ -21,6 +21,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.messages   = Messages(self)
+        self.contacts   = Contacts(self)
+
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.num2 = "621234567"
         
@@ -32,7 +34,7 @@ class test_main(GaiaTestCase):
         # Make sure we have no contacts.
         #
         self.data_layer.remove_all_contacts()
-        
+                
         #
         # Launch messages app.
         #
@@ -45,21 +47,38 @@ class test_main(GaiaTestCase):
         x = self.messages.waitForReceivedMsgInThisThread()
         
         #
-        # Tap the header.
+        # Tap the header to create a contact.
         #
-        x = self.UTILS.getElement(DOM.Messages.message_header, "Thread header")
+        self.messages.header_createContact()
+        
+        #
+        # Cancel the action.
+        #
+        x = self.UTILS.getElement(DOM.Contacts.edit_cancel_button, "Cancel button")
         x.tap()
-
+        
         #
-        # Verify that each expected item is present.
+        # Wait for the contacts app to go away.
         #
-        self.UTILS.waitForElements(DOM.Messages.header_call_btn, "Call button")
-        self.UTILS.waitForElements(DOM.Messages.header_create_new_contact_btn, "Create new contact button")
-        self.UTILS.waitForElements(DOM.Messages.header_add_to_contact_btn, "Add to existing contact button")
-        self.UTILS.waitForElements(DOM.Messages.header_cancel_btn, "Cancel button")
+        self.marionette.switch_to_frame()
+        self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@src, '%s')]" % DOM.Contacts.frame_locator[1]),
+                                       "Contacts iframe")
         
+        #
+        # Kill the SMS app (and all others).
+        #
+        self.apps.kill_all()
         
+        #
+        # Open the contacts app.
+        #
+        self.contacts.launch()
         
+        #
+        # Verify that there are no contacts.
+        #
+        self.UTILS.waitForElements( ("xpath", "//p[contains(text(), 'No contacts')]"),
+                                    "No contacts message")
         
         
         
