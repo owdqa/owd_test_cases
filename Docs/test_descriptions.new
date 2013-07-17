@@ -213,6 +213,8 @@
 26983|Click on an email address when data and wifi are off
 26984|Verify that the action menu with the different options given to user is shown correctly
 26985|Verify that the action menu with the different options given to user is not shown when edit mode is enabled
+26986|Cancel creating a new contact
+26987|Accept creating a new contact
 27735|Verify that If the name of the contact is not empty:  No carrier information is linked to the phone: Phone Number is shown instead of carrier as the secondary header
 27736|Press delete without any conversation selected
 27737|Try to send a new SMS using the search option (in contact list window) in order to select an inexisting contact
@@ -243,5 +245,4 @@
 27763|Verify that If the name of the contact is not empty: The name of the contact as the main header
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
-26987|Accept creating a new contact
-26986|Cancel creating a new contact
+26974|Click on an email address and Add to an existing contact without email address added

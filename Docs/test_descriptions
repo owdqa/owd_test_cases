@@ -204,6 +204,7 @@
 26971|Verify that in the sms thread view, valid e-mail addresses will be highlighted or shown with a special visual indication
 26972|Click on an email address and create a new contact fillings all fileds
 26973|Click on an email address and Add to an existing contact with 3 emails address added
+26974|Click on an email address and Add to an existing contact without email address added
 26975|Click on an email address, press on &quot;Add to existing contact&quot; (contacts lists is empty)
 26976|Click on an email address in a sms which contains 3 emails addresses
 26979|Click on an email address and verify that email app is launched with &quot;To&quot; field pre-filled in with the selected e-mail address(no contact)
