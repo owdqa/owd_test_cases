@@ -203,7 +203,11 @@
 26970|Verify that when tapping on the URL in the &quot;Edit Mode&quot;, the Browser APP is not launched 
 26971|Verify that in the sms thread view, valid e-mail addresses will be highlighted or shown with a special visual indication
 26972|Click on an email address and create a new contact fillings all fileds
+26973|Click on an email address and Add to an existing contact with 3 emails address added
 26975|Click on an email address, press on &quot;Add to existing contact&quot; (contacts lists is empty)
+26976|Click on an email address in a sms which contains 3 emails addresses
+26979|Click on an email address and verify that email app is launched with &quot;To&quot; field pre-filled in with the selected e-mail address(no contact)
+26980|Click on an email address and verify that email app is launched
 27735|Verify that If the name of the contact is not empty:  No carrier information is linked to the phone: Phone Number is shown instead of carrier as the secondary header
 27736|Press delete without any conversation selected
 27737|Try to send a new SMS using the search option (in contact list window) in order to select an inexisting contact
@@ -234,7 +238,4 @@
 27763|Verify that If the name of the contact is not empty: The name of the contact as the main header
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
-26976|Click on an email address in a sms which contains 3 emails addresses
-26980|Click on an email address and verify that email app is launched
-26979|Click on an email address and verify that email app is launched with &quot;To&quot; field pre-filled in with the selected e-mail address(no contact)
-26973|Click on an email address and Add to an existing contact with 3 emails address added
+26981|Verify that an user can not click on an email address in the edit mode
