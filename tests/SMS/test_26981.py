@@ -36,11 +36,6 @@ class test_main(GaiaTestCase):
         
     def test_run(self):
         #
-        # Make sure we have no contacts.
-        #
-        self.data_layer.remove_all_contacts()
-        
-        #
         # Set up email account.
         #
         self.UTILS.getNetworkConnection()
@@ -68,7 +63,7 @@ class test_main(GaiaTestCase):
         #
         # Get the last message.
         #
-        x = self.UTILS.getElements(DOM.Messages.message_list, "Messages")[-1]
+        x = self.UTILS.getElements(DOM.Messages.message_list, "Messages", False)[-1]
         
         #
         # Verify that the email address does not open the email app.
