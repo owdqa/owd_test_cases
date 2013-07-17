@@ -1,0 +1,15 @@
+running webserver on http://192.168.1.132:60730/
+TEST-START test_26984.py
+test_run (test_26984.test_main) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 37.610s
+
+OK
+
+SUMMARY
+-------
+passed: 1
+failed: 0
+todo: 0
+starting httpd

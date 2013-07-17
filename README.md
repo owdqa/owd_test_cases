@@ -215,6 +215,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26983</td><td  align=left>Click on an email address when data and wifi are off</td>
+  </tr>
+
+  <tr>
     <td  align=center>26840</td><td  align=left>Send a new SMS by entering manually the phone number (contact number)</td>
   </tr>
 
@@ -320,6 +324,10 @@ TESTS COVERED
 
   <tr>
     <td  align=center>26845</td><td  align=left>Add a contact and verify that the SMS list now shows the name</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26984</td><td  align=left>Verify that the action menu with the different options given to user is shown correctly</td>
   </tr>
 
   <tr>

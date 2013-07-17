@@ -1,0 +1,145 @@
+a:link    {color:#0000ff;text-decoration:none;}
+a:visited {color:#0000ff;text-decoration:none;}
+a:hover   {color:#0000ff;text-decoration:none;}
+a:active  {color:#0000ff;text-decoration:none;}
+
+.left     { text-align: left;   }
+.right    { text-align: right;  }
+.center   { text-align: center; }
+.width100 { width: 100%;        }
+.size10   { font-size: 10px;    }
+.padding5 { padding:5px;        }
+.pass     { background-color: #99ffcc; color:#006600; }
+.fail     { background-color: #ffaaaa; color:#660000; }
+.neutral  { background-color: #ffffaa; color:#222222; }
+.black    { color: black;       }
+
+/* High-level settings. */
+body{  background-color:#ffffff;}
+
+table{ font-family:"sans";      }
+
+tr{    background-color:#ffffff;}
+
+td{    font-size:12px;
+       font-weight:normal;
+       text-align:left;
+       vertical-center;
+}
+
+
+
+/* Test case run details pages (gives us the indents). */
+pre{
+    font-family:"monospace";
+    font-weight:"normal";
+    font-size:11px;
+}
+
+
+
+/* Main header info (build config details etc..). */
+td.build_header{
+    padding: 10px;
+    padding-bottom: 5px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 18px;
+}
+td.build_detail{
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.invisible{
+    background:none;
+    border: 0px solid;
+    color:inherit;
+}
+table.extra_info{
+    background-color: #ffffff; 
+    padding: 3px;
+}
+
+td.extra_info_ok, td.extra_info_warnings{
+    color:#0000ee;
+    text-align:center;
+}
+tr.setup_warnings,tr.setup_ok{
+    background-color: #ffffff;
+}
+tr.setup_warnings{
+    outline:1px solid #ff0000;
+    color:#ff0000;
+}
+tr.setup_ok{
+    outline:1px solid #ffffff;
+    color:#11aa33;
+}
+td.extra_info_ok{
+    background-color: #eeffee;
+    padding: 4px;
+    border: 1px solid #00ff00;
+}
+td.extra_info_warnings{
+    background-color: #ffeeee;
+    padding: 4px;
+    border: 1px solid #ff0000;
+}
+
+
+
+/* Summary types. */
+table.summary_types{
+    background-color: #ffffff;
+    border-collapse:collapse;
+    border: 0px solid;
+}
+td.summary_type{
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    border:1px solid #ffffff;
+    text-align: left;
+    color: #ffffff;
+    font-family:"sans";
+    font-size:12px;
+    font-weight: bold;
+}
+td.with_data{
+    background:#6666ff;
+    cursor:pointer;
+}
+td.with_data:hover{
+    border:2px solid #0000ff;
+}
+td.without_data{
+    background-color:#eeeeee;
+    color:#888888;
+}
+td.special_notice{
+    font-size:17px;
+}
+
+
+/* Summary details. */
+td.summary_table{
+    padding: 0px;
+    padding-left: 15px;
+    padding-bottom: 15px;
+    border:0px solid;
+}
+table.summary{
+    background-color: inherited;
+    border: 1px solid #ffffff;
+    border-left: 1px solid #0000ff;
+    border-bottom: 1px solid #0000ff;
+    color: #000000;
+}
+th.sum_table_header{
+    background-color:#eeeeee;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
