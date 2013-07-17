@@ -195,6 +195,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26977</td><td  align=left>Verify that when in edit mode, adding email contact from sms is disabled</td>
+  </tr>
+
+  <tr>
     <td  align=center>26970</td><td  align=left>Verify that when tapping on the URL in the &quot;Edit Mode&quot;, the Browser APP is not launched </td>
   </tr>
 
@@ -268,6 +272,10 @@ TESTS COVERED
 
   <tr>
     <td  align=center>26845</td><td  align=left>Add a contact and verify that the SMS list now shows the name</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26988</td><td  align=left>Accept Adding the phone number to an existing contact</td>
   </tr>
 
   <tr>
