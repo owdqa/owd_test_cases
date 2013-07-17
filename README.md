@@ -495,6 +495,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26988</td><td  align=left>Accept Adding the phone number to an existing contact</td>
+  </tr>
+
+  <tr>
     <td  align=center>26326</td><td  align=left>Receive a sms with vibration (device unlocked) &amp; confirm notification - verify that the notification is fired and that you can see the message received from the other phone</td>
   </tr>
 
