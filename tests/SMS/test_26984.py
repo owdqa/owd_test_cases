@@ -28,10 +28,6 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
-        #
-        # Make sure we have no contacts.
-        #
-        self.data_layer.remove_all_contacts()
         
         #
         # Launch messages app.

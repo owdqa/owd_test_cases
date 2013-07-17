@@ -27,7 +27,6 @@ class test_main(GaiaTestCase):
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
         self.cont = MockContacts().Contact_1
-        self.data_layer.remove_all_contacts()
         self.data_layer.insert_contact(self.cont)        
         
     def tearDown(self):

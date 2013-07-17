@@ -67,3 +67,4 @@ class test_main(GaiaTestCase):
         #
         time.sleep(2)
         self.phone.hangUp()
+        self.data_layer.kill_active_call()
