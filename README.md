@@ -247,6 +247,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26987</td><td  align=left>Accept creating a new contact</td>
+  </tr>
+
+  <tr>
     <td  align=center>27756</td><td  align=left>Send a new SMS using the option of reduced list of favourite contacts</td>
   </tr>
 
@@ -524,6 +528,10 @@ TESTS COVERED
 
   <tr>
     <td  align=center>26966</td><td  align=left>Verify in a received SMS thread view that only valid URL appears highlighted</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26986</td><td  align=left>Cancel creating a new contact</td>
   </tr>
 
   <tr>
