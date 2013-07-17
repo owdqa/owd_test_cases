@@ -209,6 +209,7 @@
 26979|Click on an email address and verify that email app is launched with &quot;To&quot; field pre-filled in with the selected e-mail address(no contact)
 26980|Click on an email address and verify that email app is launched
 26981|Verify that an user can not click on an email address in the edit mode
+26982|Click on an email address in a sms who contains 3 emails addresses and verify the email in email app
 27735|Verify that If the name of the contact is not empty:  No carrier information is linked to the phone: Phone Number is shown instead of carrier as the secondary header
 27736|Press delete without any conversation selected
 27737|Try to send a new SMS using the search option (in contact list window) in order to select an inexisting contact

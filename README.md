@@ -267,6 +267,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26982</td><td  align=left>Click on an email address in a sms who contains 3 emails addresses and verify the email in email app</td>
+  </tr>
+
+  <tr>
     <td  align=center>27742</td><td  align=left>Write a sms with multiple spaces between words (ex; 1 2 3 4 5)</td>
   </tr>
 
