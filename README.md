@@ -387,6 +387,14 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26976</td><td  align=left>Click on an email address in a sms which contains 3 emails addresses</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26980</td><td  align=left>Click on an email address and verify that email app is launched</td>
+  </tr>
+
+  <tr>
     <td  align=center>26839</td><td  align=left>Send a new SMS by entering manually the phone number</td>
   </tr>
 
@@ -404,6 +412,10 @@ TESTS COVERED
 
   <tr>
     <td  align=center>26841</td><td  align=left>Open SMS app after all sms were deleted or there is any sms</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26979</td><td  align=left>Click on an email address and verify that email app is launched with &quot;To&quot; field pre-filled in with the selected e-mail address(no contact)</td>
   </tr>
 
   <tr>
@@ -468,6 +480,10 @@ TESTS COVERED
 
   <tr>
     <td  align=center>27755</td><td  align=left>Verify that the SMS conversation window shows the message preview (only one incoming SMS message in the conversation thread)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26973</td><td  align=left>Click on an email address and Add to an existing contact with 3 emails address added</td>
   </tr>
 
   <tr>
