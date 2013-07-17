@@ -215,6 +215,7 @@
 26985|Verify that the action menu with the different options given to user is not shown when edit mode is enabled
 26986|Cancel creating a new contact
 26987|Accept creating a new contact
+26988|Accept Adding the phone number to an existing contact
 27735|Verify that If the name of the contact is not empty:  No carrier information is linked to the phone: Phone Number is shown instead of carrier as the secondary header
 27736|Press delete without any conversation selected
 27737|Try to send a new SMS using the search option (in contact list window) in order to select an inexisting contact
