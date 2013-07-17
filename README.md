@@ -515,6 +515,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26985</td><td  align=left>Verify that the action menu with the different options given to user is not shown when edit mode is enabled</td>
+  </tr>
+
+  <tr>
     <td  align=center>27747</td><td  align=left>Verify that  If the name of the contact is empty: Phone Number as the main header.</td>
   </tr>
 
