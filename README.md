@@ -547,6 +547,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26990</td><td  align=left>Tap on the number (short number) shown on the header to launch the different options given </td>
+  </tr>
+
+  <tr>
     <td  align=center>26336</td><td  align=left>Install a market installed hosted app - verify the app is installed with the right icon</td>
   </tr>
 </table>
