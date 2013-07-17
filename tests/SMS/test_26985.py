@@ -21,7 +21,6 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.messages   = Messages(self)
-        self.Email      = Email(self)
 
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.num2 = "621234567"
@@ -30,6 +29,11 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
+        #
+        # Make sure we have no contacts.
+        #
+        self.data_layer.remove_all_contacts()
+        
         #
         # Launch messages app.
         #
