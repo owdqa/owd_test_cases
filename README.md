@@ -407,6 +407,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26981</td><td  align=left>Verify that an user can not click on an email address in the edit mode</td>
+  </tr>
+
+  <tr>
     <td  align=center>26844</td><td  align=left>Open SMS app after send and receive some SMS from different numbers (contacts and no contacts)</td>
   </tr>
 
