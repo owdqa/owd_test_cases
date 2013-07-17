@@ -247,6 +247,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26991</td><td  align=left>Tap on the header showing the name of a contact </td>
+  </tr>
+
+  <tr>
     <td  align=center>26987</td><td  align=left>Accept creating a new contact</td>
   </tr>
 
