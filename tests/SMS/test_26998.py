@@ -38,24 +38,20 @@ class test_main(GaiaTestCase):
         self.messages.createAndSendSMS([self.num1], test_str)
         x = self.messages.waitForReceivedMsgInThisThread()
         
+                #
+        # Long press the emedded number link.
         #
-        # Check how many are links.
+        y = x.find_element("tag name", "a")  
+        self.actions    = Actions(self.marionette)
+        self.actions.long_press(y,2).perform()
+        
+        #
+        # Verufy everything's there.
         #
         fnam = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot (for reference):", fnam)
 
-        y = x.find_elements("tag name", "a")  
-                
-        bool4OK = True
-        bool7OK = True
-        for i in y:
-            self.UTILS.logResult("info", "FYI: %s is highlighted." % i.text)
-            if i.text == "1234":
-                bool4OK = False
-            if i.text == "1234567":
-                bool7OK = False
-                
-        self.UTILS.TEST(bool4OK, "The 4-digit number is not highlighted.")
-        self.UTILS.TEST(bool7OK, "The 7-digit number is not highlighted.")
+        self.UTILS.waitForElements(DOM.Messages.header_create_new_contact_btn, "Create new contact button")
+        self.UTILS.waitForElements(DOM.Messages.header_add_to_contact_btn, "Add to existing contact button")
+        self.UTILS.waitForElements(DOM.Messages.header_cancel_btn, "Cancel button")
 
-        
