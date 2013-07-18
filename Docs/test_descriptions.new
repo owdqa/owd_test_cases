@@ -250,3 +250,6 @@
 27763|Verify that If the name of the contact is not empty: The name of the contact as the main header
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
+26995|Verify in a sent SMS thread view that not completed or correct phone numbers (&lt; 8 DIGITS) doesn't appear highlighted
+26998|Verify that when long-pressing on the phone number, a Dialog Menu opens up with the correct options
+26994|Verify in a sent SMS thread view that only completed and correct phone numbers appears highlighted (&gt; 7 DIGITS)
