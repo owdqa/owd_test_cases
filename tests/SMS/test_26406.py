@@ -39,19 +39,16 @@ class test_main(GaiaTestCase):
         # Start a new SMS and add the message and contact name.
         #
         self.messages.startNewSMS()
+    
         self.messages.selectAddContactButton()
         self.contacts.selectContactFromAll(self.cont["familyName"])
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
-        
-        #
-        # Verify the contact name is present before removing it.
-        #
         self.messages.checkIsInToField(self.cont["name"], True)
         
         #
         # Remove it.
         #
-        self.messages.removeFromToField(self.cont["name"])
+        self.messages.removeContactFromToField(self.cont["name"])
         
         #
         # Verify the contact name is present before removing it.
