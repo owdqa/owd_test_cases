@@ -355,6 +355,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>27002</td><td  align=left>Verify that when tapping in a SMS with several valid phone numbers, the dialer is launched with the phone number tapped on pre-filled in</td>
+  </tr>
+
+  <tr>
     <td  align=center>26859</td><td  align=left>Verify the timestamp (received message) when the SMS has been sent from a different timezone</td>
   </tr>
 

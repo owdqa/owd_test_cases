@@ -54,7 +54,7 @@ class test_main(GaiaTestCase):
         #
         # Dialler is started with the number already filled in.
         #
-        x = self.UTILS.getElement( ('id', 'phone-number-view'), "Phone number")
+        x = self.UTILS.getElement(DOM.Phone.phone_number, "Phone number")
         self.UTILS.TEST(self.num1 in x.get_attribute("value"), 
                         "The phone number contains '%s' (it was '%s')." % (self.num1, x.get_attribute("value")))
 
