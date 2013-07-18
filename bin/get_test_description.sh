@@ -17,4 +17,8 @@ wget -O $OUTFILE --no-check-certificate ${BASE_URL}${I}?os_authType=basic --user
 DESC=$(grep "<title>" $OUTFILE | sed -e "s/^.*\][ \t]*\(.*\) - Jira.*$/\1/")
 DESC=${DESC:-"(No description found in ${BASE_URL}${I})"}
 
-echo "$DESC"
+#
+# This &#39; character is what is returned by wget if there is a " ' " in the description.
+# It messes up our description in the tets details files, so change it back with sed.
+#
+echo "$DESC" | sed "s/&#39;/'/g"

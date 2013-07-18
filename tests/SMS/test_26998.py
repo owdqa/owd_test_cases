@@ -12,8 +12,6 @@ from OWDTestToolkit import *
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
-    
     def setUp(self):
         #
         # Set up child objects...
@@ -22,7 +20,6 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.messages   = Messages(self)
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.num2 = "621234567"
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -37,25 +34,24 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], "Test %s number." % self.num2)
+        test_str = "Nine 123456789 numbers."
+        self.messages.createAndSendSMS([self.num1], test_str)
         x = self.messages.waitForReceivedMsgInThisThread()
         
+                #
+        # Long press the emedded number link.
         #
-        # Tap the header.
+        y = x.find_element("tag name", "a")  
+        self.actions    = Actions(self.marionette)
+        self.actions.long_press(y,2).perform()
+        
         #
-        x = self.UTILS.getElement(DOM.Messages.message_header, "Thread header")
-        x.tap()
+        # Verufy everything's there.
+        #
+        fnam = self.UTILS.screenShotOnErr()
+        self.UTILS.logResult("info", "Screenshot (for reference):", fnam)
 
-        #
-        # Verify that each expected item is present.
-        #
-        self.UTILS.waitForElements(DOM.Messages.header_call_btn, "Call button")
         self.UTILS.waitForElements(DOM.Messages.header_create_new_contact_btn, "Create new contact button")
         self.UTILS.waitForElements(DOM.Messages.header_add_to_contact_btn, "Add to existing contact button")
         self.UTILS.waitForElements(DOM.Messages.header_cancel_btn, "Cancel button")
-        
-        
-        
-        
-        
-        
+

@@ -26,10 +26,8 @@ class test_main(GaiaTestCase):
         #
         # Import contact (adjust the correct number).
         #
-        self.Contact_1 = MockContacts().Contact_1
-        self.Contact_1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Using target telephone number " + self.Contact_1["tel"]["value"])
-        self.data_layer.insert_contact(self.Contact_1)
+        self.cont = MockContacts().Contact_1
+        self.data_layer.insert_contact(self.cont)
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -41,24 +39,20 @@ class test_main(GaiaTestCase):
         # Start a new SMS and add the message and contact name.
         #
         self.messages.startNewSMS()
-        self.messages.enterSMSMsg("Test message.")
-        self.messages.addNumbersInToField( [ self.Contact_1["name"] ] )
-
-        #
-        # Verify the contact name is present before removing it.
-        #
-        self.messages.checkIsInToField(self.Contact_1["name"], True)
+    
+        self.messages.selectAddContactButton()
+        self.contacts.selectContactFromAll(self.cont["familyName"])
+        self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
+        self.messages.checkIsInToField(self.cont["name"], True)
         
         #
         # Remove it.
         #
-        self.messages.removeFromToField(self.Contact_1["name"])
-        x = self.UTILS.getElement( ("xpath", "//button[text()='OK']"), "Ok confirmation button.")
-        x.tap()
+        self.messages.removeContactFromToField(self.cont["name"])
         
         #
         # Verify the contact name is present before removing it.
         #
-        self.messages.checkIsInToField(self.Contact_1["name"], False)
+        self.messages.checkIsInToField(self.cont["name"], False)
         
         

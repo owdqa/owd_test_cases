@@ -12,8 +12,6 @@ from OWDTestToolkit import *
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
-    
     def setUp(self):
         #
         # Set up child objects...
@@ -22,14 +20,13 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.messages   = Messages(self)
         self.contacts   = Contacts(self)
-
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.num2 = "621234567"
         
     def tearDown(self):
         self.UTILS.reportResults()
         
     def test_run(self):
+        
         #
         # Launch messages app.
         #
@@ -38,13 +35,23 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], "Test %s number." % self.num2)
+        test_str = "Nine 123456789 numbers."
+        self.messages.createAndSendSMS([self.num1], test_str)
         x = self.messages.waitForReceivedMsgInThisThread()
         
         #
-        # Tap the header to create a contact.
+        # Long press the emedded number link.
         #
-        self.messages.header_createContact()
+        y = x.find_element("tag name", "a")  
+        self.actions    = Actions(self.marionette)
+        self.actions.long_press(y,2).perform()
+        
+        #
+        # Select create new contact.
+        #
+        x = self.UTILS.getElement(DOM.Messages.header_create_new_contact_btn, "Create new contact button")
+        x.tap()
+        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
         
         #
         # Cancel the action.
@@ -74,6 +81,3 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.waitForElements( ("xpath", "//p[contains(text(), 'No contacts')]"),
                                     "No contacts message")
-        
-        
-        

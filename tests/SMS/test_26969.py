@@ -47,28 +47,23 @@ class test_main(GaiaTestCase):
         # Create and send a new test message.
         #
         self.messages.createAndSendSMS([self.target_telNum], self._TestMsg)
-          
-        #
-        # Wait for the last message in this thread to be a 'received' one
-        # and click the link.
-        #
-        x = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.TEST(x, "Received a message.", True)         
+        self.messages.waitForReceivedMsgInThisThread()
         
-
-
         self.tryTheLink(0, self._link1)
         self.tryTheLink(1, self._link2)
         self.tryTheLink(2, self._link3)
 
     def tryTheLink(self, p_linkNum, p_link):
+        self.UTILS.logResult("info", "Tapping <b>%s</b> ..." % p_link)
+        
         #
         # Switch to messaging app.
         #
         self.apps.kill_all()
+        time.sleep(2)
         self.messages.launch()
-        
         self.messages.openThread(self.target_telNum)
+
         #
         # Get last message.
         #
@@ -90,8 +85,6 @@ class test_main(GaiaTestCase):
         #
         time.sleep(2)
         self.UTILS.switchToFrame(*DOM.Browser.frame_locator)
-    
+        
         self.UTILS.TEST(self.browser.check_page_loaded(p_link),
                  "Web page " + str(p_linkNum+1) + " loaded correctly.")
-        
-        

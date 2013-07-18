@@ -9,6 +9,7 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
+from tests._mock_data.contacts import MockContacts
 
 class test_main(GaiaTestCase):
     
@@ -21,8 +22,13 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.messages   = Messages(self)
+        self.phone      = Phone(self)
+
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.num2 = "621234567"
+
+        self.cont = MockContacts().Contact_1
+        self.cont["tel"]["value"] = self.num1
+        self.data_layer.insert_contact(self.cont)        
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -37,25 +43,28 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], "Test %s number." % self.num2)
+        self.messages.createAndSendSMS([self.num1], "Test message.")
         x = self.messages.waitForReceivedMsgInThisThread()
         
         #
-        # Tap the header.
+        # Tap the header to call.
         #
-        x = self.UTILS.getElement(DOM.Messages.message_header, "Thread header")
-        x.tap()
+        self.messages.header_call()
+        
+        #
+        # Dialler is started with the number already filled in.
+        #
+        x = self.UTILS.getElement(DOM.Phone.phone_number, "Phone number")
+        self.UTILS.TEST(self.num1 in x.get_attribute("value"), 
+                        "The phone number contains '%s' (it was '%s')." % (self.num1, x.get_attribute("value")))
 
         #
-        # Verify that each expected item is present.
+        # Dial the number.
         #
-        self.UTILS.waitForElements(DOM.Messages.header_call_btn, "Call button")
-        self.UTILS.waitForElements(DOM.Messages.header_create_new_contact_btn, "Create new contact button")
-        self.UTILS.waitForElements(DOM.Messages.header_add_to_contact_btn, "Add to existing contact button")
-        self.UTILS.waitForElements(DOM.Messages.header_cancel_btn, "Cancel button")
-        
-        
-        
-        
-        
-        
+        self.phone.callThisNumber()
+
+        #
+        # Wait 2 seconds, then hangup.
+        #
+        time.sleep(2)
+        self.data_layer.kill_active_call()

@@ -12,8 +12,6 @@ from OWDTestToolkit import *
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
-    
     def setUp(self):
         #
         # Set up child objects...
@@ -22,13 +20,13 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.messages   = Messages(self)
         self.contacts   = Contacts(self)
-
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         
     def tearDown(self):
         self.UTILS.reportResults()
         
     def test_run(self):
+        
         #
         # Launch messages app.
         #
@@ -37,46 +35,50 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], "Test message.")
+        test_str = "Nine 123456789 numbers."
+        self.messages.createAndSendSMS([self.num1], test_str)
         x = self.messages.waitForReceivedMsgInThisThread()
         
         #
-        # Tap the header to create a contact.
+        # Long press the emedded number link.
         #
-        self.messages.header_createContact()
+        y = x.find_element("tag name", "a")  
+        self.actions    = Actions(self.marionette)
+        self.actions.long_press(y,2).perform()
         
         #
-        # Fill in some details.
+        # Select create new contact.
         #
+        x = self.UTILS.getElement(DOM.Messages.header_create_new_contact_btn, "Create new contact button")
+        x.tap()
+        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
+        
+        
         contFields = self.contacts.getContactFields()
-        self.contacts.replaceStr(contFields['givenName'  ] , "Test")
+        
+        #
+        # Verify the number is in the numbe rfield.
+        #
+        self.UTILS.TEST("123456789" in contFields['tel'].get_attribute("value"),
+                        "Our target number is in the telephone field (it was %s)." % contFields['tel'].get_attribute("value"))
+        
+        #
+        # Put the contact details into each of the fields (this method
+        # clears each field first).
+        #
+        self.contacts.replaceStr(contFields['givenName'  ] , "Test2700")
         self.contacts.replaceStr(contFields['familyName' ] , "Testerton")
-
-        #
-        # Press the Done button.
-        #
         x = self.UTILS.getElement(DOM.Contacts.done_button, "Done button")
         x.tap()
         
         #
-        # Wait for contacts app to close and return to sms app.
+        # Wait for the contacts app to go away.
         #
         self.marionette.switch_to_frame()
         self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@src, '%s')]" % DOM.Contacts.frame_locator[1]),
                                        "Contacts iframe")
         
+        #
+        # Verify that the sms app is still running.
+        #
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
-        
-        #
-        # Verify the header is now the name,
-        #
-        x = self.UTILS.getElement(DOM.Messages.message_header, "Message header")
-        self.UTILS.TEST(x.text == "Test Testerton", 
-                        "Message header has been changed to match the contact (it was '%s')." % x.text)
-        
-        #
-        # Go back to the threads view and check the message name there too.
-        #
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
-        self.messages.openThread("Test Testerton")

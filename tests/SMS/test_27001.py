@@ -13,8 +13,6 @@ from tests._mock_data.contacts import MockContacts
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
-    
     def setUp(self):
         #
         # Set up child objects...
@@ -23,12 +21,11 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.messages   = Messages(self)
         self.contacts   = Contacts(self)
-
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-
+        
         self.cont = MockContacts().Contact_1
         self.data_layer.insert_contact(self.cont)        
-        
+
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -42,13 +39,23 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], "Test message.")
+        test_str = "Nine 123456789 numbers."
+        self.messages.createAndSendSMS([self.num1], test_str)
         x = self.messages.waitForReceivedMsgInThisThread()
         
         #
-        # Tap the header to create a contact.
+        # Long press the emedded number link.
         #
-        self.messages.header_addToContact()
+        y = x.find_element("tag name", "a")  
+        self.actions    = Actions(self.marionette)
+        self.actions.long_press(y,2).perform()
+        
+        #
+        # Select create new contact.
+        #
+        x = self.UTILS.getElement(DOM.Messages.header_add_to_contact_btn, "Add to existing contact button")
+        x.tap()
+        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
         
         #
         # Select our contact.
@@ -59,11 +66,12 @@ class test_main(GaiaTestCase):
         # Check the phone number.
         #
         x = self.UTILS.getElement(("id", "number_1"), "2nd phone number.")
-        self.UTILS.TEST(x.get_attribute("value") == self.num1,
-                        "Contact now has a 2nd number which is '%s' (it was '%s')." % (self.num1, x.get_attribute("value")))
+        self.UTILS.TEST(x.get_attribute("value") == "123456789",
+                        "Contact now has a 2nd number which is '123456789' (it was '%s')." % x.get_attribute("value"))
+        
         
         #
-        # Press the Done button.
+        # Press the update button.
         #
         x = self.UTILS.getElement(DOM.Contacts.edit_update_button, "Update button")
         x.tap()
@@ -76,17 +84,3 @@ class test_main(GaiaTestCase):
                                        "Contacts iframe")
         
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
-        
-        #
-        # Verify the header is now the name,
-        #
-        x = self.UTILS.getElement(DOM.Messages.message_header, "Message header")
-        self.UTILS.TEST(x.text == self.cont["name"], 
-                        "Message header has been changed to match the contact (it was '%s')." % x.text)
-        
-        #
-        # Go back to the threads view and check the message name there too.
-        #
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
-        self.messages.openThread(self.cont["name"])

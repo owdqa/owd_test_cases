@@ -91,7 +91,11 @@ TESTS COVERED
   </tr>
 
   <tr>
+
     <td  align=center>27748</td><td  align=left>Verify the textfield item</td>
+
+    <td  align=center>26883</td><td  align=left>Verify that the user can send a SMS from a contact details - SMS conversation doesn't exist</td>
+
   </tr>
 
   <tr>
@@ -223,7 +227,15 @@ TESTS COVERED
   </tr>
 
   <tr>
+<<<<<<< HEAD
     <td  align=center>26863</td><td  align=left>Try send a sms in an existing thread while airplane is enabled</td>
+=======
+    <td  align=center>27001</td><td  align=left>Verify that if the user accepts  &quot;Add to an existing contact&quot; from the “Edit contact” form, contact is correctly updated and he is returned to the SMS thread view</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26843</td><td  align=left>Open SMS app after send and receive some SMS from different numbers (contacts)</td>
+>>>>>>> 40c7f2a67c7a723ed348afb42e134ae039d6199d
   </tr>
 
   <tr>
@@ -235,7 +247,15 @@ TESTS COVERED
   </tr>
 
   <tr>
+<<<<<<< HEAD
     <td  align=center>27736</td><td  align=left>Press delete without any conversation selected</td>
+=======
+    <td  align=center>28100</td><td  align=left>Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:&quot;Test1 656565678 number&quot;)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27765</td><td  align=left>Send a new SMS using the search option (in contact list window) in order to select an existing contact</td>
+>>>>>>> 40c7f2a67c7a723ed348afb42e134ae039d6199d
   </tr>
 
   <tr>
@@ -247,7 +267,15 @@ TESTS COVERED
   </tr>
 
   <tr>
+<<<<<<< HEAD
     <td  align=center>26741</td><td  align=left>Email containing a URL</td>
+=======
+    <td  align=center>26991</td><td  align=left>Tap on the header showing the name of a contact </td>
+  </tr>
+
+  <tr>
+    <td  align=center>26987</td><td  align=left>Accept creating a new contact</td>
+>>>>>>> 40c7f2a67c7a723ed348afb42e134ae039d6199d
   </tr>
 
   <tr>
@@ -279,7 +307,15 @@ TESTS COVERED
   </tr>
 
   <tr>
+<<<<<<< HEAD
     <td  align=center>26988</td><td  align=left>Accept Adding the phone number to an existing contact</td>
+=======
+    <td  align=center>26999</td><td  align=left>Verify the user can cancel the &quot;Create new contact&quot; operation from the Contacts APP returning to the SMS thread view</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27742</td><td  align=left>Write a sms with multiple spaces between words (ex; 1 2 3 4 5)</td>
+>>>>>>> 40c7f2a67c7a723ed348afb42e134ae039d6199d
   </tr>
 
   <tr>
@@ -299,7 +335,11 @@ TESTS COVERED
   </tr>
 
   <tr>
+<<<<<<< HEAD
     <td  align=center>26973</td><td  align=left>Click on an email address and Add to an existing contact with 3 emails address added</td>
+=======
+    <td  align=center>26969</td><td  align=left>Verify that when tapping on different valid URL's contained in the same SMS,  the browser is opened each time with the selected URL</td>
+>>>>>>> 40c7f2a67c7a723ed348afb42e134ae039d6199d
   </tr>
 
   <tr>
@@ -343,7 +383,15 @@ TESTS COVERED
   </tr>
 
   <tr>
+<<<<<<< HEAD
     <td  align=center>27743</td><td  align=left>Edit a contact name and verify that the SMS list now shows the new name</td>
+=======
+    <td  align=center>27002</td><td  align=left>Verify that when tapping in a SMS with several valid phone numbers, the dialer is launched with the phone number tapped on pre-filled in</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26859</td><td  align=left>Verify the timestamp (received message) when the SMS has been sent from a different timezone</td>
+>>>>>>> 40c7f2a67c7a723ed348afb42e134ae039d6199d
   </tr>
 
   <tr>
@@ -411,7 +459,15 @@ TESTS COVERED
   </tr>
 
   <tr>
+<<<<<<< HEAD
     <td  align=center>26343</td><td  align=left>With two apps already running, launch the card view, kill one app process, and launch the other - verify the app killed is stopped and the other app starts up</td>
+=======
+    <td  align=center>26995</td><td  align=left>Verify in a sent SMS thread view that not completed or correct phone numbers (&lt; 8 DIGITS) doesn't appear highlighted</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26980</td><td  align=left>Click on an email address and verify that email app is launched</td>
+>>>>>>> 40c7f2a67c7a723ed348afb42e134ae039d6199d
   </tr>
 
   <tr>
@@ -435,7 +491,15 @@ TESTS COVERED
   </tr>
 
   <tr>
+<<<<<<< HEAD
     <td  align=center>26774</td><td  align=left>Verify that user can click on &quot;Add more categories&quot; in everything.me grid so I am shown again the list and can add more categories</td>
+=======
+    <td  align=center>27000</td><td  align=left>Verify that if the user accepts  &quot;Create new Contact&quot; from the “Add contact” form, the form is closed and the user is returned to the SMS thread view</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26841</td><td  align=left>Open SMS app after all sms were deleted or there is any sms</td>
+>>>>>>> 40c7f2a67c7a723ed348afb42e134ae039d6199d
   </tr>
 
   <tr>
@@ -443,7 +507,15 @@ TESTS COVERED
   </tr>
 
   <tr>
+<<<<<<< HEAD
     <td  align=center>26346</td><td  align=left>Delete a packaged app - verify the app was successfully removed from the homescreen</td>
+=======
+    <td  align=center>26998</td><td  align=left>Verify that when long-pressing on the phone number, a Dialog Menu opens up with the correct options</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27760</td><td  align=left>Try to send an SMS when the introduced text has been deleted.</td>
+>>>>>>> 40c7f2a67c7a723ed348afb42e134ae039d6199d
   </tr>
 
   <tr>
@@ -491,7 +563,15 @@ TESTS COVERED
   </tr>
 
   <tr>
+<<<<<<< HEAD
     <td  align=center>26900</td><td  align=left>Verify that when looking at the details of a contact, the user can make a call to the contact with several phone numbers added</td>
+=======
+    <td  align=center>26994</td><td  align=left>Verify in a sent SMS thread view that only completed and correct phone numbers appears highlighted (&gt; 7 DIGITS)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27740</td><td  align=left>Verify that the SMS conversation window shows the message preview (only one outgoing SMS message in the conversation thread) </td>
+>>>>>>> 40c7f2a67c7a723ed348afb42e134ae039d6199d
   </tr>
 
   <tr>
@@ -527,7 +607,15 @@ TESTS COVERED
   </tr>
 
   <tr>
+<<<<<<< HEAD
     <td  align=center>26901</td><td  align=left>Search a contact after edit contact name</td>
+=======
+    <td  align=center>26993</td><td  align=left>Tap on the header showing the name of a contact (contact's number with prefix)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27757</td><td  align=left>Verify The phone number displayed in a conversation</td>
+>>>>>>> 40c7f2a67c7a723ed348afb42e134ae039d6199d
   </tr>
 
   <tr>
@@ -551,7 +639,15 @@ TESTS COVERED
   </tr>
 
   <tr>
+<<<<<<< HEAD
     <td  align=center>26473</td><td  align=left>Alarm- Delete an alarm</td>
+=======
+    <td  align=center>26968</td><td  align=left>Verify in a  SMS thread view that not valid URL (incompleted domain) doesn't appear highlighted</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26992</td><td  align=left>Tap on the header showing the name of a contact (contact's number without prefix)</td>
+>>>>>>> 40c7f2a67c7a723ed348afb42e134ae039d6199d
   </tr>
 
   <tr>
