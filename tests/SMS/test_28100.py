@@ -31,26 +31,36 @@ class test_main(GaiaTestCase):
     def test_run(self):
         
         #
-        # Launch messages app.
+        # Create and send a new test message containing all of our CORRECT numbers..
         #
-        self.messages.launch()
-        
-        #
-        # Create and send a new test message containing all of our numbers..
-        #
-        nums = ["12345678", "123456789", "01234567", "012345678"]
+        self.UTILS.logResult("info", "<b>Check CORRECT numbers are ok ...</b>")
+        nums = ["12345678", "123456789"]        
+        self._testAll(nums, len(nums))
+
+        self.UTILS.logResult("info", "<b>Check INCORRECT numbers are ok ...</b>")
+        nums = ["12345", "123456"]        
+        self._testAll(nums, 0)
+
+    def _testAll(self, nums, tappable_count):
         sms_nums = ""
-        for i in nums:
-            sms_nums = "%s, %s" % (sms_nums, i)
-        sms_msg = "Test numbers %s." % sms_nums
         
+        for i in range(0,len(nums)):
+            sms_nums = "%s, test%s %s" % (sms_nums, str(i), nums[i])
+            
+        sms_msg = "Test numbers: %s." % sms_nums
+        
+        self.messages.launch()
         self.messages.createAndSendSMS([self.num1], sms_msg)
         x = self.messages.waitForReceivedMsgInThisThread()
-        
+
         #
         # Tap the number to call.
         #
         msg_nums = x.find_elements("tag name", "a")
+        
+        self.UTILS.TEST(len(msg_nums) == tappable_count,
+                        "There are <b>%s</b> numbers highlighted in the received text (there were <b>%s</b>)." % \
+                        (tappable_count, len(msg_nums)))
         
         for i in range(0,len(msg_nums)):
             msg_nums[i].tap()
