@@ -52,8 +52,15 @@ class test_main(GaiaTestCase):
         #
         self.messages.launch()
         self.messages.startNewSMS()
-        self.messages.addContactToThisSMS(self.Contact_1["name"])
-        self.messages.addContactToThisSMS(self.Contact_2["name"])
+        
+        self.messages.selectAddContactButton()
+        self.contacts.selectContactFromAll(self.Contact_1["name"])
+        self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
+        
+        self.messages.selectAddContactButton()
+        self.contacts.selectContactFromAll(self.Contact_2["name"])
+        self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
+        
         self.messages.enterSMSMsg("Test message.")
         self.messages.sendSMS()
         
