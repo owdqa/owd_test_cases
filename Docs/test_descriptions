@@ -220,6 +220,8 @@
 26988|Accept Adding the phone number to an existing contact
 26990|Tap on the number (short number) shown on the header to launch the different options given 
 26991|Tap on the header showing the name of a contact 
+26992|Tap on the header showing the name of a contact (contact's number without prefix)
+26993|Tap on the header showing the name of a contact (contact's number with prefix)
 26994|Verify in a sent SMS thread view that only completed and correct phone numbers appears highlighted (&gt; 7 DIGITS)
 26995|Verify in a sent SMS thread view that not completed or correct phone numbers (&lt; 8 DIGITS) doesn't appear highlighted
 26998|Verify that when long-pressing on the phone number, a Dialog Menu opens up with the correct options

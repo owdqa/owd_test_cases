@@ -563,6 +563,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26993</td><td  align=left>Tap on the header showing the name of a contact (contact's number with prefix)</td>
+  </tr>
+
+  <tr>
     <td  align=center>27757</td><td  align=left>Verify The phone number displayed in a conversation</td>
   </tr>
 
@@ -588,6 +592,10 @@ TESTS COVERED
 
   <tr>
     <td  align=center>26968</td><td  align=left>Verify in a  SMS thread view that not valid URL (incompleted domain) doesn't appear highlighted</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26992</td><td  align=left>Tap on the header showing the name of a contact (contact's number without prefix)</td>
   </tr>
 
   <tr>
