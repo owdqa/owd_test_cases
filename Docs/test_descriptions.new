@@ -48,7 +48,7 @@
 19187|Remove a contact from the favorites list
 19188|Configure a contact as a favourite
 19189|Add multiple emails addresses
-19190|Verify that the user can send a SMS from a contact details - SMS conversation doesn&#39;t exist
+19190|Verify that the user can send a SMS from a contact details - SMS conversation doesn't exist
 19191|Search by text string (UPPER CASE) that matches the last name
 19192|Search by text string that not matches with any contact name/last name
 19193|Receive an SMS from a contact with long name
@@ -185,7 +185,7 @@
 26865|Receive an SMS from a contact with long name
 26874|Search by text string that not matches with any contact name/last name
 26882|Search by text string (UPPER CASE) that matches the last name
-26883|Verify that the user can send a SMS from a contact details - SMS conversation doesn&#39;t exist
+26883|Verify that the user can send a SMS from a contact details - SMS conversation doesn't exist
 26885|Add multiple emails addresses
 26886|Configure a contact as a favourite
 26890|Delete all characters to the name and surname fields
@@ -198,8 +198,8 @@
 26965|Verify in a sent SMS thread view that only valid URL appears highlighted
 26966|Verify in a received SMS thread view that only valid URL appears highlighted
 26967|Verify that when tapping on the highlighted URL the browser is opened with the selected URL
-26968|Verify in a  SMS thread view that not valid URL (incompleted domain) doesn&#39;t appear highlighted
-26969|Verify that when tapping on different valid URL&#39;s contained in the same SMS,  the browser is opened each time with the selected URL
+26968|Verify in a  SMS thread view that not valid URL (incompleted domain) doesn't appear highlighted
+26969|Verify that when tapping on different valid URL's contained in the same SMS,  the browser is opened each time with the selected URL
 26970|Verify that when tapping on the URL in the &quot;Edit Mode&quot;, the Browser APP is not launched 
 26971|Verify that in the sms thread view, valid e-mail addresses will be highlighted or shown with a special visual indication
 26972|Click on an email address and create a new contact fillings all fileds
