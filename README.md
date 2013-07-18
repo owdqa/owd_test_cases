@@ -447,6 +447,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>27000</td><td  align=left>Verify that if the user accepts  &quot;Create new Contact&quot; from the “Add contact” form, the form is closed and the user is returned to the SMS thread view</td>
+  </tr>
+
+  <tr>
     <td  align=center>26841</td><td  align=left>Open SMS app after all sms were deleted or there is any sms</td>
   </tr>
 
