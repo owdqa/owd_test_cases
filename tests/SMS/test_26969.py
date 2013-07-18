@@ -60,7 +60,7 @@ class test_main(GaiaTestCase):
         # Switch to messaging app.
         #
         self.apps.kill_all()
-        time.sleep(1)
+        time.sleep(2)
         self.messages.launch()
         self.messages.openThread(self.target_telNum)
 
@@ -85,6 +85,6 @@ class test_main(GaiaTestCase):
         #
         time.sleep(2)
         self.UTILS.switchToFrame(*DOM.Browser.frame_locator)
-    
+        
         self.UTILS.TEST(self.browser.check_page_loaded(p_link),
                  "Web page " + str(p_linkNum+1) + " loaded correctly.")
