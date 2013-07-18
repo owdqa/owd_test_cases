@@ -224,6 +224,7 @@
 26995|Verify in a sent SMS thread view that not completed or correct phone numbers (&lt; 8 DIGITS) doesn't appear highlighted
 26998|Verify that when long-pressing on the phone number, a Dialog Menu opens up with the correct options
 26999|Verify the user can cancel the &quot;Create new contact&quot; operation from the Contacts APP returning to the SMS thread view
+27000|Verify that if the user accepts  &quot;Create new Contact&quot; from the “Add contact” form, the form is closed and the user is returned to the SMS thread view
 27735|Verify that If the name of the contact is not empty:  No carrier information is linked to the phone: Phone Number is shown instead of carrier as the secondary header
 27736|Press delete without any conversation selected
 27737|Try to send a new SMS using the search option (in contact list window) in order to select an inexisting contact
