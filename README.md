@@ -239,6 +239,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>28100</td><td  align=left>Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:&quot;Test1 656565678 number&quot;)</td>
+  </tr>
+
+  <tr>
     <td  align=center>27765</td><td  align=left>Send a new SMS using the search option (in contact list window) in order to select an existing contact</td>
   </tr>
 
