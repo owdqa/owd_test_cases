@@ -9,11 +9,19 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
+<<<<<<< HEAD
+from tests._mock_data.contacts import MockContacts
+=======
+>>>>>>> 40c7f2a67c7a723ed348afb42e134ae039d6199d
 
 class test_main(GaiaTestCase):
     
     _TestMsg     = "Test message."
     
+<<<<<<< HEAD
+    
+=======
+>>>>>>> 40c7f2a67c7a723ed348afb42e134ae039d6199d
     def setUp(self):
         #
         # Set up child objects...
@@ -21,6 +29,12 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.messages   = Messages(self)
+<<<<<<< HEAD
+        self.contacts   = Contacts(self)
+        
+        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.emailAddy = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
+=======
         self.Email      = Email(self)
 
         self.USER1  = self.UTILS.get_os_variable("GMAIL_1_USER")
@@ -30,11 +44,14 @@ class test_main(GaiaTestCase):
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.get_os_variable("GMAIL_2_EMAIL")
         
+>>>>>>> 40c7f2a67c7a723ed348afb42e134ae039d6199d
         
     def tearDown(self):
         self.UTILS.reportResults()
         
     def test_run(self):
+<<<<<<< HEAD
+=======
         
         #
         # Set up email account.
@@ -43,6 +60,7 @@ class test_main(GaiaTestCase):
         self.Email.launch()
         self.Email.setupAccount(self.USER1, self.EMAIL1, self.PASS1)
  
+>>>>>>> 40c7f2a67c7a723ed348afb42e134ae039d6199d
         #
         # Launch messages app.
         #
@@ -51,6 +69,29 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
+<<<<<<< HEAD
+        self.messages.createAndSendSMS([self.num1], "Hello " + self.emailAddy + " old bean.")
+        x=self.messages.waitForReceivedMsgInThisThread()
+        
+        #
+        # Tap on edit mode.
+        #
+        y=self.UTILS.getElement(DOM.Messages.edit_messages_icon, "Edit button")
+        y.tap()  
+         
+        #
+        # Long press the email link.
+        #    
+        _link = x.find_element("tag name", "a")
+        self.actions    = Actions(self.marionette)
+        self.actions.long_press(_link,2).perform() 
+        
+        #
+        # Check the email address is not a link in edit mode.
+        #
+        self.UTILS.waitForNotElements( ("xpath", "//button[text()='Create new contact']"),
+                                   "Create new contact button")
+=======
         self.messages.createAndSendSMS([self.num1], "Email addy %s test." % self.emailAddy)
         x = self.messages.waitForReceivedMsgInThisThread()
         
@@ -87,3 +128,4 @@ class test_main(GaiaTestCase):
             self.UTILS.logResult("info", "<b>Screenshot of email app:</b> ", x)
         except:
             pass
+>>>>>>> 40c7f2a67c7a723ed348afb42e134ae039d6199d
