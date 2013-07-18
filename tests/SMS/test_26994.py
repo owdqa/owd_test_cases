@@ -46,16 +46,20 @@ class test_main(GaiaTestCase):
         
         y = x.find_elements("tag name", "a")  
         
+        bool7OK = False
         bool8OK = False
         bool9OK = False
         for i in y:
             self.UTILS.logResult("info", "FYI: %s is highlighted." % i.text)
+            if i.text == "1234567":
+                bool7OK = True
             if i.text == "12345678":
                 bool8OK = True
             if i.text == "123456789":
                 bool9OK = True
                 
+        self.UTILS.TEST(bool7OK, "The 8-digit number is highlighted.")
         self.UTILS.TEST(bool8OK, "The 8-digit number is highlighted.")
-        self.UTILS.TEST(bool8OK, "The 9-digit number is highlighted.")
+        self.UTILS.TEST(bool9OK, "The 9-digit number is highlighted.")
 
         
