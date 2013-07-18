@@ -220,6 +220,9 @@
 26988|Accept Adding the phone number to an existing contact
 26990|Tap on the number (short number) shown on the header to launch the different options given 
 26991|Tap on the header showing the name of a contact 
+26994|Verify in a sent SMS thread view that only completed and correct phone numbers appears highlighted (&gt; 7 DIGITS)
+26995|Verify in a sent SMS thread view that not completed or correct phone numbers (&lt; 8 DIGITS) doesn't appear highlighted
+26998|Verify that when long-pressing on the phone number, a Dialog Menu opens up with the correct options
 27735|Verify that If the name of the contact is not empty:  No carrier information is linked to the phone: Phone Number is shown instead of carrier as the secondary header
 27736|Press delete without any conversation selected
 27737|Try to send a new SMS using the search option (in contact list window) in order to select an inexisting contact
@@ -250,6 +253,3 @@
 27763|Verify that If the name of the contact is not empty: The name of the contact as the main header
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
-26995|Verify in a sent SMS thread view that not completed or correct phone numbers (&lt; 8 DIGITS) doesn't appear highlighted
-26998|Verify that when long-pressing on the phone number, a Dialog Menu opens up with the correct options
-26994|Verify in a sent SMS thread view that only completed and correct phone numbers appears highlighted (&gt; 7 DIGITS)
