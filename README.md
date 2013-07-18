@@ -223,6 +223,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>27001</td><td  align=left>Verify that if the user accepts  &quot;Add to an existing contact&quot; from the “Edit contact” form, contact is correctly updated and he is returned to the SMS thread view</td>
+  </tr>
+
+  <tr>
     <td  align=center>26843</td><td  align=left>Open SMS app after send and receive some SMS from different numbers (contacts)</td>
   </tr>
 
