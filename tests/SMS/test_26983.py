@@ -73,5 +73,12 @@ class test_main(GaiaTestCase):
         time.sleep(2)
         self.marionette.switch_to_frame()
         self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@src,'email')]"),
-                                       "Email app iframe")
+                                       "Email app iframe", True, 5, False)
         
+        try:
+            x = self.marionette.find_element("xpath", "//iframe[contains(@src,'email')]")
+            self.marionette.switch_to_frame(x)
+            x = self.UTILS.screenShotOnErr()
+            self.UTILS.logResult("info", "<b>Screenshot of email app:</b> ", x)
+        except:
+            pass
