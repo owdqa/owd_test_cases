@@ -283,6 +283,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26999</td><td  align=left>Verify the user can cancel the &quot;Create new contact&quot; operation from the Contacts APP returning to the SMS thread view</td>
+  </tr>
+
+  <tr>
     <td  align=center>27742</td><td  align=left>Write a sms with multiple spaces between words (ex; 1 2 3 4 5)</td>
   </tr>
 
