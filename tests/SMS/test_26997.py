@@ -34,7 +34,7 @@ class test_main(GaiaTestCase):
         # Create and send a new test message containing all of our CORRECT numbers..
         #
         self.messages.launch()
-        self.messages.createAndSendSMS([self.num1], "International num: 003412345678, and +34 12345678.")
+        self.messages.createAndSendSMS([self.num1], "International num: 003412345678, and +34 09876543.")
         x = self.messages.waitForReceivedMsgInThisThread()
 
         #
@@ -46,7 +46,7 @@ class test_main(GaiaTestCase):
                         "There are <b>2</b> numbers highlighted in the received text (there were <b>%s</b>)." % \
                         len(msg_nums))
         
-        nums = ["003412345678","+3412345678"]
+        nums = ["003412345678","+3409876543"]
         for i in range(0,len(msg_nums)):
             msg_nums[i].tap()
             
