@@ -12,10 +12,6 @@ from OWDTestToolkit import *
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
-    
-    _RESTART_DEVICE = True
-    
     def setUp(self):
         #
         # Set up child objects...
@@ -24,47 +20,66 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.messages   = Messages(self)
         
-        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.num2 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
+        self.num = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         
     def tearDown(self):
         self.UTILS.reportResults()
         
     def test_run(self):
+        self.UTILS.TEST(False, "ROY RESTART DEVICE")
+        
+        x=time.time()
+        _now = self.UTILS.getDateTimeFromEpochSecs(x)
         
         #
-        # Set time on device to morning.
-        #
-        self.UTILS.setTimeToSpecific(p_hour=10,p_minute=0)
-        
-        #
-        # Launch messages app.
+        # Send a message from today.
         #
         self.messages.launch()
+        self.messages.createAndSendSMS([self.num], "Today")
+        self.apps.kill_all()
+        time.sleep(5)
         
         #
-        # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
+        # Send a message from yesterday.
         #
-#         self.messages.deleteAllThreads()
+        _yesterday = _now.tm_mday - 1
+        self.UTILS.setTimeToSpecific(p_day=_yesterday)
+        self.messages.launch()
+        self.messages.createAndSendSMS([self.num], "Yesterday")
+        self.apps.kill_all()
+        time.sleep(5)
         
         #
-        # Create and send a new test message.
+        # Send a message from each day from the day before yesterday until a week ago.
         #
-        self.messages.createAndSendSMS([self.num1], self._TestMsg)
+        for i in range(2, 6):
+            _test_day = _now.tm_mday - i
+            self.UTILS.setTimeToSpecific(p_day=_test_day)
+            self.messages.launch()
+            self.messages.createAndSendSMS([self.num], "Today %s, this was sent on day: %s" % (_now.tm_mday,_test_day))
+            self.apps.kill_all()
+            time.sleep(5)
+
+        #
+        # Send a message from two months ago.
+        #
+        _test_month = _now.tm_mon - 2
+        self.UTILS.setTimeToSpecific(p_month=_test_month)
+        self.messages.launch()
+        self.messages.createAndSendSMS([self.num], "2 months ago")
+        self.apps.kill_all()
+        time.sleep(5)
         
-        #
-        # Return to the threads screen and check the time of this thread.
-        #
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
-        time.sleep(1)
+        return
+        
+
         
         #
         # Get the time of this thread (just hour and AM in case it took longer than
         # 1 minute to send the message).
         #
-        _HH = self.messages.timeOfThread(self.num1)[:2]
-        _AM = self.messages.timeOfThread(self.num1)[-2:]
+        _HH = self.messages.timeOfThread(self.num)[:2]
+        _AM = self.messages.timeOfThread(self.num)[-2:]
         self.UTILS.TEST(_HH == "10", "Thread hour is 10 (it was " + _HH + ").", False)
         self.UTILS.TEST(_AM == "AM", "Thread timestamp says <b>AM</b> (it was " + _AM + ").", False)
         
@@ -76,7 +91,7 @@ class test_main(GaiaTestCase):
         #
         # Change the time to afternoon.
         #
-        self.UTILS.setTimeToSpecific(p_hour=14,p_minute=0)
+        self.UTILS.setTimeToSpecific(14,0)
         
         #
         # Send a message from num2.
