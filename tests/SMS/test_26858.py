@@ -31,6 +31,7 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
+        self.UTILS.TEST(False, "ROY RESTART DEVICE")
         
         #
         # Set time on device to morning.

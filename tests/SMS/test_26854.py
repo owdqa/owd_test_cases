@@ -28,20 +28,6 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.UTILS.TEST(False, "ROY RESTART DEVICE")
         
-        x = self.marionette.execute_script("""
-                var today = new Date();
-                var yr = today.getFullYear();
-                var mth = today.getMonth();
-                var day = today.getDate();
-                var hours = today.getHours();
-                var mins = today.getMinutes();
-                var x = yr + " " + mth + " " + day + " " + hours + " " + mins;
-                return x;""")
-        
-        self.UTILS.logResult("info", "x: %s" % x)
-        return
-
-        
         x=time.time()
         _now = self.UTILS.getDateTimeFromEpochSecs(x)
         
