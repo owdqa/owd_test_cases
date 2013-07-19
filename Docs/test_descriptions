@@ -208,6 +208,7 @@
 26975|Click on an email address, press on &quot;Add to existing contact&quot; (contacts lists is empty)
 26976|Click on an email address in a sms which contains 3 emails addresses
 26977|Verify that when in edit mode, adding email contact from sms is disabled
+26978|Click on an email address and send an email (any email account configured in the email app)(gmail account)
 26979|Click on an email address and verify that email app is launched with &quot;To&quot; field pre-filled in with the selected e-mail address(no contact)
 26980|Click on an email address and verify that email app is launched
 26981|Verify that an user can not click on an email address in the edit mode
