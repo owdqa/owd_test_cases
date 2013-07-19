@@ -54,7 +54,6 @@ class test_main(GaiaTestCase):
         self.messages.waitForReceivedMsgInThisThread()
         
         time.sleep(10)
-        self.marionette.switch_to_frame()
         
         #
         # Put the phone into airplane mode.
