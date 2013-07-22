@@ -13,9 +13,7 @@ from OWDTestToolkit import *
 class test_main(GaiaTestCase):
     
     _GROUP_NAME  = "Games"
-    _APP_NAME    = "Tetris"
-    _APP_FRAME   = ("src", "https://aduros.com/block-dream")
-    
+
     def setUp(self):
         #
         # Set up child objects...
@@ -26,7 +24,14 @@ class test_main(GaiaTestCase):
         self.Settings   = Settings(self)
         self.EME        = EverythingMe(self)
         
-        
+        #
+        # Don't prompt me for geolocation (this was broken recently in Gaia, so 'try' it).
+        #
+        try:
+            self.apps.set_permission('Homescreen', 'geolocation', 'deny')
+        except:
+            self.UTILS.logComment("(Just FYI) Unable to automatically set Homescreen geolocation permission.")
+
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -36,32 +41,37 @@ class test_main(GaiaTestCase):
         # Make sure 'things' are as we expect them to be first.
         #
         self.UTILS.getNetworkConnection()
-        
+         
+        #
+        # First, get the name of the app we're going to install.
+        #
+        self.EME.launch()
+        self.UTILS.TEST(self.EME.pickGroup(self._GROUP_NAME),
+                        "Group '" + self._GROUP_NAME + "' exists in EverythingME.",
+                        True)
+         
+        x = self.UTILS.getElements(DOM.EME.apps, "The first game that is not installed already")[0]
+        self._APP_NAME = x.get_attribute("data-name")
+        self.UTILS.goHome()
+ 
+         
         #
         # Make sure our app isn't installed already.
         #
         self.UTILS.uninstallApp(self._APP_NAME)
-            
-        #
-        # Don't prompt me for geolocation (this was broken recently in Gaia, so 'try' it).
-        #
-        try:
-            self.apps.set_permission('Homescreen', 'geolocation', 'deny')
-        except:
-            self.UTILS.logComment("(Just FYI) Unable to automatically set Homescreen geolocation permission.")
-
+             
         #
         # Launch the 'everything.me' app.
         #
         self.EME.launch()
-        
+         
         #
         # Pick a group.
         #
         self.UTILS.TEST(self.EME.pickGroup(self._GROUP_NAME),
                         "Group '" + self._GROUP_NAME + "' exists in EverythingME.",
                         True)
-
+ 
         #
         # Add the app to the homescreen.
         #
@@ -80,6 +90,7 @@ class test_main(GaiaTestCase):
         #
         time.sleep(10)
         self.marionette.switch_to_frame()
-        self.UTILS.switchToFrame(*self._APP_FRAME)
-        x = self.UTILS.screenShot("19393_" + self._APP_NAME)
-        self.UTILS.logComment("NOTE: Please check the game screenshot in " + x)
+        self.UTILS.switchToFrame("data-name", self._APP_NAME)
+        
+        x = self.UTILS.screenShot(self._APP_NAME)
+        self.UTILS.logResult("info", "NOTE: For a screenshot of the game running, please see this: " + x)
