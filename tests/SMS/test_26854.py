@@ -29,14 +29,40 @@ class test_main(GaiaTestCase):
         return
         self.UTILS.TEST(False, "ROY RESTART DEVICE - I am still developing this so please ignore me!!")
         
+        #
+        # Need to get the current time in 'seconds since Epoch'.
+        #
         x=time.time()
         _now = self.UTILS.getDateTimeFromEpochSecs(x)
+
+
+
+        _yesterday = _now.tm_mday - 1
+        self.UTILS.setTimeToSpecific(p_day=_yesterday)
+        return
+
+
+
+
+
+        
+        #
+        # It's tricky to wait for the replies for this test since we're moving about
+        # in time (so the last message could be a 'received' one even though we're
+        # waiting on a response).
+        # The way round this is to count the messages before we send the sms, then wait
+        # for the count to increase by 1 (which will be the reply turning up ... 'sometime').
+        #
+        # I'm using the private function '_waitForReply()' to do this.
+        #
+        _getPreCount()
         
         #
         # Send a message from today.
         #
         self.messages.launch()
         self.messages.createAndSendSMS([self.num], "Today")
+        self.messages.waitForReceivedMsgInThisThread() # This is okay - no need for _waitForReply().
         self.apps.kill_all()
         time.sleep(5)
         
@@ -45,8 +71,15 @@ class test_main(GaiaTestCase):
         #
         _yesterday = _now.tm_mday - 1
         self.UTILS.setTimeToSpecific(p_day=_yesterday)
+
+        x = self.UTILS.screenShotOnErr()
+        self.UTILS.logResult("info", "Time changed to yesterday", x)
+
         self.messages.launch()
+        _getPreCount()
         self.messages.createAndSendSMS([self.num], "Yesterday")
+        _waitForReply()
+
         self.apps.kill_all()
         time.sleep(5)
         
@@ -57,7 +90,11 @@ class test_main(GaiaTestCase):
             _test_day = _now.tm_mday - i
             self.UTILS.setTimeToSpecific(p_day=_test_day)
             self.messages.launch()
+
+            _getPreCount()
             self.messages.createAndSendSMS([self.num], "Today %s, this was sent on day: %s" % (_now.tm_mday,_test_day))
+            _waitForReply()
+
             self.apps.kill_all()
             time.sleep(5)
 
@@ -67,7 +104,11 @@ class test_main(GaiaTestCase):
         _test_month = _now.tm_mon - 2
         self.UTILS.setTimeToSpecific(p_month=_test_month)
         self.messages.launch()
+
+        _getPreCount()
         self.messages.createAndSendSMS([self.num], "2 months ago")
+        _waitForReply()
+
         self.apps.kill_all()
         time.sleep(5)
         
@@ -112,3 +153,27 @@ class test_main(GaiaTestCase):
         self.UTILS.TEST(_HH == "2", "Thread hour is 2 (it was " + _HH + ").", False)
         self.UTILS.TEST(_PM == "PM", "Thread timestamp says <b>PM</b> (it was " + _PM + ").", False)
 
+
+    def _getPreCount(self):
+        #
+        # Initialise the pre_count.
+        #
+        self.messages.launch()
+        self.messages.openThread(self.num)
+        self.pre_count = self.messages.countMessagesInThisThread()
+        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
+        x.tap()
+
+
+    def _waitForReply(self):
+        #
+        # Wait 30s for pre_count to be pre_count + 2 (1 for the 'sent' sms and 1 for the reply).
+        # This isn't part of the test (just a way to keep it 'clean'), so if the reply doesn't
+        # appear, just move on (no error).
+        #
+        for i in range(1,15):
+            x = self.messages.countMessagesInThisThread()
+            if x >= (self.pre_count + 2):
+                break
+            
+            time.sleep(2)
