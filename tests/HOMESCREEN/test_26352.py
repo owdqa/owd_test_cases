@@ -52,6 +52,7 @@ class test_main(GaiaTestCase):
          
         x = self.UTILS.getElements(DOM.EME.apps, "The first game that is not installed already")[0]
         self._APP_NAME = x.get_attribute("data-name")
+        self.UTILS.logResult("info", "App name is <b>%s</b>" % self._APP_NAME)
         self.UTILS.goHome()
  
          
@@ -59,6 +60,7 @@ class test_main(GaiaTestCase):
         # Make sure our app isn't installed already.
         #
         self.UTILS.uninstallApp(self._APP_NAME)
+        
              
         #
         # Launch the 'everything.me' app.
