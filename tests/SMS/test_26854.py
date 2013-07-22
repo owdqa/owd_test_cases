@@ -26,6 +26,7 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
+        return
         self.UTILS.TEST(False, "ROY RESTART DEVICE - I am still developing this so please ignore me!!")
         
         x=time.time()
