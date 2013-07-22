@@ -12,6 +12,8 @@ from OWDTestToolkit import *
 
 class test_main(GaiaTestCase):
     
+    _RESTART_DEVICE = True
+    
     def setUp(self):
         #
         # Set up child objects...
@@ -26,7 +28,6 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
-        self.UTILS.TEST(False, "ROY RESTART DEVICE - I am still developing this so please ignore me!!")
 
         #
         # Remember the 'real' current date and time.
