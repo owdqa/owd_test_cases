@@ -114,10 +114,11 @@ class test_main(GaiaTestCase):
         #
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "(Screenshot and html dump at this point ...)", x)
-        self.data_layer.set_time( self.NOW_EPOCH * 1000)
+        self.UTILS.setTimeToNow()
+
         self.messages.launch()
         self.messages.openThread(self.num)
-        x = self.UTILS.getElements(DOM.Messages.message_timestamps, "Message timestamp headers")[-1]
+        x = self.UTILS.getElements(DOM.Messages.message_timestamps, "Message timestamp headers", False)[-1]
         self.UTILS.TEST(p_str.lower() in x.text.lower(), 
                         "<b>Last message timestamp header contains <u>'%s'</u> (it was '%s').</b>" % \
                         (p_str, x.text))
