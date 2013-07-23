@@ -12,7 +12,7 @@ from OWDTestToolkit import *
 from tests._mock_data.contacts import MockContacts
 
 class test_main(GaiaTestCase):
-
+    
     def setUp(self):
         #
         # Set up child objects...
@@ -74,7 +74,7 @@ class test_main(GaiaTestCase):
         # Click the 2nd email button
         #
         emailBTN = self.UTILS.getElement( ("id", DOM.Contacts.email_button_spec_id % 1), 
-                                        "2nd send Email button")
+                                        "2nd send Email address in for this contact")
         emailBTN.tap()
 
         #
