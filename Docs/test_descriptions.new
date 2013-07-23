@@ -261,3 +261,7 @@
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
 28100|Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:&quot;Test1 656565678 number&quot;)
+26996|Verify that when pressing the green (dial) button in the dialer app, the call is established to the phone number (with 9 DIGITS) in the header
+26854|Verify that the structure of the conversation is correct
+26989|Tap on the number (with prefix) shown on the header to launch the different options given 
+26997|Verify that when tapping on a highlighted phone number with international prefix, the dialer is launched with the phone number pre-filled in 
