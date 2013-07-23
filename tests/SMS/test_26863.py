@@ -63,7 +63,6 @@ class test_main(GaiaTestCase):
         #
         # Open sms app and go to the previous thread
         #
-        self.messages.launch()
         self.messages.openThread(self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM"))
         
         #

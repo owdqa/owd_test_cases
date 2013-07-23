@@ -69,7 +69,7 @@ class test_main(GaiaTestCase):
         self.contacts.createNewContact(self.Contact_1)
         
         #
-        # Re-launch messages app.
+        # Switch back to the messages app.
         #
         self.messages.launch()
         
