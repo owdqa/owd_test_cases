@@ -14,6 +14,8 @@ from tests._mock_data.contacts import MockContacts
 
 class test_main(GaiaTestCase):
     
+    _RESTART_DEVICE = True
+    
     def setUp(self):
         #
         # Set up child objects...
@@ -32,7 +34,9 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.contact_1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.num2 = "123456789"
+        self.contact_1["tel"]["value"] = self.num1
         
         #
         # Add this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
@@ -44,52 +48,67 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
+            
         #
         # Create a thread for this contact.
         #
         self.messages.launch()
         self.messages.createAndSendSMS([self.contact_1["tel"]["value"]], "Test message")
         self.messages.waitForReceivedMsgInThisThread()
+        
+        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
+        x.tap()
+        
+        self.messages.createAndSendSMS([self.num2], "Thread for a different number")
+
+
+        self.UTILS.logResult("info", " ")
+        self.UTILS.logResult("info", "=================================================================")
+        self.UTILS.logResult("info", "<b>If SMS app is closed when you click 'send sms' in contacts ...")
         self.apps.kill_all()
+        self._doTest()
+        
+        self.UTILS.logResult("info", " ")
+        self.UTILS.logResult("info", "=====================================================================")
+        self.UTILS.logResult("info", "<b>If SMS app is still open when you click 'send sms' in contacts ...")
+        self.apps.kill_all()
+        self.messages.launch()
+        self.messages.openThread(self.num2)
+        self._doTest()
+        
+
+    def _doTest(self):
 
         #
-        # Launch contacts app.
+        # Launch contacts app etc...
         #
         self.contacts.launch()
-        
-        #
-        # View the details of our contact.
-        #
         self.contacts.viewContact(self.contact_1['name'])
-        
-        #
-        # Tap the sms button in the view details screen to go to the sms page.
-        #
         smsBTN = self.UTILS.getElement(DOM.Contacts.sms_button, "Send SMS button")
         smsBTN.tap()
-
+        
         #
-        # Switch to the 'Messages' app frame (or marionette will still be watching the
-        # 'Contacts' app!).
+        # Switch to sms frame and complete the tests + send the message.
         #
-        time.sleep(2)
+        time.sleep(5)
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
+        self.UTILS.logResult("info", "<b>NOTE: </b>expecting to be in a 'compose new sms' screen (not a thread) ...")
+        self.UTILS.headerCheck("1 recipient")
+        self.messages.enterSMSMsg("Test msg.")
+        self.messages.sendSMS()
 
         #
         # Verify that we are now in the thread for this contact.
         #
-        self.UTILS.logResult("info", "<b>NOTE: </b> expecting to be autimatically taken to the thread for this contact ...")
+        self.UTILS.logResult("info", 
+                             "<b>NOTE: </b> expecting to be automatically taken to the thread for '%s' ..." % \
+                             self.contact_1['name'])
         self.UTILS.headerCheck(self.contact_1['name'])
     
-        msg_count = self.UTILS.getElement(DOM.Messages.message_list, "Thread messages", True, 5, False)
-        self.UTILS.TEST(msg_count > 1, "There are <i>some</i> messages in this thread already.")
+        msg_count = self.UTILS.getElements(DOM.Messages.message_list, "Thread messages", False, 5, False)
         
-        #
-        # Create SMS.
-        #
-        self.messages.enterSMSMsg("Test msg.")
+        if msg_count:
+            self.UTILS.TEST(len(msg_count) > 1, "There are <i>some</i> messages in this thread already.")
+        else:
+            self.UTILS.logResult(False, "There are <i>some</i> messages in this thread already.")
         
-        #
-        # Click send.
-        #
-        self.messages.sendSMS()
