@@ -65,6 +65,7 @@ class test_main(GaiaTestCase):
         # Open contacts app and create a contact with the same phone number used to send the SMS in the 
         # previous step
         #
+        self.apps.kill_all()
         self.contacts.launch()
         self.contacts.createNewContact(self.Contact_1)
         
