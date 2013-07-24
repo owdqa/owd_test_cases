@@ -33,7 +33,7 @@ class test_main(GaiaTestCase):
         #
         # Create a call log.
         #
-        self.dialer.enterNumber(1234)
+        self.dialer.enterNumber(self.num)
         self.dialer.callThisNumber()
         time.sleep(2)
         self.dialer.hangUp()
