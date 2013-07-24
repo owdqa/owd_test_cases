@@ -43,14 +43,14 @@ class test_main(GaiaTestCase):
         gallery_app = {
             'name'        : "Gallery",
             'app'         : self.apps.launch("Gallery"),
-            'card'        : (DOM.Home.app_card[0], DOM.Home.app_card[1] % "app://gallery.gaiamobile.org"),
-            'close_button': (DOM.Home.app_close[0], DOM.Home.app_close[1] % "app://gallery.gaiamobile.org")
+            'card'        : (DOM.Home.app_card[0], DOM.Home.app_card[1] % "gallery"),
+            'close_button': (DOM.Home.app_close[0], DOM.Home.app_close[1] % "gallery")
         }
         radio_app = {
             'name'        : "FM Radio",
             'app'         : self.apps.launch("FM Radio"),
-            'card'        : (DOM.Home.app_card[0], DOM.Home.app_card[1] % "app://fm.gaiamobile.org"),
-            'close_button': (DOM.Home.app_close[0], DOM.Home.app_close[1] % "app://fm.gaiamobile.org")
+            'card'        : (DOM.Home.app_card[0], DOM.Home.app_card[1] % "fm"),
+            'close_button': (DOM.Home.app_close[0], DOM.Home.app_close[1] % "fm")
         }
 
         self.UTILS.touchHomeButton()

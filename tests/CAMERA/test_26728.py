@@ -62,6 +62,6 @@ class test_main(GaiaTestCase):
         # Check Camera is running in the background.
         #
         self.UTILS.holdHomeButton()
-        x = self.UTILS.getElement((DOM.Home.app_card[0], DOM.Home.app_card[1] % "app://camera.gaiamobile.org"), 
+        x = self.UTILS.getElement((DOM.Home.app_card[0], DOM.Home.app_card[1] % "camera"), 
                                   "When home button is held, camera 'card'", False)
         
