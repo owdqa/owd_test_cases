@@ -27,12 +27,10 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
-        self.dialer.launch()
-        
-        
         #
         # Create a call log.
         #
+        self.dialer.launch()
         self.dialer.enterNumber(self.num)
         self.dialer.callThisNumber()
         time.sleep(2)
@@ -41,6 +39,8 @@ class test_main(GaiaTestCase):
         #
         # Open the call log and tap on the number.
         #
+        self.apps.kill_all()
+        self.dialer.launch()
         self.dialer.callLog_call(self.num)
         
         time.sleep(2)
