@@ -38,7 +38,7 @@ class test_main(GaiaTestCase):
         self._testAll(nums, len(nums))
 
         self.UTILS.logResult("info", "<b>Check INCORRECT numbers are ok ...</b>")
-        nums = ["12345", "123456"]        
+        nums = ["123", "1234"]        
         self._testAll(nums, 0)
 
     def _testAll(self, nums, tappable_count):
@@ -49,6 +49,8 @@ class test_main(GaiaTestCase):
             
         sms_msg = "Test numbers: %s." % sms_nums
         
+        self.apps.kill_all()
+        time.sleep(2)
         self.messages.launch()
         self.messages.createAndSendSMS([self.num1], sms_msg)
         x = self.messages.waitForReceivedMsgInThisThread()
@@ -78,6 +80,7 @@ class test_main(GaiaTestCase):
             # Kill everything, then re-launch the messaging app etc ...
             #
             self.apps.kill_all()
+            time.sleep(2)
             self.messages.launch()
             self.messages.openThread(self.num1)
             x = self.messages.waitForReceivedMsgInThisThread()

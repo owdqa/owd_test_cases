@@ -23,10 +23,10 @@ class test_main(GaiaTestCase):
         self.contacts   = Contacts(self)
         self.Dialer      = Dialer(self)
 
-        self.num1 = "+34" + self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
         self.cont = MockContacts().Contact_1
-        self.cont["tel"]["value"] = self.num1
+        self.cont["tel"]["value"] = "0034" + self.num1
         self.data_layer.insert_contact(self.cont)        
         
     def tearDown(self):
