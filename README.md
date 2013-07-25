@@ -43,6 +43,18 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>27012</td><td  align=left>Add dialed number as new contact</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27022</td><td  align=left>Call the number</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27013</td><td  align=left>Add dialed number to existing contact without phone numbers</td>
+  </tr>
+
+  <tr>
     <td  align=center>26907</td><td  align=left>Remove a photo,a phone number, an email, an address and a comment from a contact and restore the phone number and the comment</td>
   </tr>
 
@@ -84,6 +96,10 @@ TESTS COVERED
 
   <tr>
     <td  align=center>26325</td><td  align=left>Send an sms from a contact detail - Verify the contact receives the SMS</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26877</td><td  align=left>Verify that the user can send a SMS from a contact details - SMS conversation thread already exists</td>
   </tr>
 
   <tr>
@@ -168,6 +184,14 @@ TESTS COVERED
 
   <tr>
     <td  align=center>26409</td><td  align=left>Open settings app from utility tray</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26553</td><td  align=left>Receiving SMS during a Wi-Fi session</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26552</td><td  align=left>Sending SMS during a Wi-Fi session</td>
   </tr>
 
   <tr>
