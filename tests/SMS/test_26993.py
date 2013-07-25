@@ -21,7 +21,7 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.messages   = Messages(self)
         self.contacts   = Contacts(self)
-        self.phone      = Phone(self)
+        self.Dialer      = Dialer(self)
 
         self.num1 = "+34" + self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
@@ -62,6 +62,6 @@ class test_main(GaiaTestCase):
         #
         # Dialler is started with the number already filled in.
         #
-        x = self.UTILS.getElement(DOM.Phone.phone_number, "Phone number")
+        x = self.UTILS.getElement(DOM.Dialer.phone_number, "Phone number")
         self.UTILS.TEST(self.num1 in x.get_attribute("value"), 
                         "The phone number contains '%s' (it was '%s')." % (self.num1, x.get_attribute("value")))

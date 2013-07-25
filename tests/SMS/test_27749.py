@@ -23,7 +23,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.messages   = Messages(self)
-        self.phone      = Phone(self)
+        self.Dialer      = Dialer(self)
         self.contacts   = Contacts(self)
         
         #
@@ -63,7 +63,7 @@ class test_main(GaiaTestCase):
         #
         # Create a contact from this number.
         #
-        self.phone.createContactFromThisNum()
+        self.Dialer.createContactFromThisNum()
 
         #
         # Make sure the number is automatically in the contact details.

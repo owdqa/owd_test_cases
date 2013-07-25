@@ -22,7 +22,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.messages   = Messages(self)
-        self.phone      = Phone(self)
+        self.Dialer      = Dialer(self)
         
         #
         # Establish which phone number to use.
@@ -52,16 +52,16 @@ class test_main(GaiaTestCase):
         
         x.find_element("tag name", "a").tap()        
         
-        self.UTILS.switchToFrame(*DOM.Phone.frame_locator)
+        self.UTILS.switchToFrame(*DOM.Dialer.frame_locator)
         
         #
         # Dial the number.
         #
-        self.phone.callThisNumber()
+        self.Dialer.callThisNumber()
         
         #
         # Wait 2 seconds, then hangup.
         #
         time.sleep(2)
-        self.phone.hangUp()
+        self.Dialer.hangUp()
         self.data_layer.kill_active_call()
