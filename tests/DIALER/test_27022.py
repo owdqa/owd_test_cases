@@ -12,9 +12,6 @@ from OWDTestToolkit import *
 
 class test_main(GaiaTestCase):
     
-    # (For some reason this test needs to be run twice unless I just do this first.)
-    _RESTART_DEVICE = True
-    
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
@@ -39,8 +36,6 @@ class test_main(GaiaTestCase):
         #
         # Open the call log and tap on the number.
         #
-        self.apps.kill_all()
-        self.dialer.launch()
         self.dialer.callLog_call(self.num)
         
         time.sleep(2)

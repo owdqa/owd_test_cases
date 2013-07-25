@@ -13,9 +13,6 @@ from tests._mock_data.contacts import MockContacts
 
 class test_main(GaiaTestCase):
     
-    # (For some reason this test needs to be run twice unless I just do this first.)
-#     _RESTART_DEVICE = True
-    
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
@@ -39,7 +36,6 @@ class test_main(GaiaTestCase):
         #
         # Create a call log.
         #
-        self.apps.kill_all()
         self.dialer.launch()
         self.dialer.enterNumber(self.num)
         self.dialer.callThisNumber()
