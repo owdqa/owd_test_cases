@@ -21,12 +21,10 @@ class test_main(GaiaTestCase):
         self.contacts   = Contacts(self)
         
         self.num  = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.num2 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
         
-        # Remove the phone number from the contact and insert it.
         self.cont = MockContacts().Contact_1
-        self.cont["tel"]["type"]    = ""
-        self.cont["tel"]["carrier"] = ""
-        self.cont["tel"]["value"]   = ""
+        self.cont["tel"]["value"] = self.num
         self.data_layer.insert_contact(self.cont)
         
     def tearDown(self):
@@ -34,11 +32,18 @@ class test_main(GaiaTestCase):
         
     def test_run(self):
         #
-        # Add a number and add it to an existing contact.
+        # Create a call log.
         #
         self.dialer.launch()
         self.dialer.enterNumber(self.num)
-        self.dialer.addThisNumberToContact(self.cont["name"])
+        self.dialer.callThisNumber()
+        time.sleep(2)
+        self.dialer.hangUp()
+         
+        #
+        # Open the call log and add to our contact.
+        #
+        self.dialer.callLog_addToContact(self.num2, self.cont["name"])
          
         #
         # Verify that this contact has been modified in contacts.
@@ -47,5 +52,5 @@ class test_main(GaiaTestCase):
         self.contacts.launch()
         self.contacts.selectContactFromAll(self.cont["name"])
         
-        x = self.UTILS.getElement(DOM.Contacts.view_contact_tel_field, "Contact telephone number")
-        self.UTILS.TEST(self.num in x.text, "Phone number contains %s (it was %s)." % (self.num, x.text))
+        self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_contact_tels_xpath % self.num2), 
+                                    "Telephone number %s in conact" % self.num2)

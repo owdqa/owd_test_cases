@@ -36,6 +36,9 @@ class test_main(GaiaTestCase):
         #
         # Open the call log and tap on the number.
         #
+        self.apps.kill_all()
+        time.sleep(3)
+        self.dialer.launch()
         self.dialer.callLog_call(self.num)
         
         time.sleep(2)

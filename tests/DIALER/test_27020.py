@@ -20,32 +20,27 @@ class test_main(GaiaTestCase):
         self.dialer     = Dialer(self)
         self.contacts   = Contacts(self)
         
-        self.cont = MockContacts().Contact_1
         self.num  = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.cont = MockContacts().Contact_1
         
     def tearDown(self):
         self.UTILS.reportResults()
         
     def test_run(self):
         #
-        # Enter a number in the dialer.
+        # Create a call log.
         #
         self.dialer.launch()
         self.dialer.enterNumber(self.num)
-        
+        self.dialer.callThisNumber()
+        time.sleep(2)
+        self.dialer.hangUp()
+         
         #
-        # Press the add to contacts button, then select 'add to existing contact'.
+        # Open the call log and create a contact for our number.
         #
-        x = self.UTILS.getElement(DOM.Dialer.add_to_contacts_button, "Add to contacts button")
-        x.tap()
-        
-        x = self.UTILS.getElement(DOM.Dialer.create_new_contact_btn, "Create new contact button")
-        x.tap()
-
-        #
-        # Enter the details of the new contact.
-        #
-        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
+        self.dialer.callLog_createContact(self.num)
+         
         contFields = self.contacts.getContactFields()
         self.contacts.replaceStr(contFields['givenName'  ] , self.cont["givenName"])
         self.contacts.replaceStr(contFields['familyName' ] , self.cont["familyName"])
@@ -62,6 +57,8 @@ class test_main(GaiaTestCase):
                                         "COntacts frame")
         self.UTILS.switchToFrame(*DOM.Dialer.frame_locator)
          
+        self.UTILS.waitForElements( ("xpath", "//h1[text()='Call log']"), "Call log header")
+        
         #
         # Verify that this contact has been created in contacts.
         #
