@@ -78,6 +78,7 @@ class test_main(GaiaTestCase):
             # Kill everything, then re-launch the messaging app etc ...
             #
             self.apps.kill_all()
+            time.sleep(2)
             self.messages.launch()
             self.messages.openThread(self.num1)
             x = self.messages.waitForReceivedMsgInThisThread()
