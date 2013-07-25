@@ -34,18 +34,11 @@ class test_main(GaiaTestCase):
         
     def test_run(self):
         #
-        # Create a call log.
+        # Add a number and add it to an existing contact.
         #
         self.dialer.launch()
         self.dialer.enterNumber(self.num)
-        self.dialer.callThisNumber()
-        time.sleep(2)
-        self.dialer.hangUp()
-         
-        #
-        # Open the call log and add to our contact.
-        #
-        self.dialer.callLog_addToContact(self.num, self.cont["name"])
+        self.dialer.addThisNumberToContact(self.cont["name"])
          
         #
         # Verify that this contact has been modified in contacts.
