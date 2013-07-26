@@ -30,17 +30,16 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
+        #
+        # Ensure we have a connection.
+        #
+        self.UTILS.getNetworkConnection()
         
         #
         # Uninstall the app (if need be).
         #
         if self.UTILS.findAppIcon(self._appName):
             self.UTILS.uninstallApp(self._appName)
-        
-        #
-        # Ensure we have a connection.
-        #
-        self.UTILS.getNetworkConnection()
         
         #
         # Open the browser app.
