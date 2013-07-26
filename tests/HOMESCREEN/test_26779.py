@@ -21,11 +21,7 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.EME        = EverythingMe(self)
         self.Settings   = Settings(self)
-        
-        self.data_layer.disable_cell_data()
-        self.data_layer.disable_wifi()
-        
-        
+                
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -55,7 +51,10 @@ class test_main(GaiaTestCase):
                                    "Connection message (without using with a network first)",
                                    True, 10, False)
         
-        #
+        x = self.UTILS.screenShotOnErr()
+        self.UTILS.logResult("info", "Screenshot at this point:", x)
+
+        #        
         # Return home, turn on networking navigate to the group again, then return home.
         #
         self.UTILS.logResult("info", "Using EME with networking ...")
@@ -64,24 +63,25 @@ class test_main(GaiaTestCase):
         self.EME.launch()
         self.EME.pickGroup("Local")
         self.UTILS.scrollHomescreenRight()
- 
+    
         #
         # Turn networking off and launch the 'everything.me' app again.
         #
-        self.data_layer.disable_cell_data()
-        self.data_layer.disable_wifi()
+        self.UTILS.disableAllNetworkSettings()
         self.UTILS.logResult("info", "Launching EME with NO network connection (after being used WITH a network connection) ...")
         self.EME.launch()
-         
+          
         #
         # Select a category (group).
         #
         self.EME.pickGroup("Music")
-         
+          
         #
         # Verify that the message is displayed.
         #
         self.UTILS.waitForElements(DOM.EME.connection_warning_msg, 
                                    "Connection message (after using with a network)",
                                    True, 10, False)
-         
+        
+        x = self.UTILS.screenShotOnErr()
+        self.UTILS.logResult("info", "Screenshot at this point:", x)

@@ -55,14 +55,11 @@ class main(GaiaTestCase):
             self.sentFolderName = "Sent"
         
         self.marionette.set_search_timeout(50)
-        self.lockscreen.unlock()
         
         #
         # Make sure we have some data connectivity.
         #
         self.UTILS.getNetworkConnection()
-        
-        self.UTILS.setTimeToNow()
         
     def send_email(self):
         
@@ -102,7 +99,7 @@ class main(GaiaTestCase):
         self.Email.openMailFolder("Inbox")
                 
         #
-        # At the inbox, compose a new email.
+        # At the inbox, compose and send a new email (or fail).
         #
         self.Email.send_new_email(self.EMAIL2, self.subject, self.body)
 

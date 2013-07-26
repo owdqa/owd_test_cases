@@ -25,8 +25,7 @@ class test_main(GaiaTestCase):
 
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
-        self.dummy_num1 = "09876543"
-        self.dummy_num2 = "12345678"
+        self.dummy_nums = ["09876543", "12345678"]
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -38,7 +37,7 @@ class test_main(GaiaTestCase):
         #
         self.messages.launch()
         self.messages.createAndSendSMS([self.num1], "International num: 0034%s, and +34 %s." %\
-                                                    (self.dummy_num1, self.dummy_num2))
+                                                    (self.dummy_nums[0], self.dummy_nums[1]))
         x = self.messages.waitForReceivedMsgInThisThread()
 
         #
@@ -67,7 +66,7 @@ class test_main(GaiaTestCase):
         
         
     def _doTest(self, p_msgs, p_num):
-        link_num = p_msgs[p_num].text
+        link_num = self.dummy_nums[p_num]
         self.UTILS.logResult("info", "Tapping link to number: %s." % link_num)
         p_msgs[p_num].tap()
         time.sleep(1)
@@ -78,4 +77,4 @@ class test_main(GaiaTestCase):
         self.UTILS.logResult("info", "Screenshot of dialer after clicking the link for number %s" % link_num, x)
         x = self.UTILS.getElement(DOM.Dialer.phone_number, "Phone number")
         x_num = x.get_attribute("value")
-        self.UTILS.TEST(link_num == x_num, "Expected number (%s) matches number in dialer (%s)." % (link_num, x_num))
+        self.UTILS.TEST(link_num in x_num, "Expected number (%s) matches number in dialer (%s)." % (link_num, x_num))
