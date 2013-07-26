@@ -28,9 +28,6 @@ class test_main(GaiaTestCase):
 
         self.num = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         
-        self.data_layer.disable_wifi()
-        
-        
     def tearDown(self):
         self.UTILS.reportResults()
         

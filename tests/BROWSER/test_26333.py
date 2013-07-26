@@ -33,10 +33,7 @@ class test_main(GaiaTestCase):
         #
         # Wifi needs to be off for this test to work.
         #
-        self.data_layer.disable_wifi()
-        self.data_layer.disable_cell_data()        
         self.UTILS.toggleViaStatusBar("data")
-        self.UTILS.waitForNetworkItemEnabled("data")
         
         #
         # Open the browser app.

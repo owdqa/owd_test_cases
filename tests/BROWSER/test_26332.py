@@ -23,10 +23,6 @@ class test_main(GaiaTestCase):
         self.wifi_user  = self.UTILS.get_os_variable("GLOBAL_WIFI_USERNAME")
         self.wifi_pass  = self.UTILS.get_os_variable("GLOBAL_WIFI_PASSWORD")
 
-        
-        self.data_layer.disable_wifi()
-        
-        
     def tearDown(self):
         self.UTILS.reportResults()
         
