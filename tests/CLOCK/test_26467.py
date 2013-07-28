@@ -29,6 +29,8 @@ class test_main(GaiaTestCase):
         #
         # Launch clock app.
         #
+        self.apps.kill_all()
+        time.sleep(3)
         self.clock.launch()
         
         #
@@ -45,7 +47,7 @@ class test_main(GaiaTestCase):
         #
         # Check this is now the digital clock face.
         #
-        x = self.UTILS.getElement(DOM.Clock.digital_face, "Digital clock face")
+        self.UTILS.waitForElements(DOM.Clock.digital_face, "Digital clock face")
         
         #
         # Verify the time is correct (digits for hh and mm need to be padded).
@@ -74,5 +76,5 @@ class test_main(GaiaTestCase):
         #
         # Check that the face is analog again.
         #
-        x = self.UTILS.getElement(DOM.Clock.analog_face, "Analog clock face")
+        self.UTILS.waitForElements(DOM.Clock.analog_face, "Analog clock face")
         
