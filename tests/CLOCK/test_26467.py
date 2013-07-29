@@ -42,7 +42,22 @@ class test_main(GaiaTestCase):
         # Tap the clock face.
         #
         self.UTILS.logResult("info", "Tapping the clock face ...")
-        x.tap()
+        try:
+            x.tap()
+            self.wait_for_element_displayed(*DOM.Clock.digital_face)
+        except:
+            #
+            # For some reason this randomly doesn't work, so try again.
+            #
+            self.UTILS.logResult("info", 
+                                 "<b>Note:</b> failed to tap the analog face - " +
+                                 "suspect this is just a Marionette issue so I'm trying again.")
+            self.apps.kill_all()
+            time.sleep(2)
+            self.clock.launch()
+            x = self.UTILS.getElement(DOM.Clock.analog_face, "Analog clock face")
+            x.tap()
+            
         
         #
         # Check this is now the digital clock face.
@@ -70,8 +85,21 @@ class test_main(GaiaTestCase):
         #
         # Tap the clock face.
         #
+        x = self.UTILS.getElement(DOM.Clock.digital_face, "Digital clock face", False)
         self.UTILS.logResult("info", "Tapping the clock face ...")
-        x.tap()
+        try:
+            x.tap()
+            self.wait_for_element_displayed(*DOM.Clock.analog_face)
+        except:
+            #
+            # For some reason this randomly doesn't work, so try again.
+            #
+            self.UTILS.logResult("info", 
+                                 "<b>Note:</b> failed to tap the digital face - " +
+                                 "suspect this is just a Marionette issue so I'm trying again.")
+            self.UTILS.switchToFrame(*DOM.Clock.frame_locator)
+            x = self.UTILS.getElement(DOM.Clock.digital_face, "Digital clock face")
+            x.tap()
         
         #
         # Check that the face is analog again.
