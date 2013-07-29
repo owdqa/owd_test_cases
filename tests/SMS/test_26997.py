@@ -35,7 +35,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message containing all of our CORRECT numbers..
         #
-        self.messages.launch()
+        msgApp = self.messages.launch()
         self.messages.createAndSendSMS([self.num1], "International num: 0034%s, and +34 %s." %\
                                                     (self.dummy_nums[0], self.dummy_nums[1]))
         x = self.messages.waitForReceivedMsgInThisThread()
@@ -57,7 +57,8 @@ class test_main(GaiaTestCase):
         #
         # Kill everything, then re-launch the messaging app etc ...
         #
-        self.apps.kill_all()
+        self.apps.kill(msgApp)
+        time.sleep(3)
         self.messages.launch()
         self.messages.openThread(self.num1)
         x = self.messages.waitForReceivedMsgInThisThread()
