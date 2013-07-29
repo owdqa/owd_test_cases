@@ -14,6 +14,8 @@ class test_main(GaiaTestCase):
     
     _TestMsg     = "Test message."
     
+    _RESTART_DEVICE = True
+    
     def setUp(self):
         #
         # Set up child objects...
@@ -49,6 +51,9 @@ class test_main(GaiaTestCase):
             
         sms_msg = "Test numbers: %s." % sms_nums
         
+        #
+        # Start from clean for each test run.
+        #
         self.apps.kill_all()
         time.sleep(2)
         self.messages.launch()
@@ -79,10 +84,13 @@ class test_main(GaiaTestCase):
             #
             # Kill everything, then re-launch the messaging app etc ...
             #
-            self.apps.kill_all()
-            time.sleep(2)
-            self.messages.launch()
-            self.messages.openThread(self.num1)
+            self.UTILS.switchToApp("Messages")
+            
+            # In case we're not in the thread already.
+            x = self.marionette.find_element(*DOM.Messages.threads_list)
+            if x:
+                self.messages.openThread(self.num1)
+                
             x = self.messages.waitForReceivedMsgInThisThread()
             msg_nums = x.find_elements("tag name", "a")
 
