@@ -147,6 +147,8 @@
 26415|Send a SMS with more than 160 characteres
 26467|Clock in different modes (analog, digital)
 26473|Alarm- Delete an alarm
+26552|Sending SMS during a Wi-Fi session
+26553|Receiving SMS during a Wi-Fi session
 26711|Select multiple pictures and delete them
 26727|Delete a picture just taken
 26728|Go to Gallery from Camera
@@ -185,6 +187,7 @@
 26864|Try send a sms to a contact while airplane is enabled (from sms app - use contact option)
 26865|Receive an SMS from a contact with long name
 26874|Search by text string that not matches with any contact name/last name
+26877|Verify that the user can send a SMS from a contact details - SMS conversation thread already exists
 26882|Search by text string (UPPER CASE) that matches the last name
 26883|Verify that the user can send a SMS from a contact details - SMS conversation doesn't exist
 26885|Add multiple emails addresses
@@ -234,6 +237,9 @@
 27000|Verify that if the user accepts  &quot;Create new Contact&quot; from the “Add contact” form, the form is closed and the user is returned to the SMS thread view
 27001|Verify that if the user accepts  &quot;Add to an existing contact&quot; from the “Edit contact” form, contact is correctly updated and he is returned to the SMS thread view
 27002|Verify that when tapping in a SMS with several valid phone numbers, the dialer is launched with the phone number tapped on pre-filled in
+27012|Add dialed number as new contact
+27013|Add dialed number to existing contact without phone numbers
+27022|Call the number
 27735|Verify that If the name of the contact is not empty:  No carrier information is linked to the phone: Phone Number is shown instead of carrier as the secondary header
 27736|Press delete without any conversation selected
 27737|Try to send a new SMS using the search option (in contact list window) in order to select an inexisting contact
@@ -265,9 +271,10 @@
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
 28100|Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:&quot;Test1 656565678 number&quot;)
-27012|Add dialed number as new contact
-27022|Call the number
-27013|Add dialed number to existing contact without phone numbers
-26877|Verify that the user can send a SMS from a contact details - SMS conversation thread already exists
-26553|Receiving SMS during a Wi-Fi session
-26552|Sending SMS during a Wi-Fi session
+27016|Add short number to an existing contact with different number
+27014|Do not add dialed number
+27021|Add call log entry to existing contact (with more phone numbers) and contacts not empty
+27018|Add dialed number to existing contact when Contacts is empty
+27020|Add call log entry to new contact
+27015|Add number with prefix as new contact
+26771|Launch a intallation doing a long-tap on any app shown by everything.me and press Yes button
