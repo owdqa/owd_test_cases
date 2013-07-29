@@ -49,18 +49,6 @@ class test_main(GaiaTestCase):
         #
         self.messages.createAndSendSMS([self.num1,self.num2], "Test message")
         
-        # Waiting for the replies isn't really part of the test, so just continue...
-        
-        #
-        # Close the SMS app.
-        #
-        self.apps.kill_all()
-        
-        #
-        # Open the SMS app and check the expected threads are there.
-        #
-        self.messages.launch()
-        
         x = self.UTILS.getElements(DOM.Messages.thread_target_names, "Threads target names")
         bool_1_ok=False
         bool_2_ok=False
