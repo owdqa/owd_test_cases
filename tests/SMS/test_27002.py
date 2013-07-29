@@ -21,7 +21,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.messages   = Messages(self)
-        self.Dialer      = Dialer(self)
+        self.dialer     = Dialer(self)
 
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         
@@ -43,12 +43,12 @@ class test_main(GaiaTestCase):
         for i in nums:
             sms_nums = "%s, %s" % (sms_nums, i)
         sms_msg = "Test numbers %s." % sms_nums
-        
+         
         self.messages.createAndSendSMS([self.num1], sms_msg)
         x = self.messages.waitForReceivedMsgInThisThread()
         
         #
-        # Tap the number to call.
+        # Tap the numbers to call.
         #
         msg_nums = x.find_elements("tag name", "a")
         
@@ -62,14 +62,21 @@ class test_main(GaiaTestCase):
             #
             x = self.UTILS.getElement(DOM.Dialer.phone_number, "Phone number")
             self.UTILS.TEST(nums[i] in x.get_attribute("value"), 
-                            "The phone number contains '%s' (it was '%s')." % (nums[i], x.get_attribute("value")))
+                            "The dialer number contains '%s' (it was '%s')." % (nums[i], x.get_attribute("value")))
             
             #
-            # Kill everything, then re-launch the messaging app etc ...
+            # Switch back to messaging app (without killing anything) etc ...
             #
-            self.apps.kill_all()
-            self.messages.launch()
-            self.messages.openThread(self.num1)
+            self.UTILS.switchToApp("Messages")
+            x = self.UTILS.screenShotOnErr()
+            
+            #
+            # Sometimes the app goes back to thread view instead of message view.
+            #
+            x = self.marionette.find_element(*DOM.Messages.threads_list)
+            if x:
+                self.messages.openThread(self.num1)
+                
             x = self.messages.waitForReceivedMsgInThisThread()
             msg_nums = x.find_elements("tag name", "a")
 

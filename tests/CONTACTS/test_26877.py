@@ -52,6 +52,7 @@ class test_main(GaiaTestCase):
         #
         # Create a thread for this contact.
         #
+        self.contacts.launch() #(Just so we can switch to it later)
         self.messages.launch()
         self.messages.createAndSendSMS([self.contact_1["tel"]["value"]], "Test message")
         self.messages.waitForReceivedMsgInThisThread()
@@ -65,14 +66,11 @@ class test_main(GaiaTestCase):
         self.UTILS.logResult("info", " ")
         self.UTILS.logResult("info", "=================================================================")
         self.UTILS.logResult("info", "<b>If SMS app is closed when you click 'send sms' in contacts ...")
-        self.apps.kill_all()
         self._doTest()
         
         self.UTILS.logResult("info", " ")
         self.UTILS.logResult("info", "=====================================================================")
         self.UTILS.logResult("info", "<b>If SMS app is still open when you click 'send sms' in contacts ...")
-        self.apps.kill_all()
-        self.messages.launch()
         self.messages.openThread(self.num2)
         self._doTest()
         
@@ -82,7 +80,7 @@ class test_main(GaiaTestCase):
         #
         # Launch contacts app etc...
         #
-        self.contacts.launch()
+        self.UTILS.switchToApp("Contacts")
         self.contacts.viewContact(self.contact_1['name'])
         smsBTN = self.UTILS.getElement(DOM.Contacts.sms_button, "Send SMS button")
         smsBTN.tap()

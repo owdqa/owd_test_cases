@@ -47,11 +47,35 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>27018</td><td  align=left>Add dialed number to existing contact when Contacts is empty</td>
+  </tr>
+
+  <tr>
     <td  align=center>27022</td><td  align=left>Call the number</td>
   </tr>
 
   <tr>
+    <td  align=center>27020</td><td  align=left>Add call log entry to new contact</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27015</td><td  align=left>Add number with prefix as new contact</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27016</td><td  align=left>Add short number to an existing contact with different number</td>
+  </tr>
+
+  <tr>
     <td  align=center>27013</td><td  align=left>Add dialed number to existing contact without phone numbers</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27021</td><td  align=left>Add call log entry to existing contact (with more phone numbers) and contacts not empty</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27014</td><td  align=left>Do not add dialed number</td>
   </tr>
 
   <tr>

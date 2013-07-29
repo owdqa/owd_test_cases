@@ -36,22 +36,22 @@ class test_main(GaiaTestCase):
         # Open the Settings application.
         #
         self.Settings.launch()
-          
+           
         #
         # Tap Wi-Fi.
         #
         self.Settings.wifi()
-  
+   
         #
         # Make sure wifi is set to 'on'.
         #
         self.Settings.turn_wifi_on()
-          
+           
         #
         # Connect to the wifi.
         #
         self.Settings.tap_wifi_network_name(self.wifi_name, self.wifi_user, self.wifi_pass)
-          
+           
         #
         # Tap specific wifi network (if it's not already connected).
         #
@@ -72,16 +72,16 @@ class test_main(GaiaTestCase):
         #
         # Open the SMS app, send a message then jump back to the browser asap.
         #
-        msgapp = self.messages.launch()
+        msgApp = self.messages.launch()
         self.messages.startNewSMS()
         self.messages.addNumbersInToField([self.num])
         self.messages.enterSMSMsg("Test")
         sendBtn = self.UTILS.getElement(DOM.Messages.send_message_button, "Send sms button")
         sendBtn.tap()
 
-        self.apps.kill_all()
+        self.apps.kill(msgApp)
 
-        self.Browser.launch()
+        self.UTILS.switchToFrame(*DOM.Browser.frame_locator)
         self.messages.waitForSMSNotifier(self.num, 60)
         
         self.Browser.open_url("www.wikipedia.com")

@@ -239,6 +239,12 @@
 27002|Verify that when tapping in a SMS with several valid phone numbers, the dialer is launched with the phone number tapped on pre-filled in
 27012|Add dialed number as new contact
 27013|Add dialed number to existing contact without phone numbers
+27014|Do not add dialed number
+27015|Add number with prefix as new contact
+27016|Add short number to an existing contact with different number
+27018|Add dialed number to existing contact when Contacts is empty
+27020|Add call log entry to new contact
+27021|Add call log entry to existing contact (with more phone numbers) and contacts not empty
 27022|Call the number
 27735|Verify that If the name of the contact is not empty:  No carrier information is linked to the phone: Phone Number is shown instead of carrier as the secondary header
 27736|Press delete without any conversation selected
