@@ -49,7 +49,6 @@ class test_main(GaiaTestCase):
         #
         # Verify that this number was added to the contact.
         #
-        self.apps.kill_all()
         self.contacts.launch()
         self.contacts.selectContactFromAll(self.cont["name"])
         

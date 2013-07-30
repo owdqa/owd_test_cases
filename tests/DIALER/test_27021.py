@@ -48,7 +48,6 @@ class test_main(GaiaTestCase):
         #
         # Verify that this contact has been modified in contacts.
         #
-        self.apps.kill_all()
         self.contacts.launch()
         self.contacts.selectContactFromAll(self.cont["name"])
         
