@@ -60,19 +60,20 @@ class test_main(GaiaTestCase):
         #
         self.messages.sendSMS()
         self.messages.waitForReceivedMsgInThisThread()
+        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
+        x.tap()
         
         #
         # Open contacts app and create a contact with the same phone number used to send the SMS in the 
         # previous step
         #
-        self.apps.kill_all()
         self.contacts.launch()
         self.contacts.createNewContact(self.Contact_1)
         
         #
         # Switch back to the messages app.
         #
-        self.messages.launch()
+        self.UTILS.switchToApp("Messages")
         
         #
         # Verify the thread now contains the name of the contact instead of the phone number

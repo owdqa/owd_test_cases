@@ -59,6 +59,7 @@ TESTS COVERED
   </tr>
 
   <tr>
+<<<<<<< HEAD
     <td  align=center>26414</td><td  align=left>Received a SMS with more than 160 characteres</td>
   </tr>
 
@@ -68,6 +69,41 @@ TESTS COVERED
 
   <tr>
     <td  align=center>26406</td><td  align=left>Press delete all text button in contact name field</td>
+=======
+    <td  align=center>27018</td><td  align=left>Add dialed number to existing contact when Contacts is empty</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27022</td><td  align=left>Call the number</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27020</td><td  align=left>Add call log entry to new contact</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27015</td><td  align=left>Add number with prefix as new contact</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27016</td><td  align=left>Add short number to an existing contact with different number</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27013</td><td  align=left>Add dialed number to existing contact without phone numbers</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27021</td><td  align=left>Add call log entry to existing contact (with more phone numbers) and contacts not empty</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27014</td><td  align=left>Do not add dialed number</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26907</td><td  align=left>Remove a photo,a phone number, an email, an address and a comment from a contact and restore the phone number and the comment</td>
+>>>>>>> b76289c5860a4b815b7a77b896a4e97314c37355
   </tr>
 
   <tr>

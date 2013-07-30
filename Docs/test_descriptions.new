@@ -271,6 +271,7 @@
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
 28100|Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:&quot;Test1 656565678 number&quot;)
+<<<<<<< HEAD
 27016|Add short number to an existing contact with different number
 27014|Do not add dialed number
 27021|Add call log entry to existing contact (with more phone numbers) and contacts not empty
@@ -278,3 +279,11 @@
 27020|Add call log entry to new contact
 27015|Add number with prefix as new contact
 26771|Launch a intallation doing a long-tap on any app shown by everything.me and press Yes button
+=======
+27018|Add dialed number to existing contact when Contacts is empty
+27020|Add call log entry to new contact
+27015|Add number with prefix as new contact
+27016|Add short number to an existing contact with different number
+27021|Add call log entry to existing contact (with more phone numbers) and contacts not empty
+27014|Do not add dialed number
+>>>>>>> b76289c5860a4b815b7a77b896a4e97314c37355
