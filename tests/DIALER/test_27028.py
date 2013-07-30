@@ -21,10 +21,8 @@ class test_main(GaiaTestCase):
         self.contacts   = Contacts(self)
         
         self.num  = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.num2 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
         
         self.cont = MockContacts().Contact_1
-        self.cont["tel"]["value"] = self.num
         self.data_layer.insert_contact(self.cont)
         
     def tearDown(self):
@@ -35,15 +33,12 @@ class test_main(GaiaTestCase):
         # Create a call log.
         #
         self.dialer.launch()
-        self.dialer.enterNumber(self.num)
-        self.dialer.callThisNumber()
-        time.sleep(2)
-        self.dialer.hangUp()
+        self.dialer.createMultipleCallLogEntries(self.num, 2)
          
         #
-        # Open the call log and add to our contact.
+        # Add to our contact.
         #
-        self.dialer.callLog_addToContact(self.num2, self.cont["name"])
+        self.dialer.callLog_addToContact(self.num, self.cont["name"], p_openCallLog=False)
          
         #
         # Verify that this contact has been modified in contacts.
@@ -51,5 +46,5 @@ class test_main(GaiaTestCase):
         self.contacts.launch()
         self.contacts.selectContactFromAll(self.cont["name"])
         
-        self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_contact_tels_xpath % self.num2), 
-                                    "Telephone number %s in conact" % self.num2)
+        self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_contact_tels_xpath % self.num), 
+                                    "Telephone number %s in conact" % self.num)

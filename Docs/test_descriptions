@@ -248,6 +248,20 @@
 27020|Add call log entry to new contact
 27021|Add call log entry to existing contact (with more phone numbers) and contacts not empty
 27022|Call the number
+27025|Call log in edit mode
+27027|Create a contact from a number which is in the call log with several entries (All tab)
+27028|Add to an existing contact from a number which is in the call log with several entries (All tab)
+27029|Verify the call log is updated after 'Creating a new contact'
+27034|Verify that on Contacts going to Settings, there is an option to import contacts from Gmail
+27035|Import from Gmail option is disabled when data and wifi is disabled
+27036|Go back (Cancel ('x')) on Account web log-in page
+27037|Log in with an invalid user/password
+27059|Verify that you can enter numbers in the search input box
+27060|Type a two digits number and check the list of contacts shown
+27061|Option to cancel the searching
+27062|Type a number which does not match with any of the contacts' phone number(s)
+27063|Verify that if the number introduced also matches the name of a contact, it will also be shown together with those in which the phone number matches
+27066|Type a number to look for a contact which has picture
 27735|Verify that If the name of the contact is not empty:  No carrier information is linked to the phone: Phone Number is shown instead of carrier as the secondary header
 27736|Press delete without any conversation selected
 27737|Try to send a new SMS using the search option (in contact list window) in order to select an inexisting contact

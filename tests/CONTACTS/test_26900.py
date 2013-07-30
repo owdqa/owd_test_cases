@@ -26,21 +26,14 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.Contact_1 = MockContacts().Contact_1
-        self.Contact_2 = MockContacts().Contact_2
-        self.data_layer.insert_contact(self.Contact_1)
-        self.data_layer.insert_contact(self.Contact_2)
+        self.cont = MockContacts().Contact_twoPhones
+        self.data_layer.insert_contact(self.cont)
         
         
     def tearDown(self):
         self.UTILS.reportResults()
         
     def test_run(self):
-        
-        #
-        # Set up to use data connection.
-        #
-        self.UTILS.getNetworkConnection()
         
         #
         # Launch contacts app.
@@ -50,22 +43,32 @@ class test_main(GaiaTestCase):
         #
         # View our contact.
         #
-        self.contacts.viewContact(self.Contact_1['name'])
+        self.contacts.viewContact(self.cont['name'])
         
-        # Jumping out here while I try to figure out how to
-        # put > 1 phone number in via the mock object!
-        self.UTILS.logResult("info", "Quitting test early!")
-        return
-
         #
         # Tap the 2nd number to dial it.
         #
+        x = self.UTILS.getElement( ("xpath", DOM.Contacts.view_contact_tels_xpath % self.cont["tel"][1]["value"]),
+                                   "Second phone number")
+        x.tap()
         
         #
         # Switch to the dialer iframe.
         #
-        self.marionette.switch_to_frame()
-        #self.UTILS.switchToFrame(DOM.Dialer.frame_locator, "Dialer iframe")
+        self.UTILS.switchToFrame(*DOM.Contacts.dialer_frame)
         
         #
         # Verify things....
+        #
+        x = self.UTILS.getElements(DOM.Dialer.outgoing_call_number, "Phone number")
+        boolOK=False
+        for i in x:
+            if self.cont['name'] in i.text:
+                boolOK = True
+                break
+            
+        self.UTILS.TEST(boolOK, "%s in the dialer number." % self.cont['name'])
+        
+        
+        
+        

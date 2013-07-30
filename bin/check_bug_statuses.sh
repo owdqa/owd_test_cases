@@ -90,7 +90,7 @@ EOF
             }
         }
         
-        if ( STATUS ~ /.*RESOLVED.*/ ){
+        if ( STATUS ~ /.*RESOLVED.*/ || STATUS ~ /.*FIXED.*/ ){
             gsub(/&quot;/, "\"", TESTLIST)
             
             printf "\n"

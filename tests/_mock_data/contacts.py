@@ -33,6 +33,20 @@ class MockContacts(dict):
                 "jobTitle"  : "Dancer number two",
                 "comment"   : "Mock test contact 2"
             }
+        self.Contact_3 = {
+                "givenName" : "Rodger",
+                "familyName": "Ramjet",
+                "name"      : "Rodger Ramjet",
+                "email"     : {"type": "", "value": "rodger.ramjet@nowhere.com"},
+                "tel"       : {"type": "Mobile", "carrier": "MoviStar", "value": "333333333"},
+                "adr"       : {"streetAddress"    : "Two Street",
+                               "postalCode"       : "00002",
+                               "locality"      : "City Two",
+                               "countryName"   : "Country Two"},
+                "bday"      : "1982-02-22",
+                "jobTitle"  : "Dancer number three",
+                "comment"   : "Mock test contact 3"
+            }
         self.Contact_longName = {
                 "givenName" : "AAAAAAAAAAAAAAAALEX",
                 "familyName": "SMITHXXXXXXXX",

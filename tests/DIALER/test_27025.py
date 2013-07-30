@@ -9,7 +9,6 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
 
 class test_main(GaiaTestCase):
     
@@ -21,12 +20,7 @@ class test_main(GaiaTestCase):
         self.contacts   = Contacts(self)
         
         self.num  = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.num2 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
-        
-        self.cont = MockContacts().Contact_1
-        self.cont["tel"]["value"] = self.num
-        self.data_layer.insert_contact(self.cont)
-        
+                
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -41,15 +35,22 @@ class test_main(GaiaTestCase):
         self.dialer.hangUp()
          
         #
-        # Open the call log and add to our contact.
+        # Open the call log and select Add to Contact.
         #
-        self.dialer.callLog_addToContact(self.num2, self.cont["name"])
-         
-        #
-        # Verify that this contact has been modified in contacts.
-        #
-        self.contacts.launch()
-        self.contacts.selectContactFromAll(self.cont["name"])
+        self.dialer.openCallLog()
+
+        x = self.UTILS.getElement(DOM.Dialer.call_log_edit_btn, "Edit button")
+        x.tap()
         
-        self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_contact_tels_xpath % self.num2), 
-                                    "Telephone number %s in conact" % self.num2)
+        #
+        # Now tap the number and verify that we're not taken to the menu,
+        #
+        x = self.UTILS.getElement( ("xpath", DOM.Dialer.call_log_number_xpath % self.num),
+                                   "The call log for number %s" % self.num)
+        x.tap()
+         
+        self.UTILS.logResult("info", "Checking the call / etc... buttons are not displayed ...")
+        self.UTILS.waitForNotElements(DOM.Dialer.call_log_numtap_call, "Call button")
+        
+        x = self.UTILS.screenShotOnErr()
+        self.UTILS.logResult("info", "Final screenshot", x)
