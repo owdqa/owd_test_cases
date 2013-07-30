@@ -155,6 +155,7 @@
 26731|Delete a video just recorded
 26741|Email containing a URL
 26750|Basic: Deleting of a e-mail in Inbox
+26771|Launch a intallation doing a long-tap on any app shown by everything.me and press Yes button
 26773|Verify that the user can uninstall a everything.me app through the grid edit mode
 26774|Verify that user can click on &quot;Add more categories&quot; in everything.me grid so I am shown again the list and can add more categories
 26776|Verify that when the user navigates to everything.me page, dock is hidden
@@ -239,6 +240,12 @@
 27002|Verify that when tapping in a SMS with several valid phone numbers, the dialer is launched with the phone number tapped on pre-filled in
 27012|Add dialed number as new contact
 27013|Add dialed number to existing contact without phone numbers
+27014|Do not add dialed number
+27015|Add number with prefix as new contact
+27016|Add short number to an existing contact with different number
+27018|Add dialed number to existing contact when Contacts is empty
+27020|Add call log entry to new contact
+27021|Add call log entry to existing contact (with more phone numbers) and contacts not empty
 27022|Call the number
 27735|Verify that If the name of the contact is not empty:  No carrier information is linked to the phone: Phone Number is shown instead of carrier as the secondary header
 27736|Press delete without any conversation selected
@@ -271,9 +278,4 @@
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
 28100|Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:&quot;Test1 656565678 number&quot;)
-27018|Add dialed number to existing contact when Contacts is empty
-27020|Add call log entry to new contact
-27015|Add number with prefix as new contact
-27016|Add short number to an existing contact with different number
-27021|Add call log entry to existing contact (with more phone numbers) and contacts not empty
-27014|Do not add dialed number
+26770|launch the everything.me page and click on the first category displayed
