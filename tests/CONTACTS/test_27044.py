@@ -54,15 +54,7 @@ class test_main(GaiaTestCase):
         for y in x:
             gmail_contacts.append( y.get_attribute("data-search") )
             
-        
-        self.UTILS.logResult("info", "Tapping the 'Select All' button ...")
-        self.marionette.execute_script("document.getElementById('%s').click()" % DOM.Contacts.gmail_import_select_all[1])
-        time.sleep(1)
-        
-        self.marionette.execute_script("document.getElementById('%s').click()" % DOM.Contacts.gmail_import_import_btn[1])
-        time.sleep(1)
-
-        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
+        self.contacts.importFromGmail_importAll()
         
         #
         # Check all our contacts are in the list.
