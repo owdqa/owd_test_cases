@@ -39,7 +39,6 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
-        self.UTILS.logResult(False, "ROY restart device")
         
         #
         # Set up to use data connection.
