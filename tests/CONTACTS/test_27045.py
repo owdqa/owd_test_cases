@@ -46,6 +46,7 @@ class test_main(GaiaTestCase):
         self.UTILS.getNetworkConnection()
          
         self.contacts.launch()
+                
         self.contacts.importFromGmail_login(self.gmail_u, self.gmail_p)
          
         x = self.UTILS.getElements(DOM.Contacts.gmail_import_conts_list, "Contact list")
@@ -56,10 +57,9 @@ class test_main(GaiaTestCase):
              
         self.contacts.importFromGmail_importAll()
  
-        x = {"name": gmail_contacts[0]}
+        self.contacts.selectContactFromAll("roytest")
         
-        self.contacts.viewContact(x["name"], False)
-        
+        self.contacts.viewContact(gmail_contacts[0], False)
         editBTN = self.UTILS.getElement(DOM.Contacts.edit_details_button, "Edit details button")
         editBTN.tap()
         self.UTILS.waitForElements(DOM.Contacts.edit_contact_header, "'Edit contacts' screen header")
