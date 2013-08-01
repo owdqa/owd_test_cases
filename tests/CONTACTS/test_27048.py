@@ -34,21 +34,18 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
+        
+        #
+        # Set up to use data connection.
+        #
+        self.UTILS.getNetworkConnection()
+        
         #
         # Launch contacts app.
         #
         self.contacts.launch()
-        x = self.UTILS.getElement(DOM.Contacts.settings_button, "Settings button")
-        x.tap()
+        x = self.contacts.importFromHotmail_login("wrongname", "wrongpass")
         
-        #
-        # Wait for the Gmail button.
-        #
-        x = self.UTILS.getElement(DOM.Contacts.gmail_button, "Gmail button")
-        x_dis = x.get_attribute("disabled")
-        self.UTILS.TEST(x_dis == "true", "The Gmail button is disabled ('disabled' was set to '%s')." % x_dis)
-                
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot and details", x)
+        self.UTILS.TEST(x == False, "Login failed.")
 
 
