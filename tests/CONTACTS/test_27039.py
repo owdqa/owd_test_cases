@@ -37,7 +37,6 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
-        
         #
         # Set up to use data connection.
         #
@@ -46,26 +45,38 @@ class test_main(GaiaTestCase):
         self.contacts.launch()
         self.contacts.importFromGmail_login(self.gmail_u, self.gmail_p)
         
+        # Get the contacts.
         x = self.UTILS.getElements(DOM.Contacts.gmail_import_conts_list, "Contact list")
-        
         gmail_contacts = []
         for y in x:
             gmail_contacts.append( y.get_attribute("data-search") )
-            
-        self.contacts.importFromGmail_importAll()
-        
-        #
-        # Check all our contacts are in the list.
-        #
-        self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_all_contact_name_xpath % self.cont["familyName"]),
-                                   "Contact '%s'" % self.cont["familyName"])
-        
-        # ... and the gmail contacts ...
-        for i in gmail_contacts:
-            self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_all_contact_name_xpath % i),
-                                       "Contact '%s'" % i)
-        
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot and details", x)
+
+        search_name = gmail_contacts[0][:gmail_contacts[0].index('@')]
 
 
+        #
+        # Use the search bar to test ...
+        #
+        
+        # Keyboard appears.
+        self.marionette.execute_script("document.getElementById('search-start').click();")
+        
+        self.marionette.switch_to_frame()
+        self.UTILS.waitForElements( ("xpath", "//iframe[contains(@%s,'%s')]" %\
+                                     (DOM.Keyboard.frame_locator[0], DOM.Keyboard.frame_locator[1])),
+                                   "Keyboard")
+
+        # Typing works and allows real-time filtering.
+        self.UTILS.logResult("info", "Typing '%s' with the keyboard (without pressing ENTER) ..." % search_name)
+        self.keyboard.send(search_name)
+        
+        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
+        self.UTILS.switchToFrame(*DOM.Contacts.gmail_import_frame, p_viaRootFrame=False)
+        after_search_count = self.UTILS.getElements(DOM.Contacts.gmail_import_search_list, "Search list")
+
+        self.UTILS.TEST(len(after_search_count) == 1, 
+                        "After typing the name '%s' the search list contains 1 contact (out of %s)." %\
+                        (search_name, str(len(gmail_contacts))))
+        
+        
+        
