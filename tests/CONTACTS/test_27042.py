@@ -14,8 +14,6 @@ import time
 
 class test_main(GaiaTestCase):
     
-    _RESTART_DEVICE = True
-
     def setUp(self):
         #
         # Set up child objects...
