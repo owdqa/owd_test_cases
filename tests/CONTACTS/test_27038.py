@@ -49,13 +49,13 @@ class test_main(GaiaTestCase):
         # Launch contacts app.
         #
         self.contacts.launch()
-        self.contacts.importFromGmail_login(self.gmail_u, self.gmail_p, False)
+        self.contacts.import_GmailLogin(self.gmail_u, self.gmail_p, False)
         
         #
         # Cancel the login.
         #
         self.marionette.switch_to_frame()
-        x = self.UTILS.getElement(DOM.Contacts.gmail_cancel_login, "Cancel icon")
+        x = self.UTILS.getElement(DOM.Contacts.import_cancel_login, "Cancel icon")
         x.tap()
         
         #

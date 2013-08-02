@@ -9,8 +9,6 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
 
 class test_main(GaiaTestCase):
     
@@ -23,15 +21,9 @@ class test_main(GaiaTestCase):
         self.contacts   = Contacts(self)
         self.settings   = Settings(self)
 
-        self.gmail_u = self.UTILS.get_os_variable("GMAIL_1_USER")
-        self.gmail_p = self.UTILS.get_os_variable("GMAIL_1_PASS")
+        self.hotmail_u = self.UTILS.get_os_variable("HOTMAIL_1_EMAIL")
+        self.hotmail_p = self.UTILS.get_os_variable("HOTMAIL_1_PASS")
 
-        #
-        # Get details of our test contacts.
-        #
-        self.cont = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.cont)
-        
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -44,12 +36,21 @@ class test_main(GaiaTestCase):
         self.UTILS.getNetworkConnection()
         
         self.contacts.launch()
-        self.contacts.import_GmailLogin(self.gmail_u, self.gmail_p)
+        self.contacts.import_HotmailLogin(self.hotmail_u, self.hotmail_p)
         
+        # Try to get the hotmail contact (use the first one if not).
         x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list")
-        gmail_contact = x[0].get_attribute("data-search")
-        
-        self.contacts.import_toggleSelectContact(1)
+        hotmail_contact = x[0].get_attribute("data-search")
+        cont_number = 1
+        i_counter   = 0
+        for i in x:
+            i_counter = i_counter + 1
+            if "hotmail" in i.get_attribute("data-search").lower():
+                hotmail_contact = i.get_attribute("data-search")
+                cont_number = i_counter
+                break
+                
+        self.contacts.import_toggleSelectContact(cont_number)
         
         self.marionette.execute_script("document.getElementById('%s').click()" % DOM.Contacts.import_import_btn[1])
         time.sleep(1)
@@ -57,13 +58,10 @@ class test_main(GaiaTestCase):
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
         
         #
-        # Check our two contacts are in the list.
+        # Check our contact are is the list.
         #
-        self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_all_contact_name_xpath % self.cont["familyName"]),
-                                   "Contact '%s'" % self.cont["familyName"])
-        
-        self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_all_contact_name_xpath % gmail_contact),
-                                   "Contact '%s'" % gmail_contact)
+        self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_all_contact_name_xpath % hotmail_contact),
+                                   "Contact '%s'" % hotmail_contact)
         
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot and details", x)

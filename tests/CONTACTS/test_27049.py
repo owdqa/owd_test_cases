@@ -14,8 +14,6 @@ import time
 
 class test_main(GaiaTestCase):
     
-    _RESTART_DEVICE = True
-    
     def setUp(self):
         #
         # Set up child objects...
@@ -45,10 +43,10 @@ class test_main(GaiaTestCase):
         self.UTILS.getNetworkConnection()
         
         self.contacts.launch()
-        self.contacts.importFromHotmail_login(self.hotmail_u, self.hotmail_p)
+        self.contacts.import_HotmailLogin(self.hotmail_u, self.hotmail_p)
         
         # Get the contacts.
-        x = self.UTILS.getElements(DOM.Contacts.hotmail_import_conts_list, "Contact list")
+        x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list")
         hotmail_contacts = []
         for y in x:
             hotmail_contacts.append( y.get_attribute("data-search") )
@@ -75,7 +73,7 @@ class test_main(GaiaTestCase):
         
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
         self.UTILS.switchToFrame(*DOM.Contacts.hotmail_import_frame, p_viaRootFrame=False)
-        after_search_count = self.UTILS.getElements(DOM.Contacts.hotmail_import_search_list, "Search list")
+        after_search_count = self.UTILS.getElements(DOM.Contacts.import_search_list, "Search list")
 
         self.UTILS.TEST(len(after_search_count) == 1, 
                         "After typing the name '%s' the search list contains 1 contact (out of %s)." %\

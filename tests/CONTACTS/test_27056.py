@@ -23,8 +23,8 @@ class test_main(GaiaTestCase):
         self.contacts   = Contacts(self)
         self.settings   = Settings(self)
 
-        self.gmail_u = self.UTILS.get_os_variable("GMAIL_1_USER")
-        self.gmail_p = self.UTILS.get_os_variable("GMAIL_1_PASS")
+        self.hotmail_u = self.UTILS.get_os_variable("HOTMAIL_1_EMAIL")
+        self.hotmail_p = self.UTILS.get_os_variable("HOTMAIL_1_PASS")
 
         #
         # Get details of our test contacts.
@@ -44,26 +44,26 @@ class test_main(GaiaTestCase):
         self.UTILS.getNetworkConnection()
         
         self.contacts.launch()
-        self.contacts.import_GmailLogin(self.gmail_u, self.gmail_p)
+        self.contacts.import_HotmailLogin(self.hotmail_u, self.hotmail_p)
         
         x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list")
-        gmail_contact = x[0].get_attribute("data-search")
         
-        self.contacts.import_toggleSelectContact(1)
-        
-        self.marionette.execute_script("document.getElementById('%s').click()" % DOM.Contacts.import_import_btn[1])
-        time.sleep(1)
-
-        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
+        hotmail_contacts = []
+        for y in x:
+            hotmail_contacts.append( y.get_attribute("data-search") )
+            
+        self.contacts.import_ImportAll()
         
         #
-        # Check our two contacts are in the list.
+        # Check all our contacts are in the list.
         #
         self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_all_contact_name_xpath % self.cont["familyName"]),
                                    "Contact '%s'" % self.cont["familyName"])
         
-        self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_all_contact_name_xpath % gmail_contact),
-                                   "Contact '%s'" % gmail_contact)
+        # ... and the hotmail contacts ...
+        for i in hotmail_contacts:
+            self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_all_contact_name_xpath % i),
+                                       "Contact '%s'" % i)
         
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot and details", x)

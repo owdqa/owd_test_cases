@@ -23,8 +23,8 @@ class test_main(GaiaTestCase):
         self.contacts   = Contacts(self)
         self.settings   = Settings(self)
 
-        self.gmail_u = self.UTILS.get_os_variable("GMAIL_1_USER")
-        self.gmail_p = self.UTILS.get_os_variable("GMAIL_1_PASS")
+        self.hotmail_u = self.UTILS.get_os_variable("HOTMAIL_1_EMAIL")
+        self.hotmail_p = self.UTILS.get_os_variable("HOTMAIL_1_PASS")
 
         #
         # Get details of our test contacts.
@@ -44,46 +44,41 @@ class test_main(GaiaTestCase):
         self.UTILS.getNetworkConnection()
         
         self.contacts.launch()
-        self.contacts.import_GmailLogin(self.gmail_u, self.gmail_p)
+        self.contacts.import_HotmailLogin(self.hotmail_u, self.hotmail_p)
         
         #
         # Check the Import button is disabled to begin with.
         #
         x = self.UTILS.getElement(DOM.Contacts.import_import_btn, "Import button")
         self.UTILS.TEST(x.get_attribute("disabled") == "true", "Import button is disabled.")
-        
+
         #
-        # Select / de-select contacts and make sure Import button is enabled / disabled
-        # as expected.
+        # Tap the Select All button (can't be done with marionette yet).
         #
-        self.UTILS.logResult("info", "Enable contact 1...")
-        self.contacts.import_toggleSelectContact(1)
-        
+        self.UTILS.logResult("info", "Tapping the 'Select All' button ...")
+        self.marionette.execute_script("document.getElementById('%s').click()" % DOM.Contacts.import_select_all[1])
+        time.sleep(1)
+            
+        x = self.UTILS.screenShotOnErr()
+        self.UTILS.logResult("info", "Screenshot and details", x)
+
         x = self.UTILS.getElement(DOM.Contacts.import_import_btn, "Import button")
         self.UTILS.TEST(x.get_attribute("disabled") != "true", "Import button is enabled.")
 
-        self.UTILS.logResult("info", "Enable contact 2...")
-        self.contacts.import_toggleSelectContact(2)
-        
-        x = self.UTILS.getElement(DOM.Contacts.import_import_btn, "Import button")
-        self.UTILS.TEST(x.get_attribute("disabled") != "true", "Import button is enabled.")
-
-
-
-        self.UTILS.logResult("info", "Disable contact 2...")
-        self.contacts.import_toggleSelectContact(2)
-        
-        x = self.UTILS.getElement(DOM.Contacts.import_import_btn, "Import button")
-        self.UTILS.TEST(x.get_attribute("disabled") != "true", "Import button is enabled.")
-
-        self.UTILS.logResult("info", "Disable contact 1...")
-        self.contacts.import_toggleSelectContact(1)
+        #
+        # The only way I can see to test that all contacts are selected is to toggle
+        # all of them and make sure the Import button is then disabled (because that
+        # means all of them were selected before the toggle).
+        #
+        x = self.UTILS.getElements( ("class name", "block-item"), "Contacts list")
+        for i in range(0,len(x)):
+            i_num = i+1
+            self.UTILS.logResult("info", "Disable contact %s ..." % i_num)
+            self.contacts.import_toggleSelectContact(i_num)
         
         x = self.UTILS.getElement(DOM.Contacts.import_import_btn, "Import button")
         self.UTILS.TEST(x.get_attribute("disabled") == "true", "Import button is disabled.")
 
-
-        
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot and details", x)
 

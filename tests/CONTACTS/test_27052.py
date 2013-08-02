@@ -23,8 +23,8 @@ class test_main(GaiaTestCase):
         self.contacts   = Contacts(self)
         self.settings   = Settings(self)
 
-        self.gmail_u = self.UTILS.get_os_variable("GMAIL_1_USER")
-        self.gmail_p = self.UTILS.get_os_variable("GMAIL_1_PASS")
+        self.hotmail_u = self.UTILS.get_os_variable("HOTMAIL_1_EMAIL")
+        self.hotmail_p = self.UTILS.get_os_variable("HOTMAIL_1_PASS")
 
         #
         # Get details of our test contacts.
@@ -44,7 +44,7 @@ class test_main(GaiaTestCase):
         self.UTILS.getNetworkConnection()
         
         self.contacts.launch()
-        self.contacts.import_GmailLogin(self.gmail_u, self.gmail_p)
+        self.contacts.import_HotmailLogin(self.hotmail_u, self.hotmail_p)
         
         #
         # Check the Import button is disabled to begin with.
