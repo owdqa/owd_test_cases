@@ -58,7 +58,7 @@ class test_main(GaiaTestCase):
         self.UTILS.waitForElements( ("xpath", "//iframe[contains(@%s, '%s')]" % \
                                      (DOM.Contacts.gmail_frame[0],DOM.Contacts.gmail_frame[1])),
                                    "Gmail login iframe")
-        x = self.UTILS.getElement(DOM.Contacts.gmail_cancel_login, "Cancel button")
+        x = self.UTILS.getElement(DOM.Contacts.import_cancel_login, "Cancel button")
         x.tap()
         
         self.UTILS.logResult("info", "Check that the gmail login frame is no longer present ...")
