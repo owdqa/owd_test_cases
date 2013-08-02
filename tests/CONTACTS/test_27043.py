@@ -49,7 +49,7 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElements(DOM.Contacts.gmail_import_conts_list, "Contact list")
         gmail_contact = x[0].get_attribute("data-search")
         
-        self.contacts.toggleSelectGmailContact(1)
+        self.contacts.toggleSelectImportContact(1)
         
         self.marionette.execute_script("document.getElementById('%s').click()" % DOM.Contacts.gmail_import_import_btn[1])
         time.sleep(1)

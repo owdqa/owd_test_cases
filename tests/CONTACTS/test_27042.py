@@ -79,7 +79,7 @@ class test_main(GaiaTestCase):
         #
         # Now select one contact and press Deselect all...
         #
-        self.contacts.toggleSelectGmailContact(1)
+        self.contacts.toggleSelectImportContact(1)
         x = self.UTILS.getElement(DOM.Contacts.gmail_import_import_btn, "Import button")
         self.UTILS.TEST(x.get_attribute("disabled") != "true", "Import button is enabled.")
 

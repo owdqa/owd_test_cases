@@ -74,7 +74,7 @@ class test_main(GaiaTestCase):
         for i in range(0,len(x)):
             i_num = i+1
             self.UTILS.logResult("info", "Disable contact %s ..." % i_num)
-            self.contacts.toggleSelectGmailContact(i_num)
+            self.contacts.toggleSelectImportContact(i_num)
         
         x = self.UTILS.getElement(DOM.Contacts.gmail_import_import_btn, "Import button")
         self.UTILS.TEST(x.get_attribute("disabled") == "true", "Import button is disabled.")

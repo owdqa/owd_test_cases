@@ -52,18 +52,19 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(DOM.Contacts.gmail_import_import_btn, "Import button")
         self.UTILS.TEST(x.get_attribute("disabled") == "true", "Import button is disabled.")
         
+        return
         #
         # Select / de-select contacts and make sure Import button is enabled / disabled
         # as expected.
         #
         self.UTILS.logResult("info", "Enable contact 1...")
-        self.contacts.toggleSelectGmailContact(1)
+        self.contacts.toggleSelectImportContact(1)
         
         x = self.UTILS.getElement(DOM.Contacts.gmail_import_import_btn, "Import button")
         self.UTILS.TEST(x.get_attribute("disabled") != "true", "Import button is enabled.")
 
         self.UTILS.logResult("info", "Enable contact 2...")
-        self.contacts.toggleSelectGmailContact(2)
+        self.contacts.toggleSelectImportContact(2)
         
         x = self.UTILS.getElement(DOM.Contacts.gmail_import_import_btn, "Import button")
         self.UTILS.TEST(x.get_attribute("disabled") != "true", "Import button is enabled.")
@@ -71,13 +72,13 @@ class test_main(GaiaTestCase):
 
 
         self.UTILS.logResult("info", "Disable contact 2...")
-        self.contacts.toggleSelectGmailContact(2)
+        self.contacts.toggleSelectImportContact(2)
         
         x = self.UTILS.getElement(DOM.Contacts.gmail_import_import_btn, "Import button")
         self.UTILS.TEST(x.get_attribute("disabled") != "true", "Import button is enabled.")
 
         self.UTILS.logResult("info", "Disable contact 1...")
-        self.contacts.toggleSelectGmailContact(1)
+        self.contacts.toggleSelectImportContact(1)
         
         x = self.UTILS.getElement(DOM.Contacts.gmail_import_import_btn, "Import button")
         self.UTILS.TEST(x.get_attribute("disabled") == "true", "Import button is disabled.")
