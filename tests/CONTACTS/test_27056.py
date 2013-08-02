@@ -44,15 +44,15 @@ class test_main(GaiaTestCase):
         self.UTILS.getNetworkConnection()
         
         self.contacts.launch()
-        self.contacts.importFromHotmail_login(self.hotmail_u, self.hotmail_p)
+        self.contacts.import_HotmailLogin(self.hotmail_u, self.hotmail_p)
         
-        x = self.UTILS.getElements(DOM.Contacts.hotmail_import_conts_list, "Contact list")
+        x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list")
         
         hotmail_contacts = []
         for y in x:
             hotmail_contacts.append( y.get_attribute("data-search") )
             
-        self.contacts.importFromGmail_importAll()
+        self.contacts.import_ImportAll()
         
         #
         # Check all our contacts are in the list.

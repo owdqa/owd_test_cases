@@ -44,9 +44,9 @@ class test_main(GaiaTestCase):
         self.UTILS.getNetworkConnection()
         
         self.contacts.launch()
-        self.contacts.importFromHotmail_login(self.hotmail_u, self.hotmail_p)
+        self.contacts.import_HotmailLogin(self.hotmail_u, self.hotmail_p)
         
-        x = self.UTILS.getElements(DOM.Contacts.hotmail_import_conts_list, "Contact list")
+        x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list")
         hotmail_contact = x[0].get_attribute("data-search")
         cont_number = 1
         i_counter   = 0
@@ -57,9 +57,9 @@ class test_main(GaiaTestCase):
                 cont_number = i_counter
                 break
                 
-        self.contacts.toggleSelectImportContact(cont_number)
+        self.contacts.import_toggleSelectContact(cont_number)
         
-        self.marionette.execute_script("document.getElementById('%s').click()" % DOM.Contacts.hotmail_import_import_btn[1])
+        self.marionette.execute_script("document.getElementById('%s').click()" % DOM.Contacts.import_import_btn[1])
         time.sleep(1)
 
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)

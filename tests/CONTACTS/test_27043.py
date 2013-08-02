@@ -44,14 +44,14 @@ class test_main(GaiaTestCase):
         self.UTILS.getNetworkConnection()
         
         self.contacts.launch()
-        self.contacts.importFromGmail_login(self.gmail_u, self.gmail_p)
+        self.contacts.import_GmailLogin(self.gmail_u, self.gmail_p)
         
-        x = self.UTILS.getElements(DOM.Contacts.gmail_import_conts_list, "Contact list")
+        x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list")
         gmail_contact = x[0].get_attribute("data-search")
         
-        self.contacts.toggleSelectImportContact(1)
+        self.contacts.import_toggleSelectContact(1)
         
-        self.marionette.execute_script("document.getElementById('%s').click()" % DOM.Contacts.gmail_import_import_btn[1])
+        self.marionette.execute_script("document.getElementById('%s').click()" % DOM.Contacts.import_import_btn[1])
         time.sleep(1)
 
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)

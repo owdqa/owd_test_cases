@@ -47,15 +47,15 @@ class test_main(GaiaTestCase):
          
         self.contacts.launch()
                 
-        self.contacts.importFromGmail_login(self.gmail_u, self.gmail_p)
+        self.contacts.import_GmailLogin(self.gmail_u, self.gmail_p)
          
-        x = self.UTILS.getElements(DOM.Contacts.gmail_import_conts_list, "Contact list")
+        x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list")
          
         gmail_contacts = []
         for y in x:
             gmail_contacts.append( y.get_attribute("data-search") )
              
-        self.contacts.importFromGmail_importAll()
+        self.contacts.import_ImportAll()
  
         self.contacts.selectContactFromAll("roytest")
         

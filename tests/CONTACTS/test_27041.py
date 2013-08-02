@@ -44,25 +44,25 @@ class test_main(GaiaTestCase):
         self.UTILS.getNetworkConnection()
         
         self.contacts.launch()
-        self.contacts.importFromGmail_login(self.gmail_u, self.gmail_p)
+        self.contacts.import_GmailLogin(self.gmail_u, self.gmail_p)
         
         #
         # Check the Import button is disabled to begin with.
         #
-        x = self.UTILS.getElement(DOM.Contacts.gmail_import_import_btn, "Import button")
+        x = self.UTILS.getElement(DOM.Contacts.import_import_btn, "Import button")
         self.UTILS.TEST(x.get_attribute("disabled") == "true", "Import button is disabled.")
 
         #
         # Tap the Select All button (can't be done with marionette yet).
         #
         self.UTILS.logResult("info", "Tapping the 'Select All' button ...")
-        self.marionette.execute_script("document.getElementById('%s').click()" % DOM.Contacts.gmail_import_select_all[1])
+        self.marionette.execute_script("document.getElementById('%s').click()" % DOM.Contacts.import_select_all[1])
         time.sleep(1)
             
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot and details", x)
 
-        x = self.UTILS.getElement(DOM.Contacts.gmail_import_import_btn, "Import button")
+        x = self.UTILS.getElement(DOM.Contacts.import_import_btn, "Import button")
         self.UTILS.TEST(x.get_attribute("disabled") != "true", "Import button is enabled.")
 
         #
@@ -74,9 +74,9 @@ class test_main(GaiaTestCase):
         for i in range(0,len(x)):
             i_num = i+1
             self.UTILS.logResult("info", "Disable contact %s ..." % i_num)
-            self.contacts.toggleSelectImportContact(i_num)
+            self.contacts.import_toggleSelectContact(i_num)
         
-        x = self.UTILS.getElement(DOM.Contacts.gmail_import_import_btn, "Import button")
+        x = self.UTILS.getElement(DOM.Contacts.import_import_btn, "Import button")
         self.UTILS.TEST(x.get_attribute("disabled") == "true", "Import button is disabled.")
 
         x = self.UTILS.screenShotOnErr()

@@ -43,10 +43,10 @@ class test_main(GaiaTestCase):
         self.UTILS.getNetworkConnection()
         
         self.contacts.launch()
-        self.contacts.importFromGmail_login(self.gmail_u, self.gmail_p)
+        self.contacts.import_GmailLogin(self.gmail_u, self.gmail_p)
         
         # Get the contacts.
-        x = self.UTILS.getElements(DOM.Contacts.gmail_import_conts_list, "Contact list")
+        x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list")
         gmail_contacts = []
         for y in x:
             gmail_contacts.append( y.get_attribute("data-search") )
@@ -72,7 +72,7 @@ class test_main(GaiaTestCase):
         
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
         self.UTILS.switchToFrame(*DOM.Contacts.gmail_import_frame, p_viaRootFrame=False)
-        after_search_count = self.UTILS.getElements(DOM.Contacts.gmail_import_search_list, "Search list")
+        after_search_count = self.UTILS.getElements(DOM.Contacts.import_search_list, "Search list")
 
         self.UTILS.TEST(len(after_search_count) == 1, 
                         "After typing the name '%s' the search list contains 1 contact (out of %s)." %\

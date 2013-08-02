@@ -44,7 +44,8 @@ class test_main(GaiaTestCase):
         # Launch contacts app.
         #
         self.contacts.launch()
-        x = self.contacts.importFromGmail_login("wrongname", "wrongpass")
+        
+        x = self.contacts.import_GmailLogin("wrongname", "wrongpass")
         
         self.UTILS.TEST(x == False, "Login failed.")
 
