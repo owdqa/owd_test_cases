@@ -23,7 +23,7 @@ class test_main(GaiaTestCase):
         self.contacts   = Contacts(self)
         self.settings   = Settings(self)
 
-        self.hotmail_u = self.UTILS.get_os_variable("HOTMAIL_1_USER")
+        self.hotmail_u = self.UTILS.get_os_variable("HOTMAIL_1_EMAIL")
         self.hotmail_p = self.UTILS.get_os_variable("HOTMAIL_1_PASS")
 
         #
