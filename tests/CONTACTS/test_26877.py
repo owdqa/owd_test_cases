@@ -91,6 +91,8 @@ class test_main(GaiaTestCase):
         time.sleep(5)
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
         self.UTILS.logResult("info", "<b>NOTE: </b>expecting to be in a 'compose new sms' screen (not a thread) ...")
+
+        
         self.UTILS.headerCheck("1 recipient")
         self.messages.enterSMSMsg("Test msg.")
         self.messages.sendSMS()
