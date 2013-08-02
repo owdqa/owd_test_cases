@@ -44,9 +44,9 @@ class test_main(GaiaTestCase):
         #
         # Wait for the Gmail button.
         #
-        x = self.UTILS.getElement(DOM.Contacts.gmail_button, "Gmail button")
+        x = self.UTILS.getElement(DOM.Contacts.hotmail_button, "Hotmail button")
         x_dis = x.get_attribute("disabled")
-        self.UTILS.TEST(x_dis == "true", "The Gmail button is disabled ('disabled' was set to '%s')." % x_dis)
+        self.UTILS.TEST(x_dis == "true", "The Hotmail button is disabled ('disabled' was set to '%s')." % x_dis)
                 
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot and details", x)

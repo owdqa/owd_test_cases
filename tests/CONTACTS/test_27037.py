@@ -44,14 +44,8 @@ class test_main(GaiaTestCase):
         # Launch contacts app.
         #
         self.contacts.launch()
-        self.contacts.importFromGmail_login("wrongname", "wrongpass")
+        x = self.contacts.importFromGmail_login("wrongname", "wrongpass")
         
-        #
-        # Check the error message appears.
-        #
-        self.UTILS.waitForElements(DOM.Contacts.gmail_login_error_msg, "login error message", True, 20)
-        
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot and details", x)
+        self.UTILS.TEST(x == False, "Login failed.")
 
 

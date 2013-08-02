@@ -25,7 +25,7 @@ class test_main(GaiaTestCase):
 
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
-        self.dummy_nums = ["09876543", "12345678"]
+        self.dummy_nums = ["2222222", "3333333"]
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -49,9 +49,15 @@ class test_main(GaiaTestCase):
                         "There are <b>2</b> numbers highlighted in the received text (there were <b>%s</b>)." % \
                         len(msg_nums))
         
+<<<<<<< HEAD
         #
         # NOTE: Change "+34" to "0034".
         #
+=======
+        x = self.UTILS.screenShotOnErr()
+        self.UTILS.logResult("info", "SMS in app", x)
+        
+>>>>>>> 8d68d489e8d89c815fb99c6bac5d3f16342075d6
         self._doTest(msg_nums, 1)
 
         #
@@ -69,6 +75,7 @@ class test_main(GaiaTestCase):
     def _doTest(self, p_msgs, p_num):
         link_num = self.dummy_nums[p_num]
         self.UTILS.logResult("info", "Tapping link to number: %s." % link_num)
+        self.UTILS.logResult("info", "Link text is '%s'." % p_msgs[p_num].text)
         p_msgs[p_num].tap()
         time.sleep(1)
         
