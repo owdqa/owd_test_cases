@@ -49,15 +49,9 @@ class test_main(GaiaTestCase):
                         "There are <b>2</b> numbers highlighted in the received text (there were <b>%s</b>)." % \
                         len(msg_nums))
         
-<<<<<<< HEAD
-        #
-        # NOTE: Change "+34" to "0034".
-        #
-=======
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "SMS in app", x)
         
->>>>>>> 8d68d489e8d89c815fb99c6bac5d3f16342075d6
         self._doTest(msg_nums, 1)
 
         #
