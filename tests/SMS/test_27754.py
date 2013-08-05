@@ -54,12 +54,12 @@ class test_main(GaiaTestCase):
         self.messages.startNewSMS()
         
         self.messages.selectAddContactButton()
-        self.contacts.selectContactFromAll(self.Contact_1["name"])
+        self.contacts.viewContact(self.Contact_1["name"])
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
         self.messages.checkIsInToField(self.Contact_1["name"], True)
         
         self.messages.selectAddContactButton()
-        self.contacts.selectContactFromAll(self.Contact_2["name"])
+        self.contacts.viewContact(self.Contact_2["name"])
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
         self.messages.checkIsInToField(self.Contact_2["name"], True)
 
@@ -81,10 +81,14 @@ class test_main(GaiaTestCase):
         boolOK = False
         for i in range(1,120):
             # No verification because it's okay if the element's not there yet.
-            x = self.marionette.find_elements(*statusBarCheck)
-            if len(x) == 2:
-                boolOK = True
-                break
+            try:
+                self.wait_for_element_present(*statusBarCheck, timeout=1)
+                x = self.marionette.find_elements(*statusBarCheck)
+                if len(x) == 2:
+                    boolOK = True
+                    break
+            except:
+                pass
             
             time.sleep(1)
             

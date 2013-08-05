@@ -57,7 +57,7 @@ class test_main(GaiaTestCase):
              
         self.contacts.import_ImportAll()
  
-        self.contacts.selectContactFromAll(gmail_contacts[0])
+        self.contacts.viewContact(gmail_contacts[0])
          
 #         self.contacts.viewContact(gmail_contacts[0], False)
         editBTN = self.UTILS.getElement(DOM.Contacts.edit_details_button, "Edit details button")

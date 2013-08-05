@@ -67,4 +67,4 @@ class test_main(GaiaTestCase):
         #
         self.apps.kill_all()
         self.contacts.launch()
-        self.contacts.selectContactFromAll(self.cont["name"])        
+        self.contacts.viewContact(self.cont["name"])        
