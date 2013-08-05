@@ -53,7 +53,7 @@ class test_main(GaiaTestCase):
         #
         # Select our contact.
         #
-        self.contacts.viewContact(self.cont["familyName"])
+        self.contacts.viewContact(self.cont["familyName"], False)
         
         #
         # Check the phone number.
