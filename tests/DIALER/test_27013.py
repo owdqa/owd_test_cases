@@ -45,7 +45,7 @@ class test_main(GaiaTestCase):
         #
         self.apps.kill_all()
         self.contacts.launch()
-        self.contacts.selectContactFromAll(self.cont["name"])
+        self.contacts.viewContact(self.cont["name"])
         
         x = self.UTILS.getElement(DOM.Contacts.view_contact_tel_field, "Contact telephone number")
         self.UTILS.TEST(self.num in x.text, "Phone number contains %s (it was %s)." % (self.num, x.text))

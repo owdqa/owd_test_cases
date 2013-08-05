@@ -134,7 +134,8 @@ class test_main(GaiaTestCase):
              
         boolED=False
         try:
-            x = self.marionette.find_element(*DOM.Contacts.photo_from_gallery)
+            self.wait_for_element_present(*DOM.Contacts.photo_from_gallery, timeout=5)
+            self.wait_for_element_present(*DOM.Contacts.cancel_photo_source, timeout=1)
             x = self.marionette.find_element(*DOM.Contacts.cancel_photo_source)
             x.tap()
             boolED = True
@@ -161,15 +162,15 @@ class test_main(GaiaTestCase):
         # the keyboard, or see what's currently displayed.
         x.tap()
         
-        boolKBD=False
         self.marionette.switch_to_frame()
-        x = self.marionette.find_element("xpath", 
-                                         "//iframe[contains(@" + DOM.Keyboard.frame_locator[0]+ \
-                                         ",'" + DOM.Keyboard.frame_locator[1] + "')]")
-        if x.is_displayed():
+        boolKBD=False
+        try:
+            self.wait_for_element_displayed("xpath", 
+                                             "//iframe[contains(@" + DOM.Keyboard.frame_locator[0]+ \
+                                             ",'" + DOM.Keyboard.frame_locator[1] + "')]", timeout=2)
             boolKBD = True
-        else:
-            boolKBD=False
+        except:
+            pass
         self.UTILS.TEST(boolKBD == p_KBD_displayed, _comment)
          
         #

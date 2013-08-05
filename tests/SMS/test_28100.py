@@ -87,9 +87,11 @@ class test_main(GaiaTestCase):
             self.UTILS.switchToApp("Messages")
             
             # In case we're not in the thread already.
-            x = self.marionette.find_element(*DOM.Messages.threads_list)
-            if x:
+            try:
+                self.wait_for_element_present(*DOM.Messages.threads_list, timeout=1)
                 self.messages.openThread(self.num1)
+            except:
+                pass
                 
             x = self.messages.waitForReceivedMsgInThisThread()
             msg_nums = x.find_elements("tag name", "a")
