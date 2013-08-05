@@ -48,7 +48,7 @@ class test_main(GaiaTestCase):
         self.contacts.launch()
         
         self.contacts.import_GmailLogin(self.gmail_u, self.gmail_p)
-        x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list")
+        x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list", False)
          
         gmail_contacts = []
         for y in x:
