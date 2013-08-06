@@ -46,15 +46,17 @@ class test_main(GaiaTestCase):
         self.UTILS.getNetworkConnection()
          
         self.contacts.launch()
-        
+
         self.contacts.import_GmailLogin(self.gmail_u, self.gmail_p)
+
         x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list", False)
          
         gmail_contacts = []
         for y in x:
             contNam = y.get_attribute("data-search")
-            self.UTILS.logResult("info", "Adding '%s' to the list of available contacts." % contNam)
-            gmail_contacts.append(contNam)
+            if '#search#' not in contNam:
+                self.UTILS.logResult("info", "Adding '%s' to the list of available contacts." % contNam)
+                gmail_contacts.append(contNam)
              
         self.contacts.import_ImportAll()
         
