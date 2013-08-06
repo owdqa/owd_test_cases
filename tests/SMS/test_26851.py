@@ -56,7 +56,8 @@ class test_main(GaiaTestCase):
         #
         # Send the SMS.
         #
-        self.messages.sendSMS()
+        sendBtn = self.UTILS.getElement(DOM.Messages.send_message_button, "Send sms button")
+        sendBtn.tap()
         
         #
         # Lock the phone immediately.
