@@ -23,9 +23,13 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.messages   = Messages(self)
         self.contacts   = Contacts(self)
+        self.email      = Email(self)
         
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.emailAddy = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
+        self.emailAddy  = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
+        self.emailE     = self.UTILS.get_os_variable("GMAIL_2_EMAIL")
+        self.emailP     = self.UTILS.get_os_variable("GMAIL_2_PASS")
+        self.emailU     = self.UTILS.get_os_variable("GMAIL_2_USER")
         
         self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
         
@@ -35,6 +39,11 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
+        self.UTILS.getNetworkConnection()
+        
+        self.email.launch()
+        self.email.setupAccount(self.emailU, self.emailE, self.emailP)
+    
         #
         # Launch messages app.
         #
@@ -61,6 +70,8 @@ class test_main(GaiaTestCase):
         #
         # Click 'create new contact'.
         #
+        self.UTILS.checkMarionetteOK()
+        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
         x = self.UTILS.getElement( ("xpath", "//button[text()='Create new contact']"),
                                    "Create new contact button")
         x.tap()
@@ -69,7 +80,7 @@ class test_main(GaiaTestCase):
         # Verify that the email is in the email field.
         #
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
-        x = self.UTILS.getElement(("id","email_0"), "Email field")
+        x = self.UTILS.getElement(DOM.Contacts.email_field, "Email field")
         x_txt = x.get_attribute("value")
         self.UTILS.TEST(x_txt == self.emailAddy, "Email is '" + self.emailAddy + "' (it was '" + x_txt + "')")
         
