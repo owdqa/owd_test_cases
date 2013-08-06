@@ -63,11 +63,12 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElements(DOM.Dialer.outgoing_call_number, "Phone number")
         boolOK=False
         for i in x:
+            self.UTILS.logResult("info", "Dialler number text: '%s'." % i.text)
             if self.cont['name'] in i.text:
                 boolOK = True
                 break
             
-        self.UTILS.TEST(boolOK, "%s in the dialer number." % self.cont['name'])
+        self.UTILS.TEST(boolOK, "'%s' in the dialer number." % self.cont['name'])
         
         
         
