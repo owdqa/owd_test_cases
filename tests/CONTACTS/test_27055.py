@@ -44,7 +44,9 @@ class test_main(GaiaTestCase):
         self.UTILS.getNetworkConnection()
         
         self.contacts.launch()
-        self.contacts.import_HotmailLogin(self.hotmail_u, self.hotmail_p)
+        x = self.contacts.import_HotmailLogin(self.hotmail_u, self.hotmail_p)
+        self.UTILS.TEST(x and x!=1, "Cannot continue past this point without importing the contacts.")
+
         
         x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list")
         hotmail_contact = x[0].get_attribute("data-search")
