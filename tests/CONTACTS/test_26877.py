@@ -14,7 +14,7 @@ from tests._mock_data.contacts import MockContacts
 
 class test_main(GaiaTestCase):
     
-    _RESTART_DEVICE = True
+#     _RESTART_DEVICE = True
     
     def setUp(self):
         #
@@ -56,21 +56,20 @@ class test_main(GaiaTestCase):
         self.messages.launch()
         self.messages.createAndSendSMS([self.contact_1["tel"]["value"]], "Test message")
         self.messages.waitForReceivedMsgInThisThread()
-        
+         
         x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
-        
+         
         self.messages.createAndSendSMS([self.num2], "Thread for a different number")
-
 
         self.UTILS.logResult("info", " ")
         self.UTILS.logResult("info", "=================================================================")
-        self.UTILS.logResult("info", "<b>If SMS app is closed when you click 'send sms' in contacts ...")
+        self.UTILS.logResult("info", "<b>If SMS app is closed when you click 'send sms' in contacts ...</b>")
         self._doTest()
         
         self.UTILS.logResult("info", " ")
         self.UTILS.logResult("info", "=====================================================================")
-        self.UTILS.logResult("info", "<b>If SMS app is still open when you click 'send sms' in contacts ...")
+        self.UTILS.logResult("info", "<b>If SMS app is still open when you click 'send sms' in contacts ...</b>")
         self.messages.openThread(self.num2)
         self._doTest()
         

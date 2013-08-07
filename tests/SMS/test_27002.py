@@ -12,8 +12,6 @@ from OWDTestToolkit import *
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
-    
     def setUp(self):
         #
         # Set up child objects...
