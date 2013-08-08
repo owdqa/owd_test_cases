@@ -3,6 +3,12 @@
 # Recreates the table of tests covered, to be inserted into the 
 # README.md file for a test project.
 #
+THISDIR=$(dirname $0)
+DESC_FILE=$THISDIR/../Docs/test_descriptions
+
+#
+# Start the table off.
+#
 echo "<!--testcoverage-->
 TESTS COVERED
 =============
@@ -10,11 +16,14 @@ TESTS COVERED
   <tr>
     <th>Test Case</th><th>Description</th>
   </tr>"
-  
-ls tests/test_*.py | while read fnam
+
+#
+# Create the rows.
+#
+find . -name "test_*.py" | while read fnam
 do
 	TEST_NAME=$(echo $fnam | sed -e "s/^.*\/test_\(.*\).py$/\1/")
-	TEST_DESC=$(grep -i "_Description" $fnam | sed -e "s/^.*= *\"\([^\"]*\)\".*/\1/")
+    TEST_DESC=$(egrep "^$TEST_NAME\|" $DESC_FILE | awk 'BEGIN{FS="|"}{print $2}')
 
     echo "
   <tr>
@@ -22,4 +31,7 @@ do
   </tr>"
 done
 
+#
+# Finish the table off.
+#
 echo  "</table>"

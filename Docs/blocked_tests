@@ -1,0 +1,41 @@
+#
+# List of blocked tests and the reason or bug number.
+#
+# Syntax:
+#
+#   <test id>|<reason for block>
+#
+# Keep the reason short, because it will be added to the description that is displayed during a test run!
+#
+26918|BUG 879830
+26853|BUG 879816
+26852|BUG 879816
+26847|BUG 879816
+26846|BUG 879816
+26731|BUG 879816
+26727|BUG 879816
+26711|BUG 879816
+26773|BUG 891816
+26776|BUG 865232
+26774|BUG 885238
+26781|BUG 885238
+26473|BUG 867987
+26347|BUG 867987
+26353|BUG 883344 and 879823
+26348|Automation issue: cannot work out how to automate the scroller for seeting the alarm time.
+26337|DEV SERVER ALWAYS DOWN
+26336|DEV SERVER ALWAYS DOWN
+26977|BUG 895389
+26983|BUG 869918-you need to manually re-check this bug is solved
+26854|BUG 897437
+27023|BUG 892554
+26972|BUG 901931
+26973|BUG 901931
+26974|BUG 901931
+26975|BUG 901931
+26976|BUG 901931
+26877|BUG 859439
+27002|Automation issue (Marionette)
+28100|Automation issue (Marionette)
+26845|Automation issue (Marionette)
+

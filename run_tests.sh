@@ -3,8 +3,21 @@
 # Set up the environment.
 . $HOME/.OWD_TEST_TOOLKIT_LOCATION
 
+if [ $? -ne 0 ] || [ ! -d $OWD_TEST_TOOLKIT_DIR/gaia-ui-tests ]
+then
+	echo "
+	** ERROR **
+	
+	It looks like OWD_TEST_TOOLKIT hasn't been installed correctly.
+	Please clone OWD_TEST_TOOLKIT from github.com/owdqa and run \"./install.sh\",
+	then retry this test.
+
+"
+	exit 1
+fi
+
 # Make sure nothing else is running first.
-wait_for_no_other_test_run.sh $$
+$OWD_TEST_TOOLKIT_BIN/wait_for_no_other_test_run.sh $$
 
 # Now run the tests.
-run_all_tests.sh $@
+$OWD_TEST_TOOLKIT_BIN/execute_tests.sh $@
