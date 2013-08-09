@@ -67,4 +67,7 @@ class test_main(GaiaTestCase):
         #
         self.apps.kill_all()
         self.contacts.launch()
-        self.contacts.viewContact(self.cont["name"])        
+        self.contacts.viewContact(self.cont["name"])
+        
+        x = self.UTILS.screenShotOnErr()
+        self.UTILS.logResult("info", "Final screenshot and html dump:", x)        

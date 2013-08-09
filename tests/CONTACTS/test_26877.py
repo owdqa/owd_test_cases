@@ -54,6 +54,8 @@ class test_main(GaiaTestCase):
         #
         self.contacts.launch() #(Just so we can switch to it later)
         self.messages.launch()
+
+        
         self.messages.createAndSendSMS([self.contact_1["tel"]["value"]], "Test message")
         self.messages.waitForReceivedMsgInThisThread()
          

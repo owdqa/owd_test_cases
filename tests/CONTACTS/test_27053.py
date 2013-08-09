@@ -44,6 +44,7 @@ class test_main(GaiaTestCase):
         self.UTILS.getNetworkConnection()
         
         self.contacts.launch()
+
         x = self.contacts.import_HotmailLogin(self.hotmail_u, self.hotmail_p)
         self.UTILS.TEST(x and x!=1, "Cannot continue past this point without importing the contacts.")
 
