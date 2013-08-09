@@ -67,3 +67,7 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.switchToFrame(*DOM.Dialer.frame_locator)
         self.UTILS.waitForElements( ("xpath", "//h1[text()='Call log']"), "Call log header")
+
+        
+        x = self.UTILS.screenShotOnErr()
+        self.UTILS.logResult("info", "Final screenshot and html dump:", x)

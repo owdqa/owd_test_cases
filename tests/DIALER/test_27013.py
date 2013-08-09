@@ -49,3 +49,6 @@ class test_main(GaiaTestCase):
         
         x = self.UTILS.getElement(DOM.Contacts.view_contact_tel_field, "Contact telephone number")
         self.UTILS.TEST(self.num in x.text, "Phone number contains %s (it was %s)." % (self.num, x.text))
+        
+        x = self.UTILS.screenShotOnErr()
+        self.UTILS.logResult("info", "Final screenshot and html dump:", x)        
