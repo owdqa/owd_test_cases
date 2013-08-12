@@ -279,6 +279,7 @@
 27061|Option to cancel the searching
 27062|Type a number which does not match with any of the contacts' phone number(s)
 27063|Verify that if the number introduced also matches the name of a contact, it will also be shown together with those in which the phone number matches
+27064|Type a number to look for a contact which is bookmarked
 27066|Type a number to look for a contact which has picture
 27735|Verify that If the name of the contact is not empty:  No carrier information is linked to the phone: Phone Number is shown instead of carrier as the secondary header
 27736|Press delete without any conversation selected
