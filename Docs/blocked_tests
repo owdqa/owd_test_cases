@@ -15,9 +15,6 @@
 26731|BUG 879816
 26727|BUG 879816
 26711|BUG 879816
-26773|BUG 891816
-26776|BUG 865232
-26774|BUG 885238
 26781|BUG 885238
 26473|BUG 867987
 26347|BUG 867987
@@ -32,4 +29,14 @@
 27002|Automation issue (Marionette)
 28100|Automation issue (Marionette)
 26845|Automation issue (Marionette)
+26352|Waiting for ev.me to be completed
+26770|Waiting for ev.me to be completed
+26771|Waiting for ev.me to be completed
+26773|Waiting for ev.me to be completed
+26774|Waiting for ev.me to be completed
+26776|Waiting for ev.me to be completed
+26777|Waiting for ev.me to be completed
+26778|Waiting for ev.me to be completed
+26779|Waiting for ev.me to be completed
+26781|Waiting for ev.me to be completed
 
