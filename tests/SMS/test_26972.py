@@ -70,8 +70,7 @@ class test_main(GaiaTestCase):
         #
         # Click 'create new contact'.
         #
-        self.UTILS.checkMarionetteOK()
-        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
+        self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
         x = self.UTILS.getElement( ("xpath", "//button[text()='Create new contact']"),
                                    "Create new contact button")
         x.tap()
@@ -87,20 +86,19 @@ class test_main(GaiaTestCase):
         #
         # Fill out all the other details.
         #
-        contFields = self.contacts.getContactFields()
         
         #
         # Put the contact details into each of the fields (this method
         # clears each field first).
         #
-        self.contacts.replaceStr(contFields['givenName'  ] , self.cont["givenName"])
-        self.contacts.replaceStr(contFields['familyName' ] , self.cont["familyName"])
-        self.contacts.replaceStr(contFields['tel'        ] , self.cont["tel"]["value"])
-        self.contacts.replaceStr(contFields['street'     ] , self.cont["adr"]["streetAddress"])
-        self.contacts.replaceStr(contFields['zip'        ] , self.cont["adr"]["postalCode"])
-        self.contacts.replaceStr(contFields['city'       ] , self.cont["adr"]["locality"])
-        self.contacts.replaceStr(contFields['country'    ] , self.cont["adr"]["countryName"])
-        self.contacts.replaceStr(contFields['comment'    ] , self.cont["comment"])
+        self._changeField('givenName'   , self.cont["givenName"])
+        self._changeField('familyName'  , self.cont["familyName"])
+        self._changeField('tel'         , self.cont["tel"]["value"])
+        self._changeField('street'      , self.cont["adr"]["streetAddress"])
+        self._changeField('zip'         , self.cont["adr"]["postalCode"])
+        self._changeField('city'        , self.cont["adr"]["locality"])
+        self._changeField('country'     , self.cont["adr"]["countryName"])
+        self._changeField('comment'     , self.cont["comment"])
         self.contacts.addGalleryImageToContact(0)
 
         #
@@ -129,3 +127,13 @@ class test_main(GaiaTestCase):
         # Now return to the SMS app.
         #
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
+        
+
+    def _changeField(self, p_field, p_valObj):
+        #
+        # To try and get around marionette issues I'm resetting Marionette every time here.
+        #
+        self.UTILS.checkMarionetteOK()
+        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
+        contFields = self.contacts.getContactFields()
+        self.contacts.replaceStr(contFields[p_field] , p_valObj)
