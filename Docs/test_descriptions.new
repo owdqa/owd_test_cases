@@ -252,10 +252,28 @@
 27027|Create a contact from a number which is in the call log with several entries (All tab)
 27028|Add to an existing contact from a number which is in the call log with several entries (All tab)
 27029|Verify the call log is updated after 'Creating a new contact'
+27030|Verify the call log is updated after 'Adding to an existing contact'
 27034|Verify that on Contacts going to Settings, there is an option to import contacts from Gmail
 27035|Import from Gmail option is disabled when data and wifi is disabled
 27036|Go back (Cancel ('x')) on Account web log-in page
 27037|Log in with an invalid user/password
+27038|Tap on cancel after inserting the user/passw
+27039|Use the Search box to introduce characters in order to look for contacts
+27040|Select one (several) contact(s) and verify that the Import option is enabled
+27041|Tap on Select All option to Select all contacts
+27042|Tap on Unselect All to unselect all the contacts
+27043|Import several contacts in a non empty addressbook
+27044|Import all contacts at once
+27045|Edit a contact that has been imported from Gmail
+27046|When the import finishes user is taken back to the contact list where it is possible to see the new contacts imported
+27047|Import from Hotmail option is disabled when data and wifi is disabled
+27048|Log in with an invalid user/password
+27049|Use the Search box to introduce characters in order to look for contacts
+27052|Select one (several) contact(s) and verify that the Import option is enabled
+27053|Tap on Unselect All to unselect all the contacts
+27054|Import one contact in an empty addressbook
+27055|Import one contact in a non empty addressbook
+27056|Import all contacts at once
 27059|Verify that you can enter numbers in the search input box
 27060|Type a two digits number and check the list of contacts shown
 27061|Option to cancel the searching
@@ -293,21 +311,4 @@
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
 28100|Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:&quot;Test1 656565678 number&quot;)
-27030|Verify the call log is updated after 'Adding to an existing contact'
-27054|Import one contact in an empty addressbook
-27053|Tap on Unselect All to unselect all the contacts
-27046|When the import finishes user is taken back to the contact list where it is possible to see the new contacts imported
-27044|Import all contacts at once
-27043|Import several contacts in a non empty addressbook
-27048|Log in with an invalid user/password
-27049|Use the Search box to introduce characters in order to look for contacts
-27039|Use the Search box to introduce characters in order to look for contacts
-27052|Select one (several) contact(s) and verify that the Import option is enabled
-27047|Import from Hotmail option is disabled when data and wifi is disabled
-27038|Tap on cancel after inserting the user/passw
-27042|Tap on Unselect All to unselect all the contacts
-27041|Tap on Select All option to Select all contacts
-27045|Edit a contact that has been imported from Gmail
-27056|Import all contacts at once
-27040|Select one (several) contact(s) and verify that the Import option is enabled
-27055|Import one contact in a non empty addressbook
+27064|Type a number to look for a contact which is bookmarked
