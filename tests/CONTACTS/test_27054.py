@@ -38,7 +38,10 @@ class test_main(GaiaTestCase):
         self.contacts.launch()
 
         x = self.contacts.import_HotmailLogin(self.hotmail_u, self.hotmail_p)
-        self.UTILS.TEST(x and x!=1, "Cannot continue past this point without importing the contacts.")
+        if not x or x == "ALLIMPORTED":
+            self.UTILS.logResult(False, "Cannot continue past this point without importing the contacts.")
+            return
+
 
         # Try to get the hotmail contact (use the first one if not).
         x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list")

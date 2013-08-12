@@ -43,19 +43,33 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-
         self.messages.createAndSendSMS([self.num1], "Hello " + self.emailAddy + " old bean.")
-        x=self.messages.waitForReceivedMsgInThisThread()
-        
+        x = self.messages.waitForReceivedMsgInThisThread()
+
+        self.UTILS.waitForNotElements(DOM.Messages.edit_mode_wrapper, "Main wrapper in edit mode")
+
         #
         # Tap on edit mode.
         #
-        y=self.UTILS.getElement(DOM.Messages.edit_messages_icon, "Edit button")
+        y = self.UTILS.getElement(DOM.Messages.edit_messages_icon, "Edit button")
         y.tap()  
          
         #
+        # Verify that the edit wrapper is now displayed.
+        #
+        self.UTILS.waitForElements(DOM.Messages.edit_mode_wrapper, "Main wrapper in edit mode")
+
+
+
+        #
+        # FROM THIS POINT ON WE CANNOT TEST - SEE https://bugzilla.mozilla.org/show_bug.cgi?id=895389
+        #
+        return
+    
+        #
         # Long press the email link.
-        #    
+        #
+        x = self.messages.waitForReceivedMsgInThisThread()
         _link = x.find_element("tag name", "a")
         self.actions    = Actions(self.marionette)
         self.actions.long_press(_link,2).perform() 
