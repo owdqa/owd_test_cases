@@ -29,8 +29,9 @@ class test_main(GaiaTestCase):
         self.cont2 = MockContacts().Contact_2
         self.cont3 = MockContacts().Contact_3
         
-        self.endName=self.cont1["givenName"][1:3]
-        self.endSurname=self.cont1["familyName"][1:4]
+        self.cont3["givenName"]="Rnameer"
+        self.cont3["familyName"]="Tnameir"
+        self.midWord="name"
         
         self.data_layer.insert_contact(self.cont1)
         self.data_layer.insert_contact(self.cont2)
@@ -47,39 +48,18 @@ class test_main(GaiaTestCase):
         self.contacts.launch()
 
         #
-        # With name: Search for the sought contact.
+        # Search for the sought contact.
         #
-        self.contacts.search(self.endName)
+        self.contacts.search(self.midWord)
         
         #
-        # With name: Verify our contact is listed.
+        # Verify our contact is listed.
         #
-        self.contacts.checkSearchResults(self.cont1["givenName"])
+        self.contacts.checkSearchResults(self.cont3["givenName"])
         
         #
-        # With name: Verify the other contact is NOT listed.
+        # Verify the other contact is NOT listed.
         #
         self.contacts.checkSearchResults(self.cont2["givenName"],False)
-        self.contacts.checkSearchResults(self.cont3["givenName"],False)
+        self.contacts.checkSearchResults(self.cont1["givenName"],False)
         
-        #
-        # Cancel search.
-        #
-        x = self.UTILS.getElement(DOM.Contacts.search_cancel_btn, "Search cancel button")
-        x.tap()
-                
-        #
-        # With last name: Search for the sought contact.
-        #
-        self.contacts.search(self.endSurname)
-        
-        #
-        # With last name: Verify our contact is listed.
-        #
-        self.contacts.checkSearchResults(self.cont1["familyName"])
-        
-        #
-        # With last name: Verify the other contact is NOT listed.
-        #
-        self.contacts.checkSearchResults(self.cont2["familyName"],False)
-        self.contacts.checkSearchResults(self.cont3["familyName"],False)      
