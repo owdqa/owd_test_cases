@@ -46,7 +46,7 @@ class test_main(GaiaTestCase):
         #
         # Edit the contact with the new details.
         #
-        self.contacts.editContact(self.Contact_1, self.Contact_2)
+        self.contacts.editContact(self.Contact_1["name"], self.Contact_2)
         
         #
         # TEST: The 'view contact' page shows the correct details for this new contact.

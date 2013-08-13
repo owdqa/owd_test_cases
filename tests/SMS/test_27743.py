@@ -53,7 +53,7 @@ class test_main(GaiaTestCase):
         self.Contact_2 = MockContacts().Contact_2
         self.Contact_2["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.logComment("Using target telephone number " + self.Contact_2["tel"]["value"])
-        self.contacts.editContact(self.Contact_1,self.Contact_2)
+        self.contacts.editContact(self.Contact_1["name"],self.Contact_2)
         
         #
         # Re-launch messages app.
