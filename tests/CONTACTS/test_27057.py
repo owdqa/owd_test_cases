@@ -60,13 +60,14 @@ class test_main(GaiaTestCase):
         time.sleep(1)
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
         
-        x = self.UTILS.getElement(DOM.Contacts.settings_done, "Settings done button")
+        
+        x = self.UTILS.getElement(DOM.Contacts.settings_done_button, "Settings done button")
         x.tap()
         
         x = self.UTILS.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
         _contacts_after = len(x)
         
-        self.UTILS.TEST(_contacts_after == _contacts_before, "No more contacts werer imported (%s vs %s)." % \
+        self.UTILS.TEST(_contacts_after == _contacts_before, "No more contacts were imported (%s before and %s after)." % \
                         (_contacts_after, _contacts_before))
         
         x = self.UTILS.screenShotOnErr()
