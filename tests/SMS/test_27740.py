@@ -44,11 +44,8 @@ class test_main(GaiaTestCase):
         #
         # Click ok in the alert.
         #
-        time.sleep(5)
-        self.marionette.switch_to_frame()
-        x = self.UTILS.getElement(DOM.GLOBAL.modal_ok_button, "OK button in question dialog")
+        x = self.UTILS.getElement(DOM.Messages.service_unavailable_ok, "Service unavailable - OK button")
         x.tap()
-        self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
 
         #
         # Return to the threads view.

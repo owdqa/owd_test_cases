@@ -46,6 +46,7 @@ class test_main(GaiaTestCase):
         # First, get the name of the app we're going to install.
         #
         self.EME.launch()
+        
         self.UTILS.TEST(self.EME.pickGroup(self._GROUP_NAME),
                         "Group '" + self._GROUP_NAME + "' exists in EverythingME.",
                         True)
