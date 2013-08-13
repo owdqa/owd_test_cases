@@ -783,6 +783,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26873</td><td  align=left>Verify that the search results are updated at each letter</td>
+  </tr>
+
+  <tr>
     <td  align=center>26338</td><td  align=left>Send email via activesync with hotmail.com - verify the email is sent to the respective account</td>
   </tr>
 
