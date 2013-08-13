@@ -279,6 +279,7 @@
 27061|Option to cancel the searching
 27062|Type a number which does not match with any of the contacts' phone number(s)
 27063|Verify that if the number introduced also matches the name of a contact, it will also be shown together with those in which the phone number matches
+27064|Type a number to look for a contact which is bookmarked
 27066|Type a number to look for a contact which has picture
 27735|Verify that If the name of the contact is not empty:  No carrier information is linked to the phone: Phone Number is shown instead of carrier as the secondary header
 27736|Press delete without any conversation selected
@@ -311,4 +312,4 @@
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
 28100|Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:&quot;Test1 656565678 number&quot;)
-27064|Type a number to look for a contact which is bookmarked
+26873|Verify that the search results are updated at each letter
