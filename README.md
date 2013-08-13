@@ -631,6 +631,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26871</td><td  align=left>Search by text string that matches the middle of a contact last name and name</td>
+  </tr>
+
+  <tr>
     <td  align=center>23887</td><td  align=left>Accept creating a new contact, editing some other fields</td>
   </tr>
 
@@ -732,6 +736,10 @@ TESTS COVERED
 
   <tr>
     <td  align=center>26874</td><td  align=left>Search by text string that not matches with any contact name/last name</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26872</td><td  align=left>Search by text string that matches the end of a contact last name and name</td>
   </tr>
 
   <tr>
