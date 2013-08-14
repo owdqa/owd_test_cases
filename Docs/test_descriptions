@@ -188,6 +188,9 @@
 26863|Try send a sms in an existing thread while airplane is enabled
 26864|Try send a sms to a contact while airplane is enabled (from sms app - use contact option)
 26865|Receive an SMS from a contact with long name
+26866|(No description found in https://jirapdi.tid.es/browse/OWD-26866)
+26869|(No description found in https://jirapdi.tid.es/browse/OWD-26869)
+26870|(No description found in https://jirapdi.tid.es/browse/OWD-26870)
 26871|Search by text string that matches the middle of a contact last name and name
 26872|Search by text string that matches the end of a contact last name and name
 26873|Verify that the search results are updated at each letter
@@ -272,11 +275,14 @@
 27047|Import from Hotmail option is disabled when data and wifi is disabled
 27048|Log in with an invalid user/password
 27049|Use the Search box to introduce characters in order to look for contacts
+27051|(No description found in https://jirapdi.tid.es/browse/OWD-27051)
 27052|Select one (several) contact(s) and verify that the Import option is enabled
 27053|Tap on Unselect All to unselect all the contacts
 27054|Import one contact in an empty addressbook
 27055|Import one contact in a non empty addressbook
 27056|Import all contacts at once
+27057|(No description found in https://jirapdi.tid.es/browse/OWD-27057)
+27058|(No description found in https://jirapdi.tid.es/browse/OWD-27058)
 27059|Verify that you can enter numbers in the search input box
 27060|Type a two digits number and check the list of contacts shown
 27061|Option to cancel the searching
