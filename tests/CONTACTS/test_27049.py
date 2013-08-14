@@ -14,6 +14,9 @@ import time
 
 class test_main(GaiaTestCase):
     
+    # Just to try and avoid the hotmail 'all your contacts are already imported' issue...
+    _RESTART_DEVICE = True
+    
     def setUp(self):
         #
         # Set up child objects...
