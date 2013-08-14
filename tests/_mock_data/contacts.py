@@ -47,6 +47,105 @@ class MockContacts(dict):
                 "jobTitle"  : "Dancer number three",
                 "comment"   : "Mock test contact 3"
             }
+
+        self.Contact_4 = {
+                "givenName" : "Rodger_4",
+                "familyName": "Ramjet_4",
+                "name"      : "Rodger_4 Ramjet_4",
+                "email"     : {"type": "", "value": "rodger.ramjet@nowhere.com"},
+                "tel"       : {"type": "Mobile", "carrier": "MoviStar", "value": "333333333"},
+                "adr"       : {"streetAddress"    : "Two Street",
+                               "postalCode"       : "00002",
+                               "locality"      : "City Two",
+                               "countryName"   : "Country Two"},
+                "bday"      : "1982-02-22",
+                "jobTitle"  : "Dancer number three",
+                "comment"   : "Mock test contact 3"
+            }
+        self.Contact_5 = {
+                "givenName" : "Rodger_5",
+                "familyName": "Ramjet_5",
+                "name"      : "Rodger_5 Ramjet_5",
+                "email"     : {"type": "", "value": "rodger.ramjet@nowhere.com"},
+                "tel"       : {"type": "Mobile", "carrier": "MoviStar", "value": "333333333"},
+                "adr"       : {"streetAddress"    : "Two Street",
+                               "postalCode"       : "00002",
+                               "locality"      : "City Two",
+                               "countryName"   : "Country Two"},
+                "bday"      : "1982-02-22",
+                "jobTitle"  : "Dancer number three",
+                "comment"   : "Mock test contact 3"
+            }
+        self.Contact_6 = {
+                "givenName" : "Rodger_6",
+                "familyName": "Ramjet_6",
+                "name"      : "Rodger_6 Ramjet_6",
+                "email"     : {"type": "", "value": "rodger.ramjet@nowhere.com"},
+                "tel"       : {"type": "Mobile", "carrier": "MoviStar", "value": "333333333"},
+                "adr"       : {"streetAddress"    : "Two Street",
+                               "postalCode"       : "00002",
+                               "locality"      : "City Two",
+                               "countryName"   : "Country Two"},
+                "bday"      : "1982-02-22",
+                "jobTitle"  : "Dancer number three",
+                "comment"   : "Mock test contact 3"
+            }
+        self.Contact_7 = {
+                "givenName" : "Rodger_7",
+                "familyName": "Ramjet_7",
+                "name"      : "Rodger_7 Ramjet_7",
+                "email"     : {"type": "", "value": "rodger.ramjet@nowhere.com"},
+                "tel"       : {"type": "Mobile", "carrier": "MoviStar", "value": "333333333"},
+                "adr"       : {"streetAddress"    : "Two Street",
+                               "postalCode"       : "00002",
+                               "locality"      : "City Two",
+                               "countryName"   : "Country Two"},
+                "bday"      : "1982-02-22",
+                "jobTitle"  : "Dancer number three",
+                "comment"   : "Mock test contact 3"
+            }
+        self.Contact_8 = {
+                "givenName" : "Rodger_8",
+                "familyName": "Ramjet_8",
+                "name"      : "Rodger_8 Ramjet_8",
+                "email"     : {"type": "", "value": "rodger.ramjet@nowhere.com"},
+                "tel"       : {"type": "Mobile", "carrier": "MoviStar", "value": "333333333"},
+                "adr"       : {"streetAddress"    : "Two Street",
+                               "postalCode"       : "00002",
+                               "locality"      : "City Two",
+                               "countryName"   : "Country Two"},
+                "bday"      : "1982-02-22",
+                "jobTitle"  : "Dancer number three",
+                "comment"   : "Mock test contact 3"
+            }
+        self.Contact_9 = {
+                "givenName" : "Rodger_9",
+                "familyName": "Ramjet_9",
+                "name"      : "Rodger_9 Ramjet_9",
+                "email"     : {"type": "", "value": "rodger.ramjet@nowhere.com"},
+                "tel"       : {"type": "Mobile", "carrier": "MoviStar", "value": "333333333"},
+                "adr"       : {"streetAddress"    : "Two Street",
+                               "postalCode"       : "00002",
+                               "locality"      : "City Two",
+                               "countryName"   : "Country Two"},
+                "bday"      : "1982-02-22",
+                "jobTitle"  : "Dancer number three",
+                "comment"   : "Mock test contact 3"
+            }
+        self.Contact_10 = {
+                "givenName" : "Rodger_10",
+                "familyName": "Ramjet_10",
+                "name"      : "Rodger_10 Ramjet_10",
+                "email"     : {"type": "", "value": "rodger.ramjet@nowhere.com"},
+                "tel"       : {"type": "Mobile", "carrier": "MoviStar", "value": "333333333"},
+                "adr"       : {"streetAddress"    : "Two Street",
+                               "postalCode"       : "00002",
+                               "locality"      : "City Two",
+                               "countryName"   : "Country Two"},
+                "bday"      : "1982-02-22",
+                "jobTitle"  : "Dancer number three",
+                "comment"   : "Mock test contact 3"
+            }       
         self.Contact_longName = {
                 "givenName" : "AAAAAAAAAAAAAAAALEX",
                 "familyName": "SMITHXXXXXXXX",
