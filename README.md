@@ -659,6 +659,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26869</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26869)</td>
+  </tr>
+
+  <tr>
     <td  align=center>27062</td><td  align=left>Type a number which does not match with any of the contacts' phone number(s)</td>
   </tr>
 

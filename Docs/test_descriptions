@@ -188,6 +188,7 @@
 26863|Try send a sms in an existing thread while airplane is enabled
 26864|Try send a sms to a contact while airplane is enabled (from sms app - use contact option)
 26865|Receive an SMS from a contact with long name
+26869|(No description found in https://jirapdi.tid.es/browse/OWD-26869)
 26870|(No description found in https://jirapdi.tid.es/browse/OWD-26870)
 26871|Search by text string that matches the middle of a contact last name and name
 26872|Search by text string that matches the end of a contact last name and name
