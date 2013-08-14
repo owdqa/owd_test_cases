@@ -615,6 +615,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>27057</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-27057)</td>
+  </tr>
+
+  <tr>
     <td  align=center>27042</td><td  align=left>Tap on Unselect All to unselect all the contacts</td>
   </tr>
 
@@ -699,6 +703,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>27051</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-27051)</td>
+  </tr>
+
+  <tr>
     <td  align=center>27038</td><td  align=left>Tap on cancel after inserting the user/passw</td>
   </tr>
 
@@ -736,6 +744,10 @@ TESTS COVERED
 
   <tr>
     <td  align=center>26874</td><td  align=left>Search by text string that not matches with any contact name/last name</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27058</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-27058)</td>
   </tr>
 
   <tr>
@@ -784,6 +796,10 @@ TESTS COVERED
 
   <tr>
     <td  align=center>26901</td><td  align=left>Search a contact after edit contact name</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26870</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26870)</td>
   </tr>
 
   <tr>
