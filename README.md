@@ -747,6 +747,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26866</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26866)</td>
+  </tr>
+
+  <tr>
     <td  align=center>26874</td><td  align=left>Search by text string that not matches with any contact name/last name</td>
   </tr>
 
