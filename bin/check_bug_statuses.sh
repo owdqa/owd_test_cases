@@ -12,10 +12,11 @@ DESCS_FILE=$(dirname $0)/../Docs/test_descriptions
 #
 BRANCH=$(git branch | awk '{print $NF}')
 case $BRANCH in
-	"v1-train" ) export BRANCH_STR="status-b2g18";;
-	"1.1"      ) export BRANCH_STR="status-b2g-v1.1hd";;
+    "1.0.1"    ) export BRANCH_STR="status-b2g18-v1.0.1"; export COMMENT_BRANCH_STR="v1.0.1";;
+	"v1-train" ) export BRANCH_STR="status-b2g18"       ; export COMMENT_BRANCH_STR="v1-train";;
+    "1.1"      ) export BRANCH_STR="status-b2g-v1.1hd"  ; export COMMENT_BRANCH_STR="master";;
 esac
-    
+
 echo "
 Checking the status of any bugzilla bugs that are currently 'blocking' OWD automated test cases ...
 "
@@ -54,13 +55,15 @@ EOF
     	BUGID                   = ENVIRON["BUGID"]
     	TESTLIST                = ENVIRON["TESTLIST"]
     	BRANCH_STR              = ENVIRON["BRANCH_STR"]
+    	COMMENT_BRANCH_STR      = ENVIRON["COMMENT_BRANCH_STR"]
         IN_DESC                 = ""
         DESC                    = ""
         IN_TRACKING_FLAGS_TABLE = ""
         IN_LABEL                = ""
         LABEL                   = ""
         STATUS                  = ""
-        
+        COMMENT_NUM             = "(unknown)"
+
         while ( getline < LOGFILE ){
         	
             #
@@ -83,7 +86,7 @@ EOF
             }
             
             #
-            # GATHER INFO ON THE STATUS.
+            # GATHER INFO ON THE STATUS (USING THE FLAG FIELD).
             #
             if ( $0 ~ /table *class="tracking_flags"/ ){
                 IN_TRACKING_FLAGS_TABLE = "Y"
@@ -108,9 +111,27 @@ EOF
             if ( IN_TRACKING_FLAGS_TABLE != "" && $0 ~ /<\/table>/ ) {
             	IN_TRACKING_FLAGS_TABLE = ""
             }
+            
+            #
+            # ... trying comments.
+            #
+            if ( $0 ~ /href=".*">Comment [0-9]*<\/a>/ ){
+            	COMMENT_NUM = $0
+                gsub(/^.*Comment */, "", COMMENT_NUM)
+                gsub(/<\/a>.*/, "", COMMENT_NUM)
+            }
+            if ( $0 ~ /<pre *class="bz_comment_text"/ ){
+            	X = $0
+            	gsub(/<pre *class="bz_comment_text" *>/, "", X)
+            	gsub(/:.*$/, "", X)
+            	if ( X == COMMENT_BRANCH_STR ){
+            		STATUS = "(fix for \"" COMMENT_BRANCH_STR "\" mentioned in comment " COMMENT_NUM ".)"
+            		break
+            	}
+            }
         }
         
-        if ( STATUS ~ /.*RESOLVED.*/ || STATUS ~ /.*fixed.*/ ){
+        if ( STATUS ~ /.*RESOLVED.*/ || STATUS ~ /.*fixed.*/ || STATUS ~ /fix for/ ){
             gsub(/&quot;/, "\"", TESTLIST)
             
             printf "\n"
