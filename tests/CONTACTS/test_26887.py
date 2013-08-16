@@ -51,7 +51,7 @@ class test_main(GaiaTestCase):
         time.sleep(1)
         
         x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "(TEST CASE INCIMPLETE, I'M STILL WORKING ON IT - Roy.", x)
+        self.UTILS.logResult("info", "(TEST CASE INCOMPLETE, I'M STILL WORKING ON IT - Roy.)", x)
 
 
         
