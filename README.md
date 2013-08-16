@@ -651,6 +651,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26868</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26868)</td>
+  </tr>
+
+  <tr>
     <td  align=center>23887</td><td  align=left>Accept creating a new contact, editing some other fields</td>
   </tr>
 
