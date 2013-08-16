@@ -14,7 +14,8 @@ from tests._mock_data.contacts import MockContacts
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test."
+    _addFavStr      = "Add as Favorite"
+    _removeFavStr   = "Remove as Favorite"
 
     def setUp(self):
         #
@@ -43,16 +44,48 @@ class test_main(GaiaTestCase):
         #
         # View the details of our contact and make him a favourite.
         #
+        self.UTILS.logResult("info", "<b>Setting up a contact in favourites ...</b>")
         self.contacts.viewContact(self.cont['name'])
-        x = self.UTILS.getElement(DOM.Contacts.favourite_button, "Favourite button")
+        
+        x = self.UTILS.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
+        self.UTILS.TEST(x.text == self._addFavStr, "Toggle favourite button text is '%s'." % self._addFavStr)
         x.tap()
-        x = self.UTILS.getElement(DOM.Contacts.details_back_button, "Favourite button")
+        x = self.UTILS.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (after tap)")
+        self.UTILS.TEST(x.text == self._removeFavStr, "Toggle favourite button text is '%s'." % self._removeFavStr)
+        
+        x = self.UTILS.getElement(DOM.Contacts.details_back_button, "Back button")
         x.tap()
-        time.sleep(1)
+        
+        self.UTILS.waitForElements( ("xpath", DOM.Contacts.favourites_list_xpath % self.cont["name"].replace(" ", "")),
+                                    "%s in favorites" % self.cont["name"])
         
         x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "(TEST CASE INCOMPLETE, I'M STILL WORKING ON IT - Roy.)", x)
+        self.UTILS.logResult("info", "Screenshot at this point", x)
 
+
+        
+        self.UTILS.logResult("info", "<b>removing contact from favourites ...</b>")
+        self.contacts.viewContact(self.cont['name'])
+        
+        x = self.UTILS.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
+        self.UTILS.TEST(x.text == self._removeFavStr, "Toggle favourite button text is '%s'." % self._removeFavStr)
+        x.tap()
+        x = self.UTILS.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (after tap)")
+        self.UTILS.TEST(x.text == self._addFavStr, "Toggle favourite button text is '%s'." % self._addFavStr)
+        
+        x = self.UTILS.getElement(DOM.Contacts.details_back_button, "Back button")
+        x.tap()
+        
+        time.sleep(1)
+        self.UTILS.waitForNotElements( ("xpath", DOM.Contacts.favourites_list_xpath % self.cont["name"].replace(" ", "")),
+                                    "%s in favorites" % self.cont["name"])
+        
+        
+        x = self.UTILS.screenShotOnErr()
+        self.UTILS.logResult("info", "Screenshot at this point", x)
+
+        
+        
 
         
         
