@@ -189,17 +189,26 @@
 26864|Try send a sms to a contact while airplane is enabled (from sms app - use contact option)
 26865|Receive an SMS from a contact with long name
 26866|(No description found in https://jirapdi.tid.es/browse/OWD-26866)
+26867|(No description found in https://jirapdi.tid.es/browse/OWD-26867)
 26869|(No description found in https://jirapdi.tid.es/browse/OWD-26869)
 26870|(No description found in https://jirapdi.tid.es/browse/OWD-26870)
 26871|Search by text string that matches the middle of a contact last name and name
 26872|Search by text string that matches the end of a contact last name and name
 26873|Verify that the search results are updated at each letter
 26874|Search by text string that not matches with any contact name/last name
+26875|(No description found in https://jirapdi.tid.es/browse/OWD-26875)
+26876|(No description found in https://jirapdi.tid.es/browse/OWD-26876)
 26877|Verify that the user can send a SMS from a contact details - SMS conversation thread already exists
+26878|(No description found in https://jirapdi.tid.es/browse/OWD-26878)
+26879|(No description found in https://jirapdi.tid.es/browse/OWD-26879)
+26880|(No description found in https://jirapdi.tid.es/browse/OWD-26880)
 26882|Search by text string (UPPER CASE) that matches the last name
 26883|Verify that the user can send a SMS from a contact details - SMS conversation doesn't exist
+26884|(No description found in https://jirapdi.tid.es/browse/OWD-26884)
 26885|Add multiple emails addresses
 26886|Configure a contact as a favourite
+26887|(No description found in https://jirapdi.tid.es/browse/OWD-26887)
+26889|(No description found in https://jirapdi.tid.es/browse/OWD-26889)
 26890|Delete all characters to the name and surname fields
 26895|The &quot;done&quot; button in new contact mode (email parameter)
 26899|Delete a contact from the contact details(all the fields filled)
@@ -321,12 +330,4 @@
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
 28100|Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:&quot;Test1 656565678 number&quot;)
-26876|(No description found in https://jirapdi.tid.es/browse/OWD-26876)
-26875|(No description found in https://jirapdi.tid.es/browse/OWD-26875)
-26887|(No description found in https://jirapdi.tid.es/browse/OWD-26887)
-26879|(No description found in https://jirapdi.tid.es/browse/OWD-26879)
-26884|(No description found in https://jirapdi.tid.es/browse/OWD-26884)
-26867|(No description found in https://jirapdi.tid.es/browse/OWD-26867)
-26889|(No description found in https://jirapdi.tid.es/browse/OWD-26889)
-26880|(No description found in https://jirapdi.tid.es/browse/OWD-26880)
-26878|(No description found in https://jirapdi.tid.es/browse/OWD-26878)
+26868|(No description found in https://jirapdi.tid.es/browse/OWD-26868)
