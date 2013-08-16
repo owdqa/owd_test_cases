@@ -14,4 +14,5 @@ from tests.CONTACTS.shared_test_functions import TEST_FIELD_REMOVE_TOGGLE
 class test_main(TEST_FIELD_REMOVE_TOGGLE.main):
 
     def test_run(self):        
-        self.field_remove_toggle_test("thumbnail-action")
+        self.field_remove_toggle_test("contacts-form-emails")
+        
