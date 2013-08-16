@@ -14,9 +14,6 @@ from tests._mock_data.contacts import MockContacts
 
 class test_main(GaiaTestCase):
     
-    _addFavStr      = "Add as Favorite"
-    _removeFavStr   = "Remove as Favorite"
-
     def setUp(self):
         #
         # Set up child objects...
@@ -48,16 +45,12 @@ class test_main(GaiaTestCase):
         self.contacts.viewContact(self.cont['name'])
         
         x = self.UTILS.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
-        self.UTILS.TEST(x.text == self._addFavStr, "Toggle favourite button text is '%s'." % self._addFavStr)
         x.tap()
-        x = self.UTILS.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (after tap)")
-        self.UTILS.TEST(x.text == self._removeFavStr, "Toggle favourite button text is '%s'." % self._removeFavStr)
-        
+
         x = self.UTILS.getElement(DOM.Contacts.details_back_button, "Back button")
         x.tap()
         
-        self.UTILS.waitForElements( ("xpath", DOM.Contacts.favourites_list_xpath % self.cont["name"].replace(" ", "")),
-                                    "%s in favorites" % self.cont["name"])
+        self.UTILS.waitForElements( DOM.Contacts.favourites_section, "Favourites section")
         
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot at this point", x)
@@ -68,17 +61,13 @@ class test_main(GaiaTestCase):
         self.contacts.viewContact(self.cont['name'])
         
         x = self.UTILS.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
-        self.UTILS.TEST(x.text == self._removeFavStr, "Toggle favourite button text is '%s'." % self._removeFavStr)
         x.tap()
-        x = self.UTILS.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (after tap)")
-        self.UTILS.TEST(x.text == self._addFavStr, "Toggle favourite button text is '%s'." % self._addFavStr)
         
         x = self.UTILS.getElement(DOM.Contacts.details_back_button, "Back button")
         x.tap()
         
         time.sleep(1)
-        self.UTILS.waitForNotElements( ("xpath", DOM.Contacts.favourites_list_xpath % self.cont["name"].replace(" ", "")),
-                                    "%s in favorites" % self.cont["name"])
+        self.UTILS.waitForNotElements( DOM.Contacts.favourites_section, "Favourites section")
         
         
         x = self.UTILS.screenShotOnErr()

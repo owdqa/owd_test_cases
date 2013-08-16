@@ -190,6 +190,7 @@
 26865|Receive an SMS from a contact with long name
 26866|(No description found in https://jirapdi.tid.es/browse/OWD-26866)
 26867|(No description found in https://jirapdi.tid.es/browse/OWD-26867)
+26868|(No description found in https://jirapdi.tid.es/browse/OWD-26868)
 26869|(No description found in https://jirapdi.tid.es/browse/OWD-26869)
 26870|(No description found in https://jirapdi.tid.es/browse/OWD-26870)
 26871|Search by text string that matches the middle of a contact last name and name
@@ -330,4 +331,15 @@
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
 28100|Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:&quot;Test1 656565678 number&quot;)
-26868|(No description found in https://jirapdi.tid.es/browse/OWD-26868)
+26903|Remove the contact Phone number and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it
+26898|Create a contact with only Name and Last name
+26894|The &quot;done&quot; button in new contact mode (phone number parameter)
+26908|Delete a contact and verify that a confirmation is shown (accept the confirmation)
+26893|The &quot;done&quot; button in new contact mode (name parameter)
+26897|Configure a contact as a favourite and verify that a icon(star) is shown next to contact name in contact details
+26902|Remove the contact picture and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it
+26888|Verify that the favourite contacts will be listed on the top of the full contact list
+26906|Remove and restore a contact phone number
+26896|The &quot;done&quot; button in new contact mode (note parameter)
+26904|Remove the contact email addres and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it
+26892|Verify that the favorite section is created
