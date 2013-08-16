@@ -611,7 +611,23 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26876</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26876)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26875</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26875)</td>
+  </tr>
+
+  <tr>
     <td  align=center>27061</td><td  align=left>Option to cancel the searching</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27057</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-27057)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26887</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26887)</td>
   </tr>
 
   <tr>
@@ -655,6 +671,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26869</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26869)</td>
+  </tr>
+
+  <tr>
     <td  align=center>27062</td><td  align=left>Type a number which does not match with any of the contacts' phone number(s)</td>
   </tr>
 
@@ -691,11 +711,19 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26879</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26879)</td>
+  </tr>
+
+  <tr>
     <td  align=center>27059</td><td  align=left>Verify that you can enter numbers in the search input box</td>
   </tr>
 
   <tr>
     <td  align=center>26317</td><td  align=left>Send an email to a contact from the contact details (Contact with multiple emails)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27051</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-27051)</td>
   </tr>
 
   <tr>
@@ -707,11 +735,23 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26884</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26884)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26867</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26867)</td>
+  </tr>
+
+  <tr>
     <td  align=center>27039</td><td  align=left>Use the Search box to introduce characters in order to look for contacts</td>
   </tr>
 
   <tr>
     <td  align=center>26907</td><td  align=left>Remove a photo,a phone number, an email, an address and a comment from a contact and restore the phone number and the comment</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26889</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26889)</td>
   </tr>
 
   <tr>
@@ -735,7 +775,19 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26866</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26866)</td>
+  </tr>
+
+  <tr>
     <td  align=center>26874</td><td  align=left>Search by text string that not matches with any contact name/last name</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27058</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-27058)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26880</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26880)</td>
   </tr>
 
   <tr>
@@ -779,11 +831,19 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26878</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26878)</td>
+  </tr>
+
+  <tr>
     <td  align=center>27036</td><td  align=left>Go back (Cancel ('x')) on Account web log-in page</td>
   </tr>
 
   <tr>
     <td  align=center>26901</td><td  align=left>Search a contact after edit contact name</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26870</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26870)</td>
   </tr>
 
   <tr>
