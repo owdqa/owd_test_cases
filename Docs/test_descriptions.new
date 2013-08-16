@@ -188,6 +188,7 @@
 26863|Try send a sms in an existing thread while airplane is enabled
 26864|Try send a sms to a contact while airplane is enabled (from sms app - use contact option)
 26865|Receive an SMS from a contact with long name
+26866|(No description found in https://jirapdi.tid.es/browse/OWD-26866)
 26869|(No description found in https://jirapdi.tid.es/browse/OWD-26869)
 26870|(No description found in https://jirapdi.tid.es/browse/OWD-26870)
 26871|Search by text string that matches the middle of a contact last name and name
@@ -320,4 +321,12 @@
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
 28100|Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:&quot;Test1 656565678 number&quot;)
-26866|(No description found in https://jirapdi.tid.es/browse/OWD-26866)
+26876|(No description found in https://jirapdi.tid.es/browse/OWD-26876)
+26875|(No description found in https://jirapdi.tid.es/browse/OWD-26875)
+26887|(No description found in https://jirapdi.tid.es/browse/OWD-26887)
+26879|(No description found in https://jirapdi.tid.es/browse/OWD-26879)
+26884|(No description found in https://jirapdi.tid.es/browse/OWD-26884)
+26867|(No description found in https://jirapdi.tid.es/browse/OWD-26867)
+26889|(No description found in https://jirapdi.tid.es/browse/OWD-26889)
+26880|(No description found in https://jirapdi.tid.es/browse/OWD-26880)
+26878|(No description found in https://jirapdi.tid.es/browse/OWD-26878)
