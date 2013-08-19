@@ -61,11 +61,11 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.logResult("info", " ")
         self.UTILS.logResult("info", "--------------------------")
-        self.UTILS.logResult("info", "<b><u>Reading an sms from 7 days ago ...</u></b>")
-        _test_day = _now.tm_mday - 7   
+        self.UTILS.logResult("info", "<b><u>Reading an sms from 6 days ago ...</u></b>")
+        _test_day = _now.tm_mday - 6
         x = self.UTILS.setTimeToSpecific(p_day=_test_day)
             
-        self._sendSMS("7 days ago")
+        self._sendSMS("6 days ago")
           
         expected_str = "%s/%s/%s" % (str(x.tm_mon).zfill(2), str(x.tm_mday).zfill(2), x.tm_year)
         self._checkTimeStamp(expected_str)
@@ -75,7 +75,7 @@ class test_main(GaiaTestCase):
         #=============================================================================
         #
         days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-        for i in range(6,1,-1):
+        for i in range(5,1,-1):
   
             self.UTILS.logResult("info", " ")
             self.UTILS.logResult("info", "--------------------------")
