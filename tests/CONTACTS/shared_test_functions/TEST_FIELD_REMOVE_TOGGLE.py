@@ -67,7 +67,7 @@ class main(GaiaTestCase):
         # try to make sure the field is in view (pretty hideous, but it does the job!).
         #
         try:
-            self.marionette.execute_script("document.getElementById('%s').scrollIntoView();" % _field_definition)
+            self.marionette.execute_script("document.getElementById('%s').scrollIntoView();" % p_field_definition)
             self.marionette.execute_script("document.getElementById('contact-form-title').scrollIntoView();")
         except:
             pass
