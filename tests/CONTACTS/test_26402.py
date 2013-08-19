@@ -64,6 +64,6 @@ class test_main(GaiaTestCase):
         #
         # Tap Ok button for confirmation.
         #
-        x = self.UTILS.getElement( ("id", "modal-dialog-confirm-ok"), "OK button", True, 5, False)
+        x = self.UTILS.getElement(DOM.GLOBAL.modal_ok_button1, "OK button", True, 5, False)
         x.tap()
         

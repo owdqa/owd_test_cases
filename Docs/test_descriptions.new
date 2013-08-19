@@ -135,6 +135,7 @@
 26348|Add an alarm - verify the alarm was added with the correct date and time
 26352|Install and launch an everything.me app - verify the everything.me app launches successfully to the right web content
 26353|Import Facebook contacts from contacts app settings
+26402|(No description found in https://jirapdi.tid.es/browse/OWD-26402)
 26403|Verify that If the contact has more than one phone number, it opens a list of numbers. Clicking on a number in the list, returns the user to the compose SMS app with the contacts name filled-in in the To Field.(second phone number)
 26404|CLONE - Verify that If the contact only has a phone number, that phone number is automatically selected and the user is returned to the compose SMS screenwidth the contacts name filled-in in the To Field..
 26405|Press cancel button in the screen for select a contact phone number
@@ -225,9 +226,11 @@
 26902|Remove the contact picture and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it
 26903|Remove the contact Phone number and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it
 26904|Remove the contact email addres and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it
+26905|(No description found in https://jirapdi.tid.es/browse/OWD-26905)
 26906|Remove and restore a contact phone number
 26907|Remove a photo,a phone number, an email, an address and a comment from a contact and restore the phone number and the comment
 26908|Delete a contact and verify that a confirmation is shown (accept the confirmation)
+26910|(No description found in https://jirapdi.tid.es/browse/OWD-26910)
 26918|Unlink all Facebook contacts in the address book in a single step and verify the contacts who was linked to a facebook contacts
 26965|Verify in a sent SMS thread view that only valid URL appears highlighted
 26966|Verify in a received SMS thread view that only valid URL appears highlighted
@@ -267,6 +270,9 @@
 27000|Verify that if the user accepts  &quot;Create new Contact&quot; from the “Add contact” form, the form is closed and the user is returned to the SMS thread view
 27001|Verify that if the user accepts  &quot;Add to an existing contact&quot; from the “Edit contact” form, contact is correctly updated and he is returned to the SMS thread view
 27002|Verify that when tapping in a SMS with several valid phone numbers, the dialer is launched with the phone number tapped on pre-filled in
+27005|(No description found in https://jirapdi.tid.es/browse/OWD-27005)
+27006|(No description found in https://jirapdi.tid.es/browse/OWD-27006)
+27007|(No description found in https://jirapdi.tid.es/browse/OWD-27007)
 27012|Add dialed number as new contact
 27013|Add dialed number to existing contact without phone numbers
 27014|Do not add dialed number
@@ -343,9 +349,3 @@
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
 28100|Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:&quot;Test1 656565678 number&quot;)
-27006|(No description found in https://jirapdi.tid.es/browse/OWD-27006)
-27005|(No description found in https://jirapdi.tid.es/browse/OWD-27005)
-27007|(No description found in https://jirapdi.tid.es/browse/OWD-27007)
-26402|(No description found in https://jirapdi.tid.es/browse/OWD-26402)
-26905|(No description found in https://jirapdi.tid.es/browse/OWD-26905)
-26910|(No description found in https://jirapdi.tid.es/browse/OWD-26910)
