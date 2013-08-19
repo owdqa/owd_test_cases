@@ -18,7 +18,6 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
 import time
 
 class main(GaiaTestCase):
@@ -32,10 +31,12 @@ class main(GaiaTestCase):
     def tearDown(self):
         self.UTILS.reportResults()
 
-    def field_remove_toggle_test(self, p_field_definition):
+    def field_remove_toggle_test(self, p_contact_json_obj, p_field_definition, p_item_nums=[0]):
         #
         # Imports a contact, goes to the contact, edits it and tests the required 'remove' icon
         # (on and then off).
+        # p_field_num: The number of the item, for example if there's >1 phone number, then '0' would
+        # be the first one etc... (defaults to zero in case there's only one item).
         #
         
         _del_icon_locator   = ("xpath",DOM.Contacts.reset_field_xpath % p_field_definition)
@@ -51,20 +52,20 @@ class main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.Contact_1 = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.Contact_1)
-        self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
-          
         self.UTILS.logResult("info", "Setting up contact ...")
+        self.data_layer.insert_contact(p_contact_json_obj)
+        
+        # Add image.
+        self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
         self.contacts.launch()
-        self.contacts.viewContact(self.Contact_1['name'])
+        self.contacts.viewContact(p_contact_json_obj['name'])
         self.contacts.pressEditContactButton()
         self.contacts.addGalleryImageToContact(0)
            
         self.UTILS.logResult("info", "Starting tests ...")
          
         #
-        # try to make sure the field is in view (pretty hideous, but it does the job!).
+        # Try to make sure this field section is in view (pretty hideous, but it does the job!).
         #
         try:
             self.marionette.execute_script("document.getElementById('%s').scrollIntoView();" % p_field_definition)
@@ -79,30 +80,31 @@ class main(GaiaTestCase):
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
         
         
-        x = self.UTILS.getElement(_field_locator, "Field being tested")
-        self.UTILS.TEST("removed" not in x.get_attribute("class"), "The item is NOT marked as temporarily removed.")
-        
-        
-        #
-        # Toggle the 'reset' icon.
-        #
-        x = self.UTILS.getElement(_del_icon_locator, "Field reset button")
-        x.tap()
-          
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot at this point:", x)
-        
-        x = self.UTILS.getElement(_field_locator, "Field being tested")
-        self.UTILS.TEST("removed" in x.get_attribute("class"), "The item IS marked as temporarily removed.")
-        
-        x = self.UTILS.getElement(_del_icon_locator, "Field reset button")
-        x.tap()
-          
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot at this point:", x)
-        
-        x = self.UTILS.getElement(_field_locator, "Field being tested")
-        self.UTILS.TEST("removed" not in x.get_attribute("class"), "The item is NOT marked as temporarily removed.")
+        self.UTILS.logResult("info", "<b>For each of our items for this field, click the icon to set them to 'remove' ...</b>")
+        for i in p_item_nums:
+            x = self.UTILS.getElements(_field_locator, "Field being tested (item %s)" % i)[i]
+            self.UTILS.TEST("removed" not in x.get_attribute("class"), "The item is NOT marked as temporarily removed.")
+                        
+            x = self.UTILS.getElements(_del_icon_locator, "Field reset button (item %s)" % i)[i]
+            x.tap()
+              
+            x = self.UTILS.screenShotOnErr()
+            self.UTILS.logResult("info", "Screenshot at this point:", x)
+            
+            x = self.UTILS.getElements(_field_locator, "Field being tested (item %s)" % i)[i]
+            self.UTILS.TEST("removed" in x.get_attribute("class"), "The item IS now marked as temporarily removed.")
+            
+
+        self.UTILS.logResult("info", "<b>For each of our items for this field, click the icon to turn off 'remove' ...</b>")
+        for i in p_item_nums:
+            x = self.UTILS.getElements(_del_icon_locator, "Field reset button (item %s)" % i)[i]
+            x.tap()
+              
+            x = self.UTILS.screenShotOnErr()
+            self.UTILS.logResult("info", "Screenshot at this point:", x)
+            
+            x = self.UTILS.getElements(_field_locator, "Field being tested (item %s)" % i)[i]
+            self.UTILS.TEST("removed" not in x.get_attribute("class"), "The item is now NOT marked as temporarily removed.")
         
         
         

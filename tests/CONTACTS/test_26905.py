@@ -15,6 +15,6 @@ from tests.CONTACTS.shared_test_functions import TEST_FIELD_REMOVE_TOGGLE
 class test_main(TEST_FIELD_REMOVE_TOGGLE.main):
 
     def test_run(self):
-        _cont = MockContacts().Contact_1
-        self.field_remove_toggle_test(_cont, "contacts-form-phones")
+        _cont = MockContacts().Contact_multiplePhones
+        self.field_remove_toggle_test(_cont, "contacts-form-phones", [0,1,2])
         
