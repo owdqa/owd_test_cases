@@ -209,13 +209,25 @@
 26885|Add multiple emails addresses
 26886|Configure a contact as a favourite
 26887|(No description found in https://jirapdi.tid.es/browse/OWD-26887)
+26888|Verify that the favourite contacts will be listed on the top of the full contact list
 26889|(No description found in https://jirapdi.tid.es/browse/OWD-26889)
 26890|Delete all characters to the name and surname fields
+26892|Verify that the favorite section is created
+26893|The &quot;done&quot; button in new contact mode (name parameter)
+26894|The &quot;done&quot; button in new contact mode (phone number parameter)
 26895|The &quot;done&quot; button in new contact mode (email parameter)
+26896|The &quot;done&quot; button in new contact mode (note parameter)
+26897|Configure a contact as a favourite and verify that a icon(star) is shown next to contact name in contact details
+26898|Create a contact with only Name and Last name
 26899|Delete a contact from the contact details(all the fields filled)
 26900|Verify that when looking at the details of a contact, the user can make a call to the contact with several phone numbers added
 26901|Search a contact after edit contact name
+26902|Remove the contact picture and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it
+26903|Remove the contact Phone number and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it
+26904|Remove the contact email addres and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it
+26906|Remove and restore a contact phone number
 26907|Remove a photo,a phone number, an email, an address and a comment from a contact and restore the phone number and the comment
+26908|Delete a contact and verify that a confirmation is shown (accept the confirmation)
 26918|Unlink all Facebook contacts in the address book in a single step and verify the contacts who was linked to a facebook contacts
 26965|Verify in a sent SMS thread view that only valid URL appears highlighted
 26966|Verify in a received SMS thread view that only valid URL appears highlighted
@@ -331,15 +343,9 @@
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
 28100|Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:&quot;Test1 656565678 number&quot;)
-26903|Remove the contact Phone number and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it
-26898|Create a contact with only Name and Last name
-26894|The &quot;done&quot; button in new contact mode (phone number parameter)
-26908|Delete a contact and verify that a confirmation is shown (accept the confirmation)
-26893|The &quot;done&quot; button in new contact mode (name parameter)
-26897|Configure a contact as a favourite and verify that a icon(star) is shown next to contact name in contact details
-26902|Remove the contact picture and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it
-26888|Verify that the favourite contacts will be listed on the top of the full contact list
-26906|Remove and restore a contact phone number
-26896|The &quot;done&quot; button in new contact mode (note parameter)
-26904|Remove the contact email addres and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it
-26892|Verify that the favorite section is created
+27006|(No description found in https://jirapdi.tid.es/browse/OWD-27006)
+27005|(No description found in https://jirapdi.tid.es/browse/OWD-27005)
+27007|(No description found in https://jirapdi.tid.es/browse/OWD-27007)
+26402|(No description found in https://jirapdi.tid.es/browse/OWD-26402)
+26905|(No description found in https://jirapdi.tid.es/browse/OWD-26905)
+26910|(No description found in https://jirapdi.tid.es/browse/OWD-26910)
