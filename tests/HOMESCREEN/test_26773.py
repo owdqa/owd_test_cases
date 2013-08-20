@@ -26,7 +26,6 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
-        
         #
         # Get a conection.
         #

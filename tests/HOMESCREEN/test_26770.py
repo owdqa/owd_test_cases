@@ -47,10 +47,6 @@ class test_main(GaiaTestCase):
         #
         self.EME.launch()
         
-        
-        
-        
-        
         self.UTILS.TEST(self.EME.pickGroup(self._GROUP_NAME),
                         "Group '" + self._GROUP_NAME + "' exists in EverythingME.",
                         True)
