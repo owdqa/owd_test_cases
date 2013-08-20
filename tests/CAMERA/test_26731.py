@@ -53,7 +53,7 @@ class test_main(GaiaTestCase):
         myIframe = self.UTILS.currentIframe()
          
         self.marionette.switch_to_frame()
-        x = self.UTILS.getElement(DOM.GLOBAL.modal_ok_button1, "OK button")
+        x = self.UTILS.getElement(DOM.GLOBAL.modal_confirm_ok, "OK button")
         x.tap()
          
         self.UTILS.switchToFrame("src", myIframe)
