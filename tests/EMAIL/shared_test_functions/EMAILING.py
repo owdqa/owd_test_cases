@@ -138,6 +138,8 @@ class main(GaiaTestCase):
         # Login.
         #
         self.Email.setupAccount(self.USER2, self.EMAIL2, self.PASS2)
+        
+        self.UTILS.logResult("info", "Finished setting up the account to log in with.")
              
         #
         # Open the email (we'll already be in the Inbox).

@@ -66,8 +66,7 @@ class test_main(GaiaTestCase):
          
         # ... and switch back to brwoser to see the next splash screen(!)
         self.UTILS.switchToFrame(*DOM.Browser.frame_locator)
-        x = ('id', 'modal-dialog-alert-ok')
-        btn = self.UTILS.getElement(x, "Ok button")
+        btn = self.UTILS.getElement(DOM.GLOBAL.modal_alert_ok, "Ok button")
         btn.tap()
  
         #
