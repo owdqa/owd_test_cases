@@ -45,8 +45,7 @@ class test_main(GaiaTestCase):
         
     def test_run(self):
         self.dialer.launch()
-        
-        self.dialer.launch()
+    
         self.dialer.enterNumber("1234")
         
         x = self.UTILS.getElement(DOM.Dialer.suggestion_count, "Suggestion count")
