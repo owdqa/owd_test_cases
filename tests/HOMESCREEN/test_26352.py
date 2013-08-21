@@ -37,6 +37,7 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
+        return
         #
         # Make sure 'things' are as we expect them to be first.
         #
@@ -46,6 +47,26 @@ class test_main(GaiaTestCase):
         # First, get the name of the app we're going to install.
         #
         self.EME.launch()
+        
+        
+        
+        x = self.UTILS.getElements(DOM.EME.groups, "EME group list")
+        boolOK = False
+        for groupLink in x:
+            if groupLink.get_attribute("data-query") == self._GROUP_NAME:
+                self.UTILS.logResult("info", "Group found - tapping it ...")
+                groupLink.tap()
+                time.sleep(10)
+                boolOK = True
+                break
+        
+        return
+        
+        
+        
+        
+        
+        
         
         self.UTILS.TEST(self.EME.pickGroup(self._GROUP_NAME),
                         "Group '" + self._GROUP_NAME + "' exists in EverythingME.",
