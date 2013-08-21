@@ -47,6 +47,26 @@ class test_main(GaiaTestCase):
         #
         self.EME.launch()
         
+        
+        
+        x = self.UTILS.getElements(DOM.EME.groups, "EME group list")
+        boolOK = False
+        for groupLink in x:
+            if groupLink.get_attribute("data-query") == self._GROUP_NAME:
+                self.UTILS.logResult("info", "Group found - tapping it ...")
+                groupLink.tap()
+                time.sleep(10)
+                boolOK = True
+                break
+        
+        return
+        
+        
+        
+        
+        
+        
+        
         self.UTILS.TEST(self.EME.pickGroup(self._GROUP_NAME),
                         "Group '" + self._GROUP_NAME + "' exists in EverythingME.",
                         True)
