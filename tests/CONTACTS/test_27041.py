@@ -55,6 +55,7 @@ class test_main(GaiaTestCase):
         #
         # Tap the Select All button (can't be done with marionette yet).
         #
+        self.UTILS.waitForElements(DOM.Contacts.import_select_all, "Select_all button")
         self.UTILS.logResult("info", "Tapping the 'Select All' button ...")
         self.marionette.execute_script("document.getElementById('%s').click()" % DOM.Contacts.import_select_all[1])
         time.sleep(1)
