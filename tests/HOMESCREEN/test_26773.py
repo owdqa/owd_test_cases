@@ -27,9 +27,22 @@ class test_main(GaiaTestCase):
         
     def test_run(self):
         #
-        # Get a conection.
+        # Make sure 'things' are as we expect them to be first.
         #
         self.UTILS.getNetworkConnection()
+         
+        #
+        # First, get the name of the app we're going to install.
+        #
+#         self.eme.launch()
+        
+        
+        self.UTILS.goHome()
+ 
+         
+        #
+        # Make sure our app isn't installed already.
+        #
         self.UTILS.uninstallApp(self._appName)
                 
         #
