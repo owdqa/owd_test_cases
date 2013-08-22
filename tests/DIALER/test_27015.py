@@ -54,7 +54,7 @@ class test_main(GaiaTestCase):
         self.marionette.switch_to_frame()
         self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@%s, '%s')]" % \
                                                 (DOM.Contacts.frame_locator[0], DOM.Contacts.frame_locator[1])),
-                                        "COntacts frame")
+                                        "Contacts frame")
         self.UTILS.switchToFrame(*DOM.Dialer.frame_locator)
          
         self.UTILS.waitForElements( ("xpath", "//h1[text()='Call log']"), "Call log header")
