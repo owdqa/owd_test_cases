@@ -21,12 +21,16 @@ class test_main(GaiaTestCase):
         self.contacts   = Contacts(self)
         
         self.cont1 = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.cont1)
+#         self.data_layer.insert_contact(self.cont1)
                 
     def tearDown(self):
         self.UTILS.reportResults()
         
     def test_run(self):
+        self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.contacts.launch()
+        self.contacts.createNewContact(self.cont1,"gallery")
+
         
         self.dialer.launch()
         self.dialer.enterNumber(self.cont1["tel"]["value"])
@@ -44,8 +48,16 @@ class test_main(GaiaTestCase):
         time.sleep(2)
         self.UTILS.switchToFrame(*DOM.Dialer.call_log_contact_name_iframe, p_viaRootFrame=False)
         
-        self.UTILS.waitForElements( ("xpath", "//button[contains(@class,'remark') and @data-tel='%s']" % self.cont1["tel"]["value"]),
-                                     "Highlighted number")
+        x = self.UTILS.getElement(DOM.Contacts.view_contact_tel_field, "Telephone field")
+        x.tap()
         
+        self.UTILS.switchToFrame(*DOM.Dialer.frame_locator_calling)
+
+        self.UTILS.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP % self.cont1["name"]),
+                                    "Outgoing call found with number matching %s" % self.cont1["name"])
+
         x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Final screenshot:", x)
+        self.UTILS.logResult("info", "Screenshot of dialer", x)
+
+        time.sleep(2)
+        self.dialer.hangUp()
