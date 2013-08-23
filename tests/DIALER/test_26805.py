@@ -33,11 +33,11 @@ class test_main(GaiaTestCase):
         
         self.dialer.callThisNumber()
         
-        x = self.UTILS.getElement(DOM.Dialer.hangup_bar_locator, "Hangup button", True, 2)
+        self.UTILS.switchToFrame(*DOM.Dialer.frame_locator_calling)
+        x = self.UTILS.getElement(DOM.Dialer.hangup_bar_locator, "Hangup button")
         x.tap()
- 
-        x = DOM.Dialer.frame_locator_calling
+        
         self.marionette.switch_to_frame()
-        self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@%s, '%s)" % (x[0],x[1])), "Outgoing call iframe", True, 5)
-         
-#         self.UTILS.switchToFrame(*DOM.Dialer.frame_locator)
+        x = DOM.Dialer.frame_locator_calling
+        self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@%s,'%s')]" % (x[0],x[1])), "Calling iframe", True, 2)
+        
