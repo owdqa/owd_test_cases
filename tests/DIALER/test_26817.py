@@ -26,8 +26,9 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
-        
         self.dialer.launch()
+        self.dialer.callLog_clearAll()
+
         self.dialer.enterNumber(self.cont1["tel"]["value"])
         self.dialer.callThisNumber()
         time.sleep(2)
