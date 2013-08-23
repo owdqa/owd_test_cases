@@ -33,7 +33,7 @@ class test_main(GaiaTestCase):
         
         self.UTILS.switchToFrame(*DOM.Dialer.frame_locator_calling)
         x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot of call being made:", x)
+        self.UTILS.logResult("info", "Screenshot of call being made with mute and speaker off:", x)
         
         self.dialer.hangUp()
         
