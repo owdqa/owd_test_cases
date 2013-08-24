@@ -27,7 +27,7 @@ class test_main(GaiaTestCase):
         # Enter a number in the dialer.
         #
         self.dialer.launch()
-        self.dialer.enterNumber(self.num)
+        self.dialer.enterNumber("123456789")
         
         self.dialer.callThisNumber()
         
