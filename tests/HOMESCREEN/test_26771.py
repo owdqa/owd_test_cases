@@ -70,9 +70,7 @@ class test_main(GaiaTestCase):
         #
         # Pick a group.
         #
-        self.UTILS.TEST(self.EME.pickGroup(self._GROUP_NAME),
-                        "Group '" + self._GROUP_NAME + "' exists in EverythingME.",
-                        True)
+        self.EME.pickGroup(self._GROUP_NAME)
         
         
         #
