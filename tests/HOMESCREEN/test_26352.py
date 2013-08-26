@@ -47,35 +47,14 @@ class test_main(GaiaTestCase):
         #
         self.EME.launch()
         
-        
-        
-        x = self.UTILS.getElements(DOM.EME.groups, "EME group list")
-        boolOK = False
-        for groupLink in x:
-            if groupLink.get_attribute("data-query") == self._GROUP_NAME:
-                self.UTILS.logResult("info", "Group found - tapping it ...")
-                groupLink.tap()
-                time.sleep(10)
-                boolOK = True
-                break
-        
-        return
-        
-        
-        
-        
-        
-        
-        
         self.UTILS.TEST(self.EME.pickGroup(self._GROUP_NAME),
                         "Group '" + self._GROUP_NAME + "' exists in EverythingME.",
                         True)
-        
+    
         x = self.UTILS.getElements(DOM.EME.apps, "The first game that is not installed already")[0]
         self._APP_NAME = x.get_attribute("data-name")
         self.UTILS.logResult("info", "App name is <b>%s</b>" % self._APP_NAME)
         self.UTILS.goHome()
- 
          
         #
         # Make sure our app isn't installed already.
