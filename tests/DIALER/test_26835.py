@@ -44,8 +44,12 @@ class test_main(GaiaTestCase):
         x.tap()
 
 
-        x = self.UTILS.getElement( ("xpath", "//p[contains(text(), 'airplane mode')]"), 
+        _warn = self.UTILS.getElement( ("xpath", "//p[contains(text(), 'airplane mode')]"), 
                                     "Airplane mode warning")
+        if _warn:
+            x = self.UTILS.screenShotOnErr()
+            self.UTILS.logResult("info", "Airplane mode warning displayed: \"%s\"" % _warn.text, x)
+        
         
         x = self.UTILS.getElement( ("xpath", "//button[text()='OK']"), "OK button")
         x.tap()
