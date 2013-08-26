@@ -18,19 +18,14 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.dialer     = Dialer(self)
         
+                
     def tearDown(self):
         self.UTILS.reportResults()
         
     def test_run(self):
         self.dialer.launch()
         
-        self.dialer.createMultipleCallLogEntries("1234567989", 2)
+        self.dialer.enterNumber("123456789")
         
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot of multiple entries:", x)
-        
-        self.dialer.callLog_clearAll()
-        
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot of multiple entries removed:", x)
+        self.dialer.createContactFromThisNum()
         
