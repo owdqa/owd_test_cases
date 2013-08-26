@@ -24,7 +24,7 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.dialer.launch()
         
-        self.dialer.createMultipleCallLogEntries(self.num, 2)
+        self.dialer.createMultipleCallLogEntries("1234567989", 2)
         
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot of multiple entries:", x)

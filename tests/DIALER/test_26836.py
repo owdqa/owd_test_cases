@@ -65,6 +65,3 @@ class test_main(GaiaTestCase):
         
         self.UTILS.waitForElements(DOM.Contacts.view_details_title, "Contact details")
 
-#         self.UTILS.TEST(self.apps.displayed_app.name == "Phone", "The dialer app is now displayed.")
-
-
