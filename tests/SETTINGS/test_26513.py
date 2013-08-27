@@ -33,7 +33,7 @@ class test_main(GaiaTestCase):
         self.settings.cellular_and_data()
         x = self.UTILS.getElement( ("xpath","//a[text()='Data connection']"), "Data connection switch")
         x.tap()
-        self.wait_for_element_displayed(*DOM.Settings.celldata_DataConn_ON, timeout=2)
+        self.wait_for_element_displayed(*DOM.Settings.celldata_DataConn_ON, timeout=10)
         x = self.marionette.find_element(*DOM.Settings.celldata_DataConn_ON)
         if x.is_displayed():
             x.tap()
