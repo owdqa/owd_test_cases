@@ -15,10 +15,10 @@ P=${P:?"Could not find PASSWORD in $HOME/.jira_login!"}
 wget -O $OUTFILE --no-check-certificate ${BASE_URL}${I}?os_authType=basic --user=$U --password=$P >/dev/null 2>&1
 
 DESC=$(grep "<title>" $OUTFILE | sed -e "s/^.*\][ \t]*\(.*\) - Jira.*$/\1/")
-DESC=${DESC:-"(No description found in ${BASE_URL}${I})"}
+DESC=${DESC:-"(Unable to get description from ${BASE_URL}${I})"}
 
 #
 # This &#39; character is what is returned by wget if there is a " ' " in the description.
 # It messes up our description in the tets details files, so change it back with sed.
 #
-echo "$DESC" | sed "s/&#39;/'/g"
+echo "$DESC" | sed -e "s/&#39;/'/g" | sed -e "s/&quot;/'/g"

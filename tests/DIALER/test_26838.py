@@ -20,11 +20,13 @@ class test_main(GaiaTestCase):
         self.dialer     = Dialer(self)
         
         self.cont1 = MockContacts().Contact_1
+        self.cont1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.cont1["givenName"] = "Longgivennamexxxxxxxxxxx"
         self.cont1["name"] = self.cont1["givenName"] + " " + self.cont1["familyName"]
         self.data_layer.insert_contact(self.cont1)
 
         self.cont2 = MockContacts().Contact_2
+        self.cont1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
         self.cont2["familyName"] = "Longfamilynamexxxxxxxxxxx"
         self.cont2["name"] = self.cont2["givenName"] + " " + self.cont2["familyName"]
         self.data_layer.insert_contact(self.cont2)
