@@ -21,6 +21,8 @@ class test_main(GaiaTestCase):
         self.actions    = Actions(self.marionette)
         self.settings   = Settings(self)
         self.eme        = EverythingMe(self)
+
+        self.UTILS.setPermission('Homescreen', 'geolocation', 'deny')
         
     def tearDown(self):
         self.UTILS.reportResults()

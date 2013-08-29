@@ -21,6 +21,8 @@ class test_main(GaiaTestCase):
         self.gallery    = Gallery(self)
         self.camera     = Camera(self)
 
+        self.UTILS.setPermission('Camera', 'geolocation', 'deny')
+
     def tearDown(self):
         self.UTILS.reportResults()
         
