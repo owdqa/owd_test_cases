@@ -23,6 +23,8 @@ class test_main(GaiaTestCase):
         self.messages   = Messages(self)
         
         self.num = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+
+        self.UTILS.setTimeToNow()
         
     def tearDown(self):
         self.UTILS.reportResults()

@@ -20,6 +20,8 @@ class test_main(GaiaTestCase):
         
         self.UTILS      = UTILS(self)
         self.EME        = EverythingMe(self)
+
+        self.UTILS.setPermission('Homescreen', 'geolocation', 'deny')
         
     def tearDown(self):
         self.UTILS.reportResults()
