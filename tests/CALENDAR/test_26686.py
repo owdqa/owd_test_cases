@@ -9,12 +9,12 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests.CALENDAR.shared_test_functions import TIME_FUNCS
 
-class test_main(TIME_FUNCS.main):
+class test_main(GaiaTestCase):
     
-    _offset_days    = -35
-    
+    _day_num  = 0
+    _day_name = ""
+ 
     def setUp(self):
         #
         # Set up child objects...
@@ -28,18 +28,23 @@ class test_main(TIME_FUNCS.main):
         self.UTILS.reportResults()
 
     def test_run(self):
-        #
-        # Launch contacts app.
-        #
-        self.calendar.launch()
-        
-        _now = self._getNewDay(self._offset_days, "month")
+        x = 3
+        y = 5
+        if (x-y) < 0:
+            x = 6 - (y-x)
+        else:
+            x = x-y
+        self.UTILS.logResult("info", "x: %s" % x)
         return
     
     
     
+        _now = self.UTILS.getDateTimeFromEpochSecs(int(time.time()))
         
-        _today = self.UTILS.getDateTimeFromEpochSecs(int(time.time()))
+        #
+        # Launch contacts app.
+        #
+        self.calendar.launch()
         
         #===================================================================================================
         #
@@ -47,16 +52,14 @@ class test_main(TIME_FUNCS.main):
         #
         self.calendar.setView("month")
          
-        self.UTILS.logResult("info", "<b>Testing <u>month</u> view for <i>today</i> ...</b>")
+        self.UTILS.logResult("info", "<b>Testing <i>month</i> view for <i>today</i> ...</b>")
         self.calendar.setView("today")
-        self._day_num   = _today.mday
-        self._day_name  = _today.day_name
-        self._monthViewTests(_today)
-         
-        self.UTILS.logResult("info", "<b>Testing <u>month</u> view for <i>%s days ago</i> ...</b>" % self._offset_days)
-        _now = self._getNewDay(self._offset_days, "month")
+        self._day_num   = _now.mday
+        self._day_name  = _now.day_name
         self._monthViewTests(_now)
-        return
+         
+        self._getNewDay(_now, "month")
+        self._monthViewTests(_now)
 
         #===================================================================================================
         #
@@ -70,10 +73,7 @@ class test_main(TIME_FUNCS.main):
         self._day_name  = _now.day_name
         self._weekViewTests(_now)
          
-        self.UTILS.logResult("info", "<b>Testing <u>week</u> view for <i>%s days ago</i> ...</b>" % self._offset_days)
-        x = self._getNewDay(self._offset_days, "week")
-        self._day_num = x[0]
-        self._day_name = x[1]
+        self._getNewDay(_now, "week")
         self._weekViewTests(_now)
 
         #===================================================================================================
@@ -88,10 +88,7 @@ class test_main(TIME_FUNCS.main):
         self._day_name  = _now.day_name
         self._dayViewTests(_now)
          
-        self.UTILS.logResult("info", "<b>Testing <u>day</u> view for <i>%s days ago</i> ...</b>" % self._offset_days)
-        x = self._getNewDay(self._offset_days, "day")
-        self._day_num = x[0]
-        self._day_name = x[1]
+        self._getNewDay(_now, "day")
         self._dayViewTests(_now)
 
 
@@ -135,14 +132,14 @@ class test_main(TIME_FUNCS.main):
         
     def _monthViewTests(self, p_now):
         # Highlighted cell is correct ...
-        el_id_str = "d-%s-%s-%s" % (p_now.year, p_now.mon-1, p_now.mday)
+        el_id_str = "d-%s-%s-%s" % (p_now.year, p_now.mon-1, self._day_num)
         self.UTILS.waitForElements( ("xpath", 
                                     "//li[@data-date='%s' and contains(@class, 'selected')]" % el_id_str),
-                                  "Selected day for %s/%s/%s" % (p_now.mday, p_now.mon, p_now.year), True, 2, False)
+                                  "Selected day for %s/%s/%s" % (self._day_num, p_now.mon, p_now.year), True, 2, False)
 
         # Selected day string is correct ...
         x = self.UTILS.getElement(DOM.Calendar.mview_selected_day_title, "Selected day detail string")
-        _expected_str = "%s %s %s %s" % (p_now.day_name, p_now.mday, p_now.month_name, p_now.year)
+        _expected_str = "%s %s %s %s" % (self._day_name, self._day_num, p_now.month_name, p_now.year)
         self.UTILS.TEST(_expected_str.lower() in x.text.lower(), 
                         "Day detail string: '%s' contains today's details ('%s')." % (x.text, _expected_str))
         
@@ -158,3 +155,31 @@ class test_main(TIME_FUNCS.main):
         self.UTILS.logResult("info", "Screenshot in month view with 'today' selected:", x)
 
 
+
+    def _getNewDay(self, p_now, p_numDays, p_viewType):
+        #
+        # Private function to get a diffrent day (avoiding issues with month and week).
+        #
+        _days   = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+        self._day_num = (p_now.mday - p_numDays)
+        if  self._day_num < 1:
+            self._day_num = 28 - (p_numDays - p_now.mday)
+                    
+        self._day_name = (p_now.wday - p_numDays)
+        if  self._day_name < 1:
+            self._day_name = 6 - (p_numDays - p_now.wday)
+                    
+        self.UTILS.logResult("info", "<b>Testing <u>%s</u> view for <i>%s day(s) in the past</i> ...</b>" % \
+                             (p_viewType, _numdays))
+
+        #
+        # Switch to month view and tap this day, then switch back to our view.
+        #
+        self.calendar.setView("month")
+        el_id_str = "d-%s-%s-%s" % (p_now.year, p_now.mon-1, self._day_num)
+        x = self.UTILS.getElement( ("xpath", 
+                                    "//li[@data-date='%s']" % el_id_str),
+                                  "Cell for day %s/%s/%s" % (self._day_num, p_now.mon, p_now.year))
+        x.tap()
+        self.calendar.setView(p_viewType)
