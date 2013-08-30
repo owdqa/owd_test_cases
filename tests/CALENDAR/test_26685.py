@@ -81,6 +81,7 @@ class test_main(GaiaTestCase):
         self._dayViewTests(_now)
 
 
+
     def _dayViewTests(self, _now):
         x = self.UTILS.getElement(DOM.Calendar.current_view_header, "Day view header")
 
@@ -141,6 +142,8 @@ class test_main(GaiaTestCase):
         
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot in month view with 'today' selected:", x)
+
+
 
     def _getNewDay(self, _now, _viewType):
         #
