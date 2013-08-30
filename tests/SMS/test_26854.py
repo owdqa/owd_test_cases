@@ -50,9 +50,9 @@ class test_main(GaiaTestCase):
         self.UTILS.logResult("info", " ")
         self.UTILS.logResult("info", "--------------------------")
         self.UTILS.logResult("info", "<b><u>Reading an sms from 2 months ago ...</u></b>")
-        _test_month = _now.tm_mon - 2
+        _test_month = _now.mon - 2
         x = self.UTILS.setTimeToSpecific(p_month=_test_month)
-        expected_str = "%s/%s/%s" % (str(x.tm_mon).zfill(2), str(x.tm_mday).zfill(2), x.tm_year)
+        expected_str = "%s/%s/%s" % (str(x.mon).zfill(2), str(x.mday).zfill(2), x.year)
           
         self._sendSMS("2 months ago", True)         
         self._checkTimeStamp(expected_str)
@@ -64,12 +64,12 @@ class test_main(GaiaTestCase):
         self.UTILS.logResult("info", " ")
         self.UTILS.logResult("info", "--------------------------")
         self.UTILS.logResult("info", "<b><u>Reading an sms from 6 days ago ...</u></b>")
-        _test_day = _now.tm_mday - 6
+        _test_day = _now.mday - 6
         x = self.UTILS.setTimeToSpecific(p_day=_test_day)
             
         self._sendSMS("6 days ago")
           
-        expected_str = "%s/%s/%s" % (str(x.tm_mon).zfill(2), str(x.tm_mday).zfill(2), x.tm_year)
+        expected_str = "%s/%s/%s" % (str(x.mon).zfill(2), str(x.mday).zfill(2), x.year)
         self._checkTimeStamp(expected_str)
           
 
@@ -81,10 +81,10 @@ class test_main(GaiaTestCase):
   
             self.UTILS.logResult("info", " ")
             self.UTILS.logResult("info", "--------------------------")
-            _test_day = _now.tm_mday - i     
+            _test_day = _now.mday - i     
             x = self.UTILS.setTimeToSpecific(p_day=_test_day)
                 
-            _dayname = days[x.tm_wday]
+            _dayname = days[x.wday]
             self.UTILS.logResult("info", "<b><u>Reading an sms from %s days ago (%s) ...</u></b>" % (str(i), _dayname))
               
             self._sendSMS("DAY: %s (%s days ago)." % (_dayname, str(i)))
@@ -97,7 +97,7 @@ class test_main(GaiaTestCase):
         self.UTILS.logResult("info", " ")
         self.UTILS.logResult("info", "--------------------------")
         self.UTILS.logResult("info", "<b><u>Reading an sms from yesterday ...</u></b>")
-        _test_day = _now.tm_mday - 1   
+        _test_day = _now.mday - 1   
         x = self.UTILS.setTimeToSpecific(p_day=_test_day)         
         self._sendSMS("DAY: YESTERDAY")
         self._checkTimeStamp("YESTERDAY")
@@ -144,11 +144,11 @@ class test_main(GaiaTestCase):
         self.data_layer.set_time(self.NOW_EPOCH * 1000)
 
         _now = self.UTILS.getDateTimeFromEpochSecs(self.NOW_EPOCH)
-        self.UTILS.waitForDeviceTimeToBe( p_year=_now.tm_year,
-                                          p_month=_now.tm_mon,
-                                          p_day=_now.tm_mday,
-                                          p_hour=_now.tm_hour, 
-                                          p_minute=_now.tm_min)
+        self.UTILS.waitForDeviceTimeToBe( p_year=_now.year,
+                                          p_month=_now.mon,
+                                          p_day=_now.mday,
+                                          p_hour=_now.hour, 
+                                          p_minute=_now.min)
 
         self.messages.launch()
         self.messages.openThread(self.num)
