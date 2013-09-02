@@ -59,8 +59,5 @@ class test_main(GaiaTestCase):
         #=======================================================================
         self.contacts.viewContact(self.contact_name, p_HeaderCheck=False)
         
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot here:", x)
-        
         x = self.UTILS.getElement(DOM.Contacts.view_contact_tel_field, "Telephone number")
         x.tap()
