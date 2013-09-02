@@ -27,7 +27,7 @@ class test_main(GaiaTestCase):
         # Enter a number in the dialer.
         #
         self.dialer.launch()
-        self.dialer.enterNumber("123456789")
+        self.dialer.enterNumber(self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM"))
         
         self.dialer.callThisNumber()
         
