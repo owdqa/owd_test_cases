@@ -15,6 +15,14 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26712</td><td  align=left>Tap on Camera option to open Camera app</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26707</td><td  align=left>Delete a picture</td>
+  </tr>
+
+  <tr>
     <td  align=center>26330</td><td  align=left>Browse photos in gallery - verify you can see each picture of your sdcard</td>
   </tr>
 
@@ -79,7 +87,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>28100</td><td  align=left>Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:&quot;Test1 656565678 number&quot;)</td>
+    <td  align=center>28100</td><td  align=left>Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:'Test1 656565678 number')</td>
   </tr>
 
   <tr>
@@ -87,7 +95,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26975</td><td  align=left>Click on an email address, press on &quot;Add to existing contact&quot; (contacts lists is empty)</td>
+    <td  align=center>26975</td><td  align=left>Click on an email address, press on 'Add to existing contact' (contacts lists is empty)</td>
   </tr>
 
   <tr>
@@ -127,7 +135,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>27000</td><td  align=left>Verify that if the user accepts  &quot;Create new Contact&quot; from the “Add contact” form, the form is closed and the user is returned to the SMS thread view</td>
+    <td  align=center>27000</td><td  align=left>Verify that if the user accepts  'Create new Contact' from the “Add contact” form, the form is closed and the user is returned to the SMS thread view</td>
   </tr>
 
   <tr>
@@ -215,7 +223,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>27001</td><td  align=left>Verify that if the user accepts  &quot;Add to an existing contact&quot; from the “Edit contact” form, contact is correctly updated and he is returned to the SMS thread view</td>
+    <td  align=center>27001</td><td  align=left>Verify that if the user accepts  'Add to an existing contact' from the “Edit contact” form, contact is correctly updated and he is returned to the SMS thread view</td>
   </tr>
 
   <tr>
@@ -227,7 +235,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26979</td><td  align=left>Click on an email address and verify that email app is launched with &quot;To&quot; field pre-filled in with the selected e-mail address(no contact)</td>
+    <td  align=center>26979</td><td  align=left>Click on an email address and verify that email app is launched with 'To' field pre-filled in with the selected e-mail address(no contact)</td>
   </tr>
 
   <tr>
@@ -247,7 +255,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26970</td><td  align=left>Verify that when tapping on the URL in the &quot;Edit Mode&quot;, the Browser APP is not launched </td>
+    <td  align=center>26970</td><td  align=left>Verify that when tapping on the URL in the 'Edit Mode', the Browser APP is not launched </td>
   </tr>
 
   <tr>
@@ -335,7 +343,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26999</td><td  align=left>Verify the user can cancel the &quot;Create new contact&quot; operation from the Contacts APP returning to the SMS thread view</td>
+    <td  align=center>26999</td><td  align=left>Verify the user can cancel the 'Create new contact' operation from the Contacts APP returning to the SMS thread view</td>
   </tr>
 
   <tr>
@@ -467,7 +475,19 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>27010</td><td  align=left>Start dialing a number which match with one contact's number with prefix</td>
+  </tr>
+
+  <tr>
     <td  align=center>27025</td><td  align=left>Call log in edit mode</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26804</td><td  align=left>End the call during a call (speaker and mute OFF)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26791</td><td  align=left>Tap in a log entry corresponding to an incoming call without a contact linked to add the number to an existing contact</td>
   </tr>
 
   <tr>
@@ -479,7 +499,16 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>27006</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-27006)</td>
+    <td  align=center>27006</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-27006)
+No match at 5th digit</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26836</td><td  align=left>Make a call by tapping on a phone number linked to a contact from address book (airplane mode enabled)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26834</td><td  align=left>Make a call by entering manually the phone number and clicking the 'dial button' afterwards (airplane mode enabled)</td>
   </tr>
 
   <tr>
@@ -487,11 +516,28 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26835</td><td  align=left>Make a call by selecting an entry in the log (airplane mode enabled)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26823</td><td  align=left>Add a contact and verify that user is returned to the dialer</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26829</td><td  align=left>Verify that If the call log is empty, edit button is disabled</td>
+  </tr>
+
+  <tr>
     <td  align=center>27021</td><td  align=left>Add call log entry to existing contact (with more phone numbers) and contacts not empty</td>
   </tr>
 
   <tr>
-    <td  align=center>27005</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-27005)</td>
+    <td  align=center>26805</td><td  align=left>End the call before the call is answered</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27005</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-27005)
+Three matches at 4th digit</td>
   </tr>
 
   <tr>
@@ -499,7 +545,12 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>27007</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-27007)</td>
+    <td  align=center>27007</td><td  align=left>Call contact from overlay
+(No description found in https://jirapdi.tid.es/browse/OWD-27007)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26819</td><td  align=left>Delete entire call log when it has several calls, All tab</td>
   </tr>
 
   <tr>
@@ -515,7 +566,43 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26807</td><td  align=left>Make a call by typing a telephone number (landline) which is not a contact. Don't use country prefix.</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27023</td><td  align=left>Call log entry already in contacts</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26822</td><td  align=left>Write a phone number and verify that the add contact button is enabled</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26809</td><td  align=left>Open Call Log using a navigation bar in the dialer application</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26811</td><td  align=left>Open Address Book using a navigation bar in the dialer application</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26838</td><td  align=left>Verify that the call log shows the ellipsis ('...') when contact has long names and that shows correctly the number of entries in call log groups</td>
+  </tr>
+
+  <tr>
     <td  align=center>27027</td><td  align=left>Create a contact from a number which is in the call log with several entries (All tab)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27009</td><td  align=left>No match at 4th digit</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26820</td><td  align=left>Delete some entries from the call log when it has several calls, All tab</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26824</td><td  align=left>Cancel the operation add a contact and verify that user is returned to the dialer</td>
   </tr>
 
   <tr>
@@ -523,7 +610,35 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26810</td><td  align=left>Open Dial Pad using a navigation bar in the dialer application</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26788</td><td  align=left>Tap in a log entry corresponding to an outgoing call with a contact with photo linked to perform a call to this number</td>
+  </tr>
+
+  <tr>
     <td  align=center>27015</td><td  align=left>Add number with prefix as new contact</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26817</td><td  align=left>Create a contact with a number that is in the call log and is not linked to any contact before</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26797</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26797)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26686</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26686)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26684</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26684)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26685</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26685)</td>
   </tr>
 
   <tr>
@@ -579,7 +694,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26774</td><td  align=left>Verify that user can click on &quot;Add more categories&quot; in everything.me grid so I am shown again the list and can add more categories</td>
+    <td  align=center>26774</td><td  align=left>Verify that user can click on 'Add more categories' in everything.me grid so I am shown again the list and can add more categories</td>
   </tr>
 
   <tr>
@@ -611,6 +726,18 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26511</td><td  align=left>Airplane Mode- verify its functionality</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26513</td><td  align=left>Data connection- Activation/Deactivation</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26512</td><td  align=left>Wi-Fi- verify its status and that can be activated from this menu</td>
+  </tr>
+
+  <tr>
     <td  align=center>26336</td><td  align=left>Install a market installed hosted app - verify the app is installed with the right icon</td>
   </tr>
 
@@ -619,7 +746,8 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26904</td><td  align=left>Remove the contact email addres and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it</td>
+    <td  align=center>26904</td><td  align=left>Remove the contact email addres and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it
+Remove the contact email addres and verify that appears is marked as 'temporarily removed' with a dark shadow and an icon that will allow to restore it</td>
   </tr>
 
   <tr>
@@ -627,19 +755,20 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26876</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26876)</td>
+    <td  align=center>26876</td><td  align=left>Verify that for each contact the user see phone numbers (and types) and primary communication (star feeds)</td>
   </tr>
 
   <tr>
-    <td  align=center>26896</td><td  align=left>The &quot;done&quot; button in new contact mode (note parameter)</td>
+    <td  align=center>26896</td><td  align=left>The 'done' button in new contact mode (note parameter)</td>
   </tr>
 
   <tr>
-    <td  align=center>26906</td><td  align=left>Remove and restore a contact phone number</td>
+    <td  align=center>26906</td><td  align=left>Remove and restore a contact phone number
+Remove and restore a contact phone number</td>
   </tr>
 
   <tr>
-    <td  align=center>26875</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26875)</td>
+    <td  align=center>26875</td><td  align=left>Verify that for each contact the user see contact name</td>
   </tr>
 
   <tr>
@@ -647,11 +776,11 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>27057</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-27057)</td>
+    <td  align=center>27057</td><td  align=left>Tap on Cancel ('x') option after selecting some contacts</td>
   </tr>
 
   <tr>
-    <td  align=center>26887</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26887)</td>
+    <td  align=center>26887</td><td  align=left>Remove a contact from the favorites list</td>
   </tr>
 
   <tr>
@@ -663,7 +792,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26895</td><td  align=left>The &quot;done&quot; button in new contact mode (email parameter)</td>
+    <td  align=center>26895</td><td  align=left>The 'done' button in new contact mode (email parameter)</td>
   </tr>
 
   <tr>
@@ -675,7 +804,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26868</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26868)</td>
+    <td  align=center>26868</td><td  align=left>Check that the contact list contains the name and last name when the user has no photo added</td>
   </tr>
 
   <tr>
@@ -703,7 +832,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26869</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26869)</td>
+    <td  align=center>26869</td><td  align=left>Search by text string that matches the beginning of a contact name</td>
   </tr>
 
   <tr>
@@ -743,7 +872,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26879</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26879)</td>
+    <td  align=center>26879</td><td  align=left>Verify that when looking at the details of a contact, the user can make a call to the contact (phone with prefix)</td>
   </tr>
 
   <tr>
@@ -755,7 +884,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>27051</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-27051)</td>
+    <td  align=center>27051</td><td  align=left>Verify that the number of contacts to be imported is shown</td>
   </tr>
 
   <tr>
@@ -763,11 +892,13 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26902</td><td  align=left>Remove the contact picture and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it</td>
+    <td  align=center>26902</td><td  align=left>Remove the contact picture and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it
+Remove the contact picture and verify that appears is marked as 'temporarily removed' with a dark shadow and an icon that will allow to restore it</td>
   </tr>
 
   <tr>
-    <td  align=center>26903</td><td  align=left>Remove the contact Phone number and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it</td>
+    <td  align=center>26903</td><td  align=left>Remove the contact Phone number and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it
+Remove the contact Phone number and verify that appears is marked as 'temporarily removed' with a dark shadow and an icon that will allow to restore it</td>
   </tr>
 
   <tr>
@@ -775,11 +906,11 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26884</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26884)</td>
+    <td  align=center>26884</td><td  align=left>Select the option to edit a contact from contact details</td>
   </tr>
 
   <tr>
-    <td  align=center>26867</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26867)</td>
+    <td  align=center>26867</td><td  align=left>Browse the contacts list of (10 contacts aprox)</td>
   </tr>
 
   <tr>
@@ -787,11 +918,12 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26907</td><td  align=left>Remove a photo,a phone number, an email, an address and a comment from a contact and restore the phone number and the comment</td>
+    <td  align=center>26907</td><td  align=left>Remove a photo,a phone number, an email, an address and a comment from a contact and restore the phone number and the comment
+Remove a photo,a phone number, an email, an address and a comment from a contact and restore the phone number and the comment</td>
   </tr>
 
   <tr>
-    <td  align=center>26889</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26889)</td>
+    <td  align=center>26889</td><td  align=left>add a new contact to the address book with the following info: name, phone numbers and emails</td>
   </tr>
 
   <tr>
@@ -815,7 +947,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26866</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26866)</td>
+    <td  align=center>26866</td><td  align=left>Access to editing a contact from the contact details</td>
   </tr>
 
   <tr>
@@ -823,11 +955,11 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>27058</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-27058)</td>
+    <td  align=center>27058</td><td  align=left>Edit a contact that has been imported from Hotmail</td>
   </tr>
 
   <tr>
-    <td  align=center>26880</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26880)</td>
+    <td  align=center>26880</td><td  align=left>Verify that the list of contact contains first name, last name and the available picture</td>
   </tr>
 
   <tr>
@@ -835,7 +967,8 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26908</td><td  align=left>Delete a contact and verify that a confirmation is shown (accept the confirmation)</td>
+    <td  align=center>26908</td><td  align=left>Delete a contact and verify that a confirmation is shown (accept the confirmation)
+Delete a contact and verify that a confirmation is shown (accept the confirmation)</td>
   </tr>
 
   <tr>
@@ -843,11 +976,11 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26894</td><td  align=left>The &quot;done&quot; button in new contact mode (phone number parameter)</td>
+    <td  align=center>26894</td><td  align=left>The 'done' button in new contact mode (phone number parameter)</td>
   </tr>
 
   <tr>
-    <td  align=center>26893</td><td  align=left>The &quot;done&quot; button in new contact mode (name parameter)</td>
+    <td  align=center>26893</td><td  align=left>The 'done' button in new contact mode (name parameter)</td>
   </tr>
 
   <tr>
@@ -871,7 +1004,8 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26905</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26905)</td>
+    <td  align=center>26905</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26905)
+Remove some contact phone numbers and verify that appears is marked as 'temporarily removed' with a dark shadow and an icon that will allow to restore it for each deleted field</td>
   </tr>
 
   <tr>
@@ -887,7 +1021,8 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26910</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26910)</td>
+    <td  align=center>26910</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26910)
+Verify that changing the option to sort the list of contacts (from family name to given name) works fine</td>
   </tr>
 
   <tr>
@@ -903,7 +1038,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26878</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26878)</td>
+    <td  align=center>26878</td><td  align=left>Verify that when looking at the details of a contact, the user can make a call to the contact (mobile phone)</td>
   </tr>
 
   <tr>
@@ -915,7 +1050,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26870</td><td  align=left>(No description found in https://jirapdi.tid.es/browse/OWD-26870)</td>
+    <td  align=center>26870</td><td  align=left>Search by text string that matches the middle of a contact last name</td>
   </tr>
 
   <tr>
