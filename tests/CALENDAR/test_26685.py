@@ -13,7 +13,7 @@ from tests.CALENDAR.shared_test_functions import TIME_FUNCS
 
 class test_main(TIME_FUNCS.main):
     
-    _offset_days    = 65
+    _offset_days    = 0
     
     def setUp(self):
         #
@@ -32,12 +32,6 @@ class test_main(TIME_FUNCS.main):
         # Launch contacts app.
         #
         self.calendar.launch()
-        
-        _now = self._getNewDay(self._offset_days, "month")
-        return
-    
-    
-    
         
         _today = self.UTILS.getDateTimeFromEpochSecs(int(time.time()))
         
