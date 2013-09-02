@@ -28,19 +28,6 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
 
     def test_run(self):
-        x = 3
-        y = 5
-        if (x-y) < 0:
-            x = 6 - (y-x)
-        else:
-            x = x-y
-        self.UTILS.logResult("info", "x: %s" % x)
-        return
-    
-    
-    
-        _now = self.UTILS.getDateTimeFromEpochSecs(int(time.time()))
-        
         #
         # Launch contacts app.
         #
@@ -50,16 +37,11 @@ class test_main(GaiaTestCase):
         #
         # MONTH view
         #
-        self.calendar.setView("month")
-         
-        self.UTILS.logResult("info", "<b>Testing <i>month</i> view for <i>today</i> ...</b>")
-        self.calendar.setView("today")
-        self._day_num   = _now.mday
-        self._day_name  = _now.day_name
-        self._monthViewTests(_now)
-         
-        self._getNewDay(_now, "month")
-        self._monthViewTests(_now)
+        self.calendar.moveMonthViewBy(1)
+        self.calendar.moveMonthViewBy(-1)
+        self.calendar.moveMonthViewBy(5)
+        self.calendar.moveMonthViewBy(-5)
+        return
 
         #===================================================================================================
         #
