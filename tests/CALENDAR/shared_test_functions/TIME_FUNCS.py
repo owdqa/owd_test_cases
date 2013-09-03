@@ -46,14 +46,14 @@ class main(GaiaTestCase):
             el = 0
             y2 = 500
         if mon_diff < 0:
-            el = 7
+            el = 6
             y2 = -500
             mon_diff = mon_diff * -1
             
-#         for i in range (0,mon_diff):
+        for i in range (0,mon_diff):
             # go left (by flicking right)
-        x = self.UTILS.getElements(DOM.Calendar.mview_first_row_for_flick, "First row of dates (for scrolling)")[el]
-        self.actions.flick(x,0,0,y2,0).perform()
+            x = self.UTILS.getElements(DOM.Calendar.mview_first_row_for_flick, "First row of dates (for scrolling)")[el]
+            self.actions.flick(x,0,0,y2,0).perform()
 
             
         
