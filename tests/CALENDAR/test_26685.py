@@ -13,7 +13,7 @@ from tests.CALENDAR.shared_test_functions import TIME_FUNCS
 
 class test_main(TIME_FUNCS.main):
     
-    _offset_days    = -35
+    _offset_days    = 65
     
     def setUp(self):
         #
