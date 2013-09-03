@@ -60,4 +60,17 @@ class test_main(GaiaTestCase):
         self.contacts.viewContact(self.contact_name, p_HeaderCheck=False)
         
         x = self.UTILS.getElement(DOM.Contacts.view_contact_tel_field, "Telephone number")
+        p_num=x.get_attribute("value")
         x.tap()
+        
+        #
+        # The call is tested.
+        #
+        time.sleep(1)
+        self.UTILS.switchToFrame(*DOM.Dialer.frame_locator_calling)
+        self.UTILS.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP % p_num),
+                                    "Outgoing call found with number matching %s" % p_num)
+
+        time.sleep(2)
+
+        self.dialer.hangUp()

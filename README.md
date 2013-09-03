@@ -618,6 +618,10 @@ Three matches at 4th digit</td>
   </tr>
 
   <tr>
+    <td  align=center>26798</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26798)</td>
+  </tr>
+
+  <tr>
     <td  align=center>27015</td><td  align=left>Add number with prefix as new contact</td>
   </tr>
 
