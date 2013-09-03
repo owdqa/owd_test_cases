@@ -70,6 +70,7 @@
 26788|Tap in a log entry corresponding to an outgoing call with a contact with photo linked to perform a call to this number
 26791|Tap in a log entry corresponding to an incoming call without a contact linked to add the number to an existing contact
 26797|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26797)
+26798|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26798)
 26804|End the call during a call (speaker and mute OFF)
 26805|End the call before the call is answered
 26807|Make a call by typing a telephone number (landline) which is not a contact. Don't use country prefix.
@@ -285,4 +286,3 @@
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
 28100|Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:'Test1 656565678 number')
-26798|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26798)
