@@ -36,27 +36,18 @@ class test_main(GaiaTestCase):
         #===================================================================================================
         #
         # MONTH view
-        #
-        self.calendar.moveMonthViewBy(1)
-        self.calendar.moveMonthViewBy(-1)
-        self.calendar.moveMonthViewBy(5)
-        self.calendar.moveMonthViewBy(-5)
-        return
+#         #
+#         self.calendar.moveMonthViewBy(1)
+#         self.calendar.moveMonthViewBy(-1)
+#         self.calendar.moveMonthViewBy(5)
+#         self.calendar.moveMonthViewBy(-5)
 
         #===================================================================================================
         #
         # WEEK view
         #
-        self.calendar.setView("week")
-        
-        self.UTILS.logResult("info", "<b>Testing <i>week</i> view for <i>today</i> ...</b>")
-        self.calendar.setView("today")
-        self._day_num   = _now.mday
-        self._day_name  = _now.day_name
-        self._weekViewTests(_now)
-         
-        self._getNewDay(_now, "week")
-        self._weekViewTests(_now)
+        self.calendar.moveWeekViewBy(1)
+        return
 
         #===================================================================================================
         #

@@ -12,7 +12,7 @@ from OWDTestToolkit import *
 
 class test_main(GaiaTestCase):
     
-    _offset_days    = 0
+    _offset_days    = 1
     
     def setUp(self):
         GaiaTestCase.setUp(self)
