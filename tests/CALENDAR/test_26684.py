@@ -38,7 +38,7 @@ class test_main(GaiaTestCase):
         #
         # Check month view details are correct for 'today'.
         #
-        x = self.UTILS.getElement(DOM.Calendar.mview_header, "Header")
+        x = self.UTILS.getElement(DOM.Calendar.current_view_header, "Header")
         _expected_str = "%s %s" % (_now.month_name, _now.year)
         self.UTILS.TEST(_expected_str.lower() in x.text.lower(), 
                         "Header: '%s' contains today's details ('%s')." % (x.text, _expected_str))

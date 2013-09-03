@@ -9,20 +9,15 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests.CALENDAR.shared_test_functions import TIME_FUNCS
 
-class test_main(TIME_FUNCS.main):
+class test_main(GaiaTestCase):
     
-    _offset_days    = 65
+    _offset_days    = 1
     
     def setUp(self):
-        #
-        # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.calendar   = Calendar(self)
-        
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -33,12 +28,6 @@ class test_main(TIME_FUNCS.main):
         #
         self.calendar.launch()
         
-        _now = self._getNewDay(self._offset_days, "month")
-        return
-    
-    
-    
-        
         _today = self.UTILS.getDateTimeFromEpochSecs(int(time.time()))
         
         #===================================================================================================
@@ -46,35 +35,28 @@ class test_main(TIME_FUNCS.main):
         # MONTH view
         #
         self.calendar.setView("month")
-         
+          
         self.UTILS.logResult("info", "<b>Testing <u>month</u> view for <i>today</i> ...</b>")
         self.calendar.setView("today")
-        self._day_num   = _today.mday
-        self._day_name  = _today.day_name
         self._monthViewTests(_today)
-         
+          
         self.UTILS.logResult("info", "<b>Testing <u>month</u> view for <i>%s days ago</i> ...</b>" % self._offset_days)
-        _now = self._getNewDay(self._offset_days, "month")
-        self._monthViewTests(_now)
-        return
-
+        x = self.calendar.changeDay(self._offset_days, "month")
+        self._monthViewTests(x)
+ 
         #===================================================================================================
         #
         # WEEK view
         #
         self.calendar.setView("week")
-        
+         
         self.UTILS.logResult("info", "<b>Testing <i>week</i> view for <i>today</i> ...</b>")
         self.calendar.setView("today")
-        self._day_num   = _now.mday
-        self._day_name  = _now.day_name
-        self._weekViewTests(_now)
-         
+        self._weekViewTests(_today)
+          
         self.UTILS.logResult("info", "<b>Testing <u>week</u> view for <i>%s days ago</i> ...</b>" % self._offset_days)
-        x = self._getNewDay(self._offset_days, "week")
-        self._day_num = x[0]
-        self._day_name = x[1]
-        self._weekViewTests(_now)
+        x = self.calendar.changeDay(self._offset_days, "week")
+        self._weekViewTests(x)
 
         #===================================================================================================
         #
@@ -84,29 +66,25 @@ class test_main(TIME_FUNCS.main):
         
         self.UTILS.logResult("info", "<b>Testing <i>day</i> view for <i>today</i> ...</b>")
         self.calendar.setView("today")
-        self._day_num   = _now.mday
-        self._day_name  = _now.day_name
-        self._dayViewTests(_now)
+        self._dayViewTests(_today)
          
         self.UTILS.logResult("info", "<b>Testing <u>day</u> view for <i>%s days ago</i> ...</b>" % self._offset_days)
-        x = self._getNewDay(self._offset_days, "day")
-        self._day_num = x[0]
-        self._day_name = x[1]
-        self._dayViewTests(_now)
+        x = self.calendar.changeDay(self._offset_days, "day")
+        self._dayViewTests(x)
 
 
 
     def _dayViewTests(self, p_now):
         x = self.UTILS.getElement(DOM.Calendar.current_view_header, "Day view header")
 
-        self.UTILS.TEST(self._day_name.lower() in x.text.lower(),
-                        "'%s' is in the header ('%s')." % (self._day_name, x.text))
+        self.UTILS.TEST(p_now.day_name.lower() in x.text.lower(),
+                        "'%s' is in the header ('%s')." % (p_now.day_name, x.text))
         
         self.UTILS.TEST(p_now.month_name.lower() in x.text.lower(),
-                        "'%s' is in the header ('%s')." % (p_now.month_name, x.text))
+                        "'%s' is in the header ('%s')." % (p_now.day_name, x.text))
         
-        self.UTILS.TEST(str(self._day_num) in x.text,
-                        "'%s' is in the header ('%s')." % (self._day_num, x.text))
+        self.UTILS.TEST(str(p_now.mday) in x.text,
+                        "'%s' is in the header ('%s')." % (p_now.mday, x.text))
         
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot in day view with 'today' selected:", x)
@@ -114,7 +92,8 @@ class test_main(TIME_FUNCS.main):
         
     def _weekViewTests(self, p_now):
         x = self.UTILS.getElements(DOM.Calendar.wview_active_days, "Active days")
-        _testStr = "%s %s" % (self._day_name[:3], self._day_num)
+        
+        _testStr = "%s %s" % (p_now.day_name[:3], p_now.mday)
         boolOK = False
         for i in x:
             if _testStr.lower() in i.text.lower():
