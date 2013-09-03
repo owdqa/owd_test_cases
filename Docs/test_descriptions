@@ -1,3 +1,9 @@
+=======
+=======
+>>>>>>> 049e8de03e73ddcf95113b3d6da77a6ffc9a44e2
+>>>>>>> 049e8de03e73ddcf95113b3d6da77a6ffc9a44e2
+<<<<<<< HEAD
+<<<<<<< HEAD
 23887|Accept creating a new contact, editing some other fields
 26317|Send an email to a contact from the contact details (Contact with multiple emails)
 26323|Add new contact filling all the fields - verify the contact is added with the correct values for each field
@@ -23,6 +29,7 @@
 26348|Add an alarm - verify the alarm was added with the correct date and time
 26352|Install and launch an everything.me app - verify the everything.me app launches successfully to the right web content
 26353|Import Facebook contacts from contacts app settings
+26402|(No description found in https://jirapdi.tid.es/browse/OWD-26402)
 26403|Verify that If the contact has more than one phone number, it opens a list of numbers. Clicking on a number in the list, returns the user to the compose SMS app with the contacts name filled-in in the To Field.(second phone number)
 26404|CLONE - Verify that If the contact only has a phone number, that phone number is automatically selected and the user is returned to the compose SMS screenwidth the contacts name filled-in in the To Field..
 26405|Press cancel button in the screen for select a contact phone number
@@ -40,6 +47,9 @@
 26513|Data connection- Activation/Deactivation
 26552|Sending SMS during a Wi-Fi session
 26553|Receiving SMS during a Wi-Fi session
+26684|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26684)
+26685|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26685)
+26686|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26686)
 26707|Delete a picture
 26711|Select multiple pictures and delete them
 26712|Tap on Camera option to open Camera app
@@ -59,6 +69,8 @@
 26781|Add and remove categories to everything.me grid
 26788|Tap in a log entry corresponding to an outgoing call with a contact with photo linked to perform a call to this number
 26791|Tap in a log entry corresponding to an incoming call without a contact linked to add the number to an existing contact
+26797|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26797)
+26798|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26798)
 26804|End the call during a call (speaker and mute OFF)
 26805|End the call before the call is answered
 26807|Make a call by typing a telephone number (landline) which is not a contact. Don't use country prefix.
@@ -134,13 +146,21 @@
 26899|Delete a contact from the contact details(all the fields filled)
 26900|Verify that when looking at the details of a contact, the user can make a call to the contact with several phone numbers added
 26901|Search a contact after edit contact name
+26902|Remove the contact picture and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it
 26902|Remove the contact picture and verify that appears is marked as 'temporarily removed' with a dark shadow and an icon that will allow to restore it
+26903|Remove the contact Phone number and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it
 26903|Remove the contact Phone number and verify that appears is marked as 'temporarily removed' with a dark shadow and an icon that will allow to restore it
+26904|Remove the contact email addres and verify that appears is marked as &quot;temporarily removed&quot; with a dark shadow and an icon that will allow to restore it
 26904|Remove the contact email addres and verify that appears is marked as 'temporarily removed' with a dark shadow and an icon that will allow to restore it
+26905|(No description found in https://jirapdi.tid.es/browse/OWD-26905)
 26905|Remove some contact phone numbers and verify that appears is marked as 'temporarily removed' with a dark shadow and an icon that will allow to restore it for each deleted field
 26906|Remove and restore a contact phone number
+26906|Remove and restore a contact phone number
+26907|Remove a photo,a phone number, an email, an address and a comment from a contact and restore the phone number and the comment
 26907|Remove a photo,a phone number, an email, an address and a comment from a contact and restore the phone number and the comment
 26908|Delete a contact and verify that a confirmation is shown (accept the confirmation)
+26908|Delete a contact and verify that a confirmation is shown (accept the confirmation)
+26910|(No description found in https://jirapdi.tid.es/browse/OWD-26910)
 26910|Verify that changing the option to sort the list of contacts (from family name to given name) works fine
 26918|Unlink all Facebook contacts in the address book in a single step and verify the contacts who was linked to a facebook contacts
 26965|Verify in a sent SMS thread view that only valid URL appears highlighted
@@ -181,9 +201,12 @@
 27000|Verify that if the user accepts  'Create new Contact' from the “Add contact” form, the form is closed and the user is returned to the SMS thread view
 27001|Verify that if the user accepts  'Add to an existing contact' from the “Edit contact” form, contact is correctly updated and he is returned to the SMS thread view
 27002|Verify that when tapping in a SMS with several valid phone numbers, the dialer is launched with the phone number tapped on pre-filled in
+27005|(No description found in https://jirapdi.tid.es/browse/OWD-27005)
 27005|Three matches at 4th digit
+27006|(No description found in https://jirapdi.tid.es/browse/OWD-27006)
 27006|No match at 5th digit
 27007|Call contact from overlay
+27007|(No description found in https://jirapdi.tid.es/browse/OWD-27007)
 27009|No match at 4th digit
 27010|Start dialing a number which match with one contact's number with prefix
 27012|Add dialed number as new contact
