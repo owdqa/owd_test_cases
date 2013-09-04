@@ -91,15 +91,11 @@ class test_main(GaiaTestCase):
         
         
     def _weekViewTests(self, p_now):
-        x = self.UTILS.getElements(DOM.Calendar.wview_active_days, "Active days")
+        x        = self.UTILS.getElement(DOM.Calendar.wview_active_days, "Active days")
+        _testStr = "%s %s" % (p_now.day_name[:3].upper(), p_now.mday)
         
-        _testStr = "%s %s" % (p_now.day_name[:3], p_now.mday)
-        boolOK = False
-        for i in x:
-            if _testStr.lower() in i.text.lower():
-                boolOK = True
-                break
-        self.UTILS.TEST(boolOK, "Selected day is displayed")
+        self.UTILS.TEST(_testStr in x.text.upper(), 
+                        "Selected day ('%s') is one of the displayed days: '%s'" % (_testStr, x.text.replace('\n',', ')))
         
         x = self.UTILS.getElement(DOM.Calendar.current_view_header, "Week view header")
         self.UTILS.TEST(p_now.month_name.lower() in x.text.lower(),
