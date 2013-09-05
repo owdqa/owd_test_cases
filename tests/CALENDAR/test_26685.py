@@ -23,6 +23,8 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
 
     def test_run(self):
+        self.UTILS.setTimeToNow()
+        
         #
         # Launch contacts app.
         #
@@ -91,11 +93,21 @@ class test_main(GaiaTestCase):
         
         
     def _weekViewTests(self, p_now):
-        x        = self.UTILS.getElement(DOM.Calendar.wview_active_days, "Active days")
+        # Loop through displayed days, building the report string + checking our day is there...
+        x        = self.UTILS.getElements(DOM.Calendar.wview_active_days, "Active days")
         _testStr = "%s %s" % (p_now.day_name[:3].upper(), p_now.mday)
+        _x_str   = ""
         
-        self.UTILS.TEST(_testStr in x.text.upper(), 
-                        "Selected day ('%s') is one of the displayed days: '%s'" % (_testStr, x.text.replace('\n',', ')))
+        boolOK = False
+        for i in range(0,len(x)):
+            if _x_str != "":
+                _x_str = _x_str + ", "
+            _x_str = _x_str + x[i].text 
+            if _testStr in x[i].text:
+                boolOK = True
+                
+        self.UTILS.TEST(boolOK, 
+                        "Selected day ('%s') is one of the displayed days: '%s'" % (_testStr, _x_str))
         
         x = self.UTILS.getElement(DOM.Calendar.current_view_header, "Week view header")
         self.UTILS.TEST(p_now.month_name.lower() in x.text.lower(),

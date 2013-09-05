@@ -47,9 +47,6 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(DOM.Dialer.add_to_existing_contact_btn, "Add to existing contact button")
         x.tap()
 
-        #
-        # You should now see the error message.
-        #
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
         self.contacts.viewContact(self.cont1["name"], p_HeaderCheck=False)
 
@@ -62,4 +59,4 @@ class test_main(GaiaTestCase):
                         "2nd number is %s (it was %s)." % (self._testNum, x.get_attribute("value")))
         
         x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "x:", x)
+        self.UTILS.logResult("info", "Final screenshot:", x)

@@ -32,6 +32,7 @@ class test_main(GaiaTestCase):
         self.contacts.launch()
         self.contacts.createNewContact(self.cont1,"gallery")
 
+        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
         
         self.dialer.launch()
         self.dialer.enterNumber(self.cont1["tel"]["value"])
@@ -45,6 +46,7 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement( ("xpath", DOM.Dialer.call_log_number_xpath % self.cont1["tel"]["value"]),
                            "The call log for number %s" % self.cont1["tel"]["value"])
         x.tap()
+        return
         
         time.sleep(2)
         self.UTILS.switchToFrame(*DOM.Dialer.call_log_contact_name_iframe, p_viaRootFrame=False)
