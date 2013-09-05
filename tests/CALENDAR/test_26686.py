@@ -50,7 +50,7 @@ class test_main(GaiaTestCase):
         self.calendar.moveWeekViewBy(-1)
         self.calendar.moveWeekViewBy(5)
         self.calendar.moveWeekViewBy(-5)
-
+ 
         #===================================================================================================
         #
         # DAY view

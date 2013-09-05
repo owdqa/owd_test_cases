@@ -30,16 +30,16 @@ class test_main(GaiaTestCase):
         self.dialer.launch()
         
         self.dialer.createMultipleCallLogEntries(self.num, 2)
-        
+         
         self.dialer.callLog_createContact(self.num, p_openCallLog=False)
-        
+         
         contFields = self.contacts.getContactFields()
         self.contacts.replaceStr(contFields['givenName'  ] , self.cont["givenName"])
         self.contacts.replaceStr(contFields['familyName' ] , self.cont["familyName"])
-         
+          
         done_button = self.UTILS.getElement(DOM.Contacts.done_button, "'Done' button")
         done_button.tap()
-        
+         
         #
         # Verify that the contacts app is closed and we are returned to the call log.
         #
@@ -48,9 +48,9 @@ class test_main(GaiaTestCase):
                                                 (DOM.Contacts.frame_locator[0], DOM.Contacts.frame_locator[1])),
                                         "COntacts frame")
         self.UTILS.switchToFrame(*DOM.Dialer.frame_locator)
-         
+          
         self.UTILS.waitForElements( ("xpath", "//h1[text()='Call log']"), "Call log header")
-        
+         
         #
         # Verify that this contact has been created in contacts.
         #
