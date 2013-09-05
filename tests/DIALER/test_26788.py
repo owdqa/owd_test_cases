@@ -22,17 +22,15 @@ class test_main(GaiaTestCase):
         
         self.cont1 = MockContacts().Contact_1
         self.cont1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logResult(False, "ROY")
-        self.data_layer.insert_contact(self.cont1)
+#         self.data_layer.insert_contact(self.cont1)
                 
     def tearDown(self):
         self.UTILS.reportResults()
         
     def test_run(self):
-        self.UTILS.logResult(False, "ROY")
-#         self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
         self.contacts.launch()
-#         self.contacts.createNewContact(self.cont1,"gallery")
+        self.contacts.createNewContact(self.cont1,"gallery")
 
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
         
