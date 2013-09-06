@@ -38,7 +38,7 @@ class test_main(GaiaTestCase):
                          "Wifi is disabled before we start this test.")
 
         #
-        # Enable airplane mode.
+        # Enable wifi mode.
         #
         self.UTILS.toggleViaStatusBar("wifi")
         
@@ -62,7 +62,7 @@ class test_main(GaiaTestCase):
         self.UTILS.waitForElements(DOM.Statusbar.wifi, "Wifi icon in statusbar", True, 20, False)
         
         #
-        # Disable airplane mode.
+        # Disable wifi mode.
         #
         self.UTILS.toggleViaStatusBar("wifi")
         
