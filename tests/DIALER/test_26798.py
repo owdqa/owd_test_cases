@@ -32,7 +32,6 @@ class test_main(GaiaTestCase):
         # Launch dialer app.
         #
         self.dialer.launch()
-        self.UTILS.savePageHTML("/tmp/paloma.html")
         
         #
         # Enter country prefix 0034.
