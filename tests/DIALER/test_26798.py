@@ -32,19 +32,66 @@ class test_main(GaiaTestCase):
         # Launch dialer app.
         #
         self.dialer.launch()
-        self.UTILS.savePageHTML("/tmp/paloma.html")
+        
         #
-        # Enter a country prefix
+        # Enter country prefix 0034.
         #
         self.dialer.enterNumber("0034"+self.telNum)
         x = self.UTILS.getElement(DOM.Dialer.call_number_button, "Call button")
+        p_num=x.text
         x.tap()
         
+        #
+        # The call is tested.
+        #
+        time.sleep(1)
+        self.UTILS.switchToFrame(*DOM.Dialer.frame_locator_calling)
+        self.UTILS.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP % p_num),
+                                    "Outgoing call found with number matching %s" % p_num)
+
         time.sleep(2)
+
+        self.dialer.hangUp()
+
+        
+        #
+        # Enter country prefix 0039.
+        #
+        self.dialer.enterNumber("0039"+self.telNum)
+        x = self.UTILS.getElement(DOM.Dialer.call_number_button, "Call button")
+        p_num=x.text
+        x.tap()
+        #
+        # The call is tested.
+        #
+        time.sleep(1)
+        self.UTILS.switchToFrame(*DOM.Dialer.frame_locator_calling)
+        self.UTILS.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP % p_num),
+                                    "Outgoing call found with number matching %s" % p_num)
+
+        time.sleep(2)
+
+        self.dialer.hangUp()
         
         
-        self.dialer.enterNumber("0039")
         
-        
-        #self.dialer.enterNumber("+34")
+        #
+        # Enter country prefix +34.
+        #
+        self.dialer.enterNumber("+34"+self.telNum)
+        x = self.UTILS.getElement(DOM.Dialer.call_number_button, "Call button")
+        p_num=x.text
+        x.tap()
+        #
+        # The call is tested.
+        #
+        time.sleep(1)
+        self.UTILS.switchToFrame(*DOM.Dialer.frame_locator_calling)
+        self.UTILS.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP % p_num),
+                                    "Outgoing call found with number matching %s" % p_num)
+
+        time.sleep(2)
+
+        self.dialer.hangUp()
+
         
