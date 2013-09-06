@@ -35,3 +35,5 @@ class test_main(GaiaTestCase):
         self.calendar.launch()
         
         self.calendar.createEvent()
+        
+        self.UTILS.logResult(False, "NOTE FOR ROY: need to check this event in each view (see jira for details).")

@@ -40,7 +40,7 @@ class test_main(GaiaTestCase):
         
         x = self.UTILS.getElement(DOM.Gallery.camera_button, "Camera button")
         x.tap()
-        
+
         self.UTILS.switchToFrame(*DOM.Camera.frame_locator)
         
         self.camera.takePicture()
