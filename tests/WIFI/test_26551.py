@@ -18,13 +18,6 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.Settings   = Settings(self)
         self.Browser    = Browser(self)
-        self.messages   = Messages(self)
-        
-        self.wifi_name  = self.UTILS.get_os_variable("GLOBAL_WIFI_NAME")
-        self.wifi_user  = self.UTILS.get_os_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass  = self.UTILS.get_os_variable("GLOBAL_WIFI_PASSWORD")
-
-        self.num = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -33,10 +26,7 @@ class test_main(GaiaTestCase):
         #
         # Open the Settings application.
         #
-        self.Settings.launch()
-        self.Settings.wifi()
-        self.Settings.wifi_switchOn()
-        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
+        self.UTILS.getNetworkConnection()
              
         #
         # Open the browser app.
@@ -47,16 +37,10 @@ class test_main(GaiaTestCase):
         # Open our URL.
         #
         self.Browser.open_url("www.google.com")
+        self.UTILS.switchToFrame(*DOM.Browser.frame_locator)
 
-        #
-        # Open the SMS app, send a message then jump back to the browser asap.
-        #
-        msgapp = self.messages.launch()
-        self.messages.createAndSendSMS([self.num], "Test message.")
-
-        self.apps.kill_all()
-
-        self.Browser.launch()
         self.Browser.open_url("www.wikipedia.com")
+        self.UTILS.switchToFrame(*DOM.Browser.frame_locator)
+
         
 

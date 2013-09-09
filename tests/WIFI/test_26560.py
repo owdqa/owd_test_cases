@@ -18,13 +18,10 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.Settings   = Settings(self)
         self.Browser    = Browser(self)
-        self.messages   = Messages(self)
         
         self.wifi_name  = self.UTILS.get_os_variable("GLOBAL_WIFI_NAME")
         self.wifi_user  = self.UTILS.get_os_variable("GLOBAL_WIFI_USERNAME")
         self.wifi_pass  = self.UTILS.get_os_variable("GLOBAL_WIFI_PASSWORD")
-
-        self.num = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -33,30 +30,19 @@ class test_main(GaiaTestCase):
         #
         # Open the Settings application.
         #
-        self.Settings.launch()
-        self.Settings.wifi()
-        self.Settings.wifi_switchOn()
         self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
-             
-        #
-        # Open the browser app.
-        #
-        self.Browser.launch()
-         
-        #
-        # Open our URL.
-        #
-        self.Browser.open_url("www.google.com")
 
         #
-        # Open the SMS app, send a message then jump back to the browser asap.
+        # Return to this wifi and check the details.
         #
-        msgapp = self.messages.launch()
-        self.messages.createAndSendSMS([self.num], "Test message.")
+        self.Settings.wifi_list_tapName(self.wifi_name)
 
-        self.apps.kill_all()
+        self.UTILS.waitForElements(("xpath", "//h1[text()='%s']" % self.wifi_name), "Details for connected wifi - header", False)
+        _forget = self.UTILS.getElement(DOM.Settings.wifi_details_forget_btn, "Details for connected wifi - forget button")
+        _ip     = self.UTILS.getElement(DOM.Settings.wifi_details_ipaddress , "Details for connected wifi - ip address")
+        _link   = self.UTILS.getElement(DOM.Settings.wifi_details_linkspeed , "Details for connected wifi - link speed")
+        _sec    = self.UTILS.getElement(DOM.Settings.wifi_details_security  , "Details for connected wifi - security")
+        _signal = self.UTILS.getElement(DOM.Settings.wifi_details_signal    , "Details for connected wifi - signal")
 
-        self.Browser.launch()
-        self.Browser.open_url("www.wikipedia.com")
-        
-
+        x = self.UTILS.screenShotOnErr()
+        self.UTILS.logResult("info", "Screenshot: ", x)

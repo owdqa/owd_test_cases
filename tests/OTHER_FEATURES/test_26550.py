@@ -56,15 +56,8 @@ class test_main(GaiaTestCase):
             # We need to supply the login details for the network.
             #
             self.UTILS.switchToFrame(*DOM.Settings.frame_locator)
-            self.Settings.tap_wifi_network_name(self.wifi_name, self.wifi_user, self.wifi_pass)
+            self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
                
-            #
-            # Tap specific wifi network (if it's not already connected).
-            #
-            self.UTILS.TEST(
-                    self.Settings.checkWifiConnected(self.wifi_name),
-                    "Wifi '" + self.wifi_name + "' is listed as 'connected' in wifi settings.", True)
-            
             self.marionette.switch_to_frame()
         except:
             pass
@@ -72,7 +65,7 @@ class test_main(GaiaTestCase):
         #
         # Data icon is no longer visible in status bar.
         #
-        self.UTILS.waitForElements(DOM.Statusbar.wifi, "Wifi icon in statusbar", True, 20, False)
+        self.UTILS.waitForNotElements(DOM.Statusbar.wifi, "Wifi icon in statusbar", True, 20, False)
         
         #
         # Disable wifi mode.

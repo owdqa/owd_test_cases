@@ -29,18 +29,12 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
 
     def test_run(self):
-        self.UTILS.TEST(self.UTILS.isNetworkTypeEnabled("wifi") == False, "Wifi is disabled.")
-        
         self.settings.launch()
         
         self.settings.wifi()
    
-        self.settings.turn_wifi_on()
+        self.settings.wifi_switchOn()
            
-        self.settings.tap_wifi_network_name(self.wifi_name, self.wifi_user, self.wifi_pass)
+        self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
            
-        self.UTILS.TEST(
-                self.settings.checkWifiConnected(self.wifi_name),
-                "Wifi '" + self.wifi_name + "' is listed as 'connected' in wifi settings.", True)
-        
         self.UTILS.TEST(self.UTILS.isNetworkTypeEnabled("wifi") == True, "Wifi mode is now enabled.")
