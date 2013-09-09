@@ -29,8 +29,6 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
 
     def test_run(self):
-        self.UTILS.TEST(self.UTILS.isNetworkTypeEnabled("wifi") == False, "Wifi is disabled.")
-        
         self.settings.launch()
         
         self.settings.wifi()

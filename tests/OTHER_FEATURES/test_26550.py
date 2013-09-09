@@ -65,7 +65,7 @@ class test_main(GaiaTestCase):
         #
         # Data icon is no longer visible in status bar.
         #
-        self.UTILS.waitForElements(DOM.Statusbar.wifi, "Wifi icon in statusbar", True, 20, False)
+        self.UTILS.waitForNotElements(DOM.Statusbar.wifi, "Wifi icon in statusbar", True, 20, False)
         
         #
         # Disable wifi mode.
