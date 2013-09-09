@@ -45,18 +45,18 @@ class test_main(GaiaTestCase):
         #
         # Make sure wifi is set to 'on'.
         #
-        self.Settings.turn_wifi_on()
+        self.Settings.wifi_switchOn()
         
         #
         # Connect to the wifi.
         #
-        self.Settings.tap_wifi_network_name(self.wifi_name, self.wifi_user, self.wifi_pass)
+        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
         
         #
         # Tap specific wifi network (if it's not already connected).
         #
         self.UTILS.TEST(
-                self.Settings.checkWifiConnected(self.wifi_name),
+                self.Settings.wifi_list_isConnected(self.wifi_name),
                 "Wifi '" + self.wifi_name + "' is listed as 'connected' in wifi settings.", True)
             
         #

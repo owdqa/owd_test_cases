@@ -32,8 +32,8 @@ class test_main(GaiaTestCase):
         self.Settings.launch()
     
         self.Settings.wifi()
-        self.Settings.turn_wifi_on()
-        self.Settings.tap_wifi_network_name(self.wifi_name, self.wifi_user, self.wifi_pass)
+        self.Settings.wifi_switchOn()
+        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
         
         x = self.Settings.goBack()
            

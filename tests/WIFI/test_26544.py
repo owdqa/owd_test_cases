@@ -27,7 +27,7 @@ class test_main(GaiaTestCase):
         #
         self.Settings.launch()
         self.Settings.wifi()
-        self.Settings.turn_wifi_on()
+        self.Settings.wifi_switchOn()
         
         x = self.UTILS.getElements(DOM.Settings.wifi_available_networks, "Available networks", False)
         
