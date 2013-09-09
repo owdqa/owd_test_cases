@@ -44,19 +44,30 @@ class test_main(GaiaTestCase):
         self.UTILS.toggleViaStatusBar("wifi")
         
         #
-        # Connect to the wifi.
+        # If required, connect to the wifi.
         #
-        self.UTILS.switchToFrame(*DOM.Settings.frame_locator)
-        self.Settings.tap_wifi_network_name(self.wifi_name, self.wifi_user, self.wifi_pass)
-           
-        #
-        # Tap specific wifi network (if it's not already connected).
-        #
-        self.UTILS.TEST(
-                self.Settings.checkWifiLisetedAsConnected(self.wifi_name),
-                "Wifi '" + self.wifi_name + "' is listed as 'connected' in wifi settings.", True)
-        
-        self.UTILS.goHome()
+        self.marionette.switch_to_frame()
+        try:
+            self.wait_for_element_present("xpath", "//iframe[contains(@%s,'%s')]" %\
+                                           (DOM.Settings.frame_locator[0], OM.Settings.frame_locator[1]),
+                                           timeout=5)
+            
+            #
+            # We need to supply the login details for the network.
+            #
+            self.UTILS.switchToFrame(*DOM.Settings.frame_locator)
+            self.Settings.tap_wifi_network_name(self.wifi_name, self.wifi_user, self.wifi_pass)
+               
+            #
+            # Tap specific wifi network (if it's not already connected).
+            #
+            self.UTILS.TEST(
+                    self.Settings.checkWifiLisetedAsConnected(self.wifi_name),
+                    "Wifi '" + self.wifi_name + "' is listed as 'connected' in wifi settings.", True)
+            
+            self.marionette.switch_to_frame()
+        except:
+            pass
 
         #
         # Data icon is no longer visible in status bar.
