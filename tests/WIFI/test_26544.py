@@ -33,7 +33,6 @@ class test_main(GaiaTestCase):
         
         self.UTILS.logResult("info", "Found %s networks" % len(x))
         
-        _secured_num = 0
         for i in x:
             _secure1 = False
             _secure2 = False
