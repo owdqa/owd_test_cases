@@ -12,7 +12,7 @@ from OWDTestToolkit import *
 
 class test_main(GaiaTestCase):
     
-#     _RESTART_DEVICE = True
+    _RESTART_DEVICE = True
     
     def setUp(self):
         # Set up child objects...
@@ -24,7 +24,6 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
-        self.UTILS.logResult(False, "ROY - restart device")
         #
         # Open the Settings application.
         #

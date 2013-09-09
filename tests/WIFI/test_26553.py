@@ -12,8 +12,6 @@ from OWDTestToolkit import *
 
 class test_main(GaiaTestCase):
     
-    _RESTART_DEVICE = True
-    
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
@@ -36,29 +34,10 @@ class test_main(GaiaTestCase):
         # Open the Settings application.
         #
         self.Settings.launch()
-           
-        #
-        # Tap Wi-Fi.
-        #
         self.Settings.wifi()
-   
-        #
-        # Make sure wifi is set to 'on'.
-        #
         self.Settings.turn_wifi_on()
-           
-        #
-        # Connect to the wifi.
-        #
         self.Settings.tap_wifi_network_name(self.wifi_name, self.wifi_user, self.wifi_pass)
-           
-        #
-        # Tap specific wifi network (if it's not already connected).
-        #
-        self.UTILS.TEST(
-                self.Settings.checkWifiLisetedAsConnected(self.wifi_name),
-                "Wifi '" + self.wifi_name + "' is listed as 'connected' in wifi settings.", True)
-             
+                        
         #
         # Open the browser app.
         #

@@ -56,7 +56,7 @@ class test_main(GaiaTestCase):
         # Tap specific wifi network (if it's not already connected).
         #
         self.UTILS.TEST(
-                self.Settings.checkWifiLisetedAsConnected(self.wifi_name),
+                self.Settings.checkWifiConnected(self.wifi_name),
                 "Wifi '" + self.wifi_name + "' is listed as 'connected' in wifi settings.", True)
             
         #
