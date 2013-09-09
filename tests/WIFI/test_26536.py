@@ -30,6 +30,7 @@ class test_main(GaiaTestCase):
         # WIFI.
         #
         self.Settings.launch()
+    
         self.Settings.wifi()
         self.Settings.turn_wifi_on()
         self.Settings.tap_wifi_network_name(self.wifi_name, self.wifi_user, self.wifi_pass)
@@ -40,4 +41,12 @@ class test_main(GaiaTestCase):
         # Tap hotspot.
         #
         self.UTILS.logResult("info", "<b>Check hotspot with WIFI on.</b>")
+        self.Settings.enable_hotSpot()
+
+        self.Settings.disable_hotSpot()
+        self.UTILS.disableAllNetworkSettings()
+        self.UTILS.toggleViaStatusBar("data")
+        
+        self.Settings.launch()
+        self.UTILS.logResult("info", "<b>Check hotspot with DataConn on.</b>")
         self.Settings.enable_hotSpot()
