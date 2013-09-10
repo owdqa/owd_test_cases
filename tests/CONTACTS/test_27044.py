@@ -46,16 +46,21 @@ class test_main(GaiaTestCase):
         self.contacts.launch()
         self.contacts.import_GmailLogin(self.gmail_u, self.gmail_p)
         
+        #
+        # Remember all the contacts in the list.
+        #
         x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list", True, 20)
-        
         gmail_contacts = []
         for y in x:
             gmail_contacts.append( y.get_attribute("data-search") )
-            
+        
+        #
+        # Import them.
+        #   
         self.contacts.import_ImportAll()
         
         #
-        # Check all our contacts are in the list.
+        # Check all our contacts are in the list, both 'standrd' ...
         #
         self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_all_contact_name_xpath % self.cont["familyName"]),
                                    "Contact '%s'" % self.cont["familyName"])

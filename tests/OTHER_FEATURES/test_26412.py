@@ -49,7 +49,7 @@ class test_main(GaiaTestCase):
         self.marionette.switch_to_frame()
         try:
             self.wait_for_element_present("xpath", "//iframe[contains(@%s,'%s')]" %\
-                                           (DOM.Settings.frame_locator[0], OM.Settings.frame_locator[1]),
+                                           (DOM.Settings.frame_locator[0], DOM.Settings.frame_locator[1]),
                                            timeout=5)
             
             #
