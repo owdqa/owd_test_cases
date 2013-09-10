@@ -31,16 +31,30 @@
 26407|Verify that If the contact has more than one phone number, it opens a list of numbers. Clicking on a number in the list, returns the user to the compose SMS app with the contacts name filled-in in the To Field.
 26408|Activate/Deactivate airplane mode from Utility tray icon
 26409|Open settings app from utility tray
+26410|As a user, I want to be able to enable/disable Bluetooth from the utility tray
 26411|As a user, I want to be able to enable/disable Data from the utility tray
+26412|As a user, I want to be able to enable/disable WiFi from the utility tray
 26414|Received a SMS with more than 160 characteres
 26415|Send a SMS with more than 160 characteres
+26416|Long press on home key
+26417|Verify the behaviour of Home key
+26458|Status bar- Radio: bluetooth icon
+26463|Status bar- Radio: Airplane mode icon
 26467|Clock in different modes (analog, digital)
 26473|Alarm- Delete an alarm
 26511|Airplane Mode- verify its functionality
 26512|Wi-Fi- verify its status and that can be activated from this menu
 26513|Data connection- Activation/Deactivation
+26535|Verify that Wi-Fi HotSpot is disable by default
+26536|Verify that it is possible to turn Wi-Fi HotSpot on/off using the dedicated icon when the device has data on or it is connected to a Wi-Fi network
+26538|Try to turn Wi-Fi HotSpot on when the device has Data connection off
+26544|Enable/disable Wi-Fi from settings
+26550|Connectivity icon
+26551|WEB connection during a Wi-Fi session
 26552|Sending SMS during a Wi-Fi session
 26553|Receiving SMS during a Wi-Fi session
+26556|Lock/unlock the device during a Wi-Fi session
+26560|Connected Network Details Dialog
 26684|View
 26685|Selecting different views (day, week, month)
 26686|Move to next/previous day, week, month
@@ -223,6 +237,7 @@
 27047|Import from Hotmail option is disabled when data and wifi is disabled
 27048|Log in with an invalid user/password
 27049|Use the Search box to introduce characters in order to look for contacts
+27050|Cancel while the contact list is being obtained
 27051|Verify that the number of contacts to be imported is shown
 27052|Select one (several) contact(s) and verify that the Import option is enabled
 27053|Tap on Unselect All to unselect all the contacts
@@ -269,18 +284,10 @@
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
 28100|Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:'Test1 656565678 number')
-27050|Cancel while the contact list is being obtained
-26417|Verify the behaviour of Home key
-26463|Status bar- Radio: Airplane mode icon
-26458|Status bar- Radio: bluetooth icon
-26412|As a user, I want to be able to enable/disable WiFi from the utility tray
-26410|As a user, I want to be able to enable/disable Bluetooth from the utility tray
-26550|Connectivity icon
-26416|Long press on home key
-26535|Verify that Wi-Fi HotSpot is disable by default
-26536|Verify that it is possible to turn Wi-Fi HotSpot on/off using the dedicated icon when the device has data on or it is connected to a Wi-Fi network
-26560|Connected Network Details Dialog
-26538|Try to turn Wi-Fi HotSpot on when the device has Data connection off
-26551|WEB connection during a Wi-Fi session
-26556|Lock/unlock the device during a Wi-Fi session
-26544|Enable/disable Wi-Fi from settings
+26568|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26568)
+26567|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26567)
+26571|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26571)
+26566|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26566)
+26565|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26565)
+26561|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26561)
+26562|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26562)

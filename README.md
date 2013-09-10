@@ -539,7 +539,27 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26568</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26568)</td>
+  </tr>
+
+  <tr>
     <td  align=center>26332</td><td  align=left>Load a website via Wifi - verify the site loads in the browser correctly</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26567</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26567)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26571</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26571)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26566</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26566)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26565</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26565)</td>
   </tr>
 
   <tr>
@@ -651,6 +671,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26561</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26561)</td>
+  </tr>
+
+  <tr>
     <td  align=center>26553</td><td  align=left>Receiving SMS during a Wi-Fi session</td>
   </tr>
 
@@ -680,6 +704,10 @@ TESTS COVERED
 
   <tr>
     <td  align=center>26556</td><td  align=left>Lock/unlock the device during a Wi-Fi session</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26562</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26562)</td>
   </tr>
 
   <tr>
