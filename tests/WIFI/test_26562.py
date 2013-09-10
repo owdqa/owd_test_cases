@@ -32,11 +32,24 @@ class test_main(GaiaTestCase):
         #
         self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
         
-#         self.marionette.execute_script("document.getElementById('%s').scrollIntoView();" % DOM.Settings.wifi_advanced_btn[1])
+        self.marionette.execute_script("document.getElementById('%s').scrollIntoView();" % DOM.Settings.wifi_advanced_btn[1])
         x = self.UTILS.getElement(DOM.Settings.wifi_advanced_btn, "Advanced settings")
         x.tap()
         
         self.UTILS.waitForElements(DOM.Settings.wifi_advanced_mac       , "Mac address")
         self.UTILS.waitForElements(DOM.Settings.wifi_advanced_knownNets , "Known networks")
         self.UTILS.waitForElements(DOM.Settings.wifi_advanced_joinHidden, "Join hidden network button")
+        
+        x = self.UTILS.screenShotOnErr()
+        self.UTILS.logResult("info", "Screenshot at this point:", x)
+        
+        x = self.UTILS.getElements(DOM.Settings.wifi_advanced_knownNets, "Known networks (should only be 1).")[0]
+        x.tap()
+
+        x = self.UTILS.screenShotOnErr()
+        self.UTILS.logResult("info", "Screenshot at this point:", x)
+        
+
+        self.UTILS.waitForElements(DOM.Settings.wifi_advanced_forgetBtn , "'Forget network' button")
+        self.UTILS.waitForElements(DOM.Settings.wifi_advanced_cancelBtn , "'Cancel' button")
         
