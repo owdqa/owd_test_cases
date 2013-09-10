@@ -25,8 +25,7 @@ class test_main(GaiaTestCase):
         
     def test_run(self):
         
-        _url1 = "www.google.com"
-        _url2 = "www.bbc.co.uk"
+        _url = "http://www.technicalinfo.net/papers/URLEmbeddedAttacks.html"
         
         #
         # Wifi needs to be off for this test to work.
@@ -38,17 +37,6 @@ class test_main(GaiaTestCase):
         #
         self.Browser.launch()
         
-        #
-        # Open our URL.
-        #
-        self.Browser.open_url(_url1)
-        _url = self.Browser.loadedURL()
-        self.UTILS.TEST(_url1 in _url, "'%s' is in the loaded source url: '%s'." % (_url1, _url))
-
-        self.Browser.open_url(_url2)
-        _url = self.Browser.loadedURL()
-        self.UTILS.TEST(_url2 in _url, "'%s' is in the loaded source url: '%s'." % (_url2, _url))
-        
-
-        
-        
+        self.Browser.open_url(_url)
+        x = self.Browser.loadedURL()
+        self.UTILS.TEST(_url in x, "'%s' is in the loaded source url: '%s'." % (_url, x))
