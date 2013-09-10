@@ -49,14 +49,15 @@ class test_main(GaiaTestCase):
         
         x = self.UTILS.getElement(DOM.Browser.tab_tray_open, "Tab tray icon")
         x.tap()
-        
-        self.UTILS.waitForElements(DOM.Browser.tab_tray_screen, "Tab screen")
 
-        x = self.UTILS.getElement(DOM.Browser.settings_button, "Settings icon")
+        self.UTILS.waitForElements(DOM.Browser.tab_tray_screen, "Tab screen", True, 2, False)
+
+        x = self.UTILS.getElement(DOM.Browser.tab_tray_new_tab_btn, "New tab icon")
         x.tap()
         
-        self.UTILS.waitForElements(DOM.Browser.settings_header, "Settings header")
+        self.UTILS.waitForNotElements(DOM.Browser.tab_tray_screen, "Tab screen", True, 2, False)
+        self.UTILS.waitForElements(DOM.Browser.new_tab_screen, "New tab")
         
-        
+
         
         
