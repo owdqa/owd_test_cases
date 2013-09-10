@@ -269,3 +269,18 @@
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
 28100|Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:'Test1 656565678 number')
+27050|Cancel while the contact list is being obtained
+26417|Verify the behaviour of Home key
+26463|Status bar- Radio: Airplane mode icon
+26458|Status bar- Radio: bluetooth icon
+26412|As a user, I want to be able to enable/disable WiFi from the utility tray
+26410|As a user, I want to be able to enable/disable Bluetooth from the utility tray
+26550|Connectivity icon
+26416|Long press on home key
+26535|Verify that Wi-Fi HotSpot is disable by default
+26536|Verify that it is possible to turn Wi-Fi HotSpot on/off using the dedicated icon when the device has data on or it is connected to a Wi-Fi network
+26560|Connected Network Details Dialog
+26538|Try to turn Wi-Fi HotSpot on when the device has Data connection off
+26551|WEB connection during a Wi-Fi session
+26556|Lock/unlock the device during a Wi-Fi session
+26544|Enable/disable Wi-Fi from settings
