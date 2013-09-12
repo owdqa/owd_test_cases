@@ -29,6 +29,7 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
+        
         #
         # Data conn icon is not in status bar yet.
         #
