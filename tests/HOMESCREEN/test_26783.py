@@ -42,7 +42,7 @@ class test_main(GaiaTestCase):
         self.UTILS.logResult("info", "Launching EME ...")
         self.EME.launch()
         
-        self.EME.addMultipleGroups([0,1,2,5])
+        self.EME.addMultipleGroups()
     
 
 
