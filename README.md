@@ -63,6 +63,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26799</td><td  align=left>Make a call by typing a phone number of a contact</td>
+  </tr>
+
+  <tr>
     <td  align=center>27012</td><td  align=left>Add dialed number as new contact</td>
   </tr>
 
@@ -720,6 +724,10 @@ TESTS COVERED
 
   <tr>
     <td  align=center>26771</td><td  align=left>Launch a intallation doing a long-tap on any app shown by everything.me and press Yes button</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26783</td><td  align=left>Add all the categories</td>
   </tr>
 
   <tr>
