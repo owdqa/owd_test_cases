@@ -43,7 +43,7 @@ class test_main(GaiaTestCase):
         #
         # Make sure our group isn't already present.
         #
-        self.EME.removeGroup(self._newGroup)       
+        self.EME.removeGroups([self._newGroup], p_validate=False)       
         
         #
         # Add the group.

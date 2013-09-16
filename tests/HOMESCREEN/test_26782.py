@@ -12,6 +12,8 @@ from OWDTestToolkit import *
 
 class test_main(GaiaTestCase):
     
+    _RESTART_DEVICE = True
+    
     def setUp(self):
         #
         # Set up child objects...
@@ -39,7 +41,6 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.logResult("info", "Launching EME ...")
         self.EME.launch()
-        
         self.EME.removeGroups()
 
 

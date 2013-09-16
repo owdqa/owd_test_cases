@@ -82,6 +82,7 @@
 26778|Verify that when first launch a search-box is shown as well as a list of application categories
 26779|Verify that if no connection available when selecting a category in everything.me the user will be notified about the need to have a network connection to use this functionality
 26781|Add and remove categories to everything.me grid
+26782|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26782)
 26783|Add all the categories
 26788|Tap in a log entry corresponding to an outgoing call with a contact with photo linked to perform a call to this number
 26791|Tap in a log entry corresponding to an incoming call without a contact linked to add the number to an existing contact
