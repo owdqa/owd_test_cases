@@ -59,13 +59,6 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.waitForElements(DOM.Messages.edit_mode_wrapper, "Main wrapper in edit mode")
 
-
-
-        #
-        # FROM THIS POINT ON WE CANNOT TEST - SEE https://bugzilla.mozilla.org/show_bug.cgi?id=895389
-        #
-        return
-    
         #
         # Long press the email link.
         #

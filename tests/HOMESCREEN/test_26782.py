@@ -12,7 +12,7 @@ from OWDTestToolkit import *
 
 class test_main(GaiaTestCase):
     
-    _newGroup = "News"
+    _RESTART_DEVICE = True
     
     def setUp(self):
         #
@@ -23,13 +23,15 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.Settings   = Settings(self)
         self.EME        = EverythingMe(self)
+        self.actions    = Actions(self.marionette)
 
         self.UTILS.setPermission('Homescreen', 'geolocation', 'deny')
         
     def tearDown(self):
         self.UTILS.reportResults()
         
-    def test_run(self):
+    def test_run(self):    
+        #
         # Make sure 'things' are as we expect them to be first.
         #
         self.UTILS.getNetworkConnection()
@@ -39,15 +41,6 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.logResult("info", "Launching EME ...")
         self.EME.launch()
-        
-        #
-        # Make sure our group isn't already present.
-        #
-        self.EME.removeGroups([self._newGroup], p_validate=False)       
-        
-        #
-        # Add the group.
-        #
-        self.EME.addGroup(self._newGroup)
-            
-        
+        self.EME.removeGroups()
+
+

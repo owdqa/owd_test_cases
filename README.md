@@ -739,6 +739,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26782</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26782)</td>
+  </tr>
+
+  <tr>
     <td  align=center>26776</td><td  align=left>Verify that when the user navigates to everything.me page, dock is hidden</td>
   </tr>
 
