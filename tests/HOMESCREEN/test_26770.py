@@ -50,7 +50,7 @@ class test_main(GaiaTestCase):
         
         self.EME.pickGroup(self._GROUP_NAME)
          
-        x = self.UTILS.getElements(DOM.EME.apps, "The first game that is not installed already")[0]
+        x = self.UTILS.getElements(DOM.EME.apps_not_installed, "The first game that is not installed already")[0]
         self._APP_NAME = x.get_attribute("data-name")
         self.UTILS.logResult("info", "App name is <b>%s</b>" % self._APP_NAME)
         self.UTILS.goHome()

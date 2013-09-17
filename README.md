@@ -763,6 +763,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26780</td><td  align=left>Verify that when an app is launched from everything.me a bottom bar is shown so that the user can go back, go forward, refresh, bookmark and close the bottom bar</td>
+  </tr>
+
+  <tr>
     <td  align=center>26346</td><td  align=left>Delete a packaged app - verify the app was successfully removed from the homescreen</td>
   </tr>
 
@@ -772,6 +776,10 @@ TESTS COVERED
 
   <tr>
     <td  align=center>26337</td><td  align=left>Launch market installed hosted app - verify the app is launched successfully from the homescreen</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26775</td><td  align=left>Verify that user can click on any app shown by everything.me and launch the application</td>
   </tr>
 
   <tr>

@@ -294,3 +294,5 @@
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
 28100|Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:'Test1 656565678 number')
+26780|Verify that when an app is launched from everything.me a bottom bar is shown so that the user can go back, go forward, refresh, bookmark and close the bottom bar
+26775|Verify that user can click on any app shown by everything.me and launch the application
