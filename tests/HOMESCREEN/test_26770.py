@@ -12,8 +12,6 @@ from OWDTestToolkit import *
 
 class test_main(GaiaTestCase):
     
-    _GROUP_NAME  = "Games"
-
     def setUp(self):
         #
         # Set up child objects...
@@ -44,53 +42,26 @@ class test_main(GaiaTestCase):
         self.UTILS.getNetworkConnection()
          
         #
-        # First, get the name of the app we're going to install.
+        # Loop through a few groups to test.
         #
         self.EME.launch()
-        
-        self.EME.pickGroup(self._GROUP_NAME)
+        x = self.UTILS.getElements(DOM.EME.groups, "Groups")
+        if len(x) > 4:
+            _max_groups = 4
+        else:
+            _max_groups = len(x)-1
+            
+        for i in range(0,_max_groups):
+            x = self.UTILS.getElements(DOM.EME.groups, "Groups")
+            _name = x[i].get_attribute("data-query")
+            
+            self.UTILS.logResult("info", "Checking group '%s' ..." % _name)
+            self.EME.pickGroup(_name)
+
+            x = self.UTILS.screenShotOnErr()
+            self.UTILS.logResult("info", "Screenshot of group icons: ", x)
+                
+            x = self.UTILS.getElement(DOM.EME.search_clear, "Clear search bar")
+            x.tap()
+            time.sleep(0.5)
          
-        x = self.UTILS.getElements(DOM.EME.apps_not_installed, "The first game that is not installed already")[0]
-        self._APP_NAME = x.get_attribute("data-name")
-        self.UTILS.logResult("info", "App name is <b>%s</b>" % self._APP_NAME)
-        self.UTILS.goHome()
- 
-         
-        #
-        # Make sure our app isn't installed already.
-        #
-        self.UTILS.uninstallApp(self._APP_NAME)
-        
-             
-        #
-        # Launch the 'everything.me' app.
-        #
-        self.EME.launch()
-         
-        #
-        # Pick a group.
-        #
-        self.EME.pickGroup(self._GROUP_NAME)
- 
-        #
-        # Add the app to the homescreen.
-        #
-        self.UTILS.TEST(self.EME.addAppToHomescreen(self._APP_NAME),
-                        "Application '" + self._APP_NAME + "' is added to the homescreen.",
-                        True)
-        
-        #
-        # Go back to the homescreen and check it's installed.
-        #
-        self.UTILS.TEST(self.UTILS.launchAppViaHomescreen(self._APP_NAME), 
-                        self._APP_NAME + " is installed.", True)
-        
-        #
-        # Give it 10 seconds to start up, switch to the frame for it and grab a screenshot.
-        #
-        time.sleep(10)
-        self.marionette.switch_to_frame()
-        self.UTILS.switchToFrame("data-name", self._APP_NAME)
-        
-        x = self.UTILS.screenShot(self._APP_NAME)
-        self.UTILS.logResult("info", "NOTE: For a screenshot of the game running, please see this: " + x)
