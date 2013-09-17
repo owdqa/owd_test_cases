@@ -77,10 +77,12 @@
 26771|Launch a intallation doing a long-tap on any app shown by everything.me and press Yes button
 26773|Verify that the user can uninstall a everything.me app through the grid edit mode
 26774|Verify that user can click on 'Add more categories' in everything.me grid so I am shown again the list and can add more categories
+26775|Verify that user can click on any app shown by everything.me and launch the application
 26776|Verify that when the user navigates to everything.me page, dock is hidden
 26777|Verify that when the user navigates from everything.me page to the grid, dock is shown again
 26778|Verify that when first launch a search-box is shown as well as a list of application categories
 26779|Verify that if no connection available when selecting a category in everything.me the user will be notified about the need to have a network connection to use this functionality
+26780|Verify that when an app is launched from everything.me a bottom bar is shown so that the user can go back, go forward, refresh, bookmark and close the bottom bar
 26781|Add and remove categories to everything.me grid
 26782|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26782)
 26783|Add all the categories
