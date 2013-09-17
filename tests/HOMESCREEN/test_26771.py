@@ -52,7 +52,7 @@ class test_main(GaiaTestCase):
                         "Group '" + self._GROUP_NAME + "' exists in EverythingME.",
                         True)
          
-        x = self.UTILS.getElements(DOM.EME.apps, "The first game that is not installed already")[0]
+        x = self.UTILS.getElements(DOM.EME.apps_not_installed, "The first game that is not installed already")[0]
         self._APP_NAME = x.get_attribute("data-name")
         self.UTILS.goHome()
  
