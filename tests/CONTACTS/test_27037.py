@@ -29,7 +29,6 @@ class test_main(GaiaTestCase):
         self.cont = MockContacts().Contact_1
         self.data_layer.insert_contact(self.cont)
         
-        
     def tearDown(self):
         self.UTILS.reportResults()
         
