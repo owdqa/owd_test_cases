@@ -3,7 +3,7 @@
 # Set up the environment.
 . $HOME/.OWD_TEST_TOOLKIT_LOCATION
 
-if [ $? -ne 0 ] || [ ! -d $OWD_TEST_TOOLKIT_DIR/gaia-ui-tests ]
+if [ $? -ne 0 ] || [ ! -d $OWD_TEST_TOOLKIT_DIR/gaia/tests/python/gaia-ui-tests ]
 then
 	echo "
 	** ERROR **
