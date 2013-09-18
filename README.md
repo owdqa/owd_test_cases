@@ -747,6 +747,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26785</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26785)</td>
+  </tr>
+
+  <tr>
     <td  align=center>26781</td><td  align=left>Add and remove categories to everything.me grid</td>
   </tr>
 
@@ -767,11 +771,23 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26772</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26772)</td>
+  </tr>
+
+  <tr>
     <td  align=center>26346</td><td  align=left>Delete a packaged app - verify the app was successfully removed from the homescreen</td>
   </tr>
 
   <tr>
     <td  align=center>26777</td><td  align=left>Verify that when the user navigates from everything.me page to the grid, dock is shown again</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26768</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26768)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26761</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26761)</td>
   </tr>
 
   <tr>

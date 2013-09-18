@@ -73,8 +73,11 @@
 26731|Delete a video just recorded
 26741|Email containing a URL
 26750|Basic: Deleting of a e-mail in Inbox
+26761|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26761)
+26768|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26768)
 26770|launch the everything.me page and click on the first category displayed
 26771|Launch a intallation doing a long-tap on any app shown by everything.me and press Yes button
+26772|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26772)
 26773|Verify that the user can uninstall a everything.me app through the grid edit mode
 26774|Verify that user can click on 'Add more categories' in everything.me grid so I am shown again the list and can add more categories
 26775|Verify that user can click on any app shown by everything.me and launch the application
@@ -86,6 +89,7 @@
 26781|Add and remove categories to everything.me grid
 26782|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26782)
 26783|Add all the categories
+26785|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26785)
 26788|Tap in a log entry corresponding to an outgoing call with a contact with photo linked to perform a call to this number
 26791|Tap in a log entry corresponding to an incoming call without a contact linked to add the number to an existing contact
 26797|Make a call by selecting a contact
