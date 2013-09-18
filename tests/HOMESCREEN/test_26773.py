@@ -9,8 +9,8 @@ from marionette import Actions
 
 
 class test_main(GaiaTestCase):
-    
-    _appName = "Wikipedia"
+
+    _appName = "Juegos Gratis"
 
     def setUp(self):
         #
@@ -20,7 +20,7 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.actions    = Actions(self.marionette)
         self.settings   = Settings(self)
-        self.eme        = EverythingMe(self)
+        self.EME        = EverythingMe(self)
 
         self.UTILS.setPermission('Homescreen', 'geolocation', 'deny')
         
@@ -34,26 +34,15 @@ class test_main(GaiaTestCase):
         self.UTILS.getNetworkConnection()
          
         #
-        # First, get the name of the app we're going to install.
-        #
-#         self.eme.launch()
-        
-        
-        self.UTILS.goHome()
- 
-         
-        #
         # Make sure our app isn't installed already.
         #
         self.UTILS.uninstallApp(self._appName)
                 
         #
-        # Get the app.
+        # Install it.
         #
-        self.eme.launch()
-        x = self.eme.searchForApp(self._appName)
-        
-        self.UTILS.TEST(x, "Icon for " + self._appName + " is found.", True)
+        self.EME.launch()
+        self.EME.searchForApp(self._appName)
         
         #
         # Long-press the app to install it to the homescreen.
