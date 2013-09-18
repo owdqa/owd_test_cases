@@ -42,14 +42,7 @@ class test_main(GaiaTestCase):
         # Install it.
         #
         self.EME.launch()
-        self.EME.searchForApp(self._appName)
-        
-        #
-        # Long-press the app to install it to the homescreen.
-        #
-        x = self.UTILS.getElement( ("xpath", DOM.EME.search_result_icon_xpath % self._appName),
-                                   self._appName + " icon")
-        
+        x = self.EME.searchForApp(self._appName)
         self.actions.press(x).wait(2).release()
         self.actions.perform()
         
