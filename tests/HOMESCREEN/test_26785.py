@@ -12,6 +12,8 @@ from OWDTestToolkit import *
 
 class test_main(GaiaTestCase):
     
+    _RESTART_DEVICE = True
+    
     def setUp(self):
         #
         # Set up child objects...
@@ -50,12 +52,27 @@ class test_main(GaiaTestCase):
         
         self.UTILS.waitForElements(DOM.EME.launched_button_bar, "Button bar", False)
         
+        #
+        # Wait for the bookmarcj option to be enabled (can take a few seconds).
+        #
+        boolOK = False
+        for i in range(0,10):
+            x = self.marionette.find_element(*DOM.EME.launched_button_bookmark)
+            if not x.get_attribute("data-disabled"):
+                boolOK = True
+                break
+
+            time.sleep(6)
+        
         x = self.UTILS.getElement(DOM.EME.launched_display_button_bar, "Button bar 'displayer' element")
         x.tap()
         
-        time.sleep(2)
+        self.UTILS.TEST(boolOK, "Bookmark button is enabled in the button bar.", True)
         
-        x = self.UTILS.getElement(DOM.EME.launched_button_bookmark , "Button bar - bookmark button")
+        time.sleep(1)
+        
+        x = self.UTILS.getElement(DOM.EME.launched_button_bookmark, "Button bar - bookmark button")
+        self.UTILS.TEST(not x.get_attribute("data-disabled"), "Bookmark button is enabled.", True)
         x.tap()
         
         self.marionette.switch_to_frame()
