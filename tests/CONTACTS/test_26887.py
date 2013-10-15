@@ -56,8 +56,7 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(DOM.Contacts.details_back_button, "Back button")
         x.tap()
         
-        self.UTILS.waitForElements( ("xpath", DOM.Contacts.favourites_list_xpath % self.cont["name"].replace(" ", "")),
-                                    "%s in favorites" % self.cont["name"])
+        self.UTILS.getElement(DOM.Contacts.favourite_JS, "John Smith")
         
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot at this point", x)

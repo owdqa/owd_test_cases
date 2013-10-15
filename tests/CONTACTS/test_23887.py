@@ -60,8 +60,7 @@ class test_main(GaiaTestCase):
         #
         # Check our chap is listed in the group favourites.
         #
-        favs = ("xpath", DOM.Contacts.favourites_list_xpath % self.Contact_1['name'].replace(" ", ""))
-        self.UTILS.waitForElements(favs,"'" + self.Contact_1['name'] + "' in the favourites list")
+        self.UTILS.getElement(DOM.Contacts.favourite_JS, "John Smith")
         
         #
         # View the contact.

@@ -53,13 +53,5 @@ class test_main(GaiaTestCase):
         # Verify our contact.
         #
         self.contacts.verifyImageInAllContacts(self.cont['name'])
-        
-        self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_all_contact_name_xpath % self.cont["familyName"]),
-                                        "Contact listed contains the family name ('%s')" % self.cont["familyName"])
-        
-        self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_all_contact_name_xpath % self.cont["givenName"]),
-                                        "Contact listed contains the given name ('%s')" % self.cont["givenName"])
-        
-        
-        
-        
+
+        self.UTILS.waitForElements(DOM.Contacts.view_all_contact_JSname, "Name John Smith")

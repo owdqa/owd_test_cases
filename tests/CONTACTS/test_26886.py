@@ -72,6 +72,4 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(DOM.Contacts.details_back_button, "Back button")
         x.tap()
         
-        favs = ("xpath", DOM.Contacts.favourites_list_xpath % self.Contact_1['name'].replace(" ", ""))
-        x = self.UTILS.waitForElements(favs,"'" + self.Contact_1['name'] + "' in the favourites list")
-        
+        self.UTILS.getElement(DOM.Contacts.favourite_JS, "John Smith")
