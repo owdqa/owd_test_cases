@@ -60,13 +60,14 @@ class test_main(GaiaTestCase):
         self.marionette.execute_script("document.getElementById('%s').click()" % DOM.Contacts.import_import_btn[1])
         time.sleep(1)
     
-        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
+        self.apps.kill_all()
+
+        self.contacts.launch()
         
         #
-        # Check our contact are is the list.
+        # Check our contact is in the list.
         #
-        self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_all_contact_name_xpath % hotmail_contact),
-                                   "Contact '%s'" % hotmail_contact)
+        self.UTILS.waitForElements(DOM.Contacts.view_all_contact_import, "Hotmail imported contact")
         
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot and details", x)

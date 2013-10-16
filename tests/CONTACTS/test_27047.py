@@ -40,9 +40,12 @@ class test_main(GaiaTestCase):
         self.contacts.launch()
         x = self.UTILS.getElement(DOM.Contacts.settings_button, "Settings button")
         x.tap()
-        
+
+        x = self.UTILS.getElement(DOM.Contacts.import_contacts, "Import button")
+        x.tap()
+
         #
-        # Wait for the Gmail button.
+        # Wait for the Hotmail button.
         #
         x = self.UTILS.getElement(DOM.Contacts.hotmail_button, "Hotmail button")
         x_dis = x.get_attribute("disabled")

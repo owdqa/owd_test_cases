@@ -51,24 +51,24 @@ class test_main(GaiaTestCase):
         #
         x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list", True, 20)
         gmail_contacts = []
-        for y in x:
-            gmail_contacts.append( y.get_attribute("data-search") )
         
         #
         # Import them.
         #   
         self.contacts.import_ImportAll()
+
+        self.apps.kill_all()
+
+        self.contacts.launch()
         
         #
         # Check all our contacts are in the list, both 'standrd' ...
         #
-        self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_all_contact_name_xpath % self.cont["familyName"]),
-                                   "Contact '%s'" % self.cont["familyName"])
+        self.UTILS.waitForElements(DOM.Contacts.view_all_contact_JSname, "Name John Smith")
         
         # ... and the gmail contacts ...
-        for i in gmail_contacts:
-            self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_all_contact_name_xpath % i),
-                                       "Contact '%s'" % i)
+        self.UTILS.waitForElements(DOM.Contacts.view_all_contact_import, "Gmail imported contact")
+        self.UTILS.waitForElements(DOM.Contacts.view_all_contact_import2, "Gmail imported contact")
         
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot and details", x)

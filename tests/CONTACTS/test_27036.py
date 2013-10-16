@@ -21,7 +21,11 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.contacts   = Contacts(self)
-        self.settings   = Settings(self)
+        self.Settings   = Settings(self)
+
+        self.wifi_name  = self.UTILS.get_os_variable("GLOBAL_WIFI_NAME")
+        self.wifi_user  = self.UTILS.get_os_variable("GLOBAL_WIFI_USERNAME")
+        self.wifi_pass  = self.UTILS.get_os_variable("GLOBAL_WIFI_PASSWORD")
 
         #
         # Get details of our test contacts.
@@ -36,15 +40,22 @@ class test_main(GaiaTestCase):
     def test_run(self):
         
         #
-        # Set up to use data connection.
+        # WIFI.
         #
-        self.UTILS.getNetworkConnection()
+        self.Settings.launch()
+
+        self.Settings.wifi()
+        self.Settings.wifi_switchOn()
+        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
         
         #
         # Launch contacts app.
         #
         self.contacts.launch()
         x = self.UTILS.getElement(DOM.Contacts.settings_button, "Settings button")
+        x.tap()
+
+        x = self.UTILS.getElement(DOM.Contacts.import_contacts, "Import button")
         x.tap()
         
         #

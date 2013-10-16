@@ -59,6 +59,10 @@ class test_main(GaiaTestCase):
                 gmail_contacts.append(contNam)
              
         self.contacts.import_ImportAll()
+
+        self.apps.kill_all()
+
+        self.contacts.launch()
         
         self.UTILS.logResult("info", "Viewing contact '%s' ..." % gmail_contacts[0]) 
         self.contacts.viewContact(gmail_contacts[0], False)

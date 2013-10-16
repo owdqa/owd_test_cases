@@ -49,16 +49,13 @@ class test_main(GaiaTestCase):
             self.UTILS.logResult(False, "Cannot continue past this point without importing the contacts.")
             return
 
-
-
-        
         x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list")
-        
-        hotmail_contacts = []
-        for y in x:
-            hotmail_contacts.append( y.get_attribute("data-search") )
             
         self.contacts.import_ImportAll()
+
+        self.apps.kill_all()
+
+        self.contacts.launch()
         
         #
         # Check all our contacts are in the list.
@@ -67,9 +64,8 @@ class test_main(GaiaTestCase):
                                    "Contact '%s'" % self.cont["familyName"])
         
         # ... and the hotmail contacts ...
-        for i in hotmail_contacts:
-            self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_all_contact_name_xpath % i),
-                                       "Contact '%s'" % i)
+        self.UTILS.waitForElements(DOM.Contacts.view_all_contact_import, "Gmail imported contact")
+        self.UTILS.waitForElements(DOM.Contacts.view_all_contact_import2, "Gmail imported contact")
         
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot and details", x)

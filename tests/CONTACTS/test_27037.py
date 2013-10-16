@@ -21,7 +21,6 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.contacts   = Contacts(self)
-        self.settings   = Settings(self)
 
         #
         # Get details of our test contacts.
@@ -38,7 +37,7 @@ class test_main(GaiaTestCase):
         # Set up to use data connection.
         #
         self.UTILS.getNetworkConnection()
-        
+
         #
         # Launch contacts app.
         #

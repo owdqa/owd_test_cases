@@ -65,5 +65,4 @@ class test_main(GaiaTestCase):
         # Verify that our contact is now present with the email address as his
         # contact name.
         #
-        x = ("xpath", DOM.Contacts.view_all_contact_name_xpath % self._email_addy)
-        self.UTILS.waitForElements(x, "Contact '" + self._email_addy + "'")
+        x = self.UTILS.getElement(DOM.Contacts.view_all_contact_email, "Contact '" + self._email_addy + "'")

@@ -48,5 +48,3 @@ class test_main(GaiaTestCase):
         # Verify our contact details.
         #
         self.contacts.checkViewContactDetails(self.cont)
-        
-        

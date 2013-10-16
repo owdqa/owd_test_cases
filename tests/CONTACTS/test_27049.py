@@ -60,16 +60,23 @@ class test_main(GaiaTestCase):
             hotmail_contacts.append( y.get_attribute("data-search") )
 
         search_name = hotmail_contacts[0]
-    
-    
 
         #
         # Use the search bar to test ...
         #
-        
+
         # Keyboard appears.
+
         self.marionette.execute_script("document.getElementById('search-start').click();")
-        
+        #
+        # self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
+        # self.UTILS.switchToFrame(*DOM.Contacts.hotmail_import_frame, p_viaRootFrame=False)
+        #
+        time.sleep(1)
+
+        x = self.UTILS.getElement(DOM.Contacts.search_contact_input, "Search contact button")
+        x.tap()
+
         self.marionette.switch_to_frame()
         self.UTILS.waitForElements( ("xpath", "//iframe[contains(@%s,'%s')]" %\
                                      (DOM.Keyboard.frame_locator[0], DOM.Keyboard.frame_locator[1])),
@@ -86,6 +93,3 @@ class test_main(GaiaTestCase):
         self.UTILS.TEST(len(after_search_count) == 1, 
                         "After typing the name '%s' the search list contains 1 contact (out of %s)." %\
                         (search_name, str(len(hotmail_contacts))))
-        
-        
-        
