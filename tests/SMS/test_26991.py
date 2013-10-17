@@ -67,4 +67,4 @@ class test_main(GaiaTestCase):
         # Wait 2 seconds, then hangup.
         #
         time.sleep(2)
-        self.data_layer.kill_active_call()
+        self.Dialer.hangUp()
