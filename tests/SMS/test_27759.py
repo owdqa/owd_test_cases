@@ -64,4 +64,3 @@ class test_main(GaiaTestCase):
         x.tap()
         
         self.UTILS.headerCheck("Select contact")
-          

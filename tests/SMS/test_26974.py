@@ -83,8 +83,7 @@ class test_main(GaiaTestCase):
         #
         # Select the contact.
         #
-        z = self.UTILS.getElement( ("xpath", "//p[@data-order='%s']" % self.Contact_1["name"].replace(" ", "")),
-                                   "Search item")
+        z = self.UTILS.getElement(DOM.Contacts.view_all_contact_JS, "Search item")
         z.tap()   
          
         #

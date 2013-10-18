@@ -70,8 +70,7 @@ class test_main(GaiaTestCase):
         # Verify that the email is in the email field.
         #
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
-        x = self.UTILS.getElement( ("xpath", "//p[@data-order='%s']" % self.cont["name"].replace(" ", "")),
-                                   "Search item")
+        x = self.UTILS.getElement(DOM.Contacts.view_all_contact_HM, "Search item")
         x.tap()
         
         self.UTILS.waitForElements(("xpath","//input[@type='email' and @value='%s']" % self.emailAddy), "New email address")

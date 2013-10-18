@@ -53,7 +53,7 @@ class test_main(GaiaTestCase):
         #
         # Select create new contact.
         #
-        x = self.UTILS.getElement(DOM.Messages.header_add_to_contact_btn, "Add to existing contact button")
+        x = self.UTILS.getElement(DOM.Messages.header_cancel_btn_no_send, "Add to existing contact button")
         x.tap()
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
         

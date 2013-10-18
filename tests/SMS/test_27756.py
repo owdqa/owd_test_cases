@@ -66,8 +66,8 @@ class test_main(GaiaTestCase):
         #
         orig_iframe = self.messages.selectAddContactButton()
         
-        x = self.UTILS.getElement( ("xpath", DOM.Contacts.favourites_list_xpath % self.Contact_1['name'].replace(" ", "")),
-                                   "'" + self.Contact_1['name'] + "' in the favourites section")
+        x = self.UTILS.getElement(DOM.Contacts.favourite_JS,
+                                  "'" + self.Contact_1['name'] + "' in the favourites section")
         x.tap()
 
         #
