@@ -78,7 +78,3 @@ class test_main(GaiaTestCase):
         self.UTILS.typeThis(DOM.Email.compose_msg    , "Message field"  , "Just a test", True, False, False)
 
         self.Email.sendTheMessage()
-
-        
-        
-        

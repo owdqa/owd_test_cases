@@ -60,4 +60,3 @@ class test_main(GaiaTestCase):
         
         self.UTILS.TEST(preview_text in msg_text, 
                         "Preview text (" + preview_text + ") is in the original message text(" + msg_text + ").")
-        
