@@ -60,6 +60,3 @@ class test_main(GaiaTestCase):
         
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot of contact:", x)
-
-        self.dialer.hangUp()        
-
