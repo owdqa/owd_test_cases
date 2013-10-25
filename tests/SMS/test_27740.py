@@ -12,7 +12,7 @@ from OWDTestToolkit import *
 
 class test_main(GaiaTestCase):
     
-    _fake_num    = "12435"
+    _num    = "620971426"
     
     def setUp(self):
         #
@@ -39,13 +39,7 @@ class test_main(GaiaTestCase):
         # outgoing message..
         #
         msg_text = str(time.time())
-        self.messages.createAndSendSMS([self._fake_num], msg_text)
-         
-        #
-        # Click ok in the alert.
-        #
-        x = self.UTILS.getElement(DOM.Messages.service_unavailable_ok, "Service unavailable - OK button")
-        x.tap()
+        self.messages.createAndSendSMS([self._num], msg_text)
 
         #
         # Return to the threads view.
@@ -56,7 +50,7 @@ class test_main(GaiaTestCase):
         #
         # Get the preview txt for our test.
         #
-        preview_text = self.messages.getThreadText(self._fake_num)
+        preview_text = self.messages.getThreadText(self._num)
         
         self.UTILS.TEST(preview_text in msg_text, 
                         "Preview text (" + preview_text + ") is in the original message text(" + msg_text + ").")

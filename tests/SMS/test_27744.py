@@ -59,16 +59,15 @@ class test_main(GaiaTestCase):
         #
         # Check for the 'discard confirmation' popup.
         #
-        orig_frame = self.UTILS.currentIframe()
+
         self.marionette.switch_to_frame()
         x = self.UTILS.getElement( ("xpath", "//*[text()='Are you sure you want to discard this message?']"),
                                    "Discard confirmation message", True, 5, False)
         x = self.UTILS.getElement( ("id", "modal-dialog-confirm-ok"), "OK button", True, 5, False)
         x.tap()
-        self.UTILS.switchToFrame("src", orig_frame)
+        self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
         
         #
         # Verify that we're now in the correct place.
         #
         self.UTILS.headerCheck("Messages")
-        
