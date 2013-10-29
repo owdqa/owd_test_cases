@@ -21,7 +21,11 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.contacts   = Contacts(self)
-        self.settings   = Settings(self)
+        self.Settings   = Settings(self)
+
+        self.wifi_name  = self.UTILS.get_os_variable("GLOBAL_WIFI_NAME")
+        self.wifi_user  = self.UTILS.get_os_variable("GLOBAL_WIFI_USERNAME")
+        self.wifi_pass  = self.UTILS.get_os_variable("GLOBAL_WIFI_PASSWORD")
 
         self.hotmail_u = self.UTILS.get_os_variable("HOTMAIL_1_EMAIL")
         self.hotmail_p = self.UTILS.get_os_variable("HOTMAIL_1_PASS")
@@ -37,11 +41,14 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
         
     def test_run(self):
-        
         #
-        # Set up to use data connection.
+        # WIFI.
         #
-        self.UTILS.getNetworkConnection()
+        self.Settings.launch()
+
+        self.Settings.wifi()
+        self.Settings.wifi_switchOn()
+        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
         
         self.contacts.launch()
         x = self.contacts.import_HotmailLogin(self.hotmail_u, self.hotmail_p)
@@ -74,7 +81,7 @@ class test_main(GaiaTestCase):
         #
         # Check our two contacts are in the list.
         #
-        self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_all_contact_name_xpath % self.cont["familyName"]),
+        self.UTILS.waitForElements(DOM.Contacts.view_all_contact_JSname,
                                    "Contact '%s'" % self.cont["familyName"])
         
         self.UTILS.waitForElements(DOM.Contacts.view_all_contact_import, "Hotmail imported contact")

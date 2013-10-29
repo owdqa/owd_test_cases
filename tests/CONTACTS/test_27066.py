@@ -79,18 +79,13 @@ class test_main(GaiaTestCase):
         for i in x:
             # Contact 1 (HAS an image).
             try:
-                x = i.find_element("xpath", ".//p[contains(@data-search, '%s')]" % self.cont1["name"])
+                x = i.find_element("xpath", "/html/body/section[2]/section/ol/li/aside/img")
                 if x:
-                    try:
-                        x = i.find_element("xpath", ".//img")
-                        if x:
-                            boolOK1 = True
-                            break
-                    except:
-                        pass  
+                    boolOK1 = True
+                    break
             except:
                 pass
-                
+
             # Contact 2 (Does NOT have an image).
             try:
                 x = i.find_element("xpath", ".//p[contains(@data-search, '%s')]" % self.cont2["name"])
