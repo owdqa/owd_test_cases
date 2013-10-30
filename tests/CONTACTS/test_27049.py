@@ -65,22 +65,25 @@ class test_main(GaiaTestCase):
         # Use the search bar to test ...
         #
 
-        # Keyboard appears.
-
         self.marionette.execute_script("document.getElementById('search-start').click();")
-        #
-        # self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
-        # self.UTILS.switchToFrame(*DOM.Contacts.hotmail_import_frame, p_viaRootFrame=False)
-        #
-        time.sleep(1)
 
-        x = self.UTILS.getElement(DOM.Contacts.search_contact_input, "Search contact button")
-        x.tap()
+        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
+        self.UTILS.switchToFrame(*DOM.Contacts.hotmail_import_frame, p_viaRootFrame=False)
+
+        self.marionette.execute_script("""
+        var getElementByXpath = function (path) {
+            return document.evaluate(path, document, null, 9, null).singleNodeValue;
+        };
+        getElementByXpath("/html/body/section/section[2]/form/p/label").click();
+        """)
 
         self.marionette.switch_to_frame()
-        self.UTILS.waitForElements( ("xpath", "//iframe[contains(@%s,'%s')]" %\
-                                     (DOM.Keyboard.frame_locator[0], DOM.Keyboard.frame_locator[1])),
-                                   "Keyboard")
+
+        # Keyboard appears.
+
+        self.UTILS.waitForElements( ("xpath", "//iframe[contains(@%s,'%s')]" % \
+                                              (DOM.Keyboard.frame_locator[0], DOM.Keyboard.frame_locator[1])),
+                                    "Keyboard")
 
         # Typing works and allows real-time filtering.
         self.UTILS.logResult("info", "Typing '%s' with the keyboard (without pressing ENTER) ..." % search_name)
