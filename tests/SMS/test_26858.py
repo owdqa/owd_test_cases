@@ -35,7 +35,7 @@ class test_main(GaiaTestCase):
         #
         # Set time on device to morning.
         #
-        self.UTILS.setTimeToSpecific(p_hour=18,p_minute=0)
+        self.UTILS.setTimeToSpecific(p_hour=19,p_minute=0)
         
         #
         # Launch messages app.
@@ -76,7 +76,7 @@ class test_main(GaiaTestCase):
         #
         # Change the time to afternoon.
         #
-        self.UTILS.setTimeToSpecific(p_hour=22,p_minute=0)
+        self.UTILS.setTimeToSpecific(p_hour=23,p_minute=0)
         
         #
         # Send a message from num2.

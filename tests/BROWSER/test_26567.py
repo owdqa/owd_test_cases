@@ -51,12 +51,13 @@ class test_main(GaiaTestCase):
         x.tap()
 
         self.UTILS.waitForElements(DOM.Browser.tab_tray_screen, "Tab screen", True, 2, False)
-        
-        self.marionette.execute_script("document.getElementById('%s').click()" % DOM.Browser.tab_back_btn[1])
-        
+
+        self.marionette.execute_script("""
+        var getElementByXpath = function (path) {
+            return document.evaluate(path, document, null, 9, null).singleNodeValue;
+        };
+        getElementByXpath("//div[@id='tabs-list']//li[@class='current']/a").click();
+        """)
+
         self.UTILS.waitForNotElements(DOM.Browser.tab_tray_screen, "Tab screen", True, 2, False)
         self.UTILS.waitForElements(DOM.Browser.tab_screen, "Main tab")
-        
-
-        
-        

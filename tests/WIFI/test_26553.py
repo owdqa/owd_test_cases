@@ -10,6 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
+
 class test_main(GaiaTestCase):
     
     def setUp(self):
@@ -60,9 +61,7 @@ class test_main(GaiaTestCase):
 
         self.apps.kill(msgApp)
 
-        self.UTILS.switchToFrame(*DOM.Browser.frame_locator)
+        self.Browser.launch()
         self.messages.waitForSMSNotifier(self.num, 60)
         
         self.Browser.open_url("www.wikipedia.com")
-        
-

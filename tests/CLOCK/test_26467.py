@@ -67,16 +67,16 @@ class test_main(GaiaTestCase):
         #
         # Verify the time is correct (digits for hh and mm need to be padded).
         #
-        device_ampm = self.UTILS.getElement( ("id", "clock-hour24-state"), "Clock time am / pm").text
-        device_hhmm = self.UTILS.getElement( ("id", "clock-time"), "Clock time hh:mm").text
+        device_ampm = self.UTILS.getElement( ("xpath", "//*[@id='clock-hour24-state']"), "Clock time am / pm").text
+        device_hhmm = self.UTILS.getElement( ("xpath", "//*[@id='clock-time']"), "Clock time hh:mm").text
         device_hh   = device_hhmm.split(":")[0].zfill(2)
         device_mm   = device_hhmm.split(":")[1].zfill(2)
         
         device_time = device_hh + ":" + device_mm + device_ampm.zfill(2)
          
         now_hhmm = time.strftime("%I:%M")
-        now_ampm = time.strftime("%r")[-2:]
-        now_time = now_hhmm + now_ampm
+        #now_ampm = time.strftime("%r")[-2:]
+        now_time = now_hhmm
          
         self.UTILS.TEST(now_time == device_time, 
                         "Digital display time is correct (now = '" + now_time + "', display = '" + device_time + "').",
@@ -105,4 +105,3 @@ class test_main(GaiaTestCase):
         # Check that the face is analog again.
         #
         self.UTILS.waitForElements(DOM.Clock.analog_face, "Analog clock face")
-        
