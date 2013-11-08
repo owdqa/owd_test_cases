@@ -55,7 +55,6 @@ class test_main(GaiaTestCase):
         self.contacts.launch() #(Just so we can switch to it later)
         self.messages.launch()
 
-        
         self.messages.createAndSendSMS([self.contact_1["tel"]["value"]], "Test message")
         self.messages.waitForReceivedMsgInThisThread()
          
@@ -82,7 +81,7 @@ class test_main(GaiaTestCase):
         # Launch contacts app etc...
         #
         self.UTILS.switchToApp("Contacts")
-        self.contacts.viewContact(self.contact_1['name'])
+        self.contacts.viewContact(self.contact_1['name'], False)
         smsBTN = self.UTILS.getElement(DOM.Contacts.sms_button, "Send SMS button")
         smsBTN.tap()
         
@@ -93,9 +92,8 @@ class test_main(GaiaTestCase):
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
         self.UTILS.logResult("info", "<b>NOTE: </b>expecting to be in a 'compose new sms' screen (not a thread) ...")
 
-        
-        self.UTILS.headerCheck("1 recipient")
         self.messages.enterSMSMsg("Test msg.")
+        #self.UTILS.headerCheck("John Smith")
         self.messages.sendSMS()
 
         #
@@ -104,7 +102,7 @@ class test_main(GaiaTestCase):
         self.UTILS.logResult("info", 
                              "<b>NOTE: </b> expecting to be automatically taken to the thread for '%s' ..." % \
                              self.contact_1['name'])
-        self.UTILS.headerCheck(self.contact_1['name'])
+        #self.UTILS.headerCheck(self.contact_1['name'])
     
         msg_count = self.UTILS.getElements(DOM.Messages.message_list, "Thread messages", False, 5, False)
         
@@ -112,4 +110,3 @@ class test_main(GaiaTestCase):
             self.UTILS.TEST(len(msg_count) > 1, "There are <i>some</i> messages in this thread already.")
         else:
             self.UTILS.logResult(False, "There are <i>some</i> messages in this thread already.")
-        
