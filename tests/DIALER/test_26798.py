@@ -38,7 +38,7 @@ class test_main(GaiaTestCase):
         #
         self.dialer.enterNumber("0034"+self.telNum)
         x = self.UTILS.getElement(DOM.Dialer.call_number_button, "Call button")
-        p_num=x.text
+        p_num="0034"+self.telNum
         x.tap()
         
         #
@@ -59,7 +59,7 @@ class test_main(GaiaTestCase):
         #
         self.dialer.enterNumber("0039"+self.telNum)
         x = self.UTILS.getElement(DOM.Dialer.call_number_button, "Call button")
-        p_num=x.text
+        p_num="0039"+self.telNum
         x.tap()
         #
         # The call is tested.
@@ -80,7 +80,7 @@ class test_main(GaiaTestCase):
         #
         self.dialer.enterNumber("+34"+self.telNum)
         x = self.UTILS.getElement(DOM.Dialer.call_number_button, "Call button")
-        p_num=x.text
+        p_num="+34"+self.telNum
         x.tap()
         #
         # The call is tested.
@@ -93,5 +93,3 @@ class test_main(GaiaTestCase):
         time.sleep(2)
 
         self.dialer.hangUp()
-
-        

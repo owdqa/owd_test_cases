@@ -68,8 +68,8 @@ class test_main(GaiaTestCase):
         #
         time.sleep(1)
         self.UTILS.switchToFrame(*DOM.Dialer.frame_locator_calling)
-        self.UTILS.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP % p_num),
-                                    "Outgoing call found with number matching %s" % p_num)
+        self.UTILS.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP % self.cont["name"]),
+                                    "Outgoing call found with number matching %s" % self.cont["name"])
 
         time.sleep(2)
 
