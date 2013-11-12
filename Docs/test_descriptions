@@ -300,3 +300,9 @@
 27764|Write and send a sms with line break
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
 28100|Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:'Test1 656565678 number')
+28537|Press call button while the last outgoing call is a number with the prefix +XX
+28538|Press call button while the last outgoing call is a contact number
+28539|Press call button after delete all the calls from the call log
+28540|Press call button while the call log contains different outgoing calls
+29867|Verifying the calling line identification presentation status, when it's provisioned
+
