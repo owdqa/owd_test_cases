@@ -10,6 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
+
 class test_main(GaiaTestCase):
     
     def setUp(self):
@@ -20,10 +21,8 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.Browser    = Browser(self)
         self.testURL    = self.UTILS.get_os_variable("GLOBAL_TEST_URL")
-        
-        
+
         self.UTILS.logComment("Using " + self.testURL)
-        
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -56,7 +55,7 @@ class test_main(GaiaTestCase):
         var getElementByXpath = function (path) {
             return document.evaluate(path, document, null, 9, null).singleNodeValue;
         };
-        getElementByXpath("//div[@id='tabs-list']//li[@class='current']/a").click();
+        getElementByXpath('//*[@id="awesomescreen-cancel-button"]').click();
         """)
 
         self.UTILS.waitForNotElements(DOM.Browser.tab_tray_screen, "Tab screen", True, 2, False)
