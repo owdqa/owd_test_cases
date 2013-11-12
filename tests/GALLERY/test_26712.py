@@ -41,11 +41,15 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(DOM.Gallery.camera_button, "Camera button")
         x.tap()
 
+        time.sleep(5)
+
         self.UTILS.switchToFrame(*DOM.Camera.frame_locator)
         
         self.camera.takePicture()
         
         self.camera.goToGallery()
+
+        time.sleep(3)
               
         _afterPic = len(self.UTILS.getElements(DOM.Gallery.thumbnail_items, "Gallery thumbnails"))
         self.UTILS.TEST(_afterPic == (_beforePic+1), "After photo taken, we have %s thunbnails (there was %s)." % \
