@@ -10,6 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
+
 class test_main(GaiaTestCase):
     
     def setUp(self):
@@ -35,11 +36,14 @@ class test_main(GaiaTestCase):
         self.Settings.wifi_switchOn()
         self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
         
-        x = self.Settings.goBack()
+        self.Settings.goBack()
            
         #
         # Tap hotspot.
         #
+
+        self.Settings.hotSpot()
+
         self.UTILS.logResult("info", "<b>Check hotspot with WIFI on.</b>")
         self.Settings.enable_hotSpot()
 
