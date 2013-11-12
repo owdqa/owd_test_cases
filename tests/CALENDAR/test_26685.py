@@ -40,11 +40,11 @@ class test_main(GaiaTestCase):
           
         self.UTILS.logResult("info", "<b>Testing <u>month</u> view for <i>today</i> ...</b>")
         self.calendar.setView("today")
-        self._monthViewTests(_today)
+        self._monthViewTests(_today, True)
           
         self.UTILS.logResult("info", "<b>Testing <u>month</u> view for <i>%s days ago</i> ...</b>" % self._offset_days)
         x = self.calendar.changeDay(self._offset_days, "month")
-        self._monthViewTests(x)
+        self._monthViewTests(x, False)
  
         #===================================================================================================
         #
@@ -118,9 +118,8 @@ class test_main(GaiaTestCase):
         
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot in week view with 'today' selected:", x)
-        
-        
-    def _monthViewTests(self, p_now):
+
+    def _monthViewTests(self, p_now, today):
         # Highlighted cell is correct ...
         el_id_str = "d-%s-%s-%s" % (p_now.year, p_now.mon-1, p_now.mday)
         self.UTILS.waitForElements( ("xpath", 
@@ -128,10 +127,13 @@ class test_main(GaiaTestCase):
                                   "Selected day for %s/%s/%s" % (p_now.mday, p_now.mon, p_now.year), True, 2, False)
 
         # Selected day string is correct ...
-        x = self.UTILS.getElement(DOM.Calendar.mview_selected_day_title, "Selected day detail string")
-        _expected_str = "%s %s %s %s" % (p_now.day_name, p_now.mday, p_now.month_name, p_now.year)
-        self.UTILS.TEST(_expected_str.lower() in x.text.lower(), 
-                        "Day detail string: '%s' contains today's details ('%s')." % (x.text, _expected_str))
+        if today:
+            x = self.UTILS.getElement(DOM.Calendar.mview_selected_day_title, "Selected day detail string")
+            _expected_str = "%s" % p_now.mday
+            self.UTILS.TEST(_expected_str.lower() in x.text.lower(),
+                            "Day detail string: '%s' contains today's details ('%s')." % (x.text, _expected_str))
+        else:
+            x = self.UTILS.getElement(DOM.Calendar.mview_selected_day_title_future, "Selected day detail string")
         
         x = self.UTILS.getElement(DOM.Calendar.current_view_header, "Month view header")
         self.UTILS.TEST(p_now.month_name.lower() in x.text.lower(),

@@ -44,7 +44,7 @@ class test_main(GaiaTestCase):
                         "Header: '%s' contains today's details ('%s')." % (x.text, _expected_str))
         
         x = self.UTILS.getElement(DOM.Calendar.mview_selected_day_title, "Selected day detail string")
-        _expected_str = "%s %s %s %s" % (_now.day_name, _now.mday, _now.month_name, _now.year)
+        _expected_str = "%s" % _now.mday
         self.UTILS.TEST(_expected_str.lower() in x.text.lower(), 
                         "Day detail string: '%s' contains today's details ('%s')." % (x.text, _expected_str))
         
