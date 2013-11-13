@@ -37,7 +37,7 @@ class test_main(GaiaTestCase):
         # Take a video.
         #
         self.camera.recordVideo(5)
-        self.camera.checkVideoLength(0, 4, 6)
+        self.camera.checkVideoLength(0, 3, 7)
         
         #
         # Open the gallery application.
@@ -49,4 +49,4 @@ class test_main(GaiaTestCase):
         # Open the first thumbnail (should be our video).
         #
         self.gallery.clickThumb(0)
-        self.gallery.checkVideoLength(4, 6)
+        self.gallery.checkVideoLength(3, 7)

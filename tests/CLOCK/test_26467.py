@@ -21,6 +21,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.clock      = Clock(self)
+        self.data_layer.set_setting("time.timezone", "Europe/Madrid")
+        self.data_layer.set_setting("time.timezone.user-selected", "Europe/Madrid")
                         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -75,8 +77,8 @@ class test_main(GaiaTestCase):
         device_time = device_hh + ":" + device_mm + device_ampm.zfill(2)
          
         now_hhmm = time.strftime("%I:%M")
-        #now_ampm = time.strftime("%r")[-2:]
-        now_time = now_hhmm
+        now_ampm = time.strftime("%r")[-2:]
+        now_time = now_hhmm + now_ampm
          
         self.UTILS.TEST(now_time == device_time, 
                         "Digital display time is correct (now = '" + now_time + "', display = '" + device_time + "').",
