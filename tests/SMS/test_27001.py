@@ -39,7 +39,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        test_str = "Nine 123456789 numbers."
+        test_str = "Nine 111111111 numbers."
         self.messages.createAndSendSMS([self.num1], test_str)
         x = self.messages.waitForReceivedMsgInThisThread()
         
@@ -66,8 +66,8 @@ class test_main(GaiaTestCase):
         # Check the phone number.
         #
         x = self.UTILS.getElement(("id", "number_1"), "2nd phone number.")
-        self.UTILS.TEST(x.get_attribute("value") == "123456789",
-                        "Contact now has a 2nd number which is '123456789' (it was '%s')." % x.get_attribute("value"))
+        self.UTILS.TEST(x.get_attribute("value") == "111111111",
+                        "Contact now has a 2nd number which is '111111111' (it was '%s')." % x.get_attribute("value"))
         
         
         #
