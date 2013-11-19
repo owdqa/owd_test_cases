@@ -19,7 +19,7 @@ class test_main(GaiaTestCase):
         self.dialer      = Dialer(self)
         
         self.num = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        
+
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -30,9 +30,14 @@ class test_main(GaiaTestCase):
         self.dialer.launch()
         self.dialer.enterNumber(self.num)
         self.dialer.callThisNumber()
+
+        #self.marionette.switch_to_frame()
+        #x = self.UTILS.getElement(DOM.Dialer.call_busy_button_ok, "OK button")
+        #x.tap()
+
         time.sleep(2)
         self.dialer.hangUp()
-        
+
         #
         # Open the call log and tap on the number.
         #
@@ -40,6 +45,11 @@ class test_main(GaiaTestCase):
         time.sleep(3)
         self.dialer.launch()
         self.dialer.callLog_call(self.num)
+
+     #   time.sleep(2)
+     #   self.marionette.switch_to_frame()
+     #   x = self.UTILS.getElement(DOM.Dialer.call_busy_button_ok, "OK button")
+     #   x.tap()
         
         time.sleep(2)
         self.dialer.hangUp()
