@@ -35,8 +35,8 @@ class test_main(GaiaTestCase):
         #x = self.UTILS.getElement(DOM.Dialer.call_busy_button_ok, "OK button")
         #x.tap()
 
-        time.sleep(2)
-        self.dialer.hangUp()
+        #time.sleep(2)
+        #self.dialer.hangUp()
 
         #
         # Open the call log and tap on the number.
@@ -50,7 +50,7 @@ class test_main(GaiaTestCase):
      #   self.marionette.switch_to_frame()
      #   x = self.UTILS.getElement(DOM.Dialer.call_busy_button_ok, "OK button")
      #   x.tap()
-        
-        time.sleep(2)
-        self.dialer.hangUp()
+
+        #time.sleep(2)
+        #self.dialer.hangUp()
 
