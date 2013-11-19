@@ -22,7 +22,9 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.dialer     = Dialer(self)
         
-        self.telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")        
+        #self.telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.cont1 = MockContacts().Contact_1
+        self.telNum = self.cont1["tel"]["value"]
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -40,7 +42,7 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(DOM.Dialer.call_number_button, "Call button")
         p_num="0034"+self.telNum
         x.tap()
-        
+
         #
         # The call is tested.
         #
