@@ -5,6 +5,20 @@ class MockContacts(dict):
     # into the device's db.
     #
     def __init__(self):
+        self.Contact_twilio = {
+                "givenName" : "Twilio",
+                "familyName": "Owdqa",
+                "name"      : "Twilio Owdqa",
+                "email"     : {"type": "", "value": "owdqa@tid.es"},
+                "tel"       : {"type": "Mobile", "carrier": "MoviStar", "value": "518880854"},
+                "adr"       : {"streetAddress"    : "TwilioStreet",
+                               "postalCode"       : "88888",
+                               "locality"      : "TwilioCity",
+                               "countryName"   : "TwiliioCountry"},
+                "bday"      : "1936-07-18",
+                "jobTitle"  : "fake number",
+                "comment"   : "Mock test contact Twilio"
+            }
         self.Contact_1 = {
                 "givenName" : "John",
                 "familyName": "Smith",
