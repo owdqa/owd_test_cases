@@ -9,6 +9,7 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
+from tests._mock_data.contacts import MockContacts
 
 class test_main(GaiaTestCase):
     
@@ -19,7 +20,10 @@ class test_main(GaiaTestCase):
         self.dialer     = Dialer(self)
         self.contacts   = Contacts(self)
         
-        self.num  = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        #self.num  = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.cont_twilio = MockContacts().Contact_twilio
+        self.num = self.cont_twilio["tel"]["value"]
+
         
     def tearDown(self):
         self.UTILS.reportResults()

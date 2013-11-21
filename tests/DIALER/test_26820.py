@@ -23,7 +23,7 @@ class test_main(GaiaTestCase):
         
     def test_run(self):
         self.dialer.launch()
-        
+
         self.dialer.createMultipleCallLogEntries(self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM"), 3)
         
         x = self.UTILS.screenShotOnErr()
