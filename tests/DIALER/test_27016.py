@@ -40,12 +40,16 @@ class test_main(GaiaTestCase):
         self.dialer.callThisNumber()
         time.sleep(2)
         self.dialer.hangUp()
+
+        time.sleep(2)
+        x = self.UTILS.getElement(DOM.Dialer.call_busy_button_ok, "OK button (Number is busy)")
+        x.tap()
          
         #
         # Open the call log and add to our contact.
         #
         self.dialer.callLog_addToContact(self.num_short, self.cont["name"])
-         
+
         #
         # Verify that this number was added to the contact.
         #
