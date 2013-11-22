@@ -29,6 +29,7 @@ class test_main(GaiaTestCase):
         #
         self.cont1 = MockContacts().Contact_1
         self.cont2 = MockContacts().Contact_2
+        self.cont_twilio = MockContacts().Contact_twilio
         
         #self.data_layer.insert_contact(self.cont1)
 
@@ -38,12 +39,19 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.dialer.launch()
 
-        # Call 2 different numbers
+        # Delete all call log
+        self.dialer.callLog_clearAll()
+
+        # Call 3 different numbers
         self.dialer.enterNumber(self.cont1["tel"]["value"])
         self.dialer.callThisNumber()
         self.dialer.hangUp()
 
         self.dialer.enterNumber(self.cont2["tel"]["value"])
+        self.dialer.callThisNumber()
+        self.dialer.hangUp()
+
+        self.dialer.enterNumber(self.cont_twilio["tel"]["value"])
         self.dialer.callThisNumber()
         self.dialer.hangUp()
 
@@ -54,9 +62,9 @@ class test_main(GaiaTestCase):
         #Make sure that after tapping, we get the last outgoing call in the call log
         x = self.UTILS.getElement(DOM.Dialer.phone_number, "Phone number field", False)
         dialer_num = x.get_attribute("value")
-        self.UTILS.TEST(str(self.cont2["tel"]["value"]) in dialer_num,
-                        "After calling '%s', and tapping call button, phone number field contains '%s'." %
-                        (dialer_num, str(self.cont2["tel"]["value"])))
+        
+        self.UTILS.TEST(str(self.cont_twilio["tel"]["value"]) in dialer_num,
+                        "After calling '{0:s}', and tapping call button, phone number field contains '{1:s}'.")
 
         y = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screen shot of the result of tapping call button", y)
