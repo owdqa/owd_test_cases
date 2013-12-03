@@ -15,6 +15,7 @@ case $BRANCH in
     "1.0.1"    ) export BRANCH_STR="status-b2g18-v1.0.1"; export COMMENT_BRANCH_STR="v1.0.1";;
 	"v1-train" ) export BRANCH_STR="status-b2g18"       ; export COMMENT_BRANCH_STR="v1-train";;
     "1.1"      ) export BRANCH_STR="status-b2g-v1.1hd"  ; export COMMENT_BRANCH_STR="master";;
+    "v1.2"     ) export BRANCH_STR="status-b2g-v1.2"    ; export COMMENT_BRANCH_STR="v1.2";;
 esac
 
 echo "
