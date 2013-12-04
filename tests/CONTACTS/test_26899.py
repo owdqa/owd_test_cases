@@ -55,11 +55,12 @@ class test_main(GaiaTestCase):
         #
         # Cancel deletion.
         #
-        x = self.UTILS.getElement(DOM.Contacts.cancel_delete_btn, "Cancel button")        
+        x = self.UTILS.getElement(DOM.Contacts.cancel_delete_btn, "Cancel button")
         x.tap()
-         
 
-        
+        x = self.UTILS.getElement(DOM.Contacts.edit_cancel_button, "Cancel edit contact")
+        x.tap()
+
         #
         # Relaunch the app.
         #
