@@ -298,5 +298,5 @@
 28100|Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:'Test1 656565678 number')
 26785|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26785)
 26772|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26772)
-26768|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26768)
+2l6768|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26768)
 26761|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26761)

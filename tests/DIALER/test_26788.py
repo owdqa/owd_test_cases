@@ -9,7 +9,7 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data_prueba.contacts import MockContacts
 
 class test_main(GaiaTestCase):
     
