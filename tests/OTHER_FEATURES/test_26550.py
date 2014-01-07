@@ -43,25 +43,18 @@ class test_main(GaiaTestCase):
         # Enable wifi mode.
         #
         self.UTILS.toggleViaStatusBar("wifi")
-        
-        #
-        # If required, connect to the wifi.
-        #
+
         self.marionette.switch_to_frame()
-        try:
-            self.wait_for_element_present("xpath", "//iframe[contains(@%s,'%s')]" %\
-                                           (DOM.Settings.frame_locator[0], OM.Settings.frame_locator[1]),
-                                           timeout=5)
-            
-            #
-            # We need to supply the login details for the network.
-            #
-            self.UTILS.switchToFrame(*DOM.Settings.frame_locator)
-            self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
-               
-            self.marionette.switch_to_frame()
-        except:
-            pass
+        time.sleep(2)
+        
+        # Open the Settings application.
+        #
+        self.Settings.launch()
+
+        #
+        # Connect to the wifi.
+        #
+        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
 
         #
         # Data icon is no longer visible in status bar.
@@ -77,4 +70,3 @@ class test_main(GaiaTestCase):
         # Data icon is no longer visible in status bar.
         #
         self.UTILS.waitForNotElements(DOM.Statusbar.wifi, "Wifi icon in statusbar")
-        

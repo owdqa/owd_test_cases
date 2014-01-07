@@ -34,15 +34,7 @@ class test_main(GaiaTestCase):
         #
         self.Settings.hotSpot()
 
-        #x = self.UTILS.getElement(DOM.Settings.hotspot_settings, "Hotspot settings")
+        x = self.UTILS.getElement(DOM.Settings.hotspot_settings, "Hotspot settings")
 
-        x = self.marionette.execute_script("""
-            var getElementByXpath = function (path) {
-                return document.evaluate(path, document, null, 9, null).singleNodeValue;
-            };
-            getElementByXpath("/html/body/section[27]/div/ul/li/label/input").click();
-            """)
-
-
-        self.UTILS.TEST(x.get_attribute("disabled") != "disabled", 
+        self.UTILS.TEST(x.get_attribute("disabled") != "disabled",
                         "Hotspot settings are enabled by default (<b>signifying that 'hotspot' is off</b>).")

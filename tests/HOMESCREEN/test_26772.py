@@ -26,10 +26,10 @@ class test_main(GaiaTestCase):
         #
         # Don't prompt me for geolocation (this was broken recently in Gaia, so 'try' it).
         #
-        try:
-            self.apps.set_permission('Homescreen', 'geolocation', 'deny')
-        except:
-            self.UTILS.logComment("(Just FYI) Unable to automatically set Homescreen geolocation permission.")
+        # try:
+        #     self.apps.set_permission('Homescreen', 'geolocation', 'deny')
+        # except:
+        #     self.UTILS.logComment("(Just FYI) Unable to automatically set Homescreen geolocation permission.")
 
         
     def tearDown(self):
@@ -48,18 +48,18 @@ class test_main(GaiaTestCase):
         self.EME.launch()
         
         self.EME.pickGroup("Games")
+
+        time.sleep(5)
         
         #
         # Get the name of the first app which is installed (it'll be in the first apps listed).
         #
-        x = self.UTILS.getElements(DOM.EME.apps_installed, "Installed apps in 'Games' group")[0]
-        _appName = x.get_attribute("data-name")
-        self.actions.press(x).wait(2).release().perform()
+        x = self.UTILS.getElements(DOM.EME.apps_installed, "Installed apps in 'Games' group")[1]
+
+        self.actions.long_press(x, 2)
         
         self.marionette.switch_to_frame()
-        x = self.UTILS.getElement(DOM.GLOBAL.modal_alert_msg, "Alert message")
-        self.UTILS.TEST(_appName in x.text, "Alert ('%s') contains '%s'." % (x.text, _appName))
+        self.UTILS.getElement(DOM.GLOBAL.modal_alert_msg2, "Alert message")
         
-        x = self.UTILS.getElement(DOM.GLOBAL.modal_alert_ok, "OK button")
+        x = self.UTILS.getElement(DOM.GLOBAL.modal_alert_ok2, "OK button")
         x.tap()
-        

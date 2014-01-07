@@ -54,5 +54,3 @@ class test_main(GaiaTestCase):
         self.UTILS.goHome()
         
         self.UTILS.uninstallApp(self._appName)
-        
-        
