@@ -12,6 +12,7 @@ from OWDTestToolkit import *
 from tests._mock_data.contacts import MockContacts
 import time
 
+
 class test_main(GaiaTestCase):
 
     def setUp(self):
@@ -27,9 +28,7 @@ class test_main(GaiaTestCase):
         #
         self.Contact_1 = MockContacts().Contact_1
         self.data_layer.insert_contact(self.Contact_1)
-        
-        
-    
+
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -77,6 +76,8 @@ class test_main(GaiaTestCase):
         #
         x = self.UTILS.getElement(DOM.Contacts.edit_update_button, "Update button")
         x.tap()
+
+        time.sleep(1)
         
         #
         # Back to 'view all' screen.
@@ -111,6 +112,4 @@ class test_main(GaiaTestCase):
         self.UTILS.TEST(view_count == new_count, str(new_count) + " emails are displayed.")
         
         self.UTILS.TEST(email1_found, "First added email is present.")        
-        self.UTILS.TEST(email2_found, "Second added email is present.")       
-        
-    
+        self.UTILS.TEST(email2_found, "Second added email is present.")

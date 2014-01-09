@@ -12,6 +12,7 @@ from OWDTestToolkit import *
 from tests._mock_data.contacts import MockContacts
 import time
 
+
 class test_main(GaiaTestCase):
 
     def setUp(self):
@@ -31,8 +32,7 @@ class test_main(GaiaTestCase):
         self.data_layer.insert_contact(self.Contact_1)
         self.data_layer.insert_contact(self.Contact_2)
         self.newGivenName = "aaaaabbbbbccccaaaa"
-        
-        
+
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -66,4 +66,3 @@ class test_main(GaiaTestCase):
         # Verify the other contact is NOT listed.
         #
         self.contacts.checkSearchResults(self.Contact_2["givenName"], False)
-        

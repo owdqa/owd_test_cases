@@ -12,6 +12,7 @@ from OWDTestToolkit import *
 from tests._mock_data.contacts import MockContacts
 import time
 
+
 class test_main(GaiaTestCase):
     
     def setUp(self):
@@ -32,25 +33,23 @@ class test_main(GaiaTestCase):
         #
         # Set up to use data connection.
         #
-        
-        
+
         self.contacts.launch()
         
         #
         # Check the Memory Card button is enabled to begin with.
         #
-        
-        
+
         self.contacts.import_MemoryCard()
         
         time.sleep(2)
         
-        x=self.UTILS.getElement(DOM.Contacts.cancel_import_contacts, "Cancel the import")
+        x = self.UTILS.getElement(DOM.Contacts.cancel_import_contacts, "Cancel the import")
         x.tap()
         
         time.sleep(2)
         
-        #Check that the process has been actually cancelled, check the contact list??
+        # Check that the process has been actually cancelled, check the contact list??
         self.UTILS.waitForElements(DOM.Contacts.memorycard_button, "Memory Card Button")
                 
         x = self.UTILS.screenShotOnErr()

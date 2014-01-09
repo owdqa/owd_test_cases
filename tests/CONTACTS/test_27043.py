@@ -61,9 +61,9 @@ class test_main(GaiaTestCase):
         #
         # Check our two contacts are in the list.
         #
-        self.UTILS.waitForElements(DOM.Contacts.view_all_contact_JSname, "Name John Smith")
+        self.UTILS.waitForElements(("xpath", "/html/body/section/article/div[2]/div/section/section[2]/ol/li/p/strong"), "Name John Smith")
         
-        self.UTILS.waitForElements(DOM.Contacts.view_all_contact_import, "Gmail imported contact")
+        self.UTILS.waitForElements(("xpath", "/html/body/section/article/div[2]/div/section/section/ol/li/p"), "Gmail imported contact")
         
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot and details", x)

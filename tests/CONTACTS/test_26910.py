@@ -10,7 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 from tests._mock_data.contacts import MockContacts
-import time
+
 
 class test_main(GaiaTestCase):
 
@@ -74,13 +74,12 @@ class test_main(GaiaTestCase):
         self.UTILS.TEST(x[1].text == self.cont2["name"], "'%s' is the second contact listed." % self.cont2["name"])
         self.UTILS.TEST(x[2].text == self.cont1["name"], "'%s' is the third contact listed." % self.cont1["name"])
 
-
     def _toggleSearchOrder(self):
         self.UTILS.logResult("info", "<b>Changing sort order ...</b>")
         x = self.UTILS.getElement(DOM.Contacts.settings_button, "Settings button")
         x.tap()
+        time.sleep(1)
         x = self.UTILS.getElement( ("id", "settingsOrder"), "'Order by last name' switch")
         x.tap()
         x = self.UTILS.getElement(DOM.Contacts.settings_done_button, "Done button")
         x.tap()
-
