@@ -305,4 +305,20 @@
 28539|Press call button after delete all the calls from the call log
 28540|Press call button while the call log contains different outgoing calls
 29867|Verifying the calling line identification presentation status, when it's provisioned
+MMSTCCOMPT009b|MMS Recipient Name
+MMSTCCOMPT010d|Message with text, audio and images
+MMSTCCOMPT012b|Message size during composition
+MMSTCCOMPT015b|USIM Addresses
+MMSTCFEATR002c|Sending PNG file
+MMSTCFEATR003b|Receiving MP4 audio file
+MMSTCFEATR012d|The device should support MPEG4 file format
+MMSTCFEATR030a|Reception of video file + JPG file + AMR file
+MMSTCMMITC011d|Differentiation between EMS, MMS and SMS
+MMSTCPREST006a|Multiple objects in same page
+MMSTCPREST008a|Hyperlinks
+MMSTCRECVN004c|JPG Image size 640x480
+MMSTCRECVN005c|GIF Image size 640x480
+MMSTCRECVN006b|Animated GIF image size 640x480
+MMSTCSENDG012c|3GPP Video
+
 
