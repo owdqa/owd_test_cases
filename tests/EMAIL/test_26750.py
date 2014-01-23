@@ -11,8 +11,11 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
+
 class test_main(GaiaTestCase):
- 
+
+    _RESTART_DEVICE = True
+
     def setUp(self):
             
         #
@@ -45,11 +48,6 @@ class test_main(GaiaTestCase):
         # Login.
         #
         self.Email.setupAccount(self.USER1, self.EMAIL1, self.PASS1)
-        
-        #
-        # Return to the Inbox.
-        #
-        self.Email.openMailFolder("Sent Mail")
         
         #
         # Delete the first email we come across.

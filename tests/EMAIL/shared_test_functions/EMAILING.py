@@ -81,8 +81,7 @@ class main(GaiaTestCase):
         SUBJECT_FILE = open(os.environ['RESULT_DIR'] + "/.email_subject", "w")
         SUBJECT_FILE.write(self.subject)
         SUBJECT_FILE.close()
-          
-                          
+
         #
         # Launch Email app.
         #
