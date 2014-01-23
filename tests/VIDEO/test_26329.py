@@ -31,7 +31,7 @@ class test_main(GaiaTestCase):
         # Record a test video.
         #
         self.camera.launch()
-        self.camera.recordVideo(5)
+        self.camera.recordVideo(6)
         self.camera.checkVideoLength(0, 4, 6)
 
         #
@@ -49,4 +49,3 @@ class test_main(GaiaTestCase):
         # Check that the video is as long as expected.
         #
         self.video.checkVideoLength(0, 4, 6)
-        
