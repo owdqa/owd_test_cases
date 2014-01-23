@@ -82,8 +82,8 @@ class test_main(GaiaTestCase):
         self.UTILS.TEST(p_now.day_name.lower() in x.text.lower(),
                         "'%s' is in the header ('%s')." % (p_now.day_name, x.text))
         
-        self.UTILS.TEST(p_now.month_name.lower() in x.text.lower(),
-                        "'%s' is in the header ('%s')." % (p_now.day_name, x.text))
+        self.UTILS.TEST(p_now.month_name[:3].lower() in x.text.lower(),
+                        "'%s' is in the header ('%s')." % (p_now.month_name[:3], x.text))
         
         self.UTILS.TEST(str(p_now.mday) in x.text,
                         "'%s' is in the header ('%s')." % (p_now.mday, x.text))
