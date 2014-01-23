@@ -37,14 +37,7 @@ class test_main(GaiaTestCase):
         # Take a picture.
         #
         self.camera.takePicture()
-        
-        #
-        # TEST: Thumbnail has not been previewed yet.
-        #
-        prev_marker = self.UTILS.getElement(DOM.Camera.thumbnail_preview_marker, "Thumbnail preview marker", False)
-        self.UTILS.TEST((prev_marker.get_attribute("class") == "offscreen"), 
-                        "Image is not previewed as soon as picture is taken.")
-        
+
         #
         # Get a screenshot of the camera at this stage.
         #

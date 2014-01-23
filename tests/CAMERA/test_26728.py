@@ -10,6 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
+
 class test_main(GaiaTestCase):
     
     def setUp(self):
@@ -37,14 +38,7 @@ class test_main(GaiaTestCase):
         # Take a picture.
         #
         self.camera.takePicture()
-        
-        #
-        # TEST: Thumbnail has not been previewed yet.
-        #
-        prev_marker = self.UTILS.getElement(DOM.Camera.thumbnail_preview_marker, "Thumbnail preview marker", False)
-        self.UTILS.TEST((prev_marker.get_attribute("class") == "offscreen"), 
-                        "Image is not previewed as soon as picture is taken.")
-        
+
         #
         # Get a screenshot of the camera at this stage.
         #
@@ -66,4 +60,3 @@ class test_main(GaiaTestCase):
         self.UTILS.holdHomeButton()
         x = self.UTILS.getElement((DOM.Home.app_card[0], DOM.Home.app_card[1] % "camera"), 
                                   "When home button is held, camera 'card'", False)
-        
