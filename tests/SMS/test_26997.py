@@ -65,13 +65,15 @@ class test_main(GaiaTestCase):
         msg_nums = x.find_elements("tag name", "a")
         self._doTest(msg_nums, 0)
         
-        
     def _doTest(self, p_msgs, p_num):
         link_num = self.dummy_nums[p_num]
         self.UTILS.logResult("info", "Tapping link to number: %s." % link_num)
         self.UTILS.logResult("info", "Link text is '%s'." % p_msgs[p_num].text)
         p_msgs[p_num].tap()
         time.sleep(1)
+
+        x = self.UTILS.getElement(DOM.Messages.header_call_btn, "Call button")
+        x.tap()
         
         self.UTILS.switchToFrame(*DOM.Dialer.frame_locator)
         time.sleep(2)
