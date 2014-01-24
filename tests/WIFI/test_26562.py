@@ -48,8 +48,6 @@ class test_main(GaiaTestCase):
 
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot at this point:", x)
-        
 
         self.UTILS.waitForElements(DOM.Settings.wifi_advanced_forgetBtn , "'Forget network' button")
         self.UTILS.waitForElements(DOM.Settings.wifi_advanced_cancelBtn , "'Cancel' button")
-        
