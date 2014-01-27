@@ -10,6 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
+
 class test_main(GaiaTestCase):
     
     def setUp(self):
@@ -32,7 +33,7 @@ class test_main(GaiaTestCase):
         #
         self.camera.launch()
         self.camera.recordVideo(5)
-        self.camera.checkVideoLength(0, 4, 6)
+        self.camera.checkVideoLength(0, 3, 6)
 
         #
         # Open the video player application.
@@ -48,5 +49,4 @@ class test_main(GaiaTestCase):
         #
         # Check that the video is as long as expected.
         #
-        self.video.checkVideoLength(0, 4, 6)
-        
+        self.video.checkVideoLength(0, 3, 6)
