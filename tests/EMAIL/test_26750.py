@@ -49,7 +49,7 @@ class test_main(GaiaTestCase):
         #
         # Return to the Inbox.
         #
-        self.Email.openMailFolder("Sent Mail")
+        self.Email.openMailFolder("Important")
         
         #
         # Delete the first email we come across.
