@@ -13,6 +13,7 @@ from OWDTestToolkit import *
 class test_main(GaiaTestCase):
     
     _GROUP_NAME  = "Games"
+    _RESTART_DEVICE = True
 
     def setUp(self):
         #
@@ -41,17 +42,18 @@ class test_main(GaiaTestCase):
         # Make sure 'things' are as we expect them to be first.
         #
         self.UTILS.getNetworkConnection()
-         
+
+        self.UTILS.switchToFrame(*DOM.Home.frame_locator)
+
         #
         # First, get the name of the app we're going to install.
         #
-        self.EME.launch()
-        
+
         self.UTILS.TEST(self.EME.pickGroup(self._GROUP_NAME),
                         "Group '" + self._GROUP_NAME + "' exists in EverythingME.",
                         True)
     
-        x = self.UTILS.getElements(DOM.EME.apps_not_installed, "The first game that is not installed already")[0]
+        x = self.UTILS.getElements(DOM.EME.app_to_install, "The first game that is not installed already")[0]
         self._APP_NAME = x.get_attribute("data-name")
         self.UTILS.logResult("info", "App name is <b>%s</b>" % self._APP_NAME)
         self.UTILS.goHome()
@@ -60,8 +62,7 @@ class test_main(GaiaTestCase):
         # Make sure our app isn't installed already.
         #
         self.UTILS.uninstallApp(self._APP_NAME)
-        
-             
+
         #
         # Launch the 'everything.me' app.
         #

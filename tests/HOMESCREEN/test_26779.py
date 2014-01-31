@@ -10,6 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
+
 class test_main(GaiaTestCase):
     
     _RESTART_DEVICE = True
@@ -41,7 +42,7 @@ class test_main(GaiaTestCase):
         # Launch the 'everything.me' app.
         #
         self.UTILS.logResult("info", "Launching EME with NO network connection first ...")
-        self.EME.launch()
+        self.UTILS.switchToFrame(*DOM.Home.frame_locator)
         
         #
         # Select a category (group).
@@ -65,7 +66,7 @@ class test_main(GaiaTestCase):
         self.UTILS.scrollHomescreenRight()
         self.UTILS.getNetworkConnection()
         self.EME.launch()
-        self.EME.pickGroup("Local")
+        self.EME.pickGroup("Social")
         self.UTILS.scrollHomescreenRight()
     
         #

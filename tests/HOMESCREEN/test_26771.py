@@ -12,7 +12,8 @@ from OWDTestToolkit import *
 #
 
 class test_main(GaiaTestCase):
-    
+
+    _RESTART_DEVICE = True
     _GROUP_NAME  = "Games"
 
     def setUp(self):
@@ -42,21 +43,21 @@ class test_main(GaiaTestCase):
         # Make sure 'things' are as we expect them to be first.
         #
         self.UTILS.getNetworkConnection()
+
+        self.UTILS.switchToFrame(*DOM.Home.frame_locator)
          
         #
         # First, get the name of the app we're going to install.
         #
-        self.EME.launch()
         
         self.UTILS.TEST(self.EME.pickGroup(self._GROUP_NAME),
                         "Group '" + self._GROUP_NAME + "' exists in EverythingME.",
                         True)
          
-        x = self.UTILS.getElements(DOM.EME.apps_not_installed, "The first game that is not installed already")[0]
+        x = self.UTILS.getElements(DOM.EME.app_to_install, "The first game that is not installed already")[0]
         self._APP_NAME = x.get_attribute("data-name")
         self.UTILS.goHome()
- 
-         
+
         #
         # Make sure our app isn't installed already.
         #
@@ -71,17 +72,17 @@ class test_main(GaiaTestCase):
         # Pick a group.
         #
         self.EME.pickGroup(self._GROUP_NAME)
-        
-        
+
         #
         # Add the app to the homescreen.
         #
         self.UTILS.TEST(self.EME.addAppToHomescreen(self._APP_NAME),
                         "Application '" + self._APP_NAME + "' is added to the homescreen.",
                         True)
- 
+
+        self.UTILS.goHome()
+
         #
         # Check if message is here and app was installed.
         #
-        self.UTILS.waitForElements(DOM.EME.app_installed_banner,"Notification message",False)
         self.UTILS.isAppInstalled(self._APP_NAME)

@@ -37,6 +37,7 @@ class test_main(GaiaTestCase):
         # Make sure 'things' are as we expect them to be first.
         #
         self.UTILS.getNetworkConnection()
+        self.UTILS.switchToFrame(*DOM.Home.frame_locator)
         self.UTILS.uninstallApp(_appName)
 
         #

@@ -10,6 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
+
 class test_main(GaiaTestCase):
     
     def setUp(self):
@@ -27,20 +28,17 @@ class test_main(GaiaTestCase):
     def tearDown(self):
         self.UTILS.reportResults()
         
-    def test_run(self):    
+    def test_run(self):
+
         #
         # Make sure 'things' are as we expect them to be first.
         #
         self.UTILS.getNetworkConnection()
 
+        self.UTILS.switchToFrame(*DOM.Home.frame_locator)
+
         #
-        # Launch the 'everything.me' app.
-        #
-        self.UTILS.logResult("info", "Launching EME ...")
-        self.EME.launch()
-        
-        #
-        # Make sure our group isn't already present.
+        # Launch the group
         #
         self.EME.pickGroup("Games")
         

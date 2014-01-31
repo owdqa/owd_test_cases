@@ -10,6 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
+
 class test_main(GaiaTestCase):
 
     def setUp(self):
@@ -31,7 +32,6 @@ class test_main(GaiaTestCase):
         except:
             self.UTILS.logComment("(Just FYI) Unable to automatically set Homescreen geolocation permission.")
 
-        
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -42,24 +42,31 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.getNetworkConnection()
          
+        self.UTILS.switchToFrame(*DOM.Home.frame_locator)
+
         #
         # First, get the name of the app we're going to install.
         #
-        self.EME.launch()
         
         self.EME.pickGroup("Games")
         
         #
         # Get the name of the first app which is installed (it'll be in the first apps listed).
         #
-        x = self.UTILS.getElements(DOM.EME.apps_installed, "Installed apps in 'Games' group")[0]
+        x = self.UTILS.getElements(DOM.EME.app_to_install, "Installed apps in 'Games' group")[0]
         _appName = x.get_attribute("data-name")
-        self.actions.press(x).wait(2).release().perform()
+        actions = Actions(self.marionette)
+        actions.press(x).wait(2).release()
+        try:
+            actions.perform()
+        except:
+            pass
+
+        x = self.UTILS.getElement(DOM.EME.add_app_to_homescreen, "Add app to homescreen button")
+        x.tap()
+
+        time.sleep(2)
         
         self.marionette.switch_to_frame()
-        x = self.UTILS.getElement(DOM.GLOBAL.modal_alert_msg, "Alert message")
+        x = self.UTILS.getElement(DOM.GLOBAL.modal_alert_msg3, "Alert message")
         self.UTILS.TEST(_appName in x.text, "Alert ('%s') contains '%s'." % (x.text, _appName))
-        
-        x = self.UTILS.getElement(DOM.GLOBAL.modal_alert_ok, "OK button")
-        x.tap()
-        

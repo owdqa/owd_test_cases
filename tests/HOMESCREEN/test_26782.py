@@ -40,7 +40,8 @@ class test_main(GaiaTestCase):
         # Launch the 'everything.me' app.
         #
         self.UTILS.logResult("info", "Launching EME ...")
-        self.EME.launch()
-        self.EME.removeGroups()
+
+        self.UTILS.switchToFrame(*DOM.Home.frame_locator)
+        self.EME.removeGroups(["Games", "Social", "Music", "Showbiz"])
 
 

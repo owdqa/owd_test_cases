@@ -10,7 +10,10 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
+
 class test_main(GaiaTestCase):
+
+    _RESTART_DEVICE = True
     
     def setUp(self):
         #
@@ -37,14 +40,15 @@ class test_main(GaiaTestCase):
         # Launch the 'everything.me' app.
         #
         self.UTILS.logResult("info", "Launching EME ...")
-        self.EME.launch()
+        self.UTILS.switchToFrame(*DOM.Home.frame_locator)
         
         #
         # Make sure our group isn't already present.
         #
         self.EME.pickGroup("Games")
-        
-        self.EME.launchFromGroup("Juegos Gratis")
+
+        x = self.UTILS.getElements(DOM.EME.app_to_install, "Installed apps in 'Games' group")[0]
+        x.tap()
 
         self.marionette.switch_to_frame()
         
@@ -52,14 +56,12 @@ class test_main(GaiaTestCase):
         
         x = self.UTILS.getElement(DOM.EME.launched_display_button_bar, "Button bar 'displayer' element")
         x.tap()
-        
+
         self.UTILS.waitForElements(DOM.EME.launched_button_back     , "Button bar - back button")
         self.UTILS.waitForElements(DOM.EME.launched_button_forward  , "Button bar - forward button")
         self.UTILS.waitForElements(DOM.EME.launched_button_reload   , "Button bar - reload button")
         self.UTILS.waitForElements(DOM.EME.launched_button_bookmark , "Button bar - bookmark button")
         self.UTILS.waitForElements(DOM.EME.launched_button_close    , "Button bar - close button")
-        
+
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot of the button bar:", x)
-        
-        

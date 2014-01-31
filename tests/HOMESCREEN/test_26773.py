@@ -11,6 +11,7 @@ from marionette import Actions
 class test_main(GaiaTestCase):
 
     _appName = "Juegos Gratis"
+    _RESTART_DEVICE = True
 
     def setUp(self):
         #
@@ -43,16 +44,19 @@ class test_main(GaiaTestCase):
         #
         self.EME.launch()
         x = self.EME.searchForApp(self._appName)
-        self.actions.press(x).wait(2).release()
-        self.actions.perform()
-        
+        actions = Actions(self.marionette)
+        actions.press(x).wait(2).release()
+        try:
+            actions.perform()
+        except:
+            pass
+
         self.marionette.switch_to_frame()
-        x = self.UTILS.getElement(DOM.GLOBAL.modal_confirm_ok, "OK button")
+        x = self.UTILS.getElement(DOM.GLOBAL.modal_alert_ok3, "OK button")
         x.tap()
         
         time.sleep(2)
-        self.UTILS.goHome()
+
+        self.UTILS.switchToFrame(*DOM.Home.frame_locator)
         
         self.UTILS.uninstallApp(self._appName)
-        
-        
