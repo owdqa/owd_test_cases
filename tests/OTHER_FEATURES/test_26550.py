@@ -42,6 +42,7 @@ class test_main(GaiaTestCase):
         #
         # Enable wifi mode.
         #
+        self.UTILS.screenShot("test")
         self.UTILS.toggleViaStatusBar("wifi")
         
         #
@@ -71,10 +72,11 @@ class test_main(GaiaTestCase):
         #
         # Disable wifi mode.
         #
+        self.UTILS.goHome()
+        self.marionette.switch_to_frame()
         self.UTILS.toggleViaStatusBar("wifi")
         
         #
         # Data icon is no longer visible in status bar.
         #
         self.UTILS.waitForNotElements(DOM.Statusbar.wifi, "Wifi icon in statusbar")
-        
