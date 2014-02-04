@@ -76,9 +76,9 @@ class test_main(GaiaTestCase):
         self.actions.long_press(x, 2).perform()
 
         #
-        # Press fordward button
+        # Press cancel button
         #
-        self.UTILS.logResult("info", "Cliking on fordaward button")
+        self.UTILS.logResult("info", "Cliking on cancel button")
         x = self.UTILS.getElement(DOM.Messages.cancel_btn_msg_opt, "Cancel button is displayed")
         x.tap()
 
