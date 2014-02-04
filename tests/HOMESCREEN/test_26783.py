@@ -43,6 +43,3 @@ class test_main(GaiaTestCase):
         self.EME.launch()
         
         self.EME.addMultipleGroups()
-    
-
-

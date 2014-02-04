@@ -54,12 +54,17 @@ class test_main(GaiaTestCase):
         #
         # Get the name of the first app which is installed (it'll be in the first apps listed).
         #
-        x = self.UTILS.getElements(DOM.EME.apps_installed, "Installed apps in 'Games' group")[1]
+        x = self.UTILS.getElements(DOM.EME.app_to_install, "Installed apps in 'Games' group")[0]
+        _appName = x.get_attribute("data-name")
+        actions = Actions(self.marionette)
+        actions.press(x).wait(2).release()
+        try:
+            actions.perform()
+        except:
+            pass
 
-        self.actions.long_press(x, 2)
-        
+        time.sleep(2)
+
         self.marionette.switch_to_frame()
-        self.UTILS.getElement(DOM.GLOBAL.modal_alert_msg2, "Alert message")
-        
-        x = self.UTILS.getElement(DOM.GLOBAL.modal_alert_ok2, "OK button")
+        x = self.UTILS.getElement(DOM.GLOBAL.modal_alert_ok, "OK button")
         x.tap()

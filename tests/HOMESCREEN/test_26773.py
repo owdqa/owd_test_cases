@@ -43,8 +43,12 @@ class test_main(GaiaTestCase):
         #
         self.EME.launch()
         x = self.EME.searchForApp(self._appName)
-        self.actions.press(x).wait(2).release()
-        self.actions.perform()
+        actions = Actions(self.marionette)
+        actions.press(x).wait(2).release()
+        try:
+            actions.perform()
+        except:
+            pass
         
         self.marionette.switch_to_frame()
         x = self.UTILS.getElement(DOM.GLOBAL.modal_confirm_ok, "OK button")
