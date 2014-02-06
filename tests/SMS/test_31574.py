@@ -11,10 +11,6 @@ from OWDTestToolkit import *
 #
 
 class test_main(GaiaTestCase):
-    #
-    # Restart device to start without sms
-    #
-    _RESTART_DEVICE = True
 
     def setUp(self):
         #

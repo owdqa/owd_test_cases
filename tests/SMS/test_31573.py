@@ -68,35 +68,4 @@ class test_main(GaiaTestCase):
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
         self.UTILS.TEST(returnedSMS, "A receieved message appeared in the thread.", True)
 
-        #
-        # Open sms option with longtap on it
-        #
-        self.UTILS.logResult("info", "Open sms option with longtap on it")
-        x = self.UTILS.getElement(DOM.Messages.received_sms, "Target sms field")
-        self.actions.long_press(x, 2).perform()
-
-        #
-        # Press fordward button
-        #
-        self.UTILS.logResult("info", "Cliking on fordaward button")
-        x = self.UTILS.getElement(DOM.Messages.fordward_btn_msg_opt, "Fordward button is displayed")
-        x.tap()
-
-        #
-        # Add a phone number.
-        #
-        self.messages.addNumbersInToField([self.target_telNum])
-
-        #
-        # Send the sms.
-        #
-        self.UTILS.logResult("info", "Cliking on Send button")
-        x = self.UTILS.getElement(DOM.Messages.send_message_button, "Send button is displayed")
-        x.tap()
-
-
-        #
-        # Wait for the last message in this thread to be a 'recieved' one.
-        #
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.TEST(returnedSMS, "A receieved message appeared in the thread.", True)
+        self.messages.fordwardMessage("aasd", self.target_telNum)
