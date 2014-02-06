@@ -68,4 +68,4 @@ class test_main(GaiaTestCase):
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
         self.UTILS.TEST(returnedSMS, "A receieved message appeared in the thread.", True)
 
-        self.messages.fordwardMessage("aasd", self.target_telNum)
+        self.messages.fordwardMessage("sms", self.target_telNum)
