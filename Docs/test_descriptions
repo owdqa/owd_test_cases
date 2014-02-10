@@ -305,6 +305,10 @@
 28539|Press call button after delete all the calls from the call log
 28540|Press call button while the call log contains different outgoing calls
 29867|Verifying the calling line identification presentation status, when it's provisioned
+29893|Send a MMS when data is on and wifi off
+29894|Send a MMS when data and wifi are on
+29895|Send a MMS when data is off and wifi on
+29896|Send a MMS when data and wifi are off
 MMSTCCOMPT009b|MMS Recipient Name
 MMSTCCOMPT010d|Message with text, audio and images
 MMSTCCOMPT012b|Message size during composition
