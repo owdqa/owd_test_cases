@@ -309,6 +309,12 @@
 29894|Send a MMS when data and wifi are on
 29895|Send a MMS when data is off and wifi on
 29896|Send a MMS when data and wifi are off
+29918|Verify that the user can attach a file .jpg and it is displayed as image
+29919|Verify that the user can attach a file .mp4 and it is displayed as video
+29920|Verify that the user can attach a file .mp3 and it is displayed as audio
+29921|Verify that the user can receive attached a file .jpg in a MMS and it is displayed as image
+29922|Verify that the user can receive attached a file .mp4 in a MMS and it is displayed as video
+29923|Verify that the user can receive attached a file .mp3 in a MMS and it is displayed as audio
 31716|MMS Recipient Name
 31717|Message with text, audio and images
 31718|Message size during composition

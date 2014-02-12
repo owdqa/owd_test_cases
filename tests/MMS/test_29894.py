@@ -49,7 +49,11 @@ class test_main(GaiaTestCase):
         self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
 
         #
-        # Set up to use data connection.
+        # Create and Send an MMS
         #
         self.messages.createAndSendMMS("image", self._TestMsg)
+        #
+        # Verify that the MMS has been received.
+        #
+        self.messages.verifyMMSReceived("image")
 

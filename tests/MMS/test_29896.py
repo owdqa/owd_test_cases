@@ -39,7 +39,11 @@ class test_main(GaiaTestCase):
 
 
         #
-        # Set up to use data connection.
+        # Create and Send an MMS
         #
         self.messages.createAndSendMMS("image", self._TestMsg)
+        #
+        # Verify that the MMS has been received.
+        #
+        self.messages.verifyMMSReceived("image")
 

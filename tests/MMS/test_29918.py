@@ -39,16 +39,6 @@ class test_main(GaiaTestCase):
 
 
         #
-        # Turn on 3g connection.
-        #
-        self.Settings.turn_dataConn_on()
-
-        #
-        # Create and Send an MMS
+        # Create and Send an MMS with a image attached.
         #
         self.messages.createAndSendMMS("image", self._TestMsg)
-         #
-        # Verify that the MMS has been received.
-        #
-        self.messages.verifyMMSReceived("image")
-
