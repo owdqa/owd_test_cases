@@ -39,16 +39,10 @@ class test_main(GaiaTestCase):
 
 
         #
-        # Turn on 3g connection.
+        # Create and Send an MMS with a audio attached.
         #
-        self.Settings.turn_dataConn_on()
-
+        self.messages.createAndSendMMS("audio", self._TestMsg)
         #
-        # Create and Send an MMS
-        #
-        self.messages.createAndSendMMS("image", self._TestMsg)
-         #
         # Verify that the MMS has been received.
         #
-        self.messages.verifyMMSReceived("image")
-
+        self.messages.verifyMMSReceived("audio")
