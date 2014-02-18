@@ -1,0 +1,80 @@
+#!/bin/bash
+function currentDir(){
+   DIR=`readlink -f $0`
+   DIR=`dirname $DIR`
+}
+currentDir
+. $DIR/setEnv.sh
+
+isCentos6(){
+    issueFile="`head -n1 /etc/issue`"
+    centos6Distribution=`echo $issueFile|egrep "CentOS.*6\.[0-9]+ "`
+}
+installPackagesOfPearRepository(){
+  pear upgrade PEAR
+  pear channel-discover pear.phpunit.de
+  pear channel-discover pear.symfony-project.com
+  pear channel-discover components.ez.no
+  pear install --alldeps pear/Image_GraphViz-1.3.0
+  pear install --alldeps pear/Log-1.12.7
+  pear install  XML_RPC2-1.1.1
+  pear install phpunit/PHP_TokenStream-1.1.1
+  pear install phpunit/PHP_CodeCoverage-1.1.1
+  pear install --alldeps phpunit/File_Iterator-1.2.6
+  pear install --alldeps phpunit/PHPUnit-3.6.3
+  pear install --alldeps phpunit/phpcpd-1.3.3
+  pear install phpunit/phploc-1.6.2
+  pear channel-discover pear.pdepend.org
+  pear install --alldeps pdepend/PHP_Depend
+  pear install --alldeps PhpDocumentor-1.4.3
+  pear install --alldeps PHP_CodeSniffer-1.3.2
+  #pecl install xdebug
+  pear install phpunit/PHP_CodeBrowser-1.0.1
+  pear channel-discover pear.phpmd.org
+  pear install --alldeps phpmd/PHP_PMD-1.3.2
+}
+installRedHat(){
+  isCentos6
+  if [ "$centos6Distribution" == "" ]; then
+      rpm -Uvh   http://rpms.famillecollet.com/enterprise/remi-release-5.rpm -y
+      yum clean all
+      yum makecache
+      yum remove php php-common php-devel php-cli php-xml -y
+      yum install gcc make ImageMagick-devel php53 php53-pdo php53-devel php53-common php53-cli php53-xml
+      wget http://pear.php.net/go-pear.phar
+      php go-pear.phar
+      rm go-pear.phar  
+  else 
+      yum install gcc make ImageMagick-devel php php-pdo php-devel php-common php-cli php-xml php-pear -y
+  fi 	
+  pushd . >/dev/null
+  bits64=`uname -a|grep x86_64`
+  if [ "$bits64" != "" ]; then
+     cd $PROJECT_HOME/temp/$name/$name/plugin/install/centos
+  else
+    cd $PROJECT_HOME/temp/$name/$name/plugin/install/centos32bits
+    rpm -Uvh sloccount-2.26-1.i386.rpm 
+  fi
+  
+  popd >/dev/null
+  installPackagesOfPearRepository
+  echo "Busca en /etc/php.ini ;date.timezone y sustituyelo por date.timezone=Europe/Madrid"
+  cd $PROJECT_HOME/temp/$name/$name/plugin/install
+}
+
+installDebian(){
+  $INSTALL_PACKAGE make php5 php5-dev php5-cli  php-benchmark php-pear re2c  php5-imagick php5-xdebug sloccount php-codesniffer php5-curl libmagickwand-dev libmagickcore-dev
+  installPackagesOfPearRepository -y
+  cd $PROJECT_HOME/temp/$name/$name/plugin/install/
+ }
+
+installCommon(){
+  pushd . >/dev/null
+
+  popd >/dev/null
+}
+
+name=`basename php_plugin.sh|cut -d'.' -f1`
+installationIn$distribution
+install$distribution
+installCommon

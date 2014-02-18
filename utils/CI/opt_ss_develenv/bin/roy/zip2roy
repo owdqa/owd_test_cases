@@ -1,0 +1,20 @@
+#!/bin/bash
+
+IP=$(cat ~/.netrc | awk '{print $2}')
+
+FOLDER="$1"
+if [ ! "$FOLDER" ]
+then
+    FOLDER=$(ls -lrtd /tmp/tests/B2G* | tail -1 | awk '{print $NF}')
+fi
+FOLDER=$(echo $FOLDER | awk 'BEGIN{FS="/"}{print $NF}')
+
+cd /tmp/tests
+
+tar cfz ${FOLDER}.tgz $FOLDER
+
+ftp $IP <<EOF
+cd Downloads
+bin
+put $FOLDER
+EOF

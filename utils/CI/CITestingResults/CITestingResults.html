@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+  
+		<meta content="text/html; charset=UTF-8" http-equiv="content-type">
+		<title>CITestingResults</title>
+		<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/index.css">
+		<script src="js/index.js"></script>
+	  
+	</head>
+	<body>
+		<div id="header">
+			<div class="logo-firefox"></div>
+			<div class="title">Telefónica Quality Team</div>
+			<div class="logo-movistar"></div>
+		</div>
+
+		<div class="left-image"></div>
+		<div class="pre-form">
+			<div class="form-title">CI Testing Results</div>
+			<div class="form-actions">
+				<input type="button" id="generate-results" value="Summary view" onclick="main.openBackWindow('results.html')">
+			</div>
+		</div>
+		<form action="window.location=location.pathname" method="post" name="CITestingResults">
+		  <p><big style="font-weight: bold;">Choose an option</big></p>
+		  <p>
+		  	<big style="font-weight: bold; margin-left: 1.5em;">Device:</big>&nbsp;&nbsp;</br> 
+		  
+			  	<input onclick="CITestingResults.hdevice.value=CITestingResults.device[0].value" checked="checked" name="device" value="unagi" type="radio" style="margin-left: 7.8em;">unagi </br>
+			  
+			  	<input onclick="CITestingResults.hdevice.value=CITestingResults.device[1].value" name="device" value="hamachi_light" type="radio" style="margin-left: 7.8em;">hamachi_light&nbsp;&nbsp;&nbsp; 
+			  
+		  		<input name="hdevice" value="unagi" type="hidden"><br>
+				&nbsp;<br>
+		  </p>
+
+		  <p>
+		  	<big style="font-weight: bold; margin-left: 1.5em;">Version:</big> </br>
+		  	<input onclick="CITestingResults.hversion.value=CITestingResults.version[0].value" name="version" value="v1.2" type="radio" style="margin-left: 8em;">v1.2 </br>
+
+		  	<input onclick="CITestingResults.hversion.value=CITestingResults.version[1].value" name="version" value="v1.3" type="radio" style="margin-left: 8em;">v1.3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+		  	<input name="hversion" type="hidden"> <br>
+		  </p>
+		  
+		  <p style="text-align: center; margin-top: 1em;">
+		  	<big>
+		  		<input onclick="main.filterResults()" name="show_btn" value="Show" type="button">
+		  		</big>&nbsp;&nbsp;&nbsp; 
+		  	<big>
+		  		<input onclick="CITestingResults.hdevice.value=CITestingResults.device[0].value; CITestingResults.hversion.value=''" name="reset" value="Reset" type="reset">
+		  	</big>
+		  </p>
+		</form>
+
+		<div class="right-image"></div>
+	</body>
+</html>

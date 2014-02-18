@@ -1,0 +1,4 @@
+#!/bin/bash
+
+mailx -s hello -a $1 roydudeatwork@gmail.com <<EOF
+EOF

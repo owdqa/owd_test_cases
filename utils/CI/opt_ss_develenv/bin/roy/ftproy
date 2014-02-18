@@ -1,0 +1,9 @@
+#!/bin/bash
+
+IP=$(cat ~/.netrc | awk '{print $2}')
+cd $(dirname $1)
+
+ftp $IP <<EOF
+cd Downloads
+put $(basename $1)
+EOF

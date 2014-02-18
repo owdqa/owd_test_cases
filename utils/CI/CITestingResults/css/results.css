@@ -1,0 +1,136 @@
+body {
+	background-image: linear-gradient(to bottom, #005D86 0%, #00C5D6 100%);
+	background: -webkit-linear-gradient(top, #00527e, #6fc3db 100%);
+	background: -moz-linear-gradient(top, #00527e, #6fc3db 100%);
+	background: -o-linear-gradient(top, #00527e, #6fc3db 100%);
+	background: -ms-linear-gradient(top, #00527e, #6fc3db 100%);
+	background: linear-gradient(top, #00527e, #6fc3db 100%);
+	background-attachment: fixed;
+	color: #fff;
+}
+table {
+	border-collapse: collapse;
+}
+table, tr, td, th {
+	border: 1px solid #fff;
+}
+
+table th, table td {
+	padding: 0.3rem;
+	text-align: left;
+	padding-right: 1.5em;
+}
+table a {
+	color: #fff;
+}
+
+table a:visited {
+	color: #fff;
+	font-weight: bold;
+}
+
+#results {
+	margin: 0 auto;
+	margin-top: 1em;
+}
+#results thead {
+	background-image: linear-gradient(rgb(247, 182, 82), rgb(215, 98, 10) 95%);
+	font-size: bold;
+}
+
+#results thead th {
+	padding-right: 2.5em;
+	margin-right: 1em;
+}
+
+
+#results tbody tr.error {
+	background-image: linear-gradient(rgb(247, 82, 82), rgb(139, 11, 42) 95%);
+}
+
+#results tbody tr.warning {
+	background-image: linear-gradient(rgb(241, 241, 26), rgb(180, 174, 33) 95%);
+}
+
+.main-title {
+	margin-top: 1em;
+	font-size: 30px;
+	font-weight: bold;
+	margin-left: 40.2%;
+}
+
+#prev-info.daily{
+	width: 29%;
+	margin-left: 34%;
+	margin-top: 1em;
+}
+
+#prev-info.weekly, #prev-info.summary{
+	width: 14%;
+	margin-left: 42%;
+	margin-top: 1em;
+}
+
+#prev-info .info-wrapper {
+	border: 1px solid white;
+	padding: 0.5em;
+}
+
+#more-info {
+	margin-top: 1em;
+	margin-left: 1em;
+}
+
+#header {
+	width: 100%;
+	height: 80px;
+	margin-left: 1em;
+}
+
+#header .logo-firefox {
+	height: 52px;
+	width: 164px;
+	background: url("../resources/firefoxos-title.png") no-repeat;
+}
+
+#header .logo-movistar {
+	height: 52px;
+	width: 152px;
+	background: url("../resources/logo_telefonica_153x52.png") no-repeat;
+	margin-top: 0.3em;
+	margin-left: 20%;
+}
+
+#header .title {
+	font-size: 1.75rem;
+	font-weight: bold;
+	margin-top: 0.4em;
+	margin-left: 19%;
+}
+
+.left {
+	float: left;
+}
+
+.clear {
+	clear: both;
+}
+
+
+
+th.header{
+    background: url("../resources/table/bg.gif") no-repeat right; 
+	cursor: pointer;
+} 
+
+th.headerSortUp { 
+    background-image:  url("../resources/table/asc.gif"), linear-gradient(rgb(243, 154, 18), rgb(163, 77, 12) 99%);
+    background-position: right, inherit;
+    background-repeat: no-repeat;
+}
+
+th.headerSortDown { 
+    background-image: url("../resources/table/desc.gif") , linear-gradient(rgb(243, 154, 18), rgb(163, 77, 12) 99%);
+    background-position: right, inherit;
+    background-repeat: no-repeat;
+}
