@@ -1,9 +1,0 @@
-.pydevproject
-.project
-*.pyc
-.bak
-build
-dist
-*~
-.~*
-*_roy.py
