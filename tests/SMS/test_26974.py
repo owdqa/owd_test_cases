@@ -10,7 +10,8 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 import time
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -31,9 +32,9 @@ class test_main(GaiaTestCase):
         # Insert a contact without email addresses
         # 
         self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')        
-        self.Contact_1 = MockContacts().Contact_1
-        self.Contact_1["email"]["value"] = ""
-        self.data_layer.insert_contact(self.Contact_1)
+        self.Contact_1 = MockContact(email = {'type': 'Personal', 'value': ''})
+
+        self.UTILS.insertContact(self.Contact_1)
    
         #
         # Establish which phone number to use.
@@ -64,8 +65,7 @@ class test_main(GaiaTestCase):
         
         a=x.find_element("tag name", "a")
         
-        self.actions=Actions(self.marionette)
-        self.actions.long_press(a,5).perform()
+        a.tap()
         
         #
         # Press 'add to existing contact' button.
@@ -102,7 +102,6 @@ class test_main(GaiaTestCase):
         self.contacts.replaceStr(contFields['zip'        ] , self.Contact_1["adr"]["postalCode"]+"bis")
         self.contacts.replaceStr(contFields['city'       ] , self.Contact_1["adr"]["locality"]+"bis")
         self.contacts.replaceStr(contFields['country'    ] , self.Contact_1["adr"]["countryName"]+"bis")
-        self.contacts.replaceStr(contFields['comment'    ] , self.Contact_1["comment"]+"bis")
         self.contacts.addGalleryImageToContact(0)
                 
         #

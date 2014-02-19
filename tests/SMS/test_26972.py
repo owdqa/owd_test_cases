@@ -9,7 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -33,7 +34,7 @@ class test_main(GaiaTestCase):
         
         self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
         
-        self.cont = MockContacts().Contact_1
+        self.cont = MockContact()
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -64,8 +65,7 @@ class test_main(GaiaTestCase):
         # Long press the email link.
         #
         _link = x.find_element("tag name", "a")
-        self.actions    = Actions(self.marionette)
-        self.actions.long_press(_link,2).perform()
+        _link.tap()
         
         #
         # Click 'create new contact'.
@@ -98,7 +98,6 @@ class test_main(GaiaTestCase):
         self._changeField('zip'         , self.cont["adr"]["postalCode"])
         self._changeField('city'        , self.cont["adr"]["locality"])
         self._changeField('country'     , self.cont["adr"]["countryName"])
-        self._changeField('comment'     , self.cont["comment"])
         self.contacts.addGalleryImageToContact(0)
 
         #

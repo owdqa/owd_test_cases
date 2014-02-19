@@ -50,7 +50,9 @@ class test_main(GaiaTestCase):
         x = self.messages.waitForReceivedMsgInThisThread()
         self.UTILS.TEST(x, "Received a message.", True)
         
-        x.find_element("xpath", "/html/body/article/section[2]/article/ul[2]/li[2]/section/div/p/a").tap()
+        a=x.find_element("tag name", "a")
+
+        a.tap()
 
         x = self.UTILS.getElement(DOM.Messages.header_call_btn, "Call button")
         x.tap()

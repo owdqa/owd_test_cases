@@ -27,7 +27,7 @@ class test_main(GaiaTestCase):
         #
         # Put the phone into airplane mode.
         #
-        self.data_layer.set_setting('ril.radio.disabled', True)
+        self.data_layer.set_setting('airplaneMode.enabled', True)
         
     def tearDown(self):
         self.UTILS.reportResults()

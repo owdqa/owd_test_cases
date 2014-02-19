@@ -53,8 +53,7 @@ class test_main(GaiaTestCase):
         # Long press the 2nd email link.
         #
         _link = x.find_elements("tag name", "a")
-        self.actions    = Actions(self.marionette)
-        self.actions.long_press(_link[1],2).perform()
+        _link.tap()
         
         #
         # Click 'create new contact'.

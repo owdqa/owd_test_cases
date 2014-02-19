@@ -10,7 +10,8 @@ import time
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -28,42 +29,34 @@ class test_main(GaiaTestCase):
         #
         # Prepare the contact we're going to insert.
         #
-        self.contact_1 = MockContacts().Contact_1
+        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.Contact_1 = MockContact(tel = {'type': '', 'value': self.num1})
 
-        #
-        # Establish which phone number to use.
-        #
-        self.num = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.contact_1["tel"]["value"] = self.num
-        self.UTILS.logComment("Using target telephone number " + self.contact_1["tel"]["value"])
-        
-        #
-        # Import this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
-        #
-        self.data_layer.insert_contact(self.contact_1)
+        self.UTILS.insertContact(self.Contact_1)
+        self.UTILS.logComment("Using target telephone number " + self.Contact_1["tel"]["value"])
 
     def tearDown(self):
         self.UTILS.reportResults()
         
     def test_run(self):
         msgapp = self.messages.launch()
-        self.messages.createAndSendSMS([self.num], "Test")
+        self.messages.createAndSendSMS([self.num1], "Test")
         self.messages.waitForReceivedMsgInThisThread()
         
         x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
-        self.messages.openThread(self.contact_1["name"])
+        self.messages.openThread(self.Contact_1["name"])
         
         #
         # Delete the contact
         #
         self.apps.kill(msgapp)
         self.contacts.launch()
-        self.contacts.deleteContact(self.contact_1["name"])
+        self.contacts.deleteContact(self.Contact_1["name"])
         
         #
         # Go back to SMS app and try to open the thread by phone number
         #
         self.messages.launch()
-        self.messages.openThread(self.contact_1["tel"]["value"])
+        self.messages.openThread(self.Contact_1["tel"]["value"])
 

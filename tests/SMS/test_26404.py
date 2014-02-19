@@ -10,7 +10,8 @@ import time
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -26,15 +27,9 @@ class test_main(GaiaTestCase):
         #
         # Prepare the contact we're going to insert.
         #
-        self.contact_1 = MockContacts().Contact_1
+        self.Contact_1 = MockContact()
+        self.UTILS.insertContact(self.Contact_1)
 
-        #
-        # Add this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
-        #
-        self.data_layer.insert_contact(self.contact_1)
-
-        
-        
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -47,7 +42,7 @@ class test_main(GaiaTestCase):
         #
         # View the details of our contact.
         #
-        self.contacts.viewContact(self.contact_1['name'])
+        self.contacts.viewContact(self.Contact_1['name'])
         
         #
         # Tap the sms button in the view details screen to go to the sms page.
@@ -67,5 +62,4 @@ class test_main(GaiaTestCase):
         # TEST: this automatically opens the 'send SMS' screen, so
         # check the correct name is in the 'to' field of this sms.
         #
-        self.messages.checkIsInToField(self.contact_1['name'])
-    
+        self.messages.checkIsInToField(self.Contact_1['name'])

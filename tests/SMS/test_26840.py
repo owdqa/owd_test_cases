@@ -9,7 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -27,21 +28,16 @@ class test_main(GaiaTestCase):
         #
         # Prepare the contact we're going to import.
         #
-        self.contact_1 = MockContacts().Contact_1
+        tlf = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': tlf})
 
-        #
-        # Establish which phone number to use.
-        #
-        self.contact_1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Using target telephone number " + self.contact_1["tel"]["value"])
+        self.UTILS.logComment("Using target telephone number " + self.Contact_1["tel"]["value"])
         
         #
         # Add this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
         #
-        self.data_layer.insert_contact(self.contact_1)
-        
-        
-        
+        self.UTILS.insertContact(self.Contact_1)
+
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -55,7 +51,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.contact_1["tel"]["value"]], self._TestMsg)
+        self.messages.createAndSendSMS([self.Contact_1["tel"]["value"]], self._TestMsg)
         
 #         #
 #         # Wait for the last message in this thread to be a 'recieved' one.

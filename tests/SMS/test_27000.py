@@ -43,8 +43,7 @@ class test_main(GaiaTestCase):
         # Long press the emedded number link.
         #
         y = x.find_element("tag name", "a")  
-        self.actions    = Actions(self.marionette)
-        self.actions.long_press(y,2).perform()
+        y.tap()
         
         #
         # Select create new contact.

@@ -10,7 +10,8 @@ import time
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -28,20 +29,10 @@ class test_main(GaiaTestCase):
         #
         # Prepare the contact we're going to insert.
         #
-        self.contact_1 = MockContacts().Contact_1
+        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.Contact_1 = MockContact(givenName = '', familyName = '', name = '', tel = {'type': '', 'value': self.num1})
 
-        #
-        # Set given and family name to empty string
-        #
-        self.contact_1["givenName"] = ""
-        self.contact_1["familyName"] = ""
-        self.contact_1["name"] = "" 
-        self.contact_1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        
-        #
-        # Import this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
-        #
-        self.data_layer.insert_contact(self.contact_1)
+        self.UTILS.insertContact(self.Contact_1)
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -56,7 +47,7 @@ class test_main(GaiaTestCase):
         # Create SMS.
         #
         self.messages.startNewSMS()
-        self.messages.addNumbersInToField([ self.contact_1["tel"]["value"] ])
+        self.messages.addNumbersInToField([ self.Contact_1["tel"]["value"] ])
         self.messages.enterSMSMsg(self._TestMsg)
         
         #
@@ -72,4 +63,4 @@ class test_main(GaiaTestCase):
         #
         # Verify the number is shown in the header as there is no contact name
         #
-        self.messages.checkThreadHeader(str(self.contact_1["tel"]["value"]))
+        self.messages.checkThreadHeader(str(self.Contact_1["tel"]["value"]))

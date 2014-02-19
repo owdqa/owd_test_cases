@@ -9,7 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -22,11 +23,13 @@ class test_main(GaiaTestCase):
         self.messages   = Messages(self)
         self.contacts   = Contacts(self)
         
+        self.Contact_1 = MockContact(tel = [{'type': 'Mobile', 'value': '11111111'}, {'type': 'Mobile', 'value': '222222222'}] )
+
         #
-        # Import contact (adjust to the correct number).
+        # We're not testing adding a contact, so just stick one
+        # into the database.
         #
-        self.Contact_twoPhones = MockContacts().Contact_twoPhones
-        self.data_layer.insert_contact(self.Contact_twoPhones)
+        self.UTILS.insertContact(self.Contact_1)
                 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -47,6 +50,5 @@ class test_main(GaiaTestCase):
         # Search for our contact.
         #
         self.messages.selectAddContactButton()
-        self.contacts.search("Bobby")
-        self.contacts.selectSearchResultSeveralPhones("Bobby",0)
-        
+        self.contacts.search(self.Contact_1['name'])
+        self.contacts.selectSearchResultSeveralPhones(self.Contact_1['name'],0)

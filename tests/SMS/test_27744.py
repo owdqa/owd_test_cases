@@ -10,6 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
+
 class test_main(GaiaTestCase):
     
     def setUp(self):
@@ -63,8 +64,9 @@ class test_main(GaiaTestCase):
         self.marionette.switch_to_frame()
         x = self.UTILS.getElement( ("xpath", "//*[text()='Are you sure you want to discard this message?']"),
                                    "Discard confirmation message", True, 5, False)
-        x = self.UTILS.getElement( ("id", "modal-dialog-confirm-ok"), "OK button", True, 5, False)
+        x = self.UTILS.getElement(DOM.GLOBAL.modal_confirm_ok2, "OK button", True, 5, False)
         x.tap()
+
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
         
         #
