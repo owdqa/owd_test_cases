@@ -27,8 +27,8 @@ class test_main(GaiaTestCase):
         #
         self.contacts.launch()
 
-        
-    
+
+
     def tearDown(self):
         self.UTILS.reportResults()
         

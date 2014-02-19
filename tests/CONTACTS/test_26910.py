@@ -9,8 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
@@ -25,23 +25,13 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.cont1 = MockContacts().Contact_1
-        self.cont2 = MockContacts().Contact_2
-        self.cont3 = MockContacts().Contact_3
-        
-        self.cont1["givenName"]  = "Agivenname"
-        self.cont2["givenName"]  = "Bgivenname"
-        self.cont3["givenName"]  = "Cgivenname"
-        self.cont1["familyName"] = "Cfamailyname"
-        self.cont2["familyName"] = "Bfamailyname"
-        self.cont3["familyName"] = "Afamailyname"
-        
-        self.cont1["name"]       = self.cont1["givenName"] + " " + self.cont1["familyName"]
-        self.cont2["name"]       = self.cont2["givenName"] + " " + self.cont2["familyName"]
-        self.cont3["name"]       = self.cont3["givenName"] + " " + self.cont3["familyName"]
-        self.data_layer.insert_contact(self.cont1)
-        self.data_layer.insert_contact(self.cont2)
-        self.data_layer.insert_contact(self.cont3)
+        self.Contact_1 = MockContact(givenName = 'Agivenname', familyName = 'Cfamailyname', name = 'Agivenname Cfamailyname')
+        self.Contact_2 = MockContact(givenName = 'Bgivenname', familyName = 'Bfamailyname', name = 'Bgivenname Bfamailyname')
+        self.Contact_3 = MockContact(givenName = 'Cgivenname', familyName = 'Afamailyname', name = 'Cgivenname Afamailyname')
+
+        self.UTILS.insertContact(self.Contact_1)
+        self.UTILS.insertContact(self.Contact_2)
+        self.UTILS.insertContact(self.Contact_3)
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -56,24 +46,23 @@ class test_main(GaiaTestCase):
         # Because we don't know what the initial state of the search order is, check it twice.
         #
         x = self.UTILS.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
-        if x[0].text != self.cont1["name"]:
+        if x[0].text != self.Contact_1["name"]:
             self.UTILS.logResult("info", "(NOTE: it looks like the initial search order may need to be changed)")
             self._toggleSearchOrder()
 
         self.UTILS.logResult("info", "<b>Checking when sorted by given name (first name) ...</b>")
         x = self.UTILS.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
-        self.UTILS.TEST(x[0].text == self.cont1["name"], "'%s' is the first contact listed." % self.cont1["name"])
-        self.UTILS.TEST(x[1].text == self.cont2["name"], "'%s' is the second contact listed." % self.cont2["name"])
-        self.UTILS.TEST(x[2].text == self.cont3["name"], "'%s' is the thrid contact listed." % self.cont3["name"])
+        self.UTILS.TEST(x[0].text == self.Contact_1["name"], "'%s' is the first contact listed." % self.Contact_1["name"])
+        self.UTILS.TEST(x[1].text == self.Contact_2["name"], "'%s' is the second contact listed." % self.Contact_2["name"])
+        self.UTILS.TEST(x[2].text == self.Contact_3["name"], "'%s' is the thrid contact listed." % self.Contact_3["name"])
         
         self._toggleSearchOrder()
 
         self.UTILS.logResult("info", "<b>Checking when sorted by family name (last name) ...</b>")
         x = self.UTILS.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
-        self.UTILS.TEST(x[0].text == self.cont3["name"], "'%s' is the first contact listed." % self.cont3["name"])
-        self.UTILS.TEST(x[1].text == self.cont2["name"], "'%s' is the second contact listed." % self.cont2["name"])
-        self.UTILS.TEST(x[2].text == self.cont1["name"], "'%s' is the third contact listed." % self.cont1["name"])
-
+        self.UTILS.TEST(x[0].text == self.Contact_3["name"], "'%s' is the first contact listed." % self.Contact_3["name"])
+        self.UTILS.TEST(x[1].text == self.Contact_2["name"], "'%s' is the second contact listed." % self.Contact_2["name"])
+        self.UTILS.TEST(x[2].text == self.Contact_1["name"], "'%s' is the third contact listed." % self.Contact_1["name"])
 
     def _toggleSearchOrder(self):
         self.UTILS.logResult("info", "<b>Changing sort order ...</b>")

@@ -20,13 +20,13 @@ from OWDTestToolkit import *
 #
 import time
 
+
 class main(GaiaTestCase):
 
     def setUp(self):
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.contacts   = Contacts(self)
-
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -53,7 +53,7 @@ class main(GaiaTestCase):
         # Get details of our test contacts.
         #
         self.UTILS.logResult("info", "Setting up contact ...")
-        self.data_layer.insert_contact(p_contact_json_obj)
+        self.UTILS.insertContact(p_contact_json_obj)
         
         # Add image.
         self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
@@ -78,8 +78,7 @@ class main(GaiaTestCase):
         
         self.UTILS.checkMarionetteOK()
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
-        
-        
+
         self.UTILS.logResult("info", "<b>For each of our items for this field, click the icon to set them to 'remove' ...</b>")
         for i in p_item_nums:
             x = self.UTILS.getElements(_field_locator, "Field being tested (item %s)" % i)[i]
@@ -93,7 +92,6 @@ class main(GaiaTestCase):
             
             x = self.UTILS.getElements(_field_locator, "Field being tested (item %s)" % i)[i]
             self.UTILS.TEST("removed" in x.get_attribute("class"), "The item IS now marked as temporarily removed.")
-            
 
         self.UTILS.logResult("info", "<b>For each of our items for this field, click the icon to turn off 'remove' ...</b>")
         for i in p_item_nums:
@@ -105,6 +103,3 @@ class main(GaiaTestCase):
             
             x = self.UTILS.getElements(_field_locator, "Field being tested (item %s)" % i)[i]
             self.UTILS.TEST("removed" not in x.get_attribute("class"), "The item is now NOT marked as temporarily removed.")
-        
-        
-        

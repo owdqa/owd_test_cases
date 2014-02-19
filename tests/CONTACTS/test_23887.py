@@ -9,8 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
@@ -25,11 +25,10 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.Contact_1 = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.Contact_1)
+        self.Contact_1 = MockContact()
+        self.UTILS.insertContact(self.Contact_1)
         
-        
-    
+
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -60,7 +59,9 @@ class test_main(GaiaTestCase):
         #
         # Check our chap is listed in the group favourites.
         #
-        self.UTILS.getElement(DOM.Contacts.favourite_JS, "John Smith")
+        string = '' + self.Contact_1['familyName'] + self.Contact_1['givenName']
+        favs = ("xpath", DOM.Contacts.favourites_list_xpath % string)
+        self.UTILS.waitForElements(favs,"'" + self.Contact_1['name'] + "' in the favourites list")
         
         #
         # View the contact.
@@ -90,6 +91,6 @@ class test_main(GaiaTestCase):
         #
         # Check our chap is no longer listed in the group favourites.
         #
-        favs = ("xpath", DOM.Contacts.favourites_list_xpath % self.Contact_1['name'].replace(" ", ""))
+        string = '' + self.Contact_1['familyName'] + self.Contact_1['givenName']
+        favs = ("xpath", DOM.Contacts.favourites_list_xpath % string)
         self.UTILS.waitForNotElements(favs,"'" + self.Contact_1['name'] + "' in the favourites list")
-        

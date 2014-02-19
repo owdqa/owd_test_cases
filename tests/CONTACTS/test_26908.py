@@ -9,8 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
@@ -25,16 +25,15 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.cont = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.cont)
-        
-        
+        self.Contact_1 = MockContact()
+        self.UTILS.insertContact(self.Contact_1)
+
     def tearDown(self):
         self.UTILS.reportResults()
         
     def test_run(self):
         self.contacts.launch()
-        self.contacts.viewContact(self.cont['name'])
+        self.contacts.viewContact(self.Contact_1['name'])
         self.contacts.pressEditContactButton()
         
         self.marionette.execute_script("document.getElementById('delete-contact').scrollIntoView();")

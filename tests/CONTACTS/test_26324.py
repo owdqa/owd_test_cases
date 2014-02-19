@@ -9,7 +9,7 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
 
 class test_main(GaiaTestCase):
 
@@ -24,14 +24,14 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.Contact_1 = MockContacts().Contact_1
-        self.Contact_2 = MockContacts().Contact_2
+        self.Contact_1 = MockContact()
+        self.Contact_2 = MockContact()
 
         #
         # We're not testing adding a contact, so just stick one 
         # into the database.
         #
-        self.data_layer.insert_contact(self.Contact_1)
+        self.UTILS.insertContact(self.Contact_1)
         
         
     def tearDown(self):
@@ -56,7 +56,4 @@ class test_main(GaiaTestCase):
         #
         # TEST: The 'edit contact' page shows the correct details for this new contact.
         #
-        self.contacts.checkEditContactDetails(self.Contact_2) 
-
-  
-        
+        self.contacts.checkEditContactDetails(self.Contact_2)

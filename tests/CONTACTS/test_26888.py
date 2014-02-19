@@ -10,7 +10,8 @@ import time
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -25,12 +26,12 @@ class test_main(GaiaTestCase):
         #
         # Prepare the contact.
         #
-        self.cont2 = MockContacts().Contact_1
-        self.cont  = MockContacts().Contact_2
-        self.cont3 = MockContacts().Contact_3
-        self.data_layer.insert_contact(self.cont)
-        self.data_layer.insert_contact(self.cont2)
-        self.data_layer.insert_contact(self.cont3)
+        self.Contact_1 = MockContact()
+        self.Contact_2 = MockContact()
+        self.Contact_3 = MockContact()
+        self.UTILS.insertContact(self.Contact_1)
+        self.UTILS.insertContact(self.Contact_2)
+        self.UTILS.insertContact(self.Contact_3)
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -46,13 +47,15 @@ class test_main(GaiaTestCase):
         # View the details of our contact and make him a favourite.
         #
         self.UTILS.logResult("info", "<b>Setting up a contact in favourites ...</b>")
-        self.contacts.viewContact(self.cont['name'])
+        self.contacts.viewContact(self.Contact_1['name'])
         
         x = self.UTILS.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
         x.tap()
         x = self.UTILS.getElement(DOM.Contacts.details_back_button, "Back button")
         x.tap()
-        self.UTILS.getElement(DOM.Contacts.favourite_JS, "John Smith")
+        string = '' + self.Contact_1['familyName'] + self.Contact_1['givenName']
+        favs = ("xpath", DOM.Contacts.favourites_list_xpath % string)
+        self.UTILS.waitForElements(favs,"'" + self.Contact_1['name'] + "' in the favourites list")
         
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot at this point", x)
@@ -74,6 +77,3 @@ class test_main(GaiaTestCase):
                 
         self.UTILS.TEST(foundNormal , "Found the non-favourite lists.")
         self.UTILS.TEST(foundFav    , "Found the favourite lists before the non-favourite lists.")
-        
-        
-        

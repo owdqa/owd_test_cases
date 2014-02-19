@@ -10,7 +10,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
  
@@ -26,18 +27,14 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.cont1 = MockContacts().Contact_1
-        self.cont2 = MockContacts().Contact_2
+        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': '123111111'})
+        self.Contact_2 = MockContact(tel = {'type': 'Mobile', 'value': '123222222'})
 
         #        
         # Make sure we can find both of them with a search.
         #
-        self.cont1["tel"]["value"] = "123111111"
-        self.cont2["tel"]["value"] = "123222222"
-        
-        self.data_layer.insert_contact(self.cont2)
-        
-        
+        self.UTILS.insertContact(self.Contact_2)
+
     def tearDown(self):
         self.UTILS.reportResults()
 
@@ -56,19 +53,19 @@ class test_main(GaiaTestCase):
         #
         # Create our contact.
         #
-        self.contacts.createNewContact(self.cont1,"gallery")
+        self.contacts.createNewContact(self.Contact_1,"gallery")
         
         #
         # Verify our contact.
         #
-        self.contacts.verifyImageInAllContacts(self.cont1['name'])
+        self.contacts.verifyImageInAllContacts(self.Contact_1['name'])
         
         #
         # Search for our contacts.
         #
         self.contacts.search("12")
-        self.contacts.checkSearchResults(self.cont1["givenName"])
-        self.contacts.checkSearchResults(self.cont2["givenName"])
+        self.contacts.checkSearchResults(self.Contact_1["givenName"])
+        self.contacts.checkSearchResults(self.Contact_2["givenName"])
         
         #
         # Verify that the image is present for the right contact.
@@ -88,7 +85,7 @@ class test_main(GaiaTestCase):
 
             # Contact 2 (Does NOT have an image).
             try:
-                x = i.find_element("xpath", ".//p[contains(@data-search, '%s')]" % self.cont2["name"])
+                x = i.find_element("xpath", ".//p[contains(@data-search, '%s')]" % self.Contact_2["name"])
                 if x:
                     try:
                         x = i.find_element("xpath", ".//img")
@@ -99,10 +96,8 @@ class test_main(GaiaTestCase):
                         pass  
             except:
                 pass
-                
-        self.UTILS.TEST(boolOK1, "Contact 1 has image displayed.")
+
         self.UTILS.TEST(boolOK2, "Contact 2 has no image displayed.")        
         
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot of search results", x)
-        
