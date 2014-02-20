@@ -9,8 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
@@ -26,11 +26,11 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.cont = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.cont)
+        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': '665666666'})
+        self.UTILS.insertContact(self.Contact_1)
         
-        self._name = self.cont["name"]
-        self._num  = self.cont["tel"]["value"]
+        self._name = self.Contact_1["name"]
+        self._num  = self.Contact_1["tel"]["value"]
         
         
     def tearDown(self):

@@ -9,7 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -21,7 +22,7 @@ class test_main(GaiaTestCase):
         self.contacts   = Contacts(self)
         
         self.num  = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.cont = MockContacts().Contact_1
+        self.Contact_1 = MockContact()
                 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -38,8 +39,8 @@ class test_main(GaiaTestCase):
         self.dialer.callLog_createContact(self.num)
         
         contFields = self.contacts.getContactFields()
-        self.contacts.replaceStr(contFields['givenName'  ] , self.cont["givenName"])
-        self.contacts.replaceStr(contFields['familyName' ] , self.cont["familyName"])
+        self.contacts.replaceStr(contFields['givenName'  ] , self.Contact_1["givenName"])
+        self.contacts.replaceStr(contFields['familyName' ] , self.Contact_1["familyName"])
          
         done_button = self.UTILS.getElement(DOM.Contacts.done_button, "'Done' button")
         done_button.tap()
@@ -61,4 +62,4 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement( ("xpath", DOM.Dialer.call_log_number_xpath % self.num),
                                    "The call log for number %s" % self.num)
 
-        self.UTILS.TEST(self.cont["name"] in x.text, "Call log now shows '%s'." % self.cont["name"])
+        self.UTILS.TEST(self.Contact_1["name"] in x.text, "Call log now shows '%s'." % self.Contact_1["name"])

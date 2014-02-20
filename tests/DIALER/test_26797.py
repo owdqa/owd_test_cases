@@ -9,8 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
@@ -26,11 +26,10 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.cont = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.cont)
+        self.Contact_1 = MockContact()
+        self.UTILS.insertContact(self.Contact_1)
         
-        self.contact_name=self.cont["givenName"]
-        
+        self.contact_name=self.Contact_1["givenName"]
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -68,8 +67,8 @@ class test_main(GaiaTestCase):
         #
         time.sleep(1)
         self.UTILS.switchToFrame(*DOM.Dialer.frame_locator_calling)
-        self.UTILS.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP % self.cont["name"]),
-                                    "Outgoing call found with number matching %s" % self.cont["name"])
+        self.UTILS.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP % self.Contact_1["name"]),
+                                    "Outgoing call found with number matching %s" % self.Contact_1["name"])
 
         time.sleep(2)
 

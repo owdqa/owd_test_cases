@@ -9,9 +9,12 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
+
+    _RESTART_DEVICE = True
     
     def setUp(self):
         # Set up child objects...
@@ -23,9 +26,8 @@ class test_main(GaiaTestCase):
         self.num  = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.num2 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
         
-        self.cont = MockContacts().Contact_1
-        self.cont["tel"]["value"] = self.num2
-        self.data_layer.insert_contact(self.cont)
+        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': self.num2})
+        self.UTILS.insertContact(self.Contact_1)
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -43,13 +45,13 @@ class test_main(GaiaTestCase):
         #
         # Open the call log and add to our contact.
         #
-        self.dialer.callLog_addToContact(self.num, self.cont["name"])
+        self.dialer.callLog_addToContact(self.num, self.Contact_1["name"])
          
         #
         # Verify that this contact has been modified in contacts.
         #
         self.contacts.launch()
-        self.contacts.viewContact(self.cont["name"])
+        self.contacts.viewContact(self.Contact_1["name"])
         
         self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_contact_tels_xpath % self.num), 
-                                    "Telephone number %s in conact" % self.num)
+                                    "Telephone number %s in contact" % self.num)

@@ -9,7 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -21,12 +22,10 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.dialer     = Dialer(self)
         self.contacts   = Contacts(self)
-        
 
-        self.cont1 = MockContacts().Contact_1
-        self.cont1["tel"]["value"] = "111111111"
-        self.data_layer.insert_contact(self.cont1)
-        
+        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': '111111111'})
+        self.UTILS.insertContact(self.Contact_1)
+
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -48,11 +47,11 @@ class test_main(GaiaTestCase):
         x.tap()
 
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
-        self.contacts.viewContact(self.cont1["name"], p_HeaderCheck=False)
+        self.contacts.viewContact(self.Contact_1["name"], p_HeaderCheck=False)
 
         x = self.UTILS.getElement( ("name", "tel[0][value]"), "Phone number 1")
-        self.UTILS.TEST(x.get_attribute("value") == self.cont1["tel"]["value"], 
-                        "1st number is %s (it was %s)." % (self.cont1["tel"]["value"], x.get_attribute("value")))
+        self.UTILS.TEST(x.get_attribute("value") == self.Contact_1["tel"]["value"],
+                        "1st number is %s (it was %s)." % (self.Contact_1["tel"]["value"], x.get_attribute("value")))
 
         x = self.UTILS.getElement( ("name", "tel[1][value]"), "Phone number 2")
         self.UTILS.TEST(x.get_attribute("value") == self._testNum, 

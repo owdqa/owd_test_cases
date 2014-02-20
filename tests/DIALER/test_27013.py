@@ -9,7 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -23,11 +24,8 @@ class test_main(GaiaTestCase):
         self.num  = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         
         # Remove the phone number from the contact and insert it.
-        self.cont = MockContacts().Contact_1
-        self.cont["tel"]["type"]    = ""
-        self.cont["tel"]["carrier"] = ""
-        self.cont["tel"]["value"]   = ""
-        self.data_layer.insert_contact(self.cont)
+        self.Contact_1 = MockContact(tel = {'type': '', 'value': ''})
+        self.UTILS.insertContact(self.Contact_1)
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -38,14 +36,14 @@ class test_main(GaiaTestCase):
         #
         self.dialer.launch()
         self.dialer.enterNumber(self.num)
-        self.dialer.addThisNumberToContact(self.cont["name"])
+        self.dialer.addThisNumberToContact(self.Contact_1["name"])
          
         #
         # Verify that this contact has been modified in contacts.
         #
         self.apps.kill_all()
         self.contacts.launch()
-        self.contacts.viewContact(self.cont["name"])
+        self.contacts.viewContact(self.Contact_1["name"])
         
         x = self.UTILS.getElement(DOM.Contacts.view_contact_tel_field, "Contact telephone number")
         self.UTILS.TEST(self.num in x.text, "Phone number contains %s (it was %s)." % (self.num, x.text))

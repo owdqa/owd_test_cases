@@ -9,7 +9,7 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
 
 class test_main(GaiaTestCase):
     
@@ -20,8 +20,8 @@ class test_main(GaiaTestCase):
         self.dialer     = Dialer(self)
         self.contacts   = Contacts(self)
 
-        self.cont_twilio = MockContacts().Contact_twilio
-        self.num = self.cont_twilio["tel"]["value"]
+        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': '665666666'})
+        self.num = self.Contact_1["tel"]["value"]
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -40,4 +40,3 @@ class test_main(GaiaTestCase):
         self.UTILS.logResult("info", "Screenshot of call being made:", x)
         
         self.dialer.hangUp()
-        

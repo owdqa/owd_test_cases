@@ -9,7 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -20,7 +21,7 @@ class test_main(GaiaTestCase):
         self.dialer     = Dialer(self)
         self.contacts   = Contacts(self)
         
-        self.cont = MockContacts().Contact_1
+        self.Contact_1 = MockContact()
         self.num  = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         
     def tearDown(self):
@@ -47,8 +48,8 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
         contFields = self.contacts.getContactFields()
-        self.contacts.replaceStr(contFields['givenName'  ] , self.cont["givenName"])
-        self.contacts.replaceStr(contFields['familyName' ] , self.cont["familyName"])
+        self.contacts.replaceStr(contFields['givenName'  ] , self.Contact_1["givenName"])
+        self.contacts.replaceStr(contFields['familyName' ] , self.Contact_1["familyName"])
          
         done_button = self.UTILS.getElement(DOM.Contacts.done_button, "'Done' button")
         done_button.tap()
@@ -67,7 +68,7 @@ class test_main(GaiaTestCase):
         #
         self.apps.kill_all()
         self.contacts.launch()
-        self.contacts.viewContact(self.cont["name"])
+        self.contacts.viewContact(self.Contact_1["name"])
         
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Final screenshot and html dump:", x)        

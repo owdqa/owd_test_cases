@@ -9,7 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -20,7 +21,7 @@ class test_main(GaiaTestCase):
         self.dialer     = Dialer(self)
         self.contacts   = Contacts(self)
         
-        self.cont1 = MockContacts().Contact_1
+        self.Contact_1 = MockContact()
                 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -34,4 +35,3 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(DOM.Dialer.call_log_edit_btn, "Edit button", False)
         
         self.UTILS.TEST(x.get_attribute("class") == "disabled", "The edit button is disabled.")
-        
