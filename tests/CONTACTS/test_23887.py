@@ -59,7 +59,7 @@ class test_main(GaiaTestCase):
         #
         # Check our chap is listed in the group favourites.
         #
-        string = '' + self.Contact_1['familyName'] + self.Contact_1['givenName']
+        string = '' + self.Contact_1['givenName'] + self.Contact_1['familyName']
         favs = ("xpath", DOM.Contacts.favourites_list_xpath % string)
         self.UTILS.waitForElements(favs,"'" + self.Contact_1['name'] + "' in the favourites list")
         
@@ -91,6 +91,6 @@ class test_main(GaiaTestCase):
         #
         # Check our chap is no longer listed in the group favourites.
         #
-        string = '' + self.Contact_1['familyName'] + self.Contact_1['givenName']
+        string = '' + self.Contact_1['givenName'] + self.Contact_1['familyName']
         favs = ("xpath", DOM.Contacts.favourites_list_xpath % string)
         self.UTILS.waitForNotElements(favs,"'" + self.Contact_1['name'] + "' in the favourites list")

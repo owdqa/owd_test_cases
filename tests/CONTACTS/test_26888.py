@@ -53,7 +53,7 @@ class test_main(GaiaTestCase):
         x.tap()
         x = self.UTILS.getElement(DOM.Contacts.details_back_button, "Back button")
         x.tap()
-        string = '' + self.Contact_1['familyName'] + self.Contact_1['givenName']
+        string = '' + self.Contact_1['givenName'] + self.Contact_1['familyName']
         favs = ("xpath", DOM.Contacts.favourites_list_xpath % string)
         self.UTILS.waitForElements(favs,"'" + self.Contact_1['name'] + "' in the favourites list")
         

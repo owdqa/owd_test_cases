@@ -54,8 +54,12 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(DOM.Contacts.settings_button, "Settings button")
         x.tap()
 
+        time.sleep(2)
+
         x = self.UTILS.getElement(DOM.Contacts.import_contacts, "Import button")
         x.tap()
+
+        time.sleep(2)
         
         #
         # Press the Gmail button and go to the gmail frame.

@@ -66,8 +66,7 @@ class test_main(GaiaTestCase):
         #
         # Check all our contacts are in the list.
         #
-        self.UTILS.waitForElements(DOM.Contacts.view_all_contact_JSname,
-                                   "Contact '%s'" % self.cont["familyName"])
+        self.UTILS.waitForElements(DOM.Contacts.view_all_contact_JSname, "Name")
         
         # ... and the hotmail contacts ...
         self.UTILS.waitForElements(DOM.Contacts.view_all_contact_import, "Gmail imported contact")

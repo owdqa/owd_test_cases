@@ -80,8 +80,7 @@ class test_main(GaiaTestCase):
         #
         # Check our two contacts are in the list.
         #
-        self.UTILS.waitForElements(DOM.Contacts.view_all_contact_JSname,
-                                   "Contact '%s'" % self.cont["familyName"])
+        self.UTILS.waitForElements(DOM.Contacts.view_all_contact_JSname, "Name")
         
         self.UTILS.waitForElements(DOM.Contacts.view_all_contact_import, "Hotmail imported contact")
         

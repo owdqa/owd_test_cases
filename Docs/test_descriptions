@@ -315,6 +315,7 @@
 29921|Verify that the user can receive attached a file .jpg in a MMS and it is displayed as image
 29922|Verify that the user can receive attached a file .mp4 in a MMS and it is displayed as video
 29923|Verify that the user can receive attached a file .mp3 in a MMS and it is displayed as audio
+30765|Verify that a contact imported from gmail is exported successfully
 31716|MMS Recipient Name
 31717|Message with text, audio and images
 31718|Message size during composition
