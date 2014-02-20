@@ -52,5 +52,5 @@ class test_main(GaiaTestCase):
 
         self.UTILS.waitForElements(DOM.Messages.header_create_new_contact_btn, "Create new contact button")
         self.UTILS.waitForElements(DOM.Messages.header_add_to_contact_btn, "Add to existing contact button")
-        self.UTILS.waitForElements(DOM.Messages.header_cancel_btn, "Cancel button")
+        self.UTILS.waitForElements(DOM.Messages.header_cancel_btn_absolute, "Cancel button")
 

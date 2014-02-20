@@ -60,9 +60,15 @@ class test_main(GaiaTestCase):
                 self.UTILS.logResult("info", "Tapping ...")
                 i.tap()
                 break
+
+        time.sleep(2)
+
+        self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
+
+        self.messages.checkIsInToField("", True)
         
-        self.UTILS.waitForElements(DOM.Messages.contact_no_phones_msg, "Message saying this contact has no phones")
-        x = self.UTILS.getElement(DOM.Messages.contact_no_phones_ok, "OK button")
-        x.tap()
-        
-        self.UTILS.headerCheck("Select contact")
+        # self.UTILS.waitForElements(DOM.Messages.contact_no_phones_msg, "Message saying this contact has no phones")
+        # x = self.UTILS.getElement(DOM.Messages.contact_no_phones_ok, "OK button")
+        # x.tap()
+        #
+        # self.UTILS.headerCheck("Select contact")

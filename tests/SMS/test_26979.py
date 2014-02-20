@@ -59,6 +59,9 @@ class test_main(GaiaTestCase):
         #
         _link = x.find_element("tag name", "a")
         _link.tap()
+
+        z= self.UTILS.getElement(DOM.Messages.header_send_email_btn, "Edit button")
+        z.tap()
         
         #
         # Switch to email frame and verify the email address is in the To field.

@@ -98,7 +98,6 @@ class test_main(GaiaTestCase):
         self._changeField('zip'         , self.cont["adr"]["postalCode"])
         self._changeField('city'        , self.cont["adr"]["locality"])
         self._changeField('country'     , self.cont["adr"]["countryName"])
-        self.contacts.addGalleryImageToContact(0)
 
         #
         # Check the fields have been updated correctly.

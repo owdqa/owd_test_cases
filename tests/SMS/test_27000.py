@@ -10,6 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
+
 class test_main(GaiaTestCase):
     
     def setUp(self):
@@ -40,7 +41,7 @@ class test_main(GaiaTestCase):
         x = self.messages.waitForReceivedMsgInThisThread()
         
         #
-        # Long press the emedded number link.
+        # Long press the embedded number link.
         #
         y = x.find_element("tag name", "a")  
         y.tap()
@@ -48,15 +49,14 @@ class test_main(GaiaTestCase):
         #
         # Select create new contact.
         #
-        x = self.UTILS.getElement(DOM.Messages.header_add_to_contact_btn, "Create new contact button")
+        x = self.UTILS.getElement(DOM.Messages.header_create_new_contact_btn, "Create new contact button")
         x.tap()
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
-        
-        
+
         contFields = self.contacts.getContactFields()
         
         #
-        # Verify the number is in the numbe rfield.
+        # Verify the number is in the number field.
         #
         self.UTILS.TEST("123456789" in contFields['tel'].get_attribute("value"),
                         "Our target number is in the telephone field (it was %s)." % contFields['tel'].get_attribute("value"))
