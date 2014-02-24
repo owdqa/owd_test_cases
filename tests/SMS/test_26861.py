@@ -10,7 +10,8 @@ import time
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     _TestMsg     = "Test text - please ignore."
@@ -28,21 +29,11 @@ class test_main(GaiaTestCase):
         #
         # Prepare the contact we're going to insert.
         #
-        self.contact_1 = MockContacts().Contact_1
- 
-        #
-        # Establish which phone number to use.
-        #
-        self.contact_1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Using target telephone number " + self.contact_1["tel"]["value"])
-         
-        #
-        # Add this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
-        #
-        self.data_layer.insert_contact(self.contact_1)
+        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': self.num1})
 
-        
-        
+        self.UTILS.insertContact(self.Contact_1)
+
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -55,7 +46,7 @@ class test_main(GaiaTestCase):
         #
         # View the details of our contact.
         #
-        self.contacts.viewContact(self.contact_1['name'])
+        self.contacts.viewContact(self.Contact_1['name'])
          
         #
         # Tap the sms button in the view details screen to go to the sms page.
@@ -72,7 +63,7 @@ class test_main(GaiaTestCase):
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
  
         self.UTILS.headerCheck("1 recipient")     
-        self.messages.checkIsInToField(self.contact_1['name'])
+        self.messages.checkIsInToField(self.Contact_1['name'])
         
         # Not present in 'master' branch because of multiple target number fnuctionality.
 #         #

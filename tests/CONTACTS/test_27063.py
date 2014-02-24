@@ -9,8 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
@@ -25,16 +25,12 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.cont1 = MockContacts().Contact_1
-        self.cont2 = MockContacts().Contact_2
+        self.Contact_1 = MockContact(givenName = '1111111')
+        self.Contact_2 = MockContact(familyName = '2222222')
         
-        self.cont1["givenName"] = self.cont1["tel"]["value"]
-        self.cont2["familyName"] = self.cont2["tel"]["value"]
-        
-        self.data_layer.insert_contact(self.cont1)
-        self.data_layer.insert_contact(self.cont2)
-        
-        
+        self.UTILS.insertContact(self.Contact_1)
+        self.UTILS.insertContact(self.Contact_2)
+
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -48,12 +44,12 @@ class test_main(GaiaTestCase):
         # Search for our new contact.
         #
         self.UTILS.logResult("info", "<b>Search against number in 'given name' field ...</b>")
-        self.contacts.search(self.cont1["tel"]["value"])
-        self.contacts.checkSearchResults(self.cont1["givenName"])
+        self.contacts.search('1111111')
+        self.contacts.checkSearchResults(self.Contact_1["givenName"])
         
         x = self.UTILS.getElement(DOM.Contacts.search_cancel_btn, "Search cancel button")
         x.tap()
 
         self.UTILS.logResult("info", "<b>Search against number in 'family name' field ...</b>")
-        self.contacts.search(self.cont2["tel"]["value"])
-        self.contacts.checkSearchResults(self.cont2["givenName"])
+        self.contacts.search('2222222')
+        self.contacts.checkSearchResults(self.Contact_2["givenName"])

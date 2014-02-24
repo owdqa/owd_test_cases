@@ -9,8 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -26,7 +26,7 @@ class test_main(GaiaTestCase):
         self.hotmail_u = self.UTILS.get_os_variable("HOTMAIL_1_EMAIL")
         self.hotmail_p = self.UTILS.get_os_variable("HOTMAIL_1_PASS")
         
-        self.cont = MockContacts().Contact_1
+        self.Contact_1 = MockContact()
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -57,12 +57,9 @@ class test_main(GaiaTestCase):
         
         
         x = self.UTILS.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")[0]
-        self.contacts.editContact(x.text, self.cont)
+        self.contacts.editContact(x.text, self.Contact_1)
         
-        self.contacts.checkViewContactDetails(self.cont)
+        self.contacts.checkViewContactDetails(self.Contact_1)
         
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "After editing contact:", x)
-        
-        
-        

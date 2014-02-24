@@ -10,6 +10,7 @@ from OWDTestToolkit import *
 # Imports particular to this test case.
 #
 
+
 class test_main(GaiaTestCase):
     
     _TestMsg     = "Test message."
@@ -25,8 +26,7 @@ class test_main(GaiaTestCase):
         
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
-        
-        
+
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -39,7 +39,7 @@ class test_main(GaiaTestCase):
         #
         # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
         #
-#         self.messages.deleteAllThreads()
+        #self.messages.deleteAllThreads()
         
         #
         # Create and send a new test message.
@@ -53,8 +53,7 @@ class test_main(GaiaTestCase):
         # Long press the 2nd email link.
         #
         _link = x.find_elements("tag name", "a")
-        self.actions    = Actions(self.marionette)
-        self.actions.long_press(_link[1],2).perform()
+        _link[1].tap()
         
         #
         # Click 'create new contact'.
@@ -70,4 +69,3 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(("id","email_0"), "Email field")
         x_txt = x.get_attribute("value")
         self.UTILS.TEST(x_txt == self.emailAddy, "Email is '" + self.emailAddy + "' (it was '" + x_txt + "')")
-        

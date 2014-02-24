@@ -10,7 +10,8 @@ import time
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -25,8 +26,8 @@ class test_main(GaiaTestCase):
         #
         # Prepare the contact.
         #
-        self.cont = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.cont)
+        self.Contact_1 = MockContact()
+        self.UTILS.insertContact(self.Contact_1)
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -42,7 +43,7 @@ class test_main(GaiaTestCase):
         # View the details of our contact and make him a favourite.
         #
         self.UTILS.logResult("info", "<b>Setting up a contact in favourites ...</b>")
-        self.contacts.viewContact(self.cont['name'])
+        self.contacts.viewContact(self.Contact_1['name'])
         
         x = self.UTILS.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
         x.tap()
@@ -58,7 +59,7 @@ class test_main(GaiaTestCase):
 
         
         self.UTILS.logResult("info", "<b>removing contact from favourites ...</b>")
-        self.contacts.viewContact(self.cont['name'])
+        self.contacts.viewContact(self.Contact_1['name'])
         
         x = self.UTILS.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
         x.tap()
@@ -72,9 +73,3 @@ class test_main(GaiaTestCase):
         
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot at this point", x)
-
-        
-        
-
-        
-        

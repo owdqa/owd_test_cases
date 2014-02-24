@@ -10,7 +10,8 @@ import time
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -24,19 +25,15 @@ class test_main(GaiaTestCase):
         self.messages   = Messages(self)
         
         #
-        # Import contacts (adjust to the correct numbers.
+        # Establish which phone number to use and set up the contacts.
         #
-        self.Contact_1 = MockContacts().Contact_1
-        self.Contact_2 = MockContacts().Contact_2
-        
-        self.Contact_1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.Contact_2["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
+        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.num2 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
+        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': self.num1})
+        self.Contact_2 = MockContact(tel = {'type': 'Mobile', 'value': self.num2})
 
-        self.UTILS.logComment("Using target telephone number " + self.Contact_1["tel"]["value"])
-        self.UTILS.logComment("Using target telephone number " + self.Contact_2["tel"]["value"])
-        
-        self.data_layer.insert_contact(self.Contact_1)
-        self.data_layer.insert_contact(self.Contact_2)
+        self.UTILS.insertContact(self.Contact_1)
+        self.UTILS.insertContact(self.Contact_2)
 
     def tearDown(self):
         self.UTILS.reportResults()

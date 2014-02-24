@@ -9,7 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -23,11 +24,12 @@ class test_main(GaiaTestCase):
         self.contacts   = Contacts(self)
         self.Dialer      = Dialer(self)
 
-        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.num1 = '0034' + self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.num2 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
-        self.cont = MockContacts().Contact_1
-        self.cont["tel"]["value"] = "0034" + self.num1
-        self.data_layer.insert_contact(self.cont)        
+        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': self.num1})
+
+        self.UTILS.insertContact(self.Contact_1)
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -45,9 +47,9 @@ class test_main(GaiaTestCase):
         self.messages.startNewSMS()
         
         self.messages.selectAddContactButton()
-        self.contacts.viewContact(self.cont["familyName"], False)
+        self.contacts.viewContact(self.Contact_1["familyName"], False)
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
-        self.messages.checkIsInToField(self.cont["name"], True)
+        self.messages.checkIsInToField(self.Contact_1["name"], True)
 
         self.messages.enterSMSMsg("Test message.")
         self.messages.sendSMS()
@@ -63,5 +65,5 @@ class test_main(GaiaTestCase):
         # Dialler is started with the number already filled in.
         #
         x = self.UTILS.getElement(DOM.Dialer.phone_number, "Phone number")
-        self.UTILS.TEST(self.num1 in x.get_attribute("value"), 
+        self.UTILS.TEST(self.num2 in x.get_attribute("value"),
                         "The phone number contains '%s' (it was '%s')." % (self.num1, x.get_attribute("value")))

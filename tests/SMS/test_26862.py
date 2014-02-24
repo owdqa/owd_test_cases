@@ -11,6 +11,7 @@ from OWDTestToolkit import *
 #
 import time
 
+
 class test_main(GaiaTestCase):
     
     _TestMsg     = "Test."
@@ -28,7 +29,7 @@ class test_main(GaiaTestCase):
         #
         # Put the phone into airplane mode.
         #
-        self.data_layer.set_setting('ril.radio.disabled', True)
+        self.data_layer.set_setting('airplaneMode.enabled', True)
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -63,7 +64,6 @@ class test_main(GaiaTestCase):
         self.messages.sendSMS()
         
         time.sleep(3)
-
 
         #
         # Check that popup appears.

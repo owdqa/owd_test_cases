@@ -9,8 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
@@ -25,32 +25,32 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.cont1 = MockContacts().Contact_1
-        self.cont2 = MockContacts().Contact_2
-        self.cont3 = MockContacts().Contact_3
-        self.cont4 = MockContacts().Contact_4
-        self.cont5 = MockContacts().Contact_5
-        self.cont6 = MockContacts().Contact_6
-        self.cont7 = MockContacts().Contact_7
-        self.cont8 = MockContacts().Contact_8
-        self.cont9 = MockContacts().Contact_9
-        self.cont10 = MockContacts().Contact_10
+        self.Contact_1 = MockContact()
+        self.Contact_2 = MockContact()
+        self.Contact_3 = MockContact()
+        self.Contact_4 = MockContact()
+        self.Contact_5 = MockContact()
+        self.Contact_6 = MockContact()
+        self.Contact_7 = MockContact()
+        self.Contact_8 = MockContact()
+        self.Contact_9 = MockContact()
+        self.Contact_10 = MockContact()
         
-        self.data_layer.insert_contact(self.cont1)
-        self.data_layer.insert_contact(self.cont2)
-        self.data_layer.insert_contact(self.cont3)
-        self.data_layer.insert_contact(self.cont4)
-        self.data_layer.insert_contact(self.cont5)
-        self.data_layer.insert_contact(self.cont6)
-        self.data_layer.insert_contact(self.cont7)
-        self.data_layer.insert_contact(self.cont8)
-        self.data_layer.insert_contact(self.cont9)
-        self.data_layer.insert_contact(self.cont10)
+        self.UTILS.insertContact(self.Contact_1)
+        self.UTILS.insertContact(self.Contact_2)
+        self.UTILS.insertContact(self.Contact_3)
+        self.UTILS.insertContact(self.Contact_4)
+        self.UTILS.insertContact(self.Contact_5)
+        self.UTILS.insertContact(self.Contact_6)
+        self.UTILS.insertContact(self.Contact_7)
+        self.UTILS.insertContact(self.Contact_8)
+        self.UTILS.insertContact(self.Contact_9)
+        self.UTILS.insertContact(self.Contact_10)
         
-        self.listContacts=[self.cont1["givenName"],self.cont2["givenName"],self.cont3["givenName"],
-                           self.cont4["givenName"],self.cont5["givenName"],self.cont6["givenName"],
-                           self.cont7["givenName"],self.cont8["givenName"],self.cont9["givenName"],
-                           self.cont10["givenName"]]
+        self.listContacts=[self.Contact_1["givenName"],self.Contact_2["givenName"],self.Contact_3["givenName"],
+                           self.Contact_4["givenName"],self.Contact_5["givenName"],self.Contact_6["givenName"],
+                           self.Contact_7["givenName"],self.Contact_8["givenName"],self.Contact_9["givenName"],
+                           self.Contact_10["givenName"]]
         self.listContacts.sort()
         
         self.numContacts=10
@@ -79,4 +79,3 @@ class test_main(GaiaTestCase):
             
             self.UTILS.TEST(self.listContacts[j] in i.text, "The contacts shown"+i.text+" are the same that contacts inserted"+self.listContacts[j])
             j=j+1
-        

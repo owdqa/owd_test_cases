@@ -10,7 +10,7 @@ import time
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
 
 class test_main(GaiaTestCase):
     
@@ -28,20 +28,11 @@ class test_main(GaiaTestCase):
         #
         # Prepare the contact we're going to insert.
         #
-        self.contact_1 = MockContacts().Contact_1
+        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.Contact_1 = MockContact(tel = {'type': '', 'value': self.num1})
 
-        #
-        # Establish which phone number to use.
-        #
-        self.contact_1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.contact_1["tel"]["carrier"] = ""
-        self.UTILS.logComment("Using target telephone number " + self.contact_1["tel"]["value"])
-        
-        #
-        # Import this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
-        #
-        self.data_layer.insert_contact(self.contact_1)
-        
+        self.UTILS.insertContact(self.Contact_1)
+        self.UTILS.logComment("Using target telephone number " + self.Contact_1["tel"]["value"])
     
     def tearDown(self):
         self.UTILS.reportResults()
@@ -55,7 +46,7 @@ class test_main(GaiaTestCase):
         #
         # View the details of our contact.
         #
-        self.contacts.viewContact(self.contact_1['name'])
+        self.contacts.viewContact(self.Contact_1['name'])
         
         #
         # Tap the sms button in the view details screen to go to the sms page.
@@ -97,15 +88,13 @@ class test_main(GaiaTestCase):
         #
         # Examine the carrier.
         #      
-        expect = self.contact_1["tel"]["type"]
+        expect = self.Contact_1["tel"]["type"]
         actual = self.messages.threadType()
         self.UTILS.TEST(expect == actual, "The type is listed as: '" + expect + "' (subheader was '" + actual + "').")
        
         # 
         # Phone Number is shown instead of carrier as the secondary header
         #
-        expect = self.contact_1["tel"]["value"]
+        expect = self.Contact_1["tel"]["value"]
         actual = self.messages.threadCarrier()
         self.UTILS.TEST(expect == actual, "The telephone number is: '" + expect + "' (subheader was '" + actual + "').")
-
-        

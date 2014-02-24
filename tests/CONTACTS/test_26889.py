@@ -10,7 +10,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
  
@@ -26,9 +27,8 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contact.
         #
-        self.cont = MockContacts().Contact_1
-        
-        
+        self.Contact_1 = MockContact()
+
     def tearDown(self):
         self.UTILS.reportResults()
 
@@ -42,9 +42,9 @@ class test_main(GaiaTestCase):
         #
         # Create our contact.
         #
-        self.contacts.createNewContact(self.cont)
+        self.contacts.createNewContact(self.Contact_1)
         
         #
         # Verify our contact details.
         #
-        self.contacts.checkViewContactDetails(self.cont)
+        self.contacts.checkViewContactDetails(self.Contact_1)

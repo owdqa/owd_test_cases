@@ -9,8 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
@@ -30,10 +30,9 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.cont = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.cont)
-        
-        
+        self.Contact_1 = MockContact()
+        self.UTILS.insertContact(self.Contact_1)
+
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -55,8 +54,12 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(DOM.Contacts.settings_button, "Settings button")
         x.tap()
 
+        time.sleep(2)
+
         x = self.UTILS.getElement(DOM.Contacts.import_contacts, "Import button")
         x.tap()
+
+        time.sleep(2)
         
         #
         # Press the Gmail button and go to the gmail frame.

@@ -9,7 +9,7 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
 
 class test_main(GaiaTestCase):
     
@@ -56,8 +56,7 @@ class test_main(GaiaTestCase):
         # Long press the email link.
         #
         _link = x.find_element("tag name", "a")
-        self.actions    = Actions(self.marionette)
-        self.actions.long_press(_link,2).perform()
+        _link.tap()
         
         #
         # Click 'Add to an existing contact'.

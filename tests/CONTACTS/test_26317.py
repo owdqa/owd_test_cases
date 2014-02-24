@@ -9,7 +9,7 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
 
 class test_main(GaiaTestCase):
     
@@ -25,20 +25,23 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.Contact_1 = MockContacts().Contact_multipleEmails
-        
-        #
-        # Set the emails to ones that work.
-        #
-        self.Contact_1["email"][0]["value"] = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
-        self.Contact_1["email"][1]["value"] = self.UTILS.get_os_variable("GMAIL_2_EMAIL")
-        self.Contact_1["email"][2]["value"] = self.UTILS.get_os_variable("HOTMAIL_1_EMAIL")
+        email1 = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
+        email2 = self.UTILS.get_os_variable("GMAIL_2_EMAIL")
+        email3 = self.UTILS.get_os_variable("HOTMAIL_1_EMAIL")
+        self.Contact_1 = MockContact(email = [{
+            'type': 'Personal',
+            'value': email1}, {
+            'type': 'Personal',
+            'value': email2}, {
+            'type': 'Personal',
+            'value': email3}
+        ])
 
         #
         # We're not testing adding a contact, so just stick one 
         # into the database.
         #
-        self.data_layer.insert_contact(self.Contact_1)
+        self.UTILS.insertContact(self.Contact_1)
         
         self._email_subject = "TEST " + str(time.time())
         self._email_message = "Test message"
