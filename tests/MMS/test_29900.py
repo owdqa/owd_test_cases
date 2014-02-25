@@ -32,7 +32,6 @@ class test_main(GaiaTestCase):
         self.wifi_user  = self.UTILS.get_os_variable("GLOBAL_WIFI_USERNAME")
         self.wifi_pass  = self.UTILS.get_os_variable("GLOBAL_WIFI_PASSWORD")
 
-
         #
         # Establish which phone number to use.
         #
@@ -44,23 +43,29 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
 
+        #
+        # Turn on wifi connection.
+        #
+        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
+
 
         #
         # Turn on 3g connection.
         #
         self.Settings.turn_dataConn_on()
 
-        #
-        # Turn on wifi connection.
-        #
-        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
 
         #
-        # Create and Send an MMS
+        # Configure Auto Retrieve as "on_with_r = On with roaming option" from messaging settings
+        #
+        self.Settings.configureMMSAutoRetrieve("on_with_r")
+
+        #
+        # Set up to use data connection.
         #
         self.messages.createAndSendMMS("image", self._TestMsg)
+
         #
         # Verify that the MMS has been received.
         #
         self.messages.verifyMMSReceived("image")
-

@@ -12,7 +12,7 @@ class test_main(GaiaTestCase):
     #
     # Restart device to starting with wifi and 3g disabled.
     #
-    _RESTART_DEVICE = True
+    #_RESTART_DEVICE = True
 
     def setUp(self):
         #
@@ -24,13 +24,6 @@ class test_main(GaiaTestCase):
         self.gallery    = Gallery(self)
         self.Settings   = Settings(self)
         self._TestMsg    = "Hello World"
-
-        #
-        # Establish wifi connection parameters.
-        #
-        self.wifi_name  = self.UTILS.get_os_variable("GLOBAL_WIFI_NAME")
-        self.wifi_user  = self.UTILS.get_os_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass  = self.UTILS.get_os_variable("GLOBAL_WIFI_PASSWORD")
 
 
         #
@@ -44,23 +37,17 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
 
+        #
+        # Configure Auto Retrieve as off from messaging settings
+        #
+        self.Settings.configureMMSAutoRetrieve("off")
 
         #
-        # Turn on 3g connection.
-        #
-        self.Settings.turn_dataConn_on()
-
-        #
-        # Turn on wifi connection.
-        #
-        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
-
-        #
-        # Create and Send an MMS
+        # Set up to use data connection.
         #
         self.messages.createAndSendMMS("image", self._TestMsg)
+
         #
         # Verify that the MMS has been received.
         #
         self.messages.verifyMMSReceived("image")
-
