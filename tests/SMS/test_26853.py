@@ -11,11 +11,11 @@ from OWDTestToolkit import *
 #
 
 class test_main(GaiaTestCase):
-    _TestMsg1 = "First message."
-    _TestMsg2 = "Second message"
-    _TestMsg3 = "Third message"
+    _testMsg1 = "First message."
+    _testMsg2 = "Second message"
+    _testMsg3 = "Third message"
     
-    _RESTART_DEVICE = True
+    # _RESTART_DEVICE = True
 
     def setUp(self):
         #
@@ -41,20 +41,21 @@ class test_main(GaiaTestCase):
     
         #
         # Launch messages app & delete all Threads
-        # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
+        # Make sure we have no threads
         #
         self.messages.launch()
-#         self.messages.deleteAllThreads()
+        self.messages.deleteAllThreads()
         
         #
-        # Create and send some new tests messages.
+        # Create and send some new tests messages. THIS ASSUMES THE TARGET
+        # TELEPHONE NUMBER IS THE SAME DEVICES WHICH IS SENDING THEM.
         #
-        self.messages.createAndSendSMS([self.target_telNum], self._TestMsg1)
+        self.messages.createAndSendSMS([self.target_telNum], self._testMsg1)
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.messages.enterSMSMsg(self._TestMsg2)
+        self.messages.enterSMSMsg(self._testMsg2)
         self.messages.sendSMS()
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.messages.enterSMSMsg(self._TestMsg3)
+        self.messages.enterSMSMsg(self._testMsg3)
         self.messages.sendSMS()
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
  
@@ -64,6 +65,13 @@ class test_main(GaiaTestCase):
         x= self.UTILS.getElement(DOM.Messages.edit_messages_icon, "Edit button" )
         x.tap()
         
+        #
+        # Select Delete Messages
+        #
+
+        x = self.UTILS.getElement(DOM.Messages.delete_messages_btn, "Delete messages button")
+        x.tap()
+
         #
         # Tap Selected all
         #
