@@ -9,7 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -28,14 +29,11 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use and set up the contact.
         #
-        self.contact_1 = MockContacts().Contact_1
-        
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.num2 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
-        
-        self.contact_1["tel"]["value"] = self.num1
+        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': self.num1})
 
-        self.data_layer.insert_contact(self.contact_1)
+        self.UTILS.insertContact(self.Contact_1)
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -68,7 +66,7 @@ class test_main(GaiaTestCase):
             #
             y = i.find_element('xpath', './/p[@class="name"]')
             self.UTILS.logResult("info", "Thread target: " + y.text)
-            if y.text == self.contact_1["name"]:
+            if y.text == self.Contact_1["name"]:
                 bool_1_target_ok = True
             if y.text == self.num2:
                 bool_2_target_ok = True
@@ -98,7 +96,7 @@ class test_main(GaiaTestCase):
             #    
             counter = counter + 1
             
-        self.UTILS.TEST(bool_1_target_ok, "A thread exists for target " + self.contact_1["name"])
+        self.UTILS.TEST(bool_1_target_ok, "A thread exists for target " + self.Contact_1["name"])
         self.UTILS.TEST(bool_2_target_ok, "A thread exists for target " + str(self.num2))
         
         self.UTILS.TEST(bool_1_time_ok, "A timestamp exists for thread 1.")
@@ -106,5 +104,3 @@ class test_main(GaiaTestCase):
         
         self.UTILS.TEST(bool_1_snippet_ok, "A conversation snippet exists for thread 1.")
         self.UTILS.TEST(bool_2_snippet_ok, "A conversation snippet exists for thread 2.")
-        
-        

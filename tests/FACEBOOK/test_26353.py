@@ -9,7 +9,7 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
 
 class test_main(GaiaTestCase):
 
@@ -26,14 +26,14 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.Contact_1 = MockContacts().Contact_1
+        self.Contact_1 = MockContact()
 
         #
         # We're not testing adding a contact, so just stick one 
         # into the database.
         #
-        self.data_layer.insert_contact(self.Contact_1)
-        
+        self.UTILS.insertContact(self.Contact_1)
+                
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -54,6 +54,7 @@ class test_main(GaiaTestCase):
         #
         self.contacts.tapSettingsButton()
         self.contacts.enableFBImport()
+
         fb_user = self.UTILS.get_os_variable("T19392_FB_USERNAME")
         fb_pass = self.UTILS.get_os_variable("T19392_FB_PASSWORD")
         self.facebook.login(fb_user, fb_pass)
@@ -63,6 +64,12 @@ class test_main(GaiaTestCase):
         #
         self.contacts.switchToFacebook()
         friend_count = self.facebook.importAll()
+
+        #
+        # Go back to "All contacts" screen
+        #
+        backBTN = self.UTILS.getElement(DOM.Contacts.settings_done_button, "Details 'done' button")
+        backBTN.tap()
  
         x = self.UTILS.getElements(DOM.Contacts.social_network_contacts, "Social network contact list", True, 20, False)
     

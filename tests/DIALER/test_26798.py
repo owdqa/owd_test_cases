@@ -9,8 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
@@ -23,8 +23,8 @@ class test_main(GaiaTestCase):
         self.dialer     = Dialer(self)
         
         #self.telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.cont1 = MockContacts().Contact_1
-        self.telNum = self.cont1["tel"]["value"]
+        self.Contact_1 = MockContact()
+        self.telNum = self.Contact_1["tel"]["value"]
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -55,7 +55,7 @@ class test_main(GaiaTestCase):
 
         self.dialer.hangUp()
 
-        
+
         #
         # Enter country prefix 0039.
         #
@@ -74,9 +74,8 @@ class test_main(GaiaTestCase):
         time.sleep(2)
 
         self.dialer.hangUp()
-        
-        
-        
+
+
         #
         # Enter country prefix +34.
         #

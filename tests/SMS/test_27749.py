@@ -57,6 +57,9 @@ class test_main(GaiaTestCase):
         
         y= x.find_element("tag name", "a")
         y.tap()
+
+        x = self.UTILS.getElement(DOM.Messages.header_call_btn, "Call button")
+        x.tap()
         
         time.sleep(5)
         

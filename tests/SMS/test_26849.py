@@ -9,7 +9,7 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+
 
 class test_main(GaiaTestCase):
     
@@ -38,13 +38,11 @@ class test_main(GaiaTestCase):
         # Launch messages app.
         #
         self.messages.launch()
-        
-        
+
         self.UTILS.logResult("info", "** TEST: receive msg while in the thread.")
         self.messages.createAndSendSMS([self.num], "Test message")
         self.messages.waitForReceivedMsgInThisThread()
-        
-        
+
         # Do this 'long hand' so we can switch back to the main screen before the message finishes
         # sending (or we might miss the return notification).
         self.UTILS.logResult("info", "** TEST: receive msg while in main screen (looking at threads).")

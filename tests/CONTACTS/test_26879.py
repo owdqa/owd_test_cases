@@ -9,8 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
@@ -26,11 +26,9 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.cont = MockContacts().Contact_1
-        self.cont["tel"]["value"] = "+34" + self.cont["tel"]["value"] 
-        self.data_layer.insert_contact(self.cont)
-        
-        
+        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': '+345555555555'})
+        self.UTILS.insertContact(self.Contact_1)
+
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -43,7 +41,7 @@ class test_main(GaiaTestCase):
         #
         # Search for our new contact.
         #
-        self.contacts.viewContact(self.cont["name"])
+        self.contacts.viewContact(self.Contact_1["name"])
         
         #
         # Tap the phone number.
@@ -56,8 +54,8 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.switchToFrame(*DOM.Dialer.frame_locator_calling)
         
-        self.UTILS.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP % self.cont["name"]),
-                                    "Outgoing call found with number matching %s" %  self.cont["name"])
+        self.UTILS.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP % self.Contact_1["name"]),
+                                    "Outgoing call found with number matching %s" %  self.Contact_1["name"])
         
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot of contact:", x)

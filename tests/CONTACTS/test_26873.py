@@ -9,8 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
@@ -25,21 +25,21 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.cont1 = MockContacts().Contact_1
-        self.cont2 = MockContacts().Contact_2
-        self.cont3 = MockContacts().Contact_3
+        self.Contact_1 = MockContact()
+
+        self.nameIncomplete=self.Contact_1["givenName"][:4]
+        self.surnameIncomplete=self.Contact_1["familyName"][:2]
+
+        name2 = self.nameIncomplete + "h"
+        fname2 = self.surnameIncomplete + "t"
+
+        self.Contact_2 = MockContact(givenName = name2, familyName = fname2)
+        self.Contact_3 = MockContact(givenName = 'John', familyName = 'Smith')
         
-        self.nameIncomplete=self.cont1["givenName"][:3]
-        self.surnameIncomplete=self.cont1["familyName"][:4]
-        
-        self.cont2["givenName"]=self.nameIncomplete + "h"
-        self.cont2["familyName"]=self.surnameIncomplete + "t"
-        
-        self.data_layer.insert_contact(self.cont1)
-        self.data_layer.insert_contact(self.cont2)
-        self.data_layer.insert_contact(self.cont3)
-        
-        
+        self.UTILS.insertContact(self.Contact_1)
+        self.UTILS.insertContact(self.Contact_2)
+        self.UTILS.insertContact(self.Contact_3)
+
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -57,18 +57,18 @@ class test_main(GaiaTestCase):
         #
         # With nameIncomplete: Verify our contact is listed.
         #
-        self.contacts.checkSearchResults(self.cont1["givenName"])
-        self.contacts.checkSearchResults(self.cont2["givenName"])
+        self.contacts.checkSearchResults(self.Contact_1["givenName"])
+        self.contacts.checkSearchResults(self.Contact_2["givenName"])
         
         #
         # With nameIncomplete: Verify the other contact is NOT listed.
         #
-        self.contacts.checkSearchResults(self.cont3["givenName"],False)
+        self.contacts.checkSearchResults(self.Contact_3["givenName"],False)
         
         #
         # Enter one more letter.
         #
-        self.UTILS.typeThis(DOM.Contacts.search_contact_input, "Search input", self.cont1["givenName"][3], 
+        self.UTILS.typeThis(DOM.Contacts.search_contact_input, "Search input", self.Contact_1["givenName"][4],
                             p_no_keyboard=True,
                             p_validate=False,
                             p_clear=False,
@@ -77,9 +77,9 @@ class test_main(GaiaTestCase):
         #
         # Verify list updated.
         #
-        self.contacts.checkSearchResults(self.cont1["givenName"])
-        self.contacts.checkSearchResults(self.cont2["givenName"],False)
-        self.contacts.checkSearchResults(self.cont3["givenName"],False)
+        self.contacts.checkSearchResults(self.Contact_1["givenName"])
+        self.contacts.checkSearchResults(self.Contact_2["givenName"],False)
+        self.contacts.checkSearchResults(self.Contact_3["givenName"],False)
                
         #
         # Cancel search.
@@ -95,18 +95,18 @@ class test_main(GaiaTestCase):
         #
         # With surnameIncomplete: Verify our contact is listed.
         #
-        self.contacts.checkSearchResults(self.cont1["familyName"])
-        self.contacts.checkSearchResults(self.cont2["familyName"])
+        self.contacts.checkSearchResults(self.Contact_1["familyName"])
+        self.contacts.checkSearchResults(self.Contact_2["familyName"])
         
         #
         # With surnameIncomplete: Verify the other contact is NOT listed.
         #
-        self.contacts.checkSearchResults(self.cont3["familyName"],False)
+        self.contacts.checkSearchResults(self.Contact_3["familyName"],False)
         
         #
         # Enter one more letter.
         #
-        self.UTILS.typeThis(DOM.Contacts.search_contact_input, "Search input", self.cont1["familyName"][4], 
+        self.UTILS.typeThis(DOM.Contacts.search_contact_input, "Search input", self.Contact_1["familyName"][2],
                             p_no_keyboard=True,
                             p_validate=False,
                             p_clear=False,
@@ -115,6 +115,6 @@ class test_main(GaiaTestCase):
         #
         # Verify list updated.
         #
-        self.contacts.checkSearchResults(self.cont1["familyName"])
-        self.contacts.checkSearchResults(self.cont2["familyName"],False)
-        self.contacts.checkSearchResults(self.cont3["familyName"],False)
+        self.contacts.checkSearchResults(self.Contact_1["familyName"])
+        self.contacts.checkSearchResults(self.Contact_2["familyName"],False)
+        self.contacts.checkSearchResults(self.Contact_3["familyName"],False)

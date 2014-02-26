@@ -9,8 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -29,10 +29,9 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.cont = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.cont)
-        
-        
+        self.Contact_1 = MockContact()
+        self.UTILS.insertContact(self.Contact_1)
+
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -54,7 +53,3 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(DOM.Contacts.import_num_of_conts, "Number of contacts")
         self.UTILS.logResult("info", "Detected message '%s'." % x.text)
         self.UTILS.TEST(str(cont_count) in x.text, "'%s' contains the real count, which is %s." % (x.text, cont_count))
-        
-        
-        
-        

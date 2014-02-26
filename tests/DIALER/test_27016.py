@@ -9,7 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -24,9 +25,8 @@ class test_main(GaiaTestCase):
         self.num_short  = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
         
         # Remove the phone number from the contact and insert it.
-        self.cont = MockContacts().Contact_1
-        self.cont["tel"]["value"]   = self.num
-        self.data_layer.insert_contact(self.cont)
+        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': self.num})
+        self.UTILS.insertContact(self.Contact_1)
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -40,21 +40,17 @@ class test_main(GaiaTestCase):
         self.dialer.callThisNumber()
         time.sleep(2)
         self.dialer.hangUp()
-
-        time.sleep(2)
-        x = self.UTILS.getElement(DOM.Dialer.call_busy_button_ok, "OK button (Number is busy)")
-        x.tap()
          
         #
         # Open the call log and add to our contact.
         #
-        self.dialer.callLog_addToContact(self.num_short, self.cont["name"])
+        self.dialer.callLog_addToContact(self.num_short, self.Contact_1["name"])
 
         #
         # Verify that this number was added to the contact.
         #
         self.contacts.launch()
-        self.contacts.viewContact(self.cont["name"])
+        self.contacts.viewContact(self.Contact_1["name"])
         
         self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_contact_tels_xpath % self.num_short),
                                     "New phone number %s in this contact" % self.num_short)

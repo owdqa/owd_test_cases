@@ -9,7 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -20,10 +21,10 @@ class test_main(GaiaTestCase):
         self.dialer     = Dialer(self)
         self.contacts   = Contacts(self)
         
-        self.cont_twilio = MockContacts().Contact_twilio
-        self.num  = "0034" + self.cont_twilio["tel"]["value"]
+        self.Contact_1 = MockContact()
+        self.num  = "0034" + self.Contact_1["tel"]["value"]
         #self.num  = "0034" + self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.cont = MockContacts().Contact_1
+        self.Contact_2 = MockContact()
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -44,8 +45,8 @@ class test_main(GaiaTestCase):
         self.dialer.callLog_createContact(self.num)
          
         contFields = self.contacts.getContactFields()
-        self.contacts.replaceStr(contFields['givenName'  ] , self.cont["givenName"])
-        self.contacts.replaceStr(contFields['familyName' ] , self.cont["familyName"])
+        self.contacts.replaceStr(contFields['givenName'  ] , self.Contact_2["givenName"])
+        self.contacts.replaceStr(contFields['familyName' ] , self.Contact_2["familyName"])
          
         done_button = self.UTILS.getElement(DOM.Contacts.done_button, "'Done' button")
         done_button.tap()
@@ -66,4 +67,4 @@ class test_main(GaiaTestCase):
         #
         self.apps.kill_all()
         self.contacts.launch()
-        self.contacts.viewContact(self.cont["name"])        
+        self.contacts.viewContact(self.Contact_2["name"])

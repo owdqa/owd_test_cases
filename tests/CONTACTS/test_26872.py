@@ -9,8 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
@@ -25,20 +25,16 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.cont1 = MockContacts().Contact_1
-        self.cont2 = MockContacts().Contact_2
-        self.cont3 = MockContacts().Contact_3
-        
-        self.cont1["givenName"]="Johnname"
-        self.cont1["familyName"]="Smname"
-        
+        self.Contact_1 = MockContact(givenName = 'Johnname', familyName = 'Smname')
+        self.Contact_2 = MockContact()
+        self.Contact_3 = MockContact()
+
         self.endWord="name"
         
-        self.data_layer.insert_contact(self.cont1)
-        self.data_layer.insert_contact(self.cont2)
-        self.data_layer.insert_contact(self.cont3)
-        
-        
+        self.UTILS.insertContact(self.Contact_1)
+        self.UTILS.insertContact(self.Contact_2)
+        self.UTILS.insertContact(self.Contact_3)
+
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -56,10 +52,10 @@ class test_main(GaiaTestCase):
         #
         # With name: Verify our contact is listed.
         #
-        self.contacts.checkSearchResults(self.cont1["givenName"])
+        self.contacts.checkSearchResults(self.Contact_1["givenName"])
         
         #
         # With name: Verify the other contact is NOT listed.
         #
-        self.contacts.checkSearchResults(self.cont2["givenName"],False)
-        self.contacts.checkSearchResults(self.cont3["givenName"],False)     
+        self.contacts.checkSearchResults(self.Contact_2["givenName"],False)
+        self.contacts.checkSearchResults(self.Contact_3["givenName"],False)

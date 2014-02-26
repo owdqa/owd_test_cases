@@ -9,7 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -25,8 +26,8 @@ class test_main(GaiaTestCase):
         #
         # Import some contacts.
         #
-        self.Contact_1 = MockContacts().Contact_1
-        self.Contact_2 = MockContacts().Contact_2
+        self.Contact_1 = MockContact()
+        self.Contact_2 = MockContact()
         self.Contact_3 = MockContacts().Contact_longName
         self.Contact_4 = MockContacts().Contact_multiplePhones
         self.Contact_5 = MockContacts().Contact_multipleEmails

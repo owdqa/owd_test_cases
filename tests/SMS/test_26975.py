@@ -59,7 +59,7 @@ class test_main(GaiaTestCase):
         # Long-press the link.
         #
         email_link = x.find_element("tag name", "a")
-        self.actions.press(email_link).wait(2).release().perform()
+        email_link.tap()
 
         x = self.UTILS.getElement(DOM.Messages.header_add_to_contact_btn, "'Add to an existing contact' button")
         x.tap()

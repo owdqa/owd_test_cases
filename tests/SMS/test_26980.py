@@ -9,7 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -31,9 +32,9 @@ class test_main(GaiaTestCase):
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.get_os_variable("GMAIL_2_EMAIL")
 
-        self.cont = MockContacts().Contact_1
-        self.cont["email"]["value"] = self.emailAddy
-        self.data_layer.insert_contact(self.cont)        
+        self.Contact_1 = MockContact(email = {'type': 'Personal', 'value': self.emailAddy})
+
+        self.UTILS.insertContact(self.Contact_1)
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -63,6 +64,12 @@ class test_main(GaiaTestCase):
         #
         _link = x.find_element("tag name", "a")
         _link.tap()
+
+        #
+        # Press 'add to existing contact' button.
+        #
+        w = self.UTILS.getElement(DOM.Messages.header_send_email_btn, "Send email button")
+        w.tap()
         
         #
         # Switch to email frame and verify the email address is in the To field.

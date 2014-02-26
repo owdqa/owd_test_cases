@@ -9,7 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -23,11 +24,12 @@ class test_main(GaiaTestCase):
         self.contacts   = Contacts(self)
         
         #
-        # Remove number and import contact.
+        # Prepare the contact we're going to insert.
         #
-        self.Contact_1 = MockContacts().Contact_1
-        self.Contact_1["tel"] = None
-        self.data_layer.insert_contact(self.Contact_1)
+        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.Contact_1 = MockContact(tel = {'type': '', 'value': ''})
+
+        self.UTILS.insertContact(self.Contact_1)
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -58,9 +60,15 @@ class test_main(GaiaTestCase):
                 self.UTILS.logResult("info", "Tapping ...")
                 i.tap()
                 break
+
+        time.sleep(2)
+
+        self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
+
+        self.messages.checkIsInToField("", True)
         
-        self.UTILS.waitForElements(DOM.Messages.contact_no_phones_msg, "Message saying this contact has no phones")
-        x = self.UTILS.getElement(DOM.Messages.contact_no_phones_ok, "OK button")
-        x.tap()
-        
-        self.UTILS.headerCheck("Select contact")
+        # self.UTILS.waitForElements(DOM.Messages.contact_no_phones_msg, "Message saying this contact has no phones")
+        # x = self.UTILS.getElement(DOM.Messages.contact_no_phones_ok, "OK button")
+        # x.tap()
+        #
+        # self.UTILS.headerCheck("Select contact")

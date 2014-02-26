@@ -9,8 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
@@ -25,11 +25,10 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.Contact_1 = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.Contact_1)
+        self.Contact_1 = MockContact()
+        self.UTILS.insertContact(self.Contact_1)
         self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
-          
-        
+
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -56,7 +55,6 @@ class test_main(GaiaTestCase):
         self.check_Field(True , "phone"    , "number_0"         , "number")
         self.check_Field(True , "email"    , "email_0"          , "email")
         self.check_Field(True , "address"  , "streetAddress_0"  , "streetAddress")
-        self.check_Field(True , "comment"  , "note_0"           , "note")
          
         # NOTE: for some reason the photo has to tested alone or it screws up the text tests.
         self.contacts.pressCancelEditButton()
@@ -116,10 +114,6 @@ class test_main(GaiaTestCase):
         if p_el == "address":
             x = self.UTILS.getElement(("xpath",reset_btn % "add-address-0"), "Address reset button")
             x.tap()
-           
-        if p_el == "comment":
-            x = self.UTILS.getElement(("xpath",reset_btn % "add-note-0"), "Comment reset button")
-            x.tap()
         
     def check_photo_tap(self, p_boolEditable):
         time.sleep(1)
@@ -145,7 +139,6 @@ class test_main(GaiaTestCase):
             
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
 
-        
     def check_kbd_appears(self, p_elItem, p_desc, p_KBD_displayed):
         time.sleep(1)
         #
@@ -183,7 +176,3 @@ class test_main(GaiaTestCase):
         #
         x = self.marionette.find_element(*DOM.GLOBAL.app_head)
         x.tap()
-        
-        
-        
-        

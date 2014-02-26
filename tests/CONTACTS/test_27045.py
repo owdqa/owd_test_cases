@@ -9,8 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -29,13 +29,11 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.cont  = MockContacts().Contact_1
-        self.cont2 = MockContacts().Contact_2
+        self.Contact_1 = MockContact()
+        self.Contact_2 = MockContact(email = '')
         
-        self.data_layer.insert_contact(self.cont)
-        
-        self.cont2["email"] = ""
-        
+        self.UTILS.insertContact(self.Contact_1)
+
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -65,7 +63,7 @@ class test_main(GaiaTestCase):
         self.contacts.launch()
         
         self.UTILS.logResult("info", "Viewing contact '%s' ..." % gmail_contacts[0]) 
-        self.contacts.viewContact(gmail_contacts[0], False)
+        self.contacts.viewContact("roytesterton.1@hotmail.com", False)
 
         editBTN = self.UTILS.getElement(DOM.Contacts.edit_details_button, "Edit details button")
         editBTN.tap()
@@ -75,14 +73,13 @@ class test_main(GaiaTestCase):
         # Enter the new contact details.
         #
         contFields = self.contacts.getContactFields()
-        self.contacts.replaceStr(contFields['givenName'  ] , self.cont2["givenName"])
-        self.contacts.replaceStr(contFields['familyName' ] , self.cont2["familyName"])
-        self.contacts.replaceStr(contFields['tel'        ] , self.cont2["tel"]["value"])
-        self.contacts.replaceStr(contFields['street'     ] , self.cont2["adr"]["streetAddress"])
-        self.contacts.replaceStr(contFields['zip'        ] , self.cont2["adr"]["postalCode"])
-        self.contacts.replaceStr(contFields['city'       ] , self.cont2["adr"]["locality"])
-        self.contacts.replaceStr(contFields['country'    ] , self.cont2["adr"]["countryName"])
-        self.contacts.replaceStr(contFields['comment'    ] , self.cont2["comment"])
+        self.contacts.replaceStr(contFields['givenName'  ] , self.Contact_2["givenName"])
+        self.contacts.replaceStr(contFields['familyName' ] , self.Contact_2["familyName"])
+        self.contacts.replaceStr(contFields['tel'        ] , self.Contact_2["tel"]["value"])
+        self.contacts.replaceStr(contFields['street'     ] , self.Contact_2["adr"]["streetAddress"])
+        self.contacts.replaceStr(contFields['zip'        ] , self.Contact_2["adr"]["postalCode"])
+        self.contacts.replaceStr(contFields['city'       ] , self.Contact_2["adr"]["locality"])
+        self.contacts.replaceStr(contFields['country'    ] , self.Contact_2["adr"]["countryName"])
         
         #
         # Save the changes

@@ -9,7 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -23,8 +24,8 @@ class test_main(GaiaTestCase):
         self.contacts   = Contacts(self)
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         
-        self.cont = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.cont)        
+        self.Contact_1 = MockContact()
+        self.UTILS.insertContact(self.Contact_1)
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -47,8 +48,7 @@ class test_main(GaiaTestCase):
         # Long press the emedded number link.
         #
         y = x.find_element("tag name", "a")  
-        self.actions    = Actions(self.marionette)
-        self.actions.long_press(y,2).perform()
+        y.tap()
         
         #
         # Select create new contact.
@@ -60,7 +60,7 @@ class test_main(GaiaTestCase):
         #
         # Select our contact.
         #
-        self.contacts.viewContact(self.cont["familyName"], False)
+        self.contacts.viewContact(self.Contact_1["familyName"], False)
         
         #
         # Check the phone number.

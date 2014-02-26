@@ -9,8 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -29,10 +29,9 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.cont = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.cont)
-        
-        
+        self.Contact_1 = MockContact()
+        self.UTILS.insertContact(self.Contact_1)
+
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -68,8 +67,6 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(DOM.Contacts.import_import_btn, "Import button")
         self.UTILS.TEST(x.get_attribute("disabled") != "true", "Import button is enabled.")
 
-
-
         self.UTILS.logResult("info", "Disable contact 2...")
         self.contacts.import_toggleSelectContact(2)
         
@@ -82,9 +79,5 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(DOM.Contacts.import_import_btn, "Import button")
         self.UTILS.TEST(x.get_attribute("disabled") == "true", "Import button is disabled.")
 
-
-        
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot and details", x)
-
-

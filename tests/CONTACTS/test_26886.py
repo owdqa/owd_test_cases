@@ -9,8 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
@@ -25,11 +25,9 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.Contact_1 = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.Contact_1)
-        
-        
-    
+        self.contact_1 = MockContact()
+        self.UTILS.insertContact(self.contact_1)
+
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -42,7 +40,7 @@ class test_main(GaiaTestCase):
         #
         # View the contact details.
         #
-        self.contacts.viewContact(self.Contact_1['name'])
+        self.contacts.viewContact(self.contact_1['name'])
         
         #
         # Press the favourites button.
@@ -51,12 +49,7 @@ class test_main(GaiaTestCase):
         self.UTILS.TEST(x.text == "Add as Favorite",
                         "Favourite 'toggle' button is labelled 'Add as Favourite'.")
         x.tap()
-        
-        #
-        # Verify this contact now has a star in the name.
-        #
-        self.UTILS.waitForElements(DOM.Contacts.favourite_marker, "Favourite 'marker' beside header name")
-        
+
         #
         # Verify the favourite toggle button label changes correctly.
         #
@@ -72,4 +65,6 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(DOM.Contacts.details_back_button, "Back button")
         x.tap()
         
-        self.UTILS.getElement(DOM.Contacts.favourite_JS, "John Smith")
+        string = self.contact_1['givenName'] + self.contact_1['familyName']
+        favs = ("xpath", DOM.Contacts.favourites_list_xpath % string)
+        self.UTILS.waitForElements(favs,"'" + self.contact_1['name'] + "' in the favourites list")

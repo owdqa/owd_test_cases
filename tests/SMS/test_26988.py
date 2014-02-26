@@ -9,7 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -26,8 +27,9 @@ class test_main(GaiaTestCase):
 
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
-        self.cont = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.cont)        
+        self.Contact_1 = MockContact()
+
+        self.UTILS.insertContact(self.Contact_1)
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -53,7 +55,7 @@ class test_main(GaiaTestCase):
         #
         # Select our contact.
         #
-        self.contacts.viewContact(self.cont["familyName"], False)
+        self.contacts.viewContact(self.Contact_1["familyName"], False)
         
         #
         # Check the phone number.
@@ -81,7 +83,7 @@ class test_main(GaiaTestCase):
         # Verify the header is now the name,
         #
         x = self.UTILS.getElement(DOM.Messages.message_header, "Message header")
-        self.UTILS.TEST(x.text == self.cont["name"], 
+        self.UTILS.TEST(x.text == self.Contact_1["name"],
                         "Message header has been changed to match the contact (it was '%s')." % x.text)
         
         #
@@ -89,4 +91,4 @@ class test_main(GaiaTestCase):
         #
         x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
-        self.messages.openThread(self.cont["name"])
+        self.messages.openThread(self.Contact_1["name"])

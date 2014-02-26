@@ -9,7 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -22,12 +23,13 @@ class test_main(GaiaTestCase):
         self.messages   = Messages(self)
         
         #
-        # Import contact (adjust to the correct number).
+        # Prepare the contact we're going to insert.
         #
-        self.Contact_1 = MockContacts().Contact_1
-        self.Contact_1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.Contact_1 = MockContact(tel = {'type': '', 'value': self.num1})
+
+        self.UTILS.insertContact(self.Contact_1)
         self.UTILS.logComment("Using target telephone number " + self.Contact_1["tel"]["value"])
-        self.data_layer.insert_contact(self.Contact_1)
 
     def tearDown(self):
         self.UTILS.reportResults()

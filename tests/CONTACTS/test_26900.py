@@ -9,8 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
@@ -25,10 +25,10 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.cont = MockContacts().Contact_twoPhones
-        self.data_layer.insert_contact(self.cont)
-        
-        
+        self.Contact_1 = MockContact(tel = [{'type': 'Mobile', 'value': '555555555'},
+                                            {'type': 'Mobile', 'value': '666666666'}])
+        self.UTILS.insertContact(self.Contact_1)
+
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -42,12 +42,12 @@ class test_main(GaiaTestCase):
         #
         # View our contact.
         #
-        self.contacts.viewContact(self.cont['name'])
+        self.contacts.viewContact(self.Contact_1['name'])
         
         #
         # Tap the 2nd number to dial it.
         #
-        x = self.UTILS.getElement( ("xpath", DOM.Contacts.view_contact_tels_xpath % self.cont["tel"][1]["value"]),
+        x = self.UTILS.getElement( ("xpath", DOM.Contacts.view_contact_tels_xpath % self.Contact_1["tel"][1]["value"]),
                                    "Second phone number")
         x.tap()
         

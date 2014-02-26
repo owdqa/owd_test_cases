@@ -17,7 +17,6 @@
 26781|BUG 885238
 26473|BUG 867987
 26347|BUG 867987
-26353|BUG 883344 and 879823
 26348|Automation issue: cannot work out how to automate the scroller for seeting the alarm time.
 26337|DEV SERVER ALWAYS DOWN
 26336|DEV SERVER ALWAYS DOWN
@@ -36,13 +35,13 @@
 26977|BUG 895389 (will not be fixed)
 26978|Email app not working correctly
 26982|Email app not working correctly
-26969|Pending investigation
-26317|Email app not working correctly
+26885|Pending review
 26402|Email app not working correctly
-#26338|Email app not working correctly
-#26339|Email app not working correctly
-#26340|Email app not working correctly
-#26341|Email app not working correctly
-26877|Problem with headers
+26979|Email app not working correctly
+27049|GaiaApps bug
+28542|Pending review
+27756|Pending review
+26973|Pending review
+26798|Pending review
 MMSTCFEATR030a|MMS Block
 MMSTCSENDG012c|MMS Block

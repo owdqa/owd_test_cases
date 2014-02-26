@@ -10,7 +10,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
  
@@ -27,9 +28,9 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.cont1 = MockContacts().Contact_1
-        self.cont2 = MockContacts().Contact_2
-        self.cont_twilio = MockContacts().Contact_twilio
+        self.Contact_1 = MockContact()
+        self.Contact_2 = MockContact()
+        self.Contact_3 = MockContact()
         
         #self.data_layer.insert_contact(self.cont1)
 
@@ -43,15 +44,15 @@ class test_main(GaiaTestCase):
         self.dialer.callLog_clearAll()
 
         # Call 3 different numbers
-        self.dialer.enterNumber(self.cont1["tel"]["value"])
+        self.dialer.enterNumber(self.Contact_1["tel"]["value"])
         self.dialer.callThisNumber()
         self.dialer.hangUp()
 
-        self.dialer.enterNumber(self.cont2["tel"]["value"])
+        self.dialer.enterNumber(self.Contact_2["tel"]["value"])
         self.dialer.callThisNumber()
         self.dialer.hangUp()
 
-        self.dialer.enterNumber(self.cont_twilio["tel"]["value"])
+        self.dialer.enterNumber(self.Contact_3["tel"]["value"])
         self.dialer.callThisNumber()
         self.dialer.hangUp()
 
@@ -63,7 +64,7 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(DOM.Dialer.phone_number, "Phone number field", False)
         dialer_num = x.get_attribute("value")
 
-        self.UTILS.TEST(str(self.cont_twilio["tel"]["value"]) in dialer_num,
+        self.UTILS.TEST(str(self.Contact_3["tel"]["value"]) in dialer_num,
                         "After calling '{0:s}', and tapping call button, phone number field contains '{1:s}'.")
 
         y = self.UTILS.screenShotOnErr()

@@ -9,7 +9,8 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     
@@ -20,11 +21,9 @@ class test_main(GaiaTestCase):
         self.dialer     = Dialer(self)
         self.contacts   = Contacts(self)
         
-        #self.num  = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.cont_twilio = MockContacts().Contact_twilio
-        self.num = self.cont_twilio["tel"]["value"]
+        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': '665666666'})
+        self.num = self.Contact_1["tel"]["value"]
 
-        
     def tearDown(self):
         self.UTILS.reportResults()
         
@@ -43,5 +42,4 @@ class test_main(GaiaTestCase):
         
         self.marionette.switch_to_frame()
         x = DOM.Dialer.frame_locator_calling
-        self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@%s,'%s')]" % (x[0],x[1])), "Calling iframe", True, 2)
-        
+        self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@%s,'%s')]" % (x[0],x[1])), "Calling iframe", True, 5)

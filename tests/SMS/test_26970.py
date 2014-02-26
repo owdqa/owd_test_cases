@@ -52,13 +52,19 @@ class test_main(GaiaTestCase):
         x = self.messages.waitForReceivedMsgInThisThread()
         self.UTILS.TEST(x, "Received a message.", True)
         
+        # Go into messages Settings..
         #
-        # Go into message edit mode and tap on edit button.
+        z= self.UTILS.getElement(DOM.Messages.edit_messages_icon, "Edit button")
+        z.tap()
+
         #
-        y= self.UTILS.getElement(DOM.Messages.edit_messages_icon, "Edit button" )
-        y.tap()
+        # Go into message edit mode..
+        #
+        z= self.UTILS.getElement(DOM.Messages.delete_messages_btn, "Edit button")
+        z.tap()
        
-        x.find_element("tag name", "a").tap()
+        y = x.find_element("tag name", "a")
+        y.tap()
        
         z=self.UTILS.getElement(DOM.Messages.edit_msgs_header,"1 selected message")
         self.UTILS.TEST(z.text=="1 selected", "Into edit mode, if you tap on link, the browser is not open and the message is selected.")
@@ -67,5 +73,3 @@ class test_main(GaiaTestCase):
         self.marionette.switch_to_frame()
         time.sleep(5) #(give the browser time to launch)
         self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@src,'browser')]"), "Browser iframe")
-              
-        

@@ -9,7 +9,7 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
 
 class test_main(GaiaTestCase):
     
@@ -27,9 +27,9 @@ class test_main(GaiaTestCase):
 
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
-        self.cont = MockContacts().Contact_1
-        self.cont["tel"]["value"] = self.num1
-        self.data_layer.insert_contact(self.cont)        
+        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': self.num1})
+
+        self.UTILS.insertContact(self.Contact_1)
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -47,9 +47,9 @@ class test_main(GaiaTestCase):
         self.messages.startNewSMS()
         
         self.messages.selectAddContactButton()
-        self.contacts.viewContact(self.cont["familyName"], False)
+        self.contacts.viewContact(self.Contact_1["familyName"], False)
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
-        self.messages.checkIsInToField(self.cont["name"], True)
+        self.messages.checkIsInToField(self.Contact_1["name"], True)
 
         self.messages.enterSMSMsg("Test message.")
         self.messages.sendSMS()

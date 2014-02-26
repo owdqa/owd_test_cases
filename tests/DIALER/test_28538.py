@@ -8,8 +8,7 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-import time
+from tests._mock_data.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
@@ -21,13 +20,13 @@ class test_main(GaiaTestCase):
         self.dialer = Dialer(self)
 
         #Get details of our test contacts.
-        self.cont = MockContacts().Contact_3
+        self.num  = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': self.num})
+        self.UTILS.insertContact(self.Contact_1)
 
-        self.data_layer.insert_contact(self.cont)
-
-        self.contact_name = self.cont["name"]
-        self.contact_given_name = self.cont["givenName"]
-        self.contact_number = self.cont["tel"]["value"]
+        self.contact_name = self.Contact_1["name"]
+        self.contact_given_name = self.Contact_1["givenName"]
+        self.contact_number = self.Contact_1["tel"]["value"]
 
     def tearDown(self):
         #

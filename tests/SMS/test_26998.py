@@ -38,12 +38,11 @@ class test_main(GaiaTestCase):
         self.messages.createAndSendSMS([self.num1], test_str)
         x = self.messages.waitForReceivedMsgInThisThread()
         
-                #
+        #
         # Long press the emedded number link.
         #
         y = x.find_element("tag name", "a")  
-        self.actions    = Actions(self.marionette)
-        self.actions.long_press(y,2).perform()
+        y.tap()
         
         #
         # Verufy everything's there.
@@ -53,5 +52,5 @@ class test_main(GaiaTestCase):
 
         self.UTILS.waitForElements(DOM.Messages.header_create_new_contact_btn, "Create new contact button")
         self.UTILS.waitForElements(DOM.Messages.header_add_to_contact_btn, "Add to existing contact button")
-        self.UTILS.waitForElements(DOM.Messages.header_cancel_btn, "Cancel button")
+        self.UTILS.waitForElements(DOM.Messages.header_cancel_btn_absolute, "Cancel button")
 
