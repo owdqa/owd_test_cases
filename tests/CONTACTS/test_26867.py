@@ -13,7 +13,7 @@ from tests._mock_data.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
-
+    NUM_CONTACTS = 10;
     def setUp(self):
         #
         # Set up child objects...
@@ -25,35 +25,11 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.Contact_1 = MockContact()
-        self.Contact_2 = MockContact()
-        self.Contact_3 = MockContact()
-        self.Contact_4 = MockContact()
-        self.Contact_5 = MockContact()
-        self.Contact_6 = MockContact()
-        self.Contact_7 = MockContact()
-        self.Contact_8 = MockContact()
-        self.Contact_9 = MockContact()
-        self.Contact_10 = MockContact()
+        self.mock_contacts = [MockContact() for i in range(self.NUM_CONTACTS)]
+
+        map(self.UTILS.insertContact, self.mock_contacts)
         
-        self.UTILS.insertContact(self.Contact_1)
-        self.UTILS.insertContact(self.Contact_2)
-        self.UTILS.insertContact(self.Contact_3)
-        self.UTILS.insertContact(self.Contact_4)
-        self.UTILS.insertContact(self.Contact_5)
-        self.UTILS.insertContact(self.Contact_6)
-        self.UTILS.insertContact(self.Contact_7)
-        self.UTILS.insertContact(self.Contact_8)
-        self.UTILS.insertContact(self.Contact_9)
-        self.UTILS.insertContact(self.Contact_10)
-        
-        self.listContacts=[self.Contact_1["givenName"],self.Contact_2["givenName"],self.Contact_3["givenName"],
-                           self.Contact_4["givenName"],self.Contact_5["givenName"],self.Contact_6["givenName"],
-                           self.Contact_7["givenName"],self.Contact_8["givenName"],self.Contact_9["givenName"],
-                           self.Contact_10["givenName"]]
-        self.listContacts.sort()
-        
-        self.numContacts=10
+        self.listContacts = [c["givenName"] for c in self.mock_contacts]
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -65,17 +41,22 @@ class test_main(GaiaTestCase):
         self.contacts.launch()
         
         #
-        # Verify list has 10 contacts.
+        # Verify list has 'NUM_CONTACTS' contacts.
         #
         x = self.UTILS.getElements(DOM.Contacts.view_all_contact_list,"Contacts list")
-        self.counterContacts=len(x)
-        self.UTILS.TEST(self.numContacts == self.counterContacts, "All contacts are showed")
+        self.counterContacts = len(x)
+        self.UTILS.TEST(self.NUM_CONTACTS == self.counterContacts, "All contacts are showed")
         
         #
         # Verify contacts shown are the contact inserted.
         #
-        j=0
+        count = 0
+        areThere = False;
         for i in x:
-            
-            self.UTILS.TEST(self.listContacts[j] in i.text, "The contacts shown"+i.text+" are the same that contacts inserted"+self.listContacts[j])
-            j=j+1
+            for c in self.listContacts:
+                if (c in i.text):
+                    self.UTILS.logResult("info", "Contact " + c + " inserted");
+                    count += 1;
+                    break;
+
+        self.UTILS.TEST(count == self.NUM_CONTACTS, "All contacts inserted")
