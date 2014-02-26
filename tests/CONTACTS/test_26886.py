@@ -25,8 +25,8 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.Contact_1 = MockContact()
-        self.UTILS.insertContact(self.Contact_1)
+        self.contact_1 = MockContact()
+        self.UTILS.insertContact(self.contact_1)
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -40,7 +40,7 @@ class test_main(GaiaTestCase):
         #
         # View the contact details.
         #
-        self.contacts.viewContact(self.Contact_1['name'])
+        self.contacts.viewContact(self.contact_1['name'])
         
         #
         # Press the favourites button.
@@ -65,6 +65,6 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(DOM.Contacts.details_back_button, "Back button")
         x.tap()
         
-        string = '' + self.Contact_1['givenName'] + self.Contact_1['familyName']
+        string = self.contact_1['givenName'] + self.contact_1['familyName']
         favs = ("xpath", DOM.Contacts.favourites_list_xpath % string)
-        self.UTILS.waitForElements(favs,"'" + self.Contact_1['name'] + "' in the favourites list")
+        self.UTILS.waitForElements(favs,"'" + self.contact_1['name'] + "' in the favourites list")

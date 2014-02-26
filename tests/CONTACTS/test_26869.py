@@ -25,15 +25,12 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.Contact_1 = MockContact(givenName = 'nameJohn')
-        self.Contact_2 = MockContact()
-        self.Contact_3 = MockContact()
+        self.test_contacts = [MockContact() for i in range(3)]
+        self.test_contacts[0]["givenName"] = "nameJohn";
         
-        self.beginningWord="name"
-        
-        self.UTILS.insertContact(self.Contact_1)
-        self.UTILS.insertContact(self.Contact_2)
-        self.UTILS.insertContact(self.Contact_3)
+        self.beginningWord = "name"
+
+        map(self.UTILS.insertContact, self.test_contacts)        
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -52,10 +49,10 @@ class test_main(GaiaTestCase):
         #
         # With name: Verify our contact is listed.
         #
-        self.contacts.checkSearchResults(self.Contact_1["givenName"])
+        self.contacts.checkSearchResults(self.test_contacts[0]["givenName"])
         
         #
         # With name: Verify the other contact is NOT listed.
         #
-        self.contacts.checkSearchResults(self.Contact_2["givenName"],False)
-        self.contacts.checkSearchResults(self.Contact_3["givenName"],False)
+        self.contacts.checkSearchResults(self.test_contacts[1]["givenName"], False)
+        self.contacts.checkSearchResults(self.test_contacts[2]["givenName"], False)
