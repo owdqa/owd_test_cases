@@ -25,15 +25,12 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.Contact_1 = MockContact()
-        self.Contact_2 = MockContact()
+        self.test_contacts = [MockContact() for i in range(2)]
+        map(self.UTILS.insertContact, self.test_contacts)
         
-        self.UTILS.insertContact(self.Contact_1)
-        self.UTILS.insertContact(self.Contact_2)
-        
-        self.listNames=[self.Contact_1["givenName"],self.Contact_2["givenName"]]
-        self.listSurnames=[self.Contact_1["familyName"],self.Contact_2["familyName"]]
-        
+        self.listNames = [c["givenName"] for c in self.test_contacts]
+        self.listSurnames = [c["familyName"] for c in self.test_contacts]
+                
         self.listNames.sort()
         
     def tearDown(self):
@@ -48,11 +45,10 @@ class test_main(GaiaTestCase):
         #
         # Verify contacts shown are the contact inserted.
         #
-        x = self.UTILS.getElements(DOM.Contacts.view_all_contact_list,"Contacts list")
+        x = self.UTILS.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
             
-        j=0
         for i in x:
-            
-            self.UTILS.TEST(self.listNames[j] in i.text, "The contact shown "+i.text+" has the name "+self.listNames[j])
-            self.UTILS.TEST(self.listSurnames[j] in i.text, "The contact shown "+i.text+" has the surname "+self.listSurnames[j])
-            j=j+1
+            for j in range(len(self.listNames)):
+                if self.listNames[j] in i.text and self.listSurnames[j] in i.text:
+                    self.UTILS.logResult("info", "The contact shown " + i.text + " has the name " + self.listNames[j])
+                    self.UTILS.logResult("info", "The contact shown " + i.text + " has the surnname " + self.listSurnames[j])
