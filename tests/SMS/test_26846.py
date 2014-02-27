@@ -12,9 +12,7 @@ from OWDTestToolkit import *
 
 class test_main(GaiaTestCase):
     
-    _TestMsg1 = "First message."
-    _TestMsg2 = "Second message"
-    _TestMsg3 = "Third message"
+    _testMsg1 = "First message."
     
     def setUp(self):
         #
@@ -44,24 +42,42 @@ class test_main(GaiaTestCase):
         self.messages.launch()
         
         #
+        # Make sure we have no threads
+        #
+        self.messages.deleteAllThreads()
+        
+        #
         # Create and send some new tests messages.
         #
-        self.messages.createAndSendSMS([self.target_telNum], self._TestMsg1)
+        self.messages.createAndSendSMS([self.target_telNum], self._testMsg1)
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
         
         #
         # Go back..
         #
-        x= self.UTILS.getElement(DOM.Messages.header_back_button, "Back button" )
+        x= self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
         
         #
         # Delete this thread.
         #
         self.messages.deleteThreads([self.target_telNum])
+
+        # #
+        # # Delete this thread.
+        # #
+        # x = self.UTILS.getElement(DOM.Messages.edit_threads_button, "Edit threads button")
+        # x.tap()
+
+                
+        # x = self.UTILS.getElements(DOM.Messages.threads_list, "Message threads")
+        # for i in range(0, len(x)):
+        #     x[i].tap()
+        
+        # self.messages.deleteSelectedThreads()
                 
         #
         # Check thread isn't there anymore.
         #
-        self.UTILS.waitForNotElements(("xpath", DOM.Messages.thread_selector_xpath % self.target_telNum),"Thread") 
-                
+        self.UTILS.waitForNotElements(("xpath", 
+            DOM.Messages.thread_selector_xpath.format(self.target_telNum)),"Thread") 
