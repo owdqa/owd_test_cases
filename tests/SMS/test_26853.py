@@ -13,8 +13,6 @@ from OWDTestToolkit import *
 class test_main(GaiaTestCase):
     _testMsgs = ["First message", "Second message", "Third message"]
     
-    # _RESTART_DEVICE = True
-
     def setUp(self):
         #
         # Set up child objects...
