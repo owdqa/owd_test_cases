@@ -63,19 +63,6 @@ class test_main(GaiaTestCase):
         #
         self.messages.deleteThreads([self.target_telNum])
 
-        # #
-        # # Delete this thread.
-        # #
-        # x = self.UTILS.getElement(DOM.Messages.edit_threads_button, "Edit threads button")
-        # x.tap()
-
-                
-        # x = self.UTILS.getElements(DOM.Messages.threads_list, "Message threads")
-        # for i in range(0, len(x)):
-        #     x[i].tap()
-        
-        # self.messages.deleteSelectedThreads()
-                
         #
         # Check thread isn't there anymore.
         #
