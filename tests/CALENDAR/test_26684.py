@@ -3,50 +3,53 @@
 #
 import sys
 sys.path.insert(1, "./")
+import time
+from OWDTestToolkit import DOM
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.calendar import Calendar
 
 #
 # Imports particular to this test case.
 #
 
+
 class test_main(GaiaTestCase):
- 
+
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.calendar   = Calendar(self)
-        
-        
+        self.UTILS = UTILS(self)
+        self.calendar = Calendar(self)
+
     def tearDown(self):
         self.UTILS.reportResults()
 
     def test_run(self):
-        _now = self.UTILS.getDateTimeFromEpochSecs(int(time.time()))
-        
+        now = self.UTILS.getDateTimeFromEpochSecs(int(time.time()))
+
         #
         # Launch contacts app.
         #
         self.calendar.launch()
-        
+
         self.calendar.setView("month")
         self.calendar.setView("today")
-        
+
         #
         # Check month view details are correct for 'today'.
         #
         x = self.UTILS.getElement(DOM.Calendar.current_view_header, "Header")
-        _expected_str = "%s %s" % (_now.month_name, _now.year)
-        self.UTILS.TEST(_expected_str.lower() in x.text.lower(), 
-                        "Header: '%s' contains today's details ('%s')." % (x.text, _expected_str))
-        
+        expected_str = "{} {}".format(now.month_name, now.year)
+        self.UTILS.TEST(expected_str.lower() in x.text.lower(),
+                        "Header: '{}' contains today's details ('{}').".format(x.text, expected_str))
+
         x = self.UTILS.getElement(DOM.Calendar.mview_selected_day_title, "Selected day detail string")
-        _expected_str = "%s" % _now.mday
-        self.UTILS.TEST(_expected_str.lower() in x.text.lower(), 
-                        "Day detail string: '%s' contains today's details ('%s')." % (x.text, _expected_str))
-        
+        expected_str = "{}".format(now.mday)
+        self.UTILS.TEST(expected_str.lower() in x.text.lower(),
+                        "Day detail string: '{}' contains today's details ('{}').".format(x.text, expected_str))
+
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot at this point:", x)
