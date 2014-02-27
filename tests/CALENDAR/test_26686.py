@@ -4,26 +4,27 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.calendar import Calendar
 
 #
 # Imports particular to this test case.
 #
 
+
 class test_main(GaiaTestCase):
-    
-    _day_num  = 0
-    _day_name = ""
- 
+
+    day_num = 0
+    day_name = ""
+
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.calendar   = Calendar(self)
-        
-        
+        self.UTILS = UTILS(self)
+        self.calendar = Calendar(self)
+
     def tearDown(self):
         self.UTILS.reportResults()
 
@@ -32,7 +33,7 @@ class test_main(GaiaTestCase):
         # Launch contacts app.
         #
         self.calendar.launch()
-        
+
         #===================================================================================================
         #
         # MONTH view
@@ -50,7 +51,7 @@ class test_main(GaiaTestCase):
         self.calendar.moveWeekViewBy(-1)
         self.calendar.moveWeekViewBy(5)
         self.calendar.moveWeekViewBy(-5)
- 
+
         #===================================================================================================
         #
         # DAY view
