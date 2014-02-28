@@ -9,37 +9,29 @@ from OWDTestToolkit import *
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
-    _RESTART_DEVICE = True
-    
+    _testmsg     = "Test message."
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
         
-        
+
+        tel = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+
         #
-        # Prepare the contact we're going to insert.
+        # Import details of our test contacts.
         #
-        self.contact_1 = MockContacts().Contact_1
-        self.contact_2 = MockContacts().Contact_2
-        self.contact_3 = MockContacts().Contact_longName
-        
-        #
-        # Add this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
-        #
-        self.data_layer.insert_contact(self.contact_1)
-        self.data_layer.insert_contact(self.contact_2)
-        self.data_layer.insert_contact(self.contact_3)
-        
-        
+        self.test_contacts = [MockContact() for i in range(3)]
+        self.test_contacts[0]["tel"] = {'type': 'Mobile', 'value': tel}
+
+        map(self.UTILS.insertContact, self.test_contacts)
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -52,30 +44,26 @@ class test_main(GaiaTestCase):
         self.messages.launch()
         
         #
-        # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
+        # Make sure we have no threads
         #
-#         self.messages.deleteAllThreads()
+        self.messages.deleteAllThreads()
         
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.contact_1["tel"]["value"]], self._TestMsg)
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
-        self.messages.createAndSendSMS([self.contact_2["tel"]["value"]], self._TestMsg)
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
-        self.messages.createAndSendSMS([self.contact_3["tel"]["value"]], self._TestMsg)
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
-        
+        for i in range(len(self.test_contacts)):
+
+            self.messages.createAndSendSMS([self.test_contacts[i]["tel"]["value"]], self._testmsg)
+            x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
+            x.tap()
         #
         # Delete all threads, except the last one.
         #
         x = self.UTILS.getElement(DOM.Messages.edit_threads_button, "Edit threads button")
         x.tap()
-        
-        x = self.UTILS.getElements(DOM.Messages.threads, "Message thread checkboxes")
+
+                
+        x = self.UTILS.getElements(DOM.Messages.threads_list, "Message threads")
         for i in range(0,len(x)-1):
             x[i].tap()
         
@@ -84,6 +72,7 @@ class test_main(GaiaTestCase):
         #
         # Check there is now only 1 thread.
         #
-        x = self.UTILS.getElements(DOM.Messages.threads, "Message thread checkboxes")
+        x = self.UTILS.getElements(DOM.Messages.threads_list, 
+            "Message threads after deletion")
         self.UTILS.TEST(len(x) == 1, "Only 1 thread is left after deleting the other two.")
         
