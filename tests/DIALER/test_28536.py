@@ -3,13 +3,18 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
-
+from gaiatest import GaiaTestCase
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit import DOM
+from OWDTestToolkit.apps import Settings, Dialer
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+import time
+#
+# Imports particular to this test case.
+#
+from tests._mock_data.contacts import MockContact
 
 class test_main(GaiaTestCase):
 
@@ -18,15 +23,12 @@ class test_main(GaiaTestCase):
     def setUp(self):
        GaiaTestCase.setUp(self)
        self.UTILS = UTILS(self)
-       self.contacts = Contacts(self)
+       self.Contact_1 = MockContact() # This creates a contact with random data
        self.dialer = Dialer(self)
 
        #Get details of our test contacts.
-       self.cont = MockContacts().Contact_3
-       self.data_layer.insert_contact(self.cont)
-       self.contact_name = self.cont["name"]
-       self.contact_given_name = self.cont["givenName"]
-       self.contact_number = "518880854"
+       self.UTILS.insertContact(self.Contact_1)
+       self.Contact_1 = MockContact(tel = [{'type': 'Mobile', 'value': '"518880854"'}] )
 
        #
        # Get own number.

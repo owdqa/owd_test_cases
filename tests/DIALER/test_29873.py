@@ -4,11 +4,12 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-from OWDTestToolkit import *
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit import DOM
+from OWDTestToolkit.apps import Settings, Dialer
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
 import time
 
 
@@ -17,7 +18,6 @@ class test_main(GaiaTestCase):
     def setUp(self):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
-        self.contacts = Contacts(self)
         self.dialer = Dialer(self)
         self.settings = Settings(self)
 
