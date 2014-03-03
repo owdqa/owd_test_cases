@@ -14,7 +14,6 @@ import time
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContact
 
 class test_main(GaiaTestCase):
 
@@ -23,17 +22,14 @@ class test_main(GaiaTestCase):
     def setUp(self):
        GaiaTestCase.setUp(self)
        self.UTILS = UTILS(self)
-       self.Contact_1 = MockContact() # This creates a contact with random data
-       self.dialer = Dialer(self)
 
-       #Get details of our test contacts.
-       self.UTILS.insertContact(self.Contact_1)
-       self.Contact_1 = MockContact(tel = [{'type': 'Mobile', 'value': '"518880854"'}] )
+       self.dialer = Dialer(self)
 
        #
        # Get own number.
        #
        self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+       self.UTILS.logComment("Llamando a.." +self.target_telNum)
                 
     def tearDown(self):
         self.UTILS.reportResults()
