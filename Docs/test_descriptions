@@ -301,10 +301,13 @@
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
 28100|Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:'Test1 656565678 number')
 28537|Press call button while the last outgoing call is a number with the prefix +XX
+28536|Press call button while call log only contains incoming and missed calls
 28538|Press call button while the last outgoing call is a contact number
 28539|Press call button after delete all the calls from the call log
 28540|Press call button while the call log contains different outgoing calls
 29867|Verifying the calling line identification presentation status, when it's provisioned
+29873|Hide number "CLIR" by MMI code and verify that settings options are updated
+29875|Show number "CLIR" by MMI code and verify the status using other MMI code 
 29893|Send a MMS when data is on and wifi off
 29894|Send a MMS when data and wifi are on
 29895|Send a MMS when data is off and wifi on
@@ -331,4 +334,20 @@
 31728|GIF Image size 640x480
 31729|Animated GIF image size 640x480
 31730|3GPP Video
+MMSTCCOMPT009b|MMS Recipient Name
+MMSTCCOMPT010d|Message with text, audio and images
+MMSTCCOMPT012b|Message size during composition
+MMSTCCOMPT015b|USIM Addresses
+MMSTCFEATR002c|Sending PNG file
+MMSTCFEATR003b|Receiving MP4 audio file
+MMSTCFEATR012d|The device should support MPEG4 file format
+MMSTCFEATR030a|Reception of video file + JPG file + AMR file
+MMSTCMMITC011d|Differentiation between EMS, MMS and SMS
+MMSTCPREST006a|Multiple objects in same page
+MMSTCPREST008a|Hyperlinks
+MMSTCRECVN004c|JPG Image size 640x480
+MMSTCRECVN005c|GIF Image size 640x480
+MMSTCRECVN006b|Animated GIF image size 640x480
+MMSTCSENDG012c|3GPP Video
+
 
