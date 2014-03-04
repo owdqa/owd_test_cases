@@ -4,13 +4,13 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Dialer
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps import Dialer
 from tests._mock_data.contacts import MockContact
 
 class test_main(GaiaTestCase):
@@ -44,7 +44,11 @@ class test_main(GaiaTestCase):
         self.dialer.enterNumber("1234")
         
         x = self.UTILS.getElement(DOM.Dialer.suggestion_count, "Suggestion count")
-        x.tap()
+        #
+        # We are using this since normal .tap() method does not seem to be working
+        #
+        self.UTILS.simulateClick(x)
+
         x = self.UTILS.getElements(DOM.Dialer.suggestion_list, "Suggestion list")
         self.UTILS.TEST(len(x) == 3, "There are 3 contacts listed.")
 
