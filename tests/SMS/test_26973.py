@@ -4,11 +4,14 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps import Contacts
 from tests._mock_data.contacts import MockContact
 
 class test_main(GaiaTestCase):
@@ -27,10 +30,12 @@ class test_main(GaiaTestCase):
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
         
+        self.cont = MockContact(email = [{"type": "Personal", "value": "email1@nowhere.com"},
+                               {"type": "Personal", "value": "email2@nowhere.com"},
+                               {"type": "Personal", "value": "email3@nowhere.com"}])
+        self.UTILS.insertContact(self.cont)
+
         self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
-        
-        self.cont = MockContacts().Contact_multipleEmails
-        self.data_layer.insert_contact(self.cont)
         
     def tearDown(self):
         self.UTILS.reportResults()
