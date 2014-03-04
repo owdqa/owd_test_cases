@@ -7,13 +7,17 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-
+from tests._mock_data.contacts import MockContact
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps import Contacts
+from OWDTestToolkit.apps import Gallery
+import time
 
 class test_main(GaiaTestCase):
     
@@ -28,11 +32,11 @@ class test_main(GaiaTestCase):
         self.gallery    = Gallery(self)
         
         #
-        # Import contact (adjust the correct number).
+        # Import contact (adjust to the correct number).
         #
-        self.Contact_1 = MockContacts().Contact_1
-        self.Contact_1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Using target telephone number " + self.Contact_1["tel"]["value"])
+        self.test_num = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.cont = MockContact(tel={"type": "Mobile", "value": self.test_num})
+        self.UTILS.logComment("Using target telephone number " + self.cont["tel"]["value"])
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -45,7 +49,7 @@ class test_main(GaiaTestCase):
         self.UTILS.addFileToDevice('./tests/_resources/imgd.jpg', destination='DCIM/100MZLLA')
 
         self.contacts.launch()
-        self.contacts.createNewContact(self.Contact_1)
+        self.contacts.createNewContact(self.cont)
 
         #
         # Launch messages app.
@@ -64,13 +68,15 @@ class test_main(GaiaTestCase):
         #
         # Search for our contact.
         #
+        time.sleep(5)
         orig_iframe = self.messages.selectAddContactButton()
-        self.contacts.search(self.Contact_1["name"])
-        self.contacts.checkSearchResults(self.Contact_1["name"])
+        time.sleep(5)
+        self.contacts.search(self.cont["name"])
+        self.contacts.checkSearchResults(self.cont["name"])
 
         x = self.UTILS.getElements(DOM.Contacts.search_results_list, "Contacts search results")
         for i in x:
-            if i.text == self.Contact_1["name"]:
+            if i.text == self.cont["name"]:
                 i.tap()
                 break
         
@@ -83,7 +89,7 @@ class test_main(GaiaTestCase):
         #
         # Now check the correct name is in the 'To' list.
         #
-        self.messages.checkIsInToField(self.Contact_1["name"])
+        self.messages.checkIsInToField(self.cont["name"])
         self.messages.sendSMS()
         
         #
