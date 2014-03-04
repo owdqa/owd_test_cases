@@ -20,13 +20,13 @@
 27002|Automation issue (Marionette)
 28100|Automation issue (Marionette)
 26845|Automation issue (Marionette)
-27005|BUG 907073
+#27005|BUG 907073
 27006|BUG 907073
 27007|BUG 907073
 27009|BUG 907073
 27010|BUG 907073
 26834|BUG 883285
-26838|Cannot find a way to see the dots!
+#26838|Cannot find a way to see the dots!
 26538|BUG 914099
 26977|BUG 895389 (will not be fixed)
 26978|Email app not working correctly
