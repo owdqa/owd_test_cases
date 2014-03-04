@@ -8,13 +8,16 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
-
+from tests._mock_data.contacts import MockContact
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps import Contacts
+from OWDTestToolkit.apps import Gallery
 
 
 class test_main(GaiaTestCase):
@@ -34,9 +37,9 @@ class test_main(GaiaTestCase):
         #
         # Import contact (adjust to the correct number).
         #
-        self.Contact_1 = MockContacts().Contact_1
-        self.Contact_1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Using target telephone number " + self.Contact_1["tel"]["value"])
+        self.test_num = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.cont = MockContact(tel={"type": "Mobile", "value": self.test_num})
+        self.UTILS.logComment("Using target telephone number " + self.cont["tel"]["value"])
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -84,7 +87,7 @@ class test_main(GaiaTestCase):
         # previous step
         #
         self.contacts.launch()
-        self.contacts.createNewContact(self.Contact_1)
+        self.contacts.createNewContact(self.cont)
 
         #
         # Switch back to the messages app.
@@ -95,5 +98,5 @@ class test_main(GaiaTestCase):
         #
         # Verify the thread now contains the name of the contact instead of the phone number
         #
-        self.UTILS.logComment("Trying to open the thread with name: " + self.Contact_1["name"])
-        self.messages.openThread(self.Contact_1["name"])
+        self.UTILS.logComment("Trying to open the thread with name: " + self.cont["name"])
+        self.messages.openThread(self.cont["name"])
