@@ -3,8 +3,11 @@
 #
 import sys
 sys.path.insert(1, "./")
+
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps import Messages
 
 #
 # Imports particular to this test case.

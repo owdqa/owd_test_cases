@@ -4,11 +4,16 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps import Contacts
+from OWDTestToolkit.apps import Dialer
+import time
 
 class test_main(GaiaTestCase):
 
@@ -49,7 +54,7 @@ class test_main(GaiaTestCase):
         self.messages.createAndSendSMS([self.target_telNum], self._TestMsg)
         
         #
-        # Wait for the last message in this thread to be a 'recieved' one
+        # Wait for the last message in this thread to be a 'received' one
         # and click the link.
         #
         x = self.messages.waitForReceivedMsgInThisThread()
