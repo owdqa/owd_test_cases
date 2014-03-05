@@ -31,14 +31,14 @@ class test_main(GaiaTestCase):
         # Prepare the contact we're going to import.
         #
         tlf = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': tlf})
+        self.contact = MockContact(tel = {'type': 'Mobile', 'value': tlf})
 
-        self.UTILS.logComment("Using target telephone number " + self.Contact_1["tel"]["value"])
+        self.UTILS.logComment("Using target telephone number " + self.contact["tel"]["value"])
         
         #
         # Add this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
         #
-        self.UTILS.insertContact(self.Contact_1)
+        self.UTILS.insertContact(self.contact)
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -53,7 +53,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.Contact_1["tel"]["value"]], self._TestMsg)
+        self.messages.createAndSendSMS([self.contact["tel"]["value"]], self._TestMsg)
         
 #         #
 #         # Wait for the last message in this thread to be a 'recieved' one.

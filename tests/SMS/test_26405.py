@@ -28,13 +28,13 @@ class test_main(GaiaTestCase):
         self.messages   = Messages(self)
         self.contacts   = Contacts(self)
         
-        self.Contact_1 = MockContact(tel = [{'type': 'Mobile', 'value': '11111111'}, {'type': 'Mobile', 'value': '222222222'}] )
+        self.contact = MockContact(tel = [{'type': 'Mobile', 'value': '11111111'}, {'type': 'Mobile', 'value': '222222222'}] )
 
         #
         # We're not testing adding a contact, so just stick one
         # into the database.
         #
-        self.UTILS.insertContact(self.Contact_1)
+        self.UTILS.insertContact(self.contact)
                 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -55,5 +55,5 @@ class test_main(GaiaTestCase):
         # Search for our contact.
         #
         self.messages.selectAddContactButton()
-        self.contacts.search(self.Contact_1['name'])
-        self.contacts.selectSearchResultSeveralPhones(self.Contact_1['name'],0)
+        self.contacts.search(self.contact['name'])
+        self.contacts.selectSearchResultSeveralPhones(self.contact['name'],0)

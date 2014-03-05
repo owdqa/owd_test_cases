@@ -8,10 +8,6 @@ from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.browser import Browser
 from OWDTestToolkit.apps import Settings
 
-#
-# Imports particular to this test case.
-#
-
 
 class test_main(GaiaTestCase):
 
