@@ -3,8 +3,10 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
 
 #
 # Imports particular to this test case.
@@ -19,39 +21,39 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-                
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+
         #
-        # Import details of our test contacts.
+        # Create test contacts.
         #
-        self.Contact_1 = MockContact()
-        self.UTILS.insertContact(self.Contact_1)
-    
+        self.contact = MockContact()
+        self.UTILS.insertContact(self.contact)
+
     def tearDown(self):
         self.UTILS.reportResults()
-        
+
     def test_run(self):
         #
         # Launch contacts app.
         #
         self.contacts.launch()
-        
+
         #
         # View our contact.
         #
-        self.contacts.viewContact(self.Contact_1['name'])
-           
+        self.contacts.view_contact(self.contact['name'])
+
         #
         # Edit our contact.
         #
-        self.contacts.pressEditContactButton()
-         
+        self.contacts.press_edit_contact_button
+
         #
         # Delete our contact.
         #
-        self.contacts.pressDeleteContactButton()
-         
+        self.contacts.press_delete_contact_button()
+
         #
         # Cancel deletion.
         #
@@ -65,8 +67,8 @@ class test_main(GaiaTestCase):
         # Relaunch the app.
         #
         self.contacts.launch()
-         
+
         #
         # Now actually delete our contact.
         #
-        self.contacts.deleteContact(self.Contact_1['name'])
+        self.contacts.delete_contact(self.contact['name'])

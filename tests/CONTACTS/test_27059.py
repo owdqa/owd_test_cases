@@ -4,7 +4,9 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
 
 #
 # Imports particular to this test case.
@@ -19,18 +21,18 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+
         #
-        # Get details of our test contacts.
+        # Create our test contacts.
         #
-        self.Contact_1 = MockContact()
-        self.UTILS.insertContact(self.Contact_1)
+        self.contact = MockContact()
+        self.UTILS.insertContact(self.contact)
 
     def tearDown(self):
         self.UTILS.reportResults()
-        
+
     def test_run(self):
         #
         # Launch contacts app.
@@ -40,9 +42,9 @@ class test_main(GaiaTestCase):
         #
         # Search for our new contact.
         #
-        self.contacts.search(self.Contact_1["tel"]["value"])
-        
+        self.contacts.search(self.contact["tel"]["value"])
+
         #
         # Verify our contact is listed.
         #
-        self.contacts.checkSearchResults(self.Contact_1["givenName"], True)
+        self.contacts.check_search_results(self.contact["givenName"], True)

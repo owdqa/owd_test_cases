@@ -3,8 +3,10 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.apps import Settings
 
 #
 # Imports particular to this test case.
@@ -19,49 +21,49 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.settings   = Settings(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.settings = Settings(self)
 
         #
-        # Get details of our test contacts.
+        # Create test contacts.
         #
-        self.Contact_1 = MockContact()
-        self.Contact_2 = MockContact()
-        self.UTILS.insertContact(self.Contact_1)
-        self.UTILS.insertContact(self.Contact_2)
-        self.newGivenName = "aaaaabbbbbccccaaaa"
+        self.contact = MockContact()
+        self.contact2 = MockContact()
+        self.UTILS.insertContact(self.contact)
+        self.UTILS.insertContact(self.contact2)
+        self.new_given_name = "aaaaabbbbbccccaaaa"
 
     def tearDown(self):
         self.UTILS.reportResults()
-        
+
     def test_run(self):
         #
         # Set up to use data connection.
         #
         self.UTILS.getNetworkConnection()
-        
+
         #
         # Launch contacts app.
         #
         self.contacts.launch()
-        
+
         #
         # Change the name to "aaaaabbbbbccccaaaa"
         #
-        self.contacts.changeVal(self.Contact_1['name'], "givenName", self.newGivenName)
+        self.contacts.change_contact(self.contact['name'], "givenName", self.new_given_name)
 
         #
         # Search for our new contact.
         #
         self.contacts.search("aaa")
-        
+
         #
         # Verify our contact is listed.
         #
-        self.contacts.checkSearchResults(self.newGivenName, True)
-        
+        self.contacts.check_search_results(self.new_given_name, True)
+
         #
         # Verify the other contact is NOT listed.
         #
-        self.contacts.checkSearchResults(self.Contact_2["givenName"], False)
+        self.contacts.check_search_results(self.contact2["givenName"], False)

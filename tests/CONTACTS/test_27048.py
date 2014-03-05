@@ -4,7 +4,9 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.apps import Settings
 
 #
 # Imports particular to this test case.
@@ -19,32 +21,28 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.settings   = Settings(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.settings = Settings(self)
 
         #
-        # Get details of our test contacts.
+        # Create test contacts.
         #
-        self.Contact_1 = MockContact()
-        self.UTILS.insertContact(self.Contact_1)
+        self.contact = MockContact()
+        self.UTILS.insertContact(self.contact)
 
     def tearDown(self):
         self.UTILS.reportResults()
-        
+
     def test_run(self):
-        
         #
         # Set up to use data connection.
         #
         self.UTILS.getNetworkConnection()
-        
+
         #
         # Launch contacts app.
         #
         self.contacts.launch()
-        x = self.contacts.import_HotmailLogin("wrongname", "wrongpass")
-        
+        x = self.contacts.import_hotmail_login("wrongname", "wrongpass")
         self.UTILS.TEST(x == False, "Login failed.")
-
-

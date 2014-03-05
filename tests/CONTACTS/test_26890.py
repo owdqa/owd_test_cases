@@ -3,29 +3,28 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
 
-#
-# Imports particular to this test case.
-#
 
 class test_main(GaiaTestCase):
-    
-    _testName    = "Obi"
-    _testSurname = "Wan"
+
+    name = "Obi"
+    surname = "Wan"
 
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+
     def tearDown(self):
         self.UTILS.reportResults()
-        
+
     def test_run(self):
         #
         # Launch contacts app.
@@ -35,26 +34,20 @@ class test_main(GaiaTestCase):
         #
         # Click create new contact.
         #
-        self.contacts.startCreateNewContact()
-        
-        
-        #####################################True
-        #
-        # Given name ...
-        #
-        
+        self.contacts.start_create_new_contact()
+
         #
         # Add some info. to the field.
         #
-        self.UTILS.typeThis(DOM.Contacts.given_name_field, 
-                            "Given name field", 
-                            self._testName,
-                            p_no_keyboard=False, 
-                            p_clear=True, 
-                            p_enter=False, 
+        self.UTILS.typeThis(DOM.Contacts.given_name_field,
+                            "Given name field",
+                            self.name,
+                            p_no_keyboard=False,
+                            p_clear=True,
+                            p_enter=False,
                             p_validate=True,
                             p_remove_keyboard=False)
-        
+
         #
         # Press the 'x'.
         #
@@ -67,25 +60,19 @@ class test_main(GaiaTestCase):
         self.marionette.find_element("tag name", "h1").tap()
         x = self.UTILS.getElement(DOM.Contacts.given_name_field, "Given name field")
         self.UTILS.TEST(x.text == "", "Given name field is empty after being cleared.")
-        
-                
-        #####################################
-        #
-        # Surname ...
-        #
-        
+
         #
         # Add some info. to the field.
         #
-        self.UTILS.typeThis(DOM.Contacts.family_name_field, 
-                            "Surname field", 
-                            self._testSurname,
-                            p_no_keyboard=False, 
-                            p_clear=True, 
-                            p_enter=False, 
+        self.UTILS.typeThis(DOM.Contacts.family_name_field,
+                            "Surname field",
+                            self.surname,
+                            p_no_keyboard=False,
+                            p_clear=True,
+                            p_enter=False,
                             p_validate=True,
                             p_remove_keyboard=False)
-        
+
         #
         # Press the 'x'.
         #
@@ -98,4 +85,3 @@ class test_main(GaiaTestCase):
         self.marionette.find_element("tag name", "h1").tap()
         x = self.UTILS.getElement(DOM.Contacts.family_name_field, "Surname field")
         self.UTILS.TEST(x.text == "", "Surname field is empty after being cleared.")
-                

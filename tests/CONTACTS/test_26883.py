@@ -3,8 +3,11 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.apps import Messages
 import time
 
 #
@@ -14,54 +17,46 @@ from tests._mock_data.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
-    
-    _TestMsg     = "Test."
 
-    _RESTART_DEVICE = True
+    test_msg = "Test."
+    restart_device = True
 
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.messages = Messages(self)
 
         #
         # Prepare the contact we're going to insert.
         #
-        tlf =  self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': tlf})
+        tlf = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.contact = MockContact(tel={'type': 'Mobile', 'value': tlf})
 
-        self.UTILS.logComment("Using target telephone number " + self.Contact_1["tel"]["value"])
-        
+        self.UTILS.logComment("Using target telephone number " + self.contact["tel"]["value"])
+
         #
         # Add this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
         #
-        self.UTILS.insertContact(self.Contact_1)
+        self.UTILS.insertContact(self.contact)
 
     def tearDown(self):
         self.UTILS.reportResults()
-        
-    def test_run(self):
-        #
-        # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
-        #
-#         self.messages.launch()
-#         self.messages.deleteAllThreads()
-#         self.UTILS.touchHomeButton()
 
+    def test_run(self):
         #
         # Launch contacts app.
         #
         self.contacts.launch()
-        
+
         #
         # View the details of our contact.
         #
-        self.contacts.viewContact(self.Contact_1['name'])
-        
+        self.contacts.view_contact(self.contact['name'])
+
         #
         # Tap the sms button in the view details screen to go to the sms page.
         #
@@ -75,20 +70,13 @@ class test_main(GaiaTestCase):
         time.sleep(2)
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
 
-#         #
-#         # TEST: this automatically opens the 'send SMS' screen, so
-#         # check the correct name is in the header of this sms.
-#         #
-#         self.UTILS.TEST(self.UTILS.headerCheck(self.contact_1['name']),
-#                         "'Send message' header = '" + self.contact_1['name'] + "'.")
-    
         #
         # Create SMS.
         #
-        x=self.UTILS.screenShotOnErr()
+        x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "frame", x)
-        self.messages.enterSMSMsg(self._TestMsg)
-        
+        self.messages.enterSMSMsg(self.test_msg)
+
         #
         # Click send.
         #
