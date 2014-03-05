@@ -4,12 +4,14 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
-#from datetime 
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps import Clock
+from OWDTestToolkit.apps import Settings
 import datetime, time   
 
 class test_main(GaiaTestCase):
@@ -54,20 +56,16 @@ class test_main(GaiaTestCase):
             time.sleep(diff_s)
 
 
-        t = datetime.datetime.now() + datetime.timedelta(minutes=2)
+        alarm_time = datetime.datetime.now() + datetime.timedelta(minutes=2)
         
-        _hour   = t.hour
-        _minute = t.minute
-        _title  = "Test alarm"
-
-        self.clock.createAlarm(_hour, _minute, _title)
+        self.clock.createAlarm(alarm_time.hour, alarm_time.minute, "Test alarm")
         
-        #
-        # Restart the Clock app.
-        #
-        self.clock.launch()
+        # #
+        # # Restart the Clock app.
+        # #
+        # self.clock.launch()
         
-        #
-        # Delete the alarm.
-        #
-        self.clock.deleteAllAlarms()
+        # #
+        # # Delete the alarm.
+        # #
+        # self.clock.deleteAllAlarms()
