@@ -27,8 +27,8 @@ class test_main(GaiaTestCase):
         #
         # Prepare the contact we're going to insert.
         #
-        self.Contact_1 = MockContact()
-        self.UTILS.insertContact(self.Contact_1)
+        self.contact = MockContact()
+        self.UTILS.insertContact(self.contact)
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -42,7 +42,7 @@ class test_main(GaiaTestCase):
         #
         # View the details of our contact.
         #
-        self.contacts.viewContact(self.Contact_1['name'])
+        self.contacts.viewContact(self.contact['name'])
         
         #
         # Tap the sms button in the view details screen to go to the sms page.
@@ -62,4 +62,4 @@ class test_main(GaiaTestCase):
         # TEST: this automatically opens the 'send SMS' screen, so
         # check the correct name is in the 'to' field of this sms.
         #
-        self.messages.checkIsInToField(self.Contact_1['name'])
+        self.messages.checkIsInToField(self.contact['name'])

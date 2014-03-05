@@ -27,8 +27,8 @@ class test_main(GaiaTestCase):
         #
         # Import contact (adjust the correct number).
         #
-        self.Contact_1 = MockContact()
-        self.UTILS.insertContact(self.Contact_1)
+        self.contact = MockContact()
+        self.UTILS.insertContact(self.contact)
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -42,16 +42,16 @@ class test_main(GaiaTestCase):
         self.messages.startNewSMS()
     
         self.messages.selectAddContactButton()
-        self.contacts.viewContact(self.Contact_1["familyName"], False)
+        self.contacts.viewContact(self.contact["familyName"], False)
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
-        self.messages.checkIsInToField(self.Contact_1["name"], True)
+        self.messages.checkIsInToField(self.contact["name"], True)
         
         #
         # Remove it.
         #
-        self.messages.removeContactFromToField(self.Contact_1["name"])
+        self.messages.removeContactFromToField(self.contact["name"])
         
         #
         # Verify the contact name is present before removing it.
         #
-        self.messages.checkIsInToField(self.Contact_1["name"], False)
+        self.messages.checkIsInToField(self.contact["name"], False)
