@@ -4,15 +4,18 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps import Email
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
+    test_msg = "Test message."
     
     def setUp(self):
         #
@@ -52,15 +55,23 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], "Email one one@tester.com, two %s , three three@tester.com." % self.emailAddy)
+        msg_text = "Email one one@tester.com, two {} , three three@tester.com."
+        self.messages.createAndSendSMS([self.num1], 
+            msg_text.format(self.emailAddy))
         x = self.messages.waitForReceivedMsgInThisThread()
         
         #
         # Tap the 2nd email link.
         #
-        self.UTILS.logResult("info", "Click the 2nd email address in this message: '%s'." % x.text)
+        self.UTILS.logResult("info", "Click the 2nd email address in this message: '{}'.".format(x.text))
         _link = x.find_elements("tag name", "a")[1]
         _link.tap()
+
+        #
+        # Click on "Send email" button from the overlay
+        #
+        x = self.UTILS.getElement(DOM.Messages.header_send_email_btn, "Send email button")
+        x.tap()
         
         #
         # Switch to email frame and verify the email address is in the To field.
@@ -68,5 +79,4 @@ class test_main(GaiaTestCase):
         self.UTILS.switchToFrame(*DOM.Email.frame_locator)
         x = self.UTILS.getElement(DOM.Email.compose_to_from_contacts, "To field")
         self.UTILS.TEST(x.text == self.emailAddy, 
-                        "To field contains '%s' (it was '%s')." %
-                        (self.emailAddy, self.emailAddy))
+                        "To field contains '{}' (it was '{}').".format(self.emailAddy, self.emailAddy))
