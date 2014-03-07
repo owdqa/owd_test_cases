@@ -10,8 +10,10 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Dialer
+from OWDTestToolkit.apps import Contacts
+from OWDTestToolkit.apps.dialer import Dialer
 from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
     

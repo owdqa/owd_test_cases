@@ -3,14 +3,15 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
-from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit import DOM
-from OWDTestToolkit.apps import Settings, Dialer
+from gaiatest   import GaiaTestCase
+
 #
 # Imports particular to this test case.
 #
-
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps import Settings
+from OWDTestToolkit.apps.dialer import Dialer
 import time
 
 
