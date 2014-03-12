@@ -10,32 +10,32 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps import Contacts
 from tests._mock_data.contacts import MockContact
 import time
 
 
 class test_main(GaiaTestCase):
-    _TestMsg     = "Test text - please ignore."
+    test_msg = "Test text - please ignore."
 
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.messages = Messages(self)
         
    
         #
         # Prepare the contact we're going to insert.
         #
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': self.num1})
+        self.contact = MockContact(tel = {'type': 'Mobile', 'value': self.num1})
 
-        self.UTILS.insertContact(self.Contact_1)
+        self.UTILS.insertContact(self.contact)
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -49,7 +49,7 @@ class test_main(GaiaTestCase):
         #
         # View the details of our contact.
         #
-        self.contacts.viewContact(self.Contact_1['name'])
+        self.contacts.viewContact(self.contact['name'])
          
         #
         # Tap the sms button in the view details screen to go to the sms page.
@@ -66,7 +66,7 @@ class test_main(GaiaTestCase):
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
  
         self.UTILS.headerCheck("1 recipient")     
-        self.messages.checkIsInToField(self.Contact_1['name'])
+        self.messages.checkIsInToField(self.contact['name'])
         
         # Not present in 'master' branch because of multiple target number fnuctionality.
 #         #

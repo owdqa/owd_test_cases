@@ -10,7 +10,7 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps import Dialer
 
 class test_main(GaiaTestCase):
@@ -20,9 +20,9 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.dialer     = Dialer(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.dialer = Dialer(self)
 
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         
@@ -40,10 +40,8 @@ class test_main(GaiaTestCase):
         # Create and send a new test message containing all of our numbers..
         #
         nums = ["12345678", "123456789", "01234567", "012345678"]
-        sms_nums = ""
-        for i in nums:
-            sms_nums = "%s, %s" % (sms_nums, i)
-        sms_msg = "Test numbers %s." % sms_nums
+        sms_msg = "Test numbers {}".format(", ".join(nums))
+
          
         self.messages.createAndSendSMS([self.num1], sms_msg)
         x = self.messages.waitForReceivedMsgInThisThread()
@@ -53,7 +51,7 @@ class test_main(GaiaTestCase):
         #
         msg_nums = x.find_elements("tag name", "a")
         
-        for i in range(0,len(msg_nums)):
+        for i in range(len(msg_nums)):
             msg_nums[i].tap()
             
             self.UTILS.switchToFrame(*DOM.Dialer.frame_locator)
@@ -63,7 +61,7 @@ class test_main(GaiaTestCase):
             #
             x = self.UTILS.getElement(DOM.Dialer.phone_number, "Phone number")
             self.UTILS.TEST(nums[i] in x.get_attribute("value"), 
-                            "The dialer number contains '%s' (it was '%s')." % (nums[i], x.get_attribute("value")))
+                            "The dialer number contains '{}' (it was '{}').".format(nums[i], x.get_attribute("value")))
             
             #
             # Switch back to messaging app (without killing anything) etc ...

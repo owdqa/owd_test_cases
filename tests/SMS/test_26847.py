@@ -10,14 +10,13 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps import Contacts
 from tests._mock_data.contacts import MockContact
-#import time
 
 class test_main(GaiaTestCase):
     
-    _testmsg     = "Test message."
+    test_msg = "Test message."
     def setUp(self):
         #
         # Set up child objects...
@@ -57,7 +56,7 @@ class test_main(GaiaTestCase):
         #
         for i in range(len(self.test_contacts)):
 
-            self.messages.createAndSendSMS([self.test_contacts[i]["tel"]["value"]], self._testmsg)
+            self.messages.createAndSendSMS([self.test_contacts[i]["tel"]["value"]], self.test_msg)
             x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
             x.tap()
         #

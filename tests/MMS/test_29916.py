@@ -4,8 +4,11 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.gallery import Gallery
 
 class test_main(GaiaTestCase):
 
@@ -19,14 +22,13 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.gallery    = Gallery(self)
-        self.Settings   = Settings(self)
-        self._TestMsg1    = "Hello World 1"
-        self._TestMsg2    = "Hello World 2"
-        self._TestMsg3    = "Hello World 3"
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.gallery = Gallery(self)
 
+        self.test_msg1 = "Hello World 1"
+        self.test_msg2 = "Hello World 2"
+        self.test_msg3 = "Hello World 3"
 
         #
         # Establish which phone number to use.
@@ -43,10 +45,10 @@ class test_main(GaiaTestCase):
         #
         # Create and Send a MMS.
         #
-        self.messages.createAndSendMMS("image", self._TestMsg1)
+        self.messages.createAndSendMMS("image", self.test_msg1)
 
         #
-        # Back to send a new sms
+        # Back to send a new message
         #
         x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
@@ -54,10 +56,10 @@ class test_main(GaiaTestCase):
         #
         # Create and Send other MMS.
         #
-        self.messages.createAndSendMMS("image", self._TestMsg2)
+        self.messages.createAndSendMMS("image", self.test_msg2)
 
         #
-        # Back to send a new sms
+        # Back to send a new message
         #
         x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
@@ -65,15 +67,17 @@ class test_main(GaiaTestCase):
         #
         # Create and Send other MMS.
         #
-        self.messages.createAndSendMMS("image", self._TestMsg3)
+        self.messages.createAndSendMMS("image", self.test_msg3)
 
 
         #
         # Create reference in xpth with value "val".
         #
-        a=(DOM.Messages.message_text[0],DOM.Messages.message_text[1]%val)
-        elem1 = self.UTILS.getElement(a, "mms text")
-        header1=elem1.text
+        locator = (DOM.Messages.message_text[0],
+                    DOM.Messages.message_text[1].format(val))
+
+        elem1 = self.UTILS.getElement(locator, "mms text")
+        header1 = elem1.text
 
 
         #
@@ -85,14 +89,14 @@ class test_main(GaiaTestCase):
         #
         # Create reference in xpth with value "val".
         #
-        b=(DOM.Messages.message_text[0],DOM.Messages.message_text[1]%val)
-        elem2 = self.UTILS.getElement(a, "mms text")
-        header2=elem2.text
+        elem2 = self.UTILS.getElement(locator, "mms text")
+        header2 = elem2.text
 
         #
         # Vary that header[1] is different after deleting a message".
         #
-        self.UTILS.TEST(header1 != header2, "HEADER BEFORE DETELING A MMS: " + header1 + " HEADER AFTER DETELING A MMS: " + header2, True)
+        self.UTILS.TEST(header1 != header2, 
+            "HEADER BEFORE DETELING A MMS: " + header1 + " HEADER AFTER DETELING A MMS: " + header2, True)
 
 
 

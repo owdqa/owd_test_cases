@@ -10,7 +10,7 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 
 class test_main(GaiaTestCase):
     
@@ -21,8 +21,8 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
         
         #
         # Import contact (adjust the correct number).
@@ -44,7 +44,7 @@ class test_main(GaiaTestCase):
         # Send a message to create a thread (use number, not name as this
         # avoids some blocking bugs just now). 
         #
-        self.messages.createAndSendSMS( [self._num], "Test 1")
+        self.messages.createAndSendSMS([self._num], "Test 1")
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
   
         self.messages.enterSMSMsg("Test 2")
@@ -69,29 +69,21 @@ class test_main(GaiaTestCase):
         # Find the first message.
         #
         x = self.UTILS.getElements(DOM.Messages.message_list, "Message list", False)
-        pos=0
+        pos = 0
         for i in x:
             if i.find_element("xpath", "//p[text()='Test 1']"):
                 break
-            pos = pos + 1
+            pos += 1
 
         #
         # Now verify that the order is as expected.
         #
-        self.checkMsg(x, pos, "Test 1", "outgoing")
-        pos = pos + 1
-        self.checkMsg(x, pos, "Test 1", "incoming")
-         
-        pos = pos + 1
-        self.checkMsg(x, pos, "Test 2", "outgoing")
-        pos = pos + 1
-        self.checkMsg(x, pos, "Test 2", "incoming")
- 
-        pos = pos + 1
-        self.checkMsg(x, pos, "Test 3", "outgoing")
-        pos = pos + 1
-        self.checkMsg(x, pos, "Test 3", "incoming")
 
+        for i in range(3):
+            self.checkMsg(x, pos, "Test {}".format(i + 1), "outgoing")
+            pos += 1
+            self.checkMsg(x, pos, "Test {}".format(i + 1), "incoming")
+         
         #
         # Tap the message area.
         #

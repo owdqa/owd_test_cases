@@ -10,26 +10,26 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps import Email
 import time
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
+    test_msg = "Test message."
     
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.Email      = Email(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.Email = Email(self)
 
-        self.USER1  = self.UTILS.get_os_variable("GMAIL_1_USER")
+        self.USER1 = self.UTILS.get_os_variable("GMAIL_1_USER")
         self.EMAIL1 = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
-        self.PASS1  = self.UTILS.get_os_variable("GMAIL_1_PASS")
+        self.PASS1 = self.UTILS.get_os_variable("GMAIL_1_PASS")
          
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.get_os_variable("GMAIL_2_EMAIL")
@@ -55,7 +55,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], "Email %s one." % self.emailAddy)
+        self.messages.createAndSendSMS([self.num1], "Email {} one.".format(self.emailAddy))
         x = self.messages.waitForReceivedMsgInThisThread()
         
         #
@@ -72,8 +72,8 @@ class test_main(GaiaTestCase):
         #
         # Verify that the email address does not open the email app.
         #
-        _link = x.find_element("tag name", "a")
-        _link.tap()
+        link = x.find_element("tag name", "a")
+        link.tap()
 
         #
         # Now try to find the email app iframe.

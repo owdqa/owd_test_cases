@@ -15,24 +15,23 @@ from gaiatest   import GaiaTestCase
 from tests._mock_data.contacts import MockContact
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps import Contacts
-from OWDTestToolkit.apps import Gallery
-
+from OWDTestToolkit.apps.gallery import Gallery
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test."
+    test_msg = "Test."
     
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.contacts   = Contacts(self)
-        self.gallery    = Gallery(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.contacts = Contacts(self)
+        self.gallery = Gallery(self)
         
         #
         # Import contact (adjust to the correct number).
@@ -49,7 +48,8 @@ class test_main(GaiaTestCase):
         #
         # Load sample image into the gallery.
         #
-        self.UTILS.addFileToDevice('./tests/_resources/imgd.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.addFileToDevice('./tests/_resources/imgd.jpg',
+                                        destination='DCIM/100MZLLA')
 
         #
         # Launch messages app.
@@ -64,12 +64,12 @@ class test_main(GaiaTestCase):
         #
         # Insert the phone number in the To field
         #
-        self.messages.addNumbersInToField([ self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM") ])
+        self.messages.addNumbersInToField([self.test_num])
 
         #
         # Create MMS.
         #
-        self.messages.enterSMSMsg(self._TestMsg)
+        self.messages.enterSMSMsg(self.test_msg)
 
         self.messages.createMMSImage()
         self.gallery.clickThumbMMS(0)

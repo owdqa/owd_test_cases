@@ -10,12 +10,11 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
-#import time
+from OWDTestToolkit.apps.messages import Messages
 
 class test_main(GaiaTestCase):
     
-    _testMsg1 = "First message."
+    test_msg = "First message."
     
     def setUp(self):
         #
@@ -52,7 +51,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send some new tests messages.
         #
-        self.messages.createAndSendSMS([self.target_telNum], self._testMsg1)
+        self.messages.createAndSendSMS([self.target_telNum], self.test_msg)
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
         
         #

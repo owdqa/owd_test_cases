@@ -10,7 +10,7 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 import time
 
 class test_main(GaiaTestCase):
@@ -23,8 +23,8 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
         
         self.num = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
@@ -45,9 +45,9 @@ class test_main(GaiaTestCase):
         #
         # Remember the 'real' current date and time.
         #
-        one_day        = 24*60*60
+        one_day = 24*60*60
         self.NOW_EPOCH = time.time()
-        self._now      = self.UTILS.getDateTimeFromEpochSecs(self.NOW_EPOCH)
+        self._now = self.UTILS.getDateTimeFromEpochSecs(self.NOW_EPOCH)
 
         #
         #=============================================================================
@@ -59,7 +59,7 @@ class test_main(GaiaTestCase):
         t = self.UTILS.getDateTimeFromEpochSecs(self.NOW_EPOCH - (64 * one_day))
         x = self.UTILS.setTimeToSpecific(p_year=t.year, p_month=t.mon, p_day=t.mday)
         
-        expected_str = "%s/%s/%s" % (str(t.mon).zfill(2), str(t.mday).zfill(2), t.year)
+        expected_str = "{}/{}/{}".format(str(t.mon).zfill(2), str(t.mday).zfill(2), t.year)
           
         self._sendSMS("2 months ago", True)         
         self._checkTimeStamp(expected_str)
@@ -75,7 +75,7 @@ class test_main(GaiaTestCase):
         t = self.UTILS.getDateTimeFromEpochSecs(self.NOW_EPOCH - (64 * one_day))
         x = self.UTILS.setTimeToSpecific(p_year=t.year, p_month=t.mon, p_day=t.mday)
         
-        expected_str = "%s/%s/%s" % (str(t.mon).zfill(2), str(t.mday).zfill(2), t.year)
+        expected_str = "{}/{}/{}".format(str(t.mon).zfill(2), str(t.mday).zfill(2), t.year)
           
         self._sendSMS("6 days ago")         
         self._checkTimeStamp(expected_str)
@@ -93,9 +93,9 @@ class test_main(GaiaTestCase):
             x = self.UTILS.setTimeToSpecific(p_year=t.year, p_month=t.mon, p_day=t.mday)
             
             _dayname = days[x.tm_wday]
-            self.UTILS.logResult("info", "<b><u>Reading an sms from %s days ago (%s) ...</u></b>" % (str(i), _dayname))
+            self.UTILS.logResult("info", "<b><u>Reading an sms from {} days ago ({}) ...</u></b>".format(str(i), _dayname))
               
-            self._sendSMS("DAY: %s (%s days ago)." % (_dayname, str(i)))
+            self._sendSMS("DAY: {} ({} days ago).".format(_dayname, str(i)))
             self._checkTimeStamp(_dayname)
               
               
@@ -161,7 +161,6 @@ class test_main(GaiaTestCase):
         self.messages.openThread(self.num)
         x = self.UTILS.getElements(DOM.Messages.message_timestamps, "Message timestamp headers", False)[-1]
         self.UTILS.TEST(p_str.lower() in x.text.lower(), 
-                        "<b>Last message timestamp header contains <u>'%s'</u> </b>(it was <b>'%s'</b>)." % \
-                        (p_str, x.text))
+                        "<b>Last message timestamp header contains <u>'{}'</u> </b>(it was <b>'{}'</b>).".format(p_str, x.text))
 
        

@@ -10,11 +10,11 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 import time
 
 class test_main(GaiaTestCase):
-    _testMsgs = ["First message", "Second message", "Third message"]
+    test_msgs = ["First message", "Second message", "Third message"]
     
     def setUp(self):
         #
@@ -50,11 +50,11 @@ class test_main(GaiaTestCase):
         # TELEPHONE NUMBER IS THE SAME DEVICES WHICH IS SENDING THEM.
         #
 
-        self.messages.createAndSendSMS([self.target_telNum], self._testMsgs[0])
+        self.messages.createAndSendSMS([self.target_telNum], self.test_msgs[0])
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
 
         for i in range(2):
-            self.messages.enterSMSMsg(self._testMsgs[i + 1])
+            self.messages.enterSMSMsg(self.test_msgs[i + 1])
             self.messages.sendSMS()
             returnedSMS = self.messages.waitForReceivedMsgInThisThread()
  

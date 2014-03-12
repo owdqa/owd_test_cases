@@ -10,11 +10,9 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps import Contacts
 from tests._mock_data.contacts import MockContact
-#import time
-
 
 class test_main(GaiaTestCase):
     
@@ -23,9 +21,9 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.messages = Messages(self)
         
         #
         # Import contact (adjust the correct number).

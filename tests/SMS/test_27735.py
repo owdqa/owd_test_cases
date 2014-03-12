@@ -10,32 +10,32 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps import Contacts
 from tests._mock_data.contacts import MockContact
 import time
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test."
+    test_msg = "Test."
 
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.messages = Messages(self)
         
         #
         # Prepare the contact we're going to insert.
         #
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.Contact_1 = MockContact(tel = {'type': '', 'value': self.num1})
+        self.contact = MockContact(tel = {'type': '', 'value': self.num1})
 
-        self.UTILS.insertContact(self.Contact_1)
-        self.UTILS.logComment("Using target telephone number " + self.Contact_1["tel"]["value"])
+        self.UTILS.insertContact(self.contact)
+        self.UTILS.logComment("Using target telephone number " + self.contact["tel"]["value"])
     
     def tearDown(self):
         self.UTILS.reportResults()
@@ -49,7 +49,7 @@ class test_main(GaiaTestCase):
         #
         # View the details of our contact.
         #
-        self.contacts.viewContact(self.Contact_1['name'])
+        self.contacts.viewContact(self.contact['name'])
         
         #
         # Tap the sms button in the view details screen to go to the sms page.
@@ -68,7 +68,7 @@ class test_main(GaiaTestCase):
         #
         # Create SMS.
         #
-        self.messages.enterSMSMsg(self._TestMsg)
+        self.messages.enterSMSMsg(self.test_msg)
         
         #
         # Click send.
@@ -85,19 +85,19 @@ class test_main(GaiaTestCase):
         # TEST: The returned message is as expected (caseless in case user typed it manually).
         #
         sms_text = returnedSMS.text
-        self.UTILS.TEST((sms_text.lower() == self._TestMsg.lower()), 
-            "SMS text = '" + self._TestMsg + "' (it was '" + sms_text + "').")
+        self.UTILS.TEST((sms_text.lower() == self.test_msg.lower()), 
+            "SMS text = '" + self.test_msg + "' (it was '" + sms_text + "').")
         
         #
         # Examine the carrier.
         #      
-        expect = self.Contact_1["tel"]["type"]
+        expect = self.contact["tel"]["type"]
         actual = self.messages.threadType()
         self.UTILS.TEST(expect == actual, "The type is listed as: '" + expect + "' (subheader was '" + actual + "').")
        
         # 
         # Phone Number is shown instead of carrier as the secondary header
         #
-        expect = self.Contact_1["tel"]["value"]
+        expect = self.contact["tel"]["value"]
         actual = self.messages.threadCarrier()
         self.UTILS.TEST(expect == actual, "The telephone number is: '" + expect + "' (subheader was '" + actual + "').")

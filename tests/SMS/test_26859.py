@@ -10,12 +10,12 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 import time
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
+    test_msg = "Test message."
     
     _RESTART_DEVICE = True
 
@@ -24,9 +24,9 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.settings   = Settings(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.settings = Settings(self)
         
         
         self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
@@ -48,7 +48,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.target_telNum], self._TestMsg)
+        self.messages.createAndSendSMS([self.target_telNum], self.test_msg)
         
         #
         # Check the time of this message.

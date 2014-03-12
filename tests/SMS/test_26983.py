@@ -9,26 +9,26 @@ from gaiatest   import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps import Email
 import time
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
+    test_msg = "Test message."
     
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.Email      = Email(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.Email = Email(self)
 
-        self.USER1  = self.UTILS.get_os_variable("GMAIL_1_USER")
+        self.USER1 = self.UTILS.get_os_variable("GMAIL_1_USER")
         self.EMAIL1 = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
-        self.PASS1  = self.UTILS.get_os_variable("GMAIL_1_PASS")
+        self.PASS1 = self.UTILS.get_os_variable("GMAIL_1_PASS")
          
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.get_os_variable("GMAIL_2_EMAIL")
@@ -59,15 +59,15 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], "Email addy %s test." % self.emailAddy)
+        self.messages.createAndSendSMS([self.num1], "Email addy {} test.".format(self.emailAddy))
         x = self.messages.waitForReceivedMsgInThisThread()
         
         #
         # Tap the 2nd email link.
         #
-        self.UTILS.logResult("info", "Click the email address in this message: '%s'." % x.text)
-        _link = x.find_element("tag name", "a")
-        _link.tap()
+        self.UTILS.logResult("info", "Click the email address in this message: '{}'.".format(x.text))
+        link = x.find_element("tag name", "a")
+        link.tap()
         
         #
         # The email application should not be launched.

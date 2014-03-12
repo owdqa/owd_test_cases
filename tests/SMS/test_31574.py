@@ -10,7 +10,7 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from marionette import Actions
 
 class test_main(GaiaTestCase):
@@ -20,10 +20,10 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
 
-        self.actions    = Actions(self.marionette)
+        self.actions = Actions(self.marionette)
 
         #
         # Establish which phone number to use.
@@ -44,12 +44,8 @@ class test_main(GaiaTestCase):
         #
         # Create message - 5 x 10 chars.
         #
-        sms_message = ""
-        for i in range(0,5):
-            sms_message = sms_message + "0123456789"
-            
-        sms_message_length = len(sms_message)
-        self.UTILS.logComment("Message length sent: " + str(sms_message_length))
+        sms_message = "0123456789" * 5
+        self.UTILS.logComment("Message length sent: {}".format((len(sms_message))))
         
         #
         # Launch messages app.

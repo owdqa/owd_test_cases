@@ -6,11 +6,14 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.gallery import Gallery
 
 
 class test_main(GaiaTestCase):
@@ -20,9 +23,9 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.gallery    = Gallery(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.gallery = Gallery(self)
 
         #
         # Establish which phone number to use.
@@ -40,7 +43,8 @@ class test_main(GaiaTestCase):
         # Sometimes causes a problem if not cleared.
         #
         self.UTILS.clearAllStatusBarNotifs()
-        self.UTILS.addFileToDevice('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.addFileToDevice('./tests/_resources/80x60.jpg',
+                                        destination='DCIM/100MZLLA')
 
         #
         # Create message.
@@ -73,7 +77,7 @@ class test_main(GaiaTestCase):
         #
         # Insert the phone number in the To field
         #
-        self.messages.addNumbersInToField([ self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM") ])
+        self.messages.addNumbersInToField([self.target_telNum])
 
         #
         # Create MMS.

@@ -10,21 +10,21 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps import Contacts
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
+    test_msg = "Test message."
     
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.contacts   = Contacts(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.contacts = Contacts(self)
 
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.num2 = "621234567"
@@ -41,7 +41,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], "Test %s number." % self.num2)
+        self.messages.createAndSendSMS([self.num1], "Test {} number.".format(self.num2))
         x = self.messages.waitForReceivedMsgInThisThread()
         
         #
@@ -59,8 +59,8 @@ class test_main(GaiaTestCase):
         # Wait for the contacts app to go away.
         #
         self.marionette.switch_to_frame()
-        self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@src, '%s')]" % DOM.Contacts.frame_locator[1]),
-                                       "Contacts iframe")
+        self.UTILS.waitForNotElements(("xpath", "//iframe[contains(@src, '{}')]".format(DOM.Contacts.frame_locator[1]),
+                                       "Contacts iframe"))
         
         #
         # Kill the SMS app (and all others).
