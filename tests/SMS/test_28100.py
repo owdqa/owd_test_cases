@@ -77,7 +77,7 @@ class test_main(GaiaTestCase):
         self.UTILS.TEST(len(msg_nums) == tappable_count, 
             description.format(tappable_count, len(msg_nums)))
         
-        for i in range(0, len(msg_nums)):
+        for i in range(len(msg_nums)):
             msg_nums[i].tap()
 
             #
