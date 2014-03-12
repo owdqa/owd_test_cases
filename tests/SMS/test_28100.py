@@ -52,10 +52,12 @@ class test_main(GaiaTestCase):
     def _testAll(self, nums, tappable_count):
         sms_nums = ""
         
-        for i in range(0,len(nums)):
-            sms_nums = "{}, test{} {}".format(sms_nums, str(i), nums[i])
-            
-        sms_msg = "Test numbers: {}.".format(sms_nums)
+        #
+        # Generate a string of the type: "Test0 <number> Test1 <number>...."
+        #
+        fill_text = ["Test" + i for i in range(len(nums))] 
+        sms_msg = "Test numbers: {}".format(" ".join([item for sublist in map(None, fill_text, nums) for item in sublist]))
+
         
         #
         # Start from clean for each test run.

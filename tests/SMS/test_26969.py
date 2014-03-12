@@ -90,4 +90,4 @@ class test_main(GaiaTestCase):
         self.UTILS.switchToFrame(*DOM.Browser.frame_locator)
         
         self.UTILS.TEST(self.browser.check_page_loaded(link),
-                 "Web page " + str(link_number + 1) + " loaded correctly.")
+                 "Web page {} loaded correctly.".format(link_number + 1))
