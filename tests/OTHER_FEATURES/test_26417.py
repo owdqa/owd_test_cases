@@ -12,6 +12,7 @@ from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps import Contacts
 from OWDTestToolkit.apps import Messages
+import time
 
 
 class test_main(GaiaTestCase):
