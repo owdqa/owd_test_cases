@@ -4,12 +4,16 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps import Contacts
+from OWDTestToolkit.apps.email import Email
 from tests._mock_data.contacts import MockContact
+import time
 
 class test_main(GaiaTestCase):
     
@@ -28,7 +32,7 @@ class test_main(GaiaTestCase):
         email1 = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
         email2 = self.UTILS.get_os_variable("GMAIL_2_EMAIL")
         email3 = self.UTILS.get_os_variable("HOTMAIL_1_EMAIL")
-        self.Contact_1 = MockContact(email = [{
+        self.test_contact = MockContact(email = [{
             'type': 'Personal',
             'value': email1}, {
             'type': 'Personal',
@@ -41,7 +45,7 @@ class test_main(GaiaTestCase):
         # We're not testing adding a contact, so just stick one 
         # into the database.
         #
-        self.UTILS.insertContact(self.Contact_1)
+        self.UTILS.insertContact(self.test_contact)
         
         self._email_subject = "TEST " + str(time.time())
         self._email_message = "Test message"
@@ -71,12 +75,12 @@ class test_main(GaiaTestCase):
         #
         # View the details of our contact.
         #
-        self.contacts.viewContact(self.Contact_1['name'])
+        self.contacts.viewContact(self.test_contact['name'])
         
         #
         # Click the 2nd email button
         #
-        emailBTN = self.UTILS.getElement( ("id", DOM.Contacts.email_button_spec_id % 1), 
+        emailBTN = self.UTILS.getElement( ("id", DOM.Contacts.email_button_spec_id.format(1)), 
                                         "2nd send Email address in for this contact")
         emailBTN.tap()
 
@@ -90,7 +94,7 @@ class test_main(GaiaTestCase):
         #
         # Verify the 'to' field is correct.
         #
-        expected_to = self.Contact_1["email"][1]["value"]
+        expected_to = self.test_contact["email"][1]["value"]
         y = self.UTILS.getElement(DOM.Email.compose_to_from_contacts, "'To' field")
         self.UTILS.TEST(y.text == expected_to,
                         "The 'to' field contains '" + expected_to + "' (it was (" + y.text + ").")
@@ -98,10 +102,6 @@ class test_main(GaiaTestCase):
         #
         # Fill in the rest and send it.
         #
-#         msg_subject = self.UTILS.getElement(DOM.Email.compose_subject, "'Subject' field")
-#         msg_msg     = self.UTILS.getElement(DOM.Email.compose_msg, "Message field")
-#         msg_subject.send_keys(self._email_subject)
-#         msg_msg.send_keys(self._email_message)
         self.UTILS.typeThis(DOM.Email.compose_subject, "'Subject' field", self._email_subject, True, False)
         self.UTILS.typeThis(DOM.Email.compose_msg    , "Message field"  , self._email_message, True, False, False)
 
@@ -109,4 +109,5 @@ class test_main(GaiaTestCase):
         #
         # Send the message.
         #
-        self.email.sendTheMessage()
+        self.email.sendTheMessageAndSwitchFrame(self.test_contact["givenName"] + " " +
+                                    self.test_contact["familyName"], DOM.Contacts.frame_locator)

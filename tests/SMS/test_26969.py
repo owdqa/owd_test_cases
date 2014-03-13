@@ -57,7 +57,7 @@ class test_main(GaiaTestCase):
         
 
     def tryTheLink(self, link_number, link):
-        self.UTILS.logResult("info", "Tapping <b>%s</b> ..." % link)
+        self.UTILS.logResult("info", "Tapping <b>{}</b> ...".format(link))
         
         #
         # Switch to messaging app.
