@@ -3,12 +3,13 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps import Settings
 
 
 class test_main(GaiaTestCase):
@@ -16,8 +17,8 @@ class test_main(GaiaTestCase):
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.Settings   = Settings(self)
+        self.UTILS = UTILS(self)
+        self.Settings = Settings(self)
         
         self.wifi_name  = self.UTILS.get_os_variable("GLOBAL_WIFI_NAME")
         self.wifi_user  = self.UTILS.get_os_variable("GLOBAL_WIFI_USERNAME")
