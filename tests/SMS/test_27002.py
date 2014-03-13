@@ -40,10 +40,7 @@ class test_main(GaiaTestCase):
         # Create and send a new test message containing all of our numbers..
         #
         nums = ["12345678", "123456789", "01234567", "012345678"]
-        sms_nums = ""
-        for i in nums:
-            sms_nums = "%s, %s" % (sms_nums, i)
-        sms_msg = "Test numbers %s." % sms_nums
+        sms_msg = "Test numbers {}".format(", ".join(nums))
          
         self.messages.createAndSendSMS([self.num1], sms_msg)
         x = self.messages.waitForReceivedMsgInThisThread()
@@ -53,8 +50,11 @@ class test_main(GaiaTestCase):
         #
         msg_nums = x.find_elements("tag name", "a")
         
-        for i in range(0,len(msg_nums)):
+        for i in range(len(msg_nums)):
             msg_nums[i].tap()
+
+            x = self.UTILS.getElement(DOM.Messages.header_call_btn, "Call button")
+            x.tap()
             
             self.UTILS.switchToFrame(*DOM.Dialer.frame_locator)
             
@@ -63,23 +63,17 @@ class test_main(GaiaTestCase):
             #
             x = self.UTILS.getElement(DOM.Dialer.phone_number, "Phone number")
             self.UTILS.TEST(nums[i] in x.get_attribute("value"), 
-                            "The dialer number contains '%s' (it was '%s')." % (nums[i], x.get_attribute("value")))
+                            "The dialer number contains '{}' (it was '{}').".format(nums[i], x.get_attribute("value")))
             
             #
             # Switch back to messaging app (without killing anything) etc ...
             #
-            self.UTILS.switchToApp("Messages")
-            x = self.UTILS.screenShotOnErr()
-            
+            self.messages.launch()
+                        
             #
-            # Sometimes the app goes back to thread view instead of message view.
-            #
-            try:
-                self.wait_for_element_present(*DOM.Messages.threads_list, timeout=1)
-                self.messages.openThread(self.num1)
-            except:
-                pass
-                
+            # This may seem repetitive, but it looks like the referece to the 
+            # a HTML elements is lost when switching from apps
+            #    
             x = self.messages.waitForReceivedMsgInThisThread()
             msg_nums = x.find_elements("tag name", "a")
 
