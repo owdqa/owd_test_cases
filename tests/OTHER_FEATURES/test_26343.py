@@ -43,16 +43,16 @@ class test_main(GaiaTestCase):
         # launch the test apps (lifted directly from gaiatest).
         #
         gallery_app = {
-            'name'        : "Gallery",
-            'app'         : self.apps.launch("Gallery"),
-            'card'        : (DOM.Home.app_card[0], DOM.Home.app_card[1] % "gallery"),
-            'close_button': (DOM.Home.app_close[0], DOM.Home.app_close[1] % "gallery")
+            'name': "Gallery",
+            'app': self.apps.launch("Gallery"),
+            'card': (DOM.Home.app_card[0], DOM.Home.app_card[1].format("gallery")),
+            'close_button': (DOM.Home.app_close[0], DOM.Home.app_close[1].format("gallery"))
         }
         radio_app = {
-            'name'        : "FM Radio",
-            'app'         : self.apps.launch("FM Radio"),
-            'card'        : (DOM.Home.app_card[0], DOM.Home.app_card[1] % "fm"),
-            'close_button': (DOM.Home.app_close[0], DOM.Home.app_close[1] % "fm")
+            'name': "FM Radio",
+            'app': self.apps.launch("FM Radio"),
+            'card': (DOM.Home.app_card[0], DOM.Home.app_card[1].format("fm")),
+            'close_button': (DOM.Home.app_close[0], DOM.Home.app_close[1].format("fm"))
         }
 
         self.UTILS.touchHomeButton()
