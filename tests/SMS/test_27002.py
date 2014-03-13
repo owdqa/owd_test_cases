@@ -63,7 +63,7 @@ class test_main(GaiaTestCase):
             #
             x = self.UTILS.getElement(DOM.Dialer.phone_number, "Phone number")
             self.UTILS.TEST(nums[i] in x.get_attribute("value"), 
-                            "The dialer number contains '%s' (it was '%s')." % (nums[i], x.get_attribute("value")))
+                            "The dialer number contains '{}' (it was '{}').".format(nums[i], x.get_attribute("value")))
             
             #
             # Switch back to messaging app (without killing anything) etc ...
