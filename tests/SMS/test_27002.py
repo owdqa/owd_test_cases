@@ -41,7 +41,6 @@ class test_main(GaiaTestCase):
         #
         nums = ["12345678", "123456789", "01234567", "012345678"]
         sms_msg = "Test numbers {}".format(", ".join(nums))
-
          
         self.messages.createAndSendSMS([self.num1], sms_msg)
         x = self.messages.waitForReceivedMsgInThisThread()

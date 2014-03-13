@@ -45,6 +45,7 @@ class test_main(GaiaTestCase):
         # Set up email account.
         #
         self.UTILS.getNetworkConnection()
+        
  
         #
         # Launch messages app.

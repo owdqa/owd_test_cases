@@ -29,7 +29,7 @@ class test_main(GaiaTestCase):
 
         self.USER1 = self.UTILS.get_os_variable("GMAIL_1_USER")
         self.EMAIL1 = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
-        self.PASS1 = self.UTILS.get_os_variable("GMAIL_1_PASS")
+        self.PASS1  = self.UTILS.get_os_variable("GMAIL_1_PASS")
          
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.get_os_variable("GMAIL_2_EMAIL")

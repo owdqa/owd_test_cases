@@ -122,7 +122,7 @@ class test_main(GaiaTestCase):
         # Check that the contacts iframe is now gone.
         #
         self.marionette.switch_to_frame()
-        self.UTILS.waitForNotElements(("xpath", "//iframe[contains(@src,'contacts')]"),
+        self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@src,'contacts')]"),
                                        "Contact app iframe")
         
         #

@@ -3,13 +3,12 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
-import time
+from OWDTestToolkit.utils import UTILS
 
 class test_main(GaiaTestCase):
 
