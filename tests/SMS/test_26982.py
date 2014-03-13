@@ -11,7 +11,7 @@ from gaiatest   import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
-from OWDTestToolkit.apps import Email
+from OWDTestToolkit.apps.email import Email
 
 class test_main(GaiaTestCase):
     
@@ -55,16 +55,23 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
+        msg_text = "Email one one@tester.com, two {} , three three@tester.com."
         self.messages.createAndSendSMS([self.num1], 
-            "Email one one@tester.com, two {} , three three@tester.com.".format(self.emailAddy))
+            msg_text.format(self.emailAddy))
         x = self.messages.waitForReceivedMsgInThisThread()
         
         #
         # Tap the 2nd email link.
         #
         self.UTILS.logResult("info", "Click the 2nd email address in this message: '{}'.".format(x.text))
-        link = x.find_elements("tag name", "a")[1]
-        link.tap()
+        _link = x.find_elements("tag name", "a")[1]
+        _link.tap()
+
+        #
+        # Click on "Send email" button from the overlay
+        #
+        x = self.UTILS.getElement(DOM.Messages.header_send_email_btn, "Send email button")
+        x.tap()
         
         #
         # Switch to email frame and verify the email address is in the To field.

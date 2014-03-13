@@ -11,7 +11,7 @@ from gaiatest   import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
-from OWDTestToolkit.apps import Email
+from OWDTestToolkit.apps.email import Email
 
 class test_main(GaiaTestCase):
     
@@ -72,4 +72,4 @@ class test_main(GaiaTestCase):
         self.UTILS.switchToFrame(*DOM.Email.frame_locator)
         x = self.UTILS.getElement(DOM.Email.compose_to_from_contacts, "To field")
         self.UTILS.TEST(x.text == self.emailAddy, 
-                        "To field contains '{}' (it was '{}').".format(self.emailAddy, self.emailAddy))
+                        "To field contains '{0}' (it was '{0}').".format(self.emailAddy))

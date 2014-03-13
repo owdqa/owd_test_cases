@@ -11,7 +11,7 @@ from gaiatest   import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
-from OWDTestToolkit.apps import Dialer
+from OWDTestToolkit.apps.dialer import Dialer
 
 class test_main(GaiaTestCase):
     
@@ -53,6 +53,9 @@ class test_main(GaiaTestCase):
         
         for i in range(len(msg_nums)):
             msg_nums[i].tap()
+
+            x = self.UTILS.getElement(DOM.Messages.header_call_btn, "Call button")
+            x.tap()
             
             self.UTILS.switchToFrame(*DOM.Dialer.frame_locator)
             
@@ -66,18 +69,12 @@ class test_main(GaiaTestCase):
             #
             # Switch back to messaging app (without killing anything) etc ...
             #
-            self.UTILS.switchToApp("Messages")
-            x = self.UTILS.screenShotOnErr()
-            
+            self.messages.launch()
+                        
             #
-            # Sometimes the app goes back to thread view instead of message view.
-            #
-            try:
-                self.wait_for_element_present(*DOM.Messages.threads_list, timeout=1)
-                self.messages.openThread(self.num1)
-            except:
-                pass
-                
+            # This may seem repetitive, but it looks like the referece to the 
+            # a HTML elements is lost when switching from apps
+            #    
             x = self.messages.waitForReceivedMsgInThisThread()
             msg_nums = x.find_elements("tag name", "a")
 

@@ -12,7 +12,8 @@ from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.browser import Browser
-import time 
+import time
+
 
 class test_main(GaiaTestCase):
     
@@ -57,7 +58,7 @@ class test_main(GaiaTestCase):
         
 
     def tryTheLink(self, link_number, link):
-        self.UTILS.logResult("info", "Tapping <b>%s</b> ..." % link)
+        self.UTILS.logResult("info", "Tapping <b>{}</b> ...".format(link))
         
         #
         # Switch to messaging app.
@@ -90,4 +91,4 @@ class test_main(GaiaTestCase):
         self.UTILS.switchToFrame(*DOM.Browser.frame_locator)
         
         self.UTILS.TEST(self.browser.check_page_loaded(link),
-                 "Web page " + str(link_number + 1) + " loaded correctly.")
+                 "Web page {} loaded correctly.".format(link_number + 1))

@@ -11,7 +11,7 @@ from gaiatest   import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
-from OWDTestToolkit.apps import Dialer
+from OWDTestToolkit.apps.dialer import Dialer
 
 import time
 

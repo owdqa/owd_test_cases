@@ -11,11 +11,13 @@ from gaiatest   import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
-from OWDTestToolkit.apps import Email
+from OWDTestToolkit.apps.email import Email
+import time
 
 class test_main(GaiaTestCase):
     
     test_msg = "Test message."
+    _RESTART_DEVICE = True
     
     def setUp(self):
         #
@@ -43,9 +45,6 @@ class test_main(GaiaTestCase):
         # Set up email account.
         #
         self.UTILS.getNetworkConnection()
-        
-        self.Email.launch()
-        self.Email.setupAccount(self.USER1, self.EMAIL1, self.PASS1)
  
         #
         # Launch messages app.
@@ -61,22 +60,40 @@ class test_main(GaiaTestCase):
         #
         # Tap the 2nd email link.
         #
-        self.UTILS.logResult("info", "Click the email address in this message: '{}'.".format(x.text))
-        link = x.find_element("tag name", "a")
-        link.tap()
+        self.UTILS.logResult("info", "Click the email address in this message: '%s'." % x.text)
+        _link = x.find_element("tag name", "a")
+        _link.tap()
+
+        #
+        # Tap on "Send email" button from the overlay
+        #
+        x = self.UTILS.getElement(DOM.Messages.header_send_email_btn, "Send email button")
+        x.tap()
+
+
+        time.sleep(4)
+        self.marionette.switch_to_frame()
+
+        #
+        # Confirm we want to setUp our email account
+        #
+        x = self.UTILS.getElement(DOM.Email.confirm_ok, "Set up account confirmation")
+        x.tap()
+        
+        self.UTILS.switchToFrame(*DOM.Email.frame_locator)
+        self.Email.setupAccount(self.USER1, self.EMAIL1, self.PASS1)
         
         #
-        # Switch to email frame and verify the email address is in the To field.
+        # Verify the email address is in the To field.
         #
-        self.UTILS.switchToFrame(*DOM.Email.frame_locator)
         x = self.UTILS.getElement(DOM.Email.compose_to_from_contacts, "To field")
         self.UTILS.TEST(x.text == self.emailAddy, 
-                        "To field contains '{}' (it was '{}').".format(self.emailAddy, self.emailAddy))
+                        "To field contains '{0}' (it was '{0}').".format(self.emailAddy))
         
         #
         # Fill in the details and send the email.
         #
         self.UTILS.typeThis(DOM.Email.compose_subject, "'Subject' field", "Test email", True, False)
-        self.UTILS.typeThis(DOM.Email.compose_msg    , "Message field"  , "Just a test", True, False, False)
+        self.UTILS.typeThis(DOM.Email.compose_msg, "Message field"  , "Just a test", True, False, False)
 
         self.Email.sendTheMessage()

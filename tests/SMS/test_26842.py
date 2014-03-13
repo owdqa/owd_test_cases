@@ -57,19 +57,3 @@ class test_main(GaiaTestCase):
         bools = [title.text in self.nums for title in x]
         msgs = ["A thread exists for " + str(elem) for elem in self.nums]
         map(self.UTILS.TEST, bools, msgs)
-
-        # bool_1_ok=False
-        # bool_2_ok=False
-        # for i in x:
-        #     self.UTILS.logResult("info", "Thread: " + i.text)
-        #     if i.text == self.num1:
-        #         bool_1_ok = True
-        #     if i.text == self.num2:
-        #         bool_2_ok = True
-                
-        # self.UTILS.TEST(bool_1_ok, "A thread exists for " + str(self.num1))
-        # self.UTILS.TEST(bool_2_ok, "A thread exists for " + str(self.num2))
-        
-        
-        
-        
