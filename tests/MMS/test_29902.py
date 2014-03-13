@@ -55,10 +55,14 @@ class test_main(GaiaTestCase):
 
 
         #
+        # Go back
+        #
+        self.Settings.goBack()
+
+        #
         # Turn on 3g connection.
         #
         self.Settings.turn_dataConn_on()
-
 
         #
         # Configure Auto Retrieve as off from messaging settings

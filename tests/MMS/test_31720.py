@@ -95,4 +95,4 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
 
-        self.messages.checkMMSIcon()
+        self.messages.checkMMSIcon("+" + self.target_telNum)

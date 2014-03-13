@@ -53,6 +53,11 @@ class test_main(GaiaTestCase):
         #
         self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
 
+        #
+        # Go back
+        #
+        self.Settings.goBack()
+
 
         #
         # Turn on 3g connection.

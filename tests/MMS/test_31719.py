@@ -36,6 +36,11 @@ class test_main(GaiaTestCase):
         #
         self.test_num = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.cont = MockContact(tel={"type": "Mobile", "value": self.test_num})
+
+        #
+        # TODO - delete this line if you manage to get it working
+        #
+        self.UTILS.insertContact(self.cont)
         
         self.UTILS.logComment("Using target telephone number " + self.cont["tel"]["value"])
 
@@ -46,11 +51,14 @@ class test_main(GaiaTestCase):
         #
         # Load files into the device.
         #
-        self.UTILS.addFileToDevice('./tests/_resources/imgd.jpg',
+        self.UTILS.addFileToDevice('./tests/_resources/imga.jpg',
                                     destination='DCIM/100MZLLA')
 
-        self.contacts.launch()
-        self.contacts.createNewContact(self.cont)
+        #
+        # TODO - uncommnent
+        #
+        # self.contacts.launch()
+        # self.contacts.createNewContact(self.cont)
 
         #
         # Launch messages app.
@@ -78,6 +86,7 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElements(DOM.Contacts.search_results_list, "Contacts search results")
         for i in x:
             if i.text == self.cont["name"]:
+                self.UTILS.logComment("WOLOLOOOOOO")
                 i.tap()
                 break
         
