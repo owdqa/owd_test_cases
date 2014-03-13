@@ -8,14 +8,18 @@ from gaiatest   import GaiaTestCase
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps import Messages
 from OWDTestToolkit.apps.email import Email
 import time
 
 class test_main(GaiaTestCase):
-    
-    _TestMsg     = "Test message."
+
+    _RESTART_DEVICE = True
+    test_msg = "Test message."
+    test_subject = "Test subject"
+    test_body = "This is a test!"
     
     def setUp(self):
         #
@@ -40,18 +44,6 @@ class test_main(GaiaTestCase):
     def test_run(self):
         
         #
-        # Set up email account.
-        #
-        self.UTILS.getNetworkConnection()        
-        self.Email.launch()
-        self.Email.setupAccount(self.USER1, self.EMAIL1, self.PASS1)
- 
-        #
-        # Disable the network connection.
-        #
-        self.UTILS.disableAllNetworkSettings()
- 
-        #
         # Launch messages app.
         #
         self.messages.launch()
@@ -59,31 +51,32 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], "Email addy %s test." % self.emailAddy)
+        self.messages.createAndSendSMS([self.num1], "Email addy {} test.".format(self.emailAddy))
         x = self.messages.waitForReceivedMsgInThisThread()
         
         #
         # Tap the 2nd email link.
         #
-        self.UTILS.logResult("info", "Click the email address in this message: '%s'." % x.text)
+        self.UTILS.logResult("info", "Click the email address in this message: '{}'.".format(x.text))
         _link = x.find_element("tag name", "a")
         _link.tap()
-        
-        #
-        # The email application should not be launched.
-        #
-        self.UTILS.logResult("info", "<b>When you know what the 'no network' warning looks like, replace this test with that one.</b>")
-        time.sleep(2)
+
+        x = self.UTILS.getElement(DOM.Messages.header_send_email_btn, "Send email button")
+        x.tap()
+
+        time.sleep(4)
         self.marionette.switch_to_frame()
-        self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@src,'email')]"),
-                                       "Email app iframe", True, 5, False)
-        
-        try:
-            elNam = ("xpath", "//iframe[contains(@src,'email')]")
-            self.wait_for_element_present(*elNam, timeout=2)
-            x = self.marionette.find_element(*elNam)
-            self.marionette.switch_to_frame(x)
-            x = self.UTILS.screenShotOnErr()
-            self.UTILS.logResult("info", "<b>Screenshot of email app:</b> ", x)
-        except:
-            pass
+
+        x = self.UTILS.getElement(DOM.Email.confirm_ok, "Set up account confirmation")
+        x.tap()
+
+        self.UTILS.switchToFrame(*DOM.Email.frame_locator)
+
+        #
+        # Try to set up the account - Since there is no connection, it will fail.
+        #
+        self.Email.setupAccountFirstStep(self.USER1, self.EMAIL1, self.PASS1)
+
+        error = self.UTILS.getElement(DOM.Email.new_account_error_msg, "Error message")
+        self.UTILS.TEST(error.text == "This device is currently offline. Connect to a network and try again.",
+            "Verifying error message")

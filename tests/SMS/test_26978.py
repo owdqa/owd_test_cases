@@ -15,7 +15,8 @@ from OWDTestToolkit.apps.email import Email
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
+    test_msg = "Test message."
+    _RESTART_DEVICE = True
     
     def setUp(self):
         #
@@ -44,8 +45,6 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.getNetworkConnection()
         
-        self.Email.launch()
-        self.Email.setupAccount(self.USER1, self.EMAIL1, self.PASS1)
  
         #
         # Launch messages app.
@@ -64,15 +63,32 @@ class test_main(GaiaTestCase):
         self.UTILS.logResult("info", "Click the email address in this message: '%s'." % x.text)
         _link = x.find_element("tag name", "a")
         _link.tap()
+
+        #
+        # Tap on "Send email" button from the overlay
+        #
+        x = self.UTILS.getElement(DOM.Messages.header_send_email_btn, "Send email button")
+        x.tap()
+
+
+        time.sleep(4)
+        self.marionette.switch_to_frame()
+
+        #
+        # Confirm we want to setUp our email account
+        #
+        x = self.UTILS.getElement(DOM.Email.confirm_ok, "Set up account confirmation")
+        x.tap()
+        
+        self.UTILS.switchToFrame(*DOM.Email.frame_locator)
+        self.Email.setupAccount(self.USER1, self.EMAIL1, self.PASS1)
         
         #
-        # Switch to email frame and verify the email address is in the To field.
+        # Verify the email address is in the To field.
         #
-        self.UTILS.switchToFrame(*DOM.Email.frame_locator)
         x = self.UTILS.getElement(DOM.Email.compose_to_from_contacts, "To field")
         self.UTILS.TEST(x.text == self.emailAddy, 
-                        "To field contains '%s' (it was '%s')." %
-                        (self.emailAddy, self.emailAddy))
+                        "To field contains '{}' (it was '{}').".format(self.emailAddy, self.emailAddy))
         
         #
         # Fill in the details and send the email.
