@@ -3,20 +3,23 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps import Settings
+
 
 class test_main(GaiaTestCase):
     
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.Settings   = Settings(self)
+        self.UTILS = UTILS(self)
+        self.Settings = Settings(self)
 
     def tearDown(self):
         self.UTILS.reportResults()
