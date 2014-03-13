@@ -7,7 +7,7 @@ from gaiatest   import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.camera import Camera
-from OWDTestToolkit.apps import Gallery
+from OWDTestToolkit.apps.gallery import Gallery
 
 #
 # Imports particular to this test case.
