@@ -3,13 +3,16 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps import Contacts
+from OWDTestToolkit.apps import Messages
+
 
 class test_main(GaiaTestCase):
     
@@ -18,9 +21,9 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.messages = Messages(self)
 
         
     def tearDown(self):

@@ -3,13 +3,15 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
-import time
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+
+
 
 class test_main(GaiaTestCase):
 
@@ -18,7 +20,7 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS     = UTILS(self)
+        self.UTILS = UTILS(self)
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -52,4 +54,4 @@ class test_main(GaiaTestCase):
         # Data icon is no longer visible in status bar.
         #
         self.UTILS.waitForNotElements(DOM.Statusbar.bluetooth, "Bluetooth icon in statusbar")
-        
+
