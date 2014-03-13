@@ -40,10 +40,7 @@ class test_main(GaiaTestCase):
         # Create and send a new test message containing all of our numbers..
         #
         nums = ["12345678", "123456789", "01234567", "012345678"]
-        sms_nums = ""
-        for i in nums:
-            sms_nums = "{}, {}".format(sms_nums, i)
-        sms_msg = "Test numbers {}.".format(sms_nums)
+        sms_msg = "Test numbers {}".format(", ".join(nums))
          
         self.messages.createAndSendSMS([self.num1], sms_msg)
         x = self.messages.waitForReceivedMsgInThisThread()
@@ -53,7 +50,7 @@ class test_main(GaiaTestCase):
         #
         msg_nums = x.find_elements("tag name", "a")
         
-        for i in range(0,len(msg_nums)):
+        for i in range(len(msg_nums)):
             msg_nums[i].tap()
 
             x = self.UTILS.getElement(DOM.Messages.header_call_btn, "Call button")
