@@ -11,8 +11,7 @@ from gaiatest   import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps import Messages
-from OWDTestToolkit.apps import Email
-import time
+from OWDTestToolkit.apps.email import Email
 
 class test_main(GaiaTestCase):
     

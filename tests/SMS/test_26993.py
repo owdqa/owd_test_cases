@@ -13,7 +13,7 @@ from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps import Messages
 from OWDTestToolkit.apps import Contacts
 from tests._mock_data.contacts import MockContact
-from OWDTestToolkit.apps import Dialer
+from OWDTestToolkit.apps.dialer import Dialer
 #import time
 
 
