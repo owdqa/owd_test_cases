@@ -55,7 +55,7 @@ class test_main(GaiaTestCase):
         #
         # Generate a string of the type: "Test0 <number> Test1 <number>...."
         #
-        fill_text = ["Test" + i for i in range(len(nums))] 
+        fill_text = ["Test{}".format(i) for i in range(len(nums))] 
         sms_msg = "Test numbers: {}".format(" ".join([item for sublist in map(None, fill_text, nums) for item in sublist]))
 
         
