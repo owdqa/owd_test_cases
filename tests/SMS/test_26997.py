@@ -3,29 +3,29 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+from gaiatest   import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.dialer import Dialer
 import time
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
+    test_msg = "Test message."
     
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.Dialer      = Dialer(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.Dialer = Dialer(self)
 
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
@@ -40,8 +40,7 @@ class test_main(GaiaTestCase):
         # Create and send a new test message containing all of our CORRECT numbers..
         #
         msgApp = self.messages.launch()
-        self.messages.createAndSendSMS([self.num1], "International num: 0034%s, and +34%s." %\
-                                                    (self.dummy_nums[0], self.dummy_nums[1]))
+        self.messages.createAndSendSMS([self.num1], "International num: 0034{}, and +34{}.".format(self.dummy_nums[0], self.dummy_nums[1]))
         x = self.messages.waitForReceivedMsgInThisThread()
 
         #
@@ -50,8 +49,7 @@ class test_main(GaiaTestCase):
         msg_nums = x.find_elements("tag name", "a")
         
         self.UTILS.TEST(len(msg_nums) == 2,
-                        "There are <b>2</b> numbers highlighted in the received text (there were <b>%s</b>)." % \
-                        len(msg_nums))
+                    "There are <b>2</b> numbers highlighted in the received text (there were <b>{}</b>).".format(len(msg_nums)))
         
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "SMS in app", x)
@@ -71,8 +69,8 @@ class test_main(GaiaTestCase):
         
     def _doTest(self, p_msgs, p_num):
         link_num = self.dummy_nums[p_num]
-        self.UTILS.logResult("info", "Tapping link to number: %s." % link_num)
-        self.UTILS.logResult("info", "Link text is '%s'." % p_msgs[p_num].text)
+        self.UTILS.logResult("info", "Tapping link to number: {}." % link_num)
+        self.UTILS.logResult("info", "Link text is '{}'." % p_msgs[p_num].text)
         p_msgs[p_num].tap()
         time.sleep(1)
 
@@ -82,7 +80,7 @@ class test_main(GaiaTestCase):
         self.UTILS.switchToFrame(*DOM.Dialer.frame_locator)
         time.sleep(2)
         x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot of dialer after clicking the link for number %s" % link_num, x)
+        self.UTILS.logResult("info", "Screenshot of dialer after clicking the link for number {}".format(link_num), x)
         x = self.UTILS.getElement(DOM.Dialer.phone_number, "Phone number")
         x_num = x.get_attribute("value")
-        self.UTILS.TEST(link_num in x_num, "Expected number (%s) matches number in dialer (%s)." % (link_num, x_num))
+        self.UTILS.TEST(link_num in x_num, "Expected number ({}) matches number in dialer ({}).".format(link_num, x_num))

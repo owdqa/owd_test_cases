@@ -7,23 +7,28 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.gallery import Gallery
+from OWDTestToolkit.apps.browser import Browser
+import time
 
 class test_main(GaiaTestCase):
     
-    _link1        = "www.google.com"
-    _TestMsg     = "Open this URL: " + _link1
+    link1 = "www.google.com"
+    test_msg = "Open this URL: " + link1
     
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.gallery    = Gallery(self)
-        self.browser    = Browser(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.gallery = Gallery(self)
+        self.browser = Browser(self)
         
         #
         # Establish which phone number to use.
@@ -40,7 +45,8 @@ class test_main(GaiaTestCase):
         #
         # Load sample image into the gallery.
         #
-        self.UTILS.addFileToDevice('./tests/_resources/imgd.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.addFileToDevice('./tests/_resources/imgd.jpg',
+                                    destination='DCIM/100MZLLA')
 
         #
         # Launch messages app.
@@ -55,12 +61,12 @@ class test_main(GaiaTestCase):
         #
         # Insert the phone number in the To field
         #
-        self.messages.addNumbersInToField([ self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM") ])
+        self.messages.addNumbersInToField([self.target_telNum])
 
         #
         # Create MMS.
         #
-        self.messages.enterSMSMsg(self._TestMsg)
+        self.messages.enterSMSMsg(self.test_msg)
 
         self.messages.createMMSImage()
         self.gallery.clickThumbMMS(0)
@@ -75,7 +81,7 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
 
-        self.messages.openThread("+" + self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM"))
+        self.messages.openThread("+" + self.target_telNum)
 
         #
         # Find all URLs
@@ -95,5 +101,5 @@ class test_main(GaiaTestCase):
         time.sleep(3)
         self.UTILS.switchToFrame(*DOM.Browser.frame_locator)
 
-        self.UTILS.TEST(self.browser.check_page_loaded(self._link1),
-                 "Web page loaded correctly.")
+        self.UTILS.TEST(self.browser.check_page_loaded(self.link1),
+                        "Web page loaded correctly.")

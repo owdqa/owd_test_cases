@@ -10,15 +10,15 @@ from gaiatest import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps import Contacts
 from OWDTestToolkit.apps.dialer import Dialer
 import time
 
 class test_main(GaiaTestCase):
 
-    _testNum = "089123456"
-    _TestMsg = "Testing " + _testNum + " number."
+    test_num = "089123456"
+    test_msg = "Testing " + test_num + " number."
     
     
     def setUp(self):
@@ -26,10 +26,10 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.Dialer      = Dialer(self)
-        self.contacts   = Contacts(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.Dialer = Dialer(self)
+        self.contacts = Contacts(self)
         
         #
         # Establish which phone number to use.
@@ -51,7 +51,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.target_telNum], self._TestMsg)
+        self.messages.createAndSendSMS([self.target_telNum], self.test_msg)
         
         #
         # Wait for the last message in this thread to be a 'received' one
@@ -60,7 +60,7 @@ class test_main(GaiaTestCase):
         x = self.messages.waitForReceivedMsgInThisThread()
         self.UTILS.TEST(x, "Received a message.", True)
         
-        y= x.find_element("tag name", "a")
+        y = x.find_element("tag name", "a")
         y.tap()
 
         x = self.UTILS.getElement(DOM.Messages.header_call_btn, "Call button")
@@ -76,6 +76,6 @@ class test_main(GaiaTestCase):
         #
         # Make sure the number is automatically in the contact details.
         #        
-        x = self.UTILS.getElement( ("id", "number_0"), "Mobile number field")
-        self.UTILS.TEST(x.get_attribute("value") == self._testNum, 
+        x = self.UTILS.getElement(("id", "number_0"), "Mobile number field")
+        self.UTILS.TEST(x.get_attribute("value") == self.test_num, 
                         "The correct number is automatically entered in the new contact's number field.")

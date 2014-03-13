@@ -7,7 +7,7 @@ sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 
 #
 # Imports particular to this test case.
@@ -15,15 +15,15 @@ from OWDTestToolkit.apps import Messages
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
+    test_msg = "Test message."
     
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
         
         #
         # Establish which phone number to use.
@@ -49,11 +49,12 @@ class test_main(GaiaTestCase):
         # Create and send a new test message (don't use api - I want to be back in homepage
         # before the sms has finshed sending and the api waits).
         #
-        newMsgBtn = self.UTILS.getElement(DOM.Messages.create_new_message_btn, "Create new message button")
+        newMsgBtn = self.UTILS.getElement(DOM.Messages.create_new_message_btn,
+                                        "Create new message button")
         newMsgBtn.tap()
         
         self.messages.addNumbersInToField([self.target_telNum])        
-        self.messages.enterSMSMsg(self._TestMsg)
+        self.messages.enterSMSMsg(self.test_msg)
         
         # This wasn't always quick enough so I'm trying js to make it faster ...
 #         sendBtn = self.UTILS.getElement(DOM.Messages.send_message_button, "Send sms button")
@@ -80,8 +81,8 @@ class test_main(GaiaTestCase):
         #
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
         sms_text = returnedSMS.text
-        self.UTILS.TEST((sms_text.lower() == self._TestMsg.lower()), 
-            "SMS text = '" + self._TestMsg + "' (it was '" + sms_text + "').")
+        self.UTILS.TEST((sms_text.lower() == self.test_msg.lower()), 
+            "SMS text = '" + self.test_msg + "' (it was '" + sms_text + "').")
          
         x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
@@ -96,6 +97,6 @@ class test_main(GaiaTestCase):
         #
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
         sms_text = returnedSMS.text
-        self.UTILS.TEST((sms_text.lower() == self._TestMsg.lower()), 
-            "SMS text = '" + self._TestMsg + "' (it was '" + sms_text + "').")
+        self.UTILS.TEST((sms_text.lower() == self.test_msg.lower()), 
+            "SMS text = '" + self.test_msg + "' (it was '" + sms_text + "').")
 

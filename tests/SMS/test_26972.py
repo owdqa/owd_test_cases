@@ -10,34 +10,33 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.email import Email
 from OWDTestToolkit.apps import Contacts
 from tests._mock_data.contacts import MockContact
-#import time
-
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
+    test_msg = "Test message."
     
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.contacts   = Contacts(self)
-        self.email      = Email(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.contacts = Contacts(self)
+        self.email = Email(self)
         
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.emailAddy  = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
-        self.emailE     = self.UTILS.get_os_variable("GMAIL_2_EMAIL")
-        self.emailP     = self.UTILS.get_os_variable("GMAIL_2_PASS")
-        self.emailU     = self.UTILS.get_os_variable("GMAIL_2_USER")
+        self.emailAddy = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
+        self.emailE = self.UTILS.get_os_variable("GMAIL_2_EMAIL")
+        self.emailP = self.UTILS.get_os_variable("GMAIL_2_PASS")
+        self.emailU = self.UTILS.get_os_variable("GMAIL_2_USER")
         
-        self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg',
+                                    destination='DCIM/100MZLLA')
         
         self.cont = MockContact()
         
@@ -69,8 +68,8 @@ class test_main(GaiaTestCase):
         #
         # Long press the email link.
         #
-        _link = x.find_element("tag name", "a")
-        _link.tap()
+        link = x.find_element("tag name", "a")
+        link.tap()
         
         #
         # Click 'create new contact'.
@@ -96,13 +95,13 @@ class test_main(GaiaTestCase):
         # Put the contact details into each of the fields (this method
         # clears each field first).
         #
-        self._changeField('givenName'   , self.cont["givenName"])
-        self._changeField('familyName'  , self.cont["familyName"])
-        self._changeField('tel'         , self.cont["tel"]["value"])
-        self._changeField('street'      , self.cont["adr"]["streetAddress"])
-        self._changeField('zip'         , self.cont["adr"]["postalCode"])
-        self._changeField('city'        , self.cont["adr"]["locality"])
-        self._changeField('country'     , self.cont["adr"]["countryName"])
+        self._changeField('givenName', self.cont["givenName"])
+        self._changeField('familyName', self.cont["familyName"])
+        self._changeField('tel', self.cont["tel"]["value"])
+        self._changeField('street', self.cont["adr"]["streetAddress"])
+        self._changeField('zip', self.cont["adr"]["postalCode"])
+        self._changeField('city', self.cont["adr"]["locality"])
+        self._changeField('country', self.cont["adr"]["countryName"])
 
         #
         # Check the fields have been updated correctly.
@@ -139,4 +138,4 @@ class test_main(GaiaTestCase):
         self.UTILS.checkMarionetteOK()
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
         contFields = self.contacts.getContactFields()
-        self.contacts.replaceStr(contFields[p_field] , p_valObj)
+        self.contacts.replaceStr(contFields[p_field], p_valObj)

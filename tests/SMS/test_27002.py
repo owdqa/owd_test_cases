@@ -3,14 +3,14 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+from gaiatest   import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.dialer import Dialer
 
 class test_main(GaiaTestCase):
@@ -20,9 +20,9 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.dialer     = Dialer(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.dialer = Dialer(self)
 
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         

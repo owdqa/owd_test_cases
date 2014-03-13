@@ -10,7 +10,7 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps import Contacts
 from tests._mock_data.contacts import MockContact
 import time
@@ -22,18 +22,18 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.contacts   = Contacts(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.contacts = Contacts(self)
         
         #
         # Prepare the contact we're going to insert.
         #
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.Contact_1 = MockContact(tel = {'type': '', 'value': self.num1})
+        self.contact = MockContact(tel = {'type': '', 'value': self.num1})
 
-        self.UTILS.insertContact(self.Contact_1)
-        self.UTILS.logComment("Using target telephone number " + self.Contact_1["tel"]["value"])
+        self.UTILS.insertContact(self.contact)
+        self.UTILS.logComment("Using target telephone number " + self.contact["tel"]["value"])
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -54,12 +54,12 @@ class test_main(GaiaTestCase):
         # Search for our contact.
         #
         orig_iframe = self.messages.selectAddContactButton()
-        self.contacts.search(self.Contact_1["name"])
-        self.contacts.checkSearchResults(self.Contact_1["name"])
+        self.contacts.search(self.contact["name"])
+        self.contacts.checkSearchResults(self.contact["name"])
 
         x = self.UTILS.getElements(DOM.Contacts.search_results_list, "Contacts search results")
         for i in x:
-            if i.text == self.Contact_1["name"]:
+            if i.text == self.contact["name"]:
                 i.tap()
                 break
         
@@ -72,7 +72,7 @@ class test_main(GaiaTestCase):
         #
         # Now check the correct name is in the 'To' list.
         #
-        self.messages.checkIsInToField(self.Contact_1["name"])
+        self.messages.checkIsInToField(self.contact["name"])
         self.messages.sendSMS()
         
         #

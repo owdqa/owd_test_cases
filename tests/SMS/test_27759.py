@@ -10,7 +10,7 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps import Contacts
 from tests._mock_data.contacts import MockContact
 import time
@@ -23,17 +23,17 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.contacts   = Contacts(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.contacts = Contacts(self)
         
         #
         # Prepare the contact we're going to insert.
         #
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.Contact_1 = MockContact(tel = {'type': '', 'value': ''})
+        self.contact = MockContact(tel = {'type': '', 'value': ''})
 
-        self.UTILS.insertContact(self.Contact_1)
+        self.UTILS.insertContact(self.contact)
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -60,7 +60,7 @@ class test_main(GaiaTestCase):
         #
         x = self.UTILS.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
         for i in x:
-            if i.text == self.Contact_1["name"]:
+            if i.text == self.contact["name"]:
                 self.UTILS.logResult("info", "Tapping ...")
                 i.tap()
                 break

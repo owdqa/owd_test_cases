@@ -10,23 +10,23 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps import Contacts
 from tests._mock_data.contacts import MockContact
 #import time
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
+    test_msg = "Test message."
     
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.contacts   = Contacts(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.contacts = Contacts(self)
         
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
@@ -36,7 +36,8 @@ class test_main(GaiaTestCase):
                                {"type": "Personal", "value": "email3@nowhere.com"}])
         self.UTILS.insertContact(self.cont)
 
-        self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg',
+                                    destination='DCIM/100MZLLA')
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -61,13 +62,13 @@ class test_main(GaiaTestCase):
         #
         # Long press the email link.
         #
-        _link = x.find_element("tag name", "a")
-        _link.tap()
+        link = x.find_element("tag name", "a")
+        link.tap()
         
         #
         # Click 'Add to an existing contact'.
         #
-        x = self.UTILS.getElement( ("xpath", "//button[text()='Add to an existing contact']"),
+        x = self.UTILS.getElement(("xpath", "//button[text()='Add to an existing contact']"),
                                    "Create new contact button")
         x.tap()
         
@@ -78,7 +79,9 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(DOM.Contacts.view_all_contact_HM, "Search item")
         x.tap()
         
-        self.UTILS.waitForElements(("xpath","//input[@type='email' and @value='%s']" % self.emailAddy), "New email address")
+        self.UTILS.waitForElements(("xpath",
+                                "//input[@type='email' and @value='{}']".format(self.emailAddy)),
+                                "New email address")
         
         #
         # Add gallery image.
@@ -89,14 +92,15 @@ class test_main(GaiaTestCase):
         #
         # Press the Update button.
         #
-        done_button = self.UTILS.getElement(DOM.Contacts.edit_update_button, "'Update' button")
+        done_button = self.UTILS.getElement(DOM.Contacts.edit_update_button,
+                                            "'Update' button")
         done_button.tap()
 
         #
         # Check that the contacts iframe is now gone.
         #
         self.marionette.switch_to_frame()
-        self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@src,'contacts')]"),
+        self.UTILS.waitForNotElements(("xpath", "//iframe[contains(@src,'contacts')]"),
                                        "Contact app iframe")
         
         #

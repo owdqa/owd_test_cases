@@ -10,7 +10,7 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 import time
 
 class test_main(GaiaTestCase):
@@ -20,8 +20,8 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
         
         # Start with no SMS.
         self.data_layer.delete_all_sms()
@@ -58,5 +58,5 @@ class test_main(GaiaTestCase):
         preview_text = self.messages.getThreadText(self._num)
         
         self.UTILS.TEST(preview_text in msg_text, 
-                        "Preview text (" + preview_text + ") is in the original message text(" + msg_text + ").")
+                        "Preview text ({}) is in the original message text({}).".format(preview_text, msg_text))
         

@@ -10,7 +10,7 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 
 class test_main(GaiaTestCase):
     
@@ -19,8 +19,8 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
         
         #
         # Establish which phone number to use.
@@ -64,9 +64,9 @@ class test_main(GaiaTestCase):
         # keyboard present, but we need to 'manually' use the keyboard for this).
         #
         orig_frame = self.UTILS.currentIframe()
-        self.keyboard.tap_backspace()
-        self.keyboard.tap_backspace()
-        self.keyboard.tap_backspace()
+        
+        for i in range(3):
+            self.keyboard.tap_backspace()
         self.marionette.switch_to_frame()
         self.UTILS.switchToFrame("src", orig_frame)
 

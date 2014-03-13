@@ -10,14 +10,14 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.browser import Browser
 
 
 class test_main(GaiaTestCase):
         
-    _email        = "owdqatestone@gmail.com"
-    _TestMsg     = "Test " + _email + " this."
+    email = "owdqatestone@gmail.com"
+    test_msg = "Test " + email + " this."
     
     _RESTART_DEVICE = True
     
@@ -26,9 +26,9 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.browser    = Browser(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.browser = Browser(self)
         
         #
         # Establish which phone number to use.
@@ -52,7 +52,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.target_telNum], self._TestMsg)
+        self.messages.createAndSendSMS([self.target_telNum], self.test_msg)
          
         #
         # Wait for the last message in this thread to be a 'received' one
@@ -65,16 +65,16 @@ class test_main(GaiaTestCase):
         #Verify that a valid URL appears highlight on message received.
         #
         y=x.find_element("tag name", "a")
-        self.UTILS.TEST(y.text==self._email , "The email link is in the message received")
+        self.UTILS.TEST(y.text == self.email, "The email link is in the message received")
         
         #
         # Get the link of the first message
         #    
-        w = self.UTILS.getElement( ("id", "message-1"), "Message sent")
+        w = self.UTILS.getElement(("id", "message-1"), "Message sent")
         
         #
         #Verify that a valid URL appears highlight
         #
         z=w.find_element("tag name", "a")
-        self.UTILS.TEST(z.text==self._email , "The email link is in the message sent")
+        self.UTILS.TEST(z.text == self.email, "The email link is in the message sent")
                 

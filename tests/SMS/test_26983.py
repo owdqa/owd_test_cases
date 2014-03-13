@@ -10,27 +10,24 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.email import Email
 import time
 
 class test_main(GaiaTestCase):
-
-    _RESTART_DEVICE = True
+    
     test_msg = "Test message."
-    test_subject = "Test subject"
-    test_body = "This is a test!"
     
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.Email      = Email(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.Email = Email(self)
 
-        self.USER1  = self.UTILS.get_os_variable("GMAIL_1_USER")
+        self.USER1 = self.UTILS.get_os_variable("GMAIL_1_USER")
         self.EMAIL1 = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
         self.PASS1  = self.UTILS.get_os_variable("GMAIL_1_PASS")
          

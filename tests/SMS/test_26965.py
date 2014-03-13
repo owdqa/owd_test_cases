@@ -10,13 +10,13 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.browser import Browser
 
 class test_main(GaiaTestCase):
         
-    _link        = "www.google.com"
-    _TestMsg     = "Test " + _link + " this."
+    link = "www.google.com"
+    test_msg = "Test " + link + " this."
     
     _RESTART_DEVICE = True
     
@@ -25,9 +25,9 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.browser    = Browser(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.browser = Browser(self)
         
         #
         # Establish which phone number to use.
@@ -41,7 +41,6 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.UTILS.getNetworkConnection()
         
-        
         #
         # Launch messages app.
         #
@@ -50,16 +49,16 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.target_telNum], self._TestMsg)
+        self.messages.createAndSendSMS([self.target_telNum], self.test_msg)
           
         #
         # Get the link of the first message
         #    
-        x = self.UTILS.getElement( ("id", "message-1"), "Message sent")
+        x = self.UTILS.getElement(("id", "message-1"), "Message sent")
         
         #
         #Verify that a valid URL appears highlight
         #
-        y=x.find_element("tag name", "a")
-        self.UTILS.TEST(y.text==self._link , "The web link is in the text message")
+        y = x.find_element("tag name", "a")
+        self.UTILS.TEST(y.text == self.link, "The web link is in the text message")
                 

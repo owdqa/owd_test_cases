@@ -10,8 +10,9 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.email import Email
+import time
 
 class test_main(GaiaTestCase):
     
@@ -23,13 +24,13 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.Email      = Email(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.Email = Email(self)
 
-        self.USER1  = self.UTILS.get_os_variable("GMAIL_1_USER")
+        self.USER1 = self.UTILS.get_os_variable("GMAIL_1_USER")
         self.EMAIL1 = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
-        self.PASS1  = self.UTILS.get_os_variable("GMAIL_1_PASS")
+        self.PASS1 = self.UTILS.get_os_variable("GMAIL_1_PASS")
          
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.get_os_variable("GMAIL_2_EMAIL")
@@ -54,7 +55,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], "Email address %s test." % self.emailAddy)
+        self.messages.createAndSendSMS([self.num1], "Email address {} test.".format(self.emailAddy))
         x = self.messages.waitForReceivedMsgInThisThread()
         
         #
@@ -88,12 +89,12 @@ class test_main(GaiaTestCase):
         #
         x = self.UTILS.getElement(DOM.Email.compose_to_from_contacts, "To field")
         self.UTILS.TEST(x.text == self.emailAddy, 
-                        "To field contains '{}' (it was '{}').".format(self.emailAddy, self.emailAddy))
+                        "To field contains '{0}' (it was '{0}').".format(self.emailAddy))
         
         #
         # Fill in the details and send the email.
         #
         self.UTILS.typeThis(DOM.Email.compose_subject, "'Subject' field", "Test email", True, False)
-        self.UTILS.typeThis(DOM.Email.compose_msg    , "Message field"  , "Just a test", True, False, False)
+        self.UTILS.typeThis(DOM.Email.compose_msg, "Message field"  , "Just a test", True, False, False)
 
         self.Email.sendTheMessage()

@@ -10,19 +10,19 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
+    test_msg = "Test message."
     
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
 
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.num2 = "621234567"
@@ -39,7 +39,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], "Test %s number." % self.num2)
+        self.messages.createAndSendSMS([self.num1], "Test {} number.".format(self.num2))
         x = self.messages.waitForReceivedMsgInThisThread()
         
         #
@@ -58,10 +58,14 @@ class test_main(GaiaTestCase):
         #
         # Verify that nothing happened.
         #
-        self.UTILS.waitForNotElements(DOM.Messages.header_call_btn, "Call button")
-        self.UTILS.waitForNotElements(DOM.Messages.header_create_new_contact_btn, "Create new contact button")
-        self.UTILS.waitForNotElements(DOM.Messages.header_add_to_contact_btn, "Add to existing contact button")
-        self.UTILS.waitForNotElements(DOM.Messages.header_cancel_btn, "Cancel button")
+        self.UTILS.waitForNotElements(DOM.Messages.header_call_btn,
+                                        "Call button")
+        self.UTILS.waitForNotElements(DOM.Messages.header_create_new_contact_btn,
+                                        "Create new contact button")
+        self.UTILS.waitForNotElements(DOM.Messages.header_add_to_contact_btn,
+                                        "Add to existing contact button")
+        self.UTILS.waitForNotElements(DOM.Messages.header_cancel_btn,
+                                        "Cancel button")
         
         
         

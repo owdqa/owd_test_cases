@@ -10,13 +10,13 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
-from OWDTestToolkit.apps import Dialer
+from OWDTestToolkit.apps.messages import Messages
 import time
 
 class test_main(GaiaTestCase):
     
-    test_msg     = "Test message."
+    test_msg = "Test message."
+    _RESTART_DEVICE = True
     
     def setUp(self):
         #
@@ -25,8 +25,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
-        self.Dialer = Dialer(self)
-
+        
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         
     def tearDown(self):

@@ -10,21 +10,21 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps import Contacts
 from tests._mock_data.contacts import MockContact
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test."
+    test_msg = "Test."
     
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
         
         
         #
@@ -36,7 +36,8 @@ class test_main(GaiaTestCase):
         self.UTILS.logComment("Using target telephone number " + self.contact["tel"]["value"])
         
         #
-        # Add this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
+        # Add this contact (quick'n'dirty method - we're just testing sms, 
+        # no adding a contact).
         #
         self.UTILS.insertContact(self.contact)
 
@@ -53,7 +54,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.contact["tel"]["value"]], self._TestMsg)
+        self.messages.createAndSendSMS([self.contact["tel"]["value"]], self.test_msg)
         
 #         #
 #         # Wait for the last message in this thread to be a 'recieved' one.
@@ -65,8 +66,8 @@ class test_main(GaiaTestCase):
 #         # TEST: The returned message is as expected (caseless in case user typed it manually).
 #         #
 #         sms_text = returnedSMS.text
-#         self.UTILS.TEST((sms_text.lower() == self._TestMsg.lower()), 
-#             "SMS text = '" + self._TestMsg + "' (it was '" + sms_text + "').")
+#         self.UTILS.TEST((sms_text.lower() == self.test_msg.lower()), 
+#             "SMS text = '" + self.test_msg + "' (it was '" + sms_text + "').")
 # 
 #         #
 #         # Verify that the header text is now the contact name.
