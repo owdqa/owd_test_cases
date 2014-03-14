@@ -4,11 +4,13 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.everythingme import EverythingMe
+from OWDTestToolkit.apps import Settings
 
 class test_main(GaiaTestCase):
     
@@ -44,16 +46,18 @@ class test_main(GaiaTestCase):
         #
         # Make sure our group isn't already present.
         #
-        self.EME.removeGroups([self._newGroup], p_validate=False)       
+        #self.EME.remove_groups([self._newGroup], p_validate=False)
+        #self.EME.remove_groups([self._newGroup], p_validate=False)
+        self.EME.remove_groups([self._newGroup])
         
         #
         # Add the group.
         #
-        self.EME.addGroup(self._newGroup)
+        self.EME.add_group(self._newGroup)
             
         #
         # Remove the group.
         #
-        self.EME.removeGroups([self._newGroup])
+        self.EME.remove_groups([self._newGroup])
         
         

@@ -4,11 +4,17 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.everythingme import EverythingMe
+from OWDTestToolkit.apps import Settings
+from OWDTestToolkit import DOM
+import time
+
+
 
 class test_main(GaiaTestCase):
     
@@ -56,7 +62,7 @@ class test_main(GaiaTestCase):
             _name = x[i].get_attribute("data-query")
             
             self.UTILS.logResult("info", "Checking group '%s' ..." % _name)
-            self.EME.pickGroup(_name)
+            self.EME.pick_group(_name)
 
             x = self.UTILS.screenShotOnErr()
             self.UTILS.logResult("info", "Screenshot of group icons: ", x)

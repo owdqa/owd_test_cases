@@ -4,11 +4,14 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.everythingme import EverythingMe
+from OWDTestToolkit.apps import Settings
+from OWDTestToolkit import DOM
 
 
 class test_main(GaiaTestCase):
@@ -47,7 +50,7 @@ class test_main(GaiaTestCase):
         #
         # Select a category (group).
         #
-        self.EME.pickGroup("Games")
+        self.EME.pick_group("Games")
         
         #
         # Verify that the message is displayed.
@@ -66,7 +69,7 @@ class test_main(GaiaTestCase):
         self.UTILS.scrollHomescreenRight()
         self.UTILS.getNetworkConnection()
         self.EME.launch()
-        self.EME.pickGroup("Social")
+        self.EME.pick_group("Social")
         self.UTILS.scrollHomescreenRight()
     
         #
@@ -79,7 +82,7 @@ class test_main(GaiaTestCase):
         #
         # Select a category (group).
         #
-        self.EME.pickGroup("Music")
+        self.EME.pick_group("Music")
           
         #
         # Verify that the message is displayed.
