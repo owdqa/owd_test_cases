@@ -32,7 +32,6 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
 
     def test_run(self):
-
         #
         # Store our picture on the device.
         #

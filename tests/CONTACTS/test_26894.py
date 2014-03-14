@@ -1,6 +1,8 @@
 #
 # Imports which are standard for all test cases.
 #
+import sys
+sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
@@ -13,6 +15,7 @@ from tests._mock_data.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
+    
 
     def setUp(self):
         #

@@ -55,7 +55,6 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
 
     def test_run(self):
-
         self.UTILS.getNetworkConnection()
 
         #
@@ -102,9 +101,14 @@ class test_main(GaiaTestCase):
         #
         # Fill in the rest and send it.
         #
+#         msg_subject = self.UTILS.getElement(DOM.Email.compose_subject, "'Subject' field")
+#         msg_msg     = self.UTILS.getElement(DOM.Email.compose_msg, "Message field")
+#         msg_subject.send_keys(self._email_subject)
+#         msg_msg.send_keys(self._email_message)
         self.UTILS.typeThis(DOM.Email.compose_subject, "'Subject' field", self._email_subject, True, False)
         self.UTILS.typeThis(DOM.Email.compose_msg, "Message field", self._email_message, True, False, False)
 
+         
         #
         # Send the message.
         #

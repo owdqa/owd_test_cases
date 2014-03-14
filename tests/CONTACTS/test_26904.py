@@ -1,6 +1,8 @@
 #
 # Imports which are standard for all test cases.
 #
+import sys
+sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.apps.contacts import Contacts
 
