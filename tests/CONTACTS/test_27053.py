@@ -4,47 +4,51 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.apps import Settings
 from tests._mock_data.contacts import MockContact
+import time
 
 
 class test_main(GaiaTestCase):
-    
+
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.settings   = Settings(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.settings = Settings(self)
 
-        self.hotmail_u = self.UTILS.get_os_variable("HOTMAIL_1_EMAIL")
-        self.hotmail_p = self.UTILS.get_os_variable("HOTMAIL_1_PASS")
+        self.hotmail_user = self.UTILS.get_os_variable("HOTMAIL_1_EMAIL")
+        self.hotmail_passwd = self.UTILS.get_os_variable("HOTMAIL_1_PASS")
 
         #
         # Get details of our test contacts.
         #
-        self.Contact_1 = MockContact()
-        self.UTILS.insertContact(self.Contact_1)
+        self.contact = MockContact()
+        self.UTILS.insertContact(self.contact)
 
     def tearDown(self):
         self.UTILS.reportResults()
-        
+
     def test_run(self):
-        
+
         #
         # Set up to use data connection.
         #
         self.UTILS.getNetworkConnection()
-        
+
         self.contacts.launch()
 
-        x = self.contacts.import_HotmailLogin(self.hotmail_u, self.hotmail_p)
+        x = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)
         if not x or x == "ALLIMPORTED":
             self.UTILS.logResult(False, "Cannot continue past this point without importing the contacts.")
             return
@@ -59,9 +63,10 @@ class test_main(GaiaTestCase):
         # Tap the Select All button (can't be done with marionette yet).
         #
         self.UTILS.logResult("info", "Tapping the 'Select All' button ...")
-        self.marionette.execute_script("document.getElementById('%s').click()" % DOM.Contacts.import_select_all[1])
+        self.marionette.execute_script("document.getElementById('{}').click()".\
+                                       format(DOM.Contacts.import_select_all[1]))
         time.sleep(1)
-            
+
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot and details", x)
 
@@ -73,12 +78,12 @@ class test_main(GaiaTestCase):
         # all of them and make sure the Import button is then disabled (because that
         # means all of them were selected before the toggle).
         #
-        x = self.UTILS.getElements( ("class name", "block-item"), "Contacts list")
-        for i in range(0,len(x)):
-            i_num = i+1
-            self.UTILS.logResult("info", "Disable contact %s ..." % i_num)
-            self.contacts.import_toggleSelectContact(i_num)
-        
+        x = self.UTILS.getElements(("class name", "block-item"), "Contacts list")
+        for i in range(len(x)):
+            i_num = i + 1
+            self.UTILS.logResult("info", "Disable contact {} ...".format(i_num))
+            self.contacts.import_toggle_select_contact(i_num)
+
         x = self.UTILS.getElement(DOM.Contacts.import_import_btn, "Import button")
         self.UTILS.TEST(x.get_attribute("disabled") == "true", "Import button is disabled.")
 

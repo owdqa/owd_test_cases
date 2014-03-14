@@ -10,23 +10,20 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Contacts
+from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
 import time
 
 class test_main(GaiaTestCase):
-    #
-    # Make sure we have no account set up previously
-    #
-    _RESTART_DEVICE = True
+
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-    
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+
         #
         # Get details of our test contacts.
         #
@@ -34,7 +31,7 @@ class test_main(GaiaTestCase):
 
         map(self.UTILS.insertContact, self.test_contacts)        
 
-        self.contact_name=self.test_contacts[0]["givenName"]
+        self.contact_name = self.test_contacts[0]["givenName"]
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -48,12 +45,12 @@ class test_main(GaiaTestCase):
         #
         # Go to the view details screen for this contact.
         #
-        self.contacts.viewContact(self.contact_name, p_HeaderCheck=False)
-                
+        self.contacts.view_contact(self.contact_name, p_HeaderCheck=False)
+
         #
         # Tap the Send an email button.
         #
-        sendEmail=self.UTILS.getElement(DOM.Contacts.view_contact_email_field, "Send email button")
+        sendEmail = self.UTILS.getElement(DOM.Contacts.view_contact_email_field, "Send email button")
         sendEmail.tap()
         
         #

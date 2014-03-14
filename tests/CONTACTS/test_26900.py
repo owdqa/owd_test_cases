@@ -3,12 +3,15 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
+import time
 from tests._mock_data.contacts import MockContact
 
 
@@ -19,43 +22,42 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
 
         #
         # Get details of our test contacts.
         #
-        self.Contact_1 = MockContact(tel = [{'type': 'Mobile', 'value': '555555555'},
-                                            {'type': 'Mobile', 'value': '666666666'}])
-        self.UTILS.insertContact(self.Contact_1)
+        self.contact = MockContact(tel=[{'type': 'Mobile', 'value': '555555555'},
+                                        {'type': 'Mobile', 'value': '666666666'}])
+        self.UTILS.insertContact(self.contact)
 
     def tearDown(self):
         self.UTILS.reportResults()
-        
+
     def test_run(self):
-        
         #
         # Launch contacts app.
         #
         self.contacts.launch()
-        
+
         #
         # View our contact.
         #
-        self.contacts.viewContact(self.Contact_1['name'])
-        
+        self.contacts.view_contact(self.contact['name'])
+
         #
         # Tap the 2nd number to dial it.
         #
-        x = self.UTILS.getElement( ("xpath", DOM.Contacts.view_contact_tels_xpath % self.Contact_1["tel"][1]["value"]),
-                                   "Second phone number")
+        x = self.UTILS.getElement(("xpath", DOM.Contacts.view_contact_tels_xpath.\
+                                    format(self.contact["tel"][1]["value"])), "Second phone number")
         x.tap()
-        
+
         #
         # Switch to the dialer iframe.
         #
         self.UTILS.switchToFrame(*DOM.Contacts.dialer_frame)
-        
+
         #
         # Verify things....
         #

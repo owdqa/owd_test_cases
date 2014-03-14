@@ -65,4 +65,4 @@ class test_main(GaiaTestCase):
         # TEST: this automatically opens the 'send SMS' screen, so
         # check the correct name is in the 'to' field of this sms.
         #
-        self.messages.checkIsInToField(self.contact['name'])
+        self.messages.checkIsInToField(self.Contact_1['name'])

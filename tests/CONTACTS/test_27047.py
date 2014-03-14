@@ -4,11 +4,14 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.apps import Settings
 from tests._mock_data.contacts import MockContact
 
 
@@ -19,19 +22,19 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.settings   = Settings(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.settings = Settings(self)
 
         #
-        # Get details of our test contacts.
+        # Create test contacts.
         #
-        self.Contact_1 = MockContact()
-        self.UTILS.insertContact(self.Contact_1)
+        self.contact = MockContact()
+        self.UTILS.insertContact(self.contact)
 
     def tearDown(self):
         self.UTILS.reportResults()
-        
+
     def test_run(self):
         #
         # Launch contacts app.
@@ -48,9 +51,7 @@ class test_main(GaiaTestCase):
         #
         x = self.UTILS.getElement(DOM.Contacts.hotmail_button, "Hotmail button")
         x_dis = x.get_attribute("disabled")
-        self.UTILS.TEST(x_dis == "true", "The Hotmail button is disabled ('disabled' was set to '%s')." % x_dis)
-                
+        self.UTILS.TEST(x_dis == "true", "The Hotmail button is disabled ('disabled' was set to '{}').".format(x_dis))
+
         x = self.UTILS.screenShotOnErr()
         self.UTILS.logResult("info", "Screenshot and details", x)
-
-

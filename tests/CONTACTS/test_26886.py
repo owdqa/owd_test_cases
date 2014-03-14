@@ -3,12 +3,14 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
 
 
@@ -19,18 +21,18 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
 
         #
         # Get details of our test contacts.
         #
-        self.contact_1 = MockContact()
-        self.UTILS.insertContact(self.contact_1)
+        self.contact = MockContact()
+        self.UTILS.insertContact(self.contact)
 
     def tearDown(self):
         self.UTILS.reportResults()
-        
+
     def test_run(self):
         #
         # Launch contacts app.
@@ -40,8 +42,8 @@ class test_main(GaiaTestCase):
         #
         # View the contact details.
         #
-        self.contacts.viewContact(self.contact_1['name'])
-        
+        self.contacts.view_contact(self.contact['name'])
+
         #
         # Press the favourites button.
         #
@@ -56,15 +58,14 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(DOM.Contacts.favourite_button, "Favourite toggle button")
         self.UTILS.TEST(x.text == "Remove as Favorite",
                         "Favourite 'toggle' button is labelled 'Remove as Favourite'.")
-        
-        
+
         #
         # Go back to view all contacts and check this contact is listed in the
         # 'favourites' section.
         #
         x = self.UTILS.getElement(DOM.Contacts.details_back_button, "Back button")
         x.tap()
-        
-        string = self.contact_1['givenName'] + self.contact_1['familyName']
-        favs = ("xpath", DOM.Contacts.favourites_list_xpath % string)
-        self.UTILS.waitForElements(favs,"'" + self.contact_1['name'] + "' in the favourites list")
+
+        string = self.contact['givenName'] + ' ' + self.contact['familyName']
+        favs = ("xpath", DOM.Contacts.favourites_list_xpath.format(string))
+        self.UTILS.waitForElements(favs, "'" + self.contact['name'] + "' in the favourites list")
