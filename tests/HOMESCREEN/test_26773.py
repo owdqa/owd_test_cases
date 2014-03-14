@@ -4,8 +4,17 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
-from marionette import Actions
+
+#
+# Imports particular to this test case.
+#
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.everythingme import EverythingMe
+from OWDTestToolkit.apps import Actions
+from OWDTestToolkit.apps import Settings
+from OWDTestToolkit import DOM
+import time
+#from marionette import Actions
 
 
 class test_main(GaiaTestCase):
@@ -43,7 +52,7 @@ class test_main(GaiaTestCase):
         # Install it.
         #
         self.EME.launch()
-        x = self.EME.searchForApp(self._appName)
+        x = self.EME.search_for_app(self._appName)
         actions = Actions(self.marionette)
         actions.press(x).wait(2).release()
         try:

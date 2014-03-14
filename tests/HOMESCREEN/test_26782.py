@@ -4,11 +4,16 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.everythingme import EverythingMe
+from OWDTestToolkit.apps import Actions
+from OWDTestToolkit.apps import Settings
+from OWDTestToolkit import DOM
+
 
 class test_main(GaiaTestCase):
     
@@ -42,6 +47,6 @@ class test_main(GaiaTestCase):
         self.UTILS.logResult("info", "Launching EME ...")
 
         self.UTILS.switchToFrame(*DOM.Home.frame_locator)
-        self.EME.removeGroups(["Games", "Social", "Music", "Showbiz"])
+        self.EME.remove_groups(["Games", "Social", "Music", "Showbiz"])
 
 

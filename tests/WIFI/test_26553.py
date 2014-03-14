@@ -12,7 +12,7 @@ from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps import Settings
 from OWDTestToolkit.apps.browser import Browser
-from OWDTestToolkit.apps import Messages
+from OWDTestToolkit.apps.messages import Messages
 
 
 class test_main(GaiaTestCase):

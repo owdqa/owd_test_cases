@@ -4,11 +4,16 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.everythingme import EverythingMe
+from OWDTestToolkit.apps import Settings
+from OWDTestToolkit import DOM
+import time
+
 
 class test_main(GaiaTestCase):
     
@@ -49,7 +54,7 @@ class test_main(GaiaTestCase):
         # First, get the name of the app we're going to install.
         #
 
-        self.UTILS.TEST(self.EME.pickGroup(self._GROUP_NAME),
+        self.UTILS.TEST(self.EME.pick_group(self._GROUP_NAME),
                         "Group '" + self._GROUP_NAME + "' exists in EverythingME.",
                         True)
     
@@ -71,14 +76,14 @@ class test_main(GaiaTestCase):
         #
         # Pick a group.
         #
-        self.UTILS.TEST(self.EME.pickGroup(self._GROUP_NAME),
+        self.UTILS.TEST(self.EME.pick_group(self._GROUP_NAME),
                         "Group '" + self._GROUP_NAME + "' exists in EverythingME.",
                         True)
  
         #
         # Add the app to the homescreen.
         #
-        self.UTILS.TEST(self.EME.addAppToHomescreen(self._APP_NAME),
+        self.UTILS.TEST(self.EME.add_app_to_homescreen(self._APP_NAME),
                         "Application '" + self._APP_NAME + "' is added to the homescreen.",
                         True)
         

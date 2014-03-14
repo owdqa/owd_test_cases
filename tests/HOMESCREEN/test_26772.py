@@ -4,11 +4,16 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.everythingme import EverythingMe
+from OWDTestToolkit.apps import Actions
+from OWDTestToolkit.apps import Settings
+from OWDTestToolkit import DOM
+import time
 
 
 class test_main(GaiaTestCase):
@@ -48,7 +53,7 @@ class test_main(GaiaTestCase):
         # First, get the name of the app we're going to install.
         #
         
-        self.EME.pickGroup("Games")
+        self.EME.pick_group("Games")
         
         #
         # Get the name of the first app which is installed (it'll be in the first apps listed).
