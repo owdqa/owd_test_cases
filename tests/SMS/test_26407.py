@@ -4,12 +4,16 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps import Contacts
 from tests._mock_data.contacts import MockContact
+import time
 
 
 class test_main(GaiaTestCase):
@@ -19,20 +23,21 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.messages = Messages(self)
        
         #
         # Get details of our test contacts.
         #
-        self.Contact_1 = MockContact(tel = [{'type': 'Mobile', 'value': '11111111'}, {'type': 'Mobile', 'value': '222222222'}] )
+        self.contact = MockContact(tel = [{'type': 'Mobile', 'value': '11111111'},
+                                    {'type': 'Mobile', 'value': '222222222'}] )
 
         #
         # We're not testing adding a contact, so just stick one
         # into the database.
         #
-        self.UTILS.insertContact(self.Contact_1)
+        self.UTILS.insertContact(self.contact)
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -46,12 +51,12 @@ class test_main(GaiaTestCase):
         #
         # View the details of our contact.
         #
-        self.contacts.viewContact(self.Contact_1['name'])
+        self.contacts.viewContact(self.contact['name'])
 
         #
         # Tap the 2nd sms button (index=1) in the view details screen to go to the sms page.
         #
-        smsBTN = self.UTILS.getElement( ("id", DOM.Contacts.sms_button_specific_id % 0), 
+        smsBTN = self.UTILS.getElement(("id", DOM.Contacts.sms_button_specific_id.format(0)), 
                                         "1st send SMS button")
         smsBTN.tap()
 
@@ -72,5 +77,5 @@ class test_main(GaiaTestCase):
         #
         # Check this is the right number.
         #
-        self.messages.checkIsInToField(self.Contact_1["name"])
-        self.messages.checkNumberIsInToField(self.Contact_1["tel"][0]["value"])
+        self.messages.checkIsInToField(self.contact["name"])
+        self.messages.checkNumberIsInToField(self.contact["tel"][0]["value"])

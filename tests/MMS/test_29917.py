@@ -4,8 +4,11 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.gallery import Gallery
 
 class test_main(GaiaTestCase):
 
@@ -19,13 +22,12 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.gallery    = Gallery(self)
-        self.Settings   = Settings(self)
-        self._TestMsg1    = "Hello World 1"
-        self._TestMsg2    = "Hello World 2"
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.gallery = Gallery(self)
 
+        self.test_msg1 = "Hello World 1"
+        self.test_msg2 = "Hello World 2"
 
         #
         # Establish which phone number to use.
@@ -37,15 +39,13 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
 
     def test_run(self):
-
-
         #
         # Create and Send a MMS.
         #
-        self.messages.createAndSendMMS("image", self._TestMsg1)
+        self.messages.createAndSendMMS("image", self.test_msg1)
 
         #
-        # Back to send a new sms
+        # Back to send a new message
         #
         x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
@@ -53,7 +53,7 @@ class test_main(GaiaTestCase):
         #
         # Create and Send a MMS.
         #
-        self.messages.createAndSendMMS("image", self._TestMsg2)
+        self.messages.createAndSendMMS("image", self.test_msg2)
 
 
         #
@@ -62,9 +62,11 @@ class test_main(GaiaTestCase):
         self.messages.deleteMessagesInThisThread()
 
         #
-        # Open the thread. This step is necessary because after send a mms to our number are created two threads .
+        # Open the thread. This step is necessary because after sending a mms to 
+        #our number two threads are created as a result.
         #
-        x = self.UTILS.getElement(DOM.Messages.threads_list_element, "+number Element")
+        x = self.UTILS.getElement(DOM.Messages.threads_list_element, 
+                                    "+number Element")
         x.tap()
 
         #
@@ -75,4 +77,5 @@ class test_main(GaiaTestCase):
         #
         # Verify that any thread is displayed.
         #
-        self.UTILS.waitForElements(DOM.Messages.no_threads_message, "No message threads notification")
+        self.UTILS.waitForElements(DOM.Messages.no_threads_message,
+                                    "No message threads notification")

@@ -4,12 +4,17 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps import Contacts
 from tests._mock_data.contacts import MockContact
+#import time
+
 
 
 class test_main(GaiaTestCase):
@@ -19,17 +24,18 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.contacts   = Contacts(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.contacts = Contacts(self)
         
-        self.Contact_1 = MockContact(tel = [{'type': 'Mobile', 'value': '11111111'}, {'type': 'Mobile', 'value': '222222222'}] )
+        self.contact = MockContact(tel = [{'type': 'Mobile', 'value': '11111111'},
+                                    {'type': 'Mobile', 'value': '222222222'}] )
 
         #
         # We're not testing adding a contact, so just stick one
         # into the database.
         #
-        self.UTILS.insertContact(self.Contact_1)
+        self.UTILS.insertContact(self.contact)
                 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -50,5 +56,5 @@ class test_main(GaiaTestCase):
         # Search for our contact.
         #
         self.messages.selectAddContactButton()
-        self.contacts.search(self.Contact_1['name'])
-        self.contacts.selectSearchResultSeveralPhones(self.Contact_1['name'],0)
+        self.contacts.search(self.contact['name'])
+        self.contacts.selectSearchResultSeveralPhones(self.contact['name'], 0)

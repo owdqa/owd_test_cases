@@ -4,25 +4,28 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps import Contacts
 
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
+    test_msg = "Test message."
     
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.contacts   = Contacts(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.contacts = Contacts(self)
         
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
@@ -45,15 +48,14 @@ class test_main(GaiaTestCase):
         # Create and send a new test message.
         #
         self.messages.createAndSendSMS([self.num1], 
-                                       "Email %s one, email %s two, email %s three." %
-                                       ("one@www.test.com", self.emailAddy, "three@www.test.com"))
+                                       "Email {} one, email {} two, email {} three.".format("one@www.test.com", self.emailAddy, "three@www.test.com"))
         x = self.messages.waitForReceivedMsgInThisThread()
         
         #
         # Long press the 2nd email link.
         #
-        _link = x.find_elements("tag name", "a")
-        _link[1].tap()
+        link = x.find_elements("tag name", "a")
+        link[1].tap()
         
         #
         # Click 'create new contact'.

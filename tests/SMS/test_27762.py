@@ -4,25 +4,30 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.dialer import Dialer
+
+import time
 
 class test_main(GaiaTestCase):
     
-    _TestNum = "0781234567890"
-    _TestMsg = "Test number " + _TestNum + " for dialling."
+    test_num = "0781234567890"
+    test_msg = "Test number " + test_num + " for dialling."
         
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.Dialer      = Dialer(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.Dialer = Dialer(self)
         
         #
         # Establish which phone number to use.
@@ -42,7 +47,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.target_telNum], self._TestMsg)
+        self.messages.createAndSendSMS([self.target_telNum], self.test_msg)
         
         #
         # Wait for the last message in this thread to be a 'recieved' one

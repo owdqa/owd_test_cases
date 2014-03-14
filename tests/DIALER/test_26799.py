@@ -4,12 +4,16 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps import Contacts
+from OWDTestToolkit.apps.dialer import Dialer
 from tests._mock_data.contacts import MockContact
+import time
 
 
 class test_main(GaiaTestCase):
@@ -46,8 +50,8 @@ class test_main(GaiaTestCase):
         self.dialer.callThisNumber()
 
         self.UTILS.switchToFrame(*DOM.Dialer.frame_locator_calling)
-        self.UTILS.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP % self._name),
-                                    "Outgoing call found with name matching '%s'" % self._name)
+        self.UTILS.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP.format(self._name)),
+                                    "Outgoing call found with name matching '{}'".format(self._name))
 
         time.sleep(2)
 

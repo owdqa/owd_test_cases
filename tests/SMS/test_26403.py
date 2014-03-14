@@ -1,17 +1,19 @@
 #
 # Imports which are standard for all test cases.
 #
-from gaiatest import GaiaTestCase
-from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Messages
-from OWDTestToolkit.apps import Contacts
-import time
+import sys
+sys.path.insert(1, "./")
+from gaiatest   import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps import Contacts
 from tests._mock_data.contacts import MockContact
+import time
 
 
 class test_main(GaiaTestCase):
@@ -28,24 +30,24 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.contact = MockContact(tel=[{'type': 'Mobile', 'value': '11111111'},
-                                        {'type': 'Mobile', 'value': '222222222'}])
+        self.contact = MockContact(tel = [{'type': 'Mobile', 'value': '11111111'},
+                                    {'type': 'Mobile', 'value': '222222222'}] )
 
         #
-        # We're not testing adding a contact, so just stick one
+        # We're not testing adding a contact, so just stick one 
         # into the database.
         #
         self.UTILS.insertContact(self.contact)
 
     def tearDown(self):
         self.UTILS.reportResults()
-
+        
     def test_run(self):
         #
         # Launch contacts app.
         #
         self.contacts.launch()
-
+        
         #
         # Select our contact.
         #
@@ -57,7 +59,7 @@ class test_main(GaiaTestCase):
         #
         # Tap the 2nd sms button (index=1) in the view details screen to go to the sms page.
         #
-        smsBTN = self.UTILS.getElement(("id", DOM.Contacts.sms_button_specific_id.format(1)),
+        smsBTN = self.UTILS.getElement( ("id", DOM.Contacts.sms_button_specific_id % 1), 
                                         "2nd send SMS button")
         smsBTN.tap()
 
@@ -66,6 +68,8 @@ class test_main(GaiaTestCase):
         # 'Contacts' app!).
         #
         self.marionette.switch_to_frame()
+#         self.UTILS.waitForElements(("xpath", "//iframe[@src='" + DOM.Messages.frame_locator[1] + "']"), 
+#                                    "Messaging app frame", False, 20)
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
         time.sleep(3)
 

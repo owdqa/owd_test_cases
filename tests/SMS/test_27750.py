@@ -4,23 +4,24 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
 
 class test_main(GaiaTestCase):
     
-    _testStr = "abcdefghijklmnopqrstuvwxyz"
+    test_str = "abcdefghijklmnopqrstuvwxyz"
     
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
         
         #
         # Establish which phone number to use.
@@ -43,7 +44,7 @@ class test_main(GaiaTestCase):
         #
         self.messages.startNewSMS()
 
-        self.messages.enterSMSMsg(self._testStr, False)
+        self.messages.enterSMSMsg(self.test_str, False)
         
         self.UTILS.screenShot("5968")
         

@@ -4,32 +4,37 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps import Contacts
 from tests._mock_data.contacts import MockContact
+from OWDTestToolkit.apps.dialer import Dialer
+#import time
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
+    test_msg = "Test message."
     
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.contacts   = Contacts(self)
-        self.Dialer      = Dialer(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.contacts = Contacts(self)
+        self.Dialer = Dialer(self)
 
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
-        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': self.num1})
+        self.contact = MockContact(tel = {'type': 'Mobile', 'value': self.num1})
 
-        self.UTILS.insertContact(self.Contact_1)
+        self.UTILS.insertContact(self.contact)
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -47,9 +52,9 @@ class test_main(GaiaTestCase):
         self.messages.startNewSMS()
         
         self.messages.selectAddContactButton()
-        self.contacts.viewContact(self.Contact_1["familyName"], False)
+        self.contacts.viewContact(self.contact["familyName"], False)
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
-        self.messages.checkIsInToField(self.Contact_1["name"], True)
+        self.messages.checkIsInToField(self.contact["name"], True)
 
         self.messages.enterSMSMsg("Test message.")
         self.messages.sendSMS()
@@ -66,4 +71,4 @@ class test_main(GaiaTestCase):
         #
         x = self.UTILS.getElement(DOM.Dialer.phone_number, "Phone number")
         self.UTILS.TEST(self.num1 in x.get_attribute("value"), 
-                        "The phone number contains '%s' (it was '%s')." % (self.num1, x.get_attribute("value")))
+                        "The phone number contains '{}' (it was '{}').".format(self.num1, x.get_attribute("value")))

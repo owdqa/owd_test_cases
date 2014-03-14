@@ -4,11 +4,13 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
 
 class test_main(GaiaTestCase):
     
@@ -19,8 +21,8 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
         
         
     def tearDown(self):
@@ -47,6 +49,9 @@ class test_main(GaiaTestCase):
         # Check things are as we'd expect.
         #
         self.UTILS.waitForNotElements(DOM.Messages.threads, "Message threads")
-        self.UTILS.waitForElements(DOM.Messages.create_new_message_btn, "Create new message button")
-        self.UTILS.waitForElements(DOM.Messages.edit_threads_button, "Edit threads button")
-        self.UTILS.waitForElements(DOM.Messages.no_threads_message, "No message threads notification")
+        self.UTILS.waitForElements(DOM.Messages.create_new_message_btn, 
+                                    "Create new message button")
+        self.UTILS.waitForElements(DOM.Messages.edit_threads_button,
+                                    "Edit threads button")
+        self.UTILS.waitForElements(DOM.Messages.no_threads_message,
+                                    "No message threads notification")

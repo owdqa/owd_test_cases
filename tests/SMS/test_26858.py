@@ -4,15 +4,18 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+import time
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
+    test_msg = "Test message."
     
     _RESTART_DEVICE = True
 
@@ -21,8 +24,8 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
         
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.num2 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
@@ -35,7 +38,7 @@ class test_main(GaiaTestCase):
         #
         # Set time on device to morning.
         #
-        self.UTILS.setTimeToSpecific(p_hour=10,p_minute=0)
+        self.UTILS.setTimeToSpecific(p_hour=10, p_minute=0)
         
         #
         # Launch messages app.
@@ -50,7 +53,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], self._TestMsg)
+        self.messages.createAndSendSMS([self.num1], self.test_msg)
         
         #
         # Return to the threads screen and check the time of this thread.
@@ -82,7 +85,7 @@ class test_main(GaiaTestCase):
         # Send a message from num2.
         #
         self.messages.launch()
-        self.messages.createAndSendSMS([self.num2], self._TestMsg)
+        self.messages.createAndSendSMS([self.num2], self.test_msg)
         x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
         time.sleep(1)

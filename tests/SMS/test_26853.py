@@ -3,20 +3,19 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest   import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+import time
 
 class test_main(GaiaTestCase):
-    _TestMsg1 = "First message."
-    _TestMsg2 = "Second message"
-    _TestMsg3 = "Third message"
+    test_msgs = ["First message", "Second message", "Third message"]
     
-    _RESTART_DEVICE = True
-
     def setUp(self):
         #
         # Set up child objects...
@@ -41,22 +40,23 @@ class test_main(GaiaTestCase):
     
         #
         # Launch messages app & delete all Threads
-        # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
+        # Make sure we have no threads
         #
         self.messages.launch()
-#         self.messages.deleteAllThreads()
+        self.messages.deleteAllThreads()
         
         #
-        # Create and send some new tests messages.
+        # Create and send some new tests messages. THIS ASSUMES THE TARGET
+        # TELEPHONE NUMBER IS THE SAME DEVICES WHICH IS SENDING THEM.
         #
-        self.messages.createAndSendSMS([self.target_telNum], self._TestMsg1)
+
+        self.messages.createAndSendSMS([self.target_telNum], self.test_msgs[0])
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.messages.enterSMSMsg(self._TestMsg2)
-        self.messages.sendSMS()
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.messages.enterSMSMsg(self._TestMsg3)
-        self.messages.sendSMS()
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
+
+        for i in range(2):
+            self.messages.enterSMSMsg(self.test_msgs[i + 1])
+            self.messages.sendSMS()
+            returnedSMS = self.messages.waitForReceivedMsgInThisThread()
  
         #
         # Go into edit mode..
@@ -65,9 +65,18 @@ class test_main(GaiaTestCase):
         x.tap()
         
         #
+        # Select Delete Messages
+        #
+
+        x = self.UTILS.getElement(DOM.Messages.delete_messages_btn, 
+            "Delete messages button")
+        x.tap()
+
+        #
         # Tap Selected all
         #
-        x = self.UTILS.getElement(DOM.Messages.edit_msgs_sel_all_btn, "Select all button")
+        x = self.UTILS.getElement(DOM.Messages.edit_msgs_sel_all_btn, 
+            "Select all button")
         x.tap()
 
         #
@@ -78,7 +87,8 @@ class test_main(GaiaTestCase):
         #
         # Check conversation isn't there anymore.
         #
-        self.UTILS.waitForNotElements(("xpath", DOM.Messages.thread_selector_xpath % self.target_telNum),"Thread")
+        self.UTILS.waitForNotElements(("xpath", 
+            DOM.Messages.thread_selector_xpath.format(self.target_telNum)),"Thread")
  
         time.sleep(1)
         fnam = self.UTILS.screenShotOnErr()

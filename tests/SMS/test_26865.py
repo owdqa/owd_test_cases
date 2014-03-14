@@ -4,37 +4,41 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
-import time
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps import Contacts
 from tests._mock_data.contacts import MockContact
+import time
 
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test."
+    test_msg = "Test."
 
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.messages = Messages(self)
 
         #
         # Prepare the contact we're going to insert.
         #
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.Contact_1 = MockContact(givenName = 'AAAAAAAAAAAAAAAALEX', familyName = 'SMITHXXXXXXXX',
-                                     name = 'AAAAAAAAAAAAAAAALEX SMITHXXXXXXXX',
-                                     tel = {'type': 'Mobile', 'value': self.num1})
+        self.contact = MockContact(givenName = 'AAAAAAAAAAAAAAAALEX',
+                                    familyName = 'SMITHXXXXXXXX',
+                                    name = 'AAAAAAAAAAAAAAAALEX SMITHXXXXXXXX',
+                                    tel = {'type': 'Mobile', 'value': self.num1})
 
-        self.UTILS.insertContact(self.Contact_1)
+        self.UTILS.insertContact(self.contact)
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -42,7 +46,7 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.messages.launch()
 
-        self.messages.createAndSendSMS( [self.Contact_1["tel"]["value"]],
+        self.messages.createAndSendSMS( [self.contact["tel"]["value"]],
                                         "(Just bypassing bug 867119!)")
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
         
@@ -54,7 +58,7 @@ class test_main(GaiaTestCase):
         #
         # View the details of our contact.
         #
-        self.contacts.viewContact(self.Contact_1['name'])
+        self.contacts.viewContact(self.contact['name'])
         
         #
         # Tap the sms button in the view details screen to go to the sms page.
@@ -73,7 +77,7 @@ class test_main(GaiaTestCase):
         #
         # Create SMS.
         #
-        self.messages.enterSMSMsg(self._TestMsg)
+        self.messages.enterSMSMsg(self.test_msg)
         
         #
         # Click send.
@@ -90,5 +94,5 @@ class test_main(GaiaTestCase):
         # TEST: The returned message is as expected (caseless in case user typed it manually).
         #
         sms_text = returnedSMS.text
-        self.UTILS.TEST((sms_text.lower() == self._TestMsg.lower()), 
-            "SMS text = '" + self._TestMsg + "' (it was '" + sms_text + "').")
+        self.UTILS.TEST((sms_text.lower() == self.test_msg.lower()), 
+            "SMS text = '" + self.test_msg + "' (it was '" + sms_text + "').")

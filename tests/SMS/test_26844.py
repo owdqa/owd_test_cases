@@ -4,17 +4,19 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps import Contacts
 from tests._mock_data.contacts import MockContact
-
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
+    test_msg = "Test message."
     
     _RESTART_DEVICE = True
     
@@ -23,8 +25,8 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
         
         #
         # Establish which phone number to use and set up the contact.
@@ -48,18 +50,19 @@ class test_main(GaiaTestCase):
         #
         # Send a message to myself (long and short number to get a few threads).
         #
-        self.messages.createAndSendSMS([self.num1,self.num2], "Test message")
+        self.messages.createAndSendSMS([self.num1, self.num2], "Test message")
         
         # Waiting for the replies isn't really part of the test, so just continue...
         
         x = self.UTILS.getElements(DOM.Messages.threads_list, "Threads")
-        bool_1_target_ok  = False
-        bool_2_target_ok  = False
-        bool_1_time_ok    = False
-        bool_2_time_ok    = False
+
+        bool_1_target_ok = False
+        bool_2_target_ok = False
+        bool_1_time_ok = False
+        bool_2_time_ok = False
         bool_1_snippet_ok = False
         bool_2_snippet_ok = False
-        counter           = 1
+        counter = 1
         for i in x:
             #
             # Target details.

@@ -4,27 +4,30 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
-import time
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps import Contacts
 from tests._mock_data.contacts import MockContact
+import time
 
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test."
+    test_msg = "Test."
 
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS     = UTILS(self)
-        self.messages   = Messages(self)
-        self.contacts   = Contacts(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.contacts = Contacts(self)
         
         #
         # Put the phone into airplane mode.
@@ -35,10 +38,10 @@ class test_main(GaiaTestCase):
         # Prepare the contact we're going to insert.
         #
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.Contact_1 = MockContact(tel = {'type': '', 'value': self.num1})
+        self.contact = MockContact(tel = {'type': '', 'value': self.num1})
 
-        self.UTILS.insertContact(self.Contact_1)
-        self.UTILS.logComment("Using target telephone number " + self.Contact_1["tel"]["value"])
+        self.UTILS.insertContact(self.contact)
+        self.UTILS.logComment("Using target telephone number " + self.contact["tel"]["value"])
         
     def tearDown(self):
         self.UTILS.reportResults()
@@ -49,7 +52,7 @@ class test_main(GaiaTestCase):
         # Open sms app and delete every thread to start a new one
         #
         self.contacts.launch()
-        self.contacts.viewContact(self.Contact_1["name"])
+        self.contacts.viewContact(self.contact["name"])
         x = self.UTILS.getElement(DOM.Contacts.sms_button, "SMS button")
         x.tap()
         
@@ -60,7 +63,7 @@ class test_main(GaiaTestCase):
         #
         # Create SMS.
         #
-        self.messages.enterSMSMsg(self._TestMsg)
+        self.messages.enterSMSMsg(self.test_msg)
         
         #
         # Click send.

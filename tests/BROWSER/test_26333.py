@@ -7,10 +7,6 @@ from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.browser import Browser
 
-#
-# Imports particular to this test case.
-#
-
 
 class test_main(GaiaTestCase):
 

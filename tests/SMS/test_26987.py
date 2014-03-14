@@ -4,24 +4,27 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps import Contacts
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
+    test_msg = "Test message."
     
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.contacts   = Contacts(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.contacts = Contacts(self)
 
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         
@@ -49,8 +52,8 @@ class test_main(GaiaTestCase):
         # Fill in some details.
         #
         contFields = self.contacts.getContactFields()
-        self.contacts.replaceStr(contFields['givenName'  ] , "Test")
-        self.contacts.replaceStr(contFields['familyName' ] , "Testerton")
+        self.contacts.replaceStr(contFields['givenName'], "Test")
+        self.contacts.replaceStr(contFields['familyName'], "Testerton")
 
         #
         # Press the Done button.
@@ -62,7 +65,8 @@ class test_main(GaiaTestCase):
         # Wait for contacts app to close and return to sms app.
         #
         self.marionette.switch_to_frame()
-        self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@src, '%s')]" % DOM.Contacts.frame_locator[1]),
+        self.UTILS.waitForNotElements(("xpath",
+            "//iframe[contains(@src, '{}')]".format(DOM.Contacts.frame_locator[1])),
                                        "Contacts iframe")
         
         self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
@@ -72,7 +76,7 @@ class test_main(GaiaTestCase):
         #
         x = self.UTILS.getElement(DOM.Messages.message_header, "Message header")
         self.UTILS.TEST(x.text == "Test Testerton", 
-                        "Message header has been changed to match the contact (it was '%s')." % x.text)
+                        "Message header has been changed to match the contact (it was '{}').".format(x.text))
         
         #
         # Go back to the threads view and check the message name there too.

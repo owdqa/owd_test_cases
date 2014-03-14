@@ -4,23 +4,24 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
 
 class test_main(GaiaTestCase):
     
-    _testMsg     = "This text has multiple spaces 1 2 3 4 5."
+    test_msg = "This text has multiple spaces 1 2 3 4 5."
     
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
         
         #
         # Remove number and import contact.
@@ -42,14 +43,14 @@ class test_main(GaiaTestCase):
         #
         self.messages.startNewSMS()
         self.messages.addNumbersInToField([self.telNum])
-        self.messages.enterSMSMsg(self._testMsg)
+        self.messages.enterSMSMsg(self.test_msg)
         self.messages.sendSMS()
         
         #
         # Check the receievd message.
         #
         x = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.TEST(x.text == self._testMsg, 
+        self.UTILS.TEST(x.text == self.test_msg, 
                         "The text in the message received matches the message that was sent." +\
-                        "|EXPECTED: '" + self._testMsg + "'" + \
+                        "|EXPECTED: '" + self.test_msg + "'" + \
                         "|ACTUAL  : '" + x.text + "'")

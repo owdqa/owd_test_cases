@@ -4,17 +4,21 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.browser import Browser
+import time
+
+
 class test_main(GaiaTestCase):
     
-    _link1        = "www.google.com"
-    _link2        = "www.hotmail.com"
-    _link3        = "www.wikipedia.org"
-    _TestMsg     = "Test " + _link1 +" "+ _link2 +" "+_link3 + " this."
+    links = ["www.google.com", "www.hotmail.com", "www.wikipedia.org"]
+    test_msg = "Test " + " ".join(links) + " this."
     
     
     def setUp(self):
@@ -22,9 +26,9 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.browser    = Browser(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.browser = Browser(self)
         
         #
         # Establish which phone number to use.
@@ -47,15 +51,14 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.target_telNum], self._TestMsg)
+        self.messages.createAndSendSMS([self.target_telNum], self.test_msg)
         self.messages.waitForReceivedMsgInThisThread()
         
-        self.tryTheLink(0, self._link1)
-        self.tryTheLink(1, self._link2)
-        self.tryTheLink(2, self._link3)
+        map(self.tryTheLink, range(len(self.links)), self.links)
+        
 
-    def tryTheLink(self, p_linkNum, p_link):
-        self.UTILS.logResult("info", "Tapping <b>%s</b> ..." % p_link)
+    def tryTheLink(self, link_number, link):
+        self.UTILS.logResult("info", "Tapping <b>{}</b> ...".format(link))
         
         #
         # Switch to messaging app.
@@ -73,12 +76,12 @@ class test_main(GaiaTestCase):
         #
         # Find all URLs
         #
-        y=x.find_elements("tag name", "a")
+        y = x.find_elements("tag name", "a")
  
         #
         # Tap on required link.
         #
-        y[p_linkNum].tap()
+        y[link_number].tap()
  
         #
         # Give the browser time to start up, then
@@ -87,5 +90,5 @@ class test_main(GaiaTestCase):
         time.sleep(2)
         self.UTILS.switchToFrame(*DOM.Browser.frame_locator)
         
-        self.UTILS.TEST(self.browser.check_page_loaded(p_link),
-                 "Web page " + str(p_linkNum+1) + " loaded correctly.")
+        self.UTILS.TEST(self.browser.check_page_loaded(link),
+                 "Web page {} loaded correctly.".format(link_number + 1))

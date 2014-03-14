@@ -4,11 +4,15 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.browser import Browser
+from marionette import Actions
 
 class test_main(GaiaTestCase):
     
@@ -17,10 +21,10 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.browser    = Browser(self)
-        self.actions    = Actions(self.marionette)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.browser = Browser(self)
+        self.actions = Actions(self.marionette)
 
         
         #
@@ -61,7 +65,8 @@ class test_main(GaiaTestCase):
         email_link = x.find_element("tag name", "a")
         email_link.tap()
 
-        x = self.UTILS.getElement(DOM.Messages.header_add_to_contact_btn, "'Add to an existing contact' button")
+        x = self.UTILS.getElement(DOM.Messages.header_add_to_contact_btn,
+                                    "'Add to an existing contact' button")
         x.tap()
                 
         #
@@ -69,7 +74,8 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.switchToFrame("src", "contacts")
         
-        self.UTILS.waitForElements( ("xpath", "//p[contains(text(),'contact list is empty')]"), "Warning message")
+        self.UTILS.waitForElements(("xpath", 
+                "//p[contains(text(),'contact list is empty')]"), "Warning message")
         
         fnam = self.UTILS.screenShot("26975")
         self.UTILS.logResult("info", "Screenshot of final position", fnam)

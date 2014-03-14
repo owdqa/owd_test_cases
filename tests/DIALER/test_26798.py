@@ -4,12 +4,16 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps import Contacts
+from OWDTestToolkit.apps.dialer import Dialer
 from tests._mock_data.contacts import MockContact
+import time
 
 
 class test_main(GaiaTestCase):
@@ -48,8 +52,8 @@ class test_main(GaiaTestCase):
         #
         time.sleep(1)
         self.UTILS.switchToFrame(*DOM.Dialer.frame_locator_calling)
-        self.UTILS.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP % p_num),
-                                    "Outgoing call found with number matching %s" % p_num)
+        self.UTILS.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP.format(p_num)),
+                                    "Outgoing call found with number matching {}".format(p_num))
 
         time.sleep(2)
 
@@ -68,8 +72,8 @@ class test_main(GaiaTestCase):
         #
         time.sleep(1)
         self.UTILS.switchToFrame(*DOM.Dialer.frame_locator_calling)
-        self.UTILS.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP % p_num),
-                                    "Outgoing call found with number matching %s" % p_num)
+        self.UTILS.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP.format(p_num)),
+                                    "Outgoing call found with number matching {}".format(p_num))
 
         time.sleep(2)
 
@@ -88,8 +92,8 @@ class test_main(GaiaTestCase):
         #
         time.sleep(1)
         self.UTILS.switchToFrame(*DOM.Dialer.frame_locator_calling)
-        self.UTILS.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP % p_num),
-                                    "Outgoing call found with number matching %s" % p_num)
+        self.UTILS.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP.format(p_num)),
+                                    "Outgoing call found with number matching {}".format(p_num))
 
         time.sleep(2)
 

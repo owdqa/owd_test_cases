@@ -3,21 +3,20 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
-from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps.contacts import Contacts
-from OWDTestToolkit.apps import Email
-import time
+from gaiatest   import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps import Contacts
+from OWDTestToolkit.apps.email import Email
 from tests._mock_data.contacts import MockContact
-
+import time
 
 class test_main(GaiaTestCase):
-
+    
     def setUp(self):
         #
         # Set up child objects...
@@ -55,8 +54,9 @@ class test_main(GaiaTestCase):
         self.UTILS.reportResults()
 
     def test_run(self):
+    
         self.UTILS.getNetworkConnection()
-
+        
         #
         # Set up to use email (with account #1).
         #
@@ -65,12 +65,12 @@ class test_main(GaiaTestCase):
         em_pass = self.UTILS.get_os_variable("GMAIL_1_PASS")
         self.email.launch()
         self.email.setupAccount(em_user, em_email, em_pass)
-
+        
         #
         # Launch contacts app.
         #
         self.contacts.launch()
-
+        
         #
         # View the details of our contact.
         #
@@ -97,14 +97,10 @@ class test_main(GaiaTestCase):
         y = self.UTILS.getElement(DOM.Email.compose_to_from_contacts, "'To' field")
         self.UTILS.TEST(y.text == expected_to,
                         "The 'to' field contains '" + expected_to + "' (it was (" + y.text + ").")
-
+        
         #
         # Fill in the rest and send it.
         #
-#         msg_subject = self.UTILS.getElement(DOM.Email.compose_subject, "'Subject' field")
-#         msg_msg     = self.UTILS.getElement(DOM.Email.compose_msg, "Message field")
-#         msg_subject.send_keys(self._email_subject)
-#         msg_msg.send_keys(self._email_message)
         self.UTILS.typeThis(DOM.Email.compose_subject, "'Subject' field", self._email_subject, True, False)
         self.UTILS.typeThis(DOM.Email.compose_msg, "Message field", self._email_message, True, False, False)
 

@@ -4,17 +4,18 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
 import time
 
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test."
+    test_msg = "Test."
 
     _RESTART_DEVICE = True
 
@@ -23,8 +24,8 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS     = UTILS(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
         
         #
         # Put the phone into airplane mode.
@@ -56,7 +57,7 @@ class test_main(GaiaTestCase):
         #
         # Create SMS.
         #
-        self.messages.enterSMSMsg(self._TestMsg)
+        self.messages.enterSMSMsg(self.test_msg)
         
         #
         # Click send.

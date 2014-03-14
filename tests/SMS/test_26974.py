@@ -4,19 +4,22 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
-import time
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps import Contacts
 from tests._mock_data.contacts import MockContact
+import time
 
 
 class test_main(GaiaTestCase):
     
-    _link        = "owdqatestone@gmail.com"
-    _TestMsg     = "Test " + _link + " this."
+    link = "owdqatestone@gmail.com"
+    test_msg = "Test " + link + " this."
     
     
     def setUp(self):
@@ -24,17 +27,18 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.contacts   = Contacts(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.contacts = Contacts(self)
         
         #
         # Insert a contact without email addresses
         # 
-        self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')        
-        self.Contact_1 = MockContact(email = {'type': 'Personal', 'value': ''})
+        self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg',
+                                    destination='DCIM/100MZLLA')        
+        self.contact = MockContact(email = {'type': 'Personal', 'value': ''})
 
-        self.UTILS.insertContact(self.Contact_1)
+        self.UTILS.insertContact(self.contact)
    
         #
         # Establish which phone number to use.
@@ -54,7 +58,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.target_telNum], self._TestMsg)
+        self.messages.createAndSendSMS([self.target_telNum], self.test_msg)
           
         #
         # Wait for the last message in this thread to be a 'received' one
@@ -70,7 +74,8 @@ class test_main(GaiaTestCase):
         #
         # Press 'add to existing contact' button.
         #
-        w = self.UTILS.getElement(DOM.Messages.header_add_to_contact_btn, "Add to existing contact button")
+        w = self.UTILS.getElement(DOM.Messages.header_add_to_contact_btn,
+                                    "Add to existing contact button")
         w.tap()
                 
         #
@@ -95,19 +100,16 @@ class test_main(GaiaTestCase):
         # Put the contact details into each of the fields (this method
         # clears each field first).
         #
-        self.contacts.replaceStr(contFields['givenName'  ] , self.Contact_1["givenName"]+"bis")
-        self.contacts.replaceStr(contFields['familyName' ] , self.Contact_1["familyName"]+"bis")
-        self.contacts.replaceStr(contFields['tel'        ] , self.Contact_1["tel"]["value"]+"bis")
-        self.contacts.replaceStr(contFields['street'     ] , self.Contact_1["adr"]["streetAddress"]+"bis")
-        self.contacts.replaceStr(contFields['zip'        ] , self.Contact_1["adr"]["postalCode"]+"bis")
-        self.contacts.replaceStr(contFields['city'       ] , self.Contact_1["adr"]["locality"]+"bis")
-        self.contacts.replaceStr(contFields['country'    ] , self.Contact_1["adr"]["countryName"]+"bis")
+
+        for key, value in contFields.items():
+            self.contact.replaceStr(value, self.contact[key] + "bis")
+        
         self.contacts.addGalleryImageToContact(0)
                 
         #
         # Add another email address.
         #
-        self.contacts.addAnotherEmailAddress(self.Contact_1["email"]["value"])
+        self.contacts.addAnotherEmailAddress(self.contact["email"]["value"])
         
         #
         # Press the Done button.
@@ -119,7 +121,7 @@ class test_main(GaiaTestCase):
         # Check that the contacts iframe is now gone.
         #
         self.marionette.switch_to_frame()
-        self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@src,'contacts')]"),
+        self.UTILS.waitForNotElements(("xpath", "//iframe[contains(@src,'contacts')]"),
                                        "Contact app iframe")
         
         #

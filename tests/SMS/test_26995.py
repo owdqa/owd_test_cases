@@ -4,11 +4,12 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
 
 class test_main(GaiaTestCase):
     
@@ -17,8 +18,8 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         
     def tearDown(self):
@@ -49,7 +50,7 @@ class test_main(GaiaTestCase):
         bool4OK = True
         bool6OK = True
         for i in y:
-            self.UTILS.logResult("info", "FYI: %s is highlighted." % i.text)
+            self.UTILS.logResult("info", "FYI: {} is highlighted.".format(i.text))
             if i.text == "1234":
                 bool4OK = False
             if i.text == "123456":

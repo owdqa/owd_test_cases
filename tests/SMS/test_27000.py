@@ -4,11 +4,14 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps import Contacts
 
 
 class test_main(GaiaTestCase):
@@ -18,9 +21,9 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.contacts   = Contacts(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.contacts = Contacts(self)
         self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         
     def tearDown(self):
@@ -49,7 +52,8 @@ class test_main(GaiaTestCase):
         #
         # Select create new contact.
         #
-        x = self.UTILS.getElement(DOM.Messages.header_create_new_contact_btn, "Create new contact button")
+        x = self.UTILS.getElement(DOM.Messages.header_create_new_contact_btn,
+                                    "Create new contact button")
         x.tap()
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
 
@@ -59,14 +63,14 @@ class test_main(GaiaTestCase):
         # Verify the number is in the number field.
         #
         self.UTILS.TEST("123456789" in contFields['tel'].get_attribute("value"),
-                        "Our target number is in the telephone field (it was %s)." % contFields['tel'].get_attribute("value"))
+                        "Our target number is in the telephone field (it was {}).".format(contFields['tel'].get_attribute("value")))
         
         #
         # Put the contact details into each of the fields (this method
         # clears each field first).
         #
-        self.contacts.replaceStr(contFields['givenName'  ] , "Test2700")
-        self.contacts.replaceStr(contFields['familyName' ] , "Testerton")
+        self.contacts.replaceStr(contFields['givenName'], "Test2700")
+        self.contacts.replaceStr(contFields['familyName'], "Testerton")
         x = self.UTILS.getElement(DOM.Contacts.done_button, "Done button")
         x.tap()
         
@@ -74,7 +78,7 @@ class test_main(GaiaTestCase):
         # Wait for the contacts app to go away.
         #
         self.marionette.switch_to_frame()
-        self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@src, '%s')]" % DOM.Contacts.frame_locator[1]),
+        self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@src, '{}')]".format(DOM.Contacts.frame_locator[1])),
                                        "Contacts iframe")
         
         #

@@ -7,21 +7,24 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.video import Video
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Hello World"
+    test_msg = "Hello World"
     
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.video      = Video(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.video = Video(self)
         
         #
         # Establish which phone number to use.
@@ -36,7 +39,8 @@ class test_main(GaiaTestCase):
 
         #
         # Load files into the device.
-        self.UTILS.addFileToDevice('./tests/_resources/mpeg4.mp4', destination='/SD/mus')
+        self.UTILS.addFileToDevice('./tests/_resources/mpeg4.mp4',
+                                    destination='/SD/mus')
 
         #
         # Launch messages app.
@@ -51,12 +55,12 @@ class test_main(GaiaTestCase):
         #
         # Insert the phone number in the To field
         #
-        self.messages.addNumbersInToField([ self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM") ])
+        self.messages.addNumbersInToField([self.target_telNum])
 
         #
         # Create MMS.
         #
-        self.messages.enterSMSMsg(self._TestMsg)
+        self.messages.enterSMSMsg(self.test_msg)
 
         self.messages.createMMSVideo()
         self.video.clickOnVideoMMS(0)
@@ -69,7 +73,7 @@ class test_main(GaiaTestCase):
         x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
 
-        self.messages.openThread("+" + self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM"))
+        self.messages.openThread("+" + self.target_telNum)
 
         #
         # Wait for the last message in this thread to be a 'recieved' one.

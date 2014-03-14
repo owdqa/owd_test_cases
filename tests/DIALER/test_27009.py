@@ -4,12 +4,15 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.dialer import Dialer
+from tests._mock_data.contacts import MockContact
+import time
 
 class test_main(GaiaTestCase):
     
@@ -18,11 +21,9 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.dialer     = Dialer(self)
-        self.contacts   = Contacts(self)
         
-        self.cont1 = MockContacts().Contact_1
-        self.cont1["tel"]["value"]  = "111111111"
-        self.data_layer.insert_contact(self.cont1)
+        self.cont1 = MockContact(tel=[{"type": "Mobile", "value": "111111111"}])
+        self.UTILS.insertContact(self.cont1)
 
     def tearDown(self):
         self.UTILS.reportResults()

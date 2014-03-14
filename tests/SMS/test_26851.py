@@ -4,23 +4,25 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
 
 class test_main(GaiaTestCase):
     
-    _TestMsg     = "Test message."
+    test_msg = "Test message."
     
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
         
         
         self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
@@ -51,7 +53,7 @@ class test_main(GaiaTestCase):
         #
         # Enter the message.
         #
-        self.messages.enterSMSMsg(self._TestMsg)
+        self.messages.enterSMSMsg(self.test_msg)
         
         #
         # Send the SMS.
@@ -67,5 +69,6 @@ class test_main(GaiaTestCase):
         #
         # Wait for the notification.
         #
-        x = self.UTILS.getElement(("xpath", DOM.Messages.lockscreen_notif_xpath % self.target_telNum), 
-                                   "New message notification while screen is locked", False, 120, False)
+        x = self.UTILS.getElement(("xpath", 
+                        DOM.Messages.lockscreen_notif_xpath.format(self.target_telNum)), 
+                        "New message notification while screen is locked", False, 120, False)
