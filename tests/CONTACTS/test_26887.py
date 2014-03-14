@@ -4,16 +4,16 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps.contacts import Contacts
-from OWDTestToolkit.apps import Settings
-import time
 
 #
 # Imports particular to this test case.
 #
 from tests._mock_data.contacts import MockContact
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.apps import Settings
+import time
 
 
 class test_main(GaiaTestCase):
@@ -51,7 +51,8 @@ class test_main(GaiaTestCase):
         self.contacts.view_contact(self.contact['name'])
 
         x = self.UTILS.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
-        self.UTILS.TEST(x.text == self.add_fav_str, "Toggle favourite button text is '{}'.".format(self.add_fav_str))
+        self.UTILS.TEST(x.text == self.add_fav_str, "Toggle favourite button text is '{}'.".\
+                        format(self.add_fav_str))
         x.tap()
         x = self.UTILS.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (after tap)")
         self.UTILS.TEST(x.text == self.remove_fav_str, "Toggle favourite button text is '{}'.".\
@@ -75,7 +76,8 @@ class test_main(GaiaTestCase):
                         format(self.remove_fav_str))
         x.tap()
         x = self.UTILS.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (after tap)")
-        self.UTILS.TEST(x.text == self.add_fav_str, "Toggle favourite button text is '{}'.".format(self.add_fav_str))
+        self.UTILS.TEST(x.text == self.add_fav_str, "Toggle favourite button text is '{}'.".\
+                        format(self.add_fav_str))
 
         x = self.UTILS.getElement(DOM.Contacts.details_back_button, "Back button")
         x.tap()

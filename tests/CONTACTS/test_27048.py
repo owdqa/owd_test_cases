@@ -4,13 +4,13 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps.contacts import Contacts
-from OWDTestToolkit.apps import Settings
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.apps import Settings
 from tests._mock_data.contacts import MockContact
 
 

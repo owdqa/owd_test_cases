@@ -4,13 +4,13 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps.contacts import Contacts
-from OWDTestToolkit.apps import Settings
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.apps import Settings
 from tests._mock_data.contacts import MockContact
 
 
@@ -27,13 +27,11 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.contact = MockContact(tel={'type': 'Mobile', 'value': '123111111'})
-        self.contact2 = MockContact(tel={'type': 'Mobile', 'value': '123222222'})
-        self.contact3 = MockContact(tel={'type': 'Mobile', 'value': '133333333'})
+        self.phones = ["123111111", "123222222", "133333333"]
 
-        self.UTILS.insertContact(self.contact)
-        self.UTILS.insertContact(self.contact2)
-        self.UTILS.insertContact(self.contact3)
+        self.test_contacts = [MockContact(tel={'type': 'Mobile', 'value': self.phones[i]})\
+                                for i in range(3)]
+        map(self.UTILS.insertContact, self.test_contacts)
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -52,6 +50,6 @@ class test_main(GaiaTestCase):
         #
         # Verify our contact is listed.
         #
-        self.contacts.check_search_results(self.contact["givenName"], True)
-        self.contacts.check_search_results(self.contact2["givenName"], True)
-        self.contacts.check_search_results(self.contact3["givenName"], False)
+        conditions = [True, True, False]
+        names = [c["givenName"] for c in self.test_contacts]
+        map(self.contacts.check_search_results, names, conditions)

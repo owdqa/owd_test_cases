@@ -2,13 +2,15 @@
 # Imports which are standard for all test cases.
 #
 from gaiatest   import GaiaTestCase
+
+#
+# Imports particular to this test case.
+#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps import Settings
 import time
-
-
 class test_main(GaiaTestCase):
 
     def setUp(self):

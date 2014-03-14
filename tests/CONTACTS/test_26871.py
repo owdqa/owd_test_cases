@@ -4,12 +4,12 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps.contacts import Contacts
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
 
 
@@ -26,15 +26,13 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.contact = MockContact()
-        self.contact2 = MockContact()
-        self.contact3 = MockContact(givenName='Rnameer', familyName='Tnameir')
+        self.test_contacts = [MockContact() for i in range(3)]
+        self.test_contacts[2]["givenName"] = "Rnameer"
+        self.test_contacts[2]["familyName"] = "Tnameir"
 
         self.midWord = "name"
 
-        self.UTILS.insertContact(self.contact)
-        self.UTILS.insertContact(self.contact2)
-        self.UTILS.insertContact(self.contact3)
+        map(self.UTILS.insertContact, self.test_contacts)
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -53,10 +51,10 @@ class test_main(GaiaTestCase):
         #
         # Verify our contact is listed.
         #
-        self.contacts.check_search_results(self.contact3["givenName"])
+        self.contacts.check_search_results(self.test_contacts[2]["givenName"])
 
         #
         # Verify the other contact is NOT listed.
         #
-        self.contacts.check_search_results(self.contact2["givenName"], False)
-        self.contacts.check_search_results(self.contact["givenName"], False)
+        self.contacts.check_search_results(self.test_contacts[1]["givenName"], False)
+        self.contacts.check_search_results(self.test_contacts[0]["givenName"], False)

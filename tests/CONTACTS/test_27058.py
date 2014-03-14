@@ -4,15 +4,15 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
+
+#
+# Imports particular to this test case.
+#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps import Settings
 import time
-
-#
-# Imports particular to this test case.
-#
 from tests._mock_data.contacts import MockContact
 
 
@@ -50,7 +50,8 @@ class test_main(GaiaTestCase):
 
         self.contacts.import_toggle_select_contact(1)
 
-        self.marionette.execute_script("document.getElementById('%s').click()" % DOM.Contacts.import_import_btn[1])
+        self.marionette.execute_script("document.getElementById('{}').click()".\
+                                    format(DOM.Contacts.import_import_btn[1]))
         time.sleep(1)
 
         self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)

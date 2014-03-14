@@ -4,16 +4,16 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
+
+#
+# Imports particular to this test case.
+#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps import Settings
 import os
 import time
-
-#
-# Imports particular to this test case.
-#
 
 
 class test_main(GaiaTestCase):

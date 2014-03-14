@@ -4,13 +4,13 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps.contacts import Contacts
-from OWDTestToolkit.apps import Settings
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.apps import Settings
 from tests._mock_data.contacts import MockContact
 
 
@@ -28,10 +28,8 @@ class test_main(GaiaTestCase):
         #
         # Create test contacts.
         #
-        self.contact = MockContact()
-        self.contact2 = MockContact()
-        self.UTILS.insertContact(self.contact)
-        self.UTILS.insertContact(self.contact2)
+        self.test_contacts = [MockContact() for i in range(2)]
+        map(self.UTILS.insertContact, self.test_contacts)
         self.new_given_name = "aaaaabbbbbccccaaaa"
 
     def tearDown(self):
@@ -51,7 +49,8 @@ class test_main(GaiaTestCase):
         #
         # Change the name to "aaaaabbbbbccccaaaa"
         #
-        self.contacts.change_contact(self.contact['name'], "givenName", self.new_given_name)
+        self.contacts.change_contact(self.test_contacts[0]['name'], "givenName",
+                                    self.new_given_name)
 
         #
         # Search for our new contact.
@@ -66,4 +65,4 @@ class test_main(GaiaTestCase):
         #
         # Verify the other contact is NOT listed.
         #
-        self.contacts.check_search_results(self.contact2["givenName"], False)
+        self.contacts.check_search_results(self.test_contacts[1]["givenName"], False)

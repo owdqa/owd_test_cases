@@ -4,21 +4,21 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps.contacts import Contacts
-from OWDTestToolkit.apps import Settings
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.apps import Settings
 from tests._mock_data.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
 
     # Just to try and avoid the hotmail 'all your contacts are already imported' issue...
-    restart_device = True
+    RESTART_DEVICE = True
 
     def setUp(self):
         #
