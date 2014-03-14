@@ -62,7 +62,7 @@ class test_main(GaiaTestCase):
         x.tap()
 
         string = self.contact['givenName'] + self.contact['familyName']
-        favs = ("xpath", DOM.Contacts.favourites_list_xpath % string)
+        favs = ("xpath", DOM.Contacts.favourites_list_xpath.format(string))
         self.UTILS.waitForElements(favs, "'" + self.contact['name'] + "' in the favourites list")
 
         x = self.UTILS.screenShotOnErr()
