@@ -4,14 +4,15 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-from OWDTestToolkit.apps.contacts import Contacts
-from OWDTestToolkit.apps.facebook import Facebook
-from OWDTestToolkit.utils import UTILS
 
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from OWDTestToolkit import DOM
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.apps.facebook import Facebook
+from OWDTestToolkit.utils import UTILS
+from tests._mock_data.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
@@ -28,8 +29,8 @@ class test_main(GaiaTestCase):
         #
         # Import details of our test contacts.
         #
-        self.contact = MockContacts().contact
-        self.data_layer.insert_contact(self.contact)
+        self.contact = MockContact()
+        self.UTILS.insertContact(self.contact)
 
     def tearDown(self):
         self.UTILS.reportResults()
@@ -44,7 +45,7 @@ class test_main(GaiaTestCase):
 
         self.contacts.tapSettingsButton()
 
-        self.contacts.enableFBImport()
+        self.contacts.enable_FB_import()
         fb_user = self.UTILS.get_os_variable("T19180_FB_USERNAME")
         fb_pass = self.UTILS.get_os_variable("T19180_FB_PASSWORD")
         self.facebook.login(fb_user, fb_pass)
@@ -52,13 +53,20 @@ class test_main(GaiaTestCase):
         #
         # Import facebook contacts.
         #
-        self.contacts.switchToFacebook()
+        self.contacts.switch_to_facebook()
+        self.facebook.importAll()
+
+        #
+        # Go back to "All contacts" screen
+        #
+        backBTN = self.UTILS.getElement(DOM.Contacts.settings_done_button, "Details 'done' button")
+        backBTN.tap()
 
         #
         # View the contact details.
         #
-        self.contacts.launch()
-        self.contacts.viewContact(self.contact['name'])
+        # self.contacts.launch()
+        self.contacts.view_contact(self.contact['name'])
 
         #
         # Press the link button.
