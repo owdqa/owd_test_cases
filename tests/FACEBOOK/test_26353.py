@@ -57,7 +57,7 @@ class test_main(GaiaTestCase):
         # Enable facebook and log in.
         #
         self.contacts.tapSettingsButton()
-        self.contacts.enableFBImport()
+        self.contacts.enable_FB_import()
 
         fb_user = self.UTILS.get_os_variable("T19392_FB_USERNAME")
         fb_pass = self.UTILS.get_os_variable("T19392_FB_PASSWORD")
@@ -66,7 +66,7 @@ class test_main(GaiaTestCase):
         #
         # Import facebook contacts.
         #
-        self.contacts.switchToFacebook()
+        self.contacts.switch_to_facebook()
         friend_count = self.facebook.importAll()
 
         #
