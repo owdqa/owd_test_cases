@@ -4,7 +4,7 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-from OWDTestToolkit.apps import Contacts
+from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.facebook import Facebook
 from OWDTestToolkit.utils import UTILS
 
