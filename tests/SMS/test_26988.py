@@ -11,7 +11,7 @@ from gaiatest   import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
-from OWDTestToolkit.apps import Contacts
+from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
 #import time
 
