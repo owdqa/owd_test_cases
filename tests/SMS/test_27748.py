@@ -83,6 +83,7 @@ class test_main(GaiaTestCase):
             self.checkMsg(x, pos, "Test {}".format(i + 1), "outgoing")
             pos += 1
             self.checkMsg(x, pos, "Test {}".format(i + 1), "incoming")
+            pos += 1
          
         #
         # Tap the message area.

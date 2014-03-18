@@ -81,7 +81,7 @@ class test_main(GaiaTestCase):
         orig_iframe = self.messages.selectAddContactButton()
         time.sleep(5)
         self.contacts.search(self.cont["name"])
-        self.contacts.checkSearchResults(self.cont["name"])
+        self.contacts.check_search_results(self.cont["name"])
 
         x = self.UTILS.getElements(DOM.Contacts.search_results_list, "Contacts search results")
         for i in x:

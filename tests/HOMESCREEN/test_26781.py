@@ -49,7 +49,7 @@ class test_main(GaiaTestCase):
         #self.EME.remove_groups([self._newGroup], p_validate=False)
         #self.EME.remove_groups([self._newGroup], p_validate=False)
         self.EME.remove_groups([self._newGroup])
-        
+
         #
         # Add the group.
         #
