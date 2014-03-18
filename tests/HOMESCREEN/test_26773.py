@@ -11,7 +11,7 @@ from gaiatest   import GaiaTestCase
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.everythingme import EverythingMe
 from OWDTestToolkit.apps import Actions
-from OWDTestToolkit.apps import Settings
+from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit import DOM
 import time
 #from marionette import Actions

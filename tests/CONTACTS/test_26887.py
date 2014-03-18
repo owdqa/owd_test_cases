@@ -12,7 +12,7 @@ from tests._mock_data.contacts import MockContact
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
-from OWDTestToolkit.apps import Settings
+from OWDTestToolkit.apps.settings import Settings
 import time
 
 

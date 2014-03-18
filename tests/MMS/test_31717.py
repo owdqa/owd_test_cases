@@ -13,7 +13,7 @@ from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
 from OWDTestToolkit.apps.music import Music
-from OWDTestToolkit.apps import Settings
+from OWDTestToolkit.apps.settings import Settings
 
 class test_main(GaiaTestCase):
     

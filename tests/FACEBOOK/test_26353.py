@@ -5,9 +5,9 @@ import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
-from OWDTestToolkit.apps import Contacts
+from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.facebook import Facebook
-from OWDTestToolkit.apps import Settings
+from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit.utils import UTILS
 
 #

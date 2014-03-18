@@ -10,7 +10,7 @@ from gaiatest import GaiaTestCase
 #
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
-from OWDTestToolkit.apps import Settings
+from OWDTestToolkit.apps.settings import Settings
 from tests._mock_data.contacts import MockContact
 
 

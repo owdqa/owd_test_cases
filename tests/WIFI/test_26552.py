@@ -9,7 +9,7 @@ from gaiatest import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Settings
+from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit.apps.browser import Browser
 from OWDTestToolkit.apps.messages import Messages
 

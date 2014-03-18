@@ -6,7 +6,7 @@ sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.calendar import Calendar
-from OWDTestToolkit.apps import Settings
+from OWDTestToolkit.apps.settings import Settings
 
 #
 # Imports particular to this test case.

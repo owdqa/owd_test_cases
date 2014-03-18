@@ -10,7 +10,7 @@ from gaiatest import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Contacts
+from OWDTestToolkit.apps.contacts import Contacts
 import time
 
 class test_main(GaiaTestCase):
