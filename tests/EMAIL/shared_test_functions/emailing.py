@@ -16,7 +16,7 @@ from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.email import Email
-from OWDTestToolkit.apps import Settings
+from OWDTestToolkit.apps.settings import Settings
 
 #
 # Imports particular to this test case.

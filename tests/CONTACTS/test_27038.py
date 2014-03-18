@@ -11,13 +11,13 @@ from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
-from OWDTestToolkit.apps import Settings
+from OWDTestToolkit.apps.settings import Settings
 from tests._mock_data.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
 
-    RESTART_DEVICE = True
+    _RESTART_DEVICE = True
 
     def setUp(self):
         #

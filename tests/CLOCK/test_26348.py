@@ -10,7 +10,7 @@ from gaiatest   import GaiaTestCase
 #
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.clock import Clock
-from OWDTestToolkit.apps import Settings
+from OWDTestToolkit.apps.settings import Settings
 import datetime
 import time
 

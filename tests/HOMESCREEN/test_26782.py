@@ -3,14 +3,14 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
 from OWDTestToolkit.utils import UTILS
 from OWDTestToolkit.apps.everythingme import EverythingMe
-from OWDTestToolkit.apps import Settings
+from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit import DOM
 from marionette import Actions
 
