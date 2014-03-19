@@ -88,4 +88,4 @@ class test_main(GaiaTestCase):
         #
         # Verify that we're now linked.
         #
-        self.contacts.verifyLinked(self.contact['name'], fb_email)
+        self.contacts.verify_linked(self.contact['name'], fb_email)
