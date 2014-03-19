@@ -5,7 +5,7 @@ import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.email import Email
 
 
@@ -23,18 +23,18 @@ class test_main(GaiaTestCase):
         self.Email = Email(self)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        self.UTILS.getNetworkConnection()
+        self.UTILS.network.getNetworkConnection()
 
-        self.user1 = self.UTILS.get_os_variable("GMAIL_2_USER")
-        self.email1 = self.UTILS.get_os_variable("GMAIL_2_EMAIL")
-        self.passwd1 = self.UTILS.get_os_variable("GMAIL_2_PASS")
+        self.user1 = self.UTILS.general.get_os_variable("GMAIL_2_USER")
+        self.email1 = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
+        self.passwd1 = self.UTILS.general.get_os_variable("GMAIL_2_PASS")
 
-        self.UTILS.logComment("Using username '" + self.user1 + "'")
-        self.UTILS.logComment("Using password '" + self.passwd1 + "'")
-        self.UTILS.logComment("Using email    '" + self.email1 + "'")
+        self.UTILS.reporting.logComment("Using username '" + self.user1 + "'")
+        self.UTILS.reporting.logComment("Using password '" + self.passwd1 + "'")
+        self.UTILS.reporting.logComment("Using email    '" + self.email1 + "'")
 
         #
         # Launch Email app.
@@ -50,6 +50,6 @@ class test_main(GaiaTestCase):
         # Delete the first email we come across.
         #
         _subject = self.marionette.find_elements(*DOM.Email.folder_subject_list)[0].text
-        self.UTILS.logComment("Deleting email with subject '" + _subject + "'.")
+        self.UTILS.reporting.logComment("Deleting email with subject '" + _subject + "'.")
 
         self.Email.deleteEmail(_subject)

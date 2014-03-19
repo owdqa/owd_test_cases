@@ -11,7 +11,7 @@ from gaiatest import GaiaTestCase
 #
 from tests._mock_data.contacts import MockContact
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 import time
 
@@ -30,10 +30,10 @@ class test_main(GaiaTestCase):
         # Get details of our test contacts.
         #
         self.contact = MockContact()
-        self.UTILS.insertContact(self.contact)
+        self.UTILS.general.insertContact(self.contact)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -49,14 +49,14 @@ class test_main(GaiaTestCase):
         #
         # Press the favourites button.
         #
-        x = self.UTILS.getElement(DOM.Contacts.favourite_button, "Favourite toggle button")
+        x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Favourite toggle button")
         x.tap()
 
         #
         # Go back to view all contacts and check this contact is listed in the
         # 'favourites' section.
         #
-        x = self.UTILS.getElement(DOM.Contacts.details_back_button, "Back button")
+        x = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
         x.tap()
 
         #
@@ -64,31 +64,31 @@ class test_main(GaiaTestCase):
         #
         string = self.contact['givenName'] + self.contact['familyName']
         favs = ("xpath", DOM.Contacts.favourites_list_xpath.format(string))
-        self.UTILS.waitForElements(favs, "'" + self.contact['name'] + "' in the favourites list")
+        self.UTILS.element.waitForElements(favs, "'" + self.contact['name'] + "' in the favourites list")
 
         #
         # View the contact.
         #
-        self.UTILS.logResult("info", "*** Removing contact as a favourite ... ***")
+        self.UTILS.reporting.logResult("info", "*** Removing contact as a favourite ... ***")
         self.contacts.view_contact(self.contact['name'])
 
         #
         # Press the favourites button.
         #
-        x = self.UTILS.getElement(DOM.Contacts.favourite_button, "Favourite toggle button")
-        self.UTILS.TEST(x.text == "Remove as Favorite",
+        x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Favourite toggle button")
+        self.UTILS.test.TEST(x.text == "Remove as Favorite",
                         "Favourite toggle button says 'Remove as Favorite' before contact is removed as a favorite.")
         x.tap()
         time.sleep(2)
-        x = self.UTILS.getElement(DOM.Contacts.favourite_button, "Favourite toggle button")
-        self.UTILS.TEST(x.text == "Add as Favorite",
+        x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Favourite toggle button")
+        self.UTILS.test.TEST(x.text == "Add as Favorite",
                         "Favourite toggle button says 'Add as Favorite' after contact is removed as a favorite.")
 
         #
         # Go back to view all contacts and check this contact is listed in the
         # 'favourites' section.
         #
-        x = self.UTILS.getElement(DOM.Contacts.details_back_button, "Back button")
+        x = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
         x.tap()
 
         #
@@ -96,4 +96,4 @@ class test_main(GaiaTestCase):
         #
         string = self.contact['givenName'] + self.contact['familyName']
         favs = ("xpath", DOM.Contacts.favourites_list_xpath.format(string))
-        self.UTILS.waitForNotElements(favs, "'" + self.contact['name'] + "' in the favourites list")
+        self.UTILS.element.waitForNotElements(favs, "'" + self.contact['name'] + "' in the favourites list")

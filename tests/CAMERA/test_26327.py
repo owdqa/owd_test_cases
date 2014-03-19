@@ -4,13 +4,9 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.camera import Camera
 from OWDTestToolkit.apps.gallery import Gallery
-
-#
-# Imports particular to this test case.
-#
 
 
 class test_main(GaiaTestCase):
@@ -24,10 +20,10 @@ class test_main(GaiaTestCase):
         self.gallery = Gallery(self)
         self.camera = Camera(self)
 
-        self.UTILS.setPermission('Camera', 'geolocation', 'deny')
+        self.UTILS.app.setPermission('Camera', 'geolocation', 'deny')
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -53,7 +49,7 @@ class test_main(GaiaTestCase):
         #
         # Check we have at least 1 picture in the thumbnails.
         #
-        self.UTILS.TEST(self.gallery.thumbCount() > 0, "At least one thumbnail is present in gallery.")
+        self.UTILS.test.TEST(self.gallery.thumbCount() > 0, "At least one thumbnail is present in gallery.")
 
         #
         # Open the image (0 should be ours since we just added it!).

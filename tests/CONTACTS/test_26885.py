@@ -9,7 +9,7 @@ from gaiatest import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
 
@@ -28,10 +28,10 @@ class test_main(GaiaTestCase):
         # Get details of our test contacts.
         #
         self.contact = MockContact()
-        self.UTILS.insertContact(self.contact)
+        self.UTILS.general.insertContact(self.contact)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -69,20 +69,20 @@ class test_main(GaiaTestCase):
         # Verify there are 3 more.
         #
         diff = (new_count - orig_count)
-        self.UTILS.TEST(diff == 2,
+        self.UTILS.test.TEST(diff == 2,
                         "3 more emails listed for this contact before saving the changes (there were {}) .".\
                         format(diff))
 
         #
         # Save the changes.
         #
-        x = self.UTILS.getElement(DOM.Contacts.edit_update_button, "Update button")
+        x = self.UTILS.element.getElement(DOM.Contacts.edit_update_button, "Update button")
         x.tap()
 
         #
         # Back to 'view all' screen.
         #
-        x = self.UTILS.getElement(DOM.Contacts.details_back_button, "Back button")
+        x = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
         x.tap()
 
         #
@@ -93,7 +93,7 @@ class test_main(GaiaTestCase):
         #
         # Count the email fields.
         #
-        x = self.UTILS.getElements(DOM.Contacts.email_address_list, "Email addresses", False)
+        x = self.UTILS.element.getElements(DOM.Contacts.email_address_list, "Email addresses", False)
         view_count = 0
         email1_found = False
         email2_found = False
@@ -102,13 +102,13 @@ class test_main(GaiaTestCase):
                 view_count = view_count + 1
                 btn_name = i.find_element("tag name", "button").text
 
-                self.UTILS.logResult("info", "    - " + btn_name)
+                self.UTILS.reporting.logResult("info", "    - " + btn_name)
                 if btn_name == "one@myemail.com":
                     email1_found = True
                 if btn_name == "two@myemail.com":
                     email2_found = True
 
-        self.UTILS.TEST(view_count == new_count, str(new_count) + " emails are displayed.")
+        self.UTILS.test.TEST(view_count == new_count, str(new_count) + " emails are displayed.")
 
-        self.UTILS.TEST(email1_found, "First added email is present.")
-        self.UTILS.TEST(email2_found, "Second added email is present.")
+        self.UTILS.test.TEST(email1_found, "First added email is present.")
+        self.UTILS.test.TEST(email2_found, "Second added email is present.")

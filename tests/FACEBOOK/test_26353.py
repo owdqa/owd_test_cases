@@ -8,7 +8,7 @@ from OWDTestToolkit import DOM
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.facebook import Facebook
 from OWDTestToolkit.apps.settings import Settings
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 
 #
 # Imports particular to this test case.
@@ -37,16 +37,16 @@ class test_main(GaiaTestCase):
         # We're not testing adding a contact, so just stick one
         # into the database.
         #
-        self.UTILS.insertContact(self.contact)
+        self.UTILS.general.insertContact(self.contact)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
         # Set up a network connection.
         #
-        self.UTILS.getNetworkConnection()
+        self.UTILS.network.getNetworkConnection()
 
         #
         # Launch contacts app.
@@ -59,8 +59,8 @@ class test_main(GaiaTestCase):
         self.contacts.tapSettingsButton()
         self.contacts.enableFBImport()
 
-        fb_user = self.UTILS.get_os_variable("T19392_FB_USERNAME")
-        fb_pass = self.UTILS.get_os_variable("T19392_FB_PASSWORD")
+        fb_user = self.UTILS.general.get_os_variable("T19392_FB_USERNAME")
+        fb_pass = self.UTILS.general.get_os_variable("T19392_FB_PASSWORD")
         self.facebook.login(fb_user, fb_pass)
 
         #
@@ -72,17 +72,17 @@ class test_main(GaiaTestCase):
         #
         # Go back to "All contacts" screen
         #
-        backBTN = self.UTILS.getElement(DOM.Contacts.settings_done_button, "Details 'done' button")
+        backBTN = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Details 'done' button")
         backBTN.tap()
 
-        x = self.UTILS.getElements(DOM.Contacts.social_network_contacts, "Social network contact list",
+        x = self.UTILS.element.getElements(DOM.Contacts.social_network_contacts, "Social network contact list",
                                    True, 20, False)
 
-        self.UTILS.TEST(len(x) == friend_count,
+        self.UTILS.test.TEST(len(x) == friend_count,
                         str(friend_count) + " social network friends listed (there were " + str(len(x)) + ").")
 
         self.contacts.tapSettingsButton()
 
-        x = self.UTILS.getElement(DOM.Facebook.totals, "Facebook totals")
+        x = self.UTILS.element.getElement(DOM.Facebook.totals, "Facebook totals")
         y = str(friend_count) + "/" + str(friend_count) + " friends imported"
-        self.UTILS.TEST(x.text == y, "After import, import details = '" + y + "' (it was '" + x.text + "').")
+        self.UTILS.test.TEST(x.text == y, "After import, import details = '" + y + "' (it was '" + x.text + "').")

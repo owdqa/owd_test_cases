@@ -20,7 +20,7 @@ class test_26338(Emailing):
         self.testType = "hotmail"
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         self.send_email()

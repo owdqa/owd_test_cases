@@ -9,7 +9,7 @@ from gaiatest import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.messages import Messages
 import time
@@ -30,7 +30,7 @@ class test_main(GaiaTestCase):
         #
         # Prepare the contact we're going to insert.
         #
-        tlf = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        tlf = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.contact = MockContact(tel={'type': 'Mobile', 'value': tlf})
 
         #
@@ -41,10 +41,10 @@ class test_main(GaiaTestCase):
         #
         # Add this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
         #
-        self.UTILS.insertContact(self.contact)
+        self.UTILS.general.insertContact(self.contact)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -57,19 +57,19 @@ class test_main(GaiaTestCase):
         self.messages.createAndSendSMS([self.contact["tel"]["value"]], "Test message")
         self.messages.waitForReceivedMsgInThisThread()
 
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
+        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
 
         self.messages.createAndSendSMS([self.num2], "Thread for a different number")
 
-        self.UTILS.logResult("info", " ")
-        self.UTILS.logResult("info", "=================================================================")
-        self.UTILS.logResult("info", "<b>If SMS app is closed when you click 'send sms' in contacts ...</b>")
+        self.UTILS.reporting.logResult("info", " ")
+        self.UTILS.reporting.logResult("info", "=================================================================")
+        self.UTILS.reporting.logResult("info", "<b>If SMS app is closed when you click 'send sms' in contacts ...</b>")
         self._doTest()
 
-        self.UTILS.logResult("info", " ")
-        self.UTILS.logResult("info", "=====================================================================")
-        self.UTILS.logResult("info", "<b>If SMS app is still open when you click 'send sms' in contacts ...</b>")
+        self.UTILS.reporting.logResult("info", " ")
+        self.UTILS.reporting.logResult("info", "=====================================================================")
+        self.UTILS.reporting.logResult("info", "<b>If SMS app is still open when you click 'send sms' in contacts ...</b>")
         self.messages.openThread(self.num2)
         self._doTest()
 
@@ -77,17 +77,17 @@ class test_main(GaiaTestCase):
         #
         # Launch contacts app etc...
         #
-        self.UTILS.switchToApp("Contacts")
+        self.UTILS.app.switchToApp("Contacts")
         self.contacts.view_contact(self.contact['name'], False)
-        smsBTN = self.UTILS.getElement(DOM.Contacts.sms_button, "Send SMS button")
+        smsBTN = self.UTILS.element.getElement(DOM.Contacts.sms_button, "Send SMS button")
         smsBTN.tap()
 
         #
         # Switch to sms frame and complete the tests + send the message.
         #
         time.sleep(5)
-        self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
-        self.UTILS.logResult("info", "<b>NOTE: </b>expecting to be in a 'compose new sms' screen (not a thread) ...")
+        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+        self.UTILS.reporting.logResult("info", "<b>NOTE: </b>expecting to be in a 'compose new sms' screen (not a thread) ...")
 
         self.messages.enterSMSMsg("Test msg.")
         self.messages.sendSMS()
@@ -95,13 +95,13 @@ class test_main(GaiaTestCase):
         #
         # Verify that we are now in the thread for this contact.
         #
-        self.UTILS.logResult("info",
+        self.UTILS.reporting.logResult("info",
                              "<b>NOTE: </b> expecting to be automatically taken to the thread for '{}' ...".\
                              format(self.contact['name']))
 
-        msg_count = self.UTILS.getElements(DOM.Messages.message_list, "Thread messages", False, 5, False)
+        msg_count = self.UTILS.element.getElements(DOM.Messages.message_list, "Thread messages", False, 5, False)
 
         if msg_count:
-            self.UTILS.TEST(len(msg_count) > 1, "There are <i>some</i> messages in this thread already.")
+            self.UTILS.test.TEST(len(msg_count) > 1, "There are <i>some</i> messages in this thread already.")
         else:
-            self.UTILS.logResult(False, "There are <i>some</i> messages in this thread already.")
+            self.UTILS.reporting.logResult(False, "There are <i>some</i> messages in this thread already.")

@@ -9,7 +9,7 @@ from gaiatest   import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.settings import Settings
 import time
@@ -27,8 +27,8 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.settings = Settings(self)
 
-        self.gmail_user = self.UTILS.get_os_variable("GMAIL_1_USER")
-        self.gmail_passwd = self.UTILS.get_os_variable("GMAIL_1_PASS")
+        self.gmail_user = self.UTILS.general.get_os_variable("GMAIL_1_USER")
+        self.gmail_passwd = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
 
         #
         # Create test contacts.
@@ -36,28 +36,28 @@ class test_main(GaiaTestCase):
         self.contact_list = [MockContact() for i in range(2)]
         self.contact_list[1]['email'] = {}
 
-        map(self.UTILS.insertContact, self.contact_list)
+        map(self.UTILS.general.insertContact, self.contact_list)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
         # Set up to use data connection.
         #
-        self.UTILS.getNetworkConnection()
+        self.UTILS.network.getNetworkConnection()
 
         self.contacts.launch()
 
         self.contacts.import_gmail_login(self.gmail_user, self.gmail_passwd)
 
-        x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list", False)
+        x = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list", False)
 
         gmail_contacts = []
         for y in x:
             contact_name = y.get_attribute("data-search")
             if '#search#' not in contact_name:
-                self.UTILS.logResult("info", "Adding '{}' to the list of available contacts.".\
+                self.UTILS.reporting.logResult("info", "Adding '{}' to the list of available contacts.".\
                                     format(contact_name))
                 gmail_contacts.append(contact_name)
 
@@ -67,12 +67,12 @@ class test_main(GaiaTestCase):
 
         self.contacts.launch()
 
-        self.UTILS.logResult("info", "Viewing contact '{}' ...".format(gmail_contacts[0]))
+        self.UTILS.reporting.logResult("info", "Viewing contact '{}' ...".format(gmail_contacts[0]))
         self.contacts.view_contact("roytesterton.1@hotmail.com", False)
 
-        editBTN = self.UTILS.getElement(DOM.Contacts.edit_details_button, "Edit details button")
+        editBTN = self.UTILS.element.getElement(DOM.Contacts.edit_details_button, "Edit details button")
         editBTN.tap()
-        self.UTILS.waitForElements(DOM.Contacts.edit_contact_header, "'Edit contacts' screen header")
+        self.UTILS.element.waitForElements(DOM.Contacts.edit_contact_header, "'Edit contacts' screen header")
 
         #
         # Enter the new contact details.
@@ -89,10 +89,10 @@ class test_main(GaiaTestCase):
         #
         # Save the changes
         #
-        updateBTN = self.UTILS.getElement(DOM.Contacts.edit_update_button, "Edit 'update' button")
+        updateBTN = self.UTILS.element.getElement(DOM.Contacts.edit_update_button, "Edit 'update' button")
         updateBTN.tap()
 
         time.sleep(2)
 
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot and details", x)
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot and details", x)

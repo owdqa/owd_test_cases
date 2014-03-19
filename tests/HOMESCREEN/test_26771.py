@@ -8,7 +8,7 @@ from gaiatest   import GaiaTestCase
 #
 # Imports particular to this test case.
 #
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.everythingme import EverythingMe
 from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit import DOM
@@ -24,53 +24,53 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        
+
         self.UTILS      = UTILS(self)
         self.Settings   = Settings(self)
         self.EME        = EverythingMe(self)
-        
+
         #
         # Don't prompt me for geolocation (this was broken recently in Gaia, so 'try' it).
         #
         try:
             self.apps.set_permission('Homescreen', 'geolocation', 'deny')
         except:
-            self.UTILS.logComment("(Just FYI) Unable to automatically set Homescreen geolocation permission.")
+            self.UTILS.reporting.logComment("(Just FYI) Unable to automatically set Homescreen geolocation permission.")
 
-        
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
         #
         # Make sure 'things' are as we expect them to be first.
         #
-        self.UTILS.getNetworkConnection()
+        self.UTILS.network.getNetworkConnection()
 
-        self.UTILS.switchToFrame(*DOM.Home.frame_locator)
-         
+        self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
+ 
         #
         # First, get the name of the app we're going to install.
         #
-        
-        self.UTILS.TEST(self.EME.pick_group(self._GROUP_NAME),
+
+        self.UTILS.test.TEST(self.EME.pick_group(self._GROUP_NAME),
                         "Group '" + self._GROUP_NAME + "' exists in EverythingME.",
                         True)
-         
-        x = self.UTILS.getElements(DOM.EME.app_to_install, "The first game that is not installed already")[0]
+ 
+        x = self.UTILS.element.getElements(DOM.EME.app_to_install, "The first game that is not installed already")[0]
         self._APP_NAME = x.get_attribute("data-name")
-        self.UTILS.goHome()
+        self.UTILS.home.goHome()
 
         #
         # Make sure our app isn't installed already.
         #
-        self.UTILS.uninstallApp(self._APP_NAME)
-                
+        self.UTILS.app.uninstallApp(self._APP_NAME)
+    
         #
         # Launch the 'everything.me' app.
         #
         self.EME.launch()
-        
+
         #
         # Pick a group.
         #
@@ -79,13 +79,13 @@ class test_main(GaiaTestCase):
         #
         # Add the app to the homescreen.
         #
-        self.UTILS.TEST(self.EME.add_app_to_homescreen(self._APP_NAME),
+        self.UTILS.test.TEST(self.EME.add_app_to_homescreen(self._APP_NAME),
                         "Application '" + self._APP_NAME + "' is added to the homescreen.",
                         True)
 
-        self.UTILS.goHome()
+        self.UTILS.home.goHome()
 
         #
         # Check if message is here and app was installed.
         #
-        self.UTILS.isAppInstalled(self._APP_NAME)
+        self.UTILS.app.isAppInstalled(self._APP_NAME)

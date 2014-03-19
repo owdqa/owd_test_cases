@@ -6,7 +6,7 @@ sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.apps.video import Video
 from OWDTestToolkit.apps.camera import Camera
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 import time
 
 
@@ -21,10 +21,10 @@ class test_main(GaiaTestCase):
         self.camera = Camera(self)
         self.video = Video(self)
 
-        self.UTILS.setPermission('Camera', 'geolocation', 'deny')
+        self.UTILS.app.setPermission('Camera', 'geolocation', 'deny')
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #

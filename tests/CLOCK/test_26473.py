@@ -8,7 +8,7 @@ from gaiatest   import GaiaTestCase
 #
 # Imports particular to this test case.
 #
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.clock import Clock
 from OWDTestToolkit.apps.settings import Settings
 import datetime
@@ -27,7 +27,7 @@ class test_main(GaiaTestCase):
         self.settings = Settings(self)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #

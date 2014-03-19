@@ -4,7 +4,7 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.browser import Browser
 from OWDTestToolkit.apps.settings import Settings
 
@@ -17,13 +17,13 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.Settings = Settings(self)
         self.Browser = Browser(self)
-        self.wifi_name = self.UTILS.get_os_variable("GLOBAL_WIFI_NAME")
-        self.testURL = self.UTILS.get_os_variable("GLOBAL_TEST_URL")
-        self.wifi_user = self.UTILS.get_os_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass = self.UTILS.get_os_variable("GLOBAL_WIFI_PASSWORD")
+        self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
+        self.testURL = self.UTILS.general.get_os_variable("GLOBAL_TEST_URL")
+        self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
+        self.wifi_pass = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -54,7 +54,7 @@ class test_main(GaiaTestCase):
         #
         # Tap specific wifi network (if it's not already connected).
         #
-        self.UTILS.TEST(
+        self.UTILS.test.TEST(
                 self.Settings.wifi_list_isConnected(self.wifi_name),
                 "Wifi '" + self.wifi_name + "' is listed as 'connected' in wifi settings.", True)
 

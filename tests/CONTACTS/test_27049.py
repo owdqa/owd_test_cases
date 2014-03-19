@@ -9,7 +9,7 @@ from gaiatest   import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.settings import Settings
 from tests._mock_data.contacts import MockContact
@@ -29,32 +29,32 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.settings = Settings(self)
 
-        self.hotmail_user = self.UTILS.get_os_variable("HOTMAIL_1_EMAIL")
-        self.hotmail_passwd = self.UTILS.get_os_variable("HOTMAIL_1_PASS")
+        self.hotmail_user = self.UTILS.general.get_os_variable("HOTMAIL_1_EMAIL")
+        self.hotmail_passwd = self.UTILS.general.get_os_variable("HOTMAIL_1_PASS")
 
         #
         # Get details of our test contacts.
         #
         self.contact = MockContact()
-        self.UTILS.insertContact(self.contact)
+        self.UTILS.general.insertContact(self.contact)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
         # Set up to use data connection.
         #
-        self.UTILS.getNetworkConnection()
+        self.UTILS.network.getNetworkConnection()
 
         self.contacts.launch()
         x = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)
         if not x or x == "ALLIMPORTED":
-            self.UTILS.logResult(False, "Cannot continue past this point without importing the contacts.")
+            self.UTILS.reporting.logResult(False, "Cannot continue past this point without importing the contacts.")
             return
 
         # Get the contacts.
-        x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list")
+        x = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list")
         hotmail_contacts = []
         for y in x:
             hotmail_contacts.append(y.get_attribute("data-search"))
@@ -66,8 +66,8 @@ class test_main(GaiaTestCase):
         #
         self.marionette.execute_script("document.getElementById('search-start').click();")
 
-        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
-        self.UTILS.switchToFrame(*DOM.Contacts.hotmail_import_frame, p_viaRootFrame=False)
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, p_viaRootFrame=False)
 
         self.marionette.execute_script("""
         var getElementByXpath = function (path) {
@@ -80,18 +80,18 @@ class test_main(GaiaTestCase):
 
         # Keyboard appears.
 
-        self.UTILS.waitForElements(("xpath", "//iframe[contains(@{},'{}')]".\
+        self.UTILS.element.waitForElements(("xpath", "//iframe[contains(@{},'{}')]".\
                                     format(DOM.Keyboard.frame_locator[0], DOM.Keyboard.frame_locator[1])),
                                     "Keyboard")
 
         # Typing works and allows real-time filtering.
-        self.UTILS.logResult("info", "Typing '{}' with the keyboard (without pressing ENTER) ...".format(search_name))
+        self.UTILS.reporting.logResult("info", "Typing '{}' with the keyboard (without pressing ENTER) ...".format(search_name))
         self.keyboard.send(search_name)
 
-        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
-        self.UTILS.switchToFrame(*DOM.Contacts.hotmail_import_frame, p_viaRootFrame=False)
-        after_search_count = self.UTILS.getElements(DOM.Contacts.import_search_list, "Search list")
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, p_viaRootFrame=False)
+        after_search_count = self.UTILS.element.getElements(DOM.Contacts.import_search_list, "Search list")
 
-        self.UTILS.TEST(len(after_search_count) == 1,
+        self.UTILS.test.TEST(len(after_search_count) == 1,
                         "After typing the name '{}' the search list contains 1 contact (out of {}).".\
                         format(search_name, len(hotmail_contacts)))

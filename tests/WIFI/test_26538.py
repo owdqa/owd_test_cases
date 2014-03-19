@@ -9,12 +9,12 @@ from gaiatest import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
 
 
 class test_main(GaiaTestCase):
-    
+
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
@@ -22,16 +22,16 @@ class test_main(GaiaTestCase):
         self.Settings = Settings(self)
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
         #
         # WIFI.
         #
-        self.UTILS.disableAllNetworkSettings()
-        
+        self.UTILS.network.disableAllNetworkSettings()
+
         self.Settings.launch()
-        self.UTILS.logResult("info", "<b>Check hotspot with DataConn and WiFi off.</b>")
+        self.UTILS.reporting.logResult("info", "<b>Check hotspot with DataConn and WiFi off.</b>")
         self.Settings.hotSpot()
-        x = self.UTILS.getElement(DOM.Settings.hotspot_switch, "Hotspot switch")
-        self.UTILS.TEST(not x.is_enabled(), "Hotspot switch is disabled.")
+        x = self.UTILS.element.getElement(DOM.Settings.hotspot_switch, "Hotspot switch")
+        self.UTILS.test.TEST(not x.is_enabled(), "Hotspot switch is disabled.")

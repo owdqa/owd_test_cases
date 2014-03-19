@@ -4,7 +4,7 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.calendar import Calendar
 
 #
@@ -26,7 +26,7 @@ class test_main(GaiaTestCase):
         self.calendar = Calendar(self)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #

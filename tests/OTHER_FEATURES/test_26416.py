@@ -9,14 +9,14 @@ from gaiatest import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.messages import Messages
 import time
 
 
 class test_main(GaiaTestCase):
-    
+
     def setUp(self):
         #
         # Set up child objects...
@@ -26,20 +26,20 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.messages = Messages(self)
 
-        
+
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
-    
+
         self.contacts.launch()
         self.messages.launch()
-        self.UTILS.touchHomeButton()
+        self.UTILS.home.touchHomeButton()
         time.sleep(1)
-        
-        self.UTILS.holdHomeButton()
-        
-        self.UTILS.waitForElements(DOM.Home.cards_view, "App 'cards' list (task switcher)")
-        
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot:", x)
+
+        self.UTILS.home.holdHomeButton()
+
+        self.UTILS.element.waitForElements(DOM.Home.cards_view, "App 'cards' list (task switcher)")
+
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot:", x)

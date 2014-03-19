@@ -9,7 +9,7 @@ from gaiatest import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
 
@@ -38,12 +38,12 @@ class test_main(GaiaTestCase):
         self.contact2 = MockContact(givenName=name2, familyName=fname2)
         self.contact3 = MockContact(givenName='John', familyName='Smith')
 
-        self.UTILS.insertContact(self.contact)
-        self.UTILS.insertContact(self.contact2)
-        self.UTILS.insertContact(self.contact3)
+        self.UTILS.general.insertContact(self.contact)
+        self.UTILS.general.insertContact(self.contact2)
+        self.UTILS.general.insertContact(self.contact3)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -70,7 +70,7 @@ class test_main(GaiaTestCase):
         #
         # Enter one more letter.
         #
-        self.UTILS.typeThis(DOM.Contacts.search_contact_input, "Search input", self.contact["givenName"][4],
+        self.UTILS.general.typeThis(DOM.Contacts.search_contact_input, "Search input", self.contact["givenName"][4],
                             p_no_keyboard=True, p_validate=False, p_clear=False, p_enter=False)
 
         #
@@ -83,7 +83,7 @@ class test_main(GaiaTestCase):
         #
         # Cancel search.
         #
-        x = self.UTILS.getElement(DOM.Contacts.search_cancel_btn, "Search cancel button")
+        x = self.UTILS.element.getElement(DOM.Contacts.search_cancel_btn, "Search cancel button")
         x.tap()
 
         #
@@ -105,7 +105,7 @@ class test_main(GaiaTestCase):
         #
         # Enter one more letter.
         #
-        self.UTILS.typeThis(DOM.Contacts.search_contact_input, "Search input", self.contact["familyName"][2],
+        self.UTILS.general.typeThis(DOM.Contacts.search_contact_input, "Search input", self.contact["familyName"][2],
                             p_no_keyboard=True, p_validate=False, p_clear=False, p_enter=False)
 
         #

@@ -6,14 +6,14 @@ sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
 
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
 
 class test_main(GaiaTestCase):
-    
+
     test_msg = "Hello World"
-    
+
     def setUp(self):
         #
         # Set up child objects...
@@ -22,21 +22,21 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.gallery = Gallery(self)
-        
+
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Sending mms to telephone number " + self.target_telNum)
+        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.UTILS.reporting.logComment("Sending mms to telephone number " + self.target_telNum)
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
         #
         # Load an image file into the device.
         #
-        self.UTILS.addFileToDevice('./tests/_resources/80x60.jpg',
+        self.UTILS.general.addFileToDevice('./tests/_resources/80x60.jpg',
                                     destination='DCIM/100MZLLA')
 
         #
@@ -48,7 +48,7 @@ class test_main(GaiaTestCase):
         # Create a new SMS
         #
         self.messages.startNewSMS()
-        
+
         #
         # Insert the phone number in the To field
         #
@@ -69,7 +69,7 @@ class test_main(GaiaTestCase):
         #
         # This step is necessary because our sim cards receive mms with +XXX
         #
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
+        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
 
         self.messages.openThread("+" + self.target_telNum)
@@ -78,7 +78,7 @@ class test_main(GaiaTestCase):
         # Wait for the last message in this thread to be a 'recieved' one.
         #
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.TEST(returnedSMS, "A receieved message appeared in the thread.", True)
+        self.UTILS.test.TEST(returnedSMS, "A receieved message appeared in the thread.", True)
 
         self.messages.fordwardMessage("mms", self.target_telNum)
 

@@ -8,7 +8,7 @@ from gaiatest   import GaiaTestCase
 #
 # Imports particular to this test case.
 #
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.everythingme import EverythingMe
 from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit import DOM
@@ -31,22 +31,22 @@ class test_main(GaiaTestCase):
         self.settings   = Settings(self)
         self.EME        = EverythingMe(self)
 
-        self.UTILS.setPermission('Homescreen', 'geolocation', 'deny')
-        
+        self.UTILS.app.setPermission('Homescreen', 'geolocation', 'deny')
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
         #
         # Make sure 'things' are as we expect them to be first.
         #
-        self.UTILS.getNetworkConnection()
-         
+        self.UTILS.network.getNetworkConnection()
+ 
         #
         # Make sure our app isn't installed already.
         #
-        self.UTILS.uninstallApp(self._appName)
-                
+        self.UTILS.app.uninstallApp(self._appName)
+    
         #
         # Install it.
         #
@@ -60,11 +60,11 @@ class test_main(GaiaTestCase):
             pass
 
         self.marionette.switch_to_frame()
-        x = self.UTILS.getElement(DOM.GLOBAL.modal_alert_ok3, "OK button")
+        x = self.UTILS.element.getElement(DOM.GLOBAL.modal_alert_ok3, "OK button")
         x.tap()
-        
+
         time.sleep(2)
 
-        self.UTILS.switchToFrame(*DOM.Home.frame_locator)
-        
-        self.UTILS.uninstallApp(self._appName)
+        self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
+
+        self.UTILS.app.uninstallApp(self._appName)

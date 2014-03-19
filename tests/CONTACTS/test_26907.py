@@ -9,7 +9,7 @@ from gaiatest import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 import time
 from tests._mock_data.contacts import MockContact
@@ -29,17 +29,17 @@ class test_main(GaiaTestCase):
         # Create test contacts.
         #
         self.contact = MockContact()
-        self.UTILS.insertContact(self.contact)
-        self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.insertContact(self.contact)
+        self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
         # Launch contacts app.
         #
-        self.UTILS.logResult("info", "Setting up contact ...")
+        self.UTILS.reporting.logResult("info", "Setting up contact ...")
         self.contacts.launch()
 
         #
@@ -52,7 +52,7 @@ class test_main(GaiaTestCase):
         #
         self.contacts.press_edit_contact_button()
 
-        self.UTILS.logResult("info", "Starting tests ...")
+        self.UTILS.reporting.logResult("info", "Starting tests ...")
 
         self.check_field(True, "phone", "number_0", "number")
         self.check_field(True, "email", "email_0", "email")
@@ -78,21 +78,21 @@ class test_main(GaiaTestCase):
         except:
             pass
 
-        self.UTILS.logResult("info", " ")
-        self.UTILS.logResult("info", "*** '" + field_name + "': default (before testing 'reset' mode) ... ***")
+        self.UTILS.reporting.logResult("info", " ")
+        self.UTILS.reporting.logResult("info", "*** '" + field_name + "': default (before testing 'reset' mode) ... ***")
         self.check_kbd_appears(reset_btn_name, field_name, True) if text else self.check_photo_tap(True)
 
-        self.UTILS.logResult("info", " ")
-        self.UTILS.logResult("info", "*** '" + field_name + "': switching 'reset' mode ON ... ***")
+        self.UTILS.reporting.logResult("info", " ")
+        self.UTILS.reporting.logResult("info", "*** '" + field_name + "': switching 'reset' mode ON ... ***")
         self.toggle_reset_button(field_name)
         self.check_kbd_appears(reset_btn_name, field_name, False) if text else self.check_photo_tap(False)
 
-        self.UTILS.logResult("info", " ")
-        self.UTILS.logResult("info", "*** '" + field_name + "': switching 'reset' mode OFF ... ***")
+        self.UTILS.reporting.logResult("info", " ")
+        self.UTILS.reporting.logResult("info", "*** '" + field_name + "': switching 'reset' mode OFF ... ***")
         self.toggle_reset_button(field_name)
         self.check_kbd_appears(reset_btn_name, field_name, True) if text else self.check_photo_tap(True)
 
-        self.UTILS.logResult("info", " ")
+        self.UTILS.reporting.logResult("info", " ")
 
     def toggle_reset_button(self, element):
         #
@@ -101,19 +101,19 @@ class test_main(GaiaTestCase):
         reset_btn = DOM.Contacts.reset_field_xpath
 
         if element == "photo":
-            x = self.UTILS.getElement(("xpath", reset_btn.format("thumbnail-action")), "Photo reset button")
+            x = self.UTILS.element.getElement(("xpath", reset_btn.format("thumbnail-action")), "Photo reset button")
             x.tap()
 
         if element == "phone":
-            x = self.UTILS.getElement(("xpath", reset_btn.format("add-phone-0")), "Phone reset button")
+            x = self.UTILS.element.getElement(("xpath", reset_btn.format("add-phone-0")), "Phone reset button")
             x.tap()
 
         if element == "email":
-            x = self.UTILS.getElement(("xpath", reset_btn.format("add-email-0")), "Email reset button")
+            x = self.UTILS.element.getElement(("xpath", reset_btn.format("add-email-0")), "Email reset button")
             x.tap()
 
         if element == "address":
-            x = self.UTILS.getElement(("xpath", reset_btn.format("add-address-0")), "Address reset button")
+            x = self.UTILS.element.getElement(("xpath", reset_btn.format("add-address-0")), "Address reset button")
             x.tap()
 
     def check_photo_tap(self, editable):
@@ -121,7 +121,7 @@ class test_main(GaiaTestCase):
 
         # Check tapping photo (same link for add and edit)
         _comment = "Photo is " + ("not " if not editable else "")
-        x = self.UTILS.getElement(DOM.Contacts.add_photo, "Photo")
+        x = self.UTILS.element.getElement(DOM.Contacts.add_photo, "Photo")
         x.tap()
         time.sleep(1)
 
@@ -136,8 +136,8 @@ class test_main(GaiaTestCase):
             is_editable = True
         except:
             is_editable = False
-        self.UTILS.TEST(is_editable == editable, _comment + "editable.")
-        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
+        self.UTILS.test.TEST(is_editable == editable, _comment + "editable.")
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
     def check_kbd_appears(self, item, desc, kbd_displayed):
         time.sleep(1)
@@ -147,7 +147,7 @@ class test_main(GaiaTestCase):
         #
         comment = "The " + desc + " field can" + ("not" if not kbd_displayed else "") + " be edited."
 
-        x = self.UTILS.getElement(("id", "{}_0".format(item)), "Field for " + desc)
+        x = self.UTILS.element.getElement(("id", "{}_0".format(item)), "Field for " + desc)
 
         # From here on does the keyboard verification.
         # The problem is that the keyboard frame is always present
@@ -163,12 +163,12 @@ class test_main(GaiaTestCase):
             kbd = True
         except:
             pass
-        self.UTILS.TEST(kbd == kbd_displayed, comment)
+        self.UTILS.test.TEST(kbd == kbd_displayed, comment)
 
         #
         # Return to the contacts iframe.
         #
-        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
         #
         # Tap the header to remove the keyboard.
