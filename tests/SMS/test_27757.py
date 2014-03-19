@@ -8,11 +8,11 @@ from gaiatest   import GaiaTestCase
 #
 # Imports particular to this test case.
 #
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 
 class test_main(GaiaTestCase):
-    
+
     def setUp(self):
         #
         # Set up child objects...
@@ -20,16 +20,16 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
-        
+
         #
         # Import contact (adjust the correct number).
         #
-        self.telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Using target telephone number " + self.telNum)
+        self.telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.UTILS.reporting.logComment("Using target telephone number " + self.telNum)
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
         #
         # Launch messages app.
@@ -42,11 +42,11 @@ class test_main(GaiaTestCase):
         #
         self.messages.createAndSendSMS([self.telNum], "Test message.")
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        
+
         #
         # Examine the header.
         #
-        self.UTILS.headerCheck(self.telNum)
+        self.UTILS.element.headerCheck(self.telNum)
 
         #
         # Close the thread and check we can find it again with this number.

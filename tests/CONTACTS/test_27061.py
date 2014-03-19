@@ -9,7 +9,7 @@ from gaiatest import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
 
@@ -28,10 +28,10 @@ class test_main(GaiaTestCase):
         # Create our test contacts.
         #
         self.contact_list = [MockContact() for i in range(3)]
-        map(self.UTILS.insertContact, self.contact_list)
+        map(self.UTILS.general.insertContact, self.contact_list)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -47,15 +47,15 @@ class test_main(GaiaTestCase):
         #
         # Verify that we're now in the 'search results' screen.
         #
-        self.UTILS.waitForElements(DOM.Contacts.search_results_list, "Search results list")
+        self.UTILS.element.waitForElements(DOM.Contacts.search_results_list, "Search results list")
 
         #
         # Cancel the search.
         #
-        x = self.UTILS.getElement(DOM.Contacts.search_cancel_btn, "Cancel search button")
+        x = self.UTILS.element.getElement(DOM.Contacts.search_cancel_btn, "Cancel search button")
         x.tap()
 
         #
         # Verify that we're no longer in the 'search results' screen.
         #
-        self.UTILS.waitForNotElements(DOM.Contacts.search_results_list, "Search results list")
+        self.UTILS.element.waitForNotElements(DOM.Contacts.search_results_list, "Search results list")

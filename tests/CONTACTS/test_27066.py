@@ -10,7 +10,7 @@ from gaiatest import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
 
@@ -34,16 +34,16 @@ class test_main(GaiaTestCase):
         #
         # Make sure we can find both of them with a search.
         #
-        self.UTILS.insertContact(self.contact2)
+        self.UTILS.general.insertContact(self.contact2)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
         # Store our picture on the device.
         #
-        self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
 
         #
         # Launch contacts app.
@@ -72,7 +72,7 @@ class test_main(GaiaTestCase):
         #
         boolOK1 = False
         boolOK2 = True
-        x = self.UTILS.getElements(DOM.Contacts.search_results_list, "Search results")
+        x = self.UTILS.element.getElements(DOM.Contacts.search_results_list, "Search results")
         for i in x:
             # Contact 1 (HAS an image).
             try:
@@ -97,8 +97,8 @@ class test_main(GaiaTestCase):
             except:
                 pass
 
-        self.UTILS.TEST(boolOK1, "Contact 1 has image displayed.")
-        self.UTILS.TEST(boolOK2, "Contact 2 has no image displayed.")
+        self.UTILS.test.TEST(boolOK1, "Contact 1 has image displayed.")
+        self.UTILS.test.TEST(boolOK2, "Contact 2 has no image displayed.")
 
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot of search results", x)
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot of search results", x)

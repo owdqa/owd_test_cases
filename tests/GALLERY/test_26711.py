@@ -5,7 +5,7 @@ import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.apps.gallery import Gallery
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 
 
 class test_main(GaiaTestCase):
@@ -21,14 +21,14 @@ class test_main(GaiaTestCase):
         self.gallery = Gallery(self)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
         # Load sample images into the gallery.
         #
         for i in self.img_list:
-            self.UTILS.addFileToDevice('./tests/_resources/' + i, destination='DCIM/100MZLLA')
+            self.UTILS.general.addFileToDevice('./tests/_resources/' + i, destination='DCIM/100MZLLA')
 
         #
         # Open the gallery application.

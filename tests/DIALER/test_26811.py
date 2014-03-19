@@ -9,36 +9,36 @@ from gaiatest   import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.dialer import Dialer
 import time
 
 class test_main(GaiaTestCase):
-    
+
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.dialer     = Dialer(self)
         self.contacts   = Contacts(self)
-        
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
         #
         # Enter a number in the dialer.
         #
         self.dialer.launch()
-        
-        x = self.UTILS.getElement(DOM.Dialer.option_bar_contacts, "Contacts option")
-        x.tap()
-    
-        time.sleep(2)    
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot of contacts (from the dialer iframe):", x)
 
-        self.UTILS.switchToFrame(*DOM.Dialer.contacts_sub_iframe, p_viaRootFrame=False)
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot of contacts (from the contacts sub-iframe):", x)
+        x = self.UTILS.element.getElement(DOM.Dialer.option_bar_contacts, "Contacts option")
+        x.tap()
+
+        time.sleep(2)
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot of contacts (from the dialer iframe):", x)
+
+        self.UTILS.iframe.switchToFrame(*DOM.Dialer.contacts_sub_iframe, p_viaRootFrame=False)
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot of contacts (from the contacts sub-iframe):", x)

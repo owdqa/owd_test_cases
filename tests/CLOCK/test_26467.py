@@ -9,7 +9,7 @@ from gaiatest   import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.clock import Clock
 import time
 
@@ -27,7 +27,7 @@ class test_main(GaiaTestCase):
         self.data_layer.set_setting("time.timezone.user-selected", "Europe/Madrid")
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -40,12 +40,12 @@ class test_main(GaiaTestCase):
         #
         # Check that the face is analog.
         #
-        x = self.UTILS.getElement(DOM.Clock.analog_face, "Analog clock face")
+        x = self.UTILS.element.getElement(DOM.Clock.analog_face, "Analog clock face")
 
         #
         # Tap the clock face.
         #
-        self.UTILS.logResult("info", "Tapping the clock face ...")
+        self.UTILS.reporting.logResult("info", "Tapping the clock face ...")
         try:
             x.tap()
             self.wait_for_element_displayed(*DOM.Clock.digital_face)
@@ -53,25 +53,25 @@ class test_main(GaiaTestCase):
             #
             # For some reason this randomly doesn't work, so try again.
             #
-            self.UTILS.logResult("info",
+            self.UTILS.reporting.logResult("info",
                                  "<b>Note:</b> failed to tap the analog face - " +
                                  "suspect this is just a Marionette issue so I'm trying again.")
             self.apps.kill_all()
             time.sleep(2)
             self.clock.launch()
-            x = self.UTILS.getElement(DOM.Clock.analog_face, "Analog clock face")
+            x = self.UTILS.element.getElement(DOM.Clock.analog_face, "Analog clock face")
             x.tap()
 
         #
         # Check this is now the digital clock face.
         #
-        self.UTILS.waitForElements(DOM.Clock.digital_face, "Digital clock face")
+        self.UTILS.element.waitForElements(DOM.Clock.digital_face, "Digital clock face")
 
         #
         # Verify the time is correct (digits for hh and mm need to be padded).
         #
-        device_ampm = self.UTILS.getElement(("xpath", "//*[@id='clock-hour24-state']"), "Clock time am / pm").text
-        device_hhmm = self.UTILS.getElement(("xpath", "//*[@id='clock-time']"), "Clock time hh:mm").text
+        device_ampm = self.UTILS.element.getElement(("xpath", "//*[@id='clock-hour24-state']"), "Clock time am / pm").text
+        device_hhmm = self.UTILS.element.getElement(("xpath", "//*[@id='clock-time']"), "Clock time hh:mm").text
         device_hh = device_hhmm.split(":")[0].zfill(2)
         device_mm = device_hhmm.split(":")[1].zfill(2)
 
@@ -81,15 +81,15 @@ class test_main(GaiaTestCase):
         now_ampm = time.strftime("%r")[-2:]
         now_time = now_hhmm + now_ampm
 
-        self.UTILS.TEST(now_time == device_time,
+        self.UTILS.test.TEST(now_time == device_time,
                         "Digital display time is correct (now = '" + now_time + "', display = '" + device_time + "').",
                         False)
 
         #
         # Tap the clock face.
         #
-        x = self.UTILS.getElement(DOM.Clock.digital_face, "Digital clock face", False)
-        self.UTILS.logResult("info", "Tapping the clock face ...")
+        x = self.UTILS.element.getElement(DOM.Clock.digital_face, "Digital clock face", False)
+        self.UTILS.reporting.logResult("info", "Tapping the clock face ...")
         try:
             x.tap()
             self.wait_for_element_displayed(*DOM.Clock.analog_face)
@@ -97,14 +97,14 @@ class test_main(GaiaTestCase):
             #
             # For some reason this randomly doesn't work, so try again.
             #
-            self.UTILS.logResult("info",
+            self.UTILS.reporting.logResult("info",
                                  "<b>Note:</b> failed to tap the digital face - " +
                                  "suspect this is just a Marionette issue so I'm trying again.")
-            self.UTILS.switchToFrame(*DOM.Clock.frame_locator)
-            x = self.UTILS.getElement(DOM.Clock.digital_face, "Digital clock face")
+            self.UTILS.iframe.switchToFrame(*DOM.Clock.frame_locator)
+            x = self.UTILS.element.getElement(DOM.Clock.digital_face, "Digital clock face")
             x.tap()
 
         #
         # Check that the face is analog again.
         #
-        self.UTILS.waitForElements(DOM.Clock.analog_face, "Analog clock face")
+        self.UTILS.element.waitForElements(DOM.Clock.analog_face, "Analog clock face")

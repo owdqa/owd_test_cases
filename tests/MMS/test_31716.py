@@ -14,15 +14,15 @@ from gaiatest   import GaiaTestCase
 #
 from tests._mock_data.contacts import MockContact
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.gallery import Gallery
 
 class test_main(GaiaTestCase):
-    
+
     test_msg = "Test."
-    
+
     def setUp(self):
         #
         # Set up child objects...
@@ -32,23 +32,23 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.contacts = Contacts(self)
         self.gallery = Gallery(self)
-        
+
         #
         # Import contact (adjust to the correct number).
         #
-        self.test_num = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.test_num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.cont = MockContact(tel={"type": "Mobile", "value": self.test_num})
-        self.UTILS.logComment("Using target telephone number " + self.cont["tel"]["value"])
+        self.UTILS.reporting.logComment("Using target telephone number " + self.cont["tel"]["value"])
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
 
         #
         # Load sample image into the gallery.
         #
-        self.UTILS.addFileToDevice('./tests/_resources/imgd.jpg',
+        self.UTILS.general.addFileToDevice('./tests/_resources/imgd.jpg',
                                         destination='DCIM/100MZLLA')
 
         #
@@ -60,7 +60,7 @@ class test_main(GaiaTestCase):
         # Create a new SMS
         #
         self.messages.startNewSMS()
-        
+
         #
         # Insert the phone number in the To field
         #
@@ -79,7 +79,7 @@ class test_main(GaiaTestCase):
         #
         self.messages.sendSMS()
 
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
+        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
 
         #
@@ -92,11 +92,11 @@ class test_main(GaiaTestCase):
         #
         # Switch back to the messages app.
         #
-        self.UTILS.goHome()
+        self.UTILS.home.goHome()
         self.messages.launch()
 
         #
         # Verify the thread now contains the name of the contact instead of the phone number
         #
-        self.UTILS.logComment("Trying to open the thread with name: " + self.cont["name"])
+        self.UTILS.reporting.logComment("Trying to open the thread with name: " + self.cont["name"])
         self.messages.openThread(self.cont["name"])

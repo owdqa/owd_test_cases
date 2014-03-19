@@ -13,7 +13,7 @@
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.apps import Ftu
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 
 #
 # Imports particular to this test case.
@@ -49,7 +49,7 @@ class Emailing():
         x = p_x + " keyboard image = "
         x = x + str(p_a) + " bytes (it was " + str(p_b)
         x = x + "). See the screenshot for details."
-        self.UTILS.TEST((p_a == p_b), x)
+        self.UTILS.test.TEST((p_a == p_b), x)
 
     def run(self):
         #
@@ -60,7 +60,7 @@ class Emailing():
         #
         # LANGUAGE.
         #
-        self.UTILS.TEST(self.ftu.setLanguage(self.lang),
+        self.UTILS.test.TEST(self.ftu.setLanguage(self.lang),
             "Language '" + self.lang + "' is available on this device.", True)
         self.ftu.nextScreen()
 
@@ -93,7 +93,7 @@ class Emailing():
         # PRIVACY SCREEN - info. email.
         #
         # Click the email area to display the keyboard.
-        x = self.UTILS.getElement(DOM.ftu.privacy_email, "Privacy policy email address")
+        x = self.UTILS.element.getElement(DOM.ftu.privacy_email, "Privacy policy email address")
         x.tap()
         self.parent.keyboard._switch_to_keyboard()
 
@@ -101,25 +101,25 @@ class Emailing():
         # Take a screenshot of each view and check the size.
         #
 
-        imgnam = self.UTILS.screenShot("42_lowercase_alpha")
-        self.UTILS.logComment("Screenshot of lowercase alpha keyboard = " + imgnam)
+        imgnam = self.UTILS.debug.screenShot("42_lowercase_alpha")
+        self.UTILS.reporting.logComment("Screenshot of lowercase alpha keyboard = " + imgnam)
         imgsize = os.path.getsize(imgnam)
         self._checkSize("Lowercase alpha", self.sizes[0], imgsize)
 
         self.parent.keyboard.tap_shift()
-        imgnam = self.UTILS.screenShot("42_uppercase_alpha")
-        self.UTILS.logComment("Screenshot of uppercase alpha keyboard = " + imgnam)
+        imgnam = self.UTILS.debug.screenShot("42_uppercase_alpha")
+        self.UTILS.reporting.logComment("Screenshot of uppercase alpha keyboard = " + imgnam)
         imgsize = os.path.getsize(imgnam)
         self._checkSize("Uppercase alpha", self.sizes[1], imgsize)
 
         self.parent.keyboard.switch_to_number_keyboard()
-        imgnam = self.UTILS.screenShot("42_numeric")
-        self.UTILS.logComment("Screenshot of numeric keyboard = " + imgnam)
+        imgnam = self.UTILS.debug.screenShot("42_numeric")
+        self.UTILS.reporting.logComment("Screenshot of numeric keyboard = " + imgnam)
         imgsize = os.path.getsize(imgnam)
         self._checkSize("Numeric", self.sizes[2], imgsize)
 
         self.parent.keyboard.tap_alt()
-        imgnam = self.UTILS.screenShot("42_alt_numeric")
-        self.UTILS.logComment("Screenshot of alt numeric keyboard = " + imgnam)
+        imgnam = self.UTILS.debug.screenShot("42_alt_numeric")
+        self.UTILS.reporting.logComment("Screenshot of alt numeric keyboard = " + imgnam)
         imgsize = os.path.getsize(imgnam)
         self._checkSize("Alt numeric", self.sizes[3], imgsize)

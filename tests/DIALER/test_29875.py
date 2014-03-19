@@ -9,7 +9,7 @@ from gaiatest   import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit.apps.dialer import Dialer
 import time
@@ -29,7 +29,7 @@ class test_main(GaiaTestCase):
     def tearDown(self):
 
 
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
 
@@ -39,23 +39,23 @@ class test_main(GaiaTestCase):
 
         self.dialer.launch()
         self.dialer.enterNumber("#31#")
-        x = self.UTILS.getElement(DOM.Dialer.call_number_button, "Call number button")
+        x = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call number button")
         x.tap()
 
         time.sleep(2)
 
-        self.UTILS.goHome()
-        self.UTILS.logResult("info", "Home screen")
+        self.UTILS.home.goHome()
+        self.UTILS.reporting.logResult("info", "Home screen")
 
         #Tap settings
         self.settings.launch()
-        self.UTILS.logResult("info", "Settings screen")
+        self.UTILS.reporting.logResult("info", "Settings screen")
 
         self.settings.callID_verify()
 
 
-        self.UTILS.goHome()
-        self.UTILS.logResult("info", "Home screen")
+        self.UTILS.home.goHome()
+        self.UTILS.reporting.logResult("info", "Home screen")
 
 
         self.dialer.launch()
@@ -64,16 +64,16 @@ class test_main(GaiaTestCase):
      #
         # Calls the current number.
         #
-        x = self.UTILS.getElement(DOM.Dialer.call_number_button, "Call number button")
+        x = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call number button")
         x.tap()
 
         time.sleep(2)
 
-        self.UTILS.goHome()
-        self.UTILS.logResult("info", "Home screen")
+        self.UTILS.home.goHome()
+        self.UTILS.reporting.logResult("info", "Home screen")
 
         #Tap settings
         self.settings.launch()
-        self.UTILS.logResult("info", "Settings screen")
+        self.UTILS.reporting.logResult("info", "Settings screen")
 
         self.settings.callID_verify()

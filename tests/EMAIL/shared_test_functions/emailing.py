@@ -14,7 +14,7 @@ import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.email import Email
 from OWDTestToolkit.apps.settings import Settings
 
@@ -32,19 +32,19 @@ class Emailing(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
 
-        self.user1 = self.UTILS.get_os_variable(self.testType.upper() + "_1_USER")
-        self.email1 = self.UTILS.get_os_variable(self.testType.upper() + "_1_EMAIL")
-        self.passwd1 = self.UTILS.get_os_variable(self.testType.upper() + "_1_PASS")
-        self.user2 = self.UTILS.get_os_variable(self.testType.upper() + "_2_USER")
-        self.email2 = self.UTILS.get_os_variable(self.testType.upper() + "_2_EMAIL")
-        self.passwd2 = self.UTILS.get_os_variable(self.testType.upper() + "_2_PASS")
+        self.user1 = self.UTILS.general.get_os_variable(self.testType.upper() + "_1_USER")
+        self.email1 = self.UTILS.general.get_os_variable(self.testType.upper() + "_1_EMAIL")
+        self.passwd1 = self.UTILS.general.get_os_variable(self.testType.upper() + "_1_PASS")
+        self.user2 = self.UTILS.general.get_os_variable(self.testType.upper() + "_2_USER")
+        self.email2 = self.UTILS.general.get_os_variable(self.testType.upper() + "_2_EMAIL")
+        self.passwd2 = self.UTILS.general.get_os_variable(self.testType.upper() + "_2_PASS")
 
-        self.UTILS.logComment("Using username 1 '" + self.user1 + "'")
-        self.UTILS.logComment("Using password 1 '" + self.passwd1 + "'")
-        self.UTILS.logComment("Using email    1 '" + self.email1 + "'")
-        self.UTILS.logComment("Using username 2 '" + self.user2 + "'")
-        self.UTILS.logComment("Using password 2 '" + self.passwd2 + "'")
-        self.UTILS.logComment("Using email    2 '" + self.email2 + "'")
+        self.UTILS.reporting.logComment("Using username 1 '" + self.user1 + "'")
+        self.UTILS.reporting.logComment("Using password 1 '" + self.passwd1 + "'")
+        self.UTILS.reporting.logComment("Using email    1 '" + self.email1 + "'")
+        self.UTILS.reporting.logComment("Using username 2 '" + self.user2 + "'")
+        self.UTILS.reporting.logComment("Using password 2 '" + self.passwd2 + "'")
+        self.UTILS.reporting.logComment("Using email    2 '" + self.email2 + "'")
 
         self.Email = Email(self)
         self.settings = Settings(self)
@@ -53,10 +53,10 @@ class Emailing(GaiaTestCase):
         # Set up specific folder names.
         #
         if "gmail" in self.testType.lower():
-            self.UTILS.logComment("Gmail account being used.")
+            self.UTILS.reporting.logComment("Gmail account being used.")
             self.sentFolderName = "Sent Mail"
         else:
-            self.UTILS.logComment("Non-gmail account being used.")
+            self.UTILS.reporting.logComment("Non-gmail account being used.")
             self.sentFolderName = "Sent"
 
         self.marionette.set_search_timeout(50)
@@ -64,7 +64,7 @@ class Emailing(GaiaTestCase):
         #
         # Make sure we have some data connectivity.
         #
-        self.UTILS.getNetworkConnection()
+        self.UTILS.network.getNetworkConnection()
 
     def send_email(self):
 
@@ -76,7 +76,7 @@ class Emailing(GaiaTestCase):
         self.subject = "TEST " + str(time.time())
         self.body = "This is the test email body."
 
-        self.UTILS.logComment("Using subject \"" + self.subject + "\".")
+        self.UTILS.reporting.logComment("Using subject \"" + self.subject + "\".")
 
         #
         # Keep the subject in a file so the next test (receive email)
@@ -111,7 +111,7 @@ class Emailing(GaiaTestCase):
         #
         self.Email.openMailFolder(self.sentFolderName)
         time.sleep(10)
-        self.UTILS.TEST(self.Email.emailIsInFolder(self.subject),
+        self.UTILS.test.TEST(self.Email.emailIsInFolder(self.subject),
             "Email '" + self.subject + "' found in the Sent folder.", False)
 
     def receive_email(self):
@@ -125,11 +125,11 @@ class Emailing(GaiaTestCase):
             self.subject = SUBJECT_FILE.read()
             SUBJECT_FILE.close()
         except:
-            self.UTILS.logResult(False, "Email subject file was not found - this test should only"\
+            self.UTILS.reporting.logResult(False, "Email subject file was not found - this test should only"\
                                  " be run in conjunction with a 'send email' test.")
-            self.UTILS.quitTest()
+            self.UTILS.test.quitTest()
 
-        self.UTILS.logComment("Using subject \"" + self.subject + "\".")
+        self.UTILS.reporting.logComment("Using subject \"" + self.subject + "\".")
 
         #
         # Launch Email app.
@@ -141,12 +141,12 @@ class Emailing(GaiaTestCase):
         #
         self.Email.setupAccount(self.user2, self.email2, self.passwd2)
 
-        self.UTILS.logResult("info", "Finished setting up the account to log in with.")
+        self.UTILS.reporting.logResult("info", "Finished setting up the account to log in with.")
 
         #
         # Open the email (we'll already be in the Inbox).
         #
-        self.UTILS.TEST(self.Email.openMsg(self.subject),
+        self.UTILS.test.TEST(self.Email.openMsg(self.subject),
             "Email was opened successfully.", True)
 
         #
@@ -155,15 +155,15 @@ class Emailing(GaiaTestCase):
         email1_name = self.email1.split("@")[0]
         email2_name = self.email2.split("@")[0]
 
-        x = self.UTILS.getElement(DOM.Email.open_email_from, "'From' field")
+        x = self.UTILS.element.getElement(DOM.Email.open_email_from, "'From' field")
 
-        self.UTILS.TEST((x.text == self.email1 or x.text == email1_name or x.text == self.user1),
+        self.UTILS.test.TEST((x.text == self.email1 or x.text == email1_name or x.text == self.user1),
             "'From' field shows the sender (it was '" + x.text + "').")
 
-        x = self.UTILS.getElement(DOM.Email.open_email_to, "'To' field")
-        self.UTILS.TEST((x.text == self.email2 or x.text == email2_name),
+        x = self.UTILS.element.getElement(DOM.Email.open_email_to, "'To' field")
+        self.UTILS.test.TEST((x.text == self.email2 or x.text == email2_name),
             "'To' field = '" + self.email2 + "', (it was '" + x.text + "').")
 
-        x = self.UTILS.getElement(DOM.Email.open_email_subject, "'Subject' field")
-        self.UTILS.TEST(x.text == self.subject,
+        x = self.UTILS.element.getElement(DOM.Email.open_email_subject, "'Subject' field")
+        self.UTILS.test.TEST(x.text == self.subject,
             "'From' field = '" + self.subject + "', (it was '" + x.text + "').")

@@ -4,7 +4,7 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.browser import Browser
 
 
@@ -19,7 +19,7 @@ class test_main(GaiaTestCase):
         self.Browser = Browser(self)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
 
@@ -29,7 +29,7 @@ class test_main(GaiaTestCase):
         #
         # Wifi needs to be off for this test to work.
         #
-        self.UTILS.toggleViaStatusBar("data")
+        self.UTILS.statusbar.toggleViaStatusBar("data")
 
         #
         # Open the browser app.
@@ -41,8 +41,8 @@ class test_main(GaiaTestCase):
         #
         self.Browser.open_url(url1)
         url = self.Browser.loadedURL()
-        self.UTILS.TEST(url1 in url, "'{0}' is in the loaded source url: '{1}'.".format(url1, url))
+        self.UTILS.test.TEST(url1 in url, "'{0}' is in the loaded source url: '{1}'.".format(url1, url))
 
         self.Browser.open_url(url2)
         url = self.Browser.loadedURL()
-        self.UTILS.TEST(url2 in url, "'{0}' is in the loaded source url: '{1}'.".format(url2, url))
+        self.UTILS.test.TEST(url2 in url, "'{0}' is in the loaded source url: '{1}'.".format(url2, url))

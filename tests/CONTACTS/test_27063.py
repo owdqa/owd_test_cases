@@ -9,7 +9,7 @@ from gaiatest import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
 
@@ -30,11 +30,11 @@ class test_main(GaiaTestCase):
         self.contact = MockContact(givenName='1111111')
         self.contact2 = MockContact(familyName='2222222')
 
-        self.UTILS.insertContact(self.contact)
-        self.UTILS.insertContact(self.contact2)
+        self.UTILS.general.insertContact(self.contact)
+        self.UTILS.general.insertContact(self.contact2)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -45,13 +45,13 @@ class test_main(GaiaTestCase):
         #
         # Search for our new contact.
         #
-        self.UTILS.logResult("info", "<b>Search against number in 'given name' field ...</b>")
+        self.UTILS.reporting.logResult("info", "<b>Search against number in 'given name' field ...</b>")
         self.contacts.search('1111111')
         self.contacts.check_search_results(self.contact["givenName"])
 
-        x = self.UTILS.getElement(DOM.Contacts.search_cancel_btn, "Search cancel button")
+        x = self.UTILS.element.getElement(DOM.Contacts.search_cancel_btn, "Search cancel button")
         x.tap()
 
-        self.UTILS.logResult("info", "<b>Search against number in 'family name' field ...</b>")
+        self.UTILS.reporting.logResult("info", "<b>Search against number in 'family name' field ...</b>")
         self.contacts.search('2222222')
         self.contacts.check_search_results(self.contact2["familyName"])

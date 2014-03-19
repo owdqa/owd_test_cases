@@ -9,7 +9,7 @@ from gaiatest import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
 
@@ -31,12 +31,12 @@ class test_main(GaiaTestCase):
         #
         self.mock_contacts = [MockContact() for i in range(self.num_contacts)]
 
-        map(self.UTILS.insertContact, self.mock_contacts)
+        map(self.UTILS.general.insertContact, self.mock_contacts)
 
         self.listContacts = [c["givenName"] for c in self.mock_contacts]
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -47,8 +47,8 @@ class test_main(GaiaTestCase):
         #
         # Verify list has 'num_contacts' contacts.
         #
-        x = self.UTILS.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
-        self.UTILS.TEST(self.num_contacts == len(x), "All contacts are showed")
+        x = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
+        self.UTILS.test.TEST(self.num_contacts == len(x), "All contacts are showed")
 
         #
         # Verify contacts shown are the contact inserted.
@@ -57,8 +57,8 @@ class test_main(GaiaTestCase):
         for i in x:
             for c in self.listContacts:
                 if (c in i.text):
-                    self.UTILS.logResult("info", "Contact " + c + " inserted")
+                    self.UTILS.reporting.logResult("info", "Contact " + c + " inserted")
                     count += 1
                     break
 
-        self.UTILS.TEST(count == self.num_contacts, "All contacts inserted")
+        self.UTILS.test.TEST(count == self.num_contacts, "All contacts inserted")

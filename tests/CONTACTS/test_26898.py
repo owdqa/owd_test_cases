@@ -9,7 +9,7 @@ from gaiatest import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 import time
 from tests._mock_data.contacts import MockContact
@@ -31,7 +31,7 @@ class test_main(GaiaTestCase):
         self.contact = MockContact()
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -47,16 +47,16 @@ class test_main(GaiaTestCase):
         self.contacts.replace_str(contFields['givenName'], self.contact["givenName"])
         self.contacts.replace_str(contFields['familyName'], self.contact["familyName"])
 
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot at this point", x)
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot at this point", x)
 
-        x = self.UTILS.getElement(DOM.Contacts.done_button, "Done button")
+        x = self.UTILS.element.getElement(DOM.Contacts.done_button, "Done button")
         x.tap()
 
         self.contacts.view_contact(self.contact["name"])
 
         time.sleep(1)
-        self.UTILS.waitForNotElements(("xpath", "//h2[text()='Home']"), "'Home' section.")
+        self.UTILS.element.waitForNotElements(("xpath", "//h2[text()='Home']"), "'Home' section.")
 
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot at this point", x)
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot at this point", x)

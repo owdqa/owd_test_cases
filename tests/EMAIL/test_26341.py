@@ -20,7 +20,7 @@ class test_26341(Emailing):
         self.testType = "gmail"
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         self.receive_email()

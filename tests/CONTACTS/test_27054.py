@@ -7,7 +7,7 @@ from gaiatest   import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.settings import Settings
 import time
@@ -22,15 +22,15 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.Settings = Settings(self)
 
-        self.wifi_name = self.UTILS.get_os_variable("GLOBAL_WIFI_NAME")
-        self.wifi_user = self.UTILS.get_os_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass = self.UTILS.get_os_variable("GLOBAL_WIFI_PASSWORD")
+        self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
+        self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
+        self.wifi_pass = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
 
-        self.hotmail_user = self.UTILS.get_os_variable("HOTMAIL_1_EMAIL")
-        self.hotmail_passwd = self.UTILS.get_os_variable("HOTMAIL_1_PASS")
+        self.hotmail_user = self.UTILS.general.get_os_variable("HOTMAIL_1_EMAIL")
+        self.hotmail_passwd = self.UTILS.general.get_os_variable("HOTMAIL_1_PASS")
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -46,11 +46,11 @@ class test_main(GaiaTestCase):
 
         x = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)
         if not x or x == "ALLIMPORTED":
-            self.UTILS.logResult(False, "Cannot continue past this point without importing the contacts.")
+            self.UTILS.reporting.logResult(False, "Cannot continue past this point without importing the contacts.")
             return
 
         # Try to get the hotmail contact (use the first one if not).
-        x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list")
+        x = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list")
         cont_number = 1
         i_counter = 0
         for i in x:
@@ -70,7 +70,7 @@ class test_main(GaiaTestCase):
         #
         # Check our contact is in the list.
         #
-        self.UTILS.waitForElements(DOM.Contacts.view_all_contact_JSname, "Hotmail imported contact")
+        self.UTILS.element.waitForElements(DOM.Contacts.view_all_contact_JSname, "Hotmail imported contact")
 
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot and details", x)
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot and details", x)

@@ -8,23 +8,23 @@ from gaiatest   import GaiaTestCase
 #
 # Imports particular to this test case.
 #
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.dialer import Dialer
 import time
 
 class test_main(GaiaTestCase):
-    
+
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.dialer      = Dialer(self)
-        
-        self.num = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+
+        self.num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
         #
         # Create a call log.
@@ -34,7 +34,7 @@ class test_main(GaiaTestCase):
         self.dialer.callThisNumber()
 
         #self.marionette.switch_to_frame()
-        #x = self.UTILS.getElement(DOM.Dialer.call_busy_button_ok, "OK button")
+        #x = self.UTILS.element.getElement(DOM.Dialer.call_busy_button_ok, "OK button")
         #x.tap()
 
         #time.sleep(2)
@@ -50,7 +50,7 @@ class test_main(GaiaTestCase):
 
      #   time.sleep(2)
      #   self.marionette.switch_to_frame()
-     #   x = self.UTILS.getElement(DOM.Dialer.call_busy_button_ok, "OK button")
+     #   x = self.UTILS.element.getElement(DOM.Dialer.call_busy_button_ok, "OK button")
      #   x.tap()
 
         #time.sleep(2)

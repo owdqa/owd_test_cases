@@ -9,7 +9,7 @@ from gaiatest import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
 
@@ -28,10 +28,10 @@ class test_main(GaiaTestCase):
         # Create test contacts.
         #
         self.contact = MockContact()
-        self.UTILS.insertContact(self.contact)
+        self.UTILS.general.insertContact(self.contact)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -57,10 +57,10 @@ class test_main(GaiaTestCase):
         #
         # Cancel deletion.
         #
-        x = self.UTILS.getElement(DOM.Contacts.cancel_delete_btn, "Cancel button")
+        x = self.UTILS.element.getElement(DOM.Contacts.cancel_delete_btn, "Cancel button")
         x.tap()
 
-        x = self.UTILS.getElement(DOM.Contacts.edit_cancel_button, "Cancel edit contact")
+        x = self.UTILS.element.getElement(DOM.Contacts.edit_cancel_button, "Cancel edit contact")
         x.tap()
 
         #
