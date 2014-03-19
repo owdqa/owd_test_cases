@@ -65,6 +65,10 @@ class Emailing(GaiaTestCase):
         # Make sure we have some data connectivity.
         #
         self.UTILS.getNetworkConnection()
+        #
+        #  Insert your comment
+        #
+        time.sleep(10)
 
     def send_email(self):
 
