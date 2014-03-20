@@ -94,7 +94,7 @@ class test_main(GaiaTestCase):
         #
         # Fill out all the other details.
         #
-        contFields = self.contacts.getContactFields()
+        contFields = self.contacts.get_contact_fields()
 
         #
         # Put the contact details into each of the fields (this method

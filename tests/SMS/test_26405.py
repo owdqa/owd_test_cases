@@ -43,7 +43,7 @@ class test_main(GaiaTestCase):
         self.messages.launch()
 
         #
-        # Type a message containing the required string 
+        # Type a message containing the required string
         #
         self.messages.startNewSMS()
         self.messages.enterSMSMsg("Test message")
@@ -53,4 +53,4 @@ class test_main(GaiaTestCase):
         #
         self.messages.selectAddContactButton()
         self.contacts.search(self.contact['name'])
-        self.contacts.selectSearchResultSeveralPhones(self.contact['name'], 0)
+        self.contacts.select_search_result_several_phones(self.contact['name'], 0)

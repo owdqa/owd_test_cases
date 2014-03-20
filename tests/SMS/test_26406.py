@@ -43,7 +43,7 @@ class test_main(GaiaTestCase):
         #
         self.messages.startNewSMS()
         self.messages.selectAddContactButton()
-        self.contacts.viewContact(self.contact["familyName"], False)
+        self.contacts.view_contact(self.contact["familyName"], False)
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
         self.messages.checkIsInToField(self.contact["name"], True)
 

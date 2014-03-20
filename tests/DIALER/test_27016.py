@@ -54,7 +54,7 @@ class test_main(GaiaTestCase):
         # Verify that this number was added to the contact.
         #
         self.contacts.launch()
-        self.contacts.viewContact(self.Contact_1["name"])
+        self.contacts.view_contact(self.Contact_1["name"])
 
         self.UTILS.element.waitForElements( ("xpath", DOM.Contacts.view_contact_tels_xpath % self.num_short),
                                     "New phone number %s in this contact" % self.num_short)

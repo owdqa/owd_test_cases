@@ -137,5 +137,5 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.general.checkMarionetteOK()
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
-        contFields = self.contacts.getContactFields()
+        contFields = self.contacts.get_contact_fields()
         self.contacts.replaceStr(contFields[p_field], p_valObj)

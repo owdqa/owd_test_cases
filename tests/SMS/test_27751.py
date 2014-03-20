@@ -52,7 +52,7 @@ class test_main(GaiaTestCase):
         # Open sms app and delete every thread to start a new one
         #
         self.contacts.launch()
-        self.contacts.viewContact(self.contact["name"])
+        self.contacts.view_contact(self.contact["name"])
         x = self.UTILS.element.getElement(DOM.Contacts.sms_button, "SMS button")
         x.tap()
 

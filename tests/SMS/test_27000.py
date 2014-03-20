@@ -57,7 +57,7 @@ class test_main(GaiaTestCase):
         x.tap()
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
-        contFields = self.contacts.getContactFields()
+        contFields = self.contacts.get_contact_fields()
 
         #
         # Verify the number is in the number field.

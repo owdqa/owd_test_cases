@@ -42,8 +42,9 @@ class test_main(GaiaTestCase):
 
         self.dialer.openCallLog()
 
-        x = self.UTILS.element.getElement(("xpath", DOM.Dialer.call_log_number_xpath.format(self.Contact_1["tel"]["value"])),
-                           "The call log for number {}".format(self.Contact_1["tel"]["value"]))
+        x = self.UTILS.element.getElement(("xpath",
+                                           DOM.Dialer.call_log_number_xpath.format(self.Contact_1["tel"]["value"])),
+                                          "The call log for number {}".format(self.Contact_1["tel"]["value"]))
         x.tap()
 
         time.sleep(2)

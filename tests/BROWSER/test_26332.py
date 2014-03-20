@@ -52,13 +52,6 @@ class test_main(GaiaTestCase):
         self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
 
         #
-        # Tap specific wifi network (if it's not already connected).
-        #
-        self.UTILS.test.TEST(
-                self.settings.wifi_list_isConnected(self.wifi_name),
-                "Wifi '" + self.wifi_name + "' is listed as 'connected' in wifi settings.", True)
-
-        #
         # Open the browser app.
         #
         self.Browser.launch()

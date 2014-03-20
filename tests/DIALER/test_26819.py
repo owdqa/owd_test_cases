@@ -11,13 +11,14 @@ from gaiatest   import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.dialer import Dialer
 
+
 class test_main(GaiaTestCase):
 
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.dialer     = Dialer(self)
+        self.UTILS = UTILS(self)
+        self.dialer = Dialer(self)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -35,4 +36,3 @@ class test_main(GaiaTestCase):
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot of multiple entries removed:", x)
-
