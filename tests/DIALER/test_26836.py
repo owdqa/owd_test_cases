@@ -22,9 +22,9 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.dialer     = Dialer(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.dialer = Dialer(self)
 
         #
         # Get details of our test contacts.
@@ -46,7 +46,7 @@ class test_main(GaiaTestCase):
         #
         # Search for our new contact.
         #
-        self.contacts.viewContact(self.Contact_1["name"])
+        self.contacts.view_contact(self.Contact_1["name"])
 
         #
         # Tap the phone number.
@@ -57,13 +57,13 @@ class test_main(GaiaTestCase):
         #
         # Switch to dialer.
         #
-        _warn = self.UTILS.element.getElement( ("xpath", "//p[contains(text(), 'airplane mode')]"), 
+        _warn = self.UTILS.element.getElement(("xpath", "//p[contains(text(), 'airplane mode')]"),
                                     "Airplane mode warning")
         if _warn:
             x = self.UTILS.debug.screenShotOnErr()
             self.UTILS.reporting.logResult("info", "Airplane mode warning displayed: \"%s\"" % _warn.text, x)
 
-        x = self.UTILS.element.getElement( ("xpath", "//button[text()='OK']"), "OK button")
+        x = self.UTILS.element.getElement(("xpath", "//button[text()='OK']"), "OK button")
         x.tap()
 
         self.UTILS.element.waitForElements(DOM.Contacts.view_details_title, "Contact details")

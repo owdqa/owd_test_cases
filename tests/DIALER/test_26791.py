@@ -50,11 +50,12 @@ class test_main(GaiaTestCase):
         x.tap()
 
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
-        self.contacts.viewContact(self.Contact_1["name"], p_HeaderCheck=False)
+        self.contacts.view_contact(self.Contact_1["name"], header_check=False)
 
         x = self.UTILS.element.getElement(("name", "tel[0][value]"), "Phone number 1")
         self.UTILS.test.TEST(x.get_attribute("value") == self.Contact_1["tel"]["value"],
-                        "1st number is {} (it was {}).".format(self.Contact_1["tel"]["value"], x.get_attribute("value")))
+                             "1st number is {} (it was {}).".format(self.Contact_1["tel"]["value"],
+                                                                    x.get_attribute("value")))
 
         x = self.UTILS.element.getElement(("name", "tel[1][value]"), "Phone number 2")
         self.UTILS.test.TEST(x.get_attribute("value") == self._testNum,

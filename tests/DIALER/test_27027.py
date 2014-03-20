@@ -38,7 +38,7 @@ class test_main(GaiaTestCase):
  
         self.dialer.callLog_createContact(self.num, p_openCallLog=False)
  
-        contFields = self.contacts.getContactFields()
+        contFields = self.contacts.get_contact_fields()
         self.contacts.replaceStr(contFields['givenName'  ] , self.Contact_1["givenName"])
         self.contacts.replaceStr(contFields['familyName' ] , self.Contact_1["familyName"])
   
@@ -61,4 +61,4 @@ class test_main(GaiaTestCase):
         #
         self.apps.kill_all()
         self.contacts.launch()
-        self.contacts.viewContact(self.Contact_1["name"])
+        self.contacts.view_contact(self.Contact_1["name"])

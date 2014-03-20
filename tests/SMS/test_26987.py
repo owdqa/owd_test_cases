@@ -51,7 +51,7 @@ class test_main(GaiaTestCase):
         #
         # Fill in some details.
         #
-        contFields = self.contacts.getContactFields()
+        contFields = self.contacts.get_contact_fields()
         self.contacts.replaceStr(contFields['givenName'], "Test")
         self.contacts.replaceStr(contFields['familyName'], "Testerton")
 

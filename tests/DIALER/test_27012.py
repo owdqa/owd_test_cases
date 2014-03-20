@@ -51,7 +51,7 @@ class test_main(GaiaTestCase):
         # Enter the details of the new contact.
         #
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
-        contFields = self.contacts.getContactFields()
+        contFields = self.contacts.get_contact_fields()
         self.contacts.replaceStr(contFields['givenName'  ] , self.Contact_1["givenName"])
         self.contacts.replaceStr(contFields['familyName' ] , self.Contact_1["familyName"])
  
@@ -72,7 +72,7 @@ class test_main(GaiaTestCase):
         #
         self.apps.kill_all()
         self.contacts.launch()
-        self.contacts.viewContact(self.Contact_1["name"])
+        self.contacts.view_contact(self.Contact_1["name"])
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Final screenshot and html dump:", x)        

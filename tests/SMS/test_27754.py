@@ -53,7 +53,7 @@ class test_main(GaiaTestCase):
 
         for i in range(len(self.test_contacts)):
             self.messages.selectAddContactButton()
-            self.contacts.viewContact(self.test_contacts[i]["name"], False)
+            self.contacts.view_contact(self.test_contacts[i]["name"], False)
             self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
             self.messages.checkIsInToField(self.test_contacts[i]["name"], True)
 

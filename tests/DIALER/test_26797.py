@@ -23,9 +23,9 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.dialer     = Dialer(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.dialer = Dialer(self)
 
         #
         # Get details of our test contacts.
@@ -33,7 +33,7 @@ class test_main(GaiaTestCase):
         self.Contact_1 = MockContact()
         self.UTILS.general.insertContact(self.Contact_1)
 
-        self.contact_name=self.Contact_1["givenName"]
+        self.contact_name = self.Contact_1["givenName"]
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -50,20 +50,9 @@ class test_main(GaiaTestCase):
         #
         # Go to the view details screen for this contact.
         #
-        #self.marionette.switch_to_frame()
-        #=======================================================================
-        # self.marionette.switch_to_frame()
-        # self.UTILS.element.waitForNotElements( ("xpath", "//iframe[contains(@%s, '%s')]" % \
-        #                                         (DOM.Contacts.frame_locator[0], DOM.Contacts.frame_locator[1])),
-        #                                 "COntacts frame")
-        # self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator)
-        # 
-        # 
-        #=======================================================================
-        self.contacts.viewContact(self.contact_name, p_HeaderCheck=False)
+        self.contacts.view_contact(self.contact_name, header_check=False)
 
         x = self.UTILS.element.getElement(DOM.Contacts.view_contact_tel_field, "Telephone number")
-        p_num=x.get_attribute("value")
         x.tap()
 
         #
@@ -71,7 +60,7 @@ class test_main(GaiaTestCase):
         #
         time.sleep(1)
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)
-        self.UTILS.element.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP.format(self.Contact_1["name"])),
+        self.UTILS.element.waitForElements(("xpath", DOM.Dialer.outgoing_call_numberXP.format(self.Contact_1["name"])),
                                     "Outgoing call found with number matching {}".format(self.Contact_1["name"]))
 
         time.sleep(2)

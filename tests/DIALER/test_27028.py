@@ -48,7 +48,7 @@ class test_main(GaiaTestCase):
         # Verify that this contact has been modified in contacts.
         #
         self.contacts.launch()
-        self.contacts.viewContact(self.Contact_1["name"])
+        self.contacts.view_contact(self.Contact_1["name"])
 
         self.UTILS.element.waitForElements( ("xpath", DOM.Contacts.view_contact_tels_xpath % self.num), 
                                     "Telephone number %s in conact" % self.num)

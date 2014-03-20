@@ -34,7 +34,7 @@ class test_main(GaiaTestCase):
                                     {'type': 'Mobile', 'value': '222222222'}])
 
         #
-        # We're not testing adding a contact, so just stick one 
+        # We're not testing adding a contact, so just stick one
         # into the database.
         #
         self.UTILS.general.insertContact(self.contact)
@@ -54,12 +54,12 @@ class test_main(GaiaTestCase):
         #
         # View the details of our contact.
         #
-        self.contacts.viewContact(self.contact['name'])
+        self.contacts.view_contact(self.contact['name'])
 
         #
         # Tap the 2nd sms button (index=1) in the view details screen to go to the sms page.
         #
-        smsBTN = self.UTILS.element.getElement(("id", DOM.Contacts.sms_button_specific_id % 1),
+        smsBTN = self.UTILS.element.getElement(("id", DOM.Contacts.sms_button_specific_id.format(1)),
                                         "2nd send SMS button")
         smsBTN.tap()
 

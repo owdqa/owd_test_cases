@@ -45,7 +45,7 @@ class test_main(GaiaTestCase):
     def test_run(self):
 
         self.contacts.launch()
-        self.contacts.viewContact(self.contact["name"])
+        self.contacts.view_contact(self.contact["name"])
         x = self.UTILS.element.getElement(DOM.Contacts.sms_button, "SMS button")
         x.tap()
 
