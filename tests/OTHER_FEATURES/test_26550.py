@@ -53,13 +53,13 @@ class test_main(GaiaTestCase):
         self.marionette.switch_to_frame()
         try:
             self.wait_for_element_present("xpath", "//iframe[contains(@{},'{}')]".\
-                                           format(DOM.settings.frame_locator[0], DOM.settings.frame_locator[1]),
+                                           format(DOM.Settings.frame_locator[0], DOM.Settings.frame_locator[1]),
                                            timeout=5)
 
             #
             # We need to supply the login details for the network.
             #
-            self.UTILS.iframe.switchToFrame(*DOM.settings.frame_locator)
+            self.UTILS.iframe.switchToFrame(*DOM.Settings.frame_locator)
             self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
 
             self.marionette.switch_to_frame()
