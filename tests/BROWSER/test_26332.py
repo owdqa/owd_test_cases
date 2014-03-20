@@ -15,7 +15,7 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
-        self.Settings = Settings(self)
+        self.settings = Settings(self)
         self.Browser = Browser(self)
         self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
         self.testURL = self.UTILS.general.get_os_variable("GLOBAL_TEST_URL")
@@ -32,30 +32,30 @@ class test_main(GaiaTestCase):
         #self.data_layer.forget_all_networks()
 
         #
-        # Open the Settings application.
+        # Open the settings application.
         #
-        self.Settings.launch()
+        self.settings.launch()
 
         #
         # Tap Wi-Fi.
         #
-        self.Settings.wifi()
+        self.settings.wifi()
 
         #
         # Make sure wifi is set to 'on'.
         #
-        self.Settings.wifi_switchOn()
+        self.settings.wifi_switchOn()
 
         #
         # Connect to the wifi.
         #
-        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
+        self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
 
         #
         # Tap specific wifi network (if it's not already connected).
         #
         self.UTILS.test.TEST(
-                self.Settings.wifi_list_isConnected(self.wifi_name),
+                self.settings.wifi_list_isConnected(self.wifi_name),
                 "Wifi '" + self.wifi_name + "' is listed as 'connected' in wifi settings.", True)
 
         #

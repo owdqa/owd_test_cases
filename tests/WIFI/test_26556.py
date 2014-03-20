@@ -21,7 +21,7 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
-        self.Settings = Settings(self)
+        self.settings = Settings(self)
         self.Browser = Browser(self)
 
         self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
@@ -33,12 +33,12 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         #
-        # Open the Settings application.
+        # Open the settings application.
         #
-        self.Settings.launch()
-        self.Settings.wifi()
-        self.Settings.wifi_switchOn()
-        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
+        self.settings.launch()
+        self.settings.wifi()
+        self.settings.wifi_switchOn()
+        self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
 
         #
         # Open the browser app.

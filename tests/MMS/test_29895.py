@@ -5,11 +5,11 @@ import sys
 sys.path.insert(1, "./")
 from gaiatest   import GaiaTestCase
 
-from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
 from OWDTestToolkit.apps.settings import Settings
+
 
 class test_main(GaiaTestCase):
 
@@ -48,7 +48,6 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
 
-
         #
         # Turn on wifi connection.
         #
@@ -62,4 +61,3 @@ class test_main(GaiaTestCase):
         # Verify that the MMS has been received.
         #
         self.messages.verifyMMSReceived("image")
-

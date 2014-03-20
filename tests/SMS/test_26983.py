@@ -14,9 +14,11 @@ from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.email import Email
 import time
 
+
 class test_main(GaiaTestCase):
 
     test_msg = "Test message."
+    _RESTART_DEVICE = True
 
     def setUp(self):
         #
@@ -29,11 +31,10 @@ class test_main(GaiaTestCase):
 
         self.USER1 = self.UTILS.general.get_os_variable("GMAIL_1_USER")
         self.EMAIL1 = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
-        self.PASS1  = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
- 
+        self.PASS1 = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
+
         self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
-
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()

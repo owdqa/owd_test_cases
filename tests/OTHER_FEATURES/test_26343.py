@@ -13,19 +13,19 @@ from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 import time
 
+
 class test_main(GaiaTestCase):
 
     _test_apps = ["Gallery", "FM Radio"]
-    _img_list  = ('img1.jpg', 'img2.jpg')
+    _img_list = ('img1.jpg', 'img2.jpg')
 
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -68,9 +68,11 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logComment("(Didn't drag the app 'up' to close it, I just clicked the 'close' button.)")
 
         # Kill the radio.
-        x = self.UTILS.element.getElement(radio_app["close_button"], "Close button on '" + radio_app["name"] + "' card")
+        x = self.UTILS.element.getElement(radio_app["close_button"],
+                                          "Close button on '" + radio_app["name"] + "' card")
         x.tap()
-        self.UTILS.element.waitForNotElements(radio_app["card"], "Card for '" + radio_app["name"] + "'", True, 5, False)
+        self.UTILS.element.waitForNotElements(radio_app["card"],
+                                              "Card for '" + radio_app["name"] + "'", True, 5, False)
 
         # Open the gallery.
         x = self.UTILS.element.getElement(gallery_app["card"], "Card for '" + gallery_app["name"] + "'")

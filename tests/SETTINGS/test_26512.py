@@ -3,27 +3,24 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.settings import Settings
 
-#
-# Imports particular to this test case.
-#
 
 class test_main(GaiaTestCase):
-
 
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.settings   = Settings(self)
+        self.UTILS = UTILS(self)
+        self.settings = Settings(self)
 
-        self.wifi_name  = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
-        self.wifi_user  = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass  = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
+        self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
+        self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
+        self.wifi_pass = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
