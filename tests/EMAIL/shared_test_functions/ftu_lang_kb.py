@@ -106,7 +106,7 @@ class Emailing():
         imgsize = os.path.getsize(imgnam)
         self._checkSize("Lowercase alpha", self.sizes[0], imgsize)
 
-        self.parent.keyboard.tap_shift()
+        self.parent.parent.keyboard.tap_shift()
         imgnam = self.UTILS.debug.screenShot("42_uppercase_alpha")
         self.UTILS.reporting.logComment("Screenshot of uppercase alpha keyboard = " + imgnam)
         imgsize = os.path.getsize(imgnam)
@@ -118,7 +118,7 @@ class Emailing():
         imgsize = os.path.getsize(imgnam)
         self._checkSize("Numeric", self.sizes[2], imgsize)
 
-        self.parent.keyboard.tap_alt()
+        self.parent.parent.keyboard.tap_alt()
         imgnam = self.UTILS.debug.screenShot("42_alt_numeric")
         self.UTILS.reporting.logComment("Screenshot of alt numeric keyboard = " + imgnam)
         imgsize = os.path.getsize(imgnam)

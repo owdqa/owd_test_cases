@@ -3,7 +3,8 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
 
@@ -24,8 +25,10 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.settings.launch()
 
-        self.UTILS.test.TEST(self.UTILS.network.isNetworkTypeEnabled("airplane") == False, "Airplane mode is disabled by default.")
-        self.UTILS.test.TEST(self.data_layer.get_setting('ril.radio.disabled') == False, "Radio functionality is enabled by default.")
+        self.UTILS.test.TEST(self.UTILS.network.isNetworkTypeEnabled("airplane") == False,
+                             "Airplane mode is disabled by default.")
+        self.UTILS.test.TEST(self.data_layer.get_setting('ril.radio.disabled') == False,
+                             "Radio functionality is enabled by default.")
 
         self.UTILS.reporting.logResult("info", "Turning airplane mode on ...")
         x = self.UTILS.element.getElement(DOM.Settings.airplane_mode_switch, "Airplane mode switch")
@@ -33,5 +36,7 @@ class test_main(GaiaTestCase):
 
         self.UTILS.network.waitForNetworkItemEnabled("airplane")
 
-        self.UTILS.test.TEST(self.UTILS.network.isNetworkTypeEnabled("airplane") == True, "Airplane mode is now enabled.")
-        self.UTILS.test.TEST(self.data_layer.get_setting('ril.radio.disabled') == True, "Radio functionality is now disabled.")
+        self.UTILS.test.TEST(self.UTILS.network.isNetworkTypeEnabled("airplane") == True,
+                             "Airplane mode is now enabled.")
+        self.UTILS.test.TEST(self.data_layer.get_setting('ril.radio.disabled') == True,
+                             "Radio functionality is now disabled.")
