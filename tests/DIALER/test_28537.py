@@ -38,7 +38,7 @@ class test_main(GaiaTestCase):
         # Delete the contact. (REVISAR)
         #
         #self.contacts.launch()
-        #self.contacts.deleteContact(self.contact_name)
+        #self.contacts.delete_contact(self.contact_name)
 
         self.UTILS.reporting.reportResults()
 

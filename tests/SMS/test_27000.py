@@ -69,8 +69,8 @@ class test_main(GaiaTestCase):
         # Put the contact details into each of the fields (this method
         # clears each field first).
         #
-        self.contacts.replaceStr(contFields['givenName'], "Test2700")
-        self.contacts.replaceStr(contFields['familyName'], "Testerton")
+        self.contacts.replace_str(contFields['givenName'], "Test2700")
+        self.contacts.replace_str(contFields['familyName'], "Testerton")
         x = self.UTILS.element.getElement(DOM.Contacts.done_button, "Done button")
         x.tap()
 

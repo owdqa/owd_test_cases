@@ -49,8 +49,8 @@ class test_main(GaiaTestCase):
         self.dialer.callLog_createContact(self.num)
  
         contFields = self.contacts.get_contact_fields()
-        self.contacts.replaceStr(contFields['givenName'  ] , self.Contact_1["givenName"])
-        self.contacts.replaceStr(contFields['familyName' ] , self.Contact_1["familyName"])
+        self.contacts.replace_str(contFields['givenName'  ] , self.Contact_1["givenName"])
+        self.contacts.replace_str(contFields['familyName' ] , self.Contact_1["familyName"])
  
         done_button = self.UTILS.element.getElement(DOM.Contacts.done_button, "'Done' button")
         done_button.tap()

@@ -26,7 +26,7 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
 
         num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.Contact_1 = MockContact(tel={'type': 'Mobile', 'value': num})
+        self.contact = MockContact(tel={'type': 'Mobile', 'value': num})
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -35,28 +35,44 @@ class test_main(GaiaTestCase):
         self.dialer.launch()
         self.dialer.callLog_clearAll()
 
-        self.dialer.enterNumber(self.Contact_1["tel"]["value"])
+        self.dialer.enterNumber(self.contact["tel"]["value"])
         self.dialer.callThisNumber()
         time.sleep(2)
-        self.dialer.hangUp()
+
+        self.UTILS.test.TEST(True, "Looking for Element OK Button")
+        ok_btn = self.UTILS.element.getElement(DOM.Dialer.call_busy_button_ok, "Ok Button")
+
+        # Since the call destination is the same as the origin, it's very likely to get an error
+        # message. If this is the case, tap the OK button. Otherwise (i.e. using twilio), hang up the call
+        if ok_btn:
+            self.UTILS.test.TEST(True, "Button text: {}".format(ok_btn.text))
+            ok_btn.tap()
+        else:
+            self.dialer.hangUp()
 
         self.dialer.openCallLog()
 
-        _number_el = DOM.Dialer.call_log_number_xpath.format(self.Contact_1["tel"]["value"])
+        self.UTILS.TEST(True, "Looking for {} in DOM Element: {}".format(self.contact["tel"]["value"],
+                                                                         DOM.Dialer.call_log_number_xpath))
+        _number_el = DOM.Dialer.call_log_number_xpath.format(self.contact["tel"]["value"])
+        self.UTILS.TEST(True, "Waiting for elements _number_el: {}".format(_number_el))
         self.UTILS.element.waitForElements(("xpath", _number_el),
-                           "The number {} in the call log".format(self.Contact_1["tel"]["value"]))
-        self.UTILS.element.waitForNotElements(("xpath", "{}//*[text()='{}']".format(_number_el, self.Contact_1["name"])),
-                           "The name {} in the call log".format(self.Contact_1["name"]))
+                           "The number {} in the call log".format(self.contact["tel"]["value"]))
+        self.UTILS.TEST(True, "Waiting for NOT elements: {}".format("{}//*[text()='{}']".\
+                                                                    format(_number_el, self.contact["name"])))
+        self.UTILS.element.waitForNotElements(("xpath", "{}//*[text()='{}']".\
+                                               format(_number_el, self.contact["name"])),
+                                              "The name {} in the call log".format(self.contact["name"]))
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Call log <i>before</i> adding contact details for this number:", x)
 
         self.contacts.launch()
-        self.contacts.createNewContact(self.Contact_1)
+        self.contacts.create_contact(self.contact)
 
         self.dialer.launch()
         self.dialer.openCallLog()
 
-        self.UTILS.element.waitForElements(("xpath", DOM.Dialer.call_log_name_xpath.format(self.Contact_1["name"])),
-                           "The name {} in the call log".format(self.Contact_1["name"]))
+        self.UTILS.element.waitForElements(("xpath", DOM.Dialer.call_log_name_xpath.format(self.contact["name"])),
+                           "The name {} in the call log".format(self.contact["name"]))
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Call log <i>after</i> adding contact details for this number:", x)

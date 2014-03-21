@@ -29,8 +29,8 @@ class test_main(GaiaTestCase):
         # Prepare the contact we're going to insert.
         #
         self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.contact_1 = MockContact(tel = {'type': '', 'value': self.num1})
-        self.contact_2 = MockContact(tel = {'type': '', 'value': self.num1})
+        self.contact_1 = MockContact(tel={'type': '', 'value': self.num1})
+        self.contact_2 = MockContact(tel={'type': '', 'value': self.num1})
 
         self.UTILS.general.insertContact(self.contact_1)
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact_1["tel"]["value"])
@@ -46,9 +46,9 @@ class test_main(GaiaTestCase):
 
         #
         # Send a message to create a thread (use number, not name as this
-        # avoids some blocking bugs just now). 
+        # avoids some blocking bugs just now).
         #
-        self.messages.createAndSendSMS( [self.contact_1["tel"]["value"]], "Test message.")
+        self.messages.createAndSendSMS([self.contact_1["tel"]["value"]], "Test message.")
         self.messages.waitForReceivedMsgInThisThread()
 
         #
@@ -56,7 +56,7 @@ class test_main(GaiaTestCase):
         #
         self.contacts.launch()
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact_2["tel"]["value"])
-        self.contacts.editContact(self.contact_1["name"], self.contact_2)
+        self.contacts.edit_contact(self.contact_1["name"], self.contact_2)
 
         #
         # Re-launch messages app.

@@ -3,17 +3,15 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
-from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
-import time
 
 
 class test_main(GaiaTestCase):
@@ -31,7 +29,7 @@ class test_main(GaiaTestCase):
         # Prepare the contact we're going to insert.
         #
         self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.contact = MockContact(tel = {'type': '', 'value': self.num1})
+        self.contact = MockContact(tel={'type': '', 'value': self.num1})
 
         self.UTILS.general.insertContact(self.contact)
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact["tel"]["value"])
@@ -46,7 +44,7 @@ class test_main(GaiaTestCase):
         self.messages.launch()
 
         #
-        # Type a message containing the required string 
+        # Type a message containing the required string
         #
         self.messages.startNewSMS()
         self.messages.enterSMSMsg("Test message")
@@ -54,7 +52,6 @@ class test_main(GaiaTestCase):
         #
         # Search for our contact.
         #
-        orig_iframe = self.messages.selectAddContactButton()
+        self.messages.selectAddContactButton()
         self.contacts.search("Knot A Match")
-        self.contacts.checkSearchResults("Knot A Match", False)
-
+        self.contacts.check_search_results("Knot A Match", False)

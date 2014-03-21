@@ -24,18 +24,18 @@ class test_main(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
 
-        self.UTILS      = UTILS(self)
-        self.EME        = EverythingMe(self)
-        self.Settings   = Settings(self)
+        self.UTILS = UTILS(self)
+        self.EME = EverythingMe(self)
+        self.Settings = Settings(self)
 
         self.UTILS.app.setPermission('Homescreen', 'geolocation', 'deny')
-    
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
-        # Dug to a bug, the message only appears if you 
+        # Due to a bug, the message only appears if you
         # have used eme with a network connection first,
         # but not if the first time you use eme is without
         # a network connection. So test for both situations.
@@ -55,7 +55,7 @@ class test_main(GaiaTestCase):
         #
         # Verify that the message is displayed.
         #
-        self.UTILS.element.waitForElements(DOM.EME.connection_warning_msg, 
+        self.UTILS.element.waitForElements(DOM.EME.connection_warning_msg,
                                    "Connection message (without using with a network first)",
                                    True, 10, False)
 
@@ -76,18 +76,19 @@ class test_main(GaiaTestCase):
         # Turn networking off and launch the 'everything.me' app again.
         #
         self.UTILS.network.disableAllNetworkSettings()
-        self.UTILS.reporting.logResult("info", "Launching EME with NO network connection (after being used WITH a network connection) ...")
+        self.UTILS.reporting.logResult("info", "Launching EME with NO network connection "\
+                                       "(after being used WITH a network connection) ...")
         self.EME.launch()
-  
+
         #
         # Select a category (group).
         #
         self.EME.pick_group("Music")
-  
+
         #
         # Verify that the message is displayed.
         #
-        self.UTILS.element.waitForElements(DOM.EME.connection_warning_msg, 
+        self.UTILS.element.waitForElements(DOM.EME.connection_warning_msg,
                                    "Connection message (after using with a network)",
                                    True, 10, False)
 

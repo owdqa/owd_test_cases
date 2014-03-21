@@ -15,17 +15,17 @@ from OWDTestToolkit.apps.settings import Settings
 
 class test_main(GaiaTestCase):
 
-    APP_NAME    = 'Wikipedia'
-    APP_AUTHOR  = 'tfinc'
+    APP_NAME = 'Wikipedia'
+    APP_AUTHOR = 'tfinc'
 
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.Market     = Marketplace(self)
-        self.Settings   = Settings(self)
+        self.UTILS = UTILS(self)
+        self.Market = Marketplace(self)
+        self.Settings = Settings(self)
 
     def tearDown(self):
 #         self.messages.waitForSMSNotifier("222000",5)
@@ -51,16 +51,15 @@ class test_main(GaiaTestCase):
         # Launch market app.
         #
         self.Market.launch()
-    
+
         #
         # Install our app.
         #
         self.UTILS.test.TEST(self.Market.installApp(self.APP_NAME, self.APP_AUTHOR),
                         "Successfully installed application '" + self.APP_NAME + "'.", True)
-    
+
         #
         # Launch the app from the homescreen.
         #
-        self.UTILS.test.TEST(self.UTILS.launchAppViaHomescreen(self.APP_NAME),
+        self.UTILS.test.TEST(self.UTILS.app.launchAppViaHomescreen(self.APP_NAME),
                         "Application '" + self.APP_NAME + "' can be launched from homescreen.")
-

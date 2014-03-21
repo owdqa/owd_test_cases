@@ -16,7 +16,7 @@ import time
 
 class test_main(GaiaTestCase):
 
-    num = "620971426"
+    num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
     def setUp(self):
         #
@@ -56,5 +56,5 @@ class test_main(GaiaTestCase):
         #
         preview_text = self.messages.getThreadText(self.num)
 
-        self.UTILS.test.TEST(preview_text in msg_text, 
+        self.UTILS.test.TEST(preview_text in msg_text,
                         "Preview text ({}) is in the original message text({}).".format(preview_text, msg_text))
