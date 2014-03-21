@@ -15,18 +15,17 @@ from OWDTestToolkit.apps.dialer import Dialer
 from tests._mock_data.contacts import MockContact
 
 
-
 class test_main(GaiaTestCase):
 
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.dialer     = Dialer(self)
-        self.contacts   = Contacts(self)
+        self.UTILS = UTILS(self)
+        self.dialer = Dialer(self)
+        self.contacts = Contacts(self)
 
         self.Contact_1 = MockContact()
-        self.num  = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -52,21 +51,21 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
         contFields = self.contacts.get_contact_fields()
-        self.contacts.replaceStr(contFields['givenName'  ] , self.Contact_1["givenName"])
-        self.contacts.replaceStr(contFields['familyName' ] , self.Contact_1["familyName"])
- 
+        self.contacts.replace_str(contFields['givenName'], self.Contact_1["givenName"])
+        self.contacts.replace_str(contFields['familyName'], self.Contact_1["familyName"])
+
         done_button = self.UTILS.element.getElement(DOM.Contacts.done_button, "'Done' button")
         done_button.tap()
- 
+
         #
         # Verify that the contacts app is closed and we are returned to the call log.
         #
         self.marionette.switch_to_frame()
-        self.UTILS.element.waitForNotElements( ("xpath", "//iframe[contains(@%s, '%s')]" % \
-                                                (DOM.Contacts.frame_locator[0], DOM.Contacts.frame_locator[1])),
-                                        "COntacts frame")
+        self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@{}, '{}')]".\
+                                               format(DOM.Contacts.frame_locator[0], DOM.Contacts.frame_locator[1])),
+                                              "Contacts frame")
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator)
- 
+
         #
         # Verify that this contact has been created in contacts.
         #
@@ -75,4 +74,4 @@ class test_main(GaiaTestCase):
         self.contacts.view_contact(self.Contact_1["name"])
 
         x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Final screenshot and html dump:", x)        
+        self.UTILS.reporting.logResult("info", "Final screenshot and html dump:", x)

@@ -77,7 +77,7 @@ class test_main(GaiaTestCase):
         # previous step
         #
         self.contacts.launch()
-        self.contacts.createNewContact(self.cont)
+        self.contacts.create_contact(self.cont)
 
         #
         # Switch back to the messages app.

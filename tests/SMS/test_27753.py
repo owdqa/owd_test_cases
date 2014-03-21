@@ -13,7 +13,7 @@ from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
-#import time
+
 
 class test_main(GaiaTestCase):
 
@@ -32,7 +32,7 @@ class test_main(GaiaTestCase):
         # Prepare the contact we're going to insert.
         #
         self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.contact = MockContact(tel = {'type': '', 'value': self.num1})
+        self.contact = MockContact(tel={'type': '', 'value': self.num1})
 
         self.UTILS.general.insertContact(self.contact)
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact["tel"]["value"])
@@ -54,11 +54,10 @@ class test_main(GaiaTestCase):
         #
         self.apps.kill(msgapp)
         self.contacts.launch()
-        self.contacts.deleteContact(self.contact["name"])
+        self.contacts.delete_contact(self.contact["name"])
 
         #
         # Go back to SMS app and try to open the thread by phone number
         #
         self.messages.launch()
         self.messages.openThread(self.contact["tel"]["value"])
-

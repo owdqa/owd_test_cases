@@ -102,14 +102,14 @@ class test_main(GaiaTestCase):
         #
 
         for key, value in contFields.items():
-            self.contact.replaceStr(value, self.contact[key] + "bis")
+            self.contact.replace_str(value, self.contact[key] + "bis")
 
         self.contacts.addGalleryImageToContact(0)
     
         #
         # Add another email address.
         #
-        self.contacts.addAnotherEmailAddress(self.contact["email"]["value"])
+        self.contacts.add_another_email_address(self.contact["email"]["value"])
 
         #
         # Press the Done button.

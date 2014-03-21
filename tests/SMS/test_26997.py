@@ -14,6 +14,7 @@ from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.dialer import Dialer
 import time
 
+
 class test_main(GaiaTestCase):
 
     test_msg = "Test message."
@@ -40,7 +41,8 @@ class test_main(GaiaTestCase):
         # Create and send a new test message containing all of our CORRECT numbers..
         #
         msgApp = self.messages.launch()
-        self.messages.createAndSendSMS([self.num1], "International num: 0034{}, and +34{}.".format(self.dummy_nums[0], self.dummy_nums[1]))
+        self.messages.createAndSendSMS([self.num1], "International num: 0034{}, and +34{}.".\
+                                       format(self.dummy_nums[0], self.dummy_nums[1]))
         x = self.messages.waitForReceivedMsgInThisThread()
 
         #
@@ -49,7 +51,8 @@ class test_main(GaiaTestCase):
         msg_nums = x.find_elements("tag name", "a")
 
         self.UTILS.test.TEST(len(msg_nums) == 2,
-                    "There are <b>2</b> numbers highlighted in the received text (there were <b>{}</b>).".format(len(msg_nums)))
+                    "There are <b>2</b> numbers highlighted in the received text (there were <b>{}</b>).".\
+                    format(len(msg_nums)))
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "SMS in app", x)
@@ -69,8 +72,8 @@ class test_main(GaiaTestCase):
 
     def _doTest(self, p_msgs, p_num):
         link_num = self.dummy_nums[p_num]
-        self.UTILS.reporting.logResult("info", "Tapping link to number: {}." % link_num)
-        self.UTILS.reporting.logResult("info", "Link text is '{}'." % p_msgs[p_num].text)
+        self.UTILS.reporting.logResult("info", "Tapping link to number: {}.".format(link_num))
+        self.UTILS.reporting.logResult("info", "Link text is '{}'.".format(p_msgs[p_num].text))
         p_msgs[p_num].tap()
         time.sleep(1)
 
@@ -80,7 +83,9 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator)
         time.sleep(2)
         x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot of dialer after clicking the link for number {}".format(link_num), x)
+        self.UTILS.reporting.logResult("info", "Screenshot of dialer after clicking the link for number {}".\
+                                       format(link_num), x)
         x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number")
         x_num = x.get_attribute("value")
-        self.UTILS.test.TEST(link_num in x_num, "Expected number ({}) matches number in dialer ({}).".format(link_num, x_num))
+        self.UTILS.test.TEST(link_num in x_num, "Expected number ({}) matches number in dialer ({}).".\
+                             format(link_num, x_num))

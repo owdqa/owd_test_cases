@@ -58,7 +58,7 @@ class test_main(GaiaTestCase):
         # TODO - uncommnent
         #
         # self.contacts.launch()
-        # self.contacts.createNewContact(self.cont)
+        # self.contacts.create_contact(self.cont)
 
         #
         # Launch messages app.

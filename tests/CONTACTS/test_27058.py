@@ -60,7 +60,7 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "Before editing contact:", x)
 
         x = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")[0]
-        self.contacts.editContact(x.text, self.contact)
+        self.contacts.edit_contact(x.text, self.contact)
 
         self.contacts.check_view_contact_details(self.contact)
 

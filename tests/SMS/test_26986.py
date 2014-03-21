@@ -13,6 +13,7 @@ from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.contacts import Contacts
 
+
 class test_main(GaiaTestCase):
 
     test_msg = "Test message."
@@ -42,7 +43,7 @@ class test_main(GaiaTestCase):
         # Create and send a new test message.
         #
         self.messages.createAndSendSMS([self.num1], "Test {} number.".format(self.num2))
-        x = self.messages.waitForReceivedMsgInThisThread()
+        self.messages.waitForReceivedMsgInThisThread()
 
         #
         # Tap the header to create a contact.
@@ -59,8 +60,8 @@ class test_main(GaiaTestCase):
         # Wait for the contacts app to go away.
         #
         self.marionette.switch_to_frame()
-        self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@src, '{}')]".format(DOM.Contacts.frame_locator[1]),
-                                       "Contacts iframe"))
+        self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@src, '{}')]".\
+                                               format(DOM.Contacts.frame_locator[1]), "Contacts iframe"))
 
         #
         # Kill the SMS app (and all others).
@@ -75,8 +76,5 @@ class test_main(GaiaTestCase):
         #
         # Verify that there are no contacts.
         #
-        self.UTILS.element.waitForElements( ("xpath", "//p[contains(text(), 'No contacts')]"),
+        self.UTILS.element.waitForElements(("xpath", "//p[contains(text(), 'No contacts')]"),
                                     "No contacts message")
-
-
-        
