@@ -3,7 +3,7 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
@@ -61,7 +61,7 @@ class test_main(GaiaTestCase):
         #
         self.marionette.switch_to_frame()
         self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@src, '{}')]".\
-                                               format(DOM.Contacts.frame_locator[1]), "Contacts iframe"))
+                                               format(DOM.Contacts.frame_locator[1])), "Contacts iframe")
 
         #
         # Kill the SMS app (and all others).

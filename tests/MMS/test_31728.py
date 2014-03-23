@@ -6,12 +6,13 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.music import Music
+
 
 class test_main(GaiaTestCase):
 
@@ -30,6 +31,7 @@ class test_main(GaiaTestCase):
         # Establish which phone number to use.
         #
         self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.target_mms_number = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.target_telNum)
 
     def tearDown(self):
@@ -39,8 +41,7 @@ class test_main(GaiaTestCase):
 
         #
         # Load files into the device.
-        self.UTILS.general.addFileToDevice('./tests/_resources/MP4.mp4',
-                                    destination='/SD/mus')
+        self.UTILS.general.addFileToDevice('./tests/_resources/MP4.mp4', destination='/SD/mus')
 
         #
         # Launch messages app.
@@ -73,10 +74,10 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
 
-        self.messages.openThread("+" + self.target_telNum)
+        self.messages.openThread(self.target_mms_number)
 
         #
         # Wait for the last message in this thread to be a 'recieved' one.
         #
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(returnedSMS, "A receieved message appeared in the thread.", True)
+        self.UTILS.test.TEST(returnedSMS, "A received message appeared in the thread.", True)

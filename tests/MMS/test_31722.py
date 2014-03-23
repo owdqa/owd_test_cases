@@ -6,7 +6,7 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
@@ -14,6 +14,7 @@ from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
 from OWDTestToolkit.apps.browser import Browser
 import time
+
 
 class test_main(GaiaTestCase):
 
@@ -34,6 +35,7 @@ class test_main(GaiaTestCase):
         # Establish which phone number to use.
         #
         self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.target_mms_number = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.target_telNum)
 
     def tearDown(self):
@@ -45,8 +47,7 @@ class test_main(GaiaTestCase):
         #
         # Load sample image into the gallery.
         #
-        self.UTILS.general.addFileToDevice('./tests/_resources/imgd.jpg',
-                                    destination='DCIM/100MZLLA')
+        self.UTILS.general.addFileToDevice('./tests/_resources/imgd.jpg', destination='DCIM/100MZLLA')
 
         #
         # Launch messages app.
@@ -81,7 +82,7 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
 
-        self.messages.openThread("+" + self.target_telNum)
+        self.messages.openThread(self.target_mms_number)
 
         #
         # Find all URLs
@@ -101,5 +102,4 @@ class test_main(GaiaTestCase):
         time.sleep(3)
         self.UTILS.iframe.switchToFrame(*DOM.Browser.frame_locator)
 
-        self.UTILS.test.TEST(self.browser.check_page_loaded(self.link1),
-                        "Web page loaded correctly.")
+        self.UTILS.test.TEST(self.browser.check_page_loaded(self.link1), "Web page loaded correctly.")

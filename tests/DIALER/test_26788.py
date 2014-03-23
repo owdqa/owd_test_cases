@@ -3,7 +3,7 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
@@ -48,7 +48,7 @@ class test_main(GaiaTestCase):
         x.tap()
 
         time.sleep(2)
-        self.UTILS.iframe.switchToFrame(*DOM.Dialer.call_log_contact_name_iframe, p_viaRootFrame=False)
+        self.UTILS.iframe.switchToFrame(*DOM.Dialer.call_log_contact_name_iframe, via_root_frame=False)
 
         x = self.UTILS.element.getElement(DOM.Contacts.view_contact_tel_field, "Telephone field")
         x.tap()

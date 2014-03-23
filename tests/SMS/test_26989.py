@@ -3,7 +3,7 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
@@ -11,6 +11,7 @@ from gaiatest   import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
+
 
 class test_main(GaiaTestCase):
 
@@ -22,7 +23,9 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        self.num1 = "+34" + self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        prefix = "+34" if not phone_number.startswith("+34") else ""
+        self.num1 = prefix + phone_number
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -37,9 +40,9 @@ class test_main(GaiaTestCase):
         # Create and send a new test message to this contact.
         #
         self.messages.createAndSendSMS([self.num1], "Test message")
-        x = self.messages.waitForReceivedMsgInThisThread()
+        self.messages.waitForReceivedMsgInThisThread()
 
-        # 
+        #
         # Tap the header.
         #
         x = self.UTILS.element.getElement(DOM.Messages.message_header, "Thread header")
@@ -56,4 +59,3 @@ class test_main(GaiaTestCase):
                                     "Add to existing contact button")
         self.UTILS.element.waitForElements(DOM.Messages.header_cancel_btn_no_send,
                                     "Cancel button")
-

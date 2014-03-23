@@ -3,7 +3,7 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
@@ -67,7 +67,7 @@ class test_main(GaiaTestCase):
         self.marionette.execute_script("document.getElementById('search-start').click();")
 
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
-        self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, p_viaRootFrame=False)
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, via_root_frame=False)
 
         self.marionette.execute_script("""
         var getElementByXpath = function (path) {
@@ -89,7 +89,7 @@ class test_main(GaiaTestCase):
         self.keyboard.send(search_name)
 
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
-        self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, p_viaRootFrame=False)
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, via_root_frame=False)
         after_search_count = self.UTILS.element.getElements(DOM.Contacts.import_search_list, "Search list")
 
         self.UTILS.test.TEST(len(after_search_count) == 1,

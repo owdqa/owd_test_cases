@@ -1,7 +1,7 @@
 #
 # Imports which are standard for all test cases.
 #
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.

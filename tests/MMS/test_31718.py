@@ -6,7 +6,7 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS

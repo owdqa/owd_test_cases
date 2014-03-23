@@ -3,7 +3,7 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
@@ -23,19 +23,18 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.dialer     = Dialer(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.dialer = Dialer(self)
 
         #
         # Get details of our test contacts.
         #
-        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': '665666666'})
+        self.Contact_1 = MockContact(tel={'type': 'Mobile', 'value': '665666666'})
         self.UTILS.general.insertContact(self.Contact_1)
 
         self._name = self.Contact_1["name"]
-        self._num  = self.Contact_1["tel"]["value"]
-
+        self._num = self.Contact_1["tel"]["value"]
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -50,10 +49,8 @@ class test_main(GaiaTestCase):
         self.dialer.callThisNumber()
 
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)
-        self.UTILS.element.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP.format(self._name)),
+        self.UTILS.element.waitForElements(("xpath", DOM.Dialer.outgoing_call_numberXP.format(self._name)),
                                     "Outgoing call found with name matching '{}'".format(self._name))
 
         time.sleep(2)
-
         self.dialer.hangUp()
-

@@ -3,7 +3,7 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
@@ -21,7 +21,6 @@ class test_main(GaiaTestCase):
     link = "owdqatestone@gmail.com"
     test_msg = "Test " + link + " this."
 
-
     def setUp(self):
         #
         # Set up child objects...
@@ -33,13 +32,12 @@ class test_main(GaiaTestCase):
 
         #
         # Insert a contact without email addresses
-        # 
-        self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg',
-                                    destination='DCIM/100MZLLA')
-        self.contact = MockContact(email = {'type': 'Personal', 'value': ''})
+        #
+        self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.contact = MockContact(email={'type': 'Personal', 'value': ''})
 
         self.UTILS.general.insertContact(self.contact)
-   
+
         #
         # Establish which phone number to use.
         #
@@ -49,17 +47,17 @@ class test_main(GaiaTestCase):
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
-    def test_run(self): 
+    def test_run(self):
         #
         # Launch messages app.
         #
         self.messages.launch()
-  
+
         #
         # Create and send a new test message.
         #
         self.messages.createAndSendSMS([self.target_telNum], self.test_msg)
-  
+
         #
         # Wait for the last message in this thread to be a 'received' one
         # and click the link.
@@ -67,7 +65,7 @@ class test_main(GaiaTestCase):
         x = self.messages.waitForReceivedMsgInThisThread()
         self.UTILS.test.TEST(x, "Received a message.", True)
 
-        a=x.find_element("tag name", "a")
+        a = x.find_element("tag name", "a")
 
         a.tap()
 
@@ -77,7 +75,7 @@ class test_main(GaiaTestCase):
         w = self.UTILS.element.getElement(DOM.Messages.header_add_to_contact_btn,
                                     "Add to existing contact button")
         w.tap()
-    
+
         #
         # Switch to Contacts app.
         #
@@ -89,8 +87,8 @@ class test_main(GaiaTestCase):
         # Select the contact.
         #
         z = self.UTILS.element.getElement(DOM.Contacts.view_all_contact_JS, "Search item")
-        z.tap()   
- 
+        z.tap()
+
         #
         # Fill out all the other details.
         #
@@ -100,12 +98,11 @@ class test_main(GaiaTestCase):
         # Put the contact details into each of the fields (this method
         # clears each field first).
         #
-
         for key, value in contFields.items():
-            self.contact.replace_str(value, self.contact[key] + "bis")
+            self.contacts.replace_str(value, value + "bis")
 
         self.contacts.addGalleryImageToContact(0)
-    
+
         #
         # Add another email address.
         #
@@ -121,8 +118,7 @@ class test_main(GaiaTestCase):
         # Check that the contacts iframe is now gone.
         #
         self.marionette.switch_to_frame()
-        self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@src,'contacts')]"),
-                                       "Contact app iframe")
+        self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@src,'contacts')]"), "Contact app iframe")
 
         #
         # Now return to the SMS app.

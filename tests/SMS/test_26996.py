@@ -3,7 +3,7 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
@@ -14,10 +14,11 @@ from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.dialer import Dialer
 import time
 
+
 class test_main(GaiaTestCase):
 
     test_num = "123456789"
-    test_msg = "Test number " + test_num + " for dialling."
+    test_msg = "Test number " + test_num + " for dialing."
 
     def setUp(self):
         #
@@ -41,7 +42,7 @@ class test_main(GaiaTestCase):
         # Launch messages app.
         #
         self.messages.launch()
-  
+
         #
         # Create and send a new test message.
         #
@@ -54,8 +55,7 @@ class test_main(GaiaTestCase):
         x = self.messages.waitForReceivedMsgInThisThread()
         self.UTILS.test.TEST(x, "Received a message.", True)
 
-        a=x.find_element("tag name", "a")
-
+        a = x.find_element("tag name", "a")
         a.tap()
 
         x = self.UTILS.element.getElement(DOM.Messages.header_call_btn, "Call button")
