@@ -35,7 +35,7 @@ class MockContact(dict):
         self['tel'] = {
             'type': 'Mobile',
             'value': '655{}'.format(curr_time[6:])}
-        self['adr'] = {
+        self['addr'] = {
             'type': 'Home',
             'streetAddress': '101 Testing street',
             'postalCode': '28014',

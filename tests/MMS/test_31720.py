@@ -5,7 +5,7 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
@@ -31,9 +31,8 @@ class test_main(GaiaTestCase):
         # Establish which phone number to use.
         #
         self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.target_mms_number = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.target_telNum)
-
-
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -43,8 +42,7 @@ class test_main(GaiaTestCase):
         # Sometimes causes a problem if not cleared.
         #
         self.UTILS.statusbar.clearAllStatusBarNotifs()
-        self.UTILS.general.addFileToDevice('./tests/_resources/80x60.jpg',
-                                        destination='DCIM/100MZLLA')
+        self.UTILS.general.addFileToDevice('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
 
         #
         # Create message.
@@ -95,4 +93,4 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
 
-        self.messages.checkMMSIcon("+" + self.target_telNum)
+        self.messages.checkMMSIcon(self.target_mms_number)

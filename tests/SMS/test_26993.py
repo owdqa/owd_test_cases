@@ -3,7 +3,7 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
@@ -14,7 +14,6 @@ from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
 from OWDTestToolkit.apps.dialer import Dialer
-#import time
 
 
 class test_main(GaiaTestCase):
@@ -29,10 +28,12 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.Dialer = Dialer(self)
 
-        self.num1 = '0034' + self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.num2 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        prefix = "0034"
+        self.num1 = prefix + phone_number if not phone_number.startswith("+34") else prefix + phone_number[3:]
+        self.num2 = phone_number[3:] if phone_number.startswith("+34") else phone_number
 
-        self.contact = MockContact(tel = {'type': 'Mobile', 'value': self.num1})
+        self.contact = MockContact(tel={'type': 'Mobile', 'value': self.num1})
 
         self.UTILS.general.insertContact(self.contact)
 

@@ -3,7 +3,7 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
@@ -23,14 +23,14 @@ class test_main(GaiaTestCase):
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.dialer     = Dialer(self)
-        self.contacts   = Contacts(self)
+        self.UTILS = UTILS(self)
+        self.dialer = Dialer(self)
+        self.contacts = Contacts(self)
 
-        self.num  = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.num2 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
 
-        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': self.num2})
+        self.Contact_1 = MockContact(tel={'type': 'Mobile', 'value': self.num2})
         self.UTILS.general.insertContact(self.Contact_1)
 
     def tearDown(self):
@@ -45,17 +45,17 @@ class test_main(GaiaTestCase):
         self.dialer.callThisNumber()
         time.sleep(2)
         self.dialer.hangUp()
- 
+
         #
         # Open the call log and add to our contact.
         #
         self.dialer.callLog_addToContact(self.num, self.Contact_1["name"])
- 
+
         #
         # Verify that this contact has been modified in contacts.
         #
         self.contacts.launch()
         self.contacts.view_contact(self.Contact_1["name"])
 
-        self.UTILS.element.waitForElements( ("xpath", DOM.Contacts.view_contact_tels_xpath % self.num), 
-                                    "Telephone number %s in contact" % self.num)
+        self.UTILS.element.waitForElements(("xpath", DOM.Contacts.view_contact_tels_xpath.format(self.num)),
+                                    "Telephone number {} in contact".format(self.num))

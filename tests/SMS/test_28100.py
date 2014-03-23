@@ -3,7 +3,7 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
@@ -12,6 +12,7 @@ from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 import time
+
 
 class test_main(GaiaTestCase):
 
@@ -45,18 +46,16 @@ class test_main(GaiaTestCase):
         self._testAll(nums, 0)
 
         self.UTILS.reporting.logResult("info", "<b>Check MIXED numbers are ok ...</b>")
-        nums = ["123", "12345678","1234"]
+        nums = ["123", "12345678", "1234"]
         self._testAll(nums, 1)
 
     def _testAll(self, nums, tappable_count):
-        sms_nums = ""
-
         #
         # Generate a string of the type: "Test0 <number> Test1 <number>...."
         #
-        fill_text = ["Test{}".format(i) for i in range(len(nums))] 
-        sms_msg = "Test numbers: {}".format(" ".join([item for sublist in map(None, fill_text, nums) for item in sublist]))
-
+        fill_text = ["Test{}".format(i) for i in range(len(nums))]
+        sms_msg = "Test numbers: {}".format(" ".join([item for sublist in map(None, fill_text, nums)
+                                                      for item in sublist]))
 
         #
         # Start from clean for each test run.
@@ -72,9 +71,8 @@ class test_main(GaiaTestCase):
         #
         msg_nums = x.find_elements("tag name", "a")
 
-        description = "There are <b>{}</b> numbers highlighted in the received text (there were <b>{}</b>)." 
-        self.UTILS.test.TEST(len(msg_nums) == tappable_count, 
-            description.format(tappable_count, len(msg_nums)))
+        description = "There are <b>{}</b> numbers highlighted in the received text (there were <b>{}</b>)."
+        self.UTILS.test.TEST(len(msg_nums) == tappable_count, description.format(tappable_count, len(msg_nums)))
 
         for i in range(len(msg_nums)):
             msg_nums[i].tap()
@@ -88,22 +86,21 @@ class test_main(GaiaTestCase):
             self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator)
 
             #
-            # Dialler is started with the number already filled in.
+            # Dialer is started with the number already filled in.
             #
             description = "The phone number contains '{}' (it was '{}')."
             x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number")
-            self.UTILS.test.TEST(nums[i] in x.get_attribute("value"), 
+            self.UTILS.test.TEST(nums[i] in x.get_attribute("value"),
                             description.format(nums[i], x.get_attribute("value")))
 
             #
             # Kill everything, then re-launch the messaging app etc ...
             #
             self.messages.launch()
-    
+
             #
-            # This may seem repetitive, but it looks like the referece to the 
+            # This may seem repetitive, but it looks like the reference to the
             # a HTML elements is lost when switching from apps
             #
             x = self.messages.waitForReceivedMsgInThisThread()
             msg_nums = x.find_elements("tag name", "a")
-

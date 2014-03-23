@@ -5,7 +5,7 @@ import sys
 sys.path.insert(1, "./")
 import time
 from OWDTestToolkit import DOM
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.calendar import Calendar
 

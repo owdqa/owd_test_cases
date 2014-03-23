@@ -3,7 +3,7 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
@@ -24,9 +24,9 @@ class test_main(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
 
-        self.UTILS      = UTILS(self)
-        self.Settings   = Settings(self)
-        self.EME        = EverythingMe(self)
+        self.UTILS = UTILS(self)
+        self.Settings = Settings(self)
+        self.EME = EverythingMe(self)
 
         self.UTILS.app.setPermission('Homescreen', 'geolocation', 'deny')
 
@@ -60,11 +60,11 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(DOM.EME.launched_display_button_bar, "Button bar 'displayer' element")
         x.tap()
 
-        self.UTILS.element.waitForElements(DOM.EME.launched_button_back     , "Button bar - back button")
-        self.UTILS.element.waitForElements(DOM.EME.launched_button_forward  , "Button bar - forward button")
-        self.UTILS.element.waitForElements(DOM.EME.launched_button_reload   , "Button bar - reload button")
-        self.UTILS.element.waitForElements(DOM.EME.launched_button_bookmark , "Button bar - bookmark button")
-        self.UTILS.element.waitForElements(DOM.EME.launched_button_close    , "Button bar - close button")
+        self.UTILS.element.waitForElements(DOM.EME.launched_button_back, "Button bar - back button")
+        self.UTILS.element.waitForElements(DOM.EME.launched_button_forward, "Button bar - forward button")
+        self.UTILS.element.waitForElements(DOM.EME.launched_button_reload, "Button bar - reload button")
+        self.UTILS.element.waitForElements(DOM.EME.launched_button_bookmark, "Button bar - bookmark button")
+        self.UTILS.element.waitForElements(DOM.EME.launched_button_close, "Button bar - close button")
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot of the button bar:", x)

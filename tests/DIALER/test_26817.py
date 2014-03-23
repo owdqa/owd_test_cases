@@ -3,7 +3,7 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
@@ -39,27 +39,12 @@ class test_main(GaiaTestCase):
         self.dialer.callThisNumber()
         time.sleep(2)
 
-        self.UTILS.test.TEST(True, "Looking for Element OK Button")
-        ok_btn = self.UTILS.element.getElement(DOM.Dialer.call_busy_button_ok, "Ok Button")
-
-        # Since the call destination is the same as the origin, it's very likely to get an error
-        # message. If this is the case, tap the OK button. Otherwise (i.e. using twilio), hang up the call
-        if ok_btn:
-            self.UTILS.test.TEST(True, "Button text: {}".format(ok_btn.text))
-            ok_btn.tap()
-        else:
-            self.dialer.hangUp()
-
+        self.dialer.hangUp()
         self.dialer.openCallLog()
 
-        self.UTILS.TEST(True, "Looking for {} in DOM Element: {}".format(self.contact["tel"]["value"],
-                                                                         DOM.Dialer.call_log_number_xpath))
         _number_el = DOM.Dialer.call_log_number_xpath.format(self.contact["tel"]["value"])
-        self.UTILS.TEST(True, "Waiting for elements _number_el: {}".format(_number_el))
         self.UTILS.element.waitForElements(("xpath", _number_el),
                            "The number {} in the call log".format(self.contact["tel"]["value"]))
-        self.UTILS.TEST(True, "Waiting for NOT elements: {}".format("{}//*[text()='{}']".\
-                                                                    format(_number_el, self.contact["name"])))
         self.UTILS.element.waitForNotElements(("xpath", "{}//*[text()='{}']".\
                                                format(_number_el, self.contact["name"])),
                                               "The name {} in the call log".format(self.contact["name"]))

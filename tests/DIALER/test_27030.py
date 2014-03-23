@@ -3,7 +3,7 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
@@ -55,7 +55,7 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator) 
         self.UTILS.element.waitForElements( ("xpath", "//h1[text()='Call log']"), "Call log header")
 
-        x = self.UTILS.element.getElement( ("xpath", DOM.Dialer.call_log_number_xpath % self.num),
+        x = self.UTILS.element.getElement( ("xpath", DOM.Dialer.call_log_number_xpath.format(self.num),
                                    "The call log for number %s" % self.num)
 
         self.UTILS.test.TEST(self.Contact_1["name"] in x.text, "Call log now shows '%s'." % self.Contact_1["name"])

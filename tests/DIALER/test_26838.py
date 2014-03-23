@@ -3,7 +3,7 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
@@ -19,11 +19,11 @@ class test_main(GaiaTestCase):
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.dialer     = Dialer(self)
+        self.UTILS = UTILS(self)
+        self.dialer = Dialer(self)
 
         self.test_num = "666666666666"
-        self.test_contacts = [MockContact(tel = [{'type': 'Mobile', 
+        self.test_contacts = [MockContact(tel=[{'type': 'Mobile',
                          'value': self.test_num}]) for i in range(2)]
 
         self.test_contacts[0]["givenName"] = "LongGivennamexxxxxxxxxxx"
@@ -37,7 +37,6 @@ class test_main(GaiaTestCase):
             c["name"] = c["givenName"] + " " + c["familyName"]
 
         map(self.UTILS.general.insertContact, self.test_contacts)
-
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -55,7 +54,7 @@ class test_main(GaiaTestCase):
         for element in entries:
             item = element.find_element("xpath", "//span[@class='primary-info-main']")
 
-            value = self.marionette.execute_script(""" 
+            value = self.marionette.execute_script("""
                 function getStyle (el,styleProp) {
                     if (el.currentStyle)
                         var y = x.currentStyle[styleProp];

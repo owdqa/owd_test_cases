@@ -3,7 +3,7 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
@@ -69,8 +69,8 @@ class test_main(GaiaTestCase):
         #
         _HH = self.messages.timeOfThread(self.num1)[:2]
         _AM = self.messages.timeOfThread(self.num1)[-2:]
-        self.UTILS.test.TEST(_HH == "10", "Thread hour is 10 (it was " + _HH + ").", False)
-        self.UTILS.test.TEST(_AM == "AM", "Thread timestamp says <b>AM</b> (it was " + _AM + ").", False)
+        self.UTILS.test.TEST(_HH == "10", "Thread hour is 10 (it was {}).".format(_HH), False)
+        self.UTILS.test.TEST(_AM == "AM", "Thread timestamp says <b>AM</b> (it was {}).".format(_AM), False)
 
         #
         # Kill the sms app (just makes my life easier!).
@@ -97,5 +97,5 @@ class test_main(GaiaTestCase):
         #
         _HH = self.messages.timeOfThread(self.num2)[:1]
         _PM = self.messages.timeOfThread(self.num2)[-2:]
-        self.UTILS.test.TEST(_HH == "2", "Thread hour is 2 (it was " + _HH + ").", False)
-        self.UTILS.test.TEST(_PM == "PM", "Thread timestamp says <b>PM</b> (it was " + _PM + ").", False)
+        self.UTILS.test.TEST(_HH == "2", "Thread hour is 2 (it was {}).".format(_HH), False)
+        self.UTILS.test.TEST(_PM == "PM", "Thread timestamp says <b>PM</b> (it was {}).".format(_PM), False)

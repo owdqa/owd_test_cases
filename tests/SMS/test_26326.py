@@ -4,7 +4,7 @@
 import sys
 sys.path.insert(1, "./")
 
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -12,7 +12,7 @@ from OWDTestToolkit.apps.messages import Messages
 
 class test_main(GaiaTestCase):
 
-    test_msg = "Test message."
+    test_msg = "Test message." * 10
 
     def setUp(self):
         #
@@ -53,9 +53,8 @@ class test_main(GaiaTestCase):
         self.messages.addNumbersInToField([self.target_telNum])
         self.messages.enterSMSMsg(self.test_msg)
 
-        self.marionette.execute_script("document.getElementById('" + \
-                                             DOM.Messages.send_message_button[1] + \
-                                             "').click();")
+        self.marionette.execute_script("document.getElementById('{}').click();".\
+                                       format(DOM.Messages.send_message_button[1]))
 
         #
         # Bit of a race: QUICKLY go 'home' and wait for the notifier.

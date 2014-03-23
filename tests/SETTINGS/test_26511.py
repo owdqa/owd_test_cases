@@ -31,7 +31,9 @@ class test_main(GaiaTestCase):
                              "Radio functionality is enabled by default.")
 
         self.UTILS.reporting.logResult("info", "Turning airplane mode on ...")
+        self.UTILS.test.TEST(True, "Getting airplane mode switch")
         x = self.UTILS.element.getElement(DOM.Settings.airplane_mode_switch, "Airplane mode switch")
+        self.UTILS.test.TEST(True, "Airplane mode switch: {}".format(x))
         x.tap()
 
         self.UTILS.network.waitForNetworkItemEnabled("airplane")

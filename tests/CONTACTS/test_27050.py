@@ -3,7 +3,7 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
@@ -53,7 +53,7 @@ class test_main(GaiaTestCase):
         x.tap()
 
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
-        self.UTILS.iframe.switchToFrame("id", "fb-curtain", p_viaRootFrame=False)
+        self.UTILS.iframe.switchToFrame("id", "fb-curtain", via_root_frame=False)
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot at this point:", x)
