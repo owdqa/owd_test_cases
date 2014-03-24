@@ -25,13 +25,14 @@ class test_main(GaiaTestCase):
         self.dialer = Dialer(self)
 
         # Get details of our test contacts.
-        self.num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.Contact_1 = MockContact(tel={'type': 'Mobile', 'value': self.num})
-        self.UTILS.general.insertContact(self.Contact_1)
 
-        self.contact_name = self.Contact_1["name"]
-        self.contact_given_name = self.Contact_1["givenName"]
-        self.contact_number = self.Contact_1["tel"]["value"]
+        # self.num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.contact = MockContact(tel={'type': 'Mobile', 'value': "665666666"})
+        self.UTILS.general.insertContact(self.contact)
+
+        self.contact_name = self.contact["name"]
+        self.contact_given_name = self.contact["givenName"]
+        self.contact_number = self.contact["tel"]["value"]
 
     def tearDown(self):
         #
@@ -51,7 +52,6 @@ class test_main(GaiaTestCase):
         x.tap()
 
         # Select contact.
-        print "Contact name is: " + self.contact_name
         self.contacts.view_contact(self.contact_name, header_check=False)
 
         # Call

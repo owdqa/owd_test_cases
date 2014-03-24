@@ -25,8 +25,8 @@ class test_main(GaiaTestCase):
         self.contacts   = Contacts(self)
 
         self.num  = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.Contact_1 = MockContact()
-        self.UTILS.general.insertContact(self.Contact_1)
+        self.contact = MockContact()
+        self.UTILS.general.insertContact(self.contact)
     
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -40,7 +40,7 @@ class test_main(GaiaTestCase):
         time.sleep(2)
         self.dialer.hangUp()
 
-        self.dialer.callLog_addToContact(self.num, self.Contact_1["name"])
+        self.dialer.callLog_addToContact(self.num, self.contact["name"])
 
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator)
  
@@ -48,14 +48,14 @@ class test_main(GaiaTestCase):
         # Re-open the call log and Verify that it now shows the contact name,
         #
         self.marionette.switch_to_frame()
-        self.UTILS.element.waitForNotElements( ("xpath", "//iframe[contains(@%s, '%s')]" % \
-                                                (DOM.Contacts.frame_locator[0], DOM.Contacts.frame_locator[1])),
-                                        "COntacts frame")
+        self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@{}, '{}')]".\
+                                                format(DOM.Contacts.frame_locator[0], DOM.Contacts.frame_locator[1])),
+                                        "Contacts frame")
 
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator) 
-        self.UTILS.element.waitForElements( ("xpath", "//h1[text()='Call log']"), "Call log header")
+        self.UTILS.element.waitForElements(("xpath", "//h1[text()='Call log']"), "Call log header")
 
-        x = self.UTILS.element.getElement( ("xpath", DOM.Dialer.call_log_number_xpath.format(self.num),
-                                   "The call log for number %s" % self.num)
+        x = self.UTILS.element.getElement(("xpath", DOM.Dialer.call_log_number_xpath.format(self.num)),
+                                   "The call log for number {}".format(self.num))
 
-        self.UTILS.test.TEST(self.Contact_1["name"] in x.text, "Call log now shows '%s'." % self.Contact_1["name"])
+        self.UTILS.test.TEST(self.contact["name"] in x.text, "Call log now shows '{}'".format(self.contact["name"]))

@@ -46,4 +46,4 @@ class test_main(GaiaTestCase):
 
         self.marionette.switch_to_frame()
         x = DOM.Dialer.frame_locator_calling
-        self.UTILS.element.waitForNotElements( ("xpath", "//iframe[contains(@%s,'%s')]" % (x[0],x[1])), "Calling iframe", True, 5)
+        self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@%s,'%s')]" % (x[0],x[1])), "Calling iframe", True, 5)
