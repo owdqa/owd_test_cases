@@ -25,8 +25,8 @@ class test_main(GaiaTestCase):
         self.dialer = Dialer(self)
         self.contacts = Contacts(self)
 
-        self.Contact_1 = MockContact(tel={'type': 'Mobile', 'value': '665666666'})
-        self.UTILS.general.insertContact(self.Contact_1)
+        self.contact = MockContact(tel={'type': 'Mobile', 'value': "665666666"})
+        self.UTILS.general.insertContact(self.contact)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -35,16 +35,20 @@ class test_main(GaiaTestCase):
         self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
 
         self.dialer.launch()
-        self.dialer.enterNumber(self.Contact_1["tel"]["value"])
+        self.dialer.callLog_clearAll()
+
+        self.dialer.enterNumber(self.contact["tel"]["value"])
         self.dialer.callThisNumber()
-        time.sleep(10)
+        time.sleep(2)
+
+        self.dialer.hangUp()
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator)
 
         self.dialer.openCallLog()
 
         x = self.UTILS.element.getElement(("xpath",
-                                           DOM.Dialer.call_log_number_xpath.format(self.Contact_1["tel"]["value"])),
-                                          "The call log for number {}".format(self.Contact_1["tel"]["value"]))
+                                           DOM.Dialer.call_log_number_xpath.format(self.contact["tel"]["value"])),
+                                          "The call log for number {}".format(self.contact["tel"]["value"]))
         x.tap()
 
         time.sleep(2)
@@ -55,8 +59,8 @@ class test_main(GaiaTestCase):
 
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)
 
-        self.UTILS.element.waitForElements(("xpath", DOM.Dialer.outgoing_call_numberXP.format(self.Contact_1["name"])),
-                                    "Outgoing call found with number matching {}".format(self.Contact_1["name"]))
+        self.UTILS.element.waitForElements(("xpath", DOM.Dialer.outgoing_call_numberXP.format(self.contact["name"])),
+                                    "Outgoing call found with number matching {}".format(self.contact["name"]))
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot of dialer", x)
