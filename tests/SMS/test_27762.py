@@ -50,7 +50,7 @@ class test_main(GaiaTestCase):
         self.messages.createAndSendSMS([self.target_telNum], self.test_msg)
 
         #
-        # Wait for the last message in this thread to be a 'recieved' one
+        # Wait for the last message in this thread to be a 'received' one
         # and click the link.
         #
         x = self.messages.waitForReceivedMsgInThisThread()

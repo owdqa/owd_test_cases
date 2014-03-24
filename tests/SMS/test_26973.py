@@ -86,7 +86,7 @@ class test_main(GaiaTestCase):
         #
         # Add gallery image.
         #
-        self.contacts.addGalleryImageToContact(0)
+        self.contacts.add_gallery_image_to_contact(0)
 
 
         #

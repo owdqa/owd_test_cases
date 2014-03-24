@@ -56,7 +56,7 @@ class test_main(GaiaTestCase):
         self.messages.sendSMS()
 
         #
-        # Wait for the last message in this thread to be a 'recieved' one.
+        # Wait for the last message in this thread to be a 'received' one.
         #
         self.messages.waitForReceivedMsgInThisThread()
 

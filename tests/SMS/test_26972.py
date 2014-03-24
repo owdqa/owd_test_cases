@@ -95,10 +95,10 @@ class test_main(GaiaTestCase):
         self._changeField('givenName', self.cont["givenName"])
         self._changeField('familyName', self.cont["familyName"])
         self._changeField('tel', self.cont["tel"]["value"])
-        self._changeField('street', self.cont["adr"]["streetAddress"])
-        self._changeField('zip', self.cont["adr"]["postalCode"])
-        self._changeField('city', self.cont["adr"]["locality"])
-        self._changeField('country', self.cont["adr"]["countryName"])
+        self._changeField('street', self.cont["addr"]["streetAddress"])
+        self._changeField('zip', self.cont["addr"]["postalCode"])
+        self._changeField('city', self.cont["addr"]["locality"])
+        self._changeField('country', self.cont["addr"]["countryName"])
 
         #
         # Add another email address.
