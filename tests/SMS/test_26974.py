@@ -98,10 +98,14 @@ class test_main(GaiaTestCase):
         # Put the contact details into each of the fields (this method
         # clears each field first).
         #
-        for key, value in contFields.items():
-            self.contacts.replace_str(value, value + "bis")
-
-        self.contacts.addGalleryImageToContact(0)
+        self.contacts.replace_str(contFields['givenName'], self.contact["givenName"] + "bis")
+        self.contacts.replace_str(contFields['familyName'], self.contact["familyName"] + "bis")
+        self.contacts.replace_str(contFields['tel'], self.contact["tel"]["value"] + "bis")
+        self.contacts.replace_str(contFields['street'], self.contact["addr"]["streetAddress"] + "bis")
+        self.contacts.replace_str(contFields['zip'], self.contact["addr"]["postalCode"] + "bis")
+        self.contacts.replace_str(contFields['city'], self.contact["addr"]["locality"] + "bis")
+        self.contacts.replace_str(contFields['country'], self.contact["addr"]["countryName"] + "bis")
+        self.contacts.add_gallery_image_to_contact(0)
 
         #
         # Add another email address.
