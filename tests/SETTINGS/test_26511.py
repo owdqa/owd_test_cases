@@ -27,8 +27,7 @@ class test_main(GaiaTestCase):
 
         self.UTILS.test.TEST(self.UTILS.network.isNetworkTypeEnabled("airplane") == False,
                              "Airplane mode is disabled by default.")
-        self.UTILS.test.TEST(self.data_layer.get_setting('ril.radio.disabled') == False,
-                             "Radio functionality is enabled by default.")
+
 
         self.UTILS.reporting.logResult("info", "Turning airplane mode on ...")
         self.UTILS.test.TEST(True, "Getting airplane mode switch")

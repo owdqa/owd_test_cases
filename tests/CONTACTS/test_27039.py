@@ -85,7 +85,8 @@ class test_main(GaiaTestCase):
                                    "Keyboard")
 
         # Typing works and allows real-time filtering.
-        self.UTILS.reporting.logResult("info", "Typing '{}' with the keyboard (without pressing ENTER) ...".format(search_name))
+        self.UTILS.reporting.logResult("info", "Typing '{}' with the keyboard (without pressing ENTER) ...".\
+                                        format(search_name))
         self.keyboard.send(search_name)
 
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
