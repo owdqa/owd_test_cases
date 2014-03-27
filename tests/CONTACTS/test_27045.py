@@ -81,10 +81,10 @@ class test_main(GaiaTestCase):
         self.contacts.replace_str(contact_fields['givenName'], self.contact_list[1]["givenName"])
         self.contacts.replace_str(contact_fields['familyName'], self.contact_list[1]["familyName"])
         self.contacts.replace_str(contact_fields['tel'], self.contact_list[1]["tel"]["value"])
-        self.contacts.replace_str(contact_fields['street'], self.contact_list[1]["adr"]["streetAddress"])
-        self.contacts.replace_str(contact_fields['zip'], self.contact_list[1]["adr"]["postalCode"])
-        self.contacts.replace_str(contact_fields['city'], self.contact_list[1]["adr"]["locality"])
-        self.contacts.replace_str(contact_fields['country'], self.contact_list[1]["adr"]["countryName"])
+        self.contacts.replace_str(contact_fields['street'], self.contact_list[1]["addr"]["streetAddress"])
+        self.contacts.replace_str(contact_fields['zip'], self.contact_list[1]["addr"]["postalCode"])
+        self.contacts.replace_str(contact_fields['city'], self.contact_list[1]["addr"]["locality"])
+        self.contacts.replace_str(contact_fields['country'], self.contact_list[1]["addr"]["countryName"])
 
         #
         # Save the changes

@@ -29,12 +29,26 @@ class test_main(GaiaTestCase):
 
         self.settings.launch()
         self.settings.cellular_and_data()
-        x = self.UTILS.element.getElement(("xpath", "//a[text()='Data connection']"), "Data connection switch")
+        
+        x = self.UTILS.element.getElement(DOM.Settings.celldata_DataConn_switch, "Data connection switch")
         x.tap()
-        self.wait_for_element_displayed(*DOM.Settings.celldata_DataConn_ON, timeout=10)
-        x = self.marionette.find_element(*DOM.Settings.celldata_DataConn_ON)
-        if x.is_displayed():
-            x.tap()
+
+        #
+        # Wait for confirmation screen
+        #
+        try:
+            self.wait_for_element_displayed(*DOM.Settings.celldata_DataConn_ON, timeout=10)
+            x = self.marionette.find_element(*DOM.Settings.celldata_DataConn_ON)
+            if x.is_displayed():
+                x.tap()
+        except: #element present but not displayed
+            #
+            # If we arrive here, that means the confirmation screen is not shown, because
+            # it was already accepted some time before
+            #
+            # What does it mean such a thing? It means that we now have data connection,
+            # so nothing else is required
+            pass
 
         self.UTILS.network.waitForNetworkItemEnabled("data")
 

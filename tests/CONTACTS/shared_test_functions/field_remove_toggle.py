@@ -18,7 +18,7 @@ from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 
 
-class test_field_remove_toggle(GaiaTestCase):
+class field_remove_toggle(GaiaTestCase):
 
     def setUp(self):
         GaiaTestCase.setUp(self)
