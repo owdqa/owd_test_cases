@@ -11,7 +11,7 @@ from OWDTestToolkit.utils.utils import UTILS
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from tests._mock_data.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
@@ -28,8 +28,8 @@ class test_main(GaiaTestCase):
         #
         # Import details of our test contacts.
         #
-        self.contact = MockContacts().contact
-        self.data_layer.insert_contact(self.contact)
+        self.contact = MockContact()
+        self.UTILS.insertContact(self.contact)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -44,7 +44,7 @@ class test_main(GaiaTestCase):
 
         self.contacts.tapSettingsButton()
 
-        self.contacts.enableFBImport()
+        self.contacts.enable_FB_Import()
         fb_user = self.UTILS.general.get_os_variable("T19180_FB_USERNAME")
         fb_pass = self.UTILS.general.get_os_variable("T19180_FB_PASSWORD")
         self.facebook.login(fb_user, fb_pass)
@@ -52,7 +52,14 @@ class test_main(GaiaTestCase):
         #
         # Import facebook contacts.
         #
-        self.contacts.switchToFacebook()
+        self.contacts.switch_to_facebook()
+        self.facebook.importAll()
+
+        #
+        # Go back to "All contacts" screen
+        #
+        backBTN = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Details 'done' button")
+        backBTN.tap()
 
         #
         # View the contact details.
@@ -80,4 +87,4 @@ class test_main(GaiaTestCase):
         #
         # Verify that we're now linked.
         #
-        self.contacts.verifyLinked(self.contact['name'], fb_email)
+        self.contacts.verify_linked(self.contact['name'], fb_email)
