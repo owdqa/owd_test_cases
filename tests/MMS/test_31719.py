@@ -51,8 +51,7 @@ class test_main(GaiaTestCase):
         #
         # Load files into the device.
         #
-        self.UTILS.general.addFileToDevice('./tests/_resources/imga.jpg',
-                                    destination='DCIM/100MZLLA')
+        self.UTILS.general.addFileToDevice('./tests/_resources/imga.jpg', destination='DCIM/100MZLLA')
 
         #
         # TODO - uncommnent
@@ -94,7 +93,7 @@ class test_main(GaiaTestCase):
         # Switch back to the sms iframe.
         #
         self.marionette.switch_to_frame()
-        self.UTILS.iframe.switchToFrame("src",orig_iframe)
+        self.UTILS.iframe.switchToFrame("src", orig_iframe)
 
         #
         # Now check the correct name is in the 'To' list.

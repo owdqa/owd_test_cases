@@ -16,6 +16,9 @@ then
 	exit 1
 fi
 
+python ./tests/device_config.py -c ./tests/devices.cfg
+source ./.OWD_DEVICE_CONFIG
+
 # Make sure nothing else is running first.
 $OWD_TEST_TOOLKIT_BIN/wait_for_no_other_test_run.sh $$
 
