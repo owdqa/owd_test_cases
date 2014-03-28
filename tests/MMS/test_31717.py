@@ -47,7 +47,7 @@ class test_main(GaiaTestCase):
         # Load files into the device.
         #
         self.UTILS.general.addFileToDevice('./tests/_resources/imgd.jpg', destination='DCIM/100MZLLA')
-        self.UTILS.general.addFileToDevice('./tests/_resources/MP3.mp3', destination='/SD/mus')
+        self.UTILS.general.addFileToDevice('./tests/_resources/MP3.mp3', destination='SD/mus')
 
         #
         # Launch messages app.

@@ -36,8 +36,7 @@ class test_main(GaiaTestCase):
         self.emailP = self.UTILS.general.get_os_variable("GMAIL_2_PASS")
         self.emailU = self.UTILS.general.get_os_variable("GMAIL_2_USER")
 
-        self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg',
-                                    destination='DCIM/100MZLLA')
+        self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
 
         self.cont = MockContact()
 

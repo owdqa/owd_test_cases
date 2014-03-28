@@ -31,13 +31,12 @@ class test_main(GaiaTestCase):
         self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
 
-        self.cont = MockContact(email = [{"type": "Personal", "value": "email1@nowhere.com"},
+        self.cont = MockContact(email=[{"type": "Personal", "value": "email1@nowhere.com"},
                                {"type": "Personal", "value": "email2@nowhere.com"},
                                {"type": "Personal", "value": "email3@nowhere.com"}])
         self.UTILS.general.insertContact(self.cont)
 
-        self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg',
-                                    destination='DCIM/100MZLLA')
+        self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -88,12 +87,10 @@ class test_main(GaiaTestCase):
         #
         self.contacts.add_gallery_image_to_contact(0)
 
-
         #
         # Press the Update button.
         #
-        done_button = self.UTILS.element.getElement(DOM.Contacts.edit_update_button,
-                                            "'Update' button")
+        done_button = self.UTILS.element.getElement(DOM.Contacts.edit_update_button, "'Update' button")
         done_button.tap()
 
         #

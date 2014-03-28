@@ -41,7 +41,7 @@ class test_main(GaiaTestCase):
 
         #
         # Load files into the device.
-        self.UTILS.general.addFileToDevice('./tests/_resources/3GP.3gp', destination='/SD/mus')
+        self.UTILS.general.addFileToDevice('./tests/_resources/3GP.3gp', destination='SD/mus')
 
         #
         # Launch messages app.

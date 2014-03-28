@@ -41,7 +41,7 @@ class test_main(GaiaTestCase):
 
         #
         # Load files into the device.
-        self.UTILS.general.addFileToDevice('./tests/_resources/mpeg4.mp4', destination='/SD/mus')
+        self.UTILS.general.addFileToDevice('./tests/_resources/mpeg4.mp4', destination='SD/mus')
 
         #
         # Launch messages app.
