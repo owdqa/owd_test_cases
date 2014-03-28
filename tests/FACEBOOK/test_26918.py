@@ -65,7 +65,7 @@ class test_main(GaiaTestCase):
         # View the contact details.
         #
         self.contacts.launch()
-        self.contacts.viewContact(self.contact['name'])
+        self.contacts.view_contact(self.contact['name'])
 
         #
         # Press the link button.
