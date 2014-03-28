@@ -8,10 +8,10 @@ import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
-from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
+
 
 class test_main(GaiaTestCase):
 
@@ -64,10 +64,3 @@ class test_main(GaiaTestCase):
 
         self.messages.createMMSImage()
         self.gallery.clickThumbMMS(0)
-
-        self.marionette.execute_script("""
-            var getElementByXpath = function (path) {
-                return document.evaluate(path, document, null, 9, null).singleNodeValue;
-            };
-            getElementByXpath("/html/body/div/div[2]");
-        """)
