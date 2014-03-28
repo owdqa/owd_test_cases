@@ -8,7 +8,7 @@ sys.path.insert(1, "./")
 # Imports particular to this test case.
 #
 from gaiatest import GaiaTestCase
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
 
@@ -27,10 +27,10 @@ class test_main(GaiaTestCase):
         # Get details of our test contacts.
         #
         self.test_contacts = [MockContact() for i in range(2)]
-        map(self.UTILS.insertContact, self.test_contacts)
+        map(self.UTILS.general.insertContact, self.test_contacts)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #

@@ -3,27 +3,27 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.dialer import Dialer
 from tests._mock_data.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
-    
+
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.dialer     = Dialer(self)
-        
+        self.UTILS = UTILS(self)
+        self.dialer = Dialer(self)
+
         self.test_num = "666666666666"
-        self.test_contacts = [MockContact(tel = [{'type': 'Mobile', 
+        self.test_contacts = [MockContact(tel=[{'type': 'Mobile',
                          'value': self.test_num}]) for i in range(2)]
 
         self.test_contacts[0]["givenName"] = "LongGivennamexxxxxxxxxxx"
@@ -36,26 +36,25 @@ class test_main(GaiaTestCase):
         for c in self.test_contacts:
             c["name"] = c["givenName"] + " " + c["familyName"]
 
-        map(self.UTILS.insertContact, self.test_contacts)
-
+        map(self.UTILS.general.insertContact, self.test_contacts)
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
         self.dialer.launch()
         self.dialer.callLog_clearAll()
-        
+
         for contact in self.test_contacts:
             self.dialer.createMultipleCallLogEntries(contact["tel"][0]["value"], 1)
-            
-        entries = self.UTILS.getElements(DOM.Dialer.call_log_numbers, "Call log entries", False)
-        self.UTILS.logResult("info", "{} entries found.".format(len(entries)))
-        
+
+        entries = self.UTILS.element.getElements(DOM.Dialer.call_log_numbers, "Call log entries", False)
+        self.UTILS.reporting.logResult("info", "{} entries found.".format(len(entries)))
+
         for element in entries:
             item = element.find_element("xpath", "//span[@class='primary-info-main']")
-            
-            value = self.marionette.execute_script(""" 
+
+            value = self.marionette.execute_script("""
                 function getStyle (el,styleProp) {
                     if (el.currentStyle)
                         var y = x.currentStyle[styleProp];
@@ -74,6 +73,6 @@ class test_main(GaiaTestCase):
                 return isEllipsisActive(arguments[0])
             """, script_args=[item])
 
-            self.UTILS.logResult("info", "Value of css property: {}".format(value))
-            self.UTILS.logResult("info", "isEllipsisActive? {}".format(isEllipsis))
-            self.UTILS.TEST(value == "ellipsis" and isEllipsis, "Value of css property")
+            self.UTILS.reporting.logResult("info", "Value of css property: {}".format(value))
+            self.UTILS.reporting.logResult("info", "isEllipsisActive? {}".format(isEllipsis))
+            self.UTILS.test.TEST(value == "ellipsis" and isEllipsis, "Value of css property")

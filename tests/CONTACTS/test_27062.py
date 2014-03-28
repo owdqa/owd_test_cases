@@ -3,13 +3,13 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
 
@@ -28,10 +28,10 @@ class test_main(GaiaTestCase):
         # Create our test contacts.
         #
         self.contact_list = [MockContact(tel={'type': 'Mobile', 'value': "{}".format(i) * 9}) for i in range(3)]
-        map(self.UTILS.insertContact, self.contact_list)
+        map(self.UTILS.general.insertContact, self.contact_list)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -47,4 +47,4 @@ class test_main(GaiaTestCase):
         #
         # Verify that there are no results.
         #
-        self.UTILS.waitForElements(DOM.Contacts.search_no_contacts_found, "'No contacts found' message")
+        self.UTILS.element.waitForElements(DOM.Contacts.search_no_contacts_found, "'No contacts found' message")

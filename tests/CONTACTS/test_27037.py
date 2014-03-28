@@ -3,18 +3,19 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
 
+    _RESTART_DEVICE = True
     def setUp(self):
         #
         # Set up child objects...
@@ -27,16 +28,16 @@ class test_main(GaiaTestCase):
         # Create our test contacts.
         #
         self.contact = MockContact()
-        self.UTILS.insertContact(self.contact)
+        self.UTILS.general.insertContact(self.contact)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
         # Set up to use data connection.
         #
-        self.UTILS.getNetworkConnection()
+        self.UTILS.network.getNetworkConnection()
 
         #
         # Launch contacts app.
@@ -45,4 +46,4 @@ class test_main(GaiaTestCase):
 
         x = self.contacts.import_gmail_login("wrongname", "wrongpass")
 
-        self.UTILS.TEST(x == False, "Login failed.")
+        self.UTILS.test.TEST(x == False, "Login failed.")

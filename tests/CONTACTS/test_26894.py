@@ -10,12 +10,12 @@ from gaiatest import GaiaTestCase
 #
 from tests._mock_data.contacts import MockContact
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 
 
 class test_main(GaiaTestCase):
-    
+
 
     def setUp(self):
         #
@@ -31,7 +31,7 @@ class test_main(GaiaTestCase):
         self.contact = MockContact()
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -40,11 +40,11 @@ class test_main(GaiaTestCase):
         self.contacts.launch()
         self.contacts.start_create_new_contact()
 
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot at this point", x)
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot at this point", x)
 
-        x = self.UTILS.getElement(DOM.Contacts.done_button, "Done button")
-        self.UTILS.TEST(not x.is_enabled(), "Done button is not enabled")
+        x = self.UTILS.element.getElement(DOM.Contacts.done_button, "Done button")
+        self.UTILS.test.TEST(not x.is_enabled(), "Done button is not enabled")
 
         contFields = self.contacts.get_contact_fields()
 
@@ -54,11 +54,11 @@ class test_main(GaiaTestCase):
         #
         self.contacts.replace_str(contFields['tel'], self.contact["tel"]["value"])
 
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot at this point", x)
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot at this point", x)
 
-        x = self.UTILS.getElement(DOM.Contacts.done_button, "Done button")
-        self.UTILS.TEST(x.is_enabled(), "Done button is not enabled")
+        x = self.UTILS.element.getElement(DOM.Contacts.done_button, "Done button")
+        self.UTILS.test.TEST(x.is_enabled(), "Done button is not enabled")
         x.tap()
 
         self.contacts.view_contact(self.contact["name"])

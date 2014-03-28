@@ -8,7 +8,7 @@ from gaiatest import GaiaTestCase
 #
 # Imports particular to this test case.
 #
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
 
@@ -27,10 +27,10 @@ class test_main(GaiaTestCase):
         # Get details of our test contacts.
         #
         self.contact = MockContact()
-        self.UTILS.insertContact(self.contact)
+        self.UTILS.general.insertContact(self.contact)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -43,5 +43,5 @@ class test_main(GaiaTestCase):
         #
         self.contacts.view_contact(self.contact["name"])
 
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot of contact:", x)
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot of contact:", x)

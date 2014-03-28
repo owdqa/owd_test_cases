@@ -8,7 +8,7 @@ from gaiatest import GaiaTestCase
 #
 # Imports particular to this test case.
 #
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
 
@@ -32,10 +32,10 @@ class test_main(GaiaTestCase):
 
         self.endWord = "name"
 
-        map(self.UTILS.insertContact, self.test_contacts)
+        map(self.UTILS.general.insertContact, self.test_contacts)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #

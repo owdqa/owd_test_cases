@@ -9,41 +9,39 @@ from gaiatest import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Settings
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit.apps.browser import Browser
 
+
 class test_main(GaiaTestCase):
-    
+
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.Settings   = Settings(self)
-        self.Browser    = Browser(self)
-        
+        self.UTILS = UTILS(self)
+        self.Settings = Settings(self)
+        self.Browser = Browser(self)
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
         #
         # Open the Settings application.
         #
-        self.UTILS.getNetworkConnection()
-             
+        self.UTILS.network.getNetworkConnection()
+
         #
         # Open the browser app.
         #
         self.Browser.launch()
-         
+
         #
         # Open our URL.
         #
         self.Browser.open_url("www.google.com")
-        self.UTILS.switchToFrame(*DOM.Browser.frame_locator)
+        self.UTILS.iframe.switchToFrame(*DOM.Browser.frame_locator)
 
         self.Browser.open_url("www.wikipedia.com")
-        self.UTILS.switchToFrame(*DOM.Browser.frame_locator)
-
-        
-
+        self.UTILS.iframe.switchToFrame(*DOM.Browser.frame_locator)

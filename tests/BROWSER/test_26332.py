@@ -4,9 +4,9 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.browser import Browser
-from OWDTestToolkit.apps import Settings
+from OWDTestToolkit.apps.settings import Settings
 
 
 class test_main(GaiaTestCase):
@@ -15,15 +15,15 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
-        self.Settings = Settings(self)
+        self.settings = Settings(self)
         self.Browser = Browser(self)
-        self.wifi_name = self.UTILS.get_os_variable("GLOBAL_WIFI_NAME")
-        self.testURL = self.UTILS.get_os_variable("GLOBAL_TEST_URL")
-        self.wifi_user = self.UTILS.get_os_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass = self.UTILS.get_os_variable("GLOBAL_WIFI_PASSWORD")
+        self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
+        self.testURL = self.UTILS.general.get_os_variable("GLOBAL_TEST_URL")
+        self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
+        self.wifi_pass = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -32,31 +32,24 @@ class test_main(GaiaTestCase):
         #self.data_layer.forget_all_networks()
 
         #
-        # Open the Settings application.
+        # Open the settings application.
         #
-        self.Settings.launch()
+        self.settings.launch()
 
         #
         # Tap Wi-Fi.
         #
-        self.Settings.wifi()
+        self.settings.wifi()
 
         #
         # Make sure wifi is set to 'on'.
         #
-        self.Settings.wifi_switchOn()
+        self.settings.wifi_switchOn()
 
         #
         # Connect to the wifi.
         #
-        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
-
-        #
-        # Tap specific wifi network (if it's not already connected).
-        #
-        self.UTILS.TEST(
-                self.Settings.wifi_list_isConnected(self.wifi_name),
-                "Wifi '" + self.wifi_name + "' is listed as 'connected' in wifi settings.", True)
+        self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
 
         #
         # Open the browser app.

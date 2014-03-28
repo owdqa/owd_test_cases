@@ -3,17 +3,18 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 import time
 
+
 class test_main(GaiaTestCase):
-    
+
     test_msg = "Test."
 
     def setUp(self):
@@ -25,52 +26,52 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
         #
         # Create a new SMS
         #
         self.messages.launch()
         self.messages.startNewSMS()
-        
+
         #
         # Insert the phone number in the To field
         #
-        self.messages.addNumbersInToField([self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")])
+        self.messages.addNumbersInToField([self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")])
 
         #
         # Create SMS.
         #
         self.messages.enterSMSMsg(self.test_msg)
-        
+
         #
         # Click send.
         #
         self.messages.sendSMS()
-        
+
         #
         # Wait for the SMS to arrive.
         #
         self.messages.waitForReceivedMsgInThisThread()
-        
+
         time.sleep(10)
-        
+
         #
         # Put the phone into airplane mode.
         #
-        self.UTILS.toggleViaStatusBar('airplane')
-        
+        self.UTILS.statusbar.toggleViaStatusBar('airplane')
+
         #
         # Open sms app and go to the previous thread
         #
-        self.messages.openThread(self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM"))
-        
+        self.messages.openThread(self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM"))
+
         #
         # Create another SMS.
         #
         self.messages.enterSMSMsg(self.test_msg)
-        
+
         #
         # Click send.
         #

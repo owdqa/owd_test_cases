@@ -3,16 +3,17 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
 import time
+
 
 class test_main(GaiaTestCase):
 
@@ -29,44 +30,43 @@ class test_main(GaiaTestCase):
         #
         self.test_contacts = [MockContact() for i in range(2)]
 
-        map(self.UTILS.insertContact, self.test_contacts)        
+        map(self.UTILS.general.insertContact, self.test_contacts)
 
         self.contact_name = self.test_contacts[0]["givenName"]
-        
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
         #
         # Launch contacts app.
         #
         self.contacts.launch()
-        
+
         #
         # Go to the view details screen for this contact.
         #
-        self.contacts.view_contact(self.contact_name, p_HeaderCheck=False)
+        self.contacts.view_contact(self.contact_name, header_check=False)
 
         #
         # Tap the Send an email button.
         #
-        sendEmail = self.UTILS.getElement(DOM.Contacts.view_contact_email_field, "Send email button")
+        sendEmail = self.UTILS.element.getElement(DOM.Contacts.view_contact_email_field, "Send email button")
         sendEmail.tap()
-        
+
         #
         # Verify a dialog appears indicating that we do not have any mail accounts configured.
         #
-        time.sleep(4)        
+        time.sleep(4)
         self.marionette.switch_to_frame()
-        x = self.UTILS.getElement(DOM.Email.confirm_msg,
+        x = self.UTILS.element.getElement(DOM.Email.confirm_msg,
                                    "Dialog confirmation message", True, 5, False)
 
         msg = "You are not set up to send or receive email. Would you like to do that now?"
-        self.UTILS.TEST(msg == x.text,  "Verifying confirmation msg")
-        
+        self.UTILS.test.TEST(msg == x.text,  "Verifying confirmation msg")
+
         #
         # Tap Ok button for confirmation.
         #
-        x = self.UTILS.getElement(DOM.Email.confirm_ok, "OK button", True, 5, False)
+        x = self.UTILS.element.getElement(DOM.Email.confirm_ok, "OK button", True, 5, False)
         x.tap()
-        

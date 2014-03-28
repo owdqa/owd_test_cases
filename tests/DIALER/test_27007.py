@@ -3,19 +3,19 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.dialer import Dialer
 from tests._mock_data.contacts import MockContact
 import time
 
 class test_main(GaiaTestCase):
-    
+
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
@@ -34,37 +34,37 @@ class test_main(GaiaTestCase):
         for c in self.test_contacts:
             c["name"] = c["givenName"] + " " + c["familyName"]
 
-        map(self.UTILS.insertContact, self.test_contacts)
+        map(self.UTILS.general.insertContact, self.test_contacts)
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
         self.dialer.launch()
         self.dialer.enterNumber("1234")
-        
-        x = self.UTILS.getElement(DOM.Dialer.suggestion_count, "Suggestion count")
+
+        x = self.UTILS.element.getElement(DOM.Dialer.suggestion_count, "Suggestion count")
         #
         # We are using this since normal .tap() method does not seem to be working
         #
-        self.UTILS.simulateClick(x)
+        self.UTILS.element.simulateClick(x)
 
-        x = self.UTILS.getElements(DOM.Dialer.suggestion_list, "Suggestion list")
-        self.UTILS.TEST(len(x) == 3, "There are 3 contacts listed.")
+        x = self.UTILS.element.getElements(DOM.Dialer.suggestion_list, "Suggestion list")
+        self.UTILS.test.TEST(len(x) == 3, "There are 3 contacts listed.")
 
         i = 0
         for c in self.test_contacts:
-            self.UTILS.TEST(c["name"] in x[i].text,
+            self.UTILS.test.TEST(c["name"] in x[i].text,
                     "The first contact listed contains '{}' (it was '{}')".format(c["name"], x[i].text))
             i += 1
-        
-        self.UTILS.logResult("info", "Tapping 1st contact listed ...")
+
+        self.UTILS.reporting.logResult("info", "Tapping 1st contact listed ...")
         x[0].tap()
-        
-        self.UTILS.switchToFrame(*DOM.Dialer.frame_locator_calling)
-        
-        self.UTILS.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP.format(self.test_contacts[0]["name"])),
+
+        self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)
+
+        self.UTILS.element.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP.format(self.test_contacts[0]["name"])),
                                     "Outgoing call found with number matching".format(self.test_contacts[0]["name"]))
-        
+
         time.sleep(2)
         self.dialer.hangUp()

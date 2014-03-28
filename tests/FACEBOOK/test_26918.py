@@ -4,14 +4,13 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.apps.facebook import Facebook
+from OWDTestToolkit.utils.utils import UTILS
 
 #
 # Imports particular to this test case.
 #
-from OWDTestToolkit import DOM
-from OWDTestToolkit.apps.contacts import Contacts
-from OWDTestToolkit.apps.facebook import Facebook
-from OWDTestToolkit.utils import UTILS
 from tests._mock_data.contacts import MockContact
 
 
@@ -33,10 +32,10 @@ class test_main(GaiaTestCase):
         self.UTILS.insertContact(self.contact)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        self.UTILS.getNetworkConnection()
+        self.UTILS.network.getNetworkConnection()
 
         #
         # Launch contacts app and enable facebook import.
@@ -45,9 +44,9 @@ class test_main(GaiaTestCase):
 
         self.contacts.tapSettingsButton()
 
-        self.contacts.enable_FB_import()
-        fb_user = self.UTILS.get_os_variable("T19180_FB_USERNAME")
-        fb_pass = self.UTILS.get_os_variable("T19180_FB_PASSWORD")
+        self.contacts.enable_FB_Import()
+        fb_user = self.UTILS.general.get_os_variable("T19180_FB_USERNAME")
+        fb_pass = self.UTILS.general.get_os_variable("T19180_FB_PASSWORD")
         self.facebook.login(fb_user, fb_pass)
 
         #
@@ -59,14 +58,14 @@ class test_main(GaiaTestCase):
         #
         # Go back to "All contacts" screen
         #
-        backBTN = self.UTILS.getElement(DOM.Contacts.settings_done_button, "Details 'done' button")
+        backBTN = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Details 'done' button")
         backBTN.tap()
 
         #
         # View the contact details.
         #
-        # self.contacts.launch()
-        self.contacts.view_contact(self.contact['name'])
+        self.contacts.launch()
+        self.contacts.viewContact(self.contact['name'])
 
         #
         # Press the link button.
@@ -76,14 +75,14 @@ class test_main(GaiaTestCase):
         #
         # Select the contact to link.
         #
-        fb_email = self.UTILS.get_os_variable("T19180_FB_LINK_EMAIL_ADDRESS")
+        fb_email = self.UTILS.general.get_os_variable("T19180_FB_LINK_EMAIL_ADDRESS")
 
         self.facebook.LinkContact(fb_email)
 
         #
         # Check we're back at our contact.
         #
-        self.UTILS.headerCheck(self.contact['name'])
+        self.UTILS.element.headerCheck(self.contact['name'])
 
         #
         # Verify that we're now linked.

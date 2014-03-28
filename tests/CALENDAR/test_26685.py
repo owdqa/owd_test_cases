@@ -4,9 +4,9 @@
 import sys
 sys.path.insert(1, "./")
 import time
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.calendar import Calendar
 
 #
@@ -24,17 +24,17 @@ class test_main(GaiaTestCase):
         self.calendar = Calendar(self)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        self.UTILS.setTimeToNow()
+        self.UTILS.date_and_time.setTimeToNow()
 
         #
         # Launch contacts app.
         #
         self.calendar.launch()
 
-        _today = self.UTILS.getDateTimeFromEpochSecs(int(time.time()))
+        _today = self.UTILS.date_and_time.getDateTimeFromEpochSecs(int(time.time()))
 
         #===================================================================================================
         #
@@ -42,11 +42,11 @@ class test_main(GaiaTestCase):
         #
         self.calendar.setView("month")
 
-        self.UTILS.logResult("info", "<b>Testing <u>month</u> view for <i>today</i> ...</b>")
+        self.UTILS.reporting.logResult("info", "<b>Testing <u>month</u> view for <i>today</i> ...</b>")
         self.calendar.setView("today")
         self.monthViewTests(_today, True)
 
-        self.UTILS.logResult("info", "<b>Testing <u>month</u> view for <i>{} days ago</i> ...</b>"
+        self.UTILS.reporting.logResult("info", "<b>Testing <u>month</u> view for <i>{} days ago</i> ...</b>"
                              .format(self.offset_days))
         x = self.calendar.changeDay(self.offset_days, "month")
         self.monthViewTests(x, False)
@@ -57,11 +57,11 @@ class test_main(GaiaTestCase):
         #
         self.calendar.setView("week")
 
-        self.UTILS.logResult("info", "<b>Testing <i>week</i> view for <i>today</i> ...</b>")
+        self.UTILS.reporting.logResult("info", "<b>Testing <i>week</i> view for <i>today</i> ...</b>")
         self.calendar.setView("today")
         self.weekViewTests(_today)
 
-        self.UTILS.logResult("info", "<b>Testing <u>week</u> view for <i>{} days ago</i> ...</b>"
+        self.UTILS.reporting.logResult("info", "<b>Testing <u>week</u> view for <i>{} days ago</i> ...</b>"
                              .format(self.offset_days))
         x = self.calendar.changeDay(self.offset_days, "week")
         self.weekViewTests(x)
@@ -72,33 +72,33 @@ class test_main(GaiaTestCase):
         #
         self.calendar.setView("day")
 
-        self.UTILS.logResult("info", "<b>Testing <i>day</i> view for <i>today</i> ...</b>")
+        self.UTILS.reporting.logResult("info", "<b>Testing <i>day</i> view for <i>today</i> ...</b>")
         self.calendar.setView("today")
         self.dayViewTests(_today)
 
-        self.UTILS.logResult("info", "<b>Testing <u>day</u> view for <i>{} days ago</i> ...</b>"
+        self.UTILS.reporting.logResult("info", "<b>Testing <u>day</u> view for <i>{} days ago</i> ...</b>"
                              .format(self.offset_days))
         x = self.calendar.changeDay(self.offset_days, "day")
         self.dayViewTests(x)
 
     def dayViewTests(self, now):
-        x = self.UTILS.getElement(DOM.Calendar.current_view_header, "Day view header")
+        x = self.UTILS.element.getElement(DOM.Calendar.current_view_header, "Day view header")
 
-        self.UTILS.TEST(now.day_name.lower() in x.text.lower(),
+        self.UTILS.test.TEST(now.day_name.lower() in x.text.lower(),
                         "'{}' is in the header ('{}').".format(now.day_name, x.text))
 
-        self.UTILS.TEST(now.month_name[:3].lower() in x.text.lower(),
+        self.UTILS.test.TEST(now.month_name[:3].lower() in x.text.lower(),
                         "'{}' is in the header ('{}').".format(now.month_name[:3], x.text))
 
-        self.UTILS.TEST(str(now.mday) in x.text,
+        self.UTILS.test.TEST(str(now.mday) in x.text,
                         "'{}' is in the header ('{}').".format(now.mday, x.text))
 
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot in day view with 'today' selected:", x)
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot in day view with 'today' selected:", x)
 
     def weekViewTests(self, now):
         # Loop through displayed days, building the report string + checking our day is there...
-        x = self.UTILS.getElements(DOM.Calendar.wview_active_days, "Active days")
+        x = self.UTILS.element.getElements(DOM.Calendar.wview_active_days, "Active days")
         testStr = "{} {}".format(now.day_name[:3].upper(), now.mday)
         x_str = ""
 
@@ -110,39 +110,39 @@ class test_main(GaiaTestCase):
             if testStr in x[i].text:
                 boolOK = True
 
-        self.UTILS.TEST(boolOK, "Selected day ('{}') is one of the displayed days: '{}'".format(testStr, x_str))
+        self.UTILS.test.TEST(boolOK, "Selected day ('{}') is one of the displayed days: '{}'".format(testStr, x_str))
 
-        x = self.UTILS.getElement(DOM.Calendar.current_view_header, "Week view header")
-        self.UTILS.TEST(now.month_name.lower() in x.text.lower(),
+        x = self.UTILS.element.getElement(DOM.Calendar.current_view_header, "Week view header")
+        self.UTILS.test.TEST(now.month_name.lower() in x.text.lower(),
                         "'{}' is in the header ('{}').".format(now.month_name, x.text))
 
-        self.UTILS.TEST(str(now.year) in x.text,
+        self.UTILS.test.TEST(str(now.year) in x.text,
                         "'{}' is in the header ('{}').".format(now.year, x.text))
 
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot in week view with 'today' selected:", x)
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot in week view with 'today' selected:", x)
 
     def monthViewTests(self, now, today):
         # Highlighted cell is correct ...
         el_id_str = "d-{}-{}-{}".format(now.year, now.mon - 1, now.mday)
-        self.UTILS.waitForElements(("xpath",
+        self.UTILS.element.waitForElements(("xpath",
                                     "//li[@data-date='{}' and contains(@class, 'selected')]".format(el_id_str)),
                                   "Selected day for {}/{}/{}".format(now.mday, now.mon, now.year), True, 2, False)
 
         # Selected day string is correct ...
         if today:
-            x = self.UTILS.getElement(DOM.Calendar.mview_selected_day_title, "Selected day detail string")
+            x = self.UTILS.element.getElement(DOM.Calendar.mview_selected_day_title, "Selected day detail string")
             _expected_str = "{}".format(now.mday)
-            self.UTILS.TEST(_expected_str.lower() in x.text.lower(),
+            self.UTILS.test.TEST(_expected_str.lower() in x.text.lower(),
                             "Day detail string: '{}' contains today's details ('{}').".format(x.text, _expected_str))
         else:
-            x = self.UTILS.getElement(DOM.Calendar.mview_selected_day_title_future, "Selected day detail string")
+            x = self.UTILS.element.getElement(DOM.Calendar.mview_selected_day_title_future, "Selected day detail string")
 
-        x = self.UTILS.getElement(DOM.Calendar.current_view_header, "Month view header")
-        self.UTILS.TEST(now.month_name.lower() in x.text.lower(),
+        x = self.UTILS.element.getElement(DOM.Calendar.current_view_header, "Month view header")
+        self.UTILS.test.TEST(now.month_name.lower() in x.text.lower(),
                         "'{}' is in the header ('{}').".format(now.month_name, x.text))
 
-        self.UTILS.TEST(str(now.year) in x.text,
+        self.UTILS.test.TEST(str(now.year) in x.text,
                         "'{}' is in the header ('{}').".format(now.year, x.text))
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot in month view with 'today' selected:", x)
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot in month view with 'today' selected:", x)

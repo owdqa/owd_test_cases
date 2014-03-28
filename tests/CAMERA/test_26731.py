@@ -3,9 +3,9 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.camera import Camera
 from OWDTestToolkit.apps.gallery import Gallery
 
@@ -26,10 +26,10 @@ class test_main(GaiaTestCase):
         self.camera = Camera(self)
         self.gallery = Gallery(self)
 
-        self.UTILS.setPermission('Camera', 'geolocation', 'deny')
+        self.UTILS.app.setPermission('Camera', 'geolocation', 'deny')
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -50,24 +50,24 @@ class test_main(GaiaTestCase):
         #
         # Tap the trash icon.
         #
-        x = self.UTILS.getElement(DOM.Camera.trash_icon, "Trash icon", True, 5, False)
+        x = self.UTILS.element.getElement(DOM.Camera.trash_icon, "Trash icon", True, 5, False)
         x.tap()
 
         #
         # Tap OK in the confirmation dialog.
         #
-        myIframe = self.UTILS.currentIframe()
+        myIframe = self.UTILS.iframe.currentIframe()
 
         self.marionette.switch_to_frame()
-        x = self.UTILS.getElement(DOM.GLOBAL.modal_confirm_ok, "OK button")
+        x = self.UTILS.element.getElement(DOM.GLOBAL.modal_confirm_ok, "OK button")
         x.tap()
 
-        self.UTILS.switchToFrame("src", myIframe)
+        self.UTILS.iframe.switchToFrame("src", myIframe)
 
         #
         # Verify that there are no more thumbnails.
         #
-        self.UTILS.waitForNotElements(DOM.Camera.thumbnail, "Camera thumbnails")
+        self.UTILS.element.waitForNotElements(DOM.Camera.thumbnail, "Camera thumbnails")
 
         #
         # Launch the Gallery app.
@@ -77,6 +77,6 @@ class test_main(GaiaTestCase):
         #
         # Check all is as it should be.
         #
-        self.UTILS.waitForElements(DOM.Gallery.no_thumbnails_message,
+        self.UTILS.element.waitForElements(DOM.Gallery.no_thumbnails_message,
                                    "Message saying there are no thumbnails", True, 5)
-        self.UTILS.waitForNotElements(DOM.Gallery.thumbnail_items, "Gallery thumbnails", True, 5)
+        self.UTILS.element.waitForNotElements(DOM.Gallery.thumbnail_items, "Gallery thumbnails", True, 5)

@@ -3,39 +3,41 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.settings import Settings
 
-#
-# Imports particular to this test case.
-#
 
 class test_main(GaiaTestCase):
 
-    
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.settings   = Settings(self)
+        self.UTILS = UTILS(self)
+        self.settings = Settings(self)
 
-        
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         self.settings.launch()
-        
-        self.UTILS.TEST(self.UTILS.isNetworkTypeEnabled("airplane") == False, "Airplane mode is disabled by default.")
-        self.UTILS.TEST(self.data_layer.get_setting('ril.radio.disabled') == False, "Radio functionality is enabled by default.")
-        
-        self.UTILS.logResult("info", "Turning airplane mode on ...")
-        x = self.UTILS.getElement(DOM.Settings.airplane_mode_switch, "Airplane mode switch")
+
+        self.UTILS.test.TEST(self.UTILS.network.isNetworkTypeEnabled("airplane") == False,
+                             "Airplane mode is disabled by default.")
+
+
+        self.UTILS.reporting.logResult("info", "Turning airplane mode on ...")
+        self.UTILS.test.TEST(True, "Getting airplane mode switch")
+        x = self.UTILS.element.getElement(DOM.Settings.airplane_mode_switch, "Airplane mode switch")
+        self.UTILS.test.TEST(True, "Airplane mode switch: {}".format(x))
         x.tap()
-        
-        self.UTILS.waitForNetworkItemEnabled("airplane")
-        
-        self.UTILS.TEST(self.UTILS.isNetworkTypeEnabled("airplane") == True, "Airplane mode is now enabled.")
-        self.UTILS.TEST(self.data_layer.get_setting('ril.radio.disabled') == True, "Radio functionality is now disabled.")
+
+        self.UTILS.network.waitForNetworkItemEnabled("airplane")
+
+        self.UTILS.test.TEST(self.UTILS.network.isNetworkTypeEnabled("airplane") == True,
+                             "Airplane mode is now enabled.")
+        self.UTILS.test.TEST(self.data_layer.get_setting('ril.radio.disabled') == True,
+                             "Radio functionality is now disabled.")

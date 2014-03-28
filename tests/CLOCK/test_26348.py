@@ -3,14 +3,14 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.clock import Clock
-from OWDTestToolkit.apps import Settings
+from OWDTestToolkit.apps.settings import Settings
 import datetime
 import time
 
@@ -27,7 +27,7 @@ class test_main(GaiaTestCase):
         self.settings = Settings(self)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
 
@@ -71,12 +71,12 @@ class test_main(GaiaTestCase):
         # Return to the main screen (since this is where the user will
         # most likely be when the alarm goes off).
         #
-        self.UTILS.goHome()
+        self.UTILS.home.goHome()
 
         #
         # Check the statusbar icon exists.
         #
-        self.UTILS.TEST(self.clock.checkStatusbarIcon(), "Alarm icon is present in statusbar.")
+        self.UTILS.test.TEST(self.clock.checkStatusbarIcon(), "Alarm icon is present in statusbar.")
 
         #
         # Wait for the alarm to start.

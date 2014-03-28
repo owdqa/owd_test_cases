@@ -10,7 +10,7 @@ from gaiatest import GaiaTestCase
 #
 from tests._mock_data.contacts import MockContact
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 
 
@@ -28,13 +28,13 @@ class test_main(GaiaTestCase):
         # Prepare the contacts.
         #
         self.contact_list = [MockContact() for i in range(3)]
-        map(self.UTILS.insertContact, self.contact_list)
+        map(self.UTILS.general.insertContact, self.contact_list)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        
+
         #
         # Launch contacts app.
         #
@@ -43,24 +43,24 @@ class test_main(GaiaTestCase):
         #
         # View the details of our contact and make him a favourite.
         #
-        self.UTILS.logResult("info", "<b>Setting up a contact in favourites ...</b>")
+        self.UTILS.reporting.logResult("info", "<b>Setting up a contact in favourites ...</b>")
         self.contacts.view_contact(self.contact_list[0]['name'])
 
-        x = self.UTILS.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
+        x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
         x.tap()
-        x = self.UTILS.getElement(DOM.Contacts.details_back_button, "Back button")
+        x = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
         x.tap()
         string = self.contact_list[0]['givenName'] + " " + self.contact_list[0]['familyName']
         favs = ("xpath", DOM.Contacts.favourites_list_xpath.format(string))
-        self.UTILS.waitForElements(favs, "'" + self.contact_list[0]['name'] + "' in the favourites list")
+        self.UTILS.element.waitForElements(favs, "'" + self.contact_list[0]['name'] + "' in the favourites list")
 
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot at this point", x)
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot at this point", x)
 
         #
         # Now check the favourites list appears first.
         #
-        x = self.UTILS.getElements(("tag name", "ol"), "Contact lists")
+        x = self.UTILS.element.getElements(("tag name", "ol"), "Contact lists")
         fav_id = "contacts-list-favorites"
         normal_ids = "contacts-list-"
         foundFav = False
@@ -72,5 +72,5 @@ class test_main(GaiaTestCase):
                 foundNormal = True
                 break
 
-        self.UTILS.TEST(foundNormal, "Found the non-favourite lists.")
-        self.UTILS.TEST(foundFav, "Found the favourite lists before the non-favourite lists.")
+        self.UTILS.test.TEST(foundNormal, "Found the non-favourite lists.")
+        self.UTILS.test.TEST(foundFav, "Found the favourite lists before the non-favourite lists.")

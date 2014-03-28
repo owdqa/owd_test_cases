@@ -3,13 +3,13 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.dialer import Dialer
 from tests._mock_data.contacts import MockContact
@@ -17,7 +17,7 @@ from tests._mock_data.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
-    
+
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
@@ -29,19 +29,19 @@ class test_main(GaiaTestCase):
         self.num = self.Contact_1["tel"]["value"]
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
         #
         # Enter a number in the dialer.
         #
         self.dialer.launch()
         self.dialer.enterNumber(self.num)
-        
+
         self.dialer.callThisNumber()
-        
-        self.UTILS.switchToFrame(*DOM.Dialer.frame_locator_calling)
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot of call being made with mute and speaker off:", x)
-        
+
+        self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot of call being made with mute and speaker off:", x)
+
         self.dialer.hangUp()

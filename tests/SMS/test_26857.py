@@ -3,18 +3,19 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 import time
 
+
 class test_main(GaiaTestCase):
-    
+
     def setUp(self):
         #
         # Set up child objects...
@@ -22,13 +23,13 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
-        
+
         # Get the correct number for the sms device.
-        self.num = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        
+        self.num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
 
         #
@@ -51,18 +52,18 @@ class test_main(GaiaTestCase):
         self.messages.enterSMSMsg(msg_text)
         self.messages.sendSMS()
         self.messages.waitForReceivedMsgInThisThread()
-         
+
         #
         # Return to the threads view.
         #
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
+        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
 
         #
         # Get the preview txt for our test.
         #
         preview_text = self.messages.getThreadText(self.num)
-        
-        self.UTILS.TEST(preview_text in msg_text, 
+
+        self.UTILS.test.TEST(preview_text in msg_text,
                         "Preview text (" + preview_text + ") is in the original message text(" + msg_text + ").")
-        
+

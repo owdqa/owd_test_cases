@@ -3,14 +3,14 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
-from OWDTestToolkit.apps import Settings
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit.apps.dialer import Dialer
 import time
 
@@ -27,7 +27,7 @@ class test_main(GaiaTestCase):
     def tearDown(self):
 
 
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         # Launch dialer app.
@@ -37,12 +37,12 @@ class test_main(GaiaTestCase):
          #
         # Calls the current number.
         #
-        x = self.UTILS.getElement(DOM.Dialer.call_number_button, "Call number button")
+        x = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call number button")
         x.tap()
 
         time.sleep(5)
 
-        x = self.UTILS.getElement(DOM.Dialer.message_calleID, "Message Call ID")
+        x = self.UTILS.element.getElement(DOM.Dialer.message_calleID, "Message Call ID")
 
-        self.UTILS.assertEqual(x.text, "Service has been disabled", "Caller ID NOT restricted")
+        self.assertEqual(x.text, "Service has been disabled", "Caller ID NOT restricted")
 

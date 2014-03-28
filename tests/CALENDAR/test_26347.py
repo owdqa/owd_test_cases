@@ -3,10 +3,10 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit.utils import UTILS
+from gaiatest import GaiaTestCase
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.calendar import Calendar
-from OWDTestToolkit.apps import Settings
+from OWDTestToolkit.apps.settings import Settings
 
 #
 # Imports particular to this test case.
@@ -28,7 +28,7 @@ class test_main(GaiaTestCase):
         self.locatStr = "Right here"
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -38,4 +38,4 @@ class test_main(GaiaTestCase):
 
         self.calendar.createEvent()
 
-        self.UTILS.logResult(False, "NOTE FOR ROY: need to check this event in each view (see jira for details).")
+        self.UTILS.reporting.logResult(False, "NOTE FOR ROY: need to check this event in each view (see jira for details).")

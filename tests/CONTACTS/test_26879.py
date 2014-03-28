@@ -9,7 +9,7 @@ from gaiatest import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.dialer import Dialer
 from tests._mock_data.contacts import MockContact
@@ -30,10 +30,10 @@ class test_main(GaiaTestCase):
         # Get details of our test contacts.
         #
         self.contact = MockContact(tel={'type': 'Mobile', 'value': '+345555555555'})
-        self.UTILS.insertContact(self.contact)
+        self.UTILS.general.insertContact(self.contact)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -49,16 +49,16 @@ class test_main(GaiaTestCase):
         #
         # Tap the phone number.
         #
-        x = self.UTILS.getElement(DOM.Contacts.view_contact_tel_field, "Telephone number")
+        x = self.UTILS.element.getElement(DOM.Contacts.view_contact_tel_field, "Telephone number")
         x.tap()
 
         #
         # Switch to dialer.
         #
-        self.UTILS.switchToFrame(*DOM.Dialer.frame_locator_calling)
+        self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)
 
-        self.UTILS.waitForElements(("xpath", DOM.Dialer.outgoing_call_numberXP.format(self.contact["name"])),
+        self.UTILS.element.waitForElements(("xpath", DOM.Dialer.outgoing_call_numberXP.format(self.contact["name"])),
                                     "Outgoing call found with number matching {}".format(self.contact["name"]))
 
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot of contact:", x)
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot of contact:", x)

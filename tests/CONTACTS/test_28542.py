@@ -3,15 +3,15 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
-from OWDTestToolkit.apps import Settings
+from OWDTestToolkit.apps.settings import Settings
 import time
 
 class test_main(GaiaTestCase):
@@ -26,7 +26,7 @@ class test_main(GaiaTestCase):
         self.settings = Settings(self)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
@@ -40,12 +40,12 @@ class test_main(GaiaTestCase):
         self.contacts.import_memory_card()
         time.sleep(2)
 
-        x = self.UTILS.getElement(DOM.Contacts.cancel_import_contacts, "Cancel the import")
+        x = self.UTILS.element.getElement(DOM.Contacts.cancel_import_contacts, "Cancel the import")
         x.tap()
         time.sleep(2)
 
         #Check that the process has been actually cancelled, check the contact list??
-        self.UTILS.waitForElements(DOM.Contacts.memorycard_button, "Memory Card Button")
+        self.UTILS.element.waitForElements(DOM.Contacts.memorycard_button, "Memory Card Button")
 
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot and details", x)
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot and details", x)

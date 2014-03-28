@@ -3,10 +3,10 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
 
@@ -33,11 +33,11 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Sending mms to telephone number " + self.target_telNum)
+        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.UTILS.reporting.logComment("Sending mms to telephone number " + self.target_telNum)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         val=2
@@ -50,7 +50,7 @@ class test_main(GaiaTestCase):
         #
         # Back to send a new message
         #
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
+        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
 
         #
@@ -61,7 +61,7 @@ class test_main(GaiaTestCase):
         #
         # Back to send a new message
         #
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
+        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
 
         #
@@ -76,7 +76,7 @@ class test_main(GaiaTestCase):
         locator = (DOM.Messages.message_text[0],
                     DOM.Messages.message_text[1].format(val))
 
-        elem1 = self.UTILS.getElement(locator, "mms text")
+        elem1 = self.UTILS.element.getElement(locator, "mms text")
         header1 = elem1.text
 
 
@@ -89,13 +89,13 @@ class test_main(GaiaTestCase):
         #
         # Create reference in xpth with value "val".
         #
-        elem2 = self.UTILS.getElement(locator, "mms text")
+        elem2 = self.UTILS.element.getElement(locator, "mms text")
         header2 = elem2.text
 
         #
         # Vary that header[1] is different after deleting a message".
         #
-        self.UTILS.TEST(header1 != header2, 
+        self.UTILS.test.TEST(header1 != header2, 
             "HEADER BEFORE DETELING A MMS: " + header1 + " HEADER AFTER DETELING A MMS: " + header2, True)
 
 

@@ -3,17 +3,17 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 
 class test_main(GaiaTestCase):
-    
+
     _RESTART_DEVICE = True
 
     def setUp(self):
@@ -23,15 +23,15 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
-        
+
         #
         # Import contact (adjust the correct number).
         #
-        self._num = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self._num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
         #
         # Launch messages app.
@@ -50,25 +50,25 @@ class test_main(GaiaTestCase):
         self.messages.enterSMSMsg("Test 2")
         self.messages.sendSMS()
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-          
+  
         self.messages.enterSMSMsg("Test 3")
         self.messages.sendSMS()
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-          
+  
         #
         # Leave this thread.
         #
         self.messages.closeThread()
-         
+ 
         #
         # Enter the thread.
         #
         self.messages.openThread(self._num)
-         
+ 
         #
         # Find the first message.
         #
-        x = self.UTILS.getElements(DOM.Messages.message_list, "Message list", False)
+        x = self.UTILS.element.getElements(DOM.Messages.message_list, "Message list", False)
         pos = 0
         for i in x:
             if i.find_element("xpath", "//p[text()='Test 1']"):
@@ -84,30 +84,30 @@ class test_main(GaiaTestCase):
             pos += 1
             self.checkMsg(x, pos, "Test {}".format(i + 1), "incoming")
             pos += 1
-         
+ 
         #
         # Tap the message area.
         #
-        x = self.UTILS.getElement(DOM.Messages.input_message_area, "Message area")
+        x = self.UTILS.element.getElement(DOM.Messages.input_message_area, "Message area")
         x.tap()
-        
+
         #
         # Check the keyboard is now present.
         #
-        self.UTILS.switchToFrame(*DOM.Keyboard.frame_locator)
-            
+        self.UTILS.iframe.switchToFrame(*DOM.Keyboard.frame_locator)
+
     def checkMsg(self, p_list, p_pos, p_str, p_direction):
         #
         # Do the check of each message.
         #
-        self.UTILS.TEST(p_list[p_pos].find_element("xpath", ".//p").text == p_str,
+        self.UTILS.test.TEST(p_list[p_pos].find_element("xpath", ".//p").text == p_str,
                         "The messages at position " + str(p_pos) + " contains the string '" + p_str + "'.")
-        
-        self.UTILS.TEST(p_direction in p_list[p_pos].get_attribute("class"),
+
+        self.UTILS.test.TEST(p_direction in p_list[p_pos].get_attribute("class"),
                         "The message at position " + str(p_pos) + " is '" + p_direction + "'.")
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+

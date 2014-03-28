@@ -9,7 +9,7 @@ from gaiatest import GaiaTestCase
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.dialer import Dialer
@@ -19,8 +19,8 @@ class test_main(GaiaTestCase):
 
     test_num = "089123456"
     test_msg = "Testing " + test_num + " number."
-    
-    
+
+
     def setUp(self):
         #
         # Set up child objects...
@@ -30,44 +30,44 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.Dialer = Dialer(self)
         self.contacts = Contacts(self)
-        
+
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Sending sms to telephone number " + self.target_telNum)
-        
+        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.target_telNum)
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
-        self.UTILS.getNetworkConnection()
-        
+        self.UTILS.network.getNetworkConnection()
+
         #
         # Launch messages app.
         #
         self.messages.launch()
-         
+ 
         #
         # Create and send a new test message.
         #
         self.messages.createAndSendSMS([self.target_telNum], self.test_msg)
-        
+
         #
         # Wait for the last message in this thread to be a 'received' one
         # and click the link.
         #
         x = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.TEST(x, "Received a message.", True)
-        
+        self.UTILS.test.TEST(x, "Received a message.", True)
+
         y = x.find_element("tag name", "a")
         y.tap()
 
-        x = self.UTILS.getElement(DOM.Messages.header_call_btn, "Call button")
+        x = self.UTILS.element.getElement(DOM.Messages.header_call_btn, "Call button")
         x.tap()
-        
+
         time.sleep(5)
-        
+
         #
         # Create a contact from this number.
         #
@@ -75,7 +75,7 @@ class test_main(GaiaTestCase):
 
         #
         # Make sure the number is automatically in the contact details.
-        #        
-        x = self.UTILS.getElement(("id", "number_0"), "Mobile number field")
-        self.UTILS.TEST(x.get_attribute("value") == self.test_num, 
+        #
+        x = self.UTILS.element.getElement(("id", "number_0"), "Mobile number field")
+        self.UTILS.test.TEST(x.get_attribute("value") == self.test_num, 
                         "The correct number is automatically entered in the new contact's number field.")

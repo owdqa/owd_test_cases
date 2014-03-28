@@ -12,13 +12,13 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 
 
-class test_field_remove_toggle(GaiaTestCase):
+class field_remove_toggle(GaiaTestCase):
 
     def setUp(self):
         GaiaTestCase.setUp(self)
@@ -26,7 +26,7 @@ class test_field_remove_toggle(GaiaTestCase):
         self.contacts = Contacts(self)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def field_remove_toggle_test(self, contact, field_definition, item_nums=[0]):
         #
@@ -49,17 +49,17 @@ class test_field_remove_toggle(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.UTILS.logResult("info", "Setting up contact ...")
-        self.UTILS.insertContact(contact)
+        self.UTILS.reporting.logResult("info", "Setting up contact ...")
+        self.UTILS.general.insertContact(contact)
 
         # Add image.
-        self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
         self.contacts.launch()
         self.contacts.view_contact(contact['name'])
         self.contacts.press_edit_contact_button()
         self.contacts.add_gallery_image_to_contact(0)
 
-        self.UTILS.logResult("info", "Starting tests ...")
+        self.UTILS.reporting.logResult("info", "Starting tests ...")
 
         #
         # Try to make sure this field section is in view (pretty hideous, but it does the job!).
@@ -70,37 +70,37 @@ class test_field_remove_toggle(GaiaTestCase):
         except:
             pass
 
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot at this point:", x)
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot at this point:", x)
 
-        self.UTILS.checkMarionetteOK()
-        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
+        self.UTILS.general.checkMarionetteOK()
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
-        self.UTILS.logResult("info", "<b>For each of our items for this field, "\
+        self.UTILS.reporting.logResult("info", "<b>For each of our items for this field, "\
                              "click the icon to set them to 'remove' ...</b>")
         for i in item_nums:
-            x = self.UTILS.getElements(field_locator, "Field being tested (item {})".format(i))[i]
-            self.UTILS.TEST("removed" not in x.get_attribute("class"),
+            x = self.UTILS.element.getElements(field_locator, "Field being tested (item {})".format(i))[i]
+            self.UTILS.test.TEST("removed" not in x.get_attribute("class"),
                             "The item is NOT marked as temporarily removed.")
 
-            x = self.UTILS.getElements(del_icon_locator, "Field reset button (item {})".format(i))[i]
+            x = self.UTILS.element.getElements(del_icon_locator, "Field reset button (item {})".format(i))[i]
             x.tap()
 
-            x = self.UTILS.screenShotOnErr()
-            self.UTILS.logResult("info", "Screenshot at this point:", x)
+            x = self.UTILS.debug.screenShotOnErr()
+            self.UTILS.reporting.logResult("info", "Screenshot at this point:", x)
 
-            x = self.UTILS.getElements(field_locator, "Field being tested (item {})".format(i))[i]
-            self.UTILS.TEST("removed" in x.get_attribute("class"), "The item IS now marked as temporarily removed.")
+            x = self.UTILS.element.getElements(field_locator, "Field being tested (item {})".format(i))[i]
+            self.UTILS.test.TEST("removed" in x.get_attribute("class"), "The item IS now marked as temporarily removed.")
 
-        self.UTILS.logResult("info", "<b>For each of our items for this field, "\
+        self.UTILS.reporting.logResult("info", "<b>For each of our items for this field, "\
                              "click the icon to turn off 'remove' ...</b>")
         for i in item_nums:
-            x = self.UTILS.getElements(del_icon_locator, "Field reset button (item {})".format(i))[i]
+            x = self.UTILS.element.getElements(del_icon_locator, "Field reset button (item {})".format(i))[i]
             x.tap()
 
-            x = self.UTILS.screenShotOnErr()
-            self.UTILS.logResult("info", "Screenshot at this point:", x)
+            x = self.UTILS.debug.screenShotOnErr()
+            self.UTILS.reporting.logResult("info", "Screenshot at this point:", x)
 
-            x = self.UTILS.getElements(field_locator, "Field being tested (item {})".format(i))[i]
-            self.UTILS.TEST("removed" not in x.get_attribute("class"),
+            x = self.UTILS.element.getElements(field_locator, "Field being tested (item {})".format(i))[i]
+            self.UTILS.test.TEST("removed" not in x.get_attribute("class"),
                             "The item is now NOT marked as temporarily removed.")

@@ -3,19 +3,19 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils import UTILS
+from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from tests._mock_data.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
-    
+
     def setUp(self):
         #
         # Set up child objects...
@@ -23,25 +23,25 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
-        
+
         #
         # Prepare the contact we're going to insert.
         #
-        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.contact = MockContact(tel = {'type': '', 'value': self.num1})
 
-        self.UTILS.insertContact(self.contact)
-        self.UTILS.logComment("Using target telephone number " + self.contact["tel"]["value"])
+        self.UTILS.general.insertContact(self.contact)
+        self.UTILS.reporting.logComment("Using target telephone number " + self.contact["tel"]["value"])
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
         #
         # Launch messages app.
         #
         self.messages.launch()
-        
+
         #
         # Type a message containing the required string 
         #
@@ -52,18 +52,18 @@ class test_main(GaiaTestCase):
         #
         # Press the back button.
         #
-        x = self.UTILS.getElement(DOM.Messages.cancel_add_contact,
+        x = self.UTILS.element.getElement(DOM.Messages.cancel_add_contact,
                                     "Cancel add contact button")
         x.tap()
-                
+    
         #
         # Switch back to the sms iframe.
         #
         self.marionette.switch_to_frame()
-        self.UTILS.switchToFrame("src",orig_iframe)
+        self.UTILS.iframe.switchToFrame("src",orig_iframe)
 
         #
         # Check 'Send' button is not enabled.
         #
-        x = self.UTILS.getElement(DOM.Messages.send_message_button, "Send button")
-        self.UTILS.TEST(not x.is_enabled(), "Send button is not enabled.")
+        x = self.UTILS.element.getElement(DOM.Messages.send_message_button, "Send button")
+        self.UTILS.test.TEST(not x.is_enabled(), "Send button is not enabled.")
