@@ -46,16 +46,25 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "<b>Setting up a contact in favourites ...</b>")
         self.contacts.view_contact(self.contact_list[0]['name'])
 
+        #
+        # Mark contact as favourite
+        #
         x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
         x.tap()
+
+        #
+        # Go back to all contacts list
+        #
         x = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
         x.tap()
-        string = self.contact_list[0]['givenName'] + " " + self.contact_list[0]['familyName']
+
+        #
+        # Check the contact is in the favourite list
+        #
+        string = self.contact_list[0]['givenName'] + self.contact_list[0]['familyName']
         favs = ("xpath", DOM.Contacts.favourites_list_xpath.format(string))
         self.UTILS.element.waitForElements(favs, "'" + self.contact_list[0]['name'] + "' in the favourites list")
 
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot at this point", x)
 
         #
         # Now check the favourites list appears first.
@@ -63,6 +72,7 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElements(("tag name", "ol"), "Contact lists")
         fav_id = "contacts-list-favorites"
         normal_ids = "contacts-list-"
+
         foundFav = False
         foundNormal = False
         for i in x:

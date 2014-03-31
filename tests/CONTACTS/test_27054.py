@@ -12,6 +12,8 @@ from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.settings import Settings
 import time
 class test_main(GaiaTestCase):
+    
+    _RESTART_DEVICE = True
 
     def setUp(self):
         #
