@@ -3,53 +3,67 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.apps.settings import Settings
 from tests._mock_data.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
     
+    _RESTART_DEVICE = True
+
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.settings   = Settings(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.settings = Settings(self)
 
-        self.hotmail_u = self.UTILS.get_os_variable("HOTMAIL_1_EMAIL")
-        self.hotmail_p = self.UTILS.get_os_variable("HOTMAIL_1_PASS")
+        self.hotmail_user = self.UTILS.general.get_os_variable("HOTMAIL_2_EMAIL")
+        self.hotmail_passwd = self.UTILS.general.get_os_variable("HOTMAIL_2_PASS")
 
         #
         # Get details of our test contacts.
         #
-        self.Contact_1 = MockContact()
-        self.UTILS.insertContact(self.Contact_1)
+        self.contact = MockContact()
+        self.UTILS.general.insertContact(self.contact)
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
         #
         # Set up to use data connection.
         #
-        self.UTILS.getNetworkConnection()
-        
+        self.UTILS.network.getNetworkConnection()
+
         self.contacts.launch()
 
-        x = self.contacts.import_HotmailLogin(self.hotmail_u, self.hotmail_p)
-        if not x or x == "ALLIMPORTED":
-            self.UTILS.logResult(False, "Cannot continue past this point without importing the contacts.")
-            return
+        login_result = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)
 
-        x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list")
+        #
+        # Login unsuccesful or no available contacts to import
+        #
+        if not login_result:
+            self.UTILS.test.TEST(False, "Login unsuccesful")
+            
+        if login_result == "ALLIMPORTED":
+            self.UTILS.test.TEST(False, "No more contacts to import")
+
+        x = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list")
         cont_count = len(x)
-        x = self.UTILS.getElement(DOM.Contacts.import_num_of_conts, "Number of contacts")
-        self.UTILS.logResult("info", "Detected message '%s'." % x.text)
-        self.UTILS.TEST(str(cont_count) in x.text, "'%s' contains the real count, which is %s." % (x.text, cont_count))
+
+        x = self.UTILS.element.getElement(DOM.Contacts.import_num_of_conts, "Number of contacts")
+        self.UTILS.reporting.logResult("info", "Detected message '{}'.".format(x.text))
+        
+        self.UTILS.test.TEST(str(cont_count) in x.text, "'{}' contains the real count, which is {}.".\
+                        format(x.text, cont_count))

@@ -3,53 +3,58 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
 
 class test_main(GaiaTestCase):
-    
-    _TestMsg     = "Test message."
-    
+
+    test_msg = "Test message."
+
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.num2 = "621234567"
-        
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
-        
+
         #
         # Launch messages app.
         #
         self.messages.launch()
-        
+
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], "Test %s number." % self.num2)
+        self.messages.createAndSendSMS([self.num1], "Test {} number.".format(self.num2))
         x = self.messages.waitForReceivedMsgInThisThread()
-        
+
         #
         # Tap the header.
         #
-        x = self.UTILS.getElement(DOM.Messages.message_header, "Thread header")
+        x = self.UTILS.element.getElement(DOM.Messages.message_header, "Thread header")
         x.tap()
 
         #
         # Verify that each expected item is present.
         #
-        self.UTILS.waitForElements(DOM.Messages.header_call_btn, "Call button")
-        self.UTILS.waitForElements(DOM.Messages.header_create_new_contact_btn, "Create new contact button")
-        self.UTILS.waitForElements(DOM.Messages.header_add_to_contact_btn, "Add to existing contact button")
-        self.UTILS.waitForElements(DOM.Messages.header_cancel_btn_no_send, "Cancel button")
+        self.UTILS.element.waitForElements(DOM.Messages.header_call_btn, "Call button")
+        self.UTILS.element.waitForElements(DOM.Messages.header_create_new_contact_btn,
+                                    "Create new contact button")
+        self.UTILS.element.waitForElements(DOM.Messages.header_add_to_contact_btn,
+                                    "Add to existing contact button")
+        self.UTILS.element.waitForElements(DOM.Messages.header_cancel_btn_no_send,
+                                    "Cancel button")

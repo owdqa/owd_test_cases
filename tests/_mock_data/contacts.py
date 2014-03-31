@@ -26,16 +26,16 @@ class MockContact(dict):
 
         # Set default values
         curr_time = repr(time.time()).replace('.', '')
-        self['givenName'] = 'OWD%s' % curr_time[10:]
+        self['givenName'] = 'OWD{}'.format(curr_time[10:])
         self['familyName'] = 'TEST'
-        self['name'] = '%s %s' % (self['givenName'], self['familyName'])
+        self['name'] = '{} {}'.format(self['givenName'], self['familyName'])
         self['email'] = {
             'type': 'Personal',
-            'value': '%s@testmail.net' % curr_time[8:]}
+            'value': '{}@testmail.net'.format(curr_time[8:])}
         self['tel'] = {
             'type': 'Mobile',
-            'value': '655%s' % curr_time[6:]}
-        self['adr'] = {
+            'value': '655{}'.format(curr_time[6:])}
+        self['addr'] = {
             'type': 'Home',
             'streetAddress': '101 Testing street',
             'postalCode': '28014',

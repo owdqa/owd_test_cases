@@ -6,46 +6,48 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
+
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.gallery import Gallery
+from OWDTestToolkit.apps.music import Music
+from OWDTestToolkit.apps.settings import Settings
 
 
 class test_main(GaiaTestCase):
-    
-    _TestMsg     = "Test."
-    
+
+    test_msg = "Test."
+
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.gallery    = Gallery(self)
-        self.music      = Music(self)
-        self.settings   = Settings(self)
-        
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.gallery = Gallery(self)
+        self.music = Music(self)
+        self.settings = Settings(self)
+
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Sending mms to telephone number " + self.target_telNum)
+        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.target_mms_number = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
+        self.UTILS.reporting.logComment("Sending mms to telephone number " + self.target_telNum)
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
 
         #
         # Load files into the device.
         #
-        self.UTILS.addFileToDevice('./tests/_resources/imgd.jpg', destination='DCIM/100MZLLA')
-        self.UTILS.addFileToDevice('./tests/_resources/MP3.mp3', destination='/SD/mus')
-
-        #
-        # Activate data connection
-        #
-        #self.settings.turn_dataConn_on()
+        self.UTILS.general.addFileToDevice('./tests/_resources/imgd.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.addFileToDevice('./tests/_resources/MP3.mp3', destination='SD/mus')
 
         #
         # Launch messages app.
@@ -56,35 +58,35 @@ class test_main(GaiaTestCase):
         # Create a new SMS
         #
         self.messages.startNewSMS()
-        
+
         #
         # Insert the phone number in the To field
         #
-        self.messages.addNumbersInToField([ self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM") ])
+        self.messages.addNumbersInToField([self.target_telNum])
 
         #
         # Create MMS.
         #
-        self.messages.enterSMSMsg(self._TestMsg)
+        self.messages.enterSMSMsg(self.test_msg)
 
         self.messages.createMMSImage()
         self.gallery.clickThumbMMS(0)
 
         self.messages.createMMSMusic()
-        self.music.clickOnSongMMS()
+        self.music.click_on_song_mms()
 
         #
         # Click send and wait for the message to be received
         #
         self.messages.sendSMS()
 
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
+        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
 
-        self.messages.openThread("+" + self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM"))
+        self.messages.openThread(self.target_mms_number)
 
         #
-        # Wait for the last message in this thread to be a 'recieved' one.
+        # Wait for the last message in this thread to be a 'received' one.
         #
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.TEST(returnedSMS, "A receieved message appeared in the thread.", True)
+        self.UTILS.test.TEST(returnedSMS, "A received message appeared in the thread.", True)

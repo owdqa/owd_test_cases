@@ -3,44 +3,45 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
-
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
 
 class test_main(GaiaTestCase):
-    
+
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Sending sms to telephone number " + self.target_telNum)
-        
+        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.target_telNum)
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
         #
         # Launch messages app.
         #
         self.messages.launch()
-        
+
         #
         # Start a new sms.
         #
         self.messages.startNewSMS()
-        
+
         #
         # Enter a number in the target field.
         #
@@ -50,26 +51,26 @@ class test_main(GaiaTestCase):
         # Enter a message the message area.
         #
         x = self.messages.enterSMSMsg("xxx")
-        
+
         #
         # Click the back button.
         #
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
+        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
-        
+
         #
         # Check for the 'discard confirmation' popup.
         #
 
         self.marionette.switch_to_frame()
-        x = self.UTILS.getElement( ("xpath", "//*[text()='Are you sure you want to discard this message?']"),
+        x = self.UTILS.element.getElement( ("xpath", "//*[text()='Are you sure you want to discard this message?']"),
                                    "Discard confirmation message", True, 5, False)
-        x = self.UTILS.getElement(DOM.GLOBAL.modal_confirm_ok2, "OK button", True, 5, False)
+        x = self.UTILS.element.getElement(DOM.GLOBAL.modal_confirm_ok2, "OK button", True, 5, False)
         x.tap()
 
-        self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
-        
+        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+
         #
         # Verify that we're now in the correct place.
         #
-        self.UTILS.headerCheck("Messages")
+        self.UTILS.element.headerCheck("Messages")

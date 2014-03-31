@@ -301,14 +301,23 @@
 27765|Send a new SMS using the search option (in contact list window) in order to select an existing contact
 28100|Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:'Test1 656565678 number')
 28537|Press call button while the last outgoing call is a number with the prefix +XX
+28536|Press call button while call log only contains incoming and missed calls
 28538|Press call button while the last outgoing call is a contact number
 28539|Press call button after delete all the calls from the call log
 28540|Press call button while the call log contains different outgoing calls
 29867|Verifying the calling line identification presentation status, when it's provisioned
+29873|Hide number "CLIR" by MMI code and verify that settings options are updated
+29875|Show number "CLIR" by MMI code and verify the status using other MMI code 
 29893|Send a MMS when data is on and wifi off
 29894|Send a MMS when data and wifi are on
 29895|Send a MMS when data is off and wifi on
 29896|Send a MMS when data and wifi are off
+28999|MMS received with auto retrieve and when roaming enabled (data connection not available)
+29900|MMS received with auto retrieve and when roaming enabled (data and wifi connection available)
+29901|MMS received with auto retrieve and when roaming disabled (data connection not available)
+20902|MMS received with auto retrieve and when roaming disabled (data connection and wifi available)
+29916|Verify that the user can delete all mms in a thread with an unsent mms
+29917|Verify that the user can delete an mms in a thread with several mms
 29918|Verify that the user can attach a file .jpg and it is displayed as image
 29919|Verify that the user can attach a file .mp4 and it is displayed as video
 29920|Verify that the user can attach a file .mp3 and it is displayed as audio
@@ -316,19 +325,37 @@
 29922|Verify that the user can receive attached a file .mp4 in a MMS and it is displayed as video
 29923|Verify that the user can receive attached a file .mp3 in a MMS and it is displayed as audio
 30765|Verify that a contact imported from gmail is exported successfully
+31572|Forward an MMS with subject
+31578|Forward an MMS which is in a thread with more messages to a phone number
 31716|MMS Recipient Name
 31717|Message with text, audio and images
 31718|Message size during composition
 31719|USIM Addresses
-31720|Sending PNG file
+31720|Differentiation between EMS, MMS and SMS
 31721|Receiving MP4 audio file
 31722|The device should support MPEG4 file format
-31723|Reception of video file + JPG file + AMR file
-31724|Differentiation between EMS, MMS and SMS
+31723|Reception of JPG file
+31724|GIF Image size 640x480
 31725|Multiple objects in same page
-31726|Hyperlinks
+31726|Reception of 3GPP Video file
 31727|JPG Image size 640x480
 31728|GIF Image size 640x480
 31729|Animated GIF image size 640x480
-31730|3GPP Video
+31730|Reception of JPG + AMR + MP4 files
+MMSTCCOMPT009b|MMS Recipient Name
+MMSTCCOMPT010d|Message with text, audio and images
+MMSTCCOMPT012b|Message size during composition
+MMSTCCOMPT015b|USIM Addresses
+MMSTCFEATR002c|Sending PNG file
+MMSTCFEATR003b|Receiving MP4 audio file
+MMSTCFEATR012d|The device should support MPEG4 file format
+MMSTCFEATR030a|Reception of video file + JPG file + AMR file
+MMSTCMMITC011d|Differentiation between EMS, MMS and SMS
+MMSTCPREST006a|Multiple objects in same page
+MMSTCPREST008a|Hyperlinks
+MMSTCRECVN004c|JPG Image size 640x480
+MMSTCRECVN005c|GIF Image size 640x480
+MMSTCRECVN006b|Animated GIF image size 640x480
+MMSTCSENDG012c|3GPP Video
+
 

@@ -3,14 +3,17 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
-#from datetime 
-import datetime, time   
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.clock import Clock
+from OWDTestToolkit.apps.settings import Settings
+import datetime
+import time
+
 
 class test_main(GaiaTestCase):
 
@@ -19,15 +22,15 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.clock      = Clock(self)
-        self.settings   = Settings(self)
-                
+        self.UTILS = UTILS(self)
+        self.clock = Clock(self)
+        self.settings = Settings(self)
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
-    
+
         #
         # Set the volume to be low (no need to wake up the office! ;o)
         #
@@ -37,49 +40,45 @@ class test_main(GaiaTestCase):
         # Launch clock app.
         #
         self.clock.launch()
-         
+
         #
         # Delete all previous alarms.
         #
         #
-        self.clock.deleteAllAlarms() 
- 
+        self.clock.deleteAllAlarms()
+
         #
         # Create an alarm that is 1 minute in the future.
         #
         # (Make sure we're not about to do this at the end of a minute or an hour.)
         #
         now_mins = time.strftime("%M", time.gmtime())
-        diff_m   = 60 - int(now_mins)
+        diff_m = 60 - int(now_mins)
         if diff_m <= 1:
             time.sleep(60)
-         
+
         now_secs = time.strftime("%S", time.gmtime())
-        diff_s   = 60 - int(now_secs)
+        diff_s = 60 - int(now_secs)
         if diff_s <= 15:
             time.sleep(diff_s)
- 
- 
+
         t = datetime.datetime.now() + datetime.timedelta(minutes=1)
-         
-        _hour   = t.hour
-        _minute = t.minute
-        _title  = "Test alarm"
- 
-        self.clock.createAlarm(_hour, _minute, _title)
-         
+
+        title = "Test alarm"
+        self.clock.createAlarm(t.hour, t.minute, title)
+
         #
         # Return to the main screen (since this is where the user will
         # most likely be when the alarm goes off).
         #
-        self.UTILS.goHome()
-         
+        self.UTILS.home.goHome()
+
         #
         # Check the statusbar icon exists.
         #
-        self.UTILS.TEST(self.clock.checkStatusbarIcon(), "Alarm icon is present in statusbar.")
- 
+        self.UTILS.test.TEST(self.clock.checkStatusbarIcon(), "Alarm icon is present in statusbar.")
+
         #
         # Wait for the alarm to start.
         #
-        self.clock.checkAlarmRingDetails(_hour, _minute, _title)
+        self.clock.checkAlarmRingDetails(t.hour, t.minute, title)

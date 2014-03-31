@@ -3,9 +3,12 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.gallery import Gallery
 
 class test_main(GaiaTestCase):
 
@@ -19,26 +22,23 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.gallery    = Gallery(self)
-        self.Settings   = Settings(self)
-        self._TestMsg    = "Hello World"
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.gallery = Gallery(self)
 
+        self.test_msg = "Hello World"
 
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Sending mms to telephone number " + self.target_telNum)
+        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.UTILS.reporting.logComment("Sending mms to telephone number " + self.target_telNum)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
-
-
         #
         # Create and Send an MMS with a video attached.
         #
-        self.messages.createAndSendMMS("video", self._TestMsg)
+        self.messages.createAndSendMMS("video", self.test_msg)

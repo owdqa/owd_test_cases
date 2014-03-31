@@ -6,38 +6,41 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
+
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.gallery import Gallery
 
 
 class test_main(GaiaTestCase):
-    
-    _TestMsg     = "Test."
-    
+
+    test_msg = "Test."
+
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.gallery    = Gallery(self)
-        
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.gallery = Gallery(self)
+
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Sending mms to telephone number " + self.target_telNum)
+        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.UTILS.reporting.logComment("Sending mms to telephone number " + self.target_telNum)
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
 
         #
         # Load files into the device.
         #
-        self.UTILS.addFileToDevice('./tests/_resources/imgd.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.addFileToDevice('./tests/_resources/imgd.jpg', destination='DCIM/100MZLLA')
 
         #
         # Launch messages app.
@@ -48,23 +51,16 @@ class test_main(GaiaTestCase):
         # Create a new SMS
         #
         self.messages.startNewSMS()
-        
+
         #
         # Insert the phone number in the To field
         #
-        self.messages.addNumbersInToField([ self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM") ])
+        self.messages.addNumbersInToField([self.target_telNum])
 
         #
         # Create MMS.
         #
-        self.messages.enterSMSMsg(self._TestMsg)
+        self.messages.enterSMSMsg(self.test_msg)
 
         self.messages.createMMSImage()
         self.gallery.clickThumbMMS(0)
-
-        self.marionette.execute_script("""
-        var getElementByXpath = function (path) {
-            return document.evaluate(path, document, null, 9, null).singleNodeValue;
-        };
-        getElementByXpath("/html/body/div/div[2]");
-        """)

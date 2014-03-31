@@ -3,58 +3,76 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
-from tests._mock_data.contacts import MockContacts
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.dialer import Dialer
+from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
-    
+
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.dialer     = Dialer(self)
-        
-        self.cont1 = MockContacts().Contact_1
-        self.cont1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.cont1["givenName"] = "Longgivennamexxxxxxxxxxx"
-        self.cont1["name"] = self.cont1["givenName"] + " " + self.cont1["familyName"]
-        self.data_layer.insert_contact(self.cont1)
+        self.UTILS = UTILS(self)
+        self.dialer = Dialer(self)
 
-        self.cont2 = MockContacts().Contact_2
-        self.cont1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
-        self.cont2["familyName"] = "Longfamilynamexxxxxxxxxxx"
-        self.cont2["name"] = self.cont2["givenName"] + " " + self.cont2["familyName"]
-        self.data_layer.insert_contact(self.cont2)
+        self.test_num = "666666666666"
+        self.test_contacts = [MockContact(tel=[{'type': 'Mobile',
+                         'value': self.test_num}]) for i in range(2)]
+
+        self.test_contacts[0]["givenName"] = "LongGivennamexxxxxxxxxxx"
+        self.test_contacts[1]["familyName"] = "LongFamilynamexxxxxxxxxxx"
+
+        #
+        # This has to be done due to a MockContact malfunction. It does not
+        # update the name field to the specified values of givenName and familyName
+        #
+        for c in self.test_contacts:
+            c["name"] = c["givenName"] + " " + c["familyName"]
+
+        map(self.UTILS.general.insertContact, self.test_contacts)
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
         self.dialer.launch()
         self.dialer.callLog_clearAll()
-        
-        self.dialer.createMultipleCallLogEntries(self.cont1["tel"]["value"], 1)
-        self.dialer.createMultipleCallLogEntries(self.cont2["tel"]["value"], 1)
-        
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot of multiple entries:", x)
-        
-        x = self.UTILS.getElements(DOM.Dialer.call_log_numbers, "Call log entries", False)
-        _scr = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "%s entries found." % len(x), _scr)
-        
-        self.UTILS.logResult(False, "<b>NOTE: Cannot find a way to 'see' the dots!!</b>")
-        _item = x[0].find_element("xpath", "//span[contains(text(), '%s')]" % self.cont1["givenName"][:6])
-        self.UTILS.logResult("info", "text 1: %s" % _item.text)
-        self.UTILS.logResult("info", "val  1: %s" % _item.get_attribute("value"))
-            
-        _item = x[1].find_element("xpath", "//span[contains(text(), '%s')]" % self.cont2["givenName"][:6])
-        self.UTILS.logResult("info", "text 2: %s" % _item.text)
-            
-            
-            
+
+        for contact in self.test_contacts:
+            self.dialer.createMultipleCallLogEntries(contact["tel"][0]["value"], 1)
+
+        entries = self.UTILS.element.getElements(DOM.Dialer.call_log_numbers, "Call log entries", False)
+        self.UTILS.reporting.logResult("info", "{} entries found.".format(len(entries)))
+
+        for element in entries:
+            item = element.find_element("xpath", "//span[@class='primary-info-main']")
+
+            value = self.marionette.execute_script("""
+                function getStyle (el,styleProp) {
+                    if (el.currentStyle)
+                        var y = x.currentStyle[styleProp];
+                    else if (window.getComputedStyle)
+                        var y = document.defaultView.getComputedStyle(el,null)
+                                                    .getPropertyValue(styleProp);
+                    return y;
+                }
+                return getStyle(arguments[0], arguments[1])
+            """, script_args=[item, "text-overflow"])
+
+            isEllipsis = self.marionette.execute_script("""
+                function isEllipsisActive(element) {
+                    return (element.offsetWidth < element.scrollWidth);
+                }
+                return isEllipsisActive(arguments[0])
+            """, script_args=[item])
+
+            self.UTILS.reporting.logResult("info", "Value of css property: {}".format(value))
+            self.UTILS.reporting.logResult("info", "isEllipsisActive? {}".format(isEllipsis))
+            self.UTILS.test.TEST(value == "ellipsis" and isEllipsis, "Value of css property")

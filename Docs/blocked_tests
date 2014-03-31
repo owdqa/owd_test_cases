@@ -8,36 +8,19 @@
 # Keep the reason short, because it will be added to the description that is displayed during a test run!
 #
 26918|BUG 879830
-26853|BUG 879816
-26852|BUG 879816
-26847|BUG 879816
-26846|BUG 879816
 26731|BUG 879816
 26727|BUG 879816
 26781|BUG 885238
 26473|BUG 867987
 26347|BUG 867987
-26353|BUG 883344 and 879823
 26348|Automation issue: cannot work out how to automate the scroller for seeting the alarm time.
 26337|DEV SERVER ALWAYS DOWN
 26336|DEV SERVER ALWAYS DOWN
-26983|BUG 869918-you need to manually re-check this bug is solved
-27002|Automation issue (Marionette)
-28100|Automation issue (Marionette)
-26845|Automation issue (Marionette)
-27005|BUG 907073
-27006|BUG 907073
-27007|BUG 907073
-27009|BUG 907073
 27010|BUG 907073
 26834|BUG 883285
-26838|Cannot find a way to see the dots!
 26538|BUG 914099
-26977|BUG 895389 (will not be fixed)
-26978|Email app not working correctly
-26982|Email app not working correctly
+26977|BUG 895389 (WONTFIX)
 26885|Pending review
-26402|Email app not working correctly
 26979|Email app not working correctly
 27049|GaiaApps bug
 28542|Pending review
@@ -46,3 +29,4 @@
 26798|Pending review
 MMSTCFEATR030a|MMS Block
 MMSTCSENDG012c|MMS Block
+27050|Waiting for bug to be registered in Bugzilla

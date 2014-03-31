@@ -3,13 +3,15 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
-import time
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+
+
 
 class test_main(GaiaTestCase):
 
@@ -19,34 +21,34 @@ class test_main(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS     = UTILS(self)
-        
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
         #
         # Data conn icon is not in status bar yet.
         #
-        self.UTILS.TEST(self.UTILS.isNetworkTypeEnabled("airplane") == False,
+        self.UTILS.test.TEST(self.UTILS.network.isNetworkTypeEnabled("airplane") == False,
                          "Airplane mode is disabled before we start this test.")
-        
+
         #
         # Enable airplane mode.
         #
-        self.UTILS.toggleViaStatusBar("airplane")
-        
+        self.UTILS.statusbar.toggleViaStatusBar("airplane")
+
         #
         # Data icon is no longer visible in status bar.
         #
-        self.UTILS.waitForElements(DOM.Statusbar.airplane, "Airplane icon in statusbar", True, 20, False)
-        
+        self.UTILS.element.waitForElements(DOM.Statusbar.airplane, "Airplane icon in statusbar", True, 20, False)
+
         #
         # Disable airplane mode.
         #
-        self.UTILS.toggleViaStatusBar("airplane")
-        
+        self.UTILS.statusbar.toggleViaStatusBar("airplane")
+
         #
         # Data icon is no longer visible in status bar.
         #
-        self.UTILS.waitForNotElements(DOM.Statusbar.airplane, "Airplane icon in statusbar")
-        
+        self.UTILS.element.waitForNotElements(DOM.Statusbar.airplane, "Airplane icon in statusbar")
+

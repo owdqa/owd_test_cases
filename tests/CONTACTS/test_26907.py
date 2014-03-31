@@ -3,12 +3,15 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
+import time
 from tests._mock_data.contacts import MockContact
 
 
@@ -19,158 +22,154 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
- 
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+
         #
-        # Get details of our test contacts.
+        # Create test contacts.
         #
-        self.Contact_1 = MockContact()
-        self.UTILS.insertContact(self.Contact_1)
-        self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.contact = MockContact()
+        self.UTILS.general.insertContact(self.contact)
+        self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
-    def test_run(self):
+        self.UTILS.reporting.reportResults()
 
+    def test_run(self):
         #
         # Launch contacts app.
         #
-        self.UTILS.logResult("info", "Setting up contact ...")
+        self.UTILS.reporting.logResult("info", "Setting up contact ...")
         self.contacts.launch()
-        
+
         #
         # View our contact.
         #
-        self.contacts.viewContact(self.Contact_1['name'])
-          
+        self.contacts.view_contact(self.contact['name'])
+
         #
         # Edit our contact.
         #
-        self.contacts.pressEditContactButton()
-           
-        self.UTILS.logResult("info", "Starting tests ...")
-         
-        self.check_Field(True , "phone"    , "number_0"         , "number")
-        self.check_Field(True , "email"    , "email_0"          , "email")
-        self.check_Field(True , "address"  , "streetAddress_0"  , "streetAddress")
-         
-        # NOTE: for some reason the photo has to tested alone or it screws up the text tests.
-        self.contacts.pressCancelEditButton()
-        self.contacts.pressEditContactButton()
-        self.contacts.addGalleryImageToContact(0)
-        self.check_Field(False, "photo", "thumbnail-action")
+        self.contacts.press_edit_contact_button()
 
-    def check_Field(self, p_text, p_fieldName, p_fieldId, p_resetBtnName=""):
+        self.UTILS.reporting.logResult("info", "Starting tests ...")
+
+        self.check_field(True, "phone", "number_0", "number")
+        self.check_field(True, "email", "email_0", "email")
+        self.check_field(True, "address", "streetAddress_0", "streetAddress")
+
+        # NOTE: for some reason the photo has to tested alone or it screws up the text tests.
+        self.contacts.press_cancel_edit_button()
+        self.contacts.press_edit_contact_button()
+        self.contacts.add_gallery_image_to_contact(0)
+        self.check_field(False, "photo", "thumbnail-action")
+
+    def check_field(self, text, field_name, field_id, reset_btn_name=""):
         #
         # Test a text field: default, with reset enabled, with reset disabled.
         #
-        
+
         #
         # try to make sure the field is in view (pretty hideous, but it does the job!).
         #
         try:
-            self.marionette.execute_script("document.getElementById('" + p_fieldId + "').scrollIntoView();")
+            self.marionette.execute_script("document.getElementById('" + field_id + "').scrollIntoView();")
             self.marionette.execute_script("document.getElementById('contact-form-title').scrollIntoView();")
         except:
             pass
-        
-        self.UTILS.logResult("info", " ")
-        self.UTILS.logResult("info", "*** '" + p_fieldName + "': default (before testing 'reset' mode) ... ***")
-        self.check_kbd_appears(p_resetBtnName, p_fieldName, True) if p_text else self.check_photo_tap(True)
-        
-        self.UTILS.logResult("info", " ")
-        self.UTILS.logResult("info", "*** '" + p_fieldName + "': switching 'reset' mode ON ... ***")
-        self.toggle_reset_button(p_fieldName)
-        self.check_kbd_appears(p_resetBtnName, p_fieldName, False) if p_text else self.check_photo_tap(False)
-        
-        self.UTILS.logResult("info", " ")
-        self.UTILS.logResult("info", "*** '" + p_fieldName + "': switching 'reset' mode OFF ... ***")
-        self.toggle_reset_button(p_fieldName)
-        self.check_kbd_appears(p_resetBtnName, p_fieldName, True) if p_text else self.check_photo_tap(True)
 
-        self.UTILS.logResult("info", " ")
+        self.UTILS.reporting.logResult("info", " ")
+        self.UTILS.reporting.logResult("info", "*** '" + field_name + "': default (before testing 'reset' mode) ... ***")
+        self.check_kbd_appears(reset_btn_name, field_name, True) if text else self.check_photo_tap(True)
 
-        
-    def toggle_reset_button(self, p_el):
+        self.UTILS.reporting.logResult("info", " ")
+        self.UTILS.reporting.logResult("info", "*** '" + field_name + "': switching 'reset' mode ON ... ***")
+        self.toggle_reset_button(field_name)
+        self.check_kbd_appears(reset_btn_name, field_name, False) if text else self.check_photo_tap(False)
+
+        self.UTILS.reporting.logResult("info", " ")
+        self.UTILS.reporting.logResult("info", "*** '" + field_name + "': switching 'reset' mode OFF ... ***")
+        self.toggle_reset_button(field_name)
+        self.check_kbd_appears(reset_btn_name, field_name, True) if text else self.check_photo_tap(True)
+
+        self.UTILS.reporting.logResult("info", " ")
+
+    def toggle_reset_button(self, element):
         #
         # Press reset button on the required fields ...
         #
         reset_btn = DOM.Contacts.reset_field_xpath
-        
-        if p_el == "photo":
-            x = self.UTILS.getElement(("xpath",reset_btn % "thumbnail-action"), "Photo reset button")
+
+        if element == "photo":
+            x = self.UTILS.element.getElement(("xpath", reset_btn.format("thumbnail-action")), "Photo reset button")
             x.tap()
-          
-        if p_el == "phone":
-            x = self.UTILS.getElement(("xpath",reset_btn % "add-phone-0"), "Phone reset button")
+
+        if element == "phone":
+            x = self.UTILS.element.getElement(("xpath", reset_btn.format("add-phone-0")), "Phone reset button")
             x.tap()
-          
-        if p_el == "email":
-            x = self.UTILS.getElement(("xpath",reset_btn % "add-email-0"), "Email reset button")
+
+        if element == "email":
+            x = self.UTILS.element.getElement(("xpath", reset_btn.format("add-email-0")), "Email reset button")
             x.tap()
-           
-        if p_el == "address":
-            x = self.UTILS.getElement(("xpath",reset_btn % "add-address-0"), "Address reset button")
+
+        if element == "address":
+            x = self.UTILS.element.getElement(("xpath", reset_btn.format("add-address-0")), "Address reset button")
             x.tap()
-        
-    def check_photo_tap(self, p_boolEditable):
+
+    def check_photo_tap(self, editable):
         time.sleep(1)
-        
+
         # Check tapping photo (same link for add and edit)
-        _comment = "Photo is " + ("not " if not p_boolEditable else "")
-        x = self.UTILS.getElement(DOM.Contacts.add_photo, "Photo")
+        _comment = "Photo is " + ("not " if not editable else "")
+        x = self.UTILS.element.getElement(DOM.Contacts.add_photo, "Photo")
         x.tap()
         time.sleep(1)
-             
+
         self.marionette.switch_to_frame()
-             
-        boolED=False
+
+        is_editable = False
         try:
             self.wait_for_element_present(*DOM.Contacts.photo_from_gallery, timeout=5)
             self.wait_for_element_present(*DOM.Contacts.cancel_photo_source, timeout=1)
             x = self.marionette.find_element(*DOM.Contacts.cancel_photo_source)
             x.tap()
-            boolED = True
+            is_editable = True
         except:
-            boolED=False
-        self.UTILS.TEST(boolED == p_boolEditable, _comment + "editable.")
-            
-        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
+            is_editable = False
+        self.UTILS.test.TEST(is_editable == editable, _comment + "editable.")
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
-    def check_kbd_appears(self, p_elItem, p_desc, p_KBD_displayed):
+    def check_kbd_appears(self, item, desc, kbd_displayed):
         time.sleep(1)
         #
         # Taps the field and checks to see if the keyboard appears.
         # When marionette "is_enabled()" is working , we can forget all this.
         #
-        _comment = "The " + p_desc + " field can " + ("not " if not p_KBD_displayed else "") + "be edited."
+        comment = "The " + desc + " field can" + ("not" if not kbd_displayed else "") + " be edited."
 
-        x = self.UTILS.getElement(("id", "%s_0" % p_elItem), "Field for " + p_desc)
-    
-        # ROY - from here on does the keyboard verification .....
+        x = self.UTILS.element.getElement(("id", "{}_0".format(item)), "Field for " + desc)
+
+        # From here on does the keyboard verification.
         # The problem is that the keyboard frame is always present
         # once it's been launched, so I need a way to either KILL
         # the keyboard, or see what's currently displayed.
         x.tap()
-        
+
         self.marionette.switch_to_frame()
-        boolKBD=False
+        kbd = False
         try:
-            self.wait_for_element_displayed("xpath", 
-                                             "//iframe[contains(@" + DOM.Keyboard.frame_locator[0]+ \
+            self.wait_for_element_displayed("xpath", "//iframe[contains(@" + DOM.Keyboard.frame_locator[0] +\
                                              ",'" + DOM.Keyboard.frame_locator[1] + "')]", timeout=2)
-            boolKBD = True
+            kbd = True
         except:
             pass
-        self.UTILS.TEST(boolKBD == p_KBD_displayed, _comment)
-         
+        self.UTILS.test.TEST(kbd == kbd_displayed, comment)
+
         #
         # Return to the contacts iframe.
         #
-        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
-         
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+
         #
         # Tap the header to remove the keyboard.
         #

@@ -3,52 +3,46 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.browser import Browser
 
-#
-# Imports particular to this test case.
-#
 
 class test_main(GaiaTestCase):
-    
+
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.Browser    = Browser(self)
-        
+        self.UTILS = UTILS(self)
+        self.Browser = Browser(self)
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+
     def test_run(self):
-        
-        _url1 = "www.google.com"
-        _url2 = "www.bbc.co.uk"
-        
+
+        url1 = "www.google.com"
+        url2 = "www.bbc.co.uk"
+
         #
         # Wifi needs to be off for this test to work.
         #
-        self.UTILS.toggleViaStatusBar("data")
-        
+        self.UTILS.statusbar.toggleViaStatusBar("data")
+
         #
         # Open the browser app.
         #
         self.Browser.launch()
-        
+
         #
         # Open our URL.
         #
-        self.Browser.open_url(_url1)
-        _url = self.Browser.loadedURL()
-        self.UTILS.TEST(_url1 in _url, "'%s' is in the loaded source url: '%s'." % (_url1, _url))
+        self.Browser.open_url(url1)
+        url = self.Browser.loadedURL()
+        self.UTILS.test.TEST(url1 in url, "'{0}' is in the loaded source url: '{1}'.".format(url1, url))
 
-        self.Browser.open_url(_url2)
-        _url = self.Browser.loadedURL()
-        self.UTILS.TEST(_url2 in _url, "'%s' is in the loaded source url: '%s'." % (_url2, _url))
-        
-
-        
-        
+        self.Browser.open_url(url2)
+        url = self.Browser.loadedURL()
+        self.UTILS.test.TEST(url2 in url, "'{0}' is in the loaded source url: '{1}'.".format(url2, url))

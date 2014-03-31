@@ -5,12 +5,15 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
 #
 # Imports particular to this test case.
 #
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.gallery import Gallery
 
 
 class test_main(GaiaTestCase):
@@ -20,27 +23,26 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.gallery    = Gallery(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.gallery = Gallery(self)
 
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Sending sms to telephone number " + self.target_telNum)
-
-
+        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.target_mms_number = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.target_telNum)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
         # Sometimes causes a problem if not cleared.
         #
-        self.UTILS.clearAllStatusBarNotifs()
-        self.UTILS.addFileToDevice('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
+        self.UTILS.general.addFileToDevice('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
 
         #
         # Create message.
@@ -61,19 +63,19 @@ class test_main(GaiaTestCase):
         # Wait for the last message in this thread to be a 'received' one.
         #
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.TEST(returnedSMS, "A received message appeared in the thread.", True)
+        self.UTILS.test.TEST(returnedSMS, "A received message appeared in the thread.", True)
 
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
+        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
 
-        self.UTILS.waitForNotElements(DOM.Messages.mms_icon, "MMS Icon")
+        self.UTILS.element.waitForNotElements(DOM.Messages.mms_icon, "MMS Icon")
 
         self.messages.startNewSMS()
 
         #
         # Insert the phone number in the To field
         #
-        self.messages.addNumbersInToField([ self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM") ])
+        self.messages.addNumbersInToField([self.target_telNum])
 
         #
         # Create MMS.
@@ -88,7 +90,7 @@ class test_main(GaiaTestCase):
         #
         self.messages.sendSMS()
 
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
+        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
 
-        self.messages.checkMMSIcon()
+        self.messages.checkMMSIcon(self.target_mms_number)

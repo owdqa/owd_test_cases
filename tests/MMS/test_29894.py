@@ -3,9 +3,13 @@
 #
 import sys
 sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.gallery import Gallery
+from OWDTestToolkit.apps.settings import Settings
 
 class test_main(GaiaTestCase):
 
@@ -19,25 +23,30 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.gallery    = Gallery(self)
-        self.Settings   = Settings(self)
-        self._TestMsg    = "Hello World"
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.gallery = Gallery(self)
+        self.Settings = Settings(self)
+
+        self.test_msg = "Hello World"
+        #
+        # Establish wifi connection parameters.
+        #
+        self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
+        self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
+        self.wifi_pass = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
 
 
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Sending mms to telephone number " + self.target_telNum)
+        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.UTILS.reporting.logComment("Sending mms to telephone number " + self.target_telNum)
 
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
 
     def test_run(self):
-
-
         #
         # Turn on 3g connection.
         #
@@ -51,7 +60,7 @@ class test_main(GaiaTestCase):
         #
         # Create and Send an MMS
         #
-        self.messages.createAndSendMMS("image", self._TestMsg)
+        self.messages.createAndSendMMS("image", self.test_msg)
         #
         # Verify that the MMS has been received.
         #
