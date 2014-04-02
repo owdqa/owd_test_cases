@@ -327,6 +327,7 @@
 30765|Verify that a contact imported from gmail is exported successfully
 31572|Forward an MMS with subject
 31578|Forward an MMS which is in a thread with more messages to a phone number
+31579|Forward an MMS which is in thread with more messages to a contact
 31716|MMS Recipient Name
 31717|Message with text, audio and images
 31718|Message size during composition
