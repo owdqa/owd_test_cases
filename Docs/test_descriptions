@@ -326,6 +326,8 @@
 29923|Verify that the user can receive attached a file .mp3 in a MMS and it is displayed as audio
 30765|Verify that a contact imported from gmail is exported successfully
 31572|Forward an MMS with subject
+31576|Forward an SMS which is in a thread with more messages to a phone number
+31577|Forward an SMS which is in a thread with more messages to a contact
 31578|Forward an MMS which is in a thread with more messages to a phone number
 31579|Forward an MMS which is in thread with more messages to a contact
 31716|MMS Recipient Name
