@@ -11,7 +11,6 @@ from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
-from marionette import Actions
 from tests._mock_data.contacts import MockContact
 
 class test_main(GaiaTestCase):
@@ -23,8 +22,6 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
-
-        self.actions = Actions(self.marionette)
 
         #
         # Establish which phone number to use.
