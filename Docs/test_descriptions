@@ -328,6 +328,7 @@
 31570|Forward an SMS to multiple recipients
 31571|Forward an MMS to multiple recipients
 31572|Forward an MMS with subject
+31574|Cancel forwarding a message
 31576|Forward an SMS which is in a thread with more messages to a phone number
 31577|Forward an SMS which is in a thread with more messages to a contact
 31578|Forward an MMS which is in a thread with more messages to a phone number
