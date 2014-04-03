@@ -76,5 +76,5 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(DOM.Messages.attached_opt_remove, "Remove attached file")
         x.tap()
 
-        self.UTILS.element.waitForNotElements(DOM.Messages.attach_preview_img_type, "attached file hs been removed")
+        self.UTILS.element.waitForNotElements(DOM.Messages.attach_preview_img_type, "attached file has been removed")
 
