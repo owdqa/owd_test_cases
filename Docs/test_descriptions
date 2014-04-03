@@ -324,6 +324,7 @@
 29921|Verify that the user can receive attached a file .jpg in a MMS and it is displayed as image
 29922|Verify that the user can receive attached a file .mp4 in a MMS and it is displayed as video
 29923|Verify that the user can receive attached a file .mp3 in a MMS and it is displayed as audio
+29924|Click remove picture button in attached file options from a picture attached
 30765|Verify that a contact imported from gmail is exported successfully
 31570|Forward an SMS to multiple recipients
 31571|Forward an MMS to multiple recipients
