@@ -15,7 +15,7 @@ class test_main(GaiaTestCase):
     #
     # Restart device to starting with wifi and 3g disabled.
     #
-    #_RESTART_DEVICE = True
+    _RESTART_DEVICE = True
 
     def setUp(self):
         #
