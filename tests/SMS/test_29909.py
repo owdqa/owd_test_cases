@@ -41,6 +41,8 @@ class test_main(GaiaTestCase):
 
         self.messages.launch()
 
+        self.messages.startNewSMS()
+
         self.messages.addContactToField(self.contact["name"])
 
         self.UTILS.reporting.logResult("info", "Correct name is in the 'To' list.")
