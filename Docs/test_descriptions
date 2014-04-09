@@ -316,6 +316,7 @@
 29900|MMS received with auto retrieve and when roaming enabled (data and wifi connection available)
 29901|MMS received with auto retrieve and when roaming disabled (data connection not available)
 20902|MMS received with auto retrieve and when roaming disabled (data connection and wifi available)
+29911|All recipients are shown fine (recipients are contacts and numbers entered manually) in the sms thread
 29916|Verify that the user can delete all mms in a thread with an unsent mms
 29917|Verify that the user can delete an mms in a thread with several mms
 29918|Verify that the user can attach a file .jpg and it is displayed as image
