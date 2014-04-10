@@ -2,6 +2,7 @@
 
 # Set up the environment.
 . $HOME/.OWD_TEST_TOOLKIT_LOCATION
+export owd_test_cases_DIR=$PWD
 
 if [ $? -ne 0 ] || [ ! -d $GAIATEST_PATH ]
 then
