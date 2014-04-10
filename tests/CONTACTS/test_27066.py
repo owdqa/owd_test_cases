@@ -72,30 +72,29 @@ class test_main(GaiaTestCase):
         #
         boolOK1 = False
         boolOK2 = True
-        x = self.UTILS.element.getElements(DOM.Contacts.search_results_list, "Search results")
-        for i in x:
-            # Contact 1 (HAS an image).
-            try:
-                x = i.find_element("xpath", "/html/body/section[2]/section/ol/li/aside/img")
-                if x:
-                    boolOK1 = True
-                    break
-            except:
-                pass
+        results_list = self.UTILS.element.getElements(DOM.Contacts.search_results_list, "Search results")
 
-            # Contact 2 (Does NOT have an image).
-            try:
-                x = i.find_element("xpath", ".//p[contains(@data-search, '{}')]".format(self.contact2["name"]))
-                if x:
-                    try:
-                        x = i.find_element("xpath", ".//img")
-                        if x:
-                            boolOK2 = False
-                            break
-                    except:
-                        pass
-            except:
-                pass
+        for result in results_list:
+            if result.get_attribute("data-order") == self.contact["name"].replace(" ", ""):
+                # Contact 1
+                try:
+                    img = result.find_element("xpath", "//span[@data-type='img']")
+                    if ("blob" in img.get_attribute("data-src")):
+                        boolOK1 = True
+                except:
+                    self.UTILS.reporting.logResult("info", "No image present for contact {} | The image was indeed expected".format(result.text))
+
+            elif result.get_attribute("data-order") == self.contact2["name"].replace(" ", ""):
+                # Contact 2
+                try:
+                    img = result.find_element("xpath", "//span[@data-type='img']")
+                    if not ("blob" in img.get_attribute("data-src")):
+                        boolOK2 = False
+                except:
+                    self.UTILS.reporting.logResult("info", "No image present for contact {} | NO image expected".format(result.text))
+                    boolOK2 = True
+            else:
+                self.UTILS.test.TEST(False, "This contact does not appear in the list: {}".format(result.text))
 
         self.UTILS.test.TEST(boolOK1, "Contact 1 has image displayed.")
         self.UTILS.test.TEST(boolOK2, "Contact 2 has no image displayed.")

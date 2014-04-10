@@ -316,6 +316,7 @@
 29900|MMS received with auto retrieve and when roaming enabled (data and wifi connection available)
 29901|MMS received with auto retrieve and when roaming disabled (data connection not available)
 20902|MMS received with auto retrieve and when roaming disabled (data connection and wifi available)
+29911|All recipients are shown fine (recipients are contacts and numbers entered manually) in the sms thread
 29916|Verify that the user can delete all mms in a thread with an unsent mms
 29917|Verify that the user can delete an mms in a thread with several mms
 29918|Verify that the user can attach a file .jpg and it is displayed as image
@@ -324,9 +325,17 @@
 29921|Verify that the user can receive attached a file .jpg in a MMS and it is displayed as image
 29922|Verify that the user can receive attached a file .mp4 in a MMS and it is displayed as video
 29923|Verify that the user can receive attached a file .mp3 in a MMS and it is displayed as audio
+29924|Click remove picture button in attached file options from a picture attached
+29925|Verify that can attach a picture from the camera source
 30765|Verify that a contact imported from gmail is exported successfully
+31570|Forward an SMS to multiple recipients
+31571|Forward an MMS to multiple recipients
 31572|Forward an MMS with subject
+31574|Cancel forwarding a message
+31576|Forward an SMS which is in a thread with more messages to a phone number
+31577|Forward an SMS which is in a thread with more messages to a contact
 31578|Forward an MMS which is in a thread with more messages to a phone number
+31579|Forward an MMS which is in thread with more messages to a contact
 31716|MMS Recipient Name
 31717|Message with text, audio and images
 31718|Message size during composition
