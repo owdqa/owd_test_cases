@@ -41,7 +41,7 @@ class test_main(GaiaTestCase):
         #
         # Create and Send an MMS with a image attached.
         #
-        self.messages.createAndSendMMS("image", self.test_msg)
+        self.messages.createAndSendMMS("image", [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")], self.test_msg)
 
         #
         # Verify that the MMS has been received.

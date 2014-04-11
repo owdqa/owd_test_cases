@@ -45,7 +45,7 @@ class test_main(GaiaTestCase):
         #
         # Create and Send a MMS.
         #
-        self.messages.createAndSendMMS("image", self.test_msg1)
+        self.messages.createAndSendMMS("image", [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")], self.test_msg1)
 
         #
         # Back to send a new message
@@ -56,7 +56,7 @@ class test_main(GaiaTestCase):
         #
         # Create and Send other MMS.
         #
-        self.messages.createAndSendMMS("image", self.test_msg2)
+        self.messages.createAndSendMMS("image", [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")], self.test_msg2)
 
         #
         # Back to send a new message
@@ -67,7 +67,7 @@ class test_main(GaiaTestCase):
         #
         # Create and Send other MMS.
         #
-        self.messages.createAndSendMMS("image", self.test_msg3)
+        self.messages.createAndSendMMS("image", [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")], self.test_msg3)
 
 
         #

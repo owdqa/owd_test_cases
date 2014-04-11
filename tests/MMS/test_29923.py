@@ -42,7 +42,7 @@ class test_main(GaiaTestCase):
         #
         # Create and Send an MMS with a audio attached.
         #
-        self.messages.createAndSendMMS("audio", self.test_msg)
+        self.messages.createAndSendMMS("audio", [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")], self.test_msg)
         #
         # Verify that the MMS has been received.
         #

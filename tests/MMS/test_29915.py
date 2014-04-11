@@ -47,19 +47,19 @@ class test_main(GaiaTestCase):
         #
         # Create and Send an MMS
         #
-        self.messages.createAndSendMMSToNum("image", [self.test_num_1], self.test_msg)
+        self.messages.createAndSendMMS("image", [self.test_num_1], self.test_msg)
         #
         # Return to main SMS page.
         #
         self.messages.closeThread()
 
-        self.messages.createAndSendMMSToNum("image", [self.test_num_2], self.test_msg)
+        self.messages.createAndSendMMS("image", [self.test_num_2], self.test_msg)
           #
         # Return to main SMS page.
         #
         self.messages.closeThread()
 
-        self.messages.createAndSendMMSToNum("image", [self.test_num_3], self.test_msg)
+        self.messages.createAndSendMMS("image", [self.test_num_3], self.test_msg)
           #
         # Return to main SMS page.
         #
