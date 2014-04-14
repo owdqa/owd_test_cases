@@ -41,4 +41,4 @@ class test_main(GaiaTestCase):
         #
         # Create and Send an MMS with a video attached.
         #
-        self.messages.createAndSendMMS("video", self.test_msg)
+        self.messages.createAndSendMMS("video", [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")], self.test_msg)
