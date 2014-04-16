@@ -82,7 +82,7 @@ class test_main(GaiaTestCase):
 
             # Do the check of each message.
             #
-            self.UTILS.test.TEST(i.find_element("xpath", ".//p").text == "Test {}".format(pos + 1),
+            self.UTILS.test.TEST(i.find_element("xpath", ".//p/span").text == "Test {}".format(pos + 1),
                         "The messages at position " + str(pos) + " contains the string '" + "Test {}".format(pos + 1) + "'.")
             self.UTILS.test.TEST("outgoing" in i.get_attribute("class"),
                         "The message at position " + str(pos) + " is  outgoing.")
