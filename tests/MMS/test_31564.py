@@ -60,17 +60,20 @@ class test_main(GaiaTestCase):
         #
         self.messages.addSubject(self.test_subject)
 
-        #
-        # Delete subject
-        #
-        self.messages.deleteSubject(self.test_subject)
 
         #
-        # Review string
+        # Press cancel options button
         #
-        returnedSMS = self.UTILS.element.getElement(DOM.Messages.messages_converting,
+        self.messages.cancelSettings()
+
+        #
+        # Review settings options button
+        #
+        self.UTILS.reporting.logResult("info", "Cliking on messages options button")
+        x = self.UTILS.element.getElement(DOM.Messages.messages_options_btn,
             "Messages option button is displayed")
-        self.UTILS.test.TEST(returnedSMS, "Converting to text message.", True)
+
+        self.UTILS.test.TEST(x, "Settings options.", True)
 
         self.UTILS.reporting.logResult("info",
                              "Test working")
