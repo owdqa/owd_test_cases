@@ -352,20 +352,14 @@
 31728|GIF Image size 640x480
 31729|Animated GIF image size 640x480
 31730|Reception of JPG + AMR + MP4 files
-MMSTCCOMPT009b|MMS Recipient Name
-MMSTCCOMPT010d|Message with text, audio and images
-MMSTCCOMPT012b|Message size during composition
-MMSTCCOMPT015b|USIM Addresses
-MMSTCFEATR002c|Sending PNG file
-MMSTCFEATR003b|Receiving MP4 audio file
-MMSTCFEATR012d|The device should support MPEG4 file format
-MMSTCFEATR030a|Reception of video file + JPG file + AMR file
-MMSTCMMITC011d|Differentiation between EMS, MMS and SMS
-MMSTCPREST006a|Multiple objects in same page
-MMSTCPREST008a|Hyperlinks
-MMSTCRECVN004c|JPG Image size 640x480
-MMSTCRECVN005c|GIF Image size 640x480
-MMSTCRECVN006b|Animated GIF image size 640x480
-MMSTCSENDG012c|3GPP Video
+33908|Verify that a user can delete all download files from downloads list
+33917|A user can open ﬁles by tapping on a download complete notiﬁcation
+33931|Verify the downloads list, when it's empty
+33934|Verify the donwloads list with a file name very long
+33941|Verify that when a download completes, An event is displayed
+33942|Verify that downloading icon is displayed in the status bar during the download process
+33944|Verify that downloading icon disappears after completing the download
+33945|Verify that is possible download several files at the same time
+
 
 
