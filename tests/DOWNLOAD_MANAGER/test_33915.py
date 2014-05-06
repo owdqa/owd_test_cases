@@ -14,11 +14,6 @@ from OWDTestToolkit import DOM
 
 class test_main(GaiaTestCase):
 
-    #
-    # Restart device to have a empty downloads list
-    #
-    #_RESTART_DEVICE = True
-
     def setUp(self):
         
         #
@@ -87,10 +82,10 @@ class test_main(GaiaTestCase):
         # Tap Open button.
         #
         self.UTILS.element.waitForElements(DOM.DownloadManager.download_file_option_open,
-                                     "Getting Open file button")
+                                     "Waiting fot Open file button")
 
         x = self.UTILS.element.getElement(DOM.DownloadManager.download_file_option_open,
-            "Getting song title in music player")
+            "Getting open button")
         x.tap()
 
         #

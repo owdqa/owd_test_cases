@@ -18,11 +18,6 @@ from OWDTestToolkit import DOM
 
 class test_main(GaiaTestCase):
 
-    #
-    # Restart device to have a empty downloads list
-    #
-    #_RESTART_DEVICE = True
-
     def setUp(self):
         
         #

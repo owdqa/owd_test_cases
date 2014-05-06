@@ -15,11 +15,6 @@ from OWDTestToolkit import DOM
 
 class test_main(GaiaTestCase):
 
-    #
-    # Restart device to have a empty downloads list
-    #
-    #_RESTART_DEVICE = True
-
     def setUp(self):
         
         #
@@ -87,31 +82,33 @@ class test_main(GaiaTestCase):
         # Tap Open button.
         #
         self.UTILS.element.waitForElements(DOM.DownloadManager.download_file_option_open,
-                                     "Getting Open file button")
+                                     "Waiting for Open file button")
 
         x = self.UTILS.element.getElement(DOM.DownloadManager.download_file_option_open,
-            "Getting song title in music player")
+            "Getting open button")
         x.tap()
 
         #
-        # Wait for confirm to pop up and click YES
+        # Wait for Delete button in Delete or Keep file screen
         #
         self.UTILS.element.waitForElements(DOM.DownloadManager.download_confirm,
-            "Waiting to downloadConfirm to pop up", True, 10, True)
+            "Waiting for Delete file button", True, 10, True)
 
         x = self.UTILS.element.getElement(DOM.DownloadManager.download_confirm_yes,
                                     "Getting 'Delete' button")
         x.tap()
 
+
         #
-        # Another confirmation pop up will appear. Same process
+        # Wait for Delete button in confirmation screen
         #
         self.UTILS.element.waitForElements(DOM.DownloadManager.download_confirm,
-            "Waiting to downloadConfirm to pop up", True, 10, True)
+            "Waiting for confirm Delete file button", True, 10, True)
 
         x = self.UTILS.element.getElement(DOM.DownloadManager.download_confirm_yes,
-                                    "Getting 'Delete' button")
+                                    "Getting cofirm 'Delete' button")
         x.tap()
+
 
         #
         # Verify no downloads are present

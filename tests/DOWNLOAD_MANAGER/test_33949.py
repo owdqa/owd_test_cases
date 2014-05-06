@@ -9,10 +9,6 @@ from OWDTestToolkit.apps.downloadmanager import DownloadManager
 from OWDTestToolkit import DOM
 
 class test_main(GaiaTestCase):
-    #
-    # Restart device to have a empty downloads list
-    #
-    #_RESTART_DEVICE = True
 
     def setUp(self):
         
@@ -75,8 +71,11 @@ class test_main(GaiaTestCase):
         elem = (DOM.DownloadManager.download_element[0],
                 DOM.DownloadManager.download_element[1] % (self.testURL + self.fileName))
 
+        #x = self.UTILS.element.getElement(elem, "Getting downloaded file [%s]" % self.fileName)
+
         x = self.UTILS.element.getElement(elem,
-            "Getting downloaded file [%s]" % self.fileName)
+            "Getting downloaded file [{}]".format(self.fileName))
+
 
         self.UTILS.test.TEST(x is not None,
             "Checking we've got the file from the download list")
