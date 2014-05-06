@@ -353,6 +353,9 @@
 31729|Animated GIF image size 640x480
 31730|Reception of JPG + AMR + MP4 files
 33908|Verify that a user can delete all download files from downloads list
+33914|Try to open a .mp3 file from download list
+33915|Try to open a .jpg file from download list
+33916|Press "Delete" in uable to open file screen
 33917|A user can open ﬁles by tapping on a download complete notiﬁcation
 33931|Verify the downloads list, when it's empty
 33934|Verify the donwloads list with a file name very long
@@ -360,6 +363,9 @@
 33942|Verify that downloading icon is displayed in the status bar during the download process
 33944|Verify that downloading icon disappears after completing the download
 33945|Verify that is possible download several files at the same time
+33948|Verify that a file with size >=1 MB and <1GB is displayed as MB
+33949|Verify that a file with size >1GB is displayed as GB
+
 
 
 
