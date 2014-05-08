@@ -354,6 +354,7 @@
 31730|Reception of JPG + AMR + MP4 files
 32078|Press cancel button in audio file options screen
 32238|Verify that an video file has several option to share it
+33905|Verify that a user can delete a finished download file
 33908|Verify that a user can delete all download files from downloads list
 33912|Verify that a user can delete a download in progress
 33913|Press "keep File" in unable to open file screen
