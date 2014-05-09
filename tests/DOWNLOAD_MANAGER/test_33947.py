@@ -24,14 +24,14 @@ class test_main(GaiaTestCase):
         #
         # Standard.
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
+        self.UTILS = UTILS(self)
 
         # Specific for this test.
         self.browser = Browser(self)
         self.settings = Settings(self)
         self.downloadManager = DownloadManager(self)
-        self.testURL    = self.UTILS.general.get_os_variable("GLOBAL_DOWNLOAD_URL")
-        self.fileName    = "22MB.rar"
+        self.testURL = self.UTILS.general.get_os_variable("GLOBAL_DOWNLOAD_URL")
+        self.fileName = "22MB.rar"
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
