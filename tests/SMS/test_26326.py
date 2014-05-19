@@ -2,6 +2,7 @@
 # Imports which are standard for all test cases.
 #
 import sys
+import time
 sys.path.insert(1, "./")
 
 from gaiatest import GaiaTestCase
@@ -12,7 +13,7 @@ from OWDTestToolkit.apps.messages import Messages
 
 class test_main(GaiaTestCase):
 
-    test_msg = "Test message." * 10
+    test_msg = "Test message."
 
     def setUp(self):
         #
@@ -26,6 +27,7 @@ class test_main(GaiaTestCase):
         # Establish which phone number to use.
         #
         self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.cp_incoming_number = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER")
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.target_telNum)
 
     def tearDown(self):
@@ -37,45 +39,23 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.statusbar.clearAllStatusBarNotifs()
 
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
+        send_time = time.time()
+        self.UTILS.messages.create_incoming_sms(self.target_telNum, self.test_msg)
 
-        #
-        # Create and send a new test message (don't use api - I want to be back in homepage
-        # before the sms has finshed sending and the api waits).
-        #
-        newMsgBtn = self.UTILS.element.getElement(DOM.Messages.create_new_message_btn,
-                                        "Create new message button")
-        newMsgBtn.tap()
-
-        self.messages.addNumbersInToField([self.target_telNum])
-        self.messages.enterSMSMsg(self.test_msg)
-
-        self.marionette.execute_script("document.getElementById('{}').click();".\
-                                       format(DOM.Messages.send_message_button[1]))
-
-        #
-        # Bit of a race: QUICKLY go 'home' and wait for the notifier.
-        # If we're not quick enough the returned sms will arrive while we're still in
-        # messaging, in which case the statusbar notifier will never appear.
-        #
-        self.UTILS.home.goHome()
-        self.messages.waitForSMSNotifier(self.target_telNum)
+        self.UTILS.statusbar.wait_for_notification_toaster_title(self.cp_incoming_number, timeout=120)
 
         #
         # Click the notifier.
         #
-        self.messages.clickSMSNotifier(self.target_telNum)
+        self.UTILS.statusbar.click_on_notification_title(self.cp_incoming_number, DOM.Messages.frame_locator)
 
         #
-        # TEST: The returned message is as expected (caseless in case user typed it manually).
+        # Check received message contents
         #
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
+        returnedSMS = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
         sms_text = returnedSMS.text
-        self.UTILS.test.TEST((sms_text.lower() == self.test_msg.lower()),
-            "SMS text = '" + self.test_msg + "' (it was '" + sms_text + "').")
+        self.UTILS.test.TEST(sms_text == self.test_msg, "SMS text = '{}' (it was '{}').".\
+                             format(self.test_msg, sms_text))
 
         x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
@@ -83,13 +63,12 @@ class test_main(GaiaTestCase):
         #
         # Check the message via the thread.
         #
-        self.messages.openThread(self.target_telNum)
+        self.messages.openThread(self.cp_incoming_number)
 
         #
-        # TEST: The returned message is as expected (caseless in case user typed it manually).
+        # Check received message contents
         #
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
+        returnedSMS = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
         sms_text = returnedSMS.text
-        self.UTILS.test.TEST((sms_text.lower() == self.test_msg.lower()), 
-            "SMS text = '" + self.test_msg + "' (it was '" + sms_text + "').")
-
+        self.UTILS.test.TEST(sms_text == self.test_msg, "SMS text = '{}' (it was '{}').".\
+                             format(self.test_msg, sms_text))

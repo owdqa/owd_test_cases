@@ -2,6 +2,7 @@
 # Imports which are standard for all test cases.
 #
 import sys
+import time
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
@@ -48,8 +49,9 @@ class test_main(GaiaTestCase):
         #
         # Create and Send an MMS
         #
+        send_time = time.time()
         self.messages.createAndSendMMS("image", [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")], self.test_msg)
         #
         # Verify that the MMS has been received.
         #
-        self.messages.verifyMMSReceived("image")
+        self.messages.verifyMMSReceived("image", send_time=send_time)

@@ -104,8 +104,7 @@ class test_main(GaiaTestCase):
         self.UTILS.general.typeThis(DOM.Email.compose_subject, "'Subject' field", self._email_subject, True, False)
         self.UTILS.general.typeThis(DOM.Email.compose_msg, "Message field", self._email_message, True, False, False)
 
- 
         #
         # Send the message.
         #
-        self.email.sendTheMessage()
+        self.email.sendTheMessageAndSwitchFrame(self.contact['name'], DOM.Contacts.frame_locator)
