@@ -35,40 +35,37 @@ class test_main(GaiaTestCase):
 
         self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
+        self.incoming_sms_num = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
-
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], "Email addy {} test.".format(self.emailAddy))
-        x = self.messages.waitForReceivedMsgInThisThread()
+        send_time = time.time()
+        #self.UTILS.messages.create_incoming_sms(self.num1, "Email addy {} test.".format(self.emailAddy))
+        self.data_layer.send_sms(self.num1, "Email addy {} test.".format(self.emailAddy))
+        self.UTILS.statusbar.wait_for_notification_toaster_title(self.num1, timeout=120)
+        self.UTILS.statusbar.click_on_notification_title(self.num1, DOM.Messages.frame_locator)
+        sms = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
 
         #
         # Tap the 2nd email link.
         #
-        self.UTILS.reporting.logResult("info", "Click the email address in this message: '{}'.".format(x.text))
-        _link = x.find_element("tag name", "a")
+        self.UTILS.reporting.logResult("info", u"Click the email address in this message: '{}'.".format(sms.text))
+        _link = sms.find_element("tag name", "a")
         _link.tap()
 
         x = self.UTILS.element.getElement(DOM.Messages.header_send_email_btn, "Send email button")
         x.tap()
 
         time.sleep(4)
-        self.marionette.switch_to_frame()
-
-        x = self.UTILS.element.getElement(DOM.Email.confirm_ok, "Set up account confirmation")
-        x.tap()
 
         self.UTILS.iframe.switchToFrame(*DOM.Email.frame_locator)
+        x = self.UTILS.element.getElement(DOM.Email.email_not_setup_ok, "Set up account confirmation")
+        x.tap()
 
         #
         # Try to set up the account - Since there is no connection, it will fail.

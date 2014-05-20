@@ -2,14 +2,15 @@
 # Imports which are standard for all test cases.
 #
 import sys
+import time
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
-from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
 from OWDTestToolkit.apps.settings import Settings
+
 
 class test_main(GaiaTestCase):
 
@@ -36,7 +37,6 @@ class test_main(GaiaTestCase):
         self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
         self.wifi_pass = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
 
-
         #
         # Establish which phone number to use.
         #
@@ -60,9 +60,11 @@ class test_main(GaiaTestCase):
         #
         # Create and Send an MMS
         #
-        self.messages.createAndSendMMS("image", [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")], self.test_msg)
+        send_time = time.time()
+        self.messages.createAndSendMMS("image", [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")],
+                                       self.test_msg)
         #
         # Verify that the MMS has been received.
         #
-        self.messages.verifyMMSReceived("image")
+        self.messages.verifyMMSReceived("image", send_time=send_time)
 

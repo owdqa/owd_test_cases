@@ -24,9 +24,11 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
+        self.target_num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        self.UTILS.statusbar.toggleViaStatusBar('airplane')
 
     def test_run(self):
         #
@@ -38,7 +40,7 @@ class test_main(GaiaTestCase):
         #
         # Insert the phone number in the To field
         #
-        self.messages.addNumbersInToField([self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")])
+        self.messages.addNumbersInToField([self.target_num])
 
         #
         # Create SMS.
@@ -48,24 +50,27 @@ class test_main(GaiaTestCase):
         #
         # Click send.
         #
+        send_time = time.time()
         self.messages.sendSMS()
 
         #
         # Wait for the SMS to arrive.
         #
-        self.messages.waitForReceivedMsgInThisThread()
+        self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
 
-        time.sleep(10)
+        time.sleep(5)
+        self.UTILS.home.goHome()
 
         #
         # Put the phone into airplane mode.
         #
         self.UTILS.statusbar.toggleViaStatusBar('airplane')
 
+        self.messages.launch()
         #
         # Open sms app and go to the previous thread
         #
-        self.messages.openThread(self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM"))
+        self.messages.openThread(self.target_num)
 
         #
         # Create another SMS.

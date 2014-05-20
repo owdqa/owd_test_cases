@@ -2,10 +2,10 @@
 # Imports which are standard for all test cases.
 #
 import sys
+import time
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
-from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
@@ -42,8 +42,9 @@ class test_main(GaiaTestCase):
         #
         # Create and Send an MMS with a video attached.
         #
-        self.messages.createAndSendMMS("video", [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")], self.test_msg)
+        send_time = time.time()
+        self.messages.createAndSendMMS("video", [self.target_telNum], self.test_msg)
         #
         # Verify that the MMS has been received.
         #
-        self.messages.verifyMMSReceived("video")
+        self.messages.verifyMMSReceived("video", send_time=send_time)
