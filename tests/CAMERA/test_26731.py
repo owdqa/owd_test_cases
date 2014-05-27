@@ -28,6 +28,14 @@ class test_main(GaiaTestCase):
 
         self.UTILS.app.setPermission('Camera', 'geolocation', 'deny')
 
+        #
+        # Check gallery items
+        #
+        self.gallery.launch()
+        self.prev_img_count = self.gallery.thumbCount()
+        self.UTILS.reporting.logResult("info", "Previous images count: {}".format(self.prev_img_count))
+        self.apps.kill_all()
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
@@ -77,6 +85,6 @@ class test_main(GaiaTestCase):
         #
         # Check all is as it should be.
         #
-        self.UTILS.element.waitForElements(DOM.Gallery.no_thumbnails_message,
-                                   "Message saying there are no thumbnails", True, 5)
-        self.UTILS.element.waitForNotElements(DOM.Gallery.thumbnail_items, "Gallery thumbnails", True, 5)
+        current_count = self.gallery.thumbCount()
+        self.UTILS.test.TEST(current_count == self.prev_img_count, 
+            "After deleting the video, we have the same number of thumbnails as before the test was started")

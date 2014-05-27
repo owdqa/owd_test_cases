@@ -30,6 +30,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        self.UTILS.general.remove_file("contact_face.jpg", "DCIM/100MZLLA/")
 
     def test_run(self):
         #

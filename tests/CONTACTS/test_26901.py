@@ -37,11 +37,6 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         #
-        # Set up to use data connection.
-        #
-        self.UTILS.network.getNetworkConnection()
-
-        #
         # Launch contacts app.
         #
         self.contacts.launch()

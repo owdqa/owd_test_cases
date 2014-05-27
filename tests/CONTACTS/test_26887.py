@@ -50,13 +50,13 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "<b>Setting up a contact in favourites ...</b>")
         self.contacts.view_contact(self.contact['name'])
 
-        x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
-        self.UTILS.test.TEST(x.text == self.add_fav_str, "Toggle favourite button text is '{}'.".\
-                        format(self.add_fav_str))
+        x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Favourite toggle button")
+        self.UTILS.test.TEST(not self.contacts.is_contact_a_favorite(x), "Contact is NOT a favourite")
         x.tap()
+        time.sleep(1)
+        
         x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (after tap)")
-        self.UTILS.test.TEST(x.text == self.remove_fav_str, "Toggle favourite button text is '{}'.".\
-                        format(self.remove_fav_str))
+        self.UTILS.test.TEST(self.contacts.is_contact_a_favorite(x), "Contact is a favorite")
 
         x = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
         x.tap()
@@ -72,12 +72,11 @@ class test_main(GaiaTestCase):
         self.contacts.view_contact(self.contact['name'])
 
         x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
-        self.UTILS.test.TEST(x.text == self.remove_fav_str, "Toggle favourite button text is '{}'.".\
-                        format(self.remove_fav_str))
+        self.UTILS.test.TEST(self.contacts.is_contact_a_favorite(x), "Contact is a favorite")
         x.tap()
-        x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (after tap)")
-        self.UTILS.test.TEST(x.text == self.add_fav_str, "Toggle favourite button text is '{}'.".\
-                        format(self.add_fav_str))
+        time.sleep(1)
+        
+        self.UTILS.test.TEST(not self.contacts.is_contact_a_favorite(), "Contact is NOT a favourite")
 
         x = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
         x.tap()

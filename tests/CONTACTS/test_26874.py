@@ -44,7 +44,7 @@ class test_main(GaiaTestCase):
         self.contacts.search("XXXX")
 
         #
-        # Verify our contact is listed.
+        # Verify our contact is NOT listed.
         #
         self.contacts.check_search_results(self.test_contacts[0]["givenName"], False)
 

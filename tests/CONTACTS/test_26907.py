@@ -33,6 +33,7 @@ class test_main(GaiaTestCase):
         self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
 
     def tearDown(self):
+        self.UTILS.general.remove_file("contact_face.jpg", "DCIM/100MZLLA/")
         self.UTILS.reporting.reportResults()
 
     def test_run(self):

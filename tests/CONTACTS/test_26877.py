@@ -43,41 +43,33 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.general.insertContact(self.contact)
 
+        #
+        # Clean all messages
+        #
+        self.data_layer.delete_all_sms()
+
+        #
+        # Send an sms to num2 so that we have more than a thread
+        #
+        self.data_layer.send_sms(self.num2, "Dummy message for num2")
+
+        #
+        # Send an sms to the contact's number, so that we leave the thread opened
+        #
+        self.data_layer.send_sms(self.contact["tel"]["value"], "Previous message for contact's number")
+        #
+        # Wait for the last message in this thread to be a 'received' one.
+        #
+        self.UTILS.statusbar.wait_for_notification_toaster_title(self.contact["name"], timeout=120)
+        # self.UTILS.statusbar.click_on_notification_title(self.contact["name"], DOM.Messages.frame_locator)
+        time.sleep(5)
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        #
-        # Create a thread for this contact.
-        #
-        #(Just so we can switch to it later)
         self.contacts.launch()
-        self.messages.launch()
 
-        self.messages.createAndSendSMS([self.contact["tel"]["value"]], "Test message")
-        self.messages.waitForReceivedMsgInThisThread()
-
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
-
-        self.messages.createAndSendSMS([self.num2], "Thread for a different number")
-
-        self.UTILS.reporting.logResult("info", " ")
-        self.UTILS.reporting.logResult("info", "=================================================================")
-        self.UTILS.reporting.logResult("info", "<b>If SMS app is closed when you click 'send sms' in contacts ...</b>")
-        self._doTest()
-
-        self.UTILS.reporting.logResult("info", " ")
-        self.UTILS.reporting.logResult("info", "=====================================================================")
-        self.UTILS.reporting.logResult("info", "<b>If SMS app is still open when you click 'send sms' in contacts ...</b>")
-        self.messages.openThread(self.num2)
-        self._doTest()
-
-    def _doTest(self):
-        #
-        # Launch contacts app etc...
-        #
-        self.UTILS.app.switchToApp("Contacts")
         self.contacts.view_contact(self.contact['name'], False)
         smsBTN = self.UTILS.element.getElement(DOM.Contacts.sms_button, "Send SMS button")
         smsBTN.tap()
@@ -86,11 +78,23 @@ class test_main(GaiaTestCase):
         # Switch to sms frame and complete the tests + send the message.
         #
         time.sleep(5)
-        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+
+        #
+        # It seems that when trying to send a message from contacts application, a new activity
+        # is created, so that it won't be seen if we switch to DOM.Messages.frame_locator
+        # Therefore, we have to switch to the frame of that new activity.
+        #
+        self.UTILS.iframe.switchToFrame(*('src', 'activity-new'))
         self.UTILS.reporting.logResult("info", "<b>NOTE: </b>expecting to be in a 'compose new sms' screen (not a thread) ...")
 
-        self.messages.enterSMSMsg("Test msg.")
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot of SMS:", x)
+
+        # self.messages.enterSMSMsg("Test msg.")
+        input_field = self.UTILS.element.getElement(DOM.Messages.input_message_area, "input area")
+        input_field.send_keys("Writing message from contacts")
         self.messages.sendSMS()
+        self.UTILS.statusbar.wait_for_notification_toaster_title(self.contact["name"], timeout=120)
 
         #
         # Verify that we are now in the thread for this contact.

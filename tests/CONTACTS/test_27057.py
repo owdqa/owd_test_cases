@@ -11,7 +11,6 @@ from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
-from OWDTestToolkit.apps.settings import Settings
 import time
 from tests._mock_data.contacts import MockContact
 
@@ -27,7 +26,6 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
-        self.settings = Settings(self)
 
         self.hotmail_user = self.UTILS.general.get_os_variable("HOTMAIL_2_EMAIL")
         self.hotmail_passwd = self.UTILS.general.get_os_variable("HOTMAIL_2_PASS")
@@ -38,15 +36,12 @@ class test_main(GaiaTestCase):
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
 
+        self.connect_to_network()
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        #
-        # Set up to use data connection.
-        #
-        self.UTILS.network.getNetworkConnection()
-
         self.contacts.launch()
 
         x = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")

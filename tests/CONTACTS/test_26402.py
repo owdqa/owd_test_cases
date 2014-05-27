@@ -33,6 +33,7 @@ class test_main(GaiaTestCase):
         map(self.UTILS.general.insertContact, self.test_contacts)
 
         self.contact_name = self.test_contacts[0]["givenName"]
+        self.expected_msg = "You are not set up to send or receive email. Would you like to do that now?"
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -62,8 +63,7 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(DOM.Email.confirm_msg,
                                    "Dialog confirmation message", True, 5, False)
 
-        msg = "You are not set up to send or receive email. Would you like to do that now?"
-        self.UTILS.test.TEST(msg == x.text,  "Verifying confirmation msg")
+        self.UTILS.test.TEST(self.expected_msg == x.text,  "Verifying confirmation msg")
 
         #
         # Tap Ok button for confirmation.

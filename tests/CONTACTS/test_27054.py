@@ -9,8 +9,8 @@ from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
-from OWDTestToolkit.apps.settings import Settings
 import time
+
 class test_main(GaiaTestCase):
     
     _RESTART_DEVICE = True
@@ -22,28 +22,16 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
-        self.Settings = Settings(self)
-
-        self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
-        self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
 
         self.hotmail_user = self.UTILS.general.get_os_variable("HOTMAIL_2_EMAIL")
         self.hotmail_passwd = self.UTILS.general.get_os_variable("HOTMAIL_2_PASS")
+
+        self.connect_to_network()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        #
-        # WIFI.
-        #
-        self.Settings.launch()
-
-        self.Settings.wifi()
-        self.Settings.wifi_switchOn()
-        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
-
         self.contacts.launch()
 
         x = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)

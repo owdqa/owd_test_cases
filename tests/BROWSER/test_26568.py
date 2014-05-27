@@ -16,33 +16,33 @@ class test_main(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
-        self.Browser = Browser(self)
+        self.browser = Browser(self)
+
+        self.urls = ["www.google.com", "www.bbc.co.uk"]
+        #
+        # Get some connection, no matter which (wifi, data)
+        #
+        self.connect_to_network()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
 
-        url1 = "www.google.com"
-        url2 = "www.bbc.co.uk"
-
-        #
-        # Wifi needs to be off for this test to work.
-        #
-        self.UTILS.statusbar.toggleViaStatusBar("data")
-
         #
         # Open the browser app.
         #
-        self.Browser.launch()
+        self.browser.launch()
 
+        #
+        # Check we can go from a site to another
+        #
+        map(self.do_open_url, self.urls)
+
+    def do_open_url(self, url):
         #
         # Open our URL.
         #
-        self.Browser.open_url(url1)
-        url = self.Browser.loadedURL()
-        self.UTILS.test.TEST(url1 in url, "'{0}' is in the loaded source url: '{1}'.".format(url1, url))
-
-        self.Browser.open_url(url2)
-        url = self.Browser.loadedURL()
-        self.UTILS.test.TEST(url2 in url, "'{0}' is in the loaded source url: '{1}'.".format(url2, url))
+        self.browser.open_url(url)
+        loaded_url = self.browser.loadedURL()
+        self.UTILS.test.TEST(url in loaded_url, "'{0}' is in the loaded source url: '{1}'.".format(url, loaded_url))
