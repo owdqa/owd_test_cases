@@ -54,24 +54,8 @@ class test_main(GaiaTestCase):
         for element in entries:
             item = element.find_element("xpath", "//span[@class='primary-info-main']")
 
-            value = self.marionette.execute_script("""
-                function getStyle (el,styleProp) {
-                    if (el.currentStyle)
-                        var y = x.currentStyle[styleProp];
-                    else if (window.getComputedStyle)
-                        var y = document.defaultView.getComputedStyle(el,null)
-                                                    .getPropertyValue(styleProp);
-                    return y;
-                }
-                return getStyle(arguments[0], arguments[1])
-            """, script_args=[item, "text-overflow"])
-
-            isEllipsis = self.marionette.execute_script("""
-                function isEllipsisActive(element) {
-                    return (element.offsetWidth < element.scrollWidth);
-                }
-                return isEllipsisActive(arguments[0])
-            """, script_args=[item])
+            value = self.UTILS.element.get_css_value(item, "text-overflow")
+            isEllipsis = self.UTILS.element.is_ellipsis_active(item)
 
             self.UTILS.reporting.logResult("info", "Value of css property: {}".format(value))
             self.UTILS.reporting.logResult("info", "isEllipsisActive? {}".format(isEllipsis))

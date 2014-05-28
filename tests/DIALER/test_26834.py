@@ -33,14 +33,14 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call number button")
         x.tap()
 
-        _warn = self.UTILS.element.getElement( ("xpath", "//p[contains(text(), 'airplane mode')]"), 
+        _warn = self.UTILS.element.getElement(("xpath", "//p[contains(text(), 'airplane mode')]"), 
                                     "Airplane mode warning")
         if _warn:
             x = self.UTILS.debug.screenShotOnErr()
             self.UTILS.reporting.logResult("info", "Airplane mode warning displayed: \"%s\"" % _warn.text, x)
 
 
-        x = self.UTILS.element.getElement( ("xpath", "//button[text()='OK']"), "OK button")
+        x = self.UTILS.element.getElement(("xpath", "//button[text()='OK']"), "OK button")
         x.tap()
 
         x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number field", False)

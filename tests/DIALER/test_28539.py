@@ -24,37 +24,19 @@ class test_main(GaiaTestCase):
         self.dialer = Dialer(self)
 
         #Get details of our test contacts.
-        self.Contact_1 = MockContact()
-        self.Contact_2 = MockContact()
-        self.Contact_3 = MockContact()
-        self.Contact_4 = MockContact()
+        self.test_contacts = [MockContact() for i in range(4)]
 
+        self.dialer.launch()
+        map(self.dialer.createMultipleCallLogEntries, 
+            [c["tel"]["value"] for c in self.test_contacts], [2 for c in self.test_contacts])
 
-        #self.data_layer.insert_contact(self.cont1)
-        #self.data_layer.insert_contact(self.cont2)
-        #self.data_layer.insert_contact(self.cont3)
-
-        self.contact_number_1 = self.Contact_1["tel"]["value"]
-        self.contact_number_2 = self.Contact_2["tel"]["value"]
-        #self.contact_number_3 = self.cont3["tel"]["value"]
-        self.contact_number_twilio = self.Contact_4["tel"]["value"]
+        x = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot of multiple entries:", x)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        self.dialer.launch()
-
-        #x = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        # create logs entries from contacts
-        self.dialer.createMultipleCallLogEntries(self.contact_number_1, 3)
-        self.dialer.createMultipleCallLogEntries(self.contact_number_2, 2)
-        #self.dialer.createMultipleCallLogEntries(self.contact_number_3, 2)
-        self.dialer.createMultipleCallLogEntries(self.contact_number_twilio, 4)
-
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot of multiple entries:", x)
-
         self.dialer.callLog_clearAll()
 
         x = self.UTILS.debug.screenShotOnErr()
