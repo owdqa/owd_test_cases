@@ -22,6 +22,9 @@ class test_main(GaiaTestCase):
         self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
         self.wifi_pass = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
 
+        # switch off keyboard FTU screen
+        self.data_layer.set_setting("keyboard.ftu.enabled", False)
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 

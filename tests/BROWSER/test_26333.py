@@ -21,6 +21,9 @@ class test_main(GaiaTestCase):
 
         self.UTILS.reporting.logComment("Using " + self.testURL)
 
+        # switch off keyboard FTU screen
+        self.data_layer.set_setting("keyboard.ftu.enabled", False)
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
