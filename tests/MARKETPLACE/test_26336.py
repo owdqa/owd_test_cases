@@ -23,17 +23,17 @@ class test_main(GaiaTestCase):
         self.Market = Marketplace(self)
         self.Settings = Settings(self)
 
+        #
+        # Ensure we have a connection
+        #
+        self.connect_to_network()
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
 
         self.UTILS.reporting.logComment("Using app '" + self.APP_NAME + "'")
-
-        #
-        # Ensure we have a connection.
-        #
-        self.UTILS.network.getNetworkConnection()
 
         #
         # Make sure our app isn't installed already.

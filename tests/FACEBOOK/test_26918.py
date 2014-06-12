@@ -31,12 +31,12 @@ class test_main(GaiaTestCase):
         self.contact = MockContact()
         self.UTILS.insertContact(self.contact)
 
+        self.connect_to_network()
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        self.UTILS.network.getNetworkConnection()
-
         #
         # Launch contacts app and enable facebook import.
         #

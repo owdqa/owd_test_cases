@@ -29,16 +29,15 @@ class test_main(GaiaTestCase):
         self.settings = Settings(self)
         self.Browser = Browser(self)
 
+        #
+        # Ensure we have a connection
+        #
+        self.connect_to_network()
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-
-        #
-        # Ensure we have a connection.
-        #
-        self.UTILS.network.getNetworkConnection()
-
         #
         # Uninstall the app (if need be).
         #

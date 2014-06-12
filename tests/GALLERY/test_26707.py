@@ -17,6 +17,7 @@ class test_main(GaiaTestCase):
         self.gallery = Gallery(self)
 
     def tearDown(self):
+        self.UTILS.general.remove_file('img1.jpg', 'DCIM/100MZLLA')
         self.UTILS.reporting.reportResults()
 
     def test_run(self):

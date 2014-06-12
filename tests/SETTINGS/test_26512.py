@@ -28,11 +28,6 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.settings.launch()
-
-        # self.settings.wifi()
-   
-        # self.settings.wifi_switchOn()
-   
         #
         # wifi_connect method already calls wifi() and wifi_switchOn()
         #

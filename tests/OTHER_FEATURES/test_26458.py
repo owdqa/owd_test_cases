@@ -36,7 +36,7 @@ class test_main(GaiaTestCase):
                          "Bluetooth is disabled before we start this test.")
 
         #
-        # Enable airplane mode.
+        # Enable bluetooth
         #
         self.UTILS.statusbar.toggleViaStatusBar("bluetooth")
 
@@ -46,7 +46,7 @@ class test_main(GaiaTestCase):
         self.UTILS.element.waitForElements(DOM.Statusbar.bluetooth, "Bluetooth icon in statusbar", True, 20, False)
 
         #
-        # Disable airplane mode.
+        # Disable bluetooth
         #
         self.UTILS.statusbar.toggleViaStatusBar("bluetooth")
 

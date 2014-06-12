@@ -31,6 +31,11 @@ class test_main(GaiaTestCase):
         self.EME        = EverythingMe(self)
 
         #
+        # Ensure we have a connection
+        #
+        self.connect_to_network()
+        
+        #
         # Don't prompt me for geolocation (this was broken recently in Gaia, so 'try' it).
         #
         try:
@@ -43,11 +48,6 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        #
-        # Make sure 'things' are as we expect them to be first.
-        #
-        self.UTILS.network.getNetworkConnection()
-
         self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
 
         #

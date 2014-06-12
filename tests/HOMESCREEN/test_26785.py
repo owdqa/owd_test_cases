@@ -28,6 +28,10 @@ class test_main(GaiaTestCase):
         self.Settings   = Settings(self)
         self.EME        = EverythingMe(self)
 
+        #
+        # Ensure we have a connection
+        #
+        self.connect_to_network()
         self.UTILS.app.setPermission('Homescreen', 'geolocation', 'deny')
 
     def tearDown(self):
@@ -37,10 +41,6 @@ class test_main(GaiaTestCase):
 
         _appName = "Juegos Gratis"
 
-        #
-        # Make sure 'things' are as we expect them to be first.
-        #
-        self.UTILS.network.getNetworkConnection()
         self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
         self.UTILS.app.uninstallApp(_appName)
 
