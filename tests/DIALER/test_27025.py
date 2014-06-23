@@ -48,12 +48,7 @@ class test_main(GaiaTestCase):
 
         self.UTILS.element.getElement(DOM.Dialer.call_log_edit_btn, "Edit button")
 
-        self.marionette.execute_script("""
-        var getElementByXpath = function (path) {
-            return document.evaluate(path, document, null, 9, null).singleNodeValue;
-        };
-        getElementByXpath('//*[@id="call-log-edit-button"]').click();
-        """)
+        self.UTILS.element.getElementByXpath('//*[@id="call-log-edit-button"]').click()
 
         #
         # Now tap the number and verify that we're not taken to the menu,

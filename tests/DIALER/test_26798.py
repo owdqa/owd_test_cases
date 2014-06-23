@@ -42,9 +42,9 @@ class test_main(GaiaTestCase):
         #
         # Enter country prefix 0034.
         #
-        self.dialer.enterNumber("0034"+self.telNum)
+        self.dialer.enterNumber("0034" + self.telNum)
         x = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call button")
-        p_num="0034"+self.telNum
+        num = "0034" + self.telNum
         x.tap()
 
         #
@@ -52,28 +52,27 @@ class test_main(GaiaTestCase):
         #
         time.sleep(1)
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)
-        self.UTILS.element.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP.format(p_num)),
-                                    "Outgoing call found with number matching {}".format(p_num))
+        self.UTILS.element.waitForElements(("xpath", DOM.Dialer.outgoing_call_numberXP.format(num)),
+                                    "Outgoing call found with number matching {}".format(num))
 
         time.sleep(2)
 
         self.dialer.hangUp()
 
-
         #
         # Enter country prefix 0039.
         #
-        self.dialer.enterNumber("0039"+self.telNum)
+        self.dialer.enterNumber("0039" + self.telNum)
         x = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call button")
-        p_num="0039"+self.telNum
+        num = "0039" + self.telNum
         x.tap()
         #
         # The call is tested.
         #
         time.sleep(1)
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)
-        self.UTILS.element.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP.format(p_num)),
-                                    "Outgoing call found with number matching {}".format(p_num))
+        self.UTILS.element.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP.format(num)),
+                                    "Outgoing call found with number matching {}".format(num))
 
         time.sleep(2)
 
@@ -85,15 +84,15 @@ class test_main(GaiaTestCase):
         #
         self.dialer.enterNumber("+34"+self.telNum)
         x = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call button")
-        p_num="+34"+self.telNum
+        num= "+34" + self.telNum
         x.tap()
         #
         # The call is tested.
         #
         time.sleep(1)
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)
-        self.UTILS.element.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP.format(p_num)),
-                                    "Outgoing call found with number matching {}".format(p_num))
+        self.UTILS.element.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP.format(num)),
+                                    "Outgoing call found with number matching {}".format(num))
 
         time.sleep(2)
 

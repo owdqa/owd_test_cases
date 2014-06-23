@@ -47,10 +47,10 @@ class test_main(GaiaTestCase):
         #
         # Data icon is no longer visible in status bar.
         #
-        self.UTILS.element.waitForElements(   DOM.Statusbar.airplane , "Airplane icon in statusbar" , True, 5, False)
-        self.UTILS.element.waitForNotElements(DOM.Statusbar.signal   , "Signal icon in statusbar"   , True, 5, False)
+        self.UTILS.element.waitForElements(DOM.Statusbar.airplane, "Airplane icon in statusbar", True, 5, False)
+        self.UTILS.element.waitForNotElements(DOM.Statusbar.signal, "Signal icon in statusbar", True, 5, False)
         self.UTILS.element.waitForNotElements(DOM.Statusbar.bluetooth, "Bluetooth icon in statusbar", True, 5, False)
-        self.UTILS.element.waitForNotElements(DOM.Statusbar.dataConn , "Data conn icon in statusbar", True, 5, False)
+        self.UTILS.element.waitForNotElements(DOM.Statusbar.dataConn, "Data conn icon in statusbar", True, 5, False)
 
         #
         # Disable airplane mode.

@@ -28,14 +28,16 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
 
     def tearDown(self):
+        for img in self._img_list:
+            self.UTILS.general.remove_file(img, 'DCIM/100MZLLA/')
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
         # Load a couple of images into the gallery.
         #
-        for i in self._img_list:
-            self.UTILS.general.addFileToDevice('./tests/_resources/' + i, destination='DCIM/100MZLLA')
+        for img in self._img_list:
+            self.UTILS.general.addFileToDevice('./tests/_resources/' + img, destination='DCIM/100MZLLA')
 
         self.UTILS.home.goHome()
 

@@ -16,47 +16,25 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.settings = Settings(self)
-        self.Browser = Browser(self)
-        self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
+        self.browser = Browser(self)
+
         self.testURL = self.UTILS.general.get_os_variable("GLOBAL_TEST_URL")
-        self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
+
+        #
+        # Get Wifi
+        #
+        self.data_layer.connect_to_wifi()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
-        # Forget all networks (so we have to chose one).
-        # Roy- *might* want this, but if we're already connected then this is a 'pass' anyway.
-        #self.data_layer.forget_all_networks()
-
-        #
-        # Open the settings application.
-        #
-        self.settings.launch()
-
-        #
-        # Tap Wi-Fi.
-        #
-        self.settings.wifi()
-
-        #
-        # Make sure wifi is set to 'on'.
-        #
-        self.settings.wifi_switchOn()
-
-        #
-        # Connect to the wifi.
-        #
-        self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
-
-        #
         # Open the browser app.
         #
-        self.Browser.launch()
+        self.browser.launch()
 
         #
         # Open our URL.
         #
-        self.Browser.open_url(self.testURL)
+        self.browser.open_url(self.testURL)

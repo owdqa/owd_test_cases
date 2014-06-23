@@ -39,15 +39,12 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.general.insertContact(self.contact)
 
+        self.connect_to_network()
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        #
-        # Set up a network connection.
-        #
-        self.UTILS.network.getNetworkConnection()
-
         #
         # Launch contacts app.
         #

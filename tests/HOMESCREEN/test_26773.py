@@ -31,17 +31,16 @@ class test_main(GaiaTestCase):
         self.settings   = Settings(self)
         self.EME        = EverythingMe(self)
 
+        #
+        # Ensure we have a connection
+        #
+        self.connect_to_network()
         self.UTILS.app.setPermission('Homescreen', 'geolocation', 'deny')
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        #
-        # Make sure 'things' are as we expect them to be first.
-        #
-        self.UTILS.network.getNetworkConnection()
- 
         #
         # Make sure our app isn't installed already.
         #

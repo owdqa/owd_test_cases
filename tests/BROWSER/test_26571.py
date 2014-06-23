@@ -16,25 +16,25 @@ class test_main(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
-        self.Browser = Browser(self)
+        self.browser = Browser(self)
+        
+        self.test_url = "http://www.technicalinfo.net/papers/URLEmbeddedAttacks.html"
+
+        #
+        # Get some connection, no matter which (wifi, data)
+        #
+        self.connect_to_network()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        test_url = "http://www.technicalinfo.net/papers/URLEmbeddedAttacks.html"
-
-        #
-        # Wifi needs to be off for this test to work.
-        #
-        self.UTILS.statusbar.toggleViaStatusBar("data")
-
         #
         # Open the browser app.
         #
-        self.Browser.launch()
+        self.browser.launch()
 
-        self.Browser.open_url(test_url)
-        loaded_url = self.Browser.loadedURL()
-        self.UTILS.test.TEST(test_url in loaded_url, "'{0}' is in the loaded source url: '{1}'."
-                        .format(test_url, loaded_url))
+        self.browser.open_url(self.test_url)
+        loaded_url = self.browser.loadedURL()
+        self.UTILS.test.TEST(self.test_url in loaded_url, "'{0}' is in the loaded source url: '{1}'."
+                        .format(self.test_url, loaded_url))

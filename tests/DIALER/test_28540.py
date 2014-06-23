@@ -31,11 +31,7 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        self.Contact_1 = MockContact()
-        self.Contact_2 = MockContact()
-        self.Contact_3 = MockContact()
-
-        #self.data_layer.insert_contact(self.cont1)
+        self.test_contacts = [MockContact() for i in range(3)]
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -46,18 +42,8 @@ class test_main(GaiaTestCase):
         # Delete all call log
         self.dialer.callLog_clearAll()
 
-        # Call 3 different numbers
-        self.dialer.enterNumber(self.Contact_1["tel"]["value"])
-        self.dialer.callThisNumber()
-        self.dialer.hangUp()
-
-        self.dialer.enterNumber(self.Contact_2["tel"]["value"])
-        self.dialer.callThisNumber()
-        self.dialer.hangUp()
-
-        self.dialer.enterNumber(self.Contact_3["tel"]["value"])
-        self.dialer.callThisNumber()
-        self.dialer.hangUp()
+        # Call the three numbers
+        map(self.do_the_call, self.test_contacts)
 
         # Tapping call button
         x = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call button")
@@ -67,8 +53,14 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number field", False)
         dialer_num = x.get_attribute("value")
 
-        self.UTILS.test.TEST(str(self.Contact_3["tel"]["value"]) in dialer_num,
+        self.UTILS.test.TEST(str(self.test_contacts[-1]["tel"]["value"]) in dialer_num,
                         "After calling '{0:s}', and tapping call button, phone number field contains '{1:s}'.")
 
         y = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screen shot of the result of tapping call button", y)
+
+    def do_the_call(self, contact):
+        # Call 3 different numbers
+        self.dialer.enterNumber(contact["tel"]["value"])
+        self.dialer.callThisNumber()
+        self.dialer.hangUp()

@@ -33,8 +33,6 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.dialer.launch()
-
-        self.dialer.launch()
         self.dialer.enterNumber(self.num)
         self.dialer.callThisNumber()
         time.sleep(2)

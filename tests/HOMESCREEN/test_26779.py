@@ -67,7 +67,7 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.reporting.logResult("info", "Using EME with networking ...")
         self.UTILS.home.scrollHomescreenRight()
-        self.UTILS.network.getNetworkConnection()
+        self.connect_to_network()
         self.EME.launch()
         self.EME.pick_group("Social")
         self.UTILS.home.scrollHomescreenRight()

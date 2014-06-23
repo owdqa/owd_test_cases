@@ -50,12 +50,12 @@ class test_main(GaiaTestCase):
         self._email_subject = "TEST " + str(time.time())
         self._email_message = "Test message"
 
+        self.UTILS.network.getNetworkConnection()
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-
-        self.UTILS.network.getNetworkConnection()
 
         #
         # Set up to use email (with account #1).

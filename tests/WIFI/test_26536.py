@@ -18,7 +18,7 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
-        self.Settings = Settings(self)
+        self.settings = Settings(self)
 
         self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
         self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
@@ -31,26 +31,23 @@ class test_main(GaiaTestCase):
         #
         # WIFI.
         #
-        self.Settings.launch()
+        self.settings.launch()
+        self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
 
-        self.Settings.wifi()
-        self.Settings.wifi_switchOn()
-        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
-
-        self.Settings.goBack()
+        self.settings.goBack()
 
         #
         # Tap hotspot.
         #
-        self.Settings.hotSpot()
+        self.settings.hotSpot()
 
         self.UTILS.reporting.logResult("info", "<b>Check hotspot with WIFI on.</b>")
-        self.Settings.enable_hotSpot()
+        self.settings.enable_hotSpot()
 
-        self.Settings.disable_hotSpot()
+        self.settings.disable_hotSpot()
         self.UTILS.network.disableAllNetworkSettings()
         self.UTILS.statusbar.toggleViaStatusBar("data")
 
-        self.Settings.launch()
+        self.settings.launch()
         self.UTILS.reporting.logResult("info", "<b>Check hotspot with DataConn on.</b>")
-        self.Settings.enable_hotSpot()
+        self.settings.enable_hotSpot()

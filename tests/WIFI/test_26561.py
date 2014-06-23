@@ -11,7 +11,6 @@ from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
-from OWDTestToolkit.apps.browser import Browser
 import time
 
 
@@ -21,8 +20,7 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
-        self.Settings = Settings(self)
-        self.Browser = Browser(self)
+        self.settings = Settings(self)
 
         self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
         self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
@@ -35,21 +33,21 @@ class test_main(GaiaTestCase):
         #
         # Open the Settings application.
         #
-        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
+        self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
 
         #
         # Return to this wifi and forget it.
         #
-        self.Settings.wifi_list_tapName(self.wifi_name)
-        self.Settings.wifi_forget()
+        self.settings.wifi_list_tapName(self.wifi_name)
+        self.settings.wifi_forget()
 
-        self.UTILS.test.TEST(self.Settings.wifi_list_isNotConnected(self.wifi_name),
+        self.UTILS.test.TEST(self.settings.wifi_list_isNotConnected(self.wifi_name),
                              "{} is no longer connected".format(self.wifi_name))
 
         #
         # make sure we need to add the details again.
         #
-        self.Settings.wifi_list_tapName(self.wifi_name)
+        self.settings.wifi_list_tapName(self.wifi_name)
         time.sleep(1)
         self.UTILS.element.waitForElements(DOM.Settings.wifi_login_pass, "Password field")
 

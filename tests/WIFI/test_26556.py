@@ -10,7 +10,6 @@ from gaiatest import GaiaTestCase
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
-from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit.apps.browser import Browser
 import time
 
@@ -21,30 +20,19 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
-        self.settings = Settings(self)
-        self.Browser = Browser(self)
+        self.browser = Browser(self)
 
-        self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
-        self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
+        self.data_layer.connect_to_wifi()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
-        # Open the settings application.
-        #
-        self.settings.launch()
-        self.settings.wifi()
-        self.settings.wifi_switchOn()
-        self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
-
-        #
         # Open the browser app.
         #
-        self.Browser.launch()
-        self.Browser.open_url("www.google.com")
+        self.browser.launch()
+        self.browser.open_url("www.google.com")
 
         self.lockscreen.lock()
 
@@ -56,4 +44,4 @@ class test_main(GaiaTestCase):
 
         self.UTILS.iframe.switchToFrame(*DOM.Browser.frame_locator)
 
-        self.Browser.open_url("www.wikipedia.com")
+        self.browser.open_url("www.wikipedia.com")

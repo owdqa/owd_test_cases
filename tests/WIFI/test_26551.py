@@ -23,15 +23,12 @@ class test_main(GaiaTestCase):
         self.Settings = Settings(self)
         self.Browser = Browser(self)
 
+        self.data_layer.connect_to_wifi()
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        #
-        # Open the Settings application.
-        #
-        self.UTILS.network.getNetworkConnection()
-
         #
         # Open the browser app.
         #
