@@ -53,13 +53,16 @@ class test_main(GaiaTestCase):
                                     format(self.contact["tel"][1]["value"])), "Second phone number")
         x.tap()
 
-        #
-        # Switch to the dialer iframe.
-        #
-        self.UTILS.iframe.switchToFrame(*DOM.Contacts.dialer_frame)
+        self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)
 
         #
         # Verify things....
         #
         time.sleep(0.5)
-        x = self.UTILS.element.getElements(DOM.Dialer.outgoing_call_locator, "Outgoing Call in progress")
+        self.UTILS.element.getElements(DOM.Dialer.outgoing_call_locator, "Outgoing Call in progress")
+
+        outgoing_number = self.UTILS.element.getElement(DOM.Dialer.outgoing_call_number, "Outgoing number being called")
+        self.UTILS.test.TEST(outgoing_number.text == self.contact["givenName"] + " " + self.contact["familyName"], 
+                                        "Outgoing contact being called matches the stored in the address book")
+
+
