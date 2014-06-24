@@ -85,6 +85,8 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "Check that the contacts app is now visible again ...")
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
+        self.UTILS.element.waitForElements(DOM.Contacts.import_contacts_header, "Import contacts header")
+
         #
         # Press the cancel icon.
         #

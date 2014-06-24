@@ -69,7 +69,7 @@ class test_main(GaiaTestCase):
 
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
-        self.UTILS.element.waitForElements(("xpath", "//h1[text()='Settings']"), "Settings header")
+        self.UTILS.element.waitForElements(DOM.Contacts.import_contacts_header, "Import contacts header")
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot and details", x)
