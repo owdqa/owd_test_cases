@@ -70,7 +70,7 @@ class test_main(GaiaTestCase):
         #
         # Enter one more letter.
         #
-        self.UTILS.general.typeThis(DOM.Contacts.search_contact_input, "Search input", self.contact["givenName"][4],
+        self.UTILS.general.typeThis(DOM.Contacts.search_contact_input, "Search input", self.nameIncomplete + self.contact["givenName"][4],
                             p_no_keyboard=True, p_validate=False, p_clear=False, p_enter=False)
 
         #
@@ -105,7 +105,7 @@ class test_main(GaiaTestCase):
         #
         # Enter one more letter.
         #
-        self.UTILS.general.typeThis(DOM.Contacts.search_contact_input, "Search input", self.contact["familyName"][2],
+        self.UTILS.general.typeThis(DOM.Contacts.search_contact_input, "Search input", self.surnameIncomplete + self.contact["familyName"][2],
                             p_no_keyboard=True, p_validate=False, p_clear=False, p_enter=False)
 
         #
