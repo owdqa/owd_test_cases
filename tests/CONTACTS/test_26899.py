@@ -64,9 +64,17 @@ class test_main(GaiaTestCase):
         x.tap()
 
         #
-        # Relaunch the app.
+        # Cancel contact edition
         #
-        self.contacts.launch()
+        cancel_edition = self.UTILS.element.getElement(DOM.Contacts.edit_cancel_button, "Cancel edition")
+        cancel_edition.tap()
+
+        #
+        # Go back to contacts start page
+        #
+        
+        back = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
+        back.tap()
 
         #
         # Now actually delete our contact.
