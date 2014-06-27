@@ -18,8 +18,6 @@ from tests._mock_data.contacts import MockContact
 
 class test_main(GaiaTestCase):
 
-    _RESTART_DEVICE = True
-
     def setUp(self):
         #
         # Set up child objects...
@@ -27,7 +25,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
-        self.Settings = Settings(self)
+        self.settings = Settings(self)
 
         self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
         self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
@@ -35,6 +33,8 @@ class test_main(GaiaTestCase):
 
         self.hotmail_user = self.UTILS.general.get_os_variable("HOTMAIL_2_EMAIL")
         self.hotmail_passwd = self.UTILS.general.get_os_variable("HOTMAIL_2_PASS")
+
+        self.data_layer.remove_all_contacts()
 
         #
         # Create test contacts.
@@ -49,11 +49,8 @@ class test_main(GaiaTestCase):
         #
         # WIFI.
         #
-        self.Settings.launch()
-
-        self.Settings.wifi()
-        self.Settings.wifi_switchOn()
-        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
+        self.settings.launch()
+        self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
 
         self.contacts.launch()
         x = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)
@@ -73,11 +70,17 @@ class test_main(GaiaTestCase):
         self.contacts.import_toggle_select_contact(cont_number)
         self.marionette.execute_script("document.getElementById('{}').click()".\
                                        format(DOM.Contacts.import_import_btn[1]))
-        time.sleep(1)
 
-        self.apps.kill_all()
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+        self.wait_for_element_displayed(DOM.Contacts.import_contacts_header[0], DOM.Contacts.import_contacts_header[1], timeout=10)
 
-        self.contacts.launch()
+        self.wait_for_element_displayed(DOM.Contacts.import_contacts_back[0], DOM.Contacts.import_contacts_back[1], timeout=1)
+        back = self.marionette.find_element(*DOM.Contacts.import_contacts_back)
+        back.tap()
+
+        self.wait_for_element_displayed(DOM.Contacts.settings_done_button[0], DOM.Contacts.settings_done_button[1], timeout=5)
+        done = self.marionette.find_element(*DOM.Contacts.settings_done_button)
+        done.tap()
 
         #
         # Check our two contacts are in the list.

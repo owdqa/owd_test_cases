@@ -62,9 +62,13 @@ class test_main(GaiaTestCase):
         # El.tap() not working on this just now.
         self.marionette.execute_script("document.getElementById('{}').click()".\
                                        format(DOM.Contacts.import_close_icon[1]))
-
-        time.sleep(1)
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+
+        self.wait_for_element_displayed(DOM.Contacts.import_contacts_header[0], DOM.Contacts.import_contacts_header[1], timeout=10)
+
+        self.wait_for_element_displayed(DOM.Contacts.import_contacts_back[0], DOM.Contacts.import_contacts_back[1], timeout=1)
+        back = self.marionette.find_element(*DOM.Contacts.import_contacts_back)
+        back.tap()
 
         x = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Settings done button")
         x.tap()

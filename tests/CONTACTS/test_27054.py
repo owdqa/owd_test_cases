@@ -66,11 +66,10 @@ class test_main(GaiaTestCase):
                                        format(DOM.Contacts.import_import_btn[1]))
 
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
-        
-        self.wait_for_element_displayed(DOM.Contacts.import_contacts_header[0], DOM.Contacts.import_contacts_header[1], timeout=30)
+        self.wait_for_element_displayed(DOM.Contacts.import_contacts_header[0], DOM.Contacts.import_contacts_header[1], timeout=10)
 
-        self.wait_for_element_displayed("id", "import-settings-back", timeout=1)
-        back = self.marionette.find_element("id", "import-settings-back")
+        self.wait_for_element_displayed(DOM.Contacts.import_contacts_back[0], DOM.Contacts.import_contacts_back[1], timeout=1)
+        back = self.marionette.find_element(*DOM.Contacts.import_contacts_back)
         back.tap()
 
         self.wait_for_element_displayed(DOM.Contacts.settings_done_button[0], DOM.Contacts.settings_done_button[1], timeout=5)

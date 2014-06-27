@@ -17,8 +17,6 @@ from tests._mock_data.contacts import MockContact
 
 class test_main(GaiaTestCase):
 
-    _RESTART_DEVICE = True
-
     def setUp(self):
         #
         # Set up child objects...
@@ -64,10 +62,16 @@ class test_main(GaiaTestCase):
 
         self.contacts.import_all()
 
-        self.apps.kill_all()
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+        self.wait_for_element_displayed(DOM.Contacts.import_contacts_header[0], DOM.Contacts.import_contacts_header[1], timeout=10)
 
-        self.contacts.launch()
+        self.wait_for_element_displayed(DOM.Contacts.import_contacts_back[0], DOM.Contacts.import_contacts_back[1], timeout=1)
+        back = self.marionette.find_element(*DOM.Contacts.import_contacts_back)
+        back.tap()
 
+        self.wait_for_element_displayed(DOM.Contacts.settings_done_button[0], DOM.Contacts.settings_done_button[1], timeout=5)
+        done = self.marionette.find_element(*DOM.Contacts.settings_done_button)
+        done.tap()
         #
         # Check all our contacts are in the list.
         #
