@@ -16,7 +16,7 @@ class test_main(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
-        self.Browser = Browser(self)
+        self.browser = Browser(self)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -27,14 +27,13 @@ class test_main(GaiaTestCase):
         #
         # Wifi needs to be off for this test to work.
         #
-        self.UTILS.statusbar.toggleViaStatusBar("data")
-
+        self.data_layer.connect_to_cell_data()
         #
         # Open the browser app.
         #
-        self.Browser.launch()
+        self.browser.launch()
 
-        self.Browser.open_url(test_url)
-        loaded_url = self.Browser.loadedURL()
+        self.browser.open_url(test_url)
+        loaded_url = self.browser.loadedURL()
         self.UTILS.test.TEST(test_url in loaded_url, "'{0}' is in the loaded source url: '{1}'."
                         .format(test_url, loaded_url))
