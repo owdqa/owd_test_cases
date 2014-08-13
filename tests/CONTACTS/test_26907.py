@@ -161,6 +161,8 @@ class test_main(GaiaTestCase):
         kbd = False
         try:
             self.wait_for_element_displayed(*self._keyboard_frame_locator)
+            screenshot = self.UTILS.debug.screenShotOnErr()
+            self.UTILS.reporting.logResult('info', "Keyboard displayed", screenshot)
             kbd = True
         except:
             self.UTILS.reporting.logResult("info", "No wild keyboard appeared")

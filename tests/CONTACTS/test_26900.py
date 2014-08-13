@@ -65,4 +65,3 @@ class test_main(GaiaTestCase):
         self.UTILS.test.TEST(outgoing_number.text == self.contact["givenName"] + " " + self.contact["familyName"], 
                                         "Outgoing contact being called matches the stored in the address book")
 
-

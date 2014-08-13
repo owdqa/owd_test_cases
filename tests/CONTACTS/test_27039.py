@@ -12,7 +12,7 @@ from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
-
+from gaiatest.apps.keyboard.app import Keyboard
 
 class test_main(GaiaTestCase):
 
@@ -25,6 +25,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
+        self.keyboard = Keyboard(self.marionette)
 
         self.gmail_user = self.UTILS.general.get_os_variable("GMAIL_1_USER")
         self.gmail_passwd = self.UTILS.general.get_os_variable("GMAIL_1_PASS")

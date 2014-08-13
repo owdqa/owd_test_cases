@@ -61,18 +61,18 @@ class test_main(GaiaTestCase):
 
         self.wait_for_element_displayed(DOM.Contacts.import_contacts_back[0], DOM.Contacts.import_contacts_back[1], timeout=1)
         back = self.marionette.find_element(*DOM.Contacts.import_contacts_back)
-        back.tap()
+        self.UTILS.element.simulateClick(back)
 
-        x = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Settings done button")
-        x.tap()
+        done = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Settings done button")
+        self.UTILS.element.simulateClick(done)
 
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Before editing contact:", x)
+        screen = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Before editing contact:", screen)
 
-        x = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")[0]
-        self.contacts.edit_contact(x.text, self.contact)
+        contact_list = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")[0]
+        self.contacts.edit_contact(contact_list.text, self.contact)
 
         self.contacts.check_view_contact_details(self.contact)
 
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "After editing contact:", x)
+        screen = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "After editing contact:", screen)

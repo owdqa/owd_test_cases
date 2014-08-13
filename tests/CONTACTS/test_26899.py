@@ -57,24 +57,22 @@ class test_main(GaiaTestCase):
         #
         # Cancel deletion.
         #
-        x = self.UTILS.element.getElement(DOM.Contacts.cancel_delete_btn, "Cancel button")
-        x.tap()
+        cancel_deletion = self.UTILS.element.getElement(DOM.Contacts.cancel_delete_btn, "Cancel button")
+        cancel_deletion.tap()
 
-        x = self.UTILS.element.getElement(DOM.Contacts.edit_cancel_button, "Cancel edit contact")
-        x.tap()
 
         #
         # Cancel contact edition
         #
         cancel_edition = self.UTILS.element.getElement(DOM.Contacts.edit_cancel_button, "Cancel edition")
-        cancel_edition.tap()
+        self.UTILS.element.simulateClick(cancel_edition)
 
         #
         # Go back to contacts start page
         #
         
         back = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
-        back.tap()
+        self.UTILS.element.simulateClick(back)
 
         #
         # Now actually delete our contact.

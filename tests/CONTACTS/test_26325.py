@@ -94,6 +94,8 @@ class test_main(GaiaTestCase):
         #
         # TEST: The returned message is as expected (caseless in case user typed it manually).
         #
-        sms_text = returnedSMS.text
+        sms_text = returnedSMS.find_element(*DOM.Messages.last_message_text_nested).text
+
+        self.UTILS.reporting.logResult('info', "Content of msg: {}".format(sms_text))
         self.UTILS.test.TEST((sms_text.lower() == self.test_msg.lower()),
                         "SMS text = '{}' (it was '{}').".format(self.test_msg, sms_text))

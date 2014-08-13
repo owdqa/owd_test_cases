@@ -86,8 +86,7 @@ class test_main(GaiaTestCase):
         #
         # Switch to email frame.
         #
-        time.sleep(5)
-        self.marionette.switch_to_frame()
+        time.sleep(1)
         self.UTILS.iframe.switchToFrame(*DOM.Email.frame_locator)
 
         #
@@ -107,4 +106,5 @@ class test_main(GaiaTestCase):
         #
         # Send the message.
         #
-        self.email.sendTheMessageAndSwitchFrame(self.contact['name'], DOM.Contacts.frame_locator)
+        # self.email.sendTheMessageAndSwitchFrame(self.contact['name'], DOM.Contacts.frame_locator)
+        self.email.sendTheMessage()
