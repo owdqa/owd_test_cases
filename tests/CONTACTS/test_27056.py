@@ -23,7 +23,6 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
-        self.Settings = Settings(self)
 
         self.hotmail_user = self.UTILS.general.get_os_variable("HOTMAIL_2_EMAIL")
         self.hotmail_passwd = self.UTILS.general.get_os_variable("HOTMAIL_2_PASS")
