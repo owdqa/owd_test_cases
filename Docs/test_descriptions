@@ -352,20 +352,34 @@
 31728|GIF Image size 640x480
 31729|Animated GIF image size 640x480
 31730|Reception of JPG + AMR + MP4 files
-MMSTCCOMPT009b|MMS Recipient Name
-MMSTCCOMPT010d|Message with text, audio and images
-MMSTCCOMPT012b|Message size during composition
-MMSTCCOMPT015b|USIM Addresses
-MMSTCFEATR002c|Sending PNG file
-MMSTCFEATR003b|Receiving MP4 audio file
-MMSTCFEATR012d|The device should support MPEG4 file format
-MMSTCFEATR030a|Reception of video file + JPG file + AMR file
-MMSTCMMITC011d|Differentiation between EMS, MMS and SMS
-MMSTCPREST006a|Multiple objects in same page
-MMSTCPREST008a|Hyperlinks
-MMSTCRECVN004c|JPG Image size 640x480
-MMSTCRECVN005c|GIF Image size 640x480
-MMSTCRECVN006b|Animated GIF image size 640x480
-MMSTCSENDG012c|3GPP Video
+32078|Press cancel button in audio file options screen
+32238|Verify that an video file has several option to share it
+33905|Verify that a user can delete a finished download file
+33908|Verify that a user can delete all download files from downloads list
+33912|Verify that a user can delete a download in progress
+33913|Press "keep File" in unable to open file screen
+33914|Try to open a .mp3 file from download list
+33915|Try to open a .jpg file from download list
+33916|Press "Delete" in unable to open file screen
+33917|A user can open ﬁles by tapping on a download complete notiﬁcation
+33918| Try to open a .mp4 file from download list
+33931|Verify the downloads list, when it's empty
+33934|Verify the donwloads list with a file name very long
+33935|Verify that the user can taps on the "no" button in the confirmation stop screen
+33936|Verify that the user can taps on the "yes" button in the confirmation stop screen
+33937|Verify that if the download is stopped, the Status bar downloading icon is dismissed
+33938| Verify that the download in progress notiﬁcation is updated in the notification bar
+33939|Verify that if the user click on "retry" in "retry confirmation screen" the download is retried
+33940|Verify that if the user click on "cancel" in "retry confirmation screen" the screen is closed
+33941|Verify that when a download completes, An event is displayed
+33942|Verify that downloading icon is displayed in the status bar during the download process
+33944|Verify that downloading icon disappears after completing the download
+33945|Verify that is possible download several files at the same time
+33947] Verify that download continues, if you leave settings app during download process
+33948|Verify that a file with size >=1 MB and <1GB is displayed as MB
+33949|Verify that a file with size >1GB is displayed as GB
+33978| Verify that download list displays the downloads before opening settings app
+
+
 
 

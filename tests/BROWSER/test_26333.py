@@ -16,10 +16,13 @@ class test_main(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
-        self.Browser = Browser(self)
+        self.browser = Browser(self)
         self.testURL = self.UTILS.general.get_os_variable("GLOBAL_TEST_URL")
 
         self.UTILS.reporting.logComment("Using " + self.testURL)
+
+        # switch off keyboard FTU screen
+        self.data_layer.set_setting("keyboard.ftu.enabled", False)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -28,14 +31,14 @@ class test_main(GaiaTestCase):
         #
         # Wifi needs to be off for this test to work.
         #
-        self.UTILS.statusbar.toggleViaStatusBar("data")
+        self.data_layer.connect_to_cell_data()
 
         #
         # Open the browser app.
         #
-        self.Browser.launch()
+        self.browser.launch()
 
         #
         # Open our URL.
         #
-        self.Browser.open_url(self.testURL)
+        self.browser.open_url(self.testURL)
