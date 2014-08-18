@@ -29,6 +29,7 @@ class test_main(GaiaTestCase):
         self.contact = MockContact()
 
     def tearDown(self):
+        self.cleanup_storage()
         self.UTILS.reporting.reportResults()
 
     def test_run(self):

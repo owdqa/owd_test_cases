@@ -56,8 +56,11 @@ class test_main(GaiaTestCase):
         # Cancel the login.
         #
         self.marionette.switch_to_frame()
-        x = self.UTILS.element.getElement(DOM.Contacts.import_cancel_login, "Cancel icon")
-        x.tap()
+        #
+        # It could be more than one cancel button in this frame
+        #
+        cancel = self.UTILS.element.getElements(DOM.Contacts.import_cancel_login, "Cancel icon")
+        cancel[-1].tap()
 
         #
         # Verify that the gmail frame is closed.
@@ -69,7 +72,7 @@ class test_main(GaiaTestCase):
 
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
-        self.UTILS.element.waitForElements(("xpath", "//h1[text()='Settings']"), "Settings header")
+        self.UTILS.element.waitForElements(DOM.Contacts.import_contacts_header, "Import contacts header")
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot and details", x)

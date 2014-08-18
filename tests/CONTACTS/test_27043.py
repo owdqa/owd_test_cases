@@ -17,6 +17,8 @@ from tests._mock_data.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
+    
+    _RESTART_DEVICE = True
 
     def setUp(self):
         #
@@ -59,9 +61,15 @@ class test_main(GaiaTestCase):
         #
         # Check our two contacts are in the list.
         #
-        self.UTILS.element.waitForElements(DOM.Contacts.view_all_contact_JSname, "Name")
+        prepopulated_contact = (DOM.Contacts.view_all_contact_specific_contact[0],
+                                DOM.Contacts.view_all_contact_specific_contact[1].format("OWD"))
 
-        self.UTILS.element.waitForElements(DOM.Contacts.view_all_contact_import, "Gmail imported contact")
+        self.UTILS.element.waitForElements(prepopulated_contact, "Prepopulated Contact")
+
+        gmail_imported = (DOM.Contacts.view_all_contact_specific_contact[0],
+                                DOM.Contacts.view_all_contact_specific_contact[1].format("roy"))
+
+        self.UTILS.element.waitForElements(gmail_imported, "Gmail imported contact")
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot and details", x)

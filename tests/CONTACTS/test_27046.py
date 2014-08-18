@@ -49,24 +49,32 @@ class test_main(GaiaTestCase):
         self.contacts.launch()
         self.contacts.import_gmail_login(self.gmail_user, self.gmail_passwd)
 
-        x = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list", True, 20)
+        #
+        # Remember all the contacts in the list.
+        #
 
-        gmail_contacts = []
-        for y in x:
-            gmail_contacts.append(y.get_attribute("data-search"))
-
+        #
+        # Import them.
+        #
         self.contacts.import_all()
         self.apps.kill_all()
         self.contacts.launch()
 
         #
-        # Check all our contacts are in the list.
+        # Check all our contacts are in the list, both 'standrd' ...
         #
-        self.UTILS.element.waitForElements(DOM.Contacts.view_all_contact_JSname, "Name John Smith")
+        
+        prepopulated_contact = (DOM.Contacts.view_all_contact_specific_contact[0],
+                                DOM.Contacts.view_all_contact_specific_contact[1].format("OWD"))
+
+        self.UTILS.element.waitForElements(prepopulated_contact, "Prepopulated Contact")
 
         # ... and the gmail contacts ...
-        self.UTILS.element.waitForElements(DOM.Contacts.view_all_contact_import, "Gmail imported contact")
-        self.UTILS.element.waitForElements(DOM.Contacts.view_all_contact_import2, "Gmail imported contact")
+        gmail_imported = (DOM.Contacts.view_all_contact_specific_contact[0],
+                                DOM.Contacts.view_all_contact_specific_contact[1].format("roy"))
+        contacts = self.UTILS.element.getElements(gmail_imported, "Gmail imported contacts")
+        self.UTILS.test.TEST(len(contacts) == self.number_of_gmail_contacts, "All gmail contacts has been imported")
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot and details", x)
+

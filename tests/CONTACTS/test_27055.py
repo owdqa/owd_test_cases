@@ -11,14 +11,11 @@ from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
-from OWDTestToolkit.apps.settings import Settings
 import time
 from tests._mock_data.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
-
-    _RESTART_DEVICE = True
 
     def setUp(self):
         #
@@ -27,14 +24,12 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
-        self.Settings = Settings(self)
-
-        self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
-        self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
 
         self.hotmail_user = self.UTILS.general.get_os_variable("HOTMAIL_2_EMAIL")
         self.hotmail_passwd = self.UTILS.general.get_os_variable("HOTMAIL_2_PASS")
+
+        self.data_layer.remove_all_contacts()
+        self.data_layer.connect_to_wifi()
 
         #
         # Create test contacts.
@@ -46,17 +41,9 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        #
-        # WIFI.
-        #
-        self.Settings.launch()
-
-        self.Settings.wifi()
-        self.Settings.wifi_switchOn()
-        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
-
         self.contacts.launch()
         x = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)
+        
         if not x or x == "ALLIMPORTED":
             self.UTILS.reporting.logResult(False, "Cannot continue past this point without importing the contacts.")
             return
@@ -73,18 +60,30 @@ class test_main(GaiaTestCase):
         self.contacts.import_toggle_select_contact(cont_number)
         self.marionette.execute_script("document.getElementById('{}').click()".\
                                        format(DOM.Contacts.import_import_btn[1]))
-        time.sleep(1)
 
-        self.apps.kill_all()
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+        self.wait_for_element_displayed(DOM.Contacts.import_contacts_header[0], DOM.Contacts.import_contacts_header[1], timeout=10)
 
-        self.contacts.launch()
+        self.wait_for_element_displayed(DOM.Contacts.import_contacts_back[0], DOM.Contacts.import_contacts_back[1], timeout=1)
+        back = self.marionette.find_element(*DOM.Contacts.import_contacts_back)
+        self.UTILS.element.simulateClick(back)
+
+        self.wait_for_element_displayed(DOM.Contacts.settings_done_button[0], DOM.Contacts.settings_done_button[1], timeout=5)
+        done = self.marionette.find_element(*DOM.Contacts.settings_done_button)
+        self.UTILS.element.simulateClick(done)
 
         #
         # Check our two contacts are in the list.
         #
-        self.UTILS.element.waitForElements(DOM.Contacts.view_all_contact_JSname, "Name")
+        prepopulated_contact = (DOM.Contacts.view_all_contact_specific_contact[0],
+                                DOM.Contacts.view_all_contact_specific_contact[1].format("OWD"))
 
-        self.UTILS.element.waitForElements(DOM.Contacts.view_all_contact_import, "Hotmail imported contact")
+        self.UTILS.element.waitForElements(prepopulated_contact, "Prepopulated Contact")
+
+        hotmail_imported = (DOM.Contacts.view_all_contact_specific_contact[0],
+                                DOM.Contacts.view_all_contact_specific_contact[1].format("roy"))
+
+        self.UTILS.element.waitForElements(hotmail_imported, "Hotmail imported contact")
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot and details", x)

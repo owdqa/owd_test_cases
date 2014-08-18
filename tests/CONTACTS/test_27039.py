@@ -11,9 +11,8 @@ from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
-from OWDTestToolkit.apps.settings import Settings
 from tests._mock_data.contacts import MockContact
-
+from gaiatest.apps.keyboard.app import Keyboard
 
 class test_main(GaiaTestCase):
 
@@ -26,34 +25,23 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
-        self.Settings = Settings(self)
-
-        self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
-        self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
+        self.keyboard = Keyboard(self.marionette)
 
         self.gmail_user = self.UTILS.general.get_os_variable("GMAIL_1_USER")
         self.gmail_passwd = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
 
+        self.connect_to_network()
         #
         # Create test contacts.
         #
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
 
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        #
-        # WIFI.
-        #
-        self.Settings.launch()
-
-        self.Settings.wifi()
-        self.Settings.wifi_switchOn()
-        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
-
         self.contacts.launch()
         self.contacts.import_gmail_login(self.gmail_user, self.gmail_passwd)
 

@@ -2,19 +2,18 @@
 # Imports which are standard for all test cases.
 #
 from gaiatest import GaiaTestCase
-
 #
 # Imports particular to this test case.
 #
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
-from OWDTestToolkit.apps.settings import Settings
 import time
+
 class test_main(GaiaTestCase):
     
     _RESTART_DEVICE = True
-
+    
     def setUp(self):
         #
         # Set up child objects...
@@ -22,27 +21,17 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
-        self.Settings = Settings(self)
-
-        self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
-        self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
 
         self.hotmail_user = self.UTILS.general.get_os_variable("HOTMAIL_2_EMAIL")
         self.hotmail_passwd = self.UTILS.general.get_os_variable("HOTMAIL_2_PASS")
+
+        self.data_layer.remove_all_contacts()
+        self.data_layer.connect_to_wifi()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        #
-        # WIFI.
-        #
-        self.Settings.launch()
-
-        self.Settings.wifi()
-        self.Settings.wifi_switchOn()
-        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
 
         self.contacts.launch()
 
@@ -65,14 +54,25 @@ class test_main(GaiaTestCase):
 
         self.marionette.execute_script("document.getElementById('{}').click()".\
                                        format(DOM.Contacts.import_import_btn[1]))
-        time.sleep(1)
 
-        self.apps.kill_all()
-        self.contacts.launch()
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+
+        self.UTILS.element.waitForElements(DOM.Contacts.import_contacts_header, "Import contacts header", True, 10, True)
+
+        back = self.UTILS.element.getElement(DOM.Contacts.import_contacts_back, "Back button", True, 10, True)
+        self.UTILS.element.simulateClick(back)
+
+
+        done = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Done button", True, 10, True)
+        self.UTILS.element.simulateClick(done)
+
         #
         # Check our contact is in the list.
         #
-        self.UTILS.element.waitForElements(DOM.Contacts.view_all_contact_JSname, "Hotmail imported contact")
+        hotmail_imported = (DOM.Contacts.view_all_contact_specific_contact[0],
+                                DOM.Contacts.view_all_contact_specific_contact[1].format("roy"))
+
+        self.UTILS.element.waitForElements(hotmail_imported, "Hotmail imported contact")
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot and details", x)

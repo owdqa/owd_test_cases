@@ -11,11 +11,13 @@ from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
-import time
 from tests._mock_data.contacts import MockContact
-
+import time
+from marionette.by import By
 
 class test_main(GaiaTestCase):
+
+    _keyboard_frame_locator = (By.CSS_SELECTOR, '#keyboards iframe:not([hidden])')
 
     def setUp(self):
         #
@@ -158,11 +160,17 @@ class test_main(GaiaTestCase):
         self.marionette.switch_to_frame()
         kbd = False
         try:
-            self.wait_for_element_displayed("xpath", "//iframe[contains(@" + DOM.Keyboard.frame_locator[0] +\
-                                             ",'" + DOM.Keyboard.frame_locator[1] + "')]", timeout=2)
+            self.wait_for_element_displayed(*self._keyboard_frame_locator)
+            screenshot = self.UTILS.debug.screenShotOnErr()
+            self.UTILS.reporting.logResult('info', "Keyboard displayed", screenshot)
             kbd = True
         except:
-            pass
+            self.UTILS.reporting.logResult("info", "No wild keyboard appeared")
+            # pass
+            # 
+        self.UTILS.reporting.logResult("info", "Is keyboard really there? {}".format(kbd))
+        self.UTILS.reporting.logResult("info", "Expected: {}".format(kbd_displayed))
+
         self.UTILS.test.TEST(kbd == kbd_displayed, comment)
 
         #
@@ -173,5 +181,6 @@ class test_main(GaiaTestCase):
         #
         # Tap the header to remove the keyboard.
         #
-        x = self.marionette.find_element(*DOM.GLOBAL.app_head)
+        self.wait_for_element_displayed(*DOM.Contacts.edit_contact_header)
+        x = self.marionette.find_element(*DOM.Contacts.edit_contact_header)
         x.tap()

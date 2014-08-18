@@ -54,17 +54,25 @@ class test_main(GaiaTestCase):
 
         self.marionette.execute_script("document.getElementById('{}').click()".\
                                     format(DOM.Contacts.import_import_btn[1]))
-        time.sleep(1)
-
+        
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Before editing contact:", x)
+        self.wait_for_element_displayed(DOM.Contacts.import_contacts_header[0], DOM.Contacts.import_contacts_header[1], timeout=10)
 
-        x = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")[0]
-        self.contacts.edit_contact(x.text, self.contact)
+        self.wait_for_element_displayed(DOM.Contacts.import_contacts_back[0], DOM.Contacts.import_contacts_back[1], timeout=1)
+        back = self.marionette.find_element(*DOM.Contacts.import_contacts_back)
+        self.UTILS.element.simulateClick(back)
+
+        done = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Settings done button")
+        self.UTILS.element.simulateClick(done)
+
+        screen = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Before editing contact:", screen)
+
+        contact_list = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")[0]
+        self.contacts.edit_contact(contact_list.text, self.contact)
 
         self.contacts.check_view_contact_details(self.contact)
 
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "After editing contact:", x)
+        screen = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "After editing contact:", screen)

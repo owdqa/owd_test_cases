@@ -17,6 +17,7 @@ import time
 
 class test_main(GaiaTestCase):
 
+    _RESTART_DEVICE = True
     def setUp(self):
         #
         # Set up child objects...
@@ -54,13 +55,13 @@ class test_main(GaiaTestCase):
         sendEmail = self.UTILS.element.getElement(DOM.Contacts.view_contact_email_field, "Send email button")
         sendEmail.tap()
 
+        self.UTILS.iframe.switchToFrame(*DOM.Email.frame_locator)
+        time.sleep(3)
         #
         # Verify a dialog appears indicating that we do not have any mail accounts configured.
         #
-        time.sleep(4)
-        self.marionette.switch_to_frame()
         x = self.UTILS.element.getElement(DOM.Email.confirm_msg,
-                                   "Dialog confirmation message", True, 5, False)
+                                   "Dialog confirmation message", True, 10, False)
 
         msg = "You are not set up to send or receive email. Would you like to do that now?"
         self.UTILS.test.TEST(msg == x.text,  "Verifying confirmation msg")

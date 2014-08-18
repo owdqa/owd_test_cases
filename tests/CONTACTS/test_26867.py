@@ -43,18 +43,20 @@ class test_main(GaiaTestCase):
         # Launch contacts app.
         #
         self.contacts.launch()
-
+        
+        screenshot = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult('info', "Screenshot", screenshot)
         #
         # Verify list has 'num_contacts' contacts.
         #
-        x = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
-        self.UTILS.test.TEST(self.num_contacts == len(x), "All contacts are showed")
+        the_list = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
+        self.UTILS.test.TEST(self.num_contacts == len(the_list), "All contacts are showed")
 
         #
         # Verify contacts shown are the contact inserted.
         #
         count = 0
-        for i in x:
+        for i in the_list:
             for c in self.listContacts:
                 if (c in i.text):
                     self.UTILS.reporting.logResult("info", "Contact " + c + " inserted")
