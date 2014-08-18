@@ -66,18 +66,24 @@ class test_main(GaiaTestCase):
 
         self.wait_for_element_displayed(DOM.Contacts.import_contacts_back[0], DOM.Contacts.import_contacts_back[1], timeout=1)
         back = self.marionette.find_element(*DOM.Contacts.import_contacts_back)
-        back.tap()
+        self.UTILS.element.simulateClick(back)
 
         self.wait_for_element_displayed(DOM.Contacts.settings_done_button[0], DOM.Contacts.settings_done_button[1], timeout=5)
         done = self.marionette.find_element(*DOM.Contacts.settings_done_button)
-        done.tap()
+        self.UTILS.element.simulateClick(done)
 
         #
         # Check our two contacts are in the list.
         #
-        self.UTILS.element.waitForElements(DOM.Contacts.view_all_contact_JSname, "Name")
+        prepopulated_contact = (DOM.Contacts.view_all_contact_specific_contact[0],
+                                DOM.Contacts.view_all_contact_specific_contact[1].format("OWD"))
 
-        self.UTILS.element.waitForElements(DOM.Contacts.view_all_contact_import, "Hotmail imported contact")
+        self.UTILS.element.waitForElements(prepopulated_contact, "Prepopulated Contact")
+
+        hotmail_imported = (DOM.Contacts.view_all_contact_specific_contact[0],
+                                DOM.Contacts.view_all_contact_specific_contact[1].format("roy"))
+
+        self.UTILS.element.waitForElements(hotmail_imported, "Hotmail imported contact")
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot and details", x)

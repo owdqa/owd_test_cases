@@ -68,10 +68,10 @@ class test_main(GaiaTestCase):
 
         self.wait_for_element_displayed(DOM.Contacts.import_contacts_back[0], DOM.Contacts.import_contacts_back[1], timeout=1)
         back = self.marionette.find_element(*DOM.Contacts.import_contacts_back)
-        back.tap()
+        self.UTILS.element.simulateClick(back)
 
-        x = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Settings done button")
-        x.tap()
+        done = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Settings done button")
+        self.UTILS.element.simulateClick(done)
 
         x = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
         contacts_after = len(x)

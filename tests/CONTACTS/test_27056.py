@@ -26,6 +26,7 @@ class test_main(GaiaTestCase):
 
         self.hotmail_user = self.UTILS.general.get_os_variable("HOTMAIL_2_EMAIL")
         self.hotmail_passwd = self.UTILS.general.get_os_variable("HOTMAIL_2_PASS")
+        self.number_of_hotmail_contacts = 2
 
         self.data_layer.connect_to_wifi()
         
@@ -55,19 +56,27 @@ class test_main(GaiaTestCase):
 
         self.wait_for_element_displayed(DOM.Contacts.import_contacts_back[0], DOM.Contacts.import_contacts_back[1], timeout=1)
         back = self.marionette.find_element(*DOM.Contacts.import_contacts_back)
-        back.tap()
+        self.UTILS.element.simulateClick(back)
+
+
 
         self.wait_for_element_displayed(DOM.Contacts.settings_done_button[0], DOM.Contacts.settings_done_button[1], timeout=5)
         done = self.marionette.find_element(*DOM.Contacts.settings_done_button)
-        done.tap()
+        self.UTILS.element.simulateClick(done)
+        
         #
-        # Check all our contacts are in the list.
+        # Check our three contacts are in the list.
         #
-        self.UTILS.element.waitForElements(DOM.Contacts.view_all_contact_JSname, "Name")
+        prepopulated_contact = (DOM.Contacts.view_all_contact_specific_contact[0],
+                                DOM.Contacts.view_all_contact_specific_contact[1].format("OWD"))
+
+        self.UTILS.element.waitForElements(prepopulated_contact, "Prepopulated Contact")
 
         # ... and the hotmail contacts ...
-        self.UTILS.element.waitForElements(DOM.Contacts.view_all_contact_import, "Gmail imported contact")
-        self.UTILS.element.waitForElements(DOM.Contacts.view_all_contact_import2, "Hotmail imported contact")
+        hotmail_imported = (DOM.Contacts.view_all_contact_specific_contact[0],
+                                DOM.Contacts.view_all_contact_specific_contact[1].format("roy"))
+        contacts = self.UTILS.element.getElements(hotmail_imported, "Gmail imported contacts")
+        self.UTILS.test.TEST(len(contacts) == self.number_of_hotmail_contacts, "All gmail contacts has been imported")
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot and details", x)

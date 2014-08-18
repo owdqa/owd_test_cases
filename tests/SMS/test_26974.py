@@ -86,8 +86,11 @@ class test_main(GaiaTestCase):
         #
         # Select the contact.
         #
-        z = self.UTILS.element.getElement(DOM.Contacts.view_all_contact_JS, "Search item")
-        z.tap()
+        prepopulated_contact = (DOM.Contacts.view_all_contact_specific_contact[0],
+                                DOM.Contacts.view_all_contact_specific_contact[1].format("OWD"))
+
+        contact = self.UTILS.element.getElement(prepopulated_contact, "Search item")
+        contact.tap()
 
         #
         # Fill out all the other details.

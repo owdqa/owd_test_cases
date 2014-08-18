@@ -12,6 +12,8 @@ import time
 
 class test_main(GaiaTestCase):
     
+    _RESTART_DEVICE = True
+    
     def setUp(self):
         #
         # Set up child objects...
@@ -67,7 +69,10 @@ class test_main(GaiaTestCase):
         #
         # Check our contact is in the list.
         #
-        self.UTILS.element.waitForElements(DOM.Contacts.view_all_contact_JSname, "Hotmail imported contact")
+        hotmail_imported = (DOM.Contacts.view_all_contact_specific_contact[0],
+                                DOM.Contacts.view_all_contact_specific_contact[1].format("roy"))
+
+        self.UTILS.element.waitForElements(hotmail_imported, "Hotmail imported contact")
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot and details", x)

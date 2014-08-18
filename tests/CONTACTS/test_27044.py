@@ -30,7 +30,7 @@ class test_main(GaiaTestCase):
 
         self.gmail_user = self.UTILS.general.get_os_variable("GMAIL_1_USER")
         self.gmail_passwd = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
-
+        self.number_of_gmail_contacts = 2
         #
         # Create test contacts.
         #
@@ -63,11 +63,17 @@ class test_main(GaiaTestCase):
         #
         # Check all our contacts are in the list, both 'standrd' ...
         #
-        self.UTILS.element.waitForElements(DOM.Contacts.view_all_contact_JSname, "Name")
+        
+        prepopulated_contact = (DOM.Contacts.view_all_contact_specific_contact[0],
+                                DOM.Contacts.view_all_contact_specific_contact[1].format("OWD"))
+
+        self.UTILS.element.waitForElements(prepopulated_contact, "Prepopulated Contact")
 
         # ... and the gmail contacts ...
-        self.UTILS.element.waitForElements(DOM.Contacts.view_all_contact_import, "Gmail imported contact")
-        self.UTILS.element.waitForElements(DOM.Contacts.view_all_contact_import2, "Gmail imported contact")
+        gmail_imported = (DOM.Contacts.view_all_contact_specific_contact[0],
+                                DOM.Contacts.view_all_contact_specific_contact[1].format("roy"))
+        contacts = self.UTILS.element.getElements(gmail_imported, "Gmail imported contacts")
+        self.UTILS.test.TEST(len(contacts) == self.number_of_gmail_contacts, "All gmail contacts has been imported")
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot and details", x)
