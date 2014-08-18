@@ -1,5 +1,5 @@
 #
-# Imports which are standard for all test cases.
+# 27001
 #
 import sys
 sys.path.insert(1, "./")
@@ -13,7 +13,7 @@ from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
-#import time
+
 
 class test_main(GaiaTestCase):
 
@@ -25,7 +25,8 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.contacts = Contacts(self)
-        self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.incoming_sms_num = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
 
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
@@ -34,31 +35,33 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-
         #
         # Launch messages app.
         #
         self.messages.launch()
-
+        self.messages.deleteAllThreads()
         #
         # Create and send a new test message.
         #
-        test_str = "Nine 111111111 numbers."
-        self.messages.createAndSendSMS([self.num1], test_str)
-        x = self.messages.waitForReceivedMsgInThisThread()
+        msg_text = "Nine 111111111 numbers."
+        self.UTILS.messages.create_incoming_sms(self.phone_number, msg_text)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(msg_text, timeout=120)
+        title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.incoming_sms_num, timeout=5)
+        self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
+        sms = self.messages.lastMessageInThisThread()
 
         #
-        # Long press the emedded number link.
+        # Long press the embedded number link.
         #
-        y = x.find_element("tag name", "a")  
-        y.tap()
+        num = sms.find_element("tag name", "a")
+        num.tap()
 
         #
-        # Select create new contact.
+        # Select add to existing contact.
         #
-        x = self.UTILS.element.getElement(DOM.Messages.header_cancel_btn_no_send,
+        add_btn = self.UTILS.element.getElement(DOM.Messages.header_add_to_contact_btn,
                                     "Add to existing contact button")
-        x.tap()
+        add_btn.tap()
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
         #
@@ -69,22 +72,22 @@ class test_main(GaiaTestCase):
         #
         # Check the phone number.
         #
-        x = self.UTILS.element.getElement(("id", "number_1"), "2nd phone number.")
-        self.UTILS.test.TEST(x.get_attribute("value") == "111111111",
-                        "Contact now has a 2nd number which is '111111111' (it was '{}').".format(x.get_attribute("value")))
-
+        num = self.UTILS.element.getElement(("id", "number_1"), "2nd phone number.")
+        self.UTILS.test.TEST(num.get_attribute("value") == "111111111",
+                        "Contact now has a 2nd number which is '111111111' (it was '{}').".\
+                        format(num.get_attribute("value")))
 
         #
         # Press the update button.
         #
-        x = self.UTILS.element.getElement(DOM.Contacts.edit_update_button, "Update button")
-        x.tap()
+        update_btn = self.UTILS.element.getElement(DOM.Contacts.edit_update_button, "Update button")
+        update_btn.tap()
 
         #
         # Wait for contacts app to close and return to sms app.
         #
         self.marionette.switch_to_frame()
-        self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@src, '{}')]".format(DOM.Contacts.frame_locator[1])),
-                                       "Contacts iframe")
+        self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@src, '{}')]".\
+                                               format(DOM.Contacts.frame_locator[1])), "Contacts iframe")
 
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)

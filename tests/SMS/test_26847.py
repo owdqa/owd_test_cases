@@ -58,11 +58,16 @@ class test_main(GaiaTestCase):
             self.messages.createAndSendSMS([self.test_contacts[i]["tel"]["value"]], self.test_msg)
             x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
             x.tap()
+
         #
         # Delete all threads, except the last one.
         #
+        self.messages.threadEditModeON()
         x = self.UTILS.element.getElement(DOM.Messages.edit_threads_button, "Edit threads button")
         x.tap()
+
+        delete_threads_btn = self.UTILS.element.getElement(DOM.Messages.delete_threads_button, "Delete threads button")
+        delete_threads_btn.tap()
 
         x = self.UTILS.element.getElements(DOM.Messages.threads_list, "Message threads")
         for i in range(len(x) - 1):

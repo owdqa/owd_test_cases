@@ -1,5 +1,5 @@
 #
-# Imports which are standard for all test cases.
+# 26992
 #
 import sys
 sys.path.insert(1, "./")
@@ -14,7 +14,7 @@ from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
 from OWDTestToolkit.apps.dialer import Dialer
-#import time
+
 
 class test_main(GaiaTestCase):
 
@@ -30,9 +30,9 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.Dialer = Dialer(self)
 
-        self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
-        self.contact = MockContact(tel = {'type': 'Mobile', 'value': self.num1})
+        self.contact = MockContact(tel={'type': 'Mobile', 'value': self.phone_number})
 
         self.UTILS.general.insertContact(self.contact)
 
@@ -58,8 +58,9 @@ class test_main(GaiaTestCase):
 
         self.messages.enterSMSMsg("Test message.")
         self.messages.sendSMS()
+        send_time = self.messages.last_sent_message_timestamp()
 
-        x = self.messages.waitForReceivedMsgInThisThread()
+        self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
 
         #
         # Tap the header to call.
@@ -67,8 +68,9 @@ class test_main(GaiaTestCase):
         self.messages.header_call()
 
         #
-        # Dialler is started with the number already filled in.
+        # Dialer is started with the number already filled in.
         #
         x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number")
-        self.UTILS.test.TEST(self.num1 in x.get_attribute("value"), 
-                        "The phone number contains '{}' (it was '{}').".format(self.num1, x.get_attribute("value")))
+        self.UTILS.test.TEST(self.phone_number == x.get_attribute("value"),
+                        "The phone is '{}' (expected '{}').".\
+                        format(x.get_attribute("value"), self.phone_number))

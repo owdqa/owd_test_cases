@@ -1,13 +1,12 @@
+#===============================================================================
+# 26860: Send/Receive a new SMS when the conversation thread is empty
 #
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Send a new SMS when the conversation thread is empty. This is the first SMS to
+# send/receive
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 
@@ -15,8 +14,6 @@ from OWDTestToolkit.apps.messages import Messages
 class test_main(GaiaTestCase):
 
     test_msg = "Test message."
-
-    _RESTART_DEVICE = True
 
     def setUp(self):
         #
@@ -29,37 +26,29 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.target_telNum)
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.cp_incoming_number = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
         #
-        # Launch messages app.
+        # Launch messages app & delete all Threads
+        # Make sure we have no threads
         #
         self.messages.launch()
-
-        #
-        # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
-        #
-#         self.messages.deleteAllThreads()
+        self.messages.deleteAllThreads()
 
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.target_telNum], self.test_msg)
+        self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)
 
-        #
-        # Wait for the last message in this thread to be a 'received' one.
-        #
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(returnedSMS, "A received message appeared in the thread.", True)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
+        title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.cp_incoming_number, timeout=5)
+        self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
 
-        #
-        # TEST: The returned message is as expected (caseless in case user typed it manually).
-        #
-        sms_text = returnedSMS.text
-        self.UTILS.test.TEST((sms_text.lower() == self.test_msg.lower()),
-            "SMS text = '" + self.test_msg + "' (it was '" + sms_text + "').")
+        self.messages.check_last_message_contents(self.test_msg)

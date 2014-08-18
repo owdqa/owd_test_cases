@@ -50,8 +50,8 @@ class test_main(GaiaTestCase):
         #
         # Set up to use data connection.
         #
-        send_time = time.time()
         self.messages.createAndSendMMS("image", [self.target_telNum], self.test_msg)
+        send_time = self.messages.last_sent_message_timestamp()
 
         #
         # Verify that the MMS has been received.

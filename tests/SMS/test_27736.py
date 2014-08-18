@@ -1,8 +1,6 @@
 #
-# Imports which are standard for all test cases.
+# 27736
 #
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
 #
@@ -12,6 +10,7 @@ from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.contacts import Contacts
+
 
 class test_main(GaiaTestCase):
 
@@ -27,18 +26,22 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.reporting.logComment("Using target telephone number " + self.telNum)
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.UTILS.reporting.logComment("Using target telephone number " + self.phone_number)
+        self.incoming_sms_num = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
         self.messages.launch()
+        self.messages.deleteAllThreads()
 
-        self.messages.createAndSendSMS( [self.telNum], 
-                                        "Just creating a message thread.")
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
+        sms_msg = "Just creating a message thread."
+        self.UTILS.messages.create_incoming_sms(self.phone_number, sms_msg)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(sms_msg, timeout=120)
+        title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.incoming_sms_num, timeout=5)
+        self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
 
         #
         # Return to main SMS page.
@@ -53,5 +56,6 @@ class test_main(GaiaTestCase):
         #
         # Check that the delete button is not enabled.
         #
-        x = self.UTILS.element.getElement(DOM.Messages.delete_threads_button, "Delete button")
-        self.UTILS.test.TEST(x.get_attribute("class") == "disabled", "Delete button is not enabled.")
+        delete_btn = self.UTILS.element.getElement(DOM.Messages.threads_delete_button, "Delete button")
+        disabled = delete_btn.get_attribute("disabled")
+        self.UTILS.test.TEST(delete_btn.get_attribute("disabled") == "true", "Delete button is not enabled.")

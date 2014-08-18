@@ -1,20 +1,12 @@
 #
 # Imports which are standard for all test cases.
 #
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 
 
 class test_main(GaiaTestCase):
-
-    test_msg = "Test."
 
     def setUp(self):
         #
@@ -29,7 +21,7 @@ class test_main(GaiaTestCase):
         #
         self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.target_telNum)
-
+        self.test_msg = "Test."
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -45,16 +37,12 @@ class test_main(GaiaTestCase):
         # Create and send a new test message.
         #
         self.messages.createAndSendSMS([self.target_telNum], self.test_msg)
+        send_time = self.messages.last_sent_message_timestamp()
 
         #
         # Wait for the last message in this thread to be a 'received' one.
         #
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
+        returnedSMS = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
         self.UTILS.test.TEST(returnedSMS, "A received message appeared in the thread.", True)
 
-        #
-        # TEST: The returned message is as expected (caseless in case user typed it manually).
-        #
-        sms_text = returnedSMS.text
-        self.UTILS.test.TEST((sms_text.lower() == self.test_msg.lower()),
-            "SMS text = '" + self.test_msg + "' (it was '" + sms_text + "').")
+        self.messages.check_last_message_contents(self.test_msg)

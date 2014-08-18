@@ -41,8 +41,6 @@ class test_main(GaiaTestCase):
         # Create message - 20 x 10 chars.
         #
         sms_message = "0123456789" * 20
-        sms_message_length = len(sms_message)
-        self.UTILS.reporting.logComment("Message length sent: " + str(sms_message_length))
 
         #
         # Launch messages app.
@@ -53,19 +51,12 @@ class test_main(GaiaTestCase):
         # Create and send a new test message.
         #
         self.messages.createAndSendSMS([self.target_telNum], sms_message)
+        send_time = self.messages.last_sent_message_timestamp()
 
         #
         # Wait for the last message in this thread to be a 'received' one.
         #
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
+        returnedSMS = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
         self.UTILS.test.TEST(returnedSMS, "A received message appeared in the thread.", True)
 
-        #
-        # TEST: The returned message is as expected (caseless in case user typed it manually).
-        #
-        sms_text = returnedSMS.text
-        self.UTILS.test.TEST((sms_text.lower() == sms_message.lower()),
-            "SMS text received matches the SMS text sent.")
-
-        self.UTILS.test.TEST(len(sms_text) == sms_message_length,
-                        "Receieved sms is " + str(sms_message_length) + " characters long.")
+        self.messages.check_last_message_contents(sms_message)

@@ -1,13 +1,7 @@
 #
 # Imports which are standard for all test cases.
 #
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -16,7 +10,6 @@ import time
 
 class test_main(GaiaTestCase):
 
-    _RESTART_DEVICE = True
     _now = ""
 
     def setUp(self):
@@ -35,6 +28,13 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
+        #
+        # Launch messages app & delete all Threads
+        # Make sure we have no threads
+        #
+        self.messages.launch()
+        self.messages.deleteAllThreads()
         #
         # Remember the 'real' current date and time.
         #
@@ -47,14 +47,15 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.reporting.logResult("info", " ")
         self.UTILS.reporting.logResult("info", "--------------------------")
-        self.UTILS.reporting.logResult("info", "<b><u>Reading an sms from 2 months ago ...</u></b>")
+        self.UTILS.reporting.logResult("info", "<b><u>Reading an sms from 2 months ago...</u></b>")
 
         t = self.UTILS.date_and_time.getDateTimeFromEpochSecs(self.NOW_EPOCH - (64 * one_day))
         self.UTILS.date_and_time.setTimeToSpecific(p_year=t.year, p_month=t.mon, p_day=t.mday)
 
         expected_str = "{}/{}/{}".format(str(t.mon).zfill(2), str(t.mday).zfill(2), t.year)
 
-        self._sendSMS("2 months ago", True) 
+        self.data_layer.send_sms(self.num, "2 months ago")
+        self.UTILS.statusbar.wait_for_notification_toaster_detail("2 months ago", timeout=120)
         self._checkTimeStamp(expected_str)
 
         #
@@ -62,14 +63,15 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.reporting.logResult("info", " ")
         self.UTILS.reporting.logResult("info", "--------------------------")
-        self.UTILS.reporting.logResult("info", "<b><u>Reading an sms from 6 days ago ...</u></b>")
+        self.UTILS.reporting.logResult("info", "<b><u>Reading an sms from 6 days ago...</u></b>")
 
-        t = self.UTILS.date_and_time.getDateTimeFromEpochSecs(self.NOW_EPOCH - (64 * one_day))
+        t = self.UTILS.date_and_time.getDateTimeFromEpochSecs(self.NOW_EPOCH - (6 * one_day))
         x = self.UTILS.date_and_time.setTimeToSpecific(p_year=t.year, p_month=t.mon, p_day=t.mday)
 
         expected_str = "{}/{}/{}".format(str(t.mon).zfill(2), str(t.mday).zfill(2), t.year)
 
-        self._sendSMS("6 days ago")
+        self.data_layer.send_sms(self.num, "6 days ago")
+        self.UTILS.statusbar.wait_for_notification_toaster_detail("6 days ago", timeout=120)
         self._checkTimeStamp(expected_str)
 
         #
@@ -83,21 +85,24 @@ class test_main(GaiaTestCase):
             x = self.UTILS.date_and_time.setTimeToSpecific(p_year=t.year, p_month=t.mon, p_day=t.mday)
 
             _dayname = days[x.tm_wday]
-            self.UTILS.reporting.logResult("info", "<b><u>Reading an sms from {} days ago ({}) ...</u></b>".\
-                                           format(str(i), _dayname))
+            self.UTILS.reporting.logResult("info", "<b><u>Reading an sms from {} days ago ({})...</u></b>".\
+                                           format(i, _dayname))
 
-            self._sendSMS("DAY: {} ({} days ago).".format(_dayname, str(i)))
-            self._checkTimeStamp(_dayname)
+            text = "DAY: {} ({} days ago).".format(_dayname, str(i))
+            self.data_layer.send_sms(self.num, text)
+            self.UTILS.statusbar.wait_for_notification_toaster_detail(text, timeout=120)
+            self._checkTimeStamp(_dayname.upper())
 
         #
         #=============================================================================
         #
         self.UTILS.reporting.logResult("info", " ")
         self.UTILS.reporting.logResult("info", "--------------------------")
-        self.UTILS.reporting.logResult("info", "<b><u>Reading an sms from yesterday ...</u></b>")
+        self.UTILS.reporting.logResult("info", "<b><u>Reading an sms from yesterday...</u></b>")
         t = self.UTILS.date_and_time.getDateTimeFromEpochSecs(self.NOW_EPOCH - (1 * one_day))
         x = self.UTILS.date_and_time.setTimeToSpecific(p_year=t.year, p_month=t.mon, p_day=t.mday)
-        self._sendSMS("DAY: YESTERDAY")
+        self.data_layer.send_sms(self.num, "DAY: YESTERDAY")
+        self.UTILS.statusbar.wait_for_notification_toaster_detail("DAY: YESTERDAY", timeout=120)
         self._checkTimeStamp("YESTERDAY")
 
         #
@@ -106,27 +111,11 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", " ")
         self.UTILS.reporting.logResult("info", "--------------------------")
         self.UTILS.reporting.logResult("info", "<b><u>Reading an sms from today ...</u></b>")
-        self.data_layer.set_time( self.NOW_EPOCH * 1000)
+        self.data_layer.set_time(self.NOW_EPOCH * 1000)
 
-        self._sendSMS("DAY: TODAY")
+        self.data_layer.send_sms(self.num, "DAY: TODAY")
+        self.UTILS.statusbar.wait_for_notification_toaster_detail("DAY: TODAY", timeout=120)
         self._checkTimeStamp("TODAY")
-
-    def _sendSMS(self, p_str, p_first_time=False):
-        #
-        # Sends an sms (a little quicker if not p_firs_time).
-        #
-        self.messages.launch()
-        if p_first_time:
-            # No thread yet, so start from scratch.
-            self.messages.createAndSendSMS([self.num], p_str)
-        else:
-            # Thread exists, so just use it.
-            self.messages.openThread(self.num)
-            self.messages.enterSMSMsg(p_str)
-            self.messages.sendSMS()
-
-        self.messages.waitForReceivedMsgInThisThread()
-        self.apps.kill_all()
 
     def _checkTimeStamp(self, p_str):
         #
@@ -147,7 +136,10 @@ class test_main(GaiaTestCase):
 
         self.messages.launch()
         self.messages.openThread(self.num)
-        x = self.UTILS.element.getElements(DOM.Messages.message_timestamps, "Message timestamp headers", False)[-1]
-        self.UTILS.test.TEST(p_str.lower() in x.text.lower(), 
-                        "<b>Last message timestamp header contains <u>'{}'</u> </b>(it was <b>'{}'</b>).".\
-                        format(p_str, x.text))
+        time.sleep(2)
+        x = self.UTILS.element.getElements(DOM.Messages.message_timestamps, "Message date header", False)[-1]
+        self.UTILS.test.TEST(p_str == x.text.encode("utf8"),
+                        "<b>Last message timestamp header is <u>'{}'</u> </b>(expected <b>'{}'</b>).".\
+                        format(x.text, p_str), stop_on_error=True)
+        time.sleep(3)
+        self.messages.closeThread()

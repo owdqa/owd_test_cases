@@ -13,8 +13,6 @@ from OWDTestToolkit.apps.messages import Messages
 
 class test_main(GaiaTestCase):
 
-    test_msg = "Test message."
-
     def setUp(self):
         #
         # Set up child objects...
@@ -27,8 +25,9 @@ class test_main(GaiaTestCase):
         # Establish which phone number to use.
         #
         self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.cp_incoming_number = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER")
+        self.cp_incoming_number = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.target_telNum)
+        self.test_msg = "Test message."
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -39,23 +38,17 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.statusbar.clearAllStatusBarNotifs()
 
-        send_time = time.time()
         self.UTILS.messages.create_incoming_sms(self.target_telNum, self.test_msg)
 
-        self.UTILS.statusbar.wait_for_notification_toaster_title(self.cp_incoming_number, timeout=120)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
+        title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.cp_incoming_number, timeout=5)
 
         #
         # Click the notifier.
         #
-        self.UTILS.statusbar.click_on_notification_title(self.cp_incoming_number, DOM.Messages.frame_locator)
+        self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
 
-        #
-        # Check received message contents
-        #
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
-        sms_text = returnedSMS.text
-        self.UTILS.test.TEST(sms_text == self.test_msg, "SMS text = '{}' (it was '{}').".\
-                             format(self.test_msg, sms_text))
+        self.messages.check_last_message_contents(self.test_msg)
 
         x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
@@ -63,12 +56,5 @@ class test_main(GaiaTestCase):
         #
         # Check the message via the thread.
         #
-        self.messages.openThread(self.cp_incoming_number)
-
-        #
-        # Check received message contents
-        #
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
-        sms_text = returnedSMS.text
-        self.UTILS.test.TEST(sms_text == self.test_msg, "SMS text = '{}' (it was '{}').".\
-                             format(self.test_msg, sms_text))
+        self.messages.openThread(title)
+        self.messages.check_last_message_contents(self.test_msg)

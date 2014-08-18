@@ -1,13 +1,7 @@
 #
 # Imports which are standard for all test cases.
 #
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -19,8 +13,6 @@ class test_main(GaiaTestCase):
 
     test_msg = "Test message."
 
-    _RESTART_DEVICE = True
-
     def setUp(self):
         #
         # Set up child objects...
@@ -30,27 +22,35 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.settings = Settings(self)
 
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.cp_incoming_number = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
         #
-        # Launch messages app.
+        # Launch messages app & delete all Threads
+        # Make sure we have no threads
         #
         self.messages.launch()
+        self.messages.deleteAllThreads()
 
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.target_telNum], self.test_msg)
+        self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)
+
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
+        title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.cp_incoming_number, timeout=5)
+        self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
 
         #
         # Check the time of this message.
         #
-        _ORIG_MSG_TIMESTAMP = self.messages.timeOfLastMessageInThread()
-        self.UTILS.reporting.logResult("info", "(original message timestamp = '" + _ORIG_MSG_TIMESTAMP + "'.)")
+        _orig_msg_timestamp = self.messages.timeOfLastMessageInThread()
+        self.UTILS.reporting.logResult("info", "(original message timestamp = '" + _orig_msg_timestamp + "'.)")
 
         #
         # Return to the threads screen and check the time of this thread.
@@ -62,8 +62,8 @@ class test_main(GaiaTestCase):
         #
         # Get the time of this thread.
         #
-        _ORIG_THREAD_TIMESTAMP = self.messages.timeOfThread(self.target_telNum)
-        self.UTILS.reporting.logResult("info", "(original thread timestamp = '" + _ORIG_THREAD_TIMESTAMP + "'.)")
+        _orig_thread_timestamp = self.messages.timeOfThread(title)
+        self.UTILS.reporting.logResult("info", "(original thread timestamp = '" + _orig_thread_timestamp + "'.)")
 
         #
         # Change to a (unlikely!) timezone.
@@ -79,19 +79,19 @@ class test_main(GaiaTestCase):
         #
         # Get the new thread time.
         #
-        _NEW_THREAD_TIMESTAMP = self.messages.timeOfThread(self.target_telNum)
-        self.UTILS.reporting.logResult("info", "(new thread timestamp = '" + _NEW_THREAD_TIMESTAMP + "'.)")
+        _new_thread_timestamp = self.messages.timeOfThread(title)
+        self.UTILS.reporting.logResult("info", "(new thread timestamp = '" + _new_thread_timestamp + "'.)")
 
         #
         # Open our thread.
         #
-        self.messages.openThread(self.target_telNum)
+        self.messages.openThread(title)
 
         #
         # Get the new message time.
         #
-        _NEW_MSG_TIMESTAMP = self.messages.timeOfLastMessageInThread()
-        self.UTILS.reporting.logResult("info", "(new message timestamp = '" + _NEW_MSG_TIMESTAMP + "'.)")
+        _new_msg_timestamp = self.messages.timeOfLastMessageInThread()
+        self.UTILS.reporting.logResult("info", "(new message timestamp = '" + _new_msg_timestamp + "'.)")
 
-        self.UTILS.test.TEST(_ORIG_THREAD_TIMESTAMP != _NEW_THREAD_TIMESTAMP, "Thread timestamp has changed.")
-        self.UTILS.test.TEST(_ORIG_MSG_TIMESTAMP != _NEW_MSG_TIMESTAMP, "Message timestamp has changed.")
+        self.UTILS.test.TEST(_orig_thread_timestamp != _new_thread_timestamp, "Thread timestamp has changed.")
+        self.UTILS.test.TEST(_orig_msg_timestamp != _new_msg_timestamp, "Message timestamp has changed.")

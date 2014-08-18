@@ -1,13 +1,7 @@
 #
-# Imports which are standard for all test cases.
+# 26978
 #
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -33,9 +27,8 @@ class test_main(GaiaTestCase):
         self.EMAIL1 = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
         self.PASS1 = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
 
-        self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
-        self.incoming_sms_num = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -49,12 +42,10 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        send_time = time.time()
-        #self.UTILS.messages.create_incoming_sms(self.num1, "Email addy {} test.".format(self.emailAddy))
-        self.data_layer.send_sms(self.num1, "Email addy {} test.".format(self.emailAddy))
-        self.UTILS.statusbar.wait_for_notification_toaster_title(self.num1, timeout=120)
-        self.UTILS.statusbar.click_on_notification_title(self.num1, DOM.Messages.frame_locator)
-        sms = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+        self.data_layer.send_sms(self.phone_number, "Email addy {} test.".format(self.emailAddy))
+        self.UTILS.statusbar.wait_for_notification_toaster_title(self.phone_number, timeout=120)
+        self.UTILS.statusbar.click_on_notification_title(self.phone_number, DOM.Messages.frame_locator)
+        sms = self.messages.lastMessageInThisThread()
 
         #
         # Tap the 2nd email link.
@@ -92,4 +83,5 @@ class test_main(GaiaTestCase):
         self.UTILS.general.typeThis(DOM.Email.compose_subject, "'Subject' field", "Test email", True, False)
         self.UTILS.general.typeThis(DOM.Email.compose_msg, "Message field", "Just a test", True, False, False)
 
-        self.Email.sendTheMessage()
+        x = self.UTILS.element.getElement(DOM.Email.compose_send_btn, "Send button")
+        x.tap()

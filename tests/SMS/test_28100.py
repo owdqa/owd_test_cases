@@ -1,13 +1,7 @@
 #
-# Imports which are standard for all test cases.
+# 28100
 #
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -16,8 +10,8 @@ import time
 
 class test_main(GaiaTestCase):
 
-    test_msg = "Test message."
     _RESTART_DEVICE = True
+    test_msg = "Test message."
 
     def setUp(self):
         #
@@ -27,29 +21,30 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.incoming_sms_num = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
+        self.UTILS.reporting.logComment("Sending messages to telephone number " + self.phone_number)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-
         #
         # Create and send a new test message containing all of our CORRECT numbers..
         #
         self.UTILS.reporting.logResult("info", "<b>Check CORRECT numbers are ok ...</b>")
         nums = ["12345678", "123456789"]
-        self._testAll(nums, len(nums))
+        self.check_numbers(nums, range(2))
 
         self.UTILS.reporting.logResult("info", "<b>Check INCORRECT numbers are ok ...</b>")
         nums = ["123", "1234"]
-        self._testAll(nums, 0)
+        self.check_numbers(nums, [])
 
         self.UTILS.reporting.logResult("info", "<b>Check MIXED numbers are ok ...</b>")
         nums = ["123", "12345678", "1234"]
-        self._testAll(nums, 1)
+        self.check_numbers(nums, [1])
 
-    def _testAll(self, nums, tappable_count):
+    def check_numbers(self, nums, tappables):
         #
         # Generate a string of the type: "Test0 <number> Test1 <number>...."
         #
@@ -58,22 +53,22 @@ class test_main(GaiaTestCase):
                                                       for item in sublist]))
 
         #
-        # Start from clean for each test run.
+        # Start each test run from scratch.
         #
         self.apps.kill_all()
-        time.sleep(2)
-        self.messages.launch()
-        self.messages.createAndSendSMS([self.num1], sms_msg)
-        x = self.messages.waitForReceivedMsgInThisThread()
+        self.UTILS.messages.create_incoming_sms(self.phone_number, sms_msg)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(sms_msg, timeout=120)
+        title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.incoming_sms_num, timeout=5)
+        self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
+        sms = self.messages.lastMessageInThisThread()
 
         #
-        # Tap the number to call.
+        # Get the numbers in the SMS
         #
-        msg_nums = x.find_elements("tag name", "a")
+        msg_nums = sms.find_elements("tag name", "a")
 
-        description = "There are <b>{}</b> numbers highlighted in the received text (there were <b>{}</b>)."
-        self.UTILS.test.TEST(len(msg_nums) == tappable_count, description.format(tappable_count, len(msg_nums)))
-
+        description = "There are <b>{}</b> numbers highlighted in the received text (expected <b>{}</b>)."
+        self.UTILS.test.TEST(len(msg_nums) == len(tappables), description.format(len(msg_nums), len(tappables)))
         for i in range(len(msg_nums)):
             msg_nums[i].tap()
 
@@ -88,19 +83,15 @@ class test_main(GaiaTestCase):
             #
             # Dialer is started with the number already filled in.
             #
-            description = "The phone number contains '{}' (it was '{}')."
-            x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number")
-            self.UTILS.test.TEST(nums[i] in x.get_attribute("value"),
-                            description.format(nums[i], x.get_attribute("value")))
+            time.sleep(1)
+            number = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number").get_attribute("value")
+            description = "The phone number is '{}' (expected '{}').".format(number, nums[tappables[i]])
+            self.UTILS.test.TEST(nums[tappables[i]] == number, description)
 
             #
             # Kill everything, then re-launch the messaging app etc ...
             #
             self.messages.launch()
 
-            #
-            # This may seem repetitive, but it looks like the reference to the
-            # a HTML elements is lost when switching from apps
-            #
-            x = self.messages.waitForReceivedMsgInThisThread()
-            msg_nums = x.find_elements("tag name", "a")
+            sms = self.messages.lastMessageInThisThread()
+            msg_nums = sms.find_elements("tag name", "a")
