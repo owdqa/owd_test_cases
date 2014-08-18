@@ -85,3 +85,5 @@ class test_main(GaiaTestCase):
 
         x = self.UTILS.element.getElement(DOM.Email.compose_send_btn, "Send button")
         x.tap()
+        self.UTILS.element.waitForNotElements(DOM.Messages.send_email_failed, "Sending email error message",
+                                              timeout=10)
