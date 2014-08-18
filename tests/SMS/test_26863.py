@@ -50,8 +50,8 @@ class test_main(GaiaTestCase):
         #
         # Click send.
         #
-        send_time = time.time()
         self.messages.sendSMS()
+        send_time = self.messages.last_sent_message_timestamp()
 
         #
         # Wait for the SMS to arrive.

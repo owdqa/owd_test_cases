@@ -1,17 +1,14 @@
 #
-# Imports which are standard for all test cases.
+# 31570: Forward an SMS to multiple recipients
 #
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
@@ -24,18 +21,12 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
 
         #
-        # Establish which phone number to use.
-        #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-
-
-        #
         # Prepare the contact we're going to insert.
         #
-        self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.contact = MockContact(tel = {'type': '', 'value': self.num1})
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.contact = MockContact(tel={'type': '', 'value': self.phone_number})
         self.UTILS.general.insertContact(self.contact)
-
+        self.incoming_sms_num = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -45,6 +36,8 @@ class test_main(GaiaTestCase):
         # Sometimes causes a problem if not cleared.
         #
         self.UTILS.statusbar.clearAllStatusBarNotifs()
+        self.messages.launch()
+        self.messages.deleteAllThreads()
 
         #
         # Create message - 5 x 10 chars.
@@ -57,18 +50,9 @@ class test_main(GaiaTestCase):
         #
         self.messages.launch()
 
-        #
-        # Create and send a new test message. Repeat this steps to having several sms in the thread
-        #
-        self.messages.createAndSendSMS([self.target_telNum], sms_message)
+        self.UTILS.messages.create_incoming_sms(self.phone_number, sms_message)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(sms_message, timeout=120)
+        title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.incoming_sms_num, timeout=5)
+        self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
 
-        #
-        # Wait for the last message in this thread to be a 'received' one.
-        #
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(returnedSMS, "A received message appeared in the thread.", True)
-
-        self.messages.forwardMessageToMultipleRecipients("sms",self.target_telNum, self.contact["name"])
-
-
-
+        self.messages.forwardMessageToMultipleRecipients("sms", self.phone_number, self.contact["name"])

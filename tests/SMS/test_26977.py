@@ -45,8 +45,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], 
-                                        "Hello " + self.emailAddy + " old bean.")
+        self.messages.createAndSendSMS([self.num1], "Hello " + self.emailAddy + " old bean.")
         x = self.messages.waitForReceivedMsgInThisThread()
 
         self.UTILS.element.waitForNotElements(DOM.Messages.edit_mode_wrapper,
@@ -56,13 +55,12 @@ class test_main(GaiaTestCase):
         # Tap on edit mode.
         #
         y = self.UTILS.element.getElement(DOM.Messages.edit_messages_icon, "Edit button")
-        y.tap()  
- 
+        y.tap()
+
         #
         # Verify that the edit wrapper is now displayed.
         #
-        self.UTILS.element.waitForElements(DOM.Messages.edit_mode_wrapper,
-                                    "Main wrapper in edit mode")
+        self.UTILS.element.waitForElements(DOM.Messages.edit_mode_wrapper, "Main wrapper in edit mode")
 
         #
         # Long press the email link.
@@ -70,13 +68,12 @@ class test_main(GaiaTestCase):
         x = self.messages.waitForReceivedMsgInThisThread()
         _link = x.find_element("tag name", "a")
         self.actions = Actions(self.marionette)
-        self.actions.long_press(_link, 2).perform() 
+        self.actions.long_press(_link, 2).perform()
 
         #
         # Check the email address is not a link in edit mode.
         #
-        self.UTILS.element.waitForNotElements( ("xpath", "//button[text()='Create new contact']"),
+        self.UTILS.element.waitForNotElements(("xpath", "//button[text()='Create new contact']"),
                                    "Create new contact button")
         self.messages.createAndSendSMS([self.num1], "Email addy {} test.".format(self.emailAddy))
         x = self.messages.waitForReceivedMsgInThisThread()
-

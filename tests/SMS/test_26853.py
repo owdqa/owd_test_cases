@@ -1,8 +1,6 @@
 #
 # Imports which are standard for all test cases.
 #
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
 #
@@ -43,17 +41,13 @@ class test_main(GaiaTestCase):
         self.messages.deleteAllThreads()
 
         #
-        # Create and send some new tests messages. THIS ASSUMES THE TARGET
-        # TELEPHONE NUMBER IS THE SAME DEVICES WHICH IS SENDING THEM.
-        #
-        self.messages.createAndSendSMS([self.target_telNum], self.test_msgs[0])
-        self.messages.waitForReceivedMsgInThisThread()
+        for i in range(3):
+            self.UTILS.reporting.debug("** Sending [{}]".format(self.test_msgs[i]))
+            self.data_layer.send_sms(self.target_telNum, self.test_msgs[i])
+            self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msgs[i], timeout=120)
 
-        for i in range(2):
-            self.messages.enterSMSMsg(self.test_msgs[i + 1])
-            self.messages.sendSMS()
-            self.messages.waitForReceivedMsgInThisThread()
-
+        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+        self.messages.openThread(self.target_telNum)
         #
         # Go into edit mode..
         #

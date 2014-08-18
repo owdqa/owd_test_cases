@@ -44,12 +44,11 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        send_time = time.time()
         #self.UTILS.messages.create_incoming_sms(self.num1, "Email addy {} test.".format(self.emailAddy))
         self.data_layer.send_sms(self.num1, "Email addy {} test.".format(self.emailAddy))
         self.UTILS.statusbar.wait_for_notification_toaster_title(self.num1, timeout=120)
         self.UTILS.statusbar.click_on_notification_title(self.num1, DOM.Messages.frame_locator)
-        sms = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+        sms = self.messages.lastMessageInThisThread()
 
         #
         # Tap the 2nd email link.

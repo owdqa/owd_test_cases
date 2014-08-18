@@ -1,17 +1,12 @@
 #
-# Imports which are standard for all test cases.
+# 27002
 #
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.dialer import Dialer
+
 
 class test_main(GaiaTestCase):
 
@@ -24,56 +19,59 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.dialer = Dialer(self)
 
-        self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.incoming_sms_num = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-
         #
         # Launch messages app.
         #
         self.messages.launch()
+        self.messages.deleteAllThreads()
 
         #
         # Create and send a new test message containing all of our numbers..
         #
         nums = ["12345678", "123456789", "01234567", "012345678"]
         sms_msg = "Test numbers {}".format(", ".join(nums))
- 
-        self.messages.createAndSendSMS([self.num1], sms_msg)
-        x = self.messages.waitForReceivedMsgInThisThread()
+        self.UTILS.messages.create_incoming_sms(self.phone_number, sms_msg)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(sms_msg, timeout=120)
+        title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.incoming_sms_num, timeout=5)
+        self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
+        sms = self.messages.lastMessageInThisThread()
 
         #
         # Tap the numbers to call.
         #
-        msg_nums = x.find_elements("tag name", "a")
+        msg_nums = sms.find_elements("tag name", "a")
 
         for i in range(len(msg_nums)):
-            msg_nums[i].tap()
+            num = msg_nums[i]
+            num.tap()
+            num_text = num.text
 
-            x = self.UTILS.element.getElement(DOM.Messages.header_call_btn, "Call button")
-            x.tap()
+            call_btn = self.UTILS.element.getElement(DOM.Messages.header_call_btn, "Call button")
+            call_btn.tap()
 
             self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator)
 
             #
-            # Dialler is started with the number already filled in.
+            # Dialer is started with the number already filled in.
             #
             x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number")
-            self.UTILS.test.TEST(nums[i] in x.get_attribute("value"), 
-                            "The dialer number contains '{}' (it was '{}').".format(nums[i], x.get_attribute("value")))
+            self.UTILS.test.TEST(num_text == x.get_attribute("value"),
+                            "The dialer number contains '{}' (expected '{}').".\
+                            format(num_text, x.get_attribute("value")))
 
             #
             # Switch back to messaging app (without killing anything) etc ...
             #
             self.messages.launch()
-            
-            #
-            # This may seem repetitive, but it looks like the referece to the 
-            # a HTML elements is lost when switching from apps
-            #
-            x = self.messages.waitForReceivedMsgInThisThread()
-            msg_nums = x.find_elements("tag name", "a")
 
+            # We need to regain the last message and the numbers, since the reference is lost in
+            # the frame changes
+            sms = self.messages.lastMessageInThisThread()
+            msg_nums = sms.find_elements("tag name", "a")

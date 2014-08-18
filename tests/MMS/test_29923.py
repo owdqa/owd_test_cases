@@ -1,9 +1,3 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-import time
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
 from OWDTestToolkit.utils.utils import UTILS
@@ -33,6 +27,7 @@ class test_main(GaiaTestCase):
         # Establish which phone number to use.
         #
         self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.mms_sender = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.target_telNum)
 
     def tearDown(self):
@@ -42,9 +37,9 @@ class test_main(GaiaTestCase):
         #
         # Create and Send an MMS with a audio attached.
         #
-        send_time = time.time()
         self.messages.createAndSendMMS("audio", [self.target_telNum], self.test_msg)
         #
         # Verify that the MMS has been received.
         #
-        self.messages.verifyMMSReceived("audio", send_time=send_time)
+        self.UTILS.statusbar.wait_for_notification_toaster_title(self.mms_sender, timeout=120)
+        self.messages.verifyMMSReceived("image", self.mms_sender)

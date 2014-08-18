@@ -1,19 +1,15 @@
 #
-# Imports which are standard for all test cases.
+# 27764
 #
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
+from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 
+
 class test_main(GaiaTestCase):
 
-    _testMsg = "Test message\n\nwith line breaks."
+    test_msg = "Test message\n\nwith line breaks."
 
     def setUp(self):
         #
@@ -23,34 +19,23 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        #
-        # Remove number and import contact.
-        #
-        self.telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.telNum)
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.incoming_sms_num = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        #
-        # Launch messages app.
-        #
         self.messages.launch()
+        self.messages.deleteAllThreads()
+
+        self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
+        title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.incoming_sms_num, timeout=5)
+        self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
 
         #
-        # Send a message containing the required string 
+        # Check the received message.
         #
-        self.messages.startNewSMS()
-        self.messages.addNumbersInToField([self.telNum])
-        self.messages.enterSMSMsg(self._testMsg)
-        self.messages.sendSMS()
-
-        #
-        # Check the receievd message.
-        #
-        x = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(x.text == self._testMsg, 
-                        "The text in the message received matches the message that was sent." +\
-                        "|EXPECTED: '" + self._testMsg + "'" + \
-                        "|ACTUAL  : '" + x.text + "'")
+        self.messages.check_last_message_contents(self.test_msg)

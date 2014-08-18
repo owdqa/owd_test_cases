@@ -1,21 +1,17 @@
 #
-# Imports which are standard for all test cases.
+# 26982
 #
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.email import Email
 
+
 class test_main(GaiaTestCase):
 
     test_msg = "Test message."
+    _RESTART_DEVICE = True
 
     def setUp(self):
         #
@@ -29,10 +25,9 @@ class test_main(GaiaTestCase):
         self.USER1 = self.UTILS.general.get_os_variable("GMAIL_1_USER")
         self.EMAIL1 = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
         self.PASS1 = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
- 
-        self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
 
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -46,7 +41,7 @@ class test_main(GaiaTestCase):
 
         self.Email.launch()
         self.Email.setupAccount(self.USER1, self.EMAIL1, self.PASS1)
- 
+
         #
         # Launch messages app.
         #
@@ -55,16 +50,17 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        msg_text = "Email one one@tester.com, two {} , three three@tester.com."
-        self.messages.createAndSendSMS([self.num1], 
-            msg_text.format(self.emailAddy))
-        x = self.messages.waitForReceivedMsgInThisThread()
+        msg_text = "Email one one@tester.com, two {} , three three@tester.com.".format(self.emailAddy)
+        self.data_layer.send_sms(self.phone_number, msg_text)
+        self.UTILS.statusbar.wait_for_notification_toaster_title(self.phone_number, timeout=120)
+        self.UTILS.statusbar.click_on_notification_title(self.phone_number, DOM.Messages.frame_locator)
+        sms = self.messages.lastMessageInThisThread()
 
         #
         # Tap the 2nd email link.
         #
-        self.UTILS.reporting.logResult("info", "Click the 2nd email address in this message: '{}'.".format(x.text))
-        _link = x.find_elements("tag name", "a")[1]
+        self.UTILS.reporting.logResult("info", "Click the 2nd email address in this message: '{}'.".format(sms.text))
+        _link = sms.find_elements("tag name", "a")[1]
         _link.tap()
 
         #
@@ -78,5 +74,5 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.iframe.switchToFrame(*DOM.Email.frame_locator)
         x = self.UTILS.element.getElement(DOM.Email.compose_to_from_contacts, "To field")
-        self.UTILS.test.TEST(x.text == self.emailAddy, 
-                        "To field contains '{}' (it was '{}').".format(self.emailAddy, self.emailAddy))
+        self.UTILS.test.TEST(x.text == self.emailAddy,
+                             "To field contains '{}' (it was '{}').".format(self.emailAddy, self.emailAddy))

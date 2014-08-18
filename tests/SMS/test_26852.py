@@ -1,13 +1,7 @@
 #
 # Imports which are standard for all test cases.
 #
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -36,7 +30,7 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
         #
         # Launch messages app & delete all Threads
         # Make sure we have no threads
@@ -46,24 +40,21 @@ class test_main(GaiaTestCase):
 
         time.sleep(2)
 
-        #
-        # Create and send some new tests messages.
-        #
-        self.messages.createAndSendSMS([self.target_telNum], self.test_msgs[0])
-        self.messages.waitForReceivedMsgInThisThread()
+        for i in range(3):
+            self.UTILS.reporting.debug("** Sending [{}]".format(self.test_msgs[i]))
+            self.data_layer.send_sms(self.target_telNum, self.test_msgs[i])
+            self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msgs[i], timeout=120)
 
-        for i in range(2):
-            self.messages.enterSMSMsg(self.test_msgs[i + 1])
-            self.messages.sendSMS()
-            self.messages.waitForReceivedMsgInThisThread()
+        self.UTILS.reporting.debug("** Opening thread to check messages")
+        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+        self.messages.openThread(self.target_telNum)
 
         #
         # Check how many elements are there
         #
         original_count = self.messages.countMessagesInThisThread()
-        self.UTILS.reporting.logResult("info",
-                             "Before deletion there were " + str(original_count) +
-                              " messages in this thread.")
+        self.UTILS.reporting.logResult("info", "Before deletion there were {} messages in this thread.".\
+                                       format(original_count))
 
         #
         # Select the messages to be deleted.
@@ -77,6 +68,5 @@ class test_main(GaiaTestCase):
         final_count = len(x)
         real_count = original_count - 1
         self.UTILS.test.TEST(final_count == (original_count - 1),
-                        "After deleting the message, there were " + \
-                        str(real_count) + \
-                        " messages in this thread (" + str(final_count) + " found).")
+                        "After deleting the message, there were {} messages in this thread ({}) found).".\
+                        format(real_count, final_count))
