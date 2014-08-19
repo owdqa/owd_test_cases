@@ -34,6 +34,3 @@ class test_main(GaiaTestCase):
         self.browser.launch()
 
         self.browser.open_url(test_url)
-        loaded_url = self.browser.loadedURL()
-        self.UTILS.test.TEST(test_url in loaded_url, "'{0}' is in the loaded source url: '{1}'."
-                        .format(test_url, loaded_url))

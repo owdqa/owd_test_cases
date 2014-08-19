@@ -40,9 +40,5 @@ class test_main(GaiaTestCase):
         # Open our URL.
         #
         self.browser.open_url(url1)
-        url = self.browser.loadedURL()
-        self.UTILS.test.TEST(url1 in url, "'{0}' is in the loaded source url: '{1}'.".format(url1, url))
-
-        self.browser.open_url(url2)
-        url = self.browser.loadedURL()
-        self.UTILS.test.TEST(url2 in url, "'{0}' is in the loaded source url: '{1}'.".format(url2, url))
+        self.browser.open_url(url2, timeout=60) # bbc is heavier
+        
