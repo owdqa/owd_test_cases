@@ -54,3 +54,7 @@ PIGEON_URL=http://pigeon.compilon.com:443/sms/v2/smsoutbound
 
 # Download Manager
 GLOBAL_DOWNLOAD_URL=https://owd.tid.es/dm
+
+# nowSMS
+NOWSMS_USER=owd
+NOWSMS_PASS=qa
