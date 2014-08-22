@@ -35,6 +35,9 @@ TARGET_CALL_NUMBER=983548227
 # Incoming calls
 GLOBAL_NUM_FOR_INCOMING_CALL=+34620912635
 
+#Incoming MMS
+GLOBAL_NUM_FOR_INCOMING_MMS=+620912635
+
 # Browsing
 GLOBAL_TEST_URL=www.google.com
 
@@ -54,3 +57,7 @@ PIGEON_URL=http://pigeon.compilon.com:443/sms/v2/smsoutbound
 
 # Download Manager
 GLOBAL_DOWNLOAD_URL=https://owd.tid.es/dm
+
+# nowSMS
+NOWSMS_USER=owd
+NOWSMS_PASS=qa
