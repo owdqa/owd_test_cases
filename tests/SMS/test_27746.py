@@ -1,17 +1,15 @@
 #
-# Imports which are standard for all test cases.
+# 27746: Verify that If the name of the contact is not empty, the type of the
+# phone and the phone carrier (as defined in the address book) as the secondary
+# header
 #
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
-from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
@@ -27,7 +25,7 @@ class test_main(GaiaTestCase):
         # Prepare the contact we're going to insert.
         #
         self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.contact = MockContact(tel = {'type': '', 'value': self.num1})
+        self.contact = MockContact(tel={'type': '', 'value': self.num1})
 
         self.UTILS.general.insertContact(self.contact)
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact["tel"]["value"])
@@ -43,22 +41,22 @@ class test_main(GaiaTestCase):
 
         #
         # Send a message to create a thread (use number, not name as this
-        # avoids some blocking bugs just now). 
+        # avoids some blocking bugs just now).
         #
         self.messages.createAndSendSMS([self.contact["tel"]["value"]],
                                         "Test message.")
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
+        send_time = self.messages.last_sent_message_timestamp()
+        self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
 
         #
         # Examine the carrier.
         #
-        x = self.UTILS.element.getElement(DOM.Messages.type_and_carrier_field,
-                                    "Type and carrier information")
-
         expect = self.contact["tel"]["type"]
         actual = self.messages.threadType()
-        self.UTILS.test.TEST(expect == actual, "The type is listed as: '{}' (subheader was '{}').".format(expect,actual))
+        self.UTILS.test.TEST(expect == actual, "The type is listed as: '{}' (subheader was '{}').".\
+                             format(expect, actual))
 
         expect = self.contact["tel"]["value"]
         actual = self.messages.threadCarrier()
-        self.UTILS.test.TEST(expect == actual, "The carrier is listed as: '{}' (subheader was '{}').".format(expect,actual))
+        self.UTILS.test.TEST(expect == actual, "The carrier is listed as: '{}' (subheader was '{}').".\
+                             format(expect, actual))

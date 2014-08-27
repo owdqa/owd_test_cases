@@ -1,18 +1,13 @@
 #
-# Imports which are standard for all test cases.
+# 27752: Receive an SMS with a link to a web site and open it
 #
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.browser import Browser
 import time
+
 
 class test_main(GaiaTestCase):
 
@@ -31,8 +26,9 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.target_telNum)
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.cp_incoming_number = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -40,25 +36,16 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.UTILS.network.getNetworkConnection()
 
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
-  
-        #
-        # Create and send a new test message.
-        #
-        self.messages.createAndSendSMS([self.target_telNum], self.test_msg)
-  
-        #
-        # Wait for the last message in this thread to be a 'received' one
-        # and click the link.
-        #
-        x = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(x, "Received a message.", True)
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
 
-        x.find_element("tag name", "a").tap()
-    
+        self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)
+
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
+        title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.cp_incoming_number, timeout=5)
+        self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
+        last_msg = self.messages.lastMessageInThisThread()
+        last_msg.find_element("tag name", "a").tap()
+
         #
         # Give the browser time to start up, then
         # switch to the browser frame and check the page loaded.
@@ -67,7 +54,4 @@ class test_main(GaiaTestCase):
         self.marionette.switch_to_frame()
         self.UTILS.iframe.switchToFrame(*DOM.Browser.frame_locator)
 
-        self.UTILS.test.TEST(self.browser.check_page_loaded(self.link),
-                        "Web page loaded correctly.")
-
-
+        self.UTILS.test.TEST(self.browser.check_page_loaded(self.link), "Web page loaded correctly.")

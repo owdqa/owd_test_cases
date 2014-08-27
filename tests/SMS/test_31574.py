@@ -1,17 +1,25 @@
+#===============================================================================
+# 31574: Cancel forwarding a message
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Open Messaging app
+# 2. Open the message
+# 3. Long press on it (ER1)
+# 4. Tap on 'Cancel' option
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected results:
+# ER1. Message module options menu is shown
+# ER2. User is taken back to the message from where the message module options
+# menu was launched
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from marionette import Actions
+import time
+
 
 class test_main(GaiaTestCase):
 
@@ -28,52 +36,39 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.target_telNum)
-
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.incoming_sms_num = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        #
-        # Sometimes causes a problem if not cleared.
-        #
         self.UTILS.statusbar.clearAllStatusBarNotifs()
 
-        #
-        # Create message - 5 x 10 chars.
-        #
-        sms_message = "0123456789" * 5
+        timestamp = " {}".format(time.time())
+        sms_message = "0123456789" * 5 + timestamp
         self.UTILS.reporting.logComment("Message length sent: {}".format((len(sms_message))))
 
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
-
-        #
-        # Create and send a new test message.
-        #
-        self.messages.createAndSendSMS([self.target_telNum], sms_message)
-
-        #
-        # Wait for the last message in this thread to be a 'received' one.
-        #
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(returnedSMS, "A received message appeared in the thread.", True)
+        self.UTILS.messages.create_incoming_sms(self.phone_number, sms_message)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(timestamp, timeout=120)
+        title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.incoming_sms_num, timeout=5)
+        self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
 
         #
         # Open sms option with longtap on it
         #
         self.UTILS.reporting.logResult("info", "Open sms option with longtap on it")
-        x = self.UTILS.element.getElement(DOM.Messages.received_sms, "Target sms field")
-        self.actions.long_press(x, 2).perform()
+        sms = self.messages.lastMessageInThisThread()
+        body = self.marionette.find_element(*DOM.Messages.last_message_body, id=sms.id)
+        self.actions.long_press(body, 2).perform()
 
         #
         # Press cancel button
         #
-        self.UTILS.reporting.logResult("info", "Cliking on cancel button")
-        x = self.UTILS.element.getElement(DOM.Messages.cancel_btn_msg_opt, "Cancel button is displayed")
-        x.tap()
-
+        self.UTILS.reporting.logResult("info", "Clicking cancel button")
+        time.sleep(2)
+        cancel_btn = self.UTILS.element.getElement(DOM.Messages.cancel_btn_msg_opt, "Cancel button is displayed")
+        self.UTILS.reporting.debug("*** Cancel button: {}   text: {}".format(cancel_btn, cancel_btn.text))
+        self.UTILS.element.simulateClick(cancel_btn)

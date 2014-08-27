@@ -1,6 +1,8 @@
 #
-# 27002
+# 27002: Verify that when tapping in a SMS with several valid phone numbers,
+# the dialer is launched with the phone number tapped on pre-filled in.
 #
+import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
@@ -61,6 +63,7 @@ class test_main(GaiaTestCase):
             #
             # Dialer is started with the number already filled in.
             #
+            time.sleep(1)
             x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number")
             self.UTILS.test.TEST(num_text == x.get_attribute("value"),
                             "The dialer number contains '{}' (expected '{}').".\
@@ -71,7 +74,7 @@ class test_main(GaiaTestCase):
             #
             self.messages.launch()
 
-            # We need to regain the last message and the numbers, since the reference is lost in
+            # We need to recover the last message and the numbers, since the reference is lost in
             # the frame changes
             sms = self.messages.lastMessageInThisThread()
             msg_nums = sms.find_elements("tag name", "a")

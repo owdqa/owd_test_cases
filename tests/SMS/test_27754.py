@@ -1,13 +1,9 @@
 #
-# Imports which are standard for all test cases.
+# 27754: Send a SMS to multiple contacts
 #
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -40,14 +36,15 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         #
-        # First, we need to make sure there are no statusbar notifs.
+        # First, we need to make sure there are no statusbar notifications.
         #
         self.UTILS.statusbar.clearAllStatusBarNotifs()
 
         #
-        # Now create and send an sms to both contacts.
+        # Now create and send a SMS to both contacts.
         #
         self.messages.launch()
+        self.messages.deleteAllThreads()
         self.messages.startNewSMS()
 
         for i in range(len(self.test_contacts)):
@@ -56,8 +53,19 @@ class test_main(GaiaTestCase):
             self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
             self.messages.checkIsInToField(self.test_contacts[i]["name"], True)
 
-        self.messages.enterSMSMsg("Test message.")
+        test_msg = "Test message."
+        self.messages.enterSMSMsg(test_msg)
         self.messages.sendSMS()
 
-        self.UTILS.statusbar.wait_for_notification_toaster_title(self.nums[0], timeout=120)
-        self.UTILS.statusbar.wait_for_notification_toaster_title(self.nums[1], timeout=120)
+        # Since the destination number is the own, we will only receive one message, so we check it once
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)
+
+        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+
+        # We will also check there is one thread for each contact in the To field
+        name_xpath = DOM.Messages.thread_selector_xpath.format(self.test_contacts[0]['name'])
+        thread = self.UTILS.element.getElementByXpath(name_xpath)
+        self.UTILS.test.TEST(thread, "Thread for {} found".format(self.test_contacts[0]['name']))
+        name_xpath = DOM.Messages.thread_selector_xpath.format(self.test_contacts[1]['name'])
+        thread = self.UTILS.element.getElementByXpath(name_xpath)
+        self.UTILS.test.TEST(thread, "Thread for {} found".format(self.test_contacts[1]['name']))
