@@ -26,11 +26,12 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.target_telNum)
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         #
@@ -46,7 +47,7 @@ class test_main(GaiaTestCase):
         #
         # Enter a number in the target field.
         #
-        self.messages.addNumbersInToField([self.target_telNum])
+        self.messages.addNumbersInToField([self.phone_number])
 
         #
         # Tap the message area.

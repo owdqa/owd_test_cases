@@ -1,8 +1,16 @@
+#===============================================================================
+# 29917: Verify that the user can delete an mms in a thread with several mms
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Open sms app
+# 2. Open edit mode
+# 3. Select a mms
+# 4. Press delete button
 #
-import sys
-sys.path.insert(1, "./")
+# Expected results:
+# The MMS is deleted
+#===============================================================================
+
 from gaiatest import GaiaTestCase
 
 from OWDTestToolkit import DOM
@@ -10,12 +18,8 @@ from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
 
-class test_main(GaiaTestCase):
 
-    #
-    # Restart device to starting with wifi and 3g disabled.
-    #
-    #_RESTART_DEVICE = True
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #
@@ -32,50 +36,37 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.reporting.logComment("Sending mms to telephone number " + self.target_telNum)
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.mms_sender = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
+        self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Create and Send a MMS.
-        #
-        self.messages.createAndSendMMS("image", [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")], self.test_msg1)
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
 
-        #
-        # Back to send a new message
-        #
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        self.create_test_msgs([self.test_msg1, self.test_msg2])
 
-        #
-        # Create and Send a MMS.
-        #
-        self.messages.createAndSendMMS("image", [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")], self.test_msg2)
+        self.messages.openThread(self.mms_sender)
+        import time
+        time.sleep(5)
+        self.messages.deleteMessagesInThisThread([0])
 
+        time.sleep(5)
+        # After deleting one message, check there is only one message left, and that it
+        # is the one with text "Hello World 2"
+        msg_list = self.UTILS.element.getElements(DOM.Messages.message_list, "Remaining messages")
+        self.UTILS.test.TEST(len(msg_list) == 1, "There are {} messages left (expected {})".format(len(msg_list), 1))
 
-        #
-        # Select the messages to be deleted.
-        #
-        self.messages.deleteMessagesInThisThread()
-
-        #
-        # Open the thread. This step is necessary because after sending a mms to 
-        #our number two threads are created as a result.
-        #
-        x = self.UTILS.element.getElement(DOM.Messages.threads_list_element, 
-                                    "+number Element")
-        x.tap()
-
-        #
-        # Select the messages to be deleted.
-        #
-        self.messages.deleteMessagesInThisThread()
-
-        #
-        # Verify that any thread is displayed.
-        #
-        self.UTILS.element.waitForElements(DOM.Messages.no_threads_message,
-                                    "No message threads notification")
+    def create_test_msgs(self, msgs):
+        for msg in msgs:
+            #
+            # Create and Send a MMS.
+            #
+            self.messages.createAndSendMMS("image", [self.phone_number], msg)
+            self.UTILS.statusbar.wait_for_notification_toaster_title(self.mms_sender, timeout=60)
+            self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+            self.messages.closeThread()

@@ -19,18 +19,19 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
-        self.Settings = Settings(self)
+        self.settings = Settings(self)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         #
         # Open the Settings application.
         #
-        self.Settings.launch()
-        self.Settings.wifi()
-        self.Settings.wifi_switchOn()
+        self.settings.launch()
+        self.settings.wifi()
+        self.settings.wifi_switchOn()
 
         x = self.UTILS.element.getElements(DOM.Settings.wifi_available_networks, "Available networks", False)
 

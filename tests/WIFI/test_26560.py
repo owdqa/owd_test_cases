@@ -20,7 +20,7 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
-        self.Settings = Settings(self)
+        self.settings = Settings(self)
         self.Browser = Browser(self)
 
         self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
@@ -29,17 +29,18 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         #
         # Open the Settings application.
         #
-        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
+        self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
 
         #
         # Return to this wifi and check the details.
         #
-        self.Settings.wifi_list_tapName(self.wifi_name)
+        self.settings.wifi_list_tapName(self.wifi_name)
 
         self.UTILS.element.waitForElements(("xpath", "//h1[text()='%s']" % self.wifi_name), "Details for connected wifi - header", False)
         _forget = self.UTILS.element.getElement(DOM.Settings.wifi_details_forget_btn, "Details for connected wifi - forget button")

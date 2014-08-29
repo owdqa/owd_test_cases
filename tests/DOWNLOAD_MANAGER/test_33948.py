@@ -19,7 +19,7 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
 
         # Specific for this test.
-        self.Settings = Settings(self)
+        self.settings = Settings(self)
         self.Browser  = Browser(self)
         self.DownloadManager = DownloadManager(self)
         self.testURL    = self.UTILS.general.get_os_variable("GLOBAL_DOWNLOAD_URL")
@@ -27,6 +27,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         #
@@ -57,12 +58,12 @@ class test_main(GaiaTestCase):
         #
         # Go to settings
         #
-        self.Settings.launch()
+        self.settings.launch()
 
         #
         # Go to downloads
         #
-        self.Settings.downloads()
+        self.settings.downloads()
 
         #
         # Check the file is there

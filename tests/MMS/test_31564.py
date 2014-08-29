@@ -26,11 +26,12 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.target_mms_number = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
 
@@ -48,7 +49,7 @@ class test_main(GaiaTestCase):
         #
         # Insert the phone number in the To field
         #
-        self.messages.addNumbersInToField([self.target_telNum])
+        self.messages.addNumbersInToField([self.phone_number])
 
         #
         # Create MMS.

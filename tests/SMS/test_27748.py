@@ -27,10 +27,11 @@ class test_main(GaiaTestCase):
         #
         # Import contact (adjust the correct number).
         #
-        self._num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         #
@@ -38,13 +39,13 @@ class test_main(GaiaTestCase):
         # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
         #
         self.messages.launch()
-#         self.messages.deleteThreads([self._num])
+#         self.messages.deleteThreads([self.phone_number])
   
         #
         # Send a message to create a thread (use number, not name as this
         # avoids some blocking bugs just now). 
         #
-        self.messages.createAndSendSMS([self._num], "Test 1")
+        self.messages.createAndSendSMS([self.phone_number], "Test 1")
         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
   
         self.messages.enterSMSMsg("Test 2")
@@ -63,7 +64,7 @@ class test_main(GaiaTestCase):
         #
         # Enter the thread.
         #
-        self.messages.openThread(self._num)
+        self.messages.openThread(self.phone_number)
  
         #
         # Find the first message.

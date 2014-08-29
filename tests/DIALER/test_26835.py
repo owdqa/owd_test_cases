@@ -45,6 +45,7 @@ class test_main(GaiaTestCase):
     def tearDown(self):
         self.data_layer.set_setting("airplaneMode.enabled", False)
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         self.dialer.openCallLog()
