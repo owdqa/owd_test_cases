@@ -312,10 +312,11 @@
 29894|Send a MMS when data and wifi are on
 29895|Send a MMS when data is off and wifi on
 29896|Send a MMS when data and wifi are off
-28999|MMS received with auto retrieve and when roaming enabled (data connection not available)
+29899|MMS received with auto retrieve and when roaming enabled (data connection not available)
 29900|MMS received with auto retrieve and when roaming enabled (data and wifi connection available)
 29901|MMS received with auto retrieve and when roaming disabled (data connection not available)
-20902|MMS received with auto retrieve and when roaming disabled (data connection and wifi available)
+29902|MMS received with auto retrieve and when roaming disabled (data connection and wifi available)
+29903|Verify that all the MMSs in a thread are chronologically ordered
 29911|All recipients are shown fine (recipients are contacts and numbers entered manually) in the sms thread
 29915|Send a mms to a number using different prefixes (00, +XX) and verify that only a thread is created
 29916|Verify that the user can delete all mms in a thread with an unsent mms

@@ -26,6 +26,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         now = self.UTILS.date_and_time.getDateTimeFromEpochSecs(int(time.time()))

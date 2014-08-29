@@ -20,11 +20,12 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
-        self.Settings = Settings(self)
+        self.settings = Settings(self)
         self.Browser = Browser(self)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         #

@@ -30,13 +30,14 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.target_email = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
 
         self.msg = "Testing email link with " + self.target_email
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
 
@@ -50,7 +51,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.target_telNum], self.msg)
+        self.messages.createAndSendSMS([self.phone_number], self.msg)
   
         #
         # Wait for the last message in this thread to be a 'received' one

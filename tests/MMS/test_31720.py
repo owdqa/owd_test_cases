@@ -1,15 +1,36 @@
-# MMSTC-MMITC-011d
-# Differentiation between EMS, MMS and SMS
+#===============================================================================
+# 31720: Differentiation between EMS, MMS and SMS
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# Each type of message: SMS, EMS and MMS shall be identified by a particular
+# icon with the object of being able to differentiate between the types of
+# messages.
+# 1. In client A, create a new MM
+# 2. In MM header: To-field is set to Client B (DuT).
+# 3. In MM content: Add any content
+# 4. In client A, send MM to Client B (DuT)
+# 5. In Client B (DuT), accept the message .
+# 6. In client A, create a new SMS
+# 7. In SMS header: To-field is set to Client B (DuT)
+# 8. In SMS content: add any text.
+# 9. In client A, send SMS to Client B (DuT).
+# 10. In Client B (DuT), accept the message.
+# 11. In client A, repeat process with a EMS
+# 12. In client A, send message to Client B (DuT).
+# 13. In Client B (DuT), accept the message
+# 14. Verify the pass criteria below.
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected results:
+# In Client B (DuT), each kind of message must be differentiated with a different
+# icon.
+# ADDITIONAL INFO:
+# For MX:
+# Include text, smiley / animations, sound in EMS
+# For EC:
+# Also the handset must notify when the SMS change to MMS"
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -30,12 +51,14 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.target_mms_number = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
-        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.target_telNum)
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         #
@@ -57,14 +80,9 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.target_telNum], sms_message)
-
-        #
-        # Wait for the last message in this thread to be a 'received' one.
-        #
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(returnedSMS, "A received message appeared in the thread.", True)
-
+        self.messages.createAndSendSMS([self.phone_number], sms_message)
+        send_time = self.messages.last_sent_message_timestamp()
+        self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
         x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
 
@@ -75,7 +93,7 @@ class test_main(GaiaTestCase):
         #
         # Insert the phone number in the To field
         #
-        self.messages.addNumbersInToField([self.target_telNum])
+        self.messages.addNumbersInToField([self.phone_number])
 
         #
         # Create MMS.
@@ -89,7 +107,8 @@ class test_main(GaiaTestCase):
         # Click send and wait for the message to be received
         #
         self.messages.sendSMS()
-
+        self.UTILS.statusbar.wait_for_notification_toaster_title(self.target_mms_number, timeout=120)
+        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
         x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
 

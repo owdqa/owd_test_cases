@@ -29,11 +29,12 @@ class test_main(GaiaTestCase):
        #
        # Get own number.
        #
-       self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-       self.UTILS.reporting.logComment("Llamando a.." +self.target_telNum)
+       self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+       self.UTILS.reporting.logComment("Llamando a.." +self.phone_number)
     
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
 
@@ -41,7 +42,7 @@ class test_main(GaiaTestCase):
         self.dialer.launch()
 
         # Do an incoming call
-        self.UTILS.general.createIncomingCall(self.target_telNum)
+        self.UTILS.general.createIncomingCall(self.phone_number)
         time.sleep(30)
 
         x = self.UTILS.element.getElement(DOM.Dialer.option_bar_keypad, "Keypad Option")

@@ -25,7 +25,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
 
         self.UTILS      = UTILS(self)
-        self.Settings   = Settings(self)
+        self.settings   = Settings(self)
         self.EME        = EverythingMe(self)
 
         #
@@ -39,6 +39,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
 

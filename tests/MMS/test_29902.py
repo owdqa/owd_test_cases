@@ -1,19 +1,33 @@
+#===============================================================================
+# 29902: MMS received with auto retrieve and when roaming disabled (data connection and wifi available)
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# Data connection and wifi enabled, phone is in home network
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Procedure:
+# 1. Open settings -> Message settings
+# 2. Tap on Auto retrieve options
+# 3. Select "Off"
+# 4. Tap on OK
+# 5. Send an MMS to that phone
+#
+# Expected result:
+# 1. Open message settings
+# 2. Menu to select Auto retrieve options is displayed
+# 4. Back to Message settings
+# 5. User receives notification of MMS available
+#===============================================================================
 
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
 from OWDTestToolkit.apps.settings import Settings
 
+
 class test_main(GaiaTestCase):
 
-    #
     # Restart device to starting with wifi and 3g disabled.
     #
     _RESTART_DEVICE = True
@@ -26,55 +40,39 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.gallery = Gallery(self)
-        self.Settings = Settings(self)
+        self.settings = Settings(self)
 
         self.test_msg = "Hello World"
 
         #
-        # Establish wifi connection parameters.
-        #
-        self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
-        self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
-
-        #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.reporting.logComment("Sending mms to telephone number " + self.target_telNum)
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.mms_sender = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
+        self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
-        #
-        # Turn on wifi connection.
-        #
-        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
-
-
-        #
-        # Go back
-        #
-        self.Settings.goBack()
-
-        #
-        # Turn on 3g connection.
-        #
-        self.Settings.turn_dataConn_on()
+        self.UTILS.general.connect_to_cell_data()
+        self.data_layer.connect_to_wifi()
 
         #
         # Configure Auto Retrieve as off from messaging settings
         #
-        self.Settings.configureMMSAutoRetrieve("off")
+        self.settings.configureMMSAutoRetrieve("off")
+
+        self.messages.createAndSendMMS("image", [self.phone_number], self.test_msg)
+        self.marionette.find_element(*DOM.Messages.header_back_button).tap()
+        self.UTILS.statusbar.wait_for_notification_toaster_title(self.mms_sender, DOM.Messages.frame_locator,
+                                                                 timeout=120)
 
         #
-        # Set up to use data connection.
+        # Verify that the MMS has been received, but it contains no attached file
         #
-        self.messages.createAndSendMMS("image", [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")], self.test_msg)
-
-        #
-        # Verify that the MMS has been received.
-        #
-        self.messages.verifyMMSReceived("image")
+        self.messages.openThread(self.mms_sender)
+        last_msg = self.messages.lastMessageInThisThread()
+        btn_dl = self.marionette.find_element(*DOM.Messages.button_download_attachment, id=last_msg.id)
+        self.UTILS.test.TEST(btn_dl, "Download attachment button present")

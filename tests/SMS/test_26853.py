@@ -26,11 +26,12 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.target_telNum)
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         #
@@ -43,11 +44,11 @@ class test_main(GaiaTestCase):
         #
         for i in range(3):
             self.UTILS.reporting.debug("** Sending [{}]".format(self.test_msgs[i]))
-            self.data_layer.send_sms(self.target_telNum, self.test_msgs[i])
+            self.data_layer.send_sms(self.phone_number, self.test_msgs[i])
             self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msgs[i], timeout=120)
 
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
-        self.messages.openThread(self.target_telNum)
+        self.messages.openThread(self.phone_number)
         #
         # Go into edit mode..
         #
@@ -76,7 +77,7 @@ class test_main(GaiaTestCase):
         # Check conversation isn't there anymore.
         #
         self.UTILS.element.waitForNotElements(("xpath",
-            DOM.Messages.thread_selector_xpath.format(self.target_telNum)), "Thread")
+            DOM.Messages.thread_selector_xpath.format(self.phone_number)), "Thread")
 
         time.sleep(1)
         fnam = self.UTILS.debug.screenShotOnErr()

@@ -19,10 +19,11 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
-        self.Settings = Settings(self)
+        self.settings = Settings(self)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         #
@@ -30,8 +31,8 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.network.disableAllNetworkSettings()
 
-        self.Settings.launch()
+        self.settings.launch()
         self.UTILS.reporting.logResult("info", "<b>Check hotspot with DataConn and WiFi off.</b>")
-        self.Settings.hotSpot()
+        self.settings.hotSpot()
         x = self.UTILS.element.getElement(DOM.Settings.hotspot_switch, "Hotspot switch")
         self.UTILS.test.TEST(not x.is_enabled(), "Hotspot switch is disabled.")
