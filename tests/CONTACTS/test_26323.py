@@ -31,6 +31,7 @@ class test_main(GaiaTestCase):
     def tearDown(self):
         self.cleanup_storage()
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         #

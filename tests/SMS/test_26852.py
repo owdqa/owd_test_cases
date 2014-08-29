@@ -23,11 +23,12 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.target_telNum)
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         self.UTILS.statusbar.clearAllStatusBarNotifs()
@@ -42,12 +43,12 @@ class test_main(GaiaTestCase):
 
         for i in range(3):
             self.UTILS.reporting.debug("** Sending [{}]".format(self.test_msgs[i]))
-            self.data_layer.send_sms(self.target_telNum, self.test_msgs[i])
+            self.data_layer.send_sms(self.phone_number, self.test_msgs[i])
             self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msgs[i], timeout=120)
 
         self.UTILS.reporting.debug("** Opening thread to check messages")
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
-        self.messages.openThread(self.target_telNum)
+        self.messages.openThread(self.phone_number)
 
         #
         # Check how many elements are there

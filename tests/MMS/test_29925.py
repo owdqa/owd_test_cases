@@ -1,21 +1,25 @@
+#===============================================================================
+# 29925: Verify that can attach a picture from the camera source
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Open Messaging app
+# 2. Create a new message
+# 3. Tap on the attach icon
+# 4. Select Camera
+# 5. Take a picture
+# 6. Tap on Select
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected result:
+# The picture taken is correctly attached to the MMS
+#===============================================================================
 
-from OWDTestToolkit import DOM
+from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
 
-class test_main(GaiaTestCase):
 
-    #
-    # Restart device to starting with wifi and 3g disabled.
-    #
-    _RESTART_DEVICE = True
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #
@@ -31,14 +35,22 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.reporting.logComment("Sending mms to telephone number " + self.target_telNum)
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.mms_sender = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
+        self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         #
         # Create and Send an MMS with a image attached.
         #
-        self.messages.createAndSendMMS("cameraImage", [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")], self.test_msg)
+        self.messages.createAndSendMMS("cameraImage", [self.phone_number], self.test_msg)
+        #
+        # Verify that the MMS has been received.
+        #
+        self.UTILS.statusbar.wait_for_notification_toaster_title(self.mms_sender, timeout=120)
+        self.messages.verifyMMSReceived("img", self.mms_sender)

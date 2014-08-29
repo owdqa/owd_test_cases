@@ -34,10 +34,11 @@ class test_main(GaiaTestCase):
         self.UTILS.general.insertContact(self.Contact_1)
 
         self._name = self.Contact_1["name"]
-        self._num = self.Contact_1["tel"]["value"]
+        self.phone_number = self.Contact_1["tel"]["value"]
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         #
@@ -45,7 +46,7 @@ class test_main(GaiaTestCase):
         #
         self.dialer.launch()
 
-        self.dialer.enterNumber(self._num)
+        self.dialer.enterNumber(self.phone_number)
         self.dialer.callThisNumber()
 
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)

@@ -27,10 +27,11 @@ class test_main(GaiaTestCase):
         self.data_layer.delete_all_sms()
 
         # Get the correct number for the sms device.
-        self._num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         #
@@ -43,7 +44,7 @@ class test_main(GaiaTestCase):
         # outgoing message..
         #
         msg_text = str(time.time())
-        self.messages.createAndSendSMS([self._num], msg_text)
+        self.messages.createAndSendSMS([self.phone_number], msg_text)
         self.messages.waitForReceivedMsgInThisThread()
  
         #
@@ -55,7 +56,7 @@ class test_main(GaiaTestCase):
         #
         # Get the preview txt for our test.
         #
-        preview_text = self.messages.getThreadText(self._num)
+        preview_text = self.messages.getThreadText(self.phone_number)
 
         self.UTILS.test.TEST(preview_text in msg_text, 
                         "Preview text ({}) is in the original message text({}).".format(preview_text, msg_text))

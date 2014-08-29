@@ -42,6 +42,7 @@ class test_main(GaiaTestCase):
         # self.contacts.delete_contact(self.contact_name)
 
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         # Launch dialer app.
