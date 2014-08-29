@@ -23,13 +23,14 @@ class test_main(GaiaTestCase):
 
         # Specific for this test.
         self.Browser = Browser(self)
-        self.Settings = Settings(self)
+        self.settings = Settings(self)
         self.DownloadManager = DownloadManager(self)
         self.testURL    = self.UTILS.general.get_os_variable("GLOBAL_DOWNLOAD_URL")
         self.fileName   = "105MB.rar"
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         #
@@ -60,12 +61,12 @@ class test_main(GaiaTestCase):
         #
         # Open the Settings application.
         #
-        self.Settings.launch()
+        self.settings.launch()
 
         #
         # Tap Downloads List.
         #
-        self.Settings.downloads()
+        self.settings.downloads()
 
         #
         # Stop the download, and confirm

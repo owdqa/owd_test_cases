@@ -25,13 +25,14 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.Market = Marketplace(self)
-        self.Settings = Settings(self)
+        self.settings = Settings(self)
 
     def tearDown(self):
 #         self.messages.waitForSMSNotifier("222000",5)
 #         self.UTILS.statusbar.clearAllStatusBarNotifs()
 
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
 

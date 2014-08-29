@@ -1,20 +1,25 @@
+#===============================================================================
+# 29916: Verify that the user can delete all MMS in a thread with an unsent MMS
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Open SMS app
+# 2. Open edit mode
+# 3. Press select all button
+# 4. Press delete button
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected results:
+# All MMS are removed
+#===============================================================================
 
-from OWDTestToolkit import DOM
+from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
 
+
 class test_main(GaiaTestCase):
 
-    #
     # Restart device to starting with wifi and 3g disabled.
-    #
     _RESTART_DEVICE = True
 
     def setUp(self):
@@ -33,71 +38,29 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.reporting.logComment("Sending mms to telephone number " + self.target_telNum)
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        val=2
-
         #
         # Create and Send a MMS.
         #
-        self.messages.createAndSendMMS("image", [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")], self.test_msg1)
+        self.messages.createAndSendMMS("image", [self.phone_number], self.test_msg1)
+        self.messages.closeThread()
 
         #
-        # Back to send a new message
+        # Create and Send another MMS.
         #
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        self.messages.createAndSendMMS("image", [self.phone_number], self.test_msg2)
+        self.messages.closeThread()
 
         #
-        # Create and Send other MMS.
+        # Create and Send yet another MMS.
         #
-        self.messages.createAndSendMMS("image", [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")], self.test_msg2)
-
-        #
-        # Back to send a new message
-        #
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
-
-        #
-        # Create and Send other MMS.
-        #
-        self.messages.createAndSendMMS("image", [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")], self.test_msg3)
-
-
-        #
-        # Create reference in xpth with value "val".
-        #
-        locator = (DOM.Messages.message_text[0],
-                    DOM.Messages.message_text[1].format(val))
-
-        elem1 = self.UTILS.element.getElement(locator, "mms text")
-        header1 = elem1.text
-
-
-        #
-        # Select the messages to be deleted.
-        #
-        self.messages.deleteMessagesInThisThread([1])
-
-
-        #
-        # Create reference in xpth with value "val".
-        #
-        elem2 = self.UTILS.element.getElement(locator, "mms text")
-        header2 = elem2.text
-
-        #
-        # Vary that header[1] is different after deleting a message".
-        #
-        self.UTILS.test.TEST(header1 != header2, 
-            "HEADER BEFORE DETELING A MMS: " + header1 + " HEADER AFTER DETELING A MMS: " + header2, True)
-
-
-
-
+        self.messages.createAndSendMMS("image", [self.phone_number], self.test_msg3)
+        self.messages.openThread(self.phone_number)
+        self.messages.deleteMessagesInThisThread()

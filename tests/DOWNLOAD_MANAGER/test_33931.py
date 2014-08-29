@@ -28,11 +28,12 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
 
         # Specific for this test.
-        self.Settings = Settings(self)
+        self.settings = Settings(self)
         self.DownloadManager = DownloadManager(self)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         #

@@ -20,7 +20,7 @@ class test_main(GaiaTestCase):
         # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
-        self.Settings = Settings(self)
+        self.settings = Settings(self)
         self.Browser = Browser(self)
 
         self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
@@ -29,12 +29,13 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         #
         # Open the Settings application.
         #
-        self.Settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
+        self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
         self.marionette.execute_script("document.getElementById('{}').scrollIntoView();".\
                                        format(DOM.Settings.wifi_advanced_btn[1]))
         x = self.UTILS.element.getElement(DOM.Settings.wifi_advanced_btn, "Advanced settings")

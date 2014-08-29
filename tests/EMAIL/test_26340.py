@@ -21,6 +21,7 @@ class test_26340(Emailing):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         self.send_email()

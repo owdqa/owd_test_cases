@@ -21,10 +21,11 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.Market = Marketplace(self)
-        self.Settings = Settings(self)
+        self.settings = Settings(self)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
 

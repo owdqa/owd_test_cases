@@ -22,11 +22,12 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.target_telNum)
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         #
@@ -42,7 +43,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send some new tests messages.
         #
-        self.messages.createAndSendSMS([self.target_telNum], self.test_msg)
+        self.messages.createAndSendSMS([self.phone_number], self.test_msg)
         self.messages.waitForReceivedMsgInThisThread()
 
         #
@@ -54,10 +55,10 @@ class test_main(GaiaTestCase):
         #
         # Delete this thread.
         #
-        self.messages.deleteThreads([self.target_telNum])
+        self.messages.deleteThreads([self.phone_number])
 
         #
         # Check thread isn't there anymore.
         #
-        self.UTILS.element.waitForNotElements(("xpath", DOM.Messages.thread_selector_xpath.format(self.target_telNum)),
+        self.UTILS.element.waitForNotElements(("xpath", DOM.Messages.thread_selector_xpath.format(self.phone_number)),
                                       "Thread")

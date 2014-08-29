@@ -27,13 +27,14 @@ class test_main(GaiaTestCase):
          #
         # Get own number.
         #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
 
     def tearDown(self):
 
 
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         # Launch dialer app.

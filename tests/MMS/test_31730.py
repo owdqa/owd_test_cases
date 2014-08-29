@@ -1,13 +1,24 @@
+#===============================================================================
+# 31730: Reception of video file + JPG file + AMR file
 #
-# TC_MMSTC-FEATR-030a
-# Reception of video file + JPG file + AMR file
+# Pre-requisites:
+# DuT with properly configured MM settings. Another reference handset to send MM.
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. With a reference handset, create a new MM.
+# 2. In MM header: To-field is set to DuT.
+# 3. MM content: In the message object part, enter a 3GPP video file, JPG image
+# and AMR file.
+# 4. With the reference handset, send MM to DUT.
+# 5. In DuT receive and open the MM.
+# 6. Verify the MM (with all previous contents described) is properly shown.
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected results:
+# The MM shall be correctly received by the DUT.
+#===============================================================================
 
+import time
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -18,7 +29,7 @@ from OWDTestToolkit.apps.video import Video
 
 class test_main(GaiaTestCase):
 
-    test_msg = "Hello World"
+    test_msg = "Hello World {}".format(time.time())
 
     def setUp(self):
         #
@@ -34,21 +45,25 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.target_mms_number = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
-        self.UTILS.reporting.logComment("Sending mms to telephone number " + self.target_telNum)
+        self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
+        self.data_layer.delete_all_sms()
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
+        self.expected_sizes = ["4.8", "62.3", "175.6"]
+        self.expected_names = ["80x60.jpg", "30k_basic_AMR.amr", "mpeg4.3gp"]
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
         #
         # Load files into the device.
         #
         self.UTILS.general.addFileToDevice('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
-        self.UTILS.general.addFileToDevice('./tests/_resources/AMR.amr', destination='SD/mus')
-        self.UTILS.general.addFileToDevice('./tests/_resources/mpeg4.mp4', destination='SD/mus')
+        self.UTILS.general.addFileToDevice('./tests/_resources/30k_basic_AMR.amr', destination='SD/mus')
+        self.UTILS.general.addFileToDevice('./tests/_resources/mpeg4.mp4', destination='SD/vid')
 
         #
         # Launch messages app.
@@ -63,7 +78,7 @@ class test_main(GaiaTestCase):
         #
         # Insert the phone number in the To field
         #
-        self.messages.addNumbersInToField([self.target_telNum])
+        self.messages.addNumbersInToField([self.phone_number])
 
         #
         # Create MMS.
@@ -83,14 +98,16 @@ class test_main(GaiaTestCase):
         # Click send and wait for the message to be received
         #
         self.messages.sendSMS()
+        self.UTILS.statusbar.wait_for_notification_toaster_title(self.target_mms_number, timeout=120)
+        self.UTILS.statusbar.click_on_notification_title(self.target_mms_number)
+        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+        last_msg = self.messages.lastMessageInThisThread()
+        attachments = self.messages.get_mms_attachments_info(last_msg)
+        self.UTILS.reporting.debug("*** ATTACHMENTS: {}".format(attachments))
 
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
-
-        self.messages.openThread(self.target_mms_number)
-
-        #
-        # Wait for the last message in this thread to be a 'received' one.
-        #
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(returnedSMS, "A received message appeared in the thread.", True)
+        # Check the names and sizes of all attachments are as expected
+        for (i, att) in enumerate(attachments):
+            self.UTILS.test.TEST(self.expected_names[i] == att["name"] and self.expected_sizes[i] == att["size"],
+                                 "Attachment [{}] ({}kb)     Expected [{}] ({}kb)".\
+                                 format(self.expected_names[i], self.expected_sizes[i],
+                                        att["name"], att["size"]))
