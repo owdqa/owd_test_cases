@@ -1,18 +1,27 @@
-#
-# Imports which are standard for all test cases.
-#
+# 27027: Create a contact from a number which is in the call log with several entries (All tab)
+# ** Procedure
+#       1. Open call log
+#       2. Tap on an Unknown number
+#       3. Select "Create new contact"
+#       4. Add name of the contact and press "update"
+#       5. Close call log, open contacts and then open the new contact
+# ** Expected Results
+#       1. Several entries with call to a number with unknown name is displayed
+#       2. The "select from" menu is displayed
+#       3. The "edit contact" page is displayed
+#       4. User is taken back to call log page
+#       5. contacts now has one entry; the new contact has correct name and phone number
+
+import time
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.dialer import Dialer
 from tests._mock_data.contacts import MockContact
+from tests.i18nsetup import setup_translations
 
 
 class test_main(GaiaTestCase):
@@ -23,23 +32,25 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.dialer = Dialer(self)
         self.contacts = Contacts(self)
+        _ = setup_translations(self)
 
-        self.num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.Contact_1 = MockContact()
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.test_contact = MockContact()
+
+        # Generate an entry in the call log
+        self.dialer.launch()
+        self.dialer.callLog_clearAll()
+        self.dialer.createMultipleCallLogEntries(self.phone_number, 2)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        self.dialer.launch()
-
-        self.dialer.createMultipleCallLogEntries(self.num, 2)
-
-        self.dialer.callLog_createContact(self.num, p_openCallLog=False)
+        self.dialer.callLog_createContact(self.phone_number)
 
         contFields = self.contacts.get_contact_fields()
-        self.contacts.replace_str(contFields['givenName'], self.Contact_1["givenName"])
-        self.contacts.replace_str(contFields['familyName'], self.Contact_1["familyName"])
+        self.contacts.replace_str(contFields['givenName'], self.test_contact["givenName"])
+        self.contacts.replace_str(contFields['familyName'], self.test_contact["familyName"])
 
         done_button = self.UTILS.element.getElement(DOM.Contacts.done_button, "'Done' button")
         done_button.tap()
@@ -53,11 +64,13 @@ class test_main(GaiaTestCase):
                                               "Contacts frame")
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator)
 
-        self.UTILS.element.waitForElements(("xpath", "//h1[text()='Call log']"), "Call log header")
+        header = ('xpath', DOM.GLOBAL.app_head_specific.format(_("Call log")))
+        self.UTILS.element.waitForElements(header, "Call log header")
 
         #
         # Verify that this contact has been created in contacts.
         #
         self.apps.kill_all()
+        time.sleep(2)
         self.contacts.launch()
-        self.contacts.view_contact(self.Contact_1["name"])
+        self.contacts.view_contact(self.test_contact["name"])

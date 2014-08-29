@@ -1,16 +1,21 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# 26838: Verify that the call log shows the ellipsis ("...") when contact
+# has long names and that shows correctly the number of entries in call
+# log groups
 
-#
-# Imports particular to this test case.
-#
+# ** Procedure
+#       1. Make or receive more than one call to/from a contact with a long name
+#       2. Go to the call log
+
+# ** Expected Result
+#       The call log entry must display the ellipsis (...) and the number of grouped calls.
+#       EX: nameverylonghere... (2)
+
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.dialer import Dialer
+import sys
+sys.path.insert(1, "./")
 from tests._mock_data.contacts import MockContact
 
 
@@ -22,9 +27,9 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.dialer = Dialer(self)
 
-        self.test_num = "666666666666"
-        self.test_contacts = [MockContact(tel=[{'type': 'Mobile',
-                         'value': self.test_num}]) for i in range(2)]
+        self.test_num = ["666666666666", "555555555555"]
+        self.test_contacts = [MockContact(tel={'type': 'Mobile',
+                                                'value': self.test_num[i]}) for i in range(2)]
 
         self.test_contacts[0]["givenName"] = "LongGivennamexxxxxxxxxxx"
         self.test_contacts[1]["familyName"] = "LongFamilynamexxxxxxxxxxx"
@@ -38,41 +43,29 @@ class test_main(GaiaTestCase):
 
         map(self.UTILS.general.insertContact, self.test_contacts)
 
-    def tearDown(self):
-        self.UTILS.reporting.reportResults()
-
-    def test_run(self):
         self.dialer.launch()
         self.dialer.callLog_clearAll()
 
         for contact in self.test_contacts:
-            self.dialer.createMultipleCallLogEntries(contact["tel"][0]["value"], 1)
+            self.dialer.createMultipleCallLogEntries(contact["tel"]["value"], 2)
+        self.dialer.openCallLog()
+
+    def tearDown(self):
+        self.UTILS.reporting.reportResults()
+
+    def test_run(self):
 
         entries = self.UTILS.element.getElements(DOM.Dialer.call_log_numbers, "Call log entries", False)
         self.UTILS.reporting.logResult("info", "{} entries found.".format(len(entries)))
 
-        for element in entries:
-            item = element.find_element("xpath", "//span[@class='primary-info-main']")
+        for entry in entries:
+            item = entry.find_element("xpath", "//span[@class='primary-info-main']")
 
-            value = self.marionette.execute_script("""
-                function getStyle (el,styleProp) {
-                    if (el.currentStyle)
-                        var y = x.currentStyle[styleProp];
-                    else if (window.getComputedStyle)
-                        var y = document.defaultView.getComputedStyle(el,null)
-                                                    .getPropertyValue(styleProp);
-                    return y;
-                }
-                return getStyle(arguments[0], arguments[1])
-            """, script_args=[item, "text-overflow"])
+            value = self.UTILS.element.get_css_value(item, "text-overflow")
 
-            isEllipsis = self.marionette.execute_script("""
-                function isEllipsisActive(element) {
-                    return (element.offsetWidth < element.scrollWidth);
-                }
-                return isEllipsisActive(arguments[0])
-            """, script_args=[item])
+            isEllipsis = self.UTILS.element.is_ellipsis_active(item)
 
             self.UTILS.reporting.logResult("info", "Value of css property: {}".format(value))
             self.UTILS.reporting.logResult("info", "isEllipsisActive? {}".format(isEllipsis))
-            self.UTILS.test.TEST(value == "ellipsis" and isEllipsis, "Value of css property")
+            self.UTILS.test.TEST(
+                value == "ellipsis" and isEllipsis, "Long entry in call log displays the ellipsis (...)")

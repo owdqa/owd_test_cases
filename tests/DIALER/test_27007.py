@@ -1,31 +1,40 @@
+# 27007: Call contact from overlay
 #
-# Imports which are standard for all test cases.
+# ** Prerrequesites
+#       Address book has 3 contacts (A, B and C), the four digits typed matches as a substring of 
+#       the 3 contacts phone number
+# ** Procedure
+#       1. Type 4 sequential  digits of contact A;
+#       2. Tap on result count
+#       3. Tap on a contact displayed
+# ** Expected Results
+#       1. In suggestion result count is 3 and result is first contact (in alphabetical order) 
+#          of overlay menu;
+#       2. Open the overlay menu and shows the three contacts in alphabetical order
+#       3. Dial call to selected contact
 #
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.dialer import Dialer
 from tests._mock_data.contacts import MockContact
 import time
 
+
 class test_main(GaiaTestCase):
 
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.dialer     = Dialer(self)
+        self.UTILS = UTILS(self)
+        self.dialer = Dialer(self)
 
         self.names = ["Aname", "Bname", "Cname"]
         self.values = ["991234999", "999123499", "999912349"]
         self.test_contacts = [MockContact(givenName=self.names[i],
-            tel=[{"type":"mobile", "value": self.values[i]}]) for i in range(3)]
+                                          tel=[{"type": "mobile", "value": self.values[i]}]) for i in range(3)]
 
         #
         # This has to be done due to a MockContact malfunction. It does not
@@ -41,30 +50,33 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.dialer.launch()
+
         self.dialer.enterNumber("1234")
 
-        x = self.UTILS.element.getElement(DOM.Dialer.suggestion_count, "Suggestion count")
+        suggestion_count_btn = self.UTILS.element.getElement(DOM.Dialer.suggestion_count, "Suggestion count")
         #
         # We are using this since normal .tap() method does not seem to be working
         #
-        self.UTILS.element.simulateClick(x)
+        self.UTILS.element.simulateClick(suggestion_count_btn)
 
-        x = self.UTILS.element.getElements(DOM.Dialer.suggestion_list, "Suggestion list")
-        self.UTILS.test.TEST(len(x) == 3, "There are 3 contacts listed.")
+        self.UTILS.element.waitForElements(DOM.Dialer.suggestion_list, 'Suggestion list')
+        items = self.UTILS.element.getElements(DOM.Dialer.suggestion_item_name, "Suggestion items", timeout=10)
+        self.UTILS.test.TEST(len(items) == 3, "There are 3 contacts listed.")
 
         i = 0
         for c in self.test_contacts:
-            self.UTILS.test.TEST(c["name"] in x[i].text,
-                    "The first contact listed contains '{}' (it was '{}')".format(c["name"], x[i].text))
+            self.UTILS.test.TEST(c["name"] in items[i].text,
+                                 "The contact ({}) in suggestion list contains appears in suggestion list ({})"
+                                 .format(c["name"], items[i].text))
             i += 1
 
         self.UTILS.reporting.logResult("info", "Tapping 1st contact listed ...")
-        x[0].tap()
+        items[0].tap()
 
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)
 
-        self.UTILS.element.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP.format(self.test_contacts[0]["name"])),
-                                    "Outgoing call found with number matching".format(self.test_contacts[0]["name"]))
+        self.UTILS.element.waitForElements(("xpath", DOM.Dialer.outgoing_call_numberXP.format(self.test_contacts[0]["name"])),
+                                           "Outgoing call found with number matching".format(self.test_contacts[0]["name"]))
 
         time.sleep(2)
         self.dialer.hangUp()

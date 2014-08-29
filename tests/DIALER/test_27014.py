@@ -1,19 +1,20 @@
-#
-# Imports which are standard for all test cases.
-#
+# 27014: Do not add dialed number 
+# ** Procedure
+#       1. Dial the number and press "add to contact" button
+#       2. Select "Cancel"
+# ** Expected Results
+#       2. User is taken back to the dialer
+#      
+import time
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.dialer import Dialer
 from tests._mock_data.contacts import MockContact
-import time
+from tests.i18nsetup import setup_translations
 
 
 class test_main(GaiaTestCase):
@@ -24,55 +25,32 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.dialer = Dialer(self)
         self.contacts = Contacts(self)
+        _ = setup_translations(self)
 
-        self.num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.Contact_1 = MockContact()
-        self.UTILS.general.insertContact(self.Contact_1)
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.test_contact = MockContact()
+        self.UTILS.general.insertContact(self.test_contact)
+
+        # Generate an entry in the call log
+        self.dialer.launch()
+        self.dialer.callLog_clearAll()
+        self.dialer.createMultipleCallLogEntries(self.phone_number, 1)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
         #
-        # Create a call log.
+        # Open the call log and add to our contact, cancelling the process
         #
-        self.dialer.launch()
-        self.dialer.enterNumber(self.num)
-        self.dialer.callThisNumber()
-        time.sleep(2)
-
-        self.dialer.hangUp()
-
-        #
-        # Open the call log and select Add to Contact.
-        #
-        self.dialer.openCallLog()
-
-        x = self.UTILS.element.getElement(("xpath", DOM.Dialer.call_log_number_xpath.format(self.num)),
-                                   "The call log for number {}".format(self.num))
-        x.tap()
-
-        x = self.UTILS.element.getElement(DOM.Dialer.call_log_numtap_add_to_existing, "Add to existing contact button")
-        x.tap()
-
-        #
-        # Switch to the Contacts frame and press the cancel button in the header.
-        #
-        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
-        self.UTILS.element.waitForElements(("xpath", "//h1[text()='Select contact']"), "'Select contact' header")
-        x = self.UTILS.element.getElement(DOM.Dialer.add_to_conts_cancel_btn, "Cancel icon")
-        x.tap()
-
-        self.marionette.switch_to_frame()
-        self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@{}, '{}')]".\
-                                               format(DOM.Contacts.frame_locator[0], DOM.Contacts.frame_locator[1])),
-                                              "Contacts application")
+        self.dialer.callLog_addToContact(self.phone_number, self.test_contact["name"], cancel_process=True)
 
         #
         # Check we're back in the call log.
         #
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator)
-        self.UTILS.element.waitForElements(("xpath", "//h1[text()='Call log']"), "Call log header")
+        header = ('xpath', DOM.GLOBAL.app_head_specific.format(_("Call log")))
+        self.UTILS.element.waitForElements(header, "Call log header")
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Final screenshot and html dump:", x)

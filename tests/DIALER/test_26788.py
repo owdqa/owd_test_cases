@@ -1,13 +1,7 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# 26788: Tap in a log entry corresponding to an outgoing call with a
+# contact with photo linked to perform a call to this number
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
@@ -51,6 +45,8 @@ class test_main(GaiaTestCase):
                                           "The call log for number {}".format(self.contact["tel"]["value"]))
         x.tap()
 
+        screenshot = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult('info', "Screenshot of call_log entry", screenshot)
         time.sleep(2)
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.call_log_contact_name_iframe, via_root_frame=False)
 
@@ -60,7 +56,7 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)
 
         self.UTILS.element.waitForElements(("xpath", DOM.Dialer.outgoing_call_numberXP.format(self.contact["name"])),
-                                    "Outgoing call found with number matching {}".format(self.contact["name"]))
+                                           "Outgoing call found with number matching {}".format(self.contact["name"]))
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot of dialer", x)

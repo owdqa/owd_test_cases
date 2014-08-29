@@ -1,13 +1,24 @@
+# 27005: Three matches at 4th digit
 #
-# Imports which are standard for all test cases.
+# ** Prerrequisites
+#       Address book has 3 contacts (A, B and C); the four digits typed matches as a substring of the three
+#       contacts phone number (e.g.6869 matches 686974951 and 666686986)
+# ** Procedure
+#       1. Type three sequential digits of phone number of contact A (B & C);
+#       2. Type 4th digit of phone number of contact A  (B & C);
+#       3. Tap on result count;
+#       4. Tap on cancel
 #
+# ** Expected Results
+#
+#       1. Suggestion remain empty;
+#       2. In suggestion result count is 3 and result is first contact (in alphabetically order) of overlay menu;
+#       3. Overlay menu appears showing the 3 contacts; verify they are alphabetically ordered;
+#       4. Overlay menu is closed
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
@@ -20,13 +31,13 @@ class test_main(GaiaTestCase):
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.dialer     = Dialer(self)
+        self.UTILS = UTILS(self)
+        self.dialer = Dialer(self)
 
         self.names = ["Aname", "Bname", "Cname"]
         self.values = ["991234999", "999123499", "999912349"]
         self.test_contacts = [MockContact(givenName=self.names[i],
-            tel=[{"type":"mobile", "value": self.values[i]}]) for i in range(3)]
+                                          tel=[{"type": "mobile", "value": self.values[i]}]) for i in range(3)]
 
         #
         # This has to be done due to a MockContact malfunction. It does not
@@ -45,19 +56,21 @@ class test_main(GaiaTestCase):
 
         self.dialer.enterNumber("1234")
 
-        x = self.UTILS.element.getElement(DOM.Dialer.suggestion_count, "Suggestion count")
+        suggestion_count_btn = self.UTILS.element.getElement(DOM.Dialer.suggestion_count, "Suggestion count")
         #
         # We are using this since normal .tap() method does not seem to be working
         #
-        self.UTILS.element.simulateClick(x)
+        self.UTILS.element.simulateClick(suggestion_count_btn)
 
-        x = self.UTILS.element.getElements(DOM.Dialer.suggestion_list, "Suggestion list")
-        self.UTILS.test.TEST(len(x) == 3, "There are 3 contacts listed.")
+        self.UTILS.element.waitForElements(DOM.Dialer.suggestion_list, 'Suggestion list')
+        items = self.UTILS.element.getElements(DOM.Dialer.suggestion_item_name, "Suggestion items", timeout=10)
+        self.UTILS.test.TEST(len(items) == 3, "There are 3 contacts listed.")
 
         i = 0
         for c in self.test_contacts:
-            self.UTILS.test.TEST(c["name"] in x[i].text,
-                    "The first contact listed contains '{}' (it was '{}')".format(c["name"], x[i].text))
+            self.UTILS.test.TEST(c["name"] in items[i].text,
+                                 "The contact ({}) in suggestion list contains appears in suggestion list ({})"
+                                 .format(c["name"], items[i].text))
             i += 1
 
         x = self.UTILS.element.getElement(DOM.Dialer.suggestion_list_cancel, "Cancel button")
