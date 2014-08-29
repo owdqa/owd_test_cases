@@ -1,8 +1,15 @@
+#===============================================================================
+# 26512: Wi-Fi- verify its status and that can be activated from this menu
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Open Settings app
+# 2- Go to Networking & Connectivity
+# 3- Verify how the Wi-Fi is and try to activate it
 #
-import sys
-sys.path.insert(1, "./")
+# Expected results:
+# The Wi-Fi is disabled. It can be activated from this menu
+#===============================================================================
+
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
@@ -11,6 +18,7 @@ from OWDTestToolkit.apps.settings import Settings
 class test_main(GaiaTestCase):
 
     _RESTART_DEVICE = True
+
     def setUp(self):
         #
         # Set up child objects...
@@ -30,13 +38,6 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.settings.launch()
 
-        # self.settings.wifi()
-   
-        # self.settings.wifi_switchOn()
-   
-        #
-        # wifi_connect method already calls wifi() and wifi_switchOn()
-        #
         self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
-   
+
         self.UTILS.test.TEST(self.UTILS.network.isNetworkTypeEnabled("wifi") == True, "Wifi mode is now enabled.")
