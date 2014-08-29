@@ -1,9 +1,16 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
+# 32078: Press cancel button in audio file options screen
+# ** Prerrequisites
+#       Having an audio file downloaded which is displayed in download list
+# ** Procedure
+#       1. Open download list Settings/Downloads
+#       2. Tap on an audio file
+#       ER1
+#       3. Press cancel button
+#       ER2
+# ** Expected Results
+#       ER1 A menu with options "open, share and set as ringtone is displayed"
+#       ER2 The user retunrs to download list
 import time
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.browser import Browser
@@ -12,83 +19,46 @@ from OWDTestToolkit.apps.downloadmanager import DownloadManager
 from OWDTestToolkit import DOM
 
 
-#
-# Imports particular to this test case.
-#
-
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        
-        #
-        # Set up child objects...
-        #
-        # Standard.
-        GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
 
-        # Specific for this test.
+        GaiaTestCase.setUp(self)
+        self.UTILS = UTILS(self)
+
         self.browser = Browser(self)
         self.settings = Settings(self)
-        self.downloadManager = DownloadManager(self)
-        self.testURL    = self.UTILS.general.get_os_variable("GLOBAL_DOWNLOAD_URL")
-        self.fileName   = "GOSPEL.mp3"
+        self.download_manager = DownloadManager(self)
+
+        self.test_url = self.UTILS.general.get_os_variable("GLOBAL_DOWNLOAD_URL")
+        self.file_name = "GOSPEL.mp3"
+        self.data_url = "{}/{}".format(self.test_url, self.file_name)
+
+        self.connect_to_network()
+
+        # Download and audio file
+        self.settings.launch()
+        self.settings.downloads()
+        self.download_manager.clean_downloads_list()
+
+        self.browser.launch()
+        self.browser.open_url(self.test_url)
+
+        self.download_manager.download_file(self.file_name)
+        self.UTILS.statusbar.wait_for_notification_toaster_title("Download complete", timeout=60)
+        self.apps.kill_all()
+        time.sleep(2)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        #
-        # Restart download list to start with an empty downloads list
-        #
-        self.downloadManager.restartDownloadsList()
-
-        #
-        # Tries several methods to get ANY network connection
-        #
-        self.UTILS.network.getNetworkConnection()
-
-
-        #
-        # Open the Browser application
-        #
-        self.browser.launch()
-
-        #
-        # Open our URL
-        #
-        self.browser.open_url(self.testURL)
-
-        #
-        # Download the file
-        #
-        self.downloadManager.downloadFile(self.fileName)
-
-        #
-        # Open the Settings application.
-        #
         self.settings.launch()
-
-        #
-        # Tap Downloads List.
-        #
         self.settings.downloads()
-        time.sleep(5)
+        self.download_manager.open_download(self.data_url)
 
-        #
-        # Try to open the file - a position is required since weird things 
-        # are happening with the file ID once downloaded
-        #
-        self.downloadManager.openDownload(self.testURL + self.fileName)
-
-
-        self.UTILS.element.waitForElements(DOM.DownloadManager.download_file_option_cancel,
-                                     "Getting Open file button")
-
-        x = self.UTILS.element.getElement(DOM.DownloadManager.download_file_option_cancel,
-            "Getting song title in music player")
-
-        x.tap()
-
-
-
+        cancel_btn = self.UTILS.element.getElement(DOM.DownloadManager.download_file_option_cancel,
+                                                   "Getting Open file button")
+        cancel_btn.tap()
+        self.UTILS.element.waitForElements(DOM.Settings.downloads_header,
+                                           "Downloads header appears.", True, 20, True)

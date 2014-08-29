@@ -41,7 +41,7 @@ class test_main(GaiaTestCase):
         #
         # Restarting Downloads list
         #
-        self.downloadManager.restartDownloadsList()
+        self.downloadManager.clean_downloads_list()
 
         #
         # Tries several methods to get ANY network connection

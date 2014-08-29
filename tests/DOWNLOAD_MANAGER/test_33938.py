@@ -102,6 +102,6 @@ class test_main(GaiaTestCase):
         #
         # Restart download list
         #
-        self.downloadManager.restartDownloadsList()
+        self.downloadManager.clean_downloads_list()
 
 
