@@ -14,10 +14,11 @@ from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
 from gaiatest.apps.keyboard.app import Keyboard
 
+
 class test_main(GaiaTestCase):
 
     _RESTART_DEVICE = True
-    
+
     def setUp(self):
         #
         # Set up child objects...
@@ -36,7 +37,6 @@ class test_main(GaiaTestCase):
         #
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
-
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()

@@ -1,25 +1,19 @@
 #
-# Imports which are standard for all test cases.
+# 27749: Receive an SMS with a phone number and store it
 #
-import sys
-sys.path.insert(1, "./")
+import time
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.dialer import Dialer
-import time
+
 
 class test_main(GaiaTestCase):
 
     test_num = "089123456"
     test_msg = "Testing " + test_num + " number."
-
 
     def setUp(self):
         #
@@ -34,37 +28,33 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.target_telNum)
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.cp_incoming_number = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
         self.UTILS.network.getNetworkConnection()
-
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
         #
         # Launch messages app.
         #
         self.messages.launch()
- 
-        #
-        # Create and send a new test message.
-        #
-        self.messages.createAndSendSMS([self.target_telNum], self.test_msg)
+        self.messages.deleteAllThreads()
 
-        #
-        # Wait for the last message in this thread to be a 'received' one
-        # and click the link.
-        #
-        x = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(x, "Received a message.", True)
+        self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
+        title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.cp_incoming_number, timeout=5)
+        self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
 
-        y = x.find_element("tag name", "a")
-        y.tap()
+        last_msg = self.messages.lastMessageInThisThread()
+        num = last_msg.find_element("tag name", "a")
+        num.tap()
 
-        x = self.UTILS.element.getElement(DOM.Messages.header_call_btn, "Call button")
-        x.tap()
+        call_btn = self.UTILS.element.getElement(DOM.Messages.header_call_btn, "Call button")
+        call_btn.tap()
 
         time.sleep(5)
 
@@ -77,5 +67,5 @@ class test_main(GaiaTestCase):
         # Make sure the number is automatically in the contact details.
         #
         x = self.UTILS.element.getElement(("id", "number_0"), "Mobile number field")
-        self.UTILS.test.TEST(x.get_attribute("value") == self.test_num, 
+        self.UTILS.test.TEST(x.get_attribute("value") == self.test_num,
                         "The correct number is automatically entered in the new contact's number field.")

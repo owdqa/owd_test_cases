@@ -1,16 +1,11 @@
 #
-# Imports which are standard for all test cases.
+# 27744: Introduce a valid SMS and click on Back option
 #
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
+
 
 class test_main(GaiaTestCase):
 
@@ -25,8 +20,8 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.target_telNum)
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -36,6 +31,7 @@ class test_main(GaiaTestCase):
         # Launch messages app.
         #
         self.messages.launch()
+        self.messages.deleteAllThreads()
 
         #
         # Start a new sms.
@@ -45,32 +41,28 @@ class test_main(GaiaTestCase):
         #
         # Enter a number in the target field.
         #
-        self.messages.addNumbersInToField([self.target_telNum])
+        self.messages.addNumbersInToField([self.phone_number])
 
         #
         # Enter a message the message area.
         #
-        x = self.messages.enterSMSMsg("xxx")
+        self.messages.enterSMSMsg("xxx")
 
         #
         # Click the back button.
         #
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        back_btn = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
+        back_btn.tap()
 
         #
-        # Check for the 'discard confirmation' popup.
+        # Check for the save/discard popup.
         #
-
-        self.marionette.switch_to_frame()
-        x = self.UTILS.element.getElement( ("xpath", "//*[text()='Are you sure you want to discard this message?']"),
-                                   "Discard confirmation message", True, 5, False)
-        x = self.UTILS.element.getElement(DOM.GLOBAL.modal_confirm_ok2, "OK button", True, 5, False)
-        x.tap()
-
-        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+        discard_btn = self.UTILS.element.getElement(DOM.Messages.discard_msg_btn, "Discard button")
+        discard_btn.tap()
 
         #
         # Verify that we're now in the correct place.
         #
         self.UTILS.element.headerCheck("Messages")
+        threads = self.UTILS.element.getElement(DOM.Messages.no_threads_message, "No threads message")
+        self.UTILS.test.TEST(threads, "There are no threads, as expected")

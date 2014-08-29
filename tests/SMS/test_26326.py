@@ -24,9 +24,9 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.cp_incoming_number = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
-        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.target_telNum)
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
         self.test_msg = "Test message."
 
     def tearDown(self):
@@ -38,7 +38,7 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.statusbar.clearAllStatusBarNotifs()
 
-        self.UTILS.messages.create_incoming_sms(self.target_telNum, self.test_msg)
+        self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)
 
         self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
         title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.cp_incoming_number, timeout=5)

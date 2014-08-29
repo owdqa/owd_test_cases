@@ -1,6 +1,7 @@
 #
 # 31570: Forward an SMS to multiple recipients
 #
+import time
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
@@ -27,31 +28,22 @@ class test_main(GaiaTestCase):
         self.contact = MockContact(tel={'type': '', 'value': self.phone_number})
         self.UTILS.general.insertContact(self.contact)
         self.incoming_sms_num = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        #
-        # Sometimes causes a problem if not cleared.
-        #
         self.UTILS.statusbar.clearAllStatusBarNotifs()
-        self.messages.launch()
-        self.messages.deleteAllThreads()
-
         #
         # Create message - 5 x 10 chars.
         #
-        sms_message = "0123456789" * 5
+        timestamp = " {}".format(time.time())
+        sms_message = "0123456789" * 5 + timestamp
         self.UTILS.reporting.logComment("Message length sent: {}".format((len(sms_message))))
 
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
-
         self.UTILS.messages.create_incoming_sms(self.phone_number, sms_message)
-        self.UTILS.statusbar.wait_for_notification_toaster_detail(sms_message, timeout=120)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(timestamp, timeout=120)
         title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.incoming_sms_num, timeout=5)
         self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
 

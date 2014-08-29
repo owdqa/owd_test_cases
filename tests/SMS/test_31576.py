@@ -1,17 +1,29 @@
+#===============================================================================
+# 31576: Forward an SMS which is in a thread with more messages to a phone number
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# There should be a thread created with several sent/received messages
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Procedure:
+# 1. Open Messaging app
+# 2. Open the thread and select a message
+# 3. Long press on it (ER1)
+# 4. Tap on Forward message option (ER2)
+# 5. Introduce a phone number in the 'To' field
+# 6. Tap on Send key (ER3)
+#
+# Expected results:
+# ER1. Message module options menu is shown
+# ER2. New message composer screen is shown with the message to be forwarded in
+# the text field. The 'To' field is empty.
+# ER3. The message is sent correctly
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
-from OWDTestToolkit import DOM
+from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from marionette import Actions
+
 
 class test_main(GaiaTestCase):
 
@@ -28,59 +40,24 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.target_telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.target_telNum)
-
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.incoming_sms_num = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
 
     def test_run(self):
-        #
-        # Sometimes causes a problem if not cleared.
-        #
         self.UTILS.statusbar.clearAllStatusBarNotifs()
 
-        #
-        # Create message - 5 x 10 chars.
-        #
-        sms_message = "0123456789" * 5
-        self.UTILS.reporting.logComment("Message length sent: {}".format((len(sms_message))))
+        # Send several messages to have something in the threads
+        for i in range(4):
+            sms_message = "Message {} " + "0123456789" * 5
+            sms_message = sms_message.format(i)
+            self.UTILS.messages.create_incoming_sms(self.phone_number, sms_message)
+            self.UTILS.statusbar.wait_for_notification_toaster_detail(sms_message, timeout=120)
 
-        #
-        # Launch messages app.
-        #
         self.messages.launch()
-
-        #
-        # Create and send a new test message.
-        #
-        self.messages.createAndSendSMS([self.target_telNum], sms_message)
-
-        #
-        # Wait for the last message in this thread to be a 'received' one.
-        #
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(returnedSMS, "A received message appeared in the thread.", True)
-
-        #
-        # Back to send a new sms
-        #
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
-
-        #
-        # Create and send a new test message. Repeat this steps to having several sms in the thread
-        #
-        self.messages.createAndSendSMS([self.target_telNum], sms_message)
-
-        #
-        # Wait for the last message in this thread to be a 'received' one.
-        #
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(returnedSMS, "A received message appeared in the thread.", True)
-
-        self.messages.fordwardMessage("sms", self.target_telNum)
-
-
-
+        self.messages.openThread(self.incoming_sms_num[0])
+        self.messages.forwardMessage("sms", self.phone_number)
