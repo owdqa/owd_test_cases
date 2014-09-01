@@ -1,4 +1,4 @@
-#28540: Press call button while the call log contains different outgoing calls
+# 28540: Press call button while the call log contains different outgoing calls
 #
 # ** Procedure
 #       1. Open dialer app
@@ -18,7 +18,7 @@ import time
 
 
 class test_main(GaiaTestCase):
- 
+
     def setUp(self):
 
         #
@@ -31,7 +31,7 @@ class test_main(GaiaTestCase):
 
         self.test_contacts = [MockContact() for i in range(3)]
         self.test_numbers = [self.test_contacts[i]["tel"]["value"] for i in range(len(self.test_contacts))]
-        
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
@@ -49,16 +49,20 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call button")
         x.tap()
 
-        #Make sure that after tapping, we get the last outgoing call in the call log
+        # Make sure that after tapping, we get the last outgoing call in the call log
         x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number field", False)
         dialer_num = x.get_attribute("value")
 
         self.UTILS.test.TEST(str(self.test_contacts[-1]["tel"]["value"]) in dialer_num,
-                        "After calling several contacts, if we press 'Call' button, we get the last one's phone_number")
+                             "After calling several contacts, if we press 'Call' button, we get the last one's phone_number")
 
         y = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screen shot of the result of tapping call button", y)
 
     def _do_the_call(self, number):
         self.dialer.enterNumber(number)
-        self.dialer.call_this_number_and_hangup(2)
+        self.dialer.call_this_number_and_hangup(5)
+        # This needs to be done bcs sometimes (50%) the Dialer app crushes after hanging up
+        self.apps.kill_all()
+        time.sleep(2)
+        self.dialer.launch()
