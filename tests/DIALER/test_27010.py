@@ -1,13 +1,16 @@
+#27010: Start dialing a number which match with one contact's number with prefix
 #
-# Imports which are standard for all test cases.
-#
+# ** Pre-requisites
+#   Address book has at least one contact  stored with prefix and with the four digits dialed 
+#   that matches as a substring of the contact phone number, i.e +34 657 890
+# ** Procedure
+#   1. Type four digits of contacts phone numbers,  i.e  7890
+# ** Expected Results
+#   1. The contact which matches is shown
+#   
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
@@ -24,13 +27,9 @@ class test_main(GaiaTestCase):
         self.dialer = Dialer(self)
         self.contacts = Contacts(self)
 
-        self.cont1 = MockContact()
-        self.cont2 = MockContact()
-        self.cont3 = MockContact()
-        self.cont1["tel"]["value"] = "+34111111111"
-        self.data_layer.insert_contact(self.cont1)
-        self.data_layer.insert_contact(self.cont2)
-        self.data_layer.insert_contact(self.cont3)
+        self.test_contacts = [MockContact() for i in range(3)]
+        self.test_contacts[0]["tel"]["value"] = "+34111111111"
+        map(self.data_layer.insert_contact, self.test_contacts)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -40,6 +39,6 @@ class test_main(GaiaTestCase):
         self.dialer.launch()
         self.dialer.enterNumber("1111")
 
-        x = self.UTILS.element.getElement(DOM.Dialer.suggestion_item, "Suggestion item")
-        self.UTILS.test.TEST(self.cont1["tel"]["value"] in x.text,
-                        "'{}' is shown as a suggestion (it was '{}').".format(self.cont1["tel"]["value"], x.text))
+        suggestion_item = self.UTILS.element.getElement(DOM.Dialer.suggestion_item_single, "Suggestion item")
+        self.UTILS.test.TEST(self.test_contacts[0]["tel"]["value"] in suggestion_item.text,
+                        "'{}' is shown as a suggestion".format(self.test_contacts[0]["tel"]["value"]))

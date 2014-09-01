@@ -1,4 +1,10 @@
-# 27022:
+# 27022: Call the number 
+# ** Procedure
+#       1. Open call log
+#       2. Tap on Unknown number
+# ** Expected Results
+#       1. An entry with call to a number with unknown name is displayed
+#       2. A call to number is started
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.dialer import Dialer
@@ -16,7 +22,8 @@ class test_main(GaiaTestCase):
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
         self.dialer.launch()
-        self.dialer.createMultipleCallLogEntries(self.phone_phone_numberber, 1)
+        self.dialer.callLog_clearAll()
+        self.dialer.createMultipleCallLogEntries(self.phone_number, 1)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -24,15 +31,7 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         #
-        # Open the call log and tap on the phone_numberber.
+        # Open the call log and tap on the phone_number.
         #
         self.dialer.openCallLog()
         self.dialer.callLog_call(self.phone_number)
-
-        # TODO: If we unblock this test to match v2.0, follow this code to complete it
-        # elem = ("xpath", DOM.Dialer.call_log_number_xpath.format(self.phone_number))
-        # entry = self.UTILS.element.getElement(elem,
-        #                            "The call log for number {}".format(self.phone_number))
-        # entry.tap()
-
-        # TODO: Check that frame_calling_locator displays, wait 2 seconds, and hangUp

@@ -1,4 +1,4 @@
-#
+#26918
 # List of blocked tests and the reason or bug number.
 #
 # Syntax:
@@ -16,8 +16,6 @@
 26348|Automation issue: cannot work out how to automate the scroller for seeting the alarm time.
 26337|DEV SERVER ALWAYS DOWN
 26336|DEV SERVER ALWAYS DOWN
-27010|BUG 907073
-26834|BUG 883285
 26538|BUG 914099
 26977|BUG 895389 (WONTFIX)
 26885|Pending review
@@ -26,10 +24,7 @@
 28542|Pending review
 27756|Pending review
 26973|Pending review
-26798|Pending review
 27050|BUG 990496
 26907|Unable to figure out how to detect how not the keyboard is displayed (previously opened)
-26788|Deprecated - Behaviour no longer applied to v2.0
-27022|Deprecated - Behaviour no longer applied to v2.0
 29873|SIM with supplementary services needed
 29875|SIM with supplementary services needed
