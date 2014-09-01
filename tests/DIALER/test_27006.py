@@ -1,13 +1,7 @@
-#
-# Imports which are standard for all test cases.
-#
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.dialer import Dialer
@@ -33,9 +27,9 @@ class test_main(GaiaTestCase):
         self.dialer.launch()
         self.dialer.enterNumber("1111")
 
-        x = self.UTILS.element.getElement(DOM.Dialer.suggestion_item, "Suggestion item")
+        x = self.UTILS.element.getElement(DOM.Dialer.suggestion_item_single, "Suggestion item")
         self.UTILS.test.TEST(self.cont1["tel"][0]["value"] in x.text, 
                         "'{}' is shown as a suggestion (it was '{}').".format(self.cont1["tel"][0]["value"], x.text))
 
         self.dialer.enterNumber("2")
-        self.UTILS.element.waitForNotElements(DOM.Dialer.suggestion_count, "Suggestion count")
+        self.UTILS.element.waitForNotElements(DOM.Dialer.suggestion_item_single, "Suggestion item")

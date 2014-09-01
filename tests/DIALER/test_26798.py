@@ -1,19 +1,20 @@
-#
-# Imports which are standard for all test cases.
-#
+# 26798: Make a call by typing a telephone number (mobile) which is not a contact. 
+# Use country prefix (0034, 0039,+34)
+# ** Procedure
+#       1- Open dialer app
+#       2- Write a number with prefix (0034, 0039,+34)
+#       3- Make the call
+# ** Expected Results
+#       The call is successful
+import time
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.dialer import Dialer
 from tests._mock_data.contacts import MockContact
-import time
 
 
 class test_main(GaiaTestCase):
@@ -26,76 +27,27 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.dialer     = Dialer(self)
 
-        #self.telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.Contact_1 = MockContact()
-        self.telNum = self.Contact_1["tel"]["value"]
+        #self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.contact_1 = MockContact()
+        self.phone_number = self.contact_1["tel"]["value"]
+        self.prefixes = ["0034", "0039", "+34"]
+        self.test_numbers = [prefix + self.phone_number for prefix in self.prefixes]
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
+
+    def _do_the_call(self, number):
+        self.dialer.enterNumber(number)
+        self.dialer.call_this_number_and_hangup(5)
+        # This needs to be done bcs sometimes (50%) the Dialer app crushes after hanging up
+        self.apps.kill_all()
+        time.sleep(2)
+        self.dialer.launch()
 
     def test_run(self):
         #
         # Launch dialer app.
         #
         self.dialer.launch()
-
-        #
-        # Enter country prefix 0034.
-        #
-        self.dialer.enterNumber("0034"+self.telNum)
-        x = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call button")
-        p_num="0034"+self.telNum
-        x.tap()
-
-        #
-        # The call is tested.
-        #
-        time.sleep(1)
-        self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)
-        self.UTILS.element.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP.format(p_num)),
-                                    "Outgoing call found with number matching {}".format(p_num))
-
-        time.sleep(2)
-
-        self.dialer.hangUp()
-
-
-        #
-        # Enter country prefix 0039.
-        #
-        self.dialer.enterNumber("0039"+self.telNum)
-        x = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call button")
-        p_num="0039"+self.telNum
-        x.tap()
-        #
-        # The call is tested.
-        #
-        time.sleep(1)
-        self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)
-        self.UTILS.element.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP.format(p_num)),
-                                    "Outgoing call found with number matching {}".format(p_num))
-
-        time.sleep(2)
-
-        self.dialer.hangUp()
-
-
-        #
-        # Enter country prefix +34.
-        #
-        self.dialer.enterNumber("+34"+self.telNum)
-        x = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call button")
-        p_num="+34"+self.telNum
-        x.tap()
-        #
-        # The call is tested.
-        #
-        time.sleep(1)
-        self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)
-        self.UTILS.element.waitForElements( ("xpath", DOM.Dialer.outgoing_call_numberXP.format(p_num)),
-                                    "Outgoing call found with number matching {}".format(p_num))
-
-        time.sleep(2)
-
-        self.dialer.hangUp()
+        map(self._do_the_call, self.test_numbers)

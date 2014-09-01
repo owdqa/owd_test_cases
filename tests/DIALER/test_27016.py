@@ -1,19 +1,25 @@
-#
-# Imports which are standard for all test cases.
-#
+# 27016: Add short number to an existing contact with different number
+# ** Procedure
+#       1. Dial a short (only few digits) phone number and press "add to contact" button
+#       2. Select "Add to an existing contact"
+#       3. Select the contact available
+#       4. Press "update" button
+#       5. Close dialer and open contacts
+# 
+# ** Expected Results
+#       2. The "Select contact" window is opened
+#       3. The "Edit contact" window is opened
+#       4. User is taken back to dialer
+#       5. Verify that existing contact has been updated with the new phone number
+import time
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.dialer import Dialer
 from tests._mock_data.contacts import MockContact
-import time
 
 
 class test_main(GaiaTestCase):
@@ -25,12 +31,17 @@ class test_main(GaiaTestCase):
         self.dialer = Dialer(self)
         self.contacts = Contacts(self)
 
-        self.num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.num_short = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number_short = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
 
         # Remove the phone number from the contact and insert it.
-        self.Contact_1 = MockContact(tel={'type': 'Mobile', 'value': self.num})
-        self.UTILS.general.insertContact(self.Contact_1)
+        self.test_contact = MockContact(tel={'type': 'Mobile', 'value': self.phone_number})
+        self.UTILS.general.insertContact(self.test_contact)
+
+         # Generate an entry in the call log
+        self.dialer.launch()
+        self.dialer.callLog_clearAll()
+        self.dialer.createMultipleCallLogEntries(self.phone_number_short, 1)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -38,24 +49,18 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         #
-        # Create a call log.
-        #
-        self.dialer.launch()
-        self.dialer.enterNumber(self.num_short)
-        self.dialer.callThisNumber()
-        time.sleep(2)
-        self.dialer.hangUp()
-
-        #
         # Open the call log and add to our contact.
         #
-        self.dialer.callLog_addToContact(self.num_short, self.Contact_1["name"])
+        self.dialer.callLog_addToContact(self.phone_number_short, self.test_contact["name"])
 
         #
         # Verify that this number was added to the contact.
         #
+        self.apps.kill_all()
+        time.sleep(2)
+        
         self.contacts.launch()
-        self.contacts.view_contact(self.Contact_1["name"])
+        self.contacts.view_contact(self.test_contact["name"])
 
-        self.UTILS.element.waitForElements(("xpath", DOM.Contacts.view_contact_tels_xpath.format(self.num_short)),
-                                    "New phone number {} in this contact".format(self.num_short))
+        self.UTILS.element.waitForElements(("xpath", DOM.Contacts.view_contact_tels_xpath.format(self.phone_number_short)),
+                                    "New phone number {} in this contact".format(self.phone_number_short))

@@ -1,13 +1,11 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
+# 27022: Call the number 
+# ** Procedure
+#       1. Open call log
+#       2. Tap on Unknown number
+# ** Expected Results
+#       1. An entry with call to a number with unknown name is displayed
+#       2. A call to number is started
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.dialer import Dialer
 import time
@@ -21,7 +19,11 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.dialer = Dialer(self)
 
-        self.num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+
+        self.dialer.launch()
+        self.dialer.callLog_clearAll()
+        self.dialer.createMultipleCallLogEntries(self.phone_number, 1)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -29,16 +31,7 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         #
-        # Create a call log.
+        # Open the call log and tap on the phone_number.
         #
-        self.dialer.launch()
-        self.dialer.enterNumber(self.num)
-        self.dialer.callThisNumber()
-
-        #
-        # Open the call log and tap on the number.
-        #
-        self.apps.kill_all()
-        time.sleep(3)
-        self.dialer.launch()
-        self.dialer.callLog_call(self.num)
+        self.dialer.openCallLog()
+        self.dialer.callLog_call(self.phone_number)
