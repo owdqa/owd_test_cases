@@ -1,13 +1,22 @@
-#
-# Imports which are standard for all test cases.
-#
+# 27028: Add to an existing contact from a number which is in the call log with several entries (All tab)
+# ** Procedure
+#       1. Open call log
+#       2. Tap on Unknown number
+#       3. Select "Add to an existing contact"
+#       4. Select the a contact available
+#       5. Press "update"
+#       6. Close call log, open contacts and then open the contact
+# ** Expected Results
+#       1. Several entries with call to/from a number with unknown name is displayed
+#       2. The "select from" menu is displayed
+#       3. the "select contact" page is displayed;
+#       4. The "edit contact" page is displayed
+#       5. User is taken back to call log page
+#       6. Contacts is updated with correct name and phone number
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
@@ -24,10 +33,15 @@ class test_main(GaiaTestCase):
         self.dialer = Dialer(self)
         self.contacts = Contacts(self)
 
-        self.num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
-        self.Contact_1 = MockContact()
-        self.UTILS.general.insertContact(self.Contact_1)
+        self.test_contact = MockContact()
+        self.UTILS.general.insertContact(self.test_contact)
+
+        # Generate an entry in the call log
+        self.dialer.launch()
+        self.dialer.callLog_clearAll()
+        self.dialer.createMultipleCallLogEntries(self.phone_number, 2)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -35,21 +49,15 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         #
-        # Create a call log.
-        #
-        self.dialer.launch()
-        self.dialer.createMultipleCallLogEntries(self.num, 2)
-
-        #
         # Add to our contact.
         #
-        self.dialer.callLog_addToContact(self.num, self.Contact_1["name"], p_openCallLog=False)
+        self.dialer.callLog_addToContact(self.phone_number, self.test_contact["name"])
 
         #
         # Verify that this contact has been modified in contacts.
         #
         self.contacts.launch()
-        self.contacts.view_contact(self.Contact_1["name"])
+        self.contacts.view_contact(self.test_contact["name"])
 
-        self.UTILS.element.waitForElements(("xpath", DOM.Contacts.view_contact_tels_xpath.format(self.num)),
-                                    "Telephone number {} in contact".format(self.num))
+        self.UTILS.element.waitForElements(("xpath", DOM.Contacts.view_contact_tels_xpath.format(self.phone_number)),
+                                           "Telephone phone_numberber {} in contact".format(self.phone_number))

@@ -1,13 +1,16 @@
-#
-# Imports which are standard for all test cases.
-#
+# 28538: Press call button while the last outgoing call is a contact number
+# ** Prerrequestites
+#       The last outgoing call is a contact number
+# ** Procedure
+#       1. Open dialer app
+#       2. Press call button
+
+# ** Expected Results
+#       Tapping on the Call button retrieves the most recent outgoing number
+#       from the call log and the contact name is charged
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
@@ -26,56 +29,33 @@ class test_main(GaiaTestCase):
 
         # Get details of our test contacts.
 
-        # self.num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.contact = MockContact(tel={'type': 'Mobile', 'value': "665666666"})
-        self.UTILS.general.insertContact(self.contact)
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.test_contact = MockContact(tel={'type': 'Mobile', 'value': self.phone_number})
+        self.UTILS.general.insertContact(self.test_contact)
 
-        self.contact_name = self.contact["name"]
-        self.contact_given_name = self.contact["givenName"]
-        self.contact_number = self.contact["tel"]["value"]
+        # Generate an entry in the call log for this contact
+        self.dialer.launch()
+        self.dialer.callLog_clearAll()
+        self.dialer.createMultipleCallLogEntries(self.phone_number, 2)
 
     def tearDown(self):
-        #
-        # Delete the contact. (REVISAR)
-        #
-        # self.contacts.launch()
-        # self.contacts.delete_contact(self.contact_name)
-
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        # Launch dialer app.
-        self.dialer.launch()
+        kepad_option = self.UTILS.element.getElement(DOM.Dialer.option_bar_keypad, "Keypad Option")
+        kepad_option.tap()
 
-        # Enter Contacts Option.
-        x = self.UTILS.element.getElement(DOM.Dialer.option_bar_contacts, "Contacts option")
-        x.tap()
-
-        # Select contact.
-        self.contacts.view_contact(self.contact_name, header_check=False)
-
-        # Call
-        x = self.UTILS.element.getElement(DOM.Contacts.view_contact_tel_field, "Telephone number")
-        x.tap()
-
-        time.sleep(2)
-        # Hang Up
-        self.dialer.hangUp()
-
-        x = self.UTILS.element.getElement(DOM.Dialer.option_bar_keypad, "Keypad Option")
-        x.tap()
-
-        x = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call button")
-        x.tap()
+        call_btn = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call button")
+        call_btn.tap()
 
         # Make sure that after tapping, we get the last outgoing call in the call log
-        x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number field", False)
-        dialer_num = x.get_attribute("value")
+        phone_field = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number field", False)
+        dialer_num = phone_field.get_attribute("value")
 
-        self.UTILS.test.TEST(self.contact_number in dialer_num,
-                             "After calling '{}', and tapping call button, phone number field contains '{}'.".\
-                             format(self.contact_number, dialer_num))
+        self.UTILS.test.TEST(self.test_contact["tel"]["value"] in dialer_num,
+                             "After calling '{}', and tapping call button, phone number field contains '{}'.".
+                             format(self.test_contact["tel"]["value"], dialer_num))
 
         y = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screen shot of the result of tapping call button", y)
