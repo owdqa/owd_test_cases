@@ -46,7 +46,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-		GaiaTestCase.tearDown(self)
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         self.dialer.callLog_addToContact(self.phone_number, self.test_contact["name"])

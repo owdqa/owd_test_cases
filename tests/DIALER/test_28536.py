@@ -1,5 +1,5 @@
 # 28536: Press call button while call log only contains incoming and missed calls
-# 
+#
 #  ** Prerrequisites
 #         Call log only contains incoming and missed calls during all the test
 #  ** Procedure
@@ -49,7 +49,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-		GaiaTestCase.tearDown(self)
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         # Launch dialer app.
