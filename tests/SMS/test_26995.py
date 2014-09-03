@@ -20,7 +20,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
-        self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -37,7 +37,7 @@ class test_main(GaiaTestCase):
         # Create and send a new test message.
         #
         test_str = "Four 1234 six 123456 seven 1234567 eight 12345678 nine 123456789 numbers."
-        self.messages.createAndSendSMS([self.num1], test_str)
+        self.messages.createAndSendSMS([self.phone_number], test_str)
         x = self.messages.waitForReceivedMsgInThisThread()
 
         #

@@ -34,8 +34,8 @@ class test_main(GaiaTestCase):
         #
         self.data_layer.set_setting('airplaneMode.enabled', True)
 
-        self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.contact = MockContact(tel = {'type': 'Mobile', 'value': self.num1})
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.contact = MockContact(tel={'type': 'Mobile', 'value': self.phone_number})
 
         self.UTILS.general.insertContact(self.contact)
 

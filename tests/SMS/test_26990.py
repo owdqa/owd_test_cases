@@ -24,7 +24,7 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -39,7 +39,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], "Test message")
+        self.messages.createAndSendSMS([self.phone_number], "Test message")
 
         #
         # The returned message won't come to this thread, so just tap the header.

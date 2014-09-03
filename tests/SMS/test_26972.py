@@ -1,13 +1,24 @@
+#===============================================================================
+# 26972: Click on an email address and create a new contact fillings all fields
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Send a sms from "device A" to "device B" who contains an email address
+# 2. Open sms app in the device A.
+# 3. Hold on the email address contained in the sms
+# 4. Click on "Create new contact" button
+# 5. Insert contact photo, name, surname, company, phone number, address comment
+# and other email addrees.
+# 6. Press save button
 #
+# Expected results:
+# Contact is created.
+# The user return to sms app in the conversation screen.
+#===============================================================================
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -17,8 +28,6 @@ from tests._mock_data.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
-
-    test_msg = "Test message."
 
     def setUp(self):
         #
@@ -30,15 +39,17 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.email = Email(self)
 
-        self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
         self.emailE = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
         self.emailP = self.UTILS.general.get_os_variable("GMAIL_2_PASS")
         self.emailU = self.UTILS.general.get_os_variable("GMAIL_2_USER")
 
         self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.test_msg = "Test message."
 
         self.cont = MockContact()
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -63,8 +74,9 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], "Hello " + self.emailAddy + " old bean.")
-        x = self.messages.waitForReceivedMsgInThisThread()
+        self.messages.createAndSendSMS([self.phone_number], "Hello {} old bean.".format(self.emailAddy))
+        send_time = self.messages.last_sent_message_timestamp()
+        x = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
 
         #
         # Long press the email link.
@@ -76,8 +88,7 @@ class test_main(GaiaTestCase):
         # Click 'create new contact'.
         #
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
-        x = self.UTILS.element.getElement(("xpath", "//button[text()='Create new contact']"),
-                                   "Create new contact button")
+        x = self.UTILS.element.getElement(DOM.Messages.header_create_new_contact_btn, "Create new contact button")
         x.tap()
 
         #
@@ -86,7 +97,7 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
         x = self.UTILS.element.getElement(DOM.Contacts.email_field, "Email field")
         x_txt = x.get_attribute("value")
-        self.UTILS.test.TEST(x_txt == self.emailAddy, "Email is '" + self.emailAddy + "' (it was '" + x_txt + "')")
+        self.UTILS.test.TEST(x_txt == self.emailAddy, "Email is '{}' (expected '{}')".format(x_txt, self.emailAddy))
 
         #
         # Put the contact details into each of the fields (this method

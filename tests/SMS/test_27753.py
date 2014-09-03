@@ -1,13 +1,23 @@
+#===============================================================================
+# 27753: Delete a contact and verify that the SMS list now shows the number
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Send a sms to our device from phone number who is a contact
+# 2- Open SMS app
+# ER1
+# 3- delete the contact name who sended the last sms
+# 4- Open SMS app
+# ER2
 #
+# Expected results:
+# ER1- verify that the SMS list shows the name
+# ER2- verify that the SMS list now shows the phone number
+#===============================================================================
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -16,8 +26,6 @@ from tests._mock_data.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
-
-    test_msg = "Test."
 
     def setUp(self):
         #
@@ -31,11 +39,13 @@ class test_main(GaiaTestCase):
         #
         # Prepare the contact we're going to insert.
         #
-        self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.contact = MockContact(tel={'type': '', 'value': self.num1})
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.contact = MockContact(tel={'type': '', 'value': self.phone_number})
+        self.test_msg = "Test."
 
         self.UTILS.general.insertContact(self.contact)
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact["tel"]["value"])
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -43,8 +53,9 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         msgapp = self.messages.launch()
-        self.messages.createAndSendSMS([self.num1], "Test")
-        self.messages.waitForReceivedMsgInThisThread()
+        self.messages.createAndSendSMS([self.phone_number], "Test")
+        send_time = self.messages.last_sent_message_timestamp()
+        self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
 
         x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()

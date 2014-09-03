@@ -23,7 +23,7 @@ class test_main(GaiaTestCase):
         self.dialer     = Dialer(self)
         self.contacts   = Contacts(self)
 
-        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': '665666666'})
+        self.Contact_1 = MockContact(tel={'type': 'Mobile', 'value': '665666666'})
         self.num = self.Contact_1["tel"]["value"]
 
     def tearDown(self):

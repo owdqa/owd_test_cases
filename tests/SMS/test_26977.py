@@ -29,7 +29,7 @@ class test_main(GaiaTestCase):
 
         self.contacts = Contacts(self)
 
-        self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
 
     def tearDown(self):
@@ -46,7 +46,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], "Hello " + self.emailAddy + " old bean.")
+        self.messages.createAndSendSMS([self.phone_number], "Hello " + self.emailAddy + " old bean.")
         x = self.messages.waitForReceivedMsgInThisThread()
 
         self.UTILS.element.waitForNotElements(DOM.Messages.edit_mode_wrapper,
@@ -76,5 +76,5 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.element.waitForNotElements(("xpath", "//button[text()='Create new contact']"),
                                    "Create new contact button")
-        self.messages.createAndSendSMS([self.num1], "Email addy {} test.".format(self.emailAddy))
+        self.messages.createAndSendSMS([self.phone_number], "Email addy {} test.".format(self.emailAddy))
         x = self.messages.waitForReceivedMsgInThisThread()

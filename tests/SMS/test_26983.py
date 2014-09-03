@@ -33,7 +33,7 @@ class test_main(GaiaTestCase):
         self.EMAIL1 = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
         self.PASS1 = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
 
-        self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
         self.incoming_sms_num = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER")
 
@@ -45,10 +45,10 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        #self.UTILS.messages.create_incoming_sms(self.num1, "Email addy {} test.".format(self.emailAddy))
-        self.data_layer.send_sms(self.num1, "Email addy {} test.".format(self.emailAddy))
-        self.UTILS.statusbar.wait_for_notification_toaster_title(self.num1, timeout=120)
-        self.UTILS.statusbar.click_on_notification_title(self.num1, DOM.Messages.frame_locator)
+        #self.UTILS.messages.create_incoming_sms(self.phone_number, "Email addy {} test.".format(self.emailAddy))
+        self.data_layer.send_sms(self.phone_number, "Email addy {} test.".format(self.emailAddy))
+        self.UTILS.statusbar.wait_for_notification_toaster_title(self.phone_number, timeout=120)
+        self.UTILS.statusbar.click_on_notification_title(self.phone_number, DOM.Messages.frame_locator)
         sms = self.messages.lastMessageInThisThread()
 
         #

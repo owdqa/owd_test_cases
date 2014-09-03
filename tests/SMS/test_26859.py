@@ -1,6 +1,12 @@
+#===============================================================================
+# 26859: Verify the timestamp (received message) when the SMS has
+# been sent from a different timezone
 #
-# Imports which are standard for all test cases.
-#
+# Expected result:
+# The device must show the timestamp according to the date/time configured in
+# settings.
+#===============================================================================
+
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
@@ -10,8 +16,6 @@ import time
 
 
 class test_main(GaiaTestCase):
-
-    test_msg = "Test message."
 
     def setUp(self):
         #
@@ -24,6 +28,8 @@ class test_main(GaiaTestCase):
 
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.cp_incoming_number = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
+        self.test_msg = "Test message."
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -31,18 +37,12 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.UTILS.statusbar.clearAllStatusBarNotifs()
-        #
-        # Launch messages app & delete all Threads
-        # Make sure we have no threads
-        #
-        self.messages.launch()
-        self.messages.deleteAllThreads()
 
+        self.UTILS.date_and_time.setTimeToNow("Europe", "Madrid")
         #
         # Create and send a new test message.
         #
         self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)
-
         self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
         title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.cp_incoming_number, timeout=5)
         self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
@@ -50,8 +50,9 @@ class test_main(GaiaTestCase):
         #
         # Check the time of this message.
         #
+        time.sleep(2)
         _orig_msg_timestamp = self.messages.timeOfLastMessageInThread()
-        self.UTILS.reporting.logResult("info", "(original message timestamp = '" + _orig_msg_timestamp + "'.)")
+        self.UTILS.reporting.debug("*** original message timestamp = '{}'".format(_orig_msg_timestamp))
 
         #
         # Return to the threads screen and check the time of this thread.
@@ -64,7 +65,7 @@ class test_main(GaiaTestCase):
         # Get the time of this thread.
         #
         _orig_thread_timestamp = self.messages.timeOfThread(title)
-        self.UTILS.reporting.logResult("info", "(original thread timestamp = '" + _orig_thread_timestamp + "'.)")
+        self.UTILS.reporting.debug("*** original thread timestamp = '{}'".format(_orig_thread_timestamp))
 
         #
         # Change to a (unlikely!) timezone.
@@ -81,7 +82,7 @@ class test_main(GaiaTestCase):
         # Get the new thread time.
         #
         _new_thread_timestamp = self.messages.timeOfThread(title)
-        self.UTILS.reporting.logResult("info", "(new thread timestamp = '" + _new_thread_timestamp + "'.)")
+        self.UTILS.reporting.debug("*** new thread timestamp = '{}'".format(_new_thread_timestamp))
 
         #
         # Open our thread.
@@ -92,7 +93,7 @@ class test_main(GaiaTestCase):
         # Get the new message time.
         #
         _new_msg_timestamp = self.messages.timeOfLastMessageInThread()
-        self.UTILS.reporting.logResult("info", "(new message timestamp = '" + _new_msg_timestamp + "'.)")
+        self.UTILS.reporting.debug("*** new message timestamp = '{}'".format(_new_msg_timestamp))
 
         self.UTILS.test.TEST(_orig_thread_timestamp != _new_thread_timestamp, "Thread timestamp has changed.")
         self.UTILS.test.TEST(_orig_msg_timestamp != _new_msg_timestamp, "Message timestamp has changed.")

@@ -2,7 +2,6 @@
 # Imports which are standard for all test cases.
 #
 import sys
-import time
 sys.path.insert(1, "./")
 
 from gaiatest import GaiaTestCase
@@ -28,6 +27,7 @@ class test_main(GaiaTestCase):
         self.cp_incoming_number = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
         self.test_msg = "Test message."
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
