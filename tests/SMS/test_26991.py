@@ -29,9 +29,9 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.Dialer = Dialer(self)
 
-        self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
-        self.contact = MockContact(tel = {'type': 'Mobile', 'value': self.num1})
+        self.contact = MockContact(tel={'type': 'Mobile', 'value': self.phone_number})
 
         self.UTILS.general.insertContact(self.contact)
 
@@ -49,7 +49,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], "Test message.")
+        self.messages.createAndSendSMS([self.phone_number], "Test message.")
         x = self.messages.waitForReceivedMsgInThisThread()
 
         #
@@ -61,8 +61,8 @@ class test_main(GaiaTestCase):
         # Dialler is started with the number already filled in.
         #
         x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number")
-        self.UTILS.test.TEST(self.num1 in x.get_attribute("value"), 
-                        "The phone number contains '{}' (it was '{}').".format(self.num1, x.get_attribute("value")))
+        self.UTILS.test.TEST(self.phone_number in x.get_attribute("value"), 
+                        "The phone number contains '{}' (it was '{}').".format(self.phone_number, x.get_attribute("value")))
 
         #
         # Dial the number.

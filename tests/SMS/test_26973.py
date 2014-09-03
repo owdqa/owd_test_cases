@@ -28,7 +28,7 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.contacts = Contacts(self)
 
-        self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
 
         self.cont = MockContact(email=[{"type": "Personal", "value": "email1@nowhere.com"},
@@ -56,7 +56,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.num1], "Hello " + self.emailAddy + " old bean.")
+        self.messages.createAndSendSMS([self.phone_number], "Hello " + self.emailAddy + " old bean.")
         x = self.messages.waitForReceivedMsgInThisThread()
 
         #

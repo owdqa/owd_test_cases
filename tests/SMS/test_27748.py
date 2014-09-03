@@ -1,20 +1,29 @@
+#===============================================================================
+# 27748: Verify the textfield item
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# The device has some SMS conversation (sent and received)
 #
-import sys
-sys.path.insert(1, "./")
+# Procedure:
+# 1- Open SMS app
+# 2. Enter in the detail of a conversation
+# RES-1
+# 3. Click on the text field item
+# RES-2
+#
+# Expected results:
+# RES-1: Users can view the details of a conversation, in which all the
+# messages exchanged are displayed.
+# RES-2: The keyboard is loaded
+#===============================================================================
+import time
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 
-class test_main(GaiaTestCase):
 
-    _RESTART_DEVICE = True
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #
@@ -28,6 +37,7 @@ class test_main(GaiaTestCase):
         # Import contact (adjust the correct number).
         #
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -35,57 +45,35 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         #
+        # Send some messages to create a thread
+        #
+        self.texts = ["Test 1", "Test 2", "Test 3"]
+        self.directions = ["outgoing", "incoming"]
+        self.create_test_sms(self.phone_number, self.texts)
+
+        #
         # Launch messages app.
-        # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
         #
         self.messages.launch()
-#         self.messages.deleteThreads([self.phone_number])
-  
-        #
-        # Send a message to create a thread (use number, not name as this
-        # avoids some blocking bugs just now). 
-        #
-        self.messages.createAndSendSMS([self.phone_number], "Test 1")
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-  
-        self.messages.enterSMSMsg("Test 2")
-        self.messages.sendSMS()
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-  
-        self.messages.enterSMSMsg("Test 3")
-        self.messages.sendSMS()
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-  
-        #
-        # Leave this thread.
-        #
-        self.messages.closeThread()
- 
+
         #
         # Enter the thread.
         #
         self.messages.openThread(self.phone_number)
- 
+
         #
         # Find the first message.
         #
-        x = self.UTILS.element.getElements(DOM.Messages.message_list, "Message list", False)
-        pos = 0
-        for i in x:
-            if i.find_element("xpath", "//p[text()='Test 1']"):
-                break
-            pos += 1
-
-        #
-        # Now verify that the order is as expected.
-        #
-
-        for i in range(3):
-            self.checkMsg(x, pos, "Test {}".format(i + 1), "outgoing")
-            pos += 1
-            self.checkMsg(x, pos, "Test {}".format(i + 1), "incoming")
-            pos += 1
- 
+        time.sleep(2)
+        msg_list = self.UTILS.element.getElements(DOM.Messages.message_list, "Message list", False)
+        self.UTILS.debug.savePageHTML('/tmp/tests/test_123/messages.html')
+        msgs = [(text, direction) for text in self.texts for direction in self.directions]
+        for (msg, expected) in zip(msg_list, msgs):
+            direction = "outgoing" if "outgoing" in msg.get_attribute("class") else "incoming"
+            text = self.marionette.find_element('css selector', '.message-body p', id=msg.id).text
+            self.UTILS.test.TEST(text == expected[0], "**** Text: {}  Expected: {}".format(text, expected[0]))
+            self.UTILS.test.TEST(direction == expected[1], "Direction: {}  Expected: {}".\
+                                 format(direction, expected[1]))
         #
         # Tap the message area.
         #
@@ -97,18 +85,9 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.iframe.switchToFrame(*DOM.Keyboard.frame_locator)
 
-    def checkMsg(self, p_list, p_pos, p_str, p_direction):
-        #
-        # Do the check of each message.
-        #
-        self.UTILS.test.TEST(p_list[p_pos].find_element("xpath", ".//p").text == p_str,
-                        "The messages at position " + str(p_pos) + " contains the string '" + p_str + "'.")
-
-        self.UTILS.test.TEST(p_direction in p_list[p_pos].get_attribute("class"),
-                        "The message at position " + str(p_pos) + " is '" + p_direction + "'.")
-
-
-
-
-
-
+    def create_test_sms(self, number, msg_list):
+        """Send messages in the list to populate a thread.
+        """
+        for msg in msg_list:
+            self.data_layer.send_sms(number, msg)
+            self.UTILS.statusbar.wait_for_notification_toaster_detail(msg, timeout=120)

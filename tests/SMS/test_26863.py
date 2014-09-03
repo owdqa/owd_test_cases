@@ -1,21 +1,29 @@
+#===============================================================================
+# 26863: Try send a sms in an existing thread while airplane is enabled
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Open sms app
+# 2- Write a phone number (no contact number and there is a thread for
+# his number)
+# 3- write a text and press send
+# ER1
+# 4- Press OK
+# ER2
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected results:
+# ER1 A confirmation dialog should be shown to the user stating "in order
+# to send a message you must first disable Flight Safe Mode" and an "OK" button.
+# ER2 When the "OK" button is pressed, the dialogue is closed and the user is
+# returned to the SMS thread view.
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 import time
 
 
 class test_main(GaiaTestCase):
-
-    test_msg = "Test."
 
     def setUp(self):
         #
@@ -25,6 +33,8 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.target_num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.test_msg = "Test."
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -58,7 +68,6 @@ class test_main(GaiaTestCase):
         #
         self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
 
-        time.sleep(5)
         self.UTILS.home.goHome()
 
         #
@@ -66,6 +75,7 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.statusbar.toggleViaStatusBar('airplane')
 
+        self.UTILS.reporting.debug("*** Launching messages again!!!")
         self.messages.launch()
         #
         # Open sms app and go to the previous thread

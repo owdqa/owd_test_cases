@@ -28,7 +28,7 @@ class test_main(GaiaTestCase):
         self.num  = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
 
         # Remove the phone number from the contact and insert it.
-        self.Contact_1 = MockContact(tel = {'type': '', 'value': ''})
+        self.Contact_1 = MockContact(tel={'type': '', 'value': ''})
         self.UTILS.general.insertContact(self.Contact_1)
 
     def tearDown(self):

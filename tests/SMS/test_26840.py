@@ -30,7 +30,7 @@ class test_main(GaiaTestCase):
         # Prepare the contact we're going to import.
         #
         tlf = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.contact = MockContact(tel = {'type': 'Mobile', 'value': tlf})
+        self.contact = MockContact(tel={'type': 'Mobile', 'value': tlf})
 
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact["tel"]["value"])
 

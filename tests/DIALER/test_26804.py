@@ -15,17 +15,16 @@ from OWDTestToolkit.apps.dialer import Dialer
 from tests._mock_data.contacts import MockContact
 
 
-
 class test_main(GaiaTestCase):
 
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.dialer     = Dialer(self)
-        self.contacts   = Contacts(self)
+        self.UTILS = UTILS(self)
+        self.dialer = Dialer(self)
+        self.contacts = Contacts(self)
 
-        self.Contact_1 = MockContact(tel = {'type': 'Mobile', 'value': '665666666'})
+        self.Contact_1 = MockContact(tel={'type': 'Mobile', 'value': '665666666'})
         self.num = self.Contact_1["tel"]["value"]
 
     def tearDown(self):
