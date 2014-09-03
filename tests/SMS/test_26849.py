@@ -1,22 +1,20 @@
+#===============================================================================
+# 26849: Receive sms while the user is in the SMS app (vibration alert)
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Send a SMS to our device
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected result:
+# The SMS is received with the correct notification
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
-from OWDTestToolkit import DOM
+from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 import time
 
 
 class test_main(GaiaTestCase):
-
-    test_msg = "Test message."
 
     def setUp(self):
         #
@@ -29,8 +27,10 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.msg = "Test " + str(time.time())
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.msg = "Test {}".format(time.time())
+        self.cp_incoming_number = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -42,18 +42,5 @@ class test_main(GaiaTestCase):
         #
         self.messages.launch()
 
-        self.UTILS.reporting.logResult("info", "** TEST: receive msg while in the thread.")
-        self.messages.createAndSendSMS([self.num], "Test message")
-        self.messages.waitForReceivedMsgInThisThread()
-
-        # Do this 'long hand' so we can switch back to the main screen before the message finishes
-        # sending (or we might miss the return notification).
-        self.UTILS.reporting.logResult("info", "** TEST: receive msg while in main screen (looking at threads).")
-        self.messages.enterSMSMsg(self.msg)
-        x = self.UTILS.element.getElement(DOM.Messages.send_message_button, "Send message button")
-        x.tap()
-
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
-
-        self.messages.waitForNewSMSPopup_by_msg(self.msg)
+        self.UTILS.messages.create_incoming_sms(self.phone_number, self.msg)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(self.msg, timeout=120)
