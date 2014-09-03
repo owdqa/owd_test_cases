@@ -59,8 +59,8 @@ class test_main(GaiaTestCase):
         test_msg = "This is a test message sent at {} while connected to a wifi".format(time.time())
         self.UTILS.messages.create_incoming_sms(self.num, test_msg)
         self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)
-        self.UTILS.statusbar.click_on_notification_detail(test_msg)
-        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+        self.UTILS.statusbar.click_on_notification_detail(test_msg, DOM.Messages.frame_locator)
+        #self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
         self.messages.check_last_message_contents(test_msg)
 
         self.browser.launch()
