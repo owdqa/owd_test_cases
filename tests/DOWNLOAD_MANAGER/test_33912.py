@@ -29,7 +29,7 @@ class test_main(GaiaTestCase):
         self.settings = Settings(self)
         self.download_manager = DownloadManager(self)
         self.test_url = self.UTILS.general.get_os_variable("GLOBAL_DOWNLOAD_URL")
-        self.file_name = "105MB.rar"
+        self.file_name = "22MB.rar"
         self.data_url = "{}/{}".format(self.test_url, self.file_name)
 
         self.data_layer.connect_to_cell_data()
@@ -72,10 +72,14 @@ class test_main(GaiaTestCase):
         self.download_manager.verify_download_status(self.data_url, "downloading")
         self.download_manager.verify_download_graphical_status(self.data_url, "downloading")
 
+        self.UTILS.statusbar.wait_for_notification_toaster_title("Download complete", frame_to_change=DOM.Settings.frame_locator, timeout=240)
         previous_number_of_pictures = len(self.data_layer.sdcard_files())
+        self.UTILS.reporting.logResult('info', "Previous: {}".format(previous_number_of_pictures))
+        
         # Delete download
         self.download_manager.delete_download(self.data_url)
 
+        self.UTILS.reporting.logResult('info', "Current: {}".format(len(self.data_layer.sdcard_files())))
         # Check that picture saved to SD card
         self.wait_for_condition(
             lambda m: len(self.data_layer.sdcard_files()) == previous_number_of_pictures - 1, 20)
