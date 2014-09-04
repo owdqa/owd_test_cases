@@ -1,6 +1,18 @@
+#===============================================================================
+# 26981: Verify that an user cannot click on an email address in the edit mode
 #
-# 26981
+# Procedure:
+# 1. Send a sms from "device A" to "device B" who contains an email address
+# 2. Open the thread view in the device A
+# ER1
+# 3. Open edit mode
+# ER2
 #
+# Expected results:
+# ER1 will be highlighted for each email address
+# ER2 will not be highlighted for each email address and the user can't click on it
+#===============================================================================
+
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
@@ -11,9 +23,6 @@ import time
 
 class test_main(GaiaTestCase):
 
-    test_msg = "Test message."
-    _RESTART_DEVICE = True
-
     def setUp(self):
         #
         # Set up child objects...
@@ -23,9 +32,9 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.Email = Email(self)
 
-        self.USER1 = self.UTILS.general.get_os_variable("GMAIL_1_USER")
-        self.EMAIL1 = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
-        self.PASS1 = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
+        self.email_user = self.UTILS.general.get_os_variable("GMAIL_1_USER")
+        self.email_address = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
+        self.email_pass = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
 
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
@@ -41,7 +50,7 @@ class test_main(GaiaTestCase):
         self.UTILS.network.getNetworkConnection()
 
         self.Email.launch()
-        self.Email.setupAccount(self.USER1, self.EMAIL1, self.PASS1)
+        self.Email.setupAccount(self.email_user, self.email_address, self.email_pass)
 
         #
         # Launch messages app.
@@ -51,9 +60,10 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.data_layer.send_sms(self.phone_number, "Email {} one.".format(self.emailAddy))
-        self.UTILS.statusbar.wait_for_notification_toaster_title(self.phone_number, timeout=120)
-        self.UTILS.statusbar.click_on_notification_title(self.phone_number, DOM.Messages.frame_locator)
+        test_msg = "Email address {} test at {}".format(self.emailAddy, time.time())
+        self.data_layer.send_sms(self.phone_number, test_msg)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)
+        self.UTILS.statusbar.click_on_notification_detail(test_msg, DOM.Messages.frame_locator)
         sms = self.messages.lastMessageInThisThread()
         #
         # Verify that the email address opens the email app.

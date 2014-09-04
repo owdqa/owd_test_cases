@@ -1,6 +1,26 @@
+#===============================================================================
+# 26978: Click on an email address and send an email (any email account
+# configured in the email app)(gmail account)
 #
-# 26978
+# Procedure:
+# 1. Send a sms from "device A" to "device B" who contains an email address
+# 2. Open the thread view in the device A
+# 3. Click on the email address
+# 4. Tap on "Send email" button from the overlay
+# ER1
+# 5. Confirm we want to configure an email account
+# 6. configure an gmail acount
+# ER2
+# 7. write a email text
+# 8. Press send button
+# ER3
 #
+# Expected results:
+# ER1. email app is launched to configure an email acount
+# ER2. new message screen is launched with the email charged in the "to:" label
+# ER3. the email is sent
+#===============================================================================
+
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
@@ -11,7 +31,6 @@ import time
 
 class test_main(GaiaTestCase):
 
-    test_msg = "Test message."
     _RESTART_DEVICE = True
 
     def setUp(self):
@@ -21,14 +40,14 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
-        self.Email = Email(self)
+        self.email = Email(self)
 
-        self.USER1 = self.UTILS.general.get_os_variable("GMAIL_1_USER")
-        self.EMAIL1 = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
-        self.PASS1 = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
+        self.email_user = self.UTILS.general.get_os_variable("GMAIL_1_USER")
+        self.email_address = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
+        self.email_pass = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
 
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
+        self.dest_email = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -43,10 +62,12 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.data_layer.send_sms(self.phone_number, "Email addy {} test.".format(self.emailAddy))
-        self.UTILS.statusbar.wait_for_notification_toaster_title(self.phone_number, timeout=120)
-        self.UTILS.statusbar.click_on_notification_title(self.phone_number, DOM.Messages.frame_locator)
+        test_msg = "email address {} test at {}".format(self.dest_email, time.time())
+        self.data_layer.send_sms(self.phone_number, test_msg)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)
+        self.UTILS.statusbar.click_on_notification_detail(test_msg, DOM.Messages.frame_locator)
         sms = self.messages.lastMessageInThisThread()
+        time.sleep(1)
 
         #
         # Tap the 2nd email link.
@@ -69,14 +90,14 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(DOM.Email.email_not_setup_ok, "Set up account confirmation")
         x.tap()
 
-        self.Email.setupAccount(self.USER1, self.EMAIL1, self.PASS1)
+        self.email.setupAccount(self.email_user, self.email_address, self.email_pass)
 
         #
         # Verify the email address is in the To field.
         #
         x = self.UTILS.element.getElement(DOM.Email.compose_to_from_contacts, "To field")
-        self.UTILS.test.TEST(x.text == self.emailAddy,
-                        "To field contains '{0}' (it was '{0}').".format(self.emailAddy))
+        self.UTILS.test.TEST(x.text == self.dest_email,
+                             "To field contains '{0}' (it was '{0}').".format(self.dest_email))
 
         #
         # Fill in the details and send the email.

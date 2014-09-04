@@ -67,11 +67,6 @@ class test_main(GaiaTestCase):
         self.messages.launch()
 
         #
-        # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
-        #
-#         self.messages.deleteAllThreads()
-
-        #
         # Create and send a new test message.
         #
         self.messages.createAndSendSMS([self.phone_number], "Hello {} old bean.".format(self.emailAddy))

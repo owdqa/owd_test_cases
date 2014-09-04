@@ -1,21 +1,19 @@
+#===============================================================================
+# 26841: Open SMS app after all sms were deleted or there is any sms
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# Open sms and delete all sms
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected results:
+# Verify that SMS app is shown successfully
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
-from OWDTestToolkit import DOM
+from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 
 
 class test_main(GaiaTestCase):
-
-    _RESTART_DEVICE = True
 
     def setUp(self):
         #
@@ -34,5 +32,5 @@ class test_main(GaiaTestCase):
         # Launch messages app.
         #
         self.messages.launch()
-
+        self.messages.deleteAllThreads()
         self.UTILS.element.headerCheck("Messages")

@@ -1,6 +1,18 @@
+#===============================================================================
+# 26982: Click on an email address in a sms who contains 3 emails
+# addresses and verify the email in email app
 #
-# 26982
+# Procedure:
+# 1. Send a sms from "device A" to "device B" who contains 3 emails addresses
+# 2. Open the thread view in the device A
+# 3. click on the second email
+# 4. Click on "Send email" button from the overlay
 #
+# Expected results:
+# Email app is launched with the correct email charged in "to:" field
+#===============================================================================
+
+import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
@@ -10,7 +22,6 @@ from OWDTestToolkit.apps.email import Email
 
 class test_main(GaiaTestCase):
 
-    test_msg = "Test message."
     _RESTART_DEVICE = True
 
     def setUp(self):
@@ -22,9 +33,9 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.Email = Email(self)
 
-        self.USER1 = self.UTILS.general.get_os_variable("GMAIL_1_USER")
-        self.EMAIL1 = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
-        self.PASS1 = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
+        self.email_user = self.UTILS.general.get_os_variable("GMAIL_1_USER")
+        self.email_address = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
+        self.email_pass = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
 
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
@@ -41,7 +52,7 @@ class test_main(GaiaTestCase):
         self.UTILS.network.getNetworkConnection()
 
         self.Email.launch()
-        self.Email.setupAccount(self.USER1, self.EMAIL1, self.PASS1)
+        self.Email.setupAccount(self.email_user, self.email_address, self.email_pass)
 
         #
         # Launch messages app.
@@ -51,24 +62,26 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        msg_text = "Email one one@tester.com, two {} , three three@tester.com.".format(self.emailAddy)
+        msg_text = "Email one one@tester.com, two {} , three three@tester.com at {}".\
+                    format(self.emailAddy, time.time())
         self.data_layer.send_sms(self.phone_number, msg_text)
-        self.UTILS.statusbar.wait_for_notification_toaster_title(self.phone_number, timeout=120)
-        self.UTILS.statusbar.click_on_notification_title(self.phone_number, DOM.Messages.frame_locator)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(msg_text, timeout=120)
+        self.UTILS.statusbar.click_on_notification_detail(msg_text, DOM.Messages.frame_locator)
         sms = self.messages.lastMessageInThisThread()
+        time.sleep(1)
 
         #
         # Tap the 2nd email link.
         #
-        self.UTILS.reporting.logResult("info", "Click the 2nd email address in this message: '{}'.".format(sms.text))
+        self.UTILS.reporting.logResult("info", "Click the email address in this message: '{}'.".format(sms.text))
         _link = sms.find_elements("tag name", "a")[1]
         _link.tap()
 
         #
         # Click on "Send email" button from the overlay
         #
-        x = self.UTILS.element.getElement(DOM.Messages.header_send_email_btn, "Send email button")
-        x.tap()
+        send_btn = self.UTILS.element.getElement(DOM.Messages.header_send_email_btn, "Send email button")
+        send_btn.tap()
 
         #
         # Switch to email frame and verify the email address is in the To field.

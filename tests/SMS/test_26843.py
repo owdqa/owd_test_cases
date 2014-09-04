@@ -1,13 +1,19 @@
+#===============================================================================
+# 26843: Open SMS app after send and receive some SMS from different
+# numbers (contacts)
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Send some sms to phone numbers who are contacts
+# 2- Send some sms to our device from phone numbers who are contacts
+# 2- Opem SMS app
 #
+# Expected results:
+# The SMS app shows a list with all conversations held is displayed
+#===============================================================================
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -17,8 +23,6 @@ from tests._mock_data.contacts import MockContact
 class test_main(GaiaTestCase):
 
     test_msg = "Test message."
-
-    _RESTART_DEVICE = True
 
     def setUp(self):
         #
@@ -42,7 +46,6 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
         #
         # Launch messages app.
         #
@@ -53,12 +56,10 @@ class test_main(GaiaTestCase):
         #
         self.messages.createAndSendSMS(self.nums, "Test message")
 
-        x = self.UTILS.element.getElements(DOM.Messages.thread_target_names, "Threads target names")
+        thread_names = self.UTILS.element.getElements(DOM.Messages.thread_target_names, "Threads target names")
 
-        # bools = [title in self.nums for title in x]
+        contacts_names = [elem["name"] for elem in self.test_contacts]
+        bools = [title.text in contacts_names for title in thread_names]
 
-        f = lambda x : [elem["name"] for elem in x]
-        bools = [title.text in f(self.test_contacts) for title in x]
-
-        msgs = ["A thread exists for " + str(elem) for elem in f(self.test_contacts)]
+        msgs = ["A thread exists for {}".format(elem) for elem in contacts_names]
         map(self.UTILS.test.TEST, bools, msgs)

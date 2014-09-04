@@ -1,24 +1,26 @@
+#===============================================================================
+# 26966: Verify in a received SMS thread view that only valid URL appears
+# highlighted
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Send from another device to the Device under Test an SMS including
+# a valid URL expression (f.e. "http://www.wikipedia.org/")
+# 2. Open in the Device under Test the SMS APP
+# 3. Search and tap on the received SMS
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected results:
+# The valid URL expression is shown highlighted in the SMS thread view
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+import time
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.browser import Browser
 
 
 class test_main(GaiaTestCase):
-
-    link = "www.google.com"
-    test_msg = "Test " + link + " this."
-
-    _RESTART_DEVICE = True
 
     def setUp(self):
         #
@@ -33,7 +35,12 @@ class test_main(GaiaTestCase):
         # Establish which phone number to use.
         #
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.incoming_number = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
+        self.link = "www.wikipedia.org"
+        self.test_msg = "Test with link {} at {}".format(self.link, time.time())
+        self.data_layer.delete_all_sms()
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -42,25 +49,13 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.UTILS.network.getNetworkConnection()
 
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
-        self.messages.deleteAllThreads()
-        #
-        # Create and send a new test message.
-        #
-        self.messages.createAndSendSMS([self.phone_number], self.test_msg)
-
-        #
-        # Wait for the last message in this thread to be a 'received' one
-        # and click the link.
-        #
-        x = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(x, "Received a message.", True)
+        self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
+        self.UTILS.statusbar.click_on_notification_detail(self.test_msg, frame_to_change=DOM.Messages.frame_locator)
 
         #
         #Verify that a valid URL appears highlight
         #
-        y = x.find_element("tag name", "a")
-        self.UTILS.test.TEST(y.text == self.link, "The web link is in the text message")
+        msg = self.messages.lastMessageInThisThread()
+        y = msg.find_element("tag name", "a")
+        self.UTILS.test.TEST(y.text == self.link, "The web link is highlighted in the text message")

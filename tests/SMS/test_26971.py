@@ -1,13 +1,19 @@
+#===============================================================================
+# 26971: Verify that in the sms thread view, valid e-mail addresses will
+# be highlighted or shown with a special visual indication
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Send a sms from "device A" to "device B" who contains an email address
+# 2. Send a sms from "device B" to "device A" who contains an email address
+# 3. Open the thread view in the device A
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected results:
+# The email addresses will be highlighted or shown with a special visual
+# indication
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+import time
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -15,11 +21,6 @@ from OWDTestToolkit.apps.browser import Browser
 
 
 class test_main(GaiaTestCase):
-
-    email = "owdqatestone@gmail.com"
-    test_msg = "Test " + email + " this."
-
-    _RESTART_DEVICE = True
 
     def setUp(self):
         #
@@ -34,7 +35,12 @@ class test_main(GaiaTestCase):
         # Establish which phone number to use.
         #
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.incoming_number = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
+        self.emails = ["email1@test.com", "email2@test.com"]
+        self.test_msg = "Test with email addresses: {} and {} at {}".format(self.emails[0], self.emails[1],
+                                                                            time.time())
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -43,39 +49,16 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.UTILS.network.getNetworkConnection()
 
-
-        #
-        # Launch messages app.
-        #
         self.messages.launch()
-        self.messages.deleteAllThreads() 
 
-        #
-        # Create and send a new test message.
-        #
         self.messages.createAndSendSMS([self.phone_number], self.test_msg)
- 
-        #
-        # Wait for the last message in this thread to be a 'received' one
-        # and click the link.
-        #
-        x = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(x, "Received a message.", True) 
+        send_time = self.messages.last_sent_message_timestamp()
+        msg = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
 
         #
         #Verify that a valid URL appears highlight on message received.
         #
-        y=x.find_element("tag name", "a")
-        self.UTILS.test.TEST(y.text == self.email, "The email link is in the message received")
-
-        #
-        # Get the link of the first message
-        #
-        w = self.UTILS.element.getElement(("id", "message-1"), "Message sent")
-
-        #
-        #Verify that a valid URL appears highlight
-        #
-        z=w.find_element("tag name", "a")
-        self.UTILS.test.TEST(z.text == self.email, "The email link is in the message sent")
-                
+        email_elems = msg.find_elements("tag name", "a")
+        emails = [email.text for email in email_elems]
+        all_found = all([email in emails for email in self.emails])
+        self.UTILS.test.TEST(all_found, "All emails were found in the message")

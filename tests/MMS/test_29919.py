@@ -1,21 +1,27 @@
+#===============================================================================
+# 29919: Verify that the user can attach a file .mp4 and it is displayed
+# as video
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Open sms app
+# 2. press attach button
+# 3. Select a file .mp4
+# ER1
+# 4. Press send button
+# ER2
 #
-import sys
-sys.path.insert(1, "./")
+# Expected results:
+# ER1 The file is attached and is displayed as video in the sms composer
+# ER2 The MMS is sends successfully
+#===============================================================================
 from gaiatest import GaiaTestCase
-
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
-from OWDTestToolkit.apps.gallery import Gallery
+from OWDTestToolkit.apps.video import Video
+
 
 class test_main(GaiaTestCase):
-
-    #
-    # Restart device to starting with wifi and 3g disabled.
-    #
-    _RESTART_DEVICE = True
 
     def setUp(self):
         #
@@ -24,7 +30,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
-        self.gallery = Gallery(self)
+        self.video = Video(self)
 
         self.test_msg = "Hello World"
 
@@ -33,13 +39,36 @@ class test_main(GaiaTestCase):
         #
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
+        self.UTILS.general.addFileToDevice('./tests/_resources/mpeg4.mp4', destination='/SD/mus')
+        self.data_layer.delete_all_sms()
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
 
     def tearDown(self):
+        self.UTILS.general.remove_file('mpeg4.mp4', '/SD/mus')
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
         #
-        # Create and Send an MMS with a video attached.
+        # Launch messages app.
         #
-        self.messages.createAndSendMMS("video", [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")], self.test_msg)
+        self.messages.launch()
+
+        #
+        # Create a new SMS
+        #
+        self.messages.startNewSMS()
+
+        #
+        # Insert the phone number in the To field
+        #
+        self.messages.addNumbersInToField([self.phone_number])
+
+        #
+        # Create MMS.
+        #
+        self.messages.enterSMSMsg(self.test_msg)
+        self.messages.createMMSVideo()
+        self.video.clickOnVideoMMS(0)
+        container = self.UTILS.element.getElement(DOM.Messages.attach_preview_video_audio_type, "Video container")
+        self.UTILS.test.TEST(container.get_attribute("data-attachment-type") == "video", "Video container found")

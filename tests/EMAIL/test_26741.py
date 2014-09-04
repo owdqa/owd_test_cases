@@ -1,21 +1,30 @@
+#===============================================================================
+# 26741: Email containing a URL
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# Make sure that the user has included an URL in sent message.
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Procedure:
+# 1. Compose an email containing an URL link
+# 2. Send the email to the DuT email address.
+# 3. Retrieve the email with the DuT s email client.
+# 4. Verify that the email is correctly received.
+# 5. A link in the text body should be highlighted and underlined.
+# 6. Verify the functionality of the link.
+#
+# Expected results:
+# The user shall be notified on email receival. Email should be
+# received and shall contain a link in the text body. The link should
+# be highlighted and underlined and it shall work when accessing the link.
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 
 
 class test_main(GaiaTestCase):
-
-    _RESTART_DEVICE = True
 
     def setUp(self):
         #
@@ -30,16 +39,10 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
         #
         # Launch messages app.
         #
         self.messages.launch()
-
-        #
-        # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
-        #
-#         self.messages.deleteAllThreads()
 
         #
         # Restart the app.

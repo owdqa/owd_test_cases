@@ -29,9 +29,9 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.Email = Email(self)
 
-        self.USER1 = self.UTILS.general.get_os_variable("GMAIL_1_USER")
-        self.EMAIL1 = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
-        self.PASS1 = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
+        self.email_user = self.UTILS.general.get_os_variable("GMAIL_1_USER")
+        self.email_address = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
+        self.email_pass = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
  
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
@@ -51,7 +51,7 @@ class test_main(GaiaTestCase):
         self.UTILS.network.getNetworkConnection()
 
         self.Email.launch()
-        self.Email.setupAccount(self.USER1, self.EMAIL1, self.PASS1)
+        self.Email.setupAccount(self.email_user, self.email_address, self.email_pass)
  
         #
         # Launch messages app.

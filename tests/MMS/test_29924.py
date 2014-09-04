@@ -1,21 +1,26 @@
+#===============================================================================
+# 29924: Click remove picture button in attached file options from a
+# picture attached
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Open sms app
+# 2. press new sms/mms button
+# 3. attach a image file
+# 4. tap on the image attached
+# 5. Press remove button
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected results:
+# The file is removed successfully
+#===============================================================================
 
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
 
-class test_main(GaiaTestCase):
 
-    #
-    # Restart device to starting with wifi and 3g disabled.
-    #
-    _RESTART_DEVICE = True
+class test_main(GaiaTestCase):
 
     def setUp(self):
         #
@@ -25,9 +30,10 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.gallery = Gallery(self)
-
+        self.UTILS.general.addFileToDevice('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
 
     def tearDown(self):
+        self.UTILS.general.remove_file('80x60.jpg', 'DCIM/100MZLLA')
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
@@ -35,7 +41,6 @@ class test_main(GaiaTestCase):
         #
         # Launch messages app.
         #
-
         self.messages.launch()
 
         #
@@ -43,27 +48,10 @@ class test_main(GaiaTestCase):
         #
         self.messages.startNewSMS()
 
-        #
-        # Insert image in the device
-        #
-        self.UTILS.general.addFileToDevice('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
+        self.messages.enterSMSMsg(self.test_msg)
 
-        #
-        # Attach an image file
-        #
-        attach = self.UTILS.element.getElement(DOM.Messages.attach_button, "Attach button")
-        attach.tap()
-
-        self.marionette.switch_to_frame()
-
-        #
-        # Select a image from gallery
-        #
-        gallery = self.UTILS.element.getElement(DOM.Messages.mms_from_gallery, "From gallery")
-        gallery.tap()
-        self.UTILS.iframe.switchToFrame(*DOM.Gallery.frame_locator)
+        self.messages.createMMSImage()
         self.gallery.clickThumbMMS(0)
-
 
         #
         # Open attached file options
@@ -78,4 +66,3 @@ class test_main(GaiaTestCase):
         x.tap()
 
         self.UTILS.element.waitForNotElements(DOM.Messages.attach_preview_img_type, "attached file has been removed")
-
