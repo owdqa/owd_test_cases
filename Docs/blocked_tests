@@ -28,4 +28,5 @@
 26907|Unable to figure out how to detect how not the keyboard is displayed (previously opened)
 29873|SIM with supplementary services needed
 29875|SIM with supplementary services needed
-33912| BUG 1050225
+33949|A file bigger than 1GB not available so far
+33931|BUG 1061096

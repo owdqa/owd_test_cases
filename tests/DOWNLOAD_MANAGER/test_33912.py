@@ -10,7 +10,6 @@
 #       The download is deleted from downloads list and the file is removed from "SD CARD/Downloads"
 #
 import time
-import re
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.browser import Browser
@@ -23,14 +22,9 @@ class test_main(GaiaTestCase):
 
     def setUp(self):
 
-        #
-        # Set up child objects...
-        #
-        # Standard.
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
 
-        # Specific for this test.
         self.browser = Browser(self)
         self.settings = Settings(self)
         self.download_manager = DownloadManager(self)
@@ -39,15 +33,29 @@ class test_main(GaiaTestCase):
         self.data_url = "{}/{}".format(self.test_url, self.file_name)
 
         self.data_layer.connect_to_cell_data()
-        # self.settings.launch()
-        # self.settings.downloads()
-        # self.download_manager.clean_downloads_list()
+        self.settings.launch()
+        self.settings.downloads()
+        self.download_manager.clean_downloads_list()
+
+        # TODO - Remove this block when bug 1050225 is RESOLVED
+        # We're doing this so that we have a previously completed download
+        # and we can see the in progress download entry in the downloads list
+        self.dummy_file = "Toast.doc"
+        self.browser.launch()
+        self.browser.open_url(self.test_url)
+        self.download_manager.download_file(self.dummy_file)
+        self.UTILS.statusbar.wait_for_notification_toaster_title("Download complete", timeout=60)
+        time.sleep(5)
+        self.apps.kill_all()
+        time.sleep(2)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
+
         self.browser.launch()
         self.browser.open_url(self.test_url)
 
@@ -66,9 +74,9 @@ class test_main(GaiaTestCase):
 
         previous_number_of_pictures = len(self.data_layer.sdcard_files())
         # Delete download
-        self.download_manager.delete_all_downloads()
+        self.download_manager.delete_download(self.data_url)
 
         # Check that picture saved to SD card
         self.wait_for_condition(
-            lambda m: len(self.data_layer.sdcard_files()) == previous_number_of_pictures - len(self.file_names), 20)
-        self.assertEqual(len(self.data_layer.sdcard_files()), previous_number_of_pictures - len(self.file_names))
+            lambda m: len(self.data_layer.sdcard_files()) == previous_number_of_pictures - 1, 20)
+        self.assertEqual(len(self.data_layer.sdcard_files()), previous_number_of_pictures - 1)

@@ -35,6 +35,7 @@ class test_main(GaiaTestCase):
         self.data_url = "{}/{}".format(self.test_url, self.file_name)
 
         self.connect_to_network()
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
 
         # Download and audio file
         self.settings.launch()
@@ -51,7 +52,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-		GaiaTestCase.tearDown(self)
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
         self.settings.launch()

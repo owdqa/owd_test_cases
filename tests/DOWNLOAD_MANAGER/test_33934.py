@@ -1,94 +1,66 @@
+# 33934: Verify the donwloads list with a file name very long
 #
-# Imports which are standard for all test cases.
-#
-import sys
+# ** Prerrequisites
+#       Having a downloads list with a download with very long name
+# ** Procedure
+#       1. Open settings app
+#       2. Open Downloads
+# ** Expected Results
+#       A download with very long name is displayed successfully.
+#       The file name is displayed in a line ended in "..."
 import time
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.browser import Browser
 from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit.apps.downloadmanager import DownloadManager
 from OWDTestToolkit import DOM
 
-#
-# Imports particular to this test case.
-#
 
 class test_main(GaiaTestCase):
 
-    #
-    # Restart device to have a empty downloads list
-    #
-    #_RESTART_DEVICE = True
-
     def setUp(self):
-        
-        #
-        # Set up child objects...
-        #
-        # Standard.
-        GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
 
-        # Specific for this test.
-        self.Browser = Browser(self)
+        GaiaTestCase.setUp(self)
+        self.UTILS = UTILS(self)
+
+        self.browser = Browser(self)
         self.settings = Settings(self)
-        self.DownloadManager = DownloadManager(self)
-        self.testURL    = self.UTILS.general.get_os_variable("GLOBAL_DOWNLOAD_URL")
-        self.fileName   = "prueba_archivo_con_nombre_muy_largo_de_30MB.rar"
+        self.download_manager = DownloadManager(self)
+        self.test_url = self.UTILS.general.get_os_variable("GLOBAL_DOWNLOAD_URL")
+        self.file_name = "prueba_archivo_con_nombre_muy_largo_de_30MB.rar"
+        self.data_url = "{}/{}".format(self.test_url, self.file_name)
+
+        self.connect_to_network()
+        self.settings.launch()
+        self.settings.downloads()
+        self.download_manager.clean_downloads_list()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Restart download list to start with an empty downloads list
-        #
-        self.DownloadManager.clean_downloads_list()
-
-        #
-        # Tries several methods to get ANY network connection
-        #
-        self.UTILS.network.getNetworkConnection()
-
-        #
-        # Open the Browser application
-        #
-        self.Browser.launch()
-
-        #
-        # Open our URL
-        #
-        self.Browser.open_url(self.testURL)
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
+        
+        self.browser.launch()
+        self.browser.open_url(self.test_url)
+        self.download_manager.download_file(self.file_name)
+        self.UTILS.statusbar.wait_for_notification_toaster_title("Download complete", timeout=60)
         time.sleep(5)
 
-        #
-        # Download the file
-        #
-        self.DownloadManager.downloadFile(self.fileName)
+        self.apps.kill_all()
+        time.sleep(2)
 
-        #
-        # Go to settings
-        #
         self.settings.launch()
-
-        #
-        # Go to downloads
-        #
-
         self.settings.downloads()
 
         #
         # Check the file is there
         #
+        entry_name = self.download_manager.get_download_entry(self.data_url).find_element(*('css selector', 'p.fileName'))
+        value = self.UTILS.element.get_css_value(entry_name, "text-overflow")
+        is_ellipsis = self.UTILS.element.is_ellipsis_active(entry_name)
 
-        elem = (DOM.DownloadManager.download_element[0],
-                DOM.DownloadManager.download_element[1] % (self.testURL + self.fileName))
-
-        x = self.UTILS.element.getElement(elem,
-            "Getting download file with a very long name")
-
-        self.UTILS.test.TEST(x is not None,
-            "Checking we've got the file from the donwload list")
+        self.UTILS.test.TEST(value == "ellipsis" and is_ellipsis,
+                             "Download list shows ellipsis(...) for a long entry [{}]".format(self.file_name))

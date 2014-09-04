@@ -46,7 +46,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
+        
         self.browser.launch()
         self.browser.open_url(self.test_url)
 

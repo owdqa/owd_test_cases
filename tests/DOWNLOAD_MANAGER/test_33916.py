@@ -1,17 +1,17 @@
-# 33916: Press "Delete" in uable to open file screen
+# 33916: Press "Delete" in unable to open file screen
 # ** Procedure
-# 1. Download a not supported file ".rar, .doc..."
-# 2. Open download list
-# 3. Tap on the file
-# ER1
-# 4. Press delete button and verify that
-# ER2
-# 4. Press Delete button in confirmation screen
-# ER3
+#       1. Download a not supported file ".rar, .doc..."
+#       2. Open download list
+#       3. Tap on the file
+#       ER1
+#       4. Press delete button and verify that
+#       ER2
+#       4. Press Delete button in confirmation screen
+#       ER3
 # ** Expected Results
-# ER1 A screen "unable to open file" is displayed with the buttons "Keep file" and "Delete"
-# ER2 A confirmation screen is displayed
-# ER3 The file is deleted and the user returns to donwload list
+#       ER1 A screen "unable to open file" is displayed with the buttons "Keep file" and "Delete"
+#       ER2 A confirmation screen is displayed
+#       ER3 The file is deleted and the user returns to donwload list
 import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
