@@ -79,19 +79,19 @@ class test_main(GaiaTestCase):
         self.settings.launch()
         self.settings.downloads()
 
-        for i in range(len(self.file_names)):
+        for data_url in self.data_urls:
             # Check the download is there
-            self.download_manager.get_download_entry(self.data_urls[i])
+            self.download_manager.get_download_entry(data_url)
             # Check it is downloading
-            self.download_manager.verify_download_status(self.data_urls[i], "downloading")
-            self.download_manager.verify_download_graphical_status(self.data_urls[i], "downloading")
+            self.download_manager.verify_download_status(data_url, "downloading")
+            self.download_manager.verify_download_graphical_status(data_url, "downloading")
             # Append the progress
-            self.pre_progresses.append(self.download_manager.get_download_progress(self.data_urls[i]))
+            self.pre_progresses.append(self.download_manager.get_download_progress(data_url))
 
         time.sleep(10)
 
-        for i in range(len(self.file_names)):
-            self.post_progresses.append(self.download_manager.get_download_progress(self.data_urls[i]))
+        for data_url in self.data_urls:
+            self.post_progresses.append(self.download_manager.get_download_progress(data_url))
 
         self.UTILS.reporting.logResult('info', "Initial progress array: {}".format(self.pre_progresses))
         self.UTILS.reporting.logResult('info', "Final progress array: {}".format(self.post_progresses))
