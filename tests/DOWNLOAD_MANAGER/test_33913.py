@@ -1,6 +1,13 @@
-import sys
+# 33913: Press "keep File" in unable to open file screen 
+# ** Procedure
+#       1. Download a not supported file ".rar, .doc..."
+#       2. Open download list
+#       3. Tap on the file and verify that a screen "unable to open file" is displayed 
+#          with the buttons "Keep file" and "Delete"
+#       4. Press "Keep File" button 
+# ** Expected Results
+#       The file is not deleted and the user returns to download list
 import time
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.browser import Browser
@@ -9,114 +16,47 @@ from OWDTestToolkit.apps.downloadmanager import DownloadManager
 from OWDTestToolkit import DOM
 
 
-#
-# Imports particular to this test case.
-#
-
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        
-        #
-        # Set up child objects...
-        #
-        # Standard.
-        GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
 
-        # Specific for this test.
+        GaiaTestCase.setUp(self)
+        self.UTILS = UTILS(self)
+
         self.browser = Browser(self)
         self.settings = Settings(self)
-        self.downloadManager = DownloadManager(self)
-        self.testURL    = self.UTILS.general.get_os_variable("GLOBAL_DOWNLOAD_URL")
-        self.fileName   = "Toast.doc"
+        self.download_manager = DownloadManager(self)
+        self.test_url = self.UTILS.general.get_os_variable("GLOBAL_DOWNLOAD_URL")
+        self.file_name = "11MB.rar"
+        self.data_url = "{}/{}".format(self.test_url, self.file_name)
+
+        self.connect_to_network()
+        self.settings.launch()
+        self.settings.downloads()
+        self.download_manager.clean_downloads_list()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Restart download list to start with an empty downloads list
-        #
-        self.downloadManager.restartDownloadsList()
-
-        #
-        # Tries several methods to get ANY network connection
-        #
-        self.UTILS.network.getNetworkConnection()
-
-
-        #
-        # Open the Browser application
-        #
+     
         self.browser.launch()
+        self.browser.open_url(self.test_url)
 
-        #
-        # Open our URL
-        #
-        self.browser.open_url(self.testURL)
-
-        #
-        # Download the file
-        #
-        self.downloadManager.downloadFile(self.fileName)
-
-        #
-        # Open the Settings application.
-        #
-        self.settings.launch()
-
-        #
-        # Tap Downloads List.
-        #
-        self.settings.downloads()
+       
+        self.download_manager.download_file(self.file_name)
+        self.UTILS.statusbar.wait_for_notification_toaster_title("Download complete", timeout=60)
         time.sleep(5)
 
-        #
-        # Try to open the file - a position is required since weird things 
-        # are happening with the file ID once downloaded
-        #
-        self.downloadManager.openDownload(self.testURL + self.fileName)
+        self.apps.kill_all()
+        time.sleep(2)
 
-        #
-        # Tap Open button.
-        #
-        self.UTILS.element.waitForElements(DOM.DownloadManager.download_file_option_open,
-                                     "Waiting for Open file button")
+        self.settings.launch()
+        self.settings.downloads()
+        self.download_manager.open_download(self.data_url)
+        self.download_manager.open_download_keep_file()
 
-        x = self.UTILS.element.getElement(DOM.DownloadManager.download_file_option_open,
-            "Getting open button")
-        x.tap()
-
-        #
-        # Wait for Delete button in Delete or Keep file screen
-        #
-        self.UTILS.element.waitForElements(DOM.DownloadManager.download_confirm,
-            "Waiting for Delete file button", True, 10, True)
-
-        x = self.UTILS.element.getElement(DOM.DownloadManager.download_confirm_yes,
-                                    "Getting 'Delete' button")
-        x.tap()
-
-
-        #
-        # Wait for Delete button in confirmation screen
-        #
-        self.UTILS.element.waitForElements(DOM.DownloadManager.download_confirm,
-            "Waiting for confirm Keep file button", True, 10, True)
-
-        x = self.UTILS.element.getElement(DOM.DownloadManager.download_confirm_no,
-                                    "Getting cofirm 'Keep File' button")
-        x.tap()
-
-
-        #
-        # To verify if the file continues in downloads list
-        #
-        self.downloadManager.openDownload(self.testURL + self.fileName)
-
-
-
-
-
+        elem = (DOM.DownloadManager.download_element[0],
+                DOM.DownloadManager.download_element[1].format(self.data_url))
+        self.UTILS.element.waitForElements(elem, "Download is still there")

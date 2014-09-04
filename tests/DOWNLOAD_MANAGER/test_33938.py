@@ -1,108 +1,80 @@
+# 33938: Verify that the download in progress notification is updated in the notification bar
 #
-# Imports which are standard for all test cases.
-#
-import sys
+# ** Prerrequisites
+#       Having a download in prgoress and a downloading notification in notifications tray
+# ** Procedure
+#       1. Opening settings app
+#       2. Opening Download list
+#       ER1
+#       3. Click on a download in progress
+#       4. Click on "yes" button in confirmation screen
+#       ER2
+# ** Expected Results
+#       ER1 A notification "Downloading" is displayed in the notification bar
+#       ER2 The notificacion "Downloading" is updated and now displays "Download Stopped"
 import time
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
+from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.browser import Browser
 from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit.apps.downloadmanager import DownloadManager
-#
-# Imports particular to this test case.
-#
+from OWDTestToolkit import DOM
+
 
 class test_main(GaiaTestCase):
 
-
     def setUp(self):
-        
-        #
-        # Set up child objects...
-        #
-        # Standard.
+
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
 
-        # Specific for this test.
         self.browser = Browser(self)
         self.settings = Settings(self)
-        self.downloadManager = DownloadManager(self)
-        self.testURL = self.UTILS.general.get_os_variable("GLOBAL_DOWNLOAD_URL")
-        self.fileName = "105MB.rar"
+        self.download_manager = DownloadManager(self)
+        self.test_url = self.UTILS.general.get_os_variable("GLOBAL_DOWNLOAD_URL")
+        self.file_name = "105MB.rar"
+        self.data_url = "{}/{}".format(self.test_url, self.file_name)
+
+        # make the download process slower
+        self.data_layer.connect_to_cell_data()
+        self.settings.launch()
+        self.settings.downloads()
+        self.download_manager.clean_downloads_list()
+
+        # TODO - Remove this block when bug 1050225 is RESOLVED
+        # We're doing this so that we have a previously completed download
+        # and we can see the in progress download entry in the downloads list
+        self.dummy_file = "Toast.doc"
+        self.browser.launch()
+        self.browser.open_url(self.test_url)
+        self.download_manager.download_file(self.dummy_file)
+        self.UTILS.statusbar.wait_for_notification_toaster_title("Download complete", timeout=60)
+        time.sleep(5)
+        self.apps.kill_all()
+        time.sleep(2)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Verify that the dwonload in progresss notification is updated in the
-        # notification bar
-        #
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
 
-        #
-        # Tries several methods to get ANY network connection
-        #
-        self.UTILS.network.getNetworkConnection()
-
-        #
-        # Open the Browser application
-        #
         self.browser.launch()
+        self.browser.open_url(self.test_url)
+        self.download_manager.download_file(self.file_name)
+        self.UTILS.statusbar.wait_for_notification_toaster_title("Download started", "Downloading", timeout=15)
+        time.sleep(5)
 
-        #
-        # Open our URL
-        #
-        self.browser.open_url(self.testURL)
-
-        #
-        # Download the file
-        #
-        self.downloadManager.downloadFile(self.fileName)
-
-
-
-
-
-        #
-        # Check the download is downloading and appears as a notification in the statusbar
-        #
-
-        isOK = self.downloadManager.waitForDownloadNotifier("Downloading", self.fileName)
-
-        self.UTILS.test.TEST(isOK,
-            "Verifying the download [IN PROGRESS] appears as a notification")
-
-        #
-        # Open the Settings application.
-        #
-        self.settings.launch()
-
-        #
-        # Tap Downloads List.
-        #
-        self.settings.downloads()
-
-        #
-        # Stop the download
-        #
-        self.downloadManager.stopDownloadByPosition(1, True)
+        self.apps.kill_all()
         time.sleep(2)
 
-        #
-        # Check the download is stopped and appears as a notification in the statusbar
-        #
+        self.settings.launch()
+        self.settings.downloads()
 
-        isOK = self.downloadManager.waitForDownloadNotifier("Download stopped", self.fileName)
+        # Verify status downloading using data-state="downloading".
+        self.download_manager.verify_download_status(self.data_url, "downloading")
+        self.download_manager.verify_download_graphical_status(self.data_url, "downloading")
 
-        self.UTILS.test.TEST(isOK,
-            "Verifying the download [STOPPED] appears as a notification")
-
-        #
-        # Restart download list
-        #
-        self.downloadManager.restartDownloadsList()
-
-
+        self.download_manager.stop_download(self.data_url, True)
+        self.UTILS.statusbar.wait_for_notification_statusbar_title("Download stopped")

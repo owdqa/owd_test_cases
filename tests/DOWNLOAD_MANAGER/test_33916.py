@@ -1,6 +1,18 @@
-import sys
+# 33916: Press "Delete" in unable to open file screen
+# ** Procedure
+#       1. Download a not supported file ".rar, .doc..."
+#       2. Open download list
+#       3. Tap on the file
+#       ER1
+#       4. Press delete button and verify that
+#       ER2
+#       4. Press Delete button in confirmation screen
+#       ER3
+# ** Expected Results
+#       ER1 A screen "unable to open file" is displayed with the buttons "Keep file" and "Delete"
+#       ER2 A confirmation screen is displayed
+#       ER3 The file is deleted and the user returns to donwload list
 import time
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.browser import Browser
@@ -9,112 +21,52 @@ from OWDTestToolkit.apps.downloadmanager import DownloadManager
 from OWDTestToolkit import DOM
 
 
-#
-# Imports particular to this test case.
-#
-
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        
-        #
-        # Set up child objects...
-        #
-        # Standard.
-        GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
 
-        # Specific for this test.
-        self.Browser = Browser(self)
+        GaiaTestCase.setUp(self)
+        self.UTILS = UTILS(self)
+
+        self.browser = Browser(self)
         self.settings = Settings(self)
-        self.DownloadManager = DownloadManager(self)
-        self.testURL    = self.UTILS.general.get_os_variable("GLOBAL_DOWNLOAD_URL")
-        self.fileName   = "Toast.doc"
+        self.download_manager = DownloadManager(self)
+        self.test_url = self.UTILS.general.get_os_variable("GLOBAL_DOWNLOAD_URL")
+        self.file_name = "11MB.rar"
+        self.data_url = "{}/{}".format(self.test_url, self.file_name)
+
+        self.connect_to_network()
+        self.settings.launch()
+        self.settings.downloads()
+        self.download_manager.clean_downloads_list()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Restart download list to start with an empty downloads list
-        #
-        self.DownloadManager.restartDownloadsList()
 
-        #
-        # Tries several methods to get ANY network connection
-        #
-        self.UTILS.network.getNetworkConnection()
+        self.browser.launch()
+        self.browser.open_url(self.test_url)
 
-
-        #
-        # Open the Browser application
-        #
-        self.Browser.launch()
-
-        #
-        # Open our URL
-        #
-        self.Browser.open_url(self.testURL)
-
-        #
-        # Download the file
-        #
-        self.DownloadManager.downloadFile(self.fileName)
-
-        #
-        # Open the Settings application.
-        #
-        self.settings.launch()
-
-        #
-        # Tap Downloads List.
-        #
-        self.settings.downloads()
+        self.download_manager.download_file(self.file_name)
+        self.UTILS.statusbar.wait_for_notification_toaster_title("Download complete", timeout=60)
         time.sleep(5)
 
-        #
-        # Try to open the file - a position is required since weird things 
-        # are happening with the file ID once downloaded
-        #
-        self.DownloadManager.openDownload(self.testURL + self.fileName)
+        self.apps.kill_all()
+        time.sleep(2)
+        previous_number_of_pictures = len(self.data_layer.sdcard_files())
 
-        #
-        # Tap Open button.
-        #
-        self.UTILS.element.waitForElements(DOM.DownloadManager.download_file_option_open,
-                                     "Waiting for Open file button")
+        self.settings.launch()
+        self.settings.downloads()
+        self.download_manager.open_download(self.data_url)
+        self.download_manager.open_download_delete_file()
 
-        x = self.UTILS.element.getElement(DOM.DownloadManager.download_file_option_open,
-            "Getting open button")
-        x.tap()
+        elem = (DOM.DownloadManager.download_element[0],
+                DOM.DownloadManager.download_element[1].format(self.data_url))
+        self.UTILS.element.waitForNotElements(elem, "Download is not there")
 
-        #
-        # Wait for Delete button in Delete or Keep file screen
-        #
-        self.UTILS.element.waitForElements(DOM.DownloadManager.download_confirm,
-            "Waiting for Delete file button", True, 10, True)
-
-        x = self.UTILS.element.getElement(DOM.DownloadManager.download_confirm_yes,
-                                    "Getting 'Delete' button")
-        x.tap()
-
-
-        #
-        # Wait for Delete button in confirmation screen
-        #
-        self.UTILS.element.waitForElements(DOM.DownloadManager.download_confirm,
-            "Waiting for confirm Delete file button", True, 10, True)
-
-        x = self.UTILS.element.getElement(DOM.DownloadManager.download_confirm_yes,
-                                    "Getting cofirm 'Delete' button")
-        x.tap()
-
-
-        #
-        # Verify no downloads are present
-        #
-        x = self.UTILS.element.getElement(DOM.DownloadManager.download_empty_list_content,
-                                "Getting empty list content")
-        self.UTILS.test.TEST(x.text == "No downloads",
-            "Verifying 'No downloads' message is displayed")
+        # Check that picture saved to SD card
+        self.wait_for_condition(
+            lambda m: len(self.data_layer.sdcard_files()) == previous_number_of_pictures - 1, 20)
+        self.assertEqual(len(self.data_layer.sdcard_files()), previous_number_of_pictures - 1)
