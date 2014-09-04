@@ -1,0 +1,41 @@
+#
+# Parameters for OWD Test suites that are dependant on the device under test
+# and on the location (Madrid, Boecillo, or any other)
+#
+
+# Phone numbers
+GLOBAL_TARGET_SMS_NUM=+34620971426
+TARGET_MMS_NUM=+620971426
+GLOBAL_TARGET_SMS_NUM_SHORT=800377
+
+# PINs
+GLOBAL_PIN=2688
+GLOBAL_LOCK_CODE=1234
+GLOBAL_PUK=95094520
+GLOBAL_PUK2=79522513
+PIN2_OK=3456
+PIN2_WRONG=1234
+
+# Wifi
+GLOBAL_WIFI_NAME=OWDBOE
+GLOBAL_WIFI_USERNAME=OWDBOE
+GLOBAL_WIFI_PASSWORD=owdtest2
+GLOBAL_OPEN_WIFI_NAME=OWDBOE
+
+# OMA Client Provisioning
+GLOBAL_CP_NETWPIN=68617610508695F4
+GLOBAL_CP_PIN=1234
+GLOBAL_CP_USERNETWPIN=68617610508695F4:1234
+
+# Pigeon
+PIGEON_API_KEY=2aac9cfe-c2b5-42cc-a90a-852dd9fca1a9
+PIGEON_API_SECRET=5ab951a6-1b02-467a-92db-6225a90cd328
+
+# Logging
+OWD_LOG_CFG=/home/fran/owd/owd-obcertification/owd_test_cases/tests/logger.cfg
+#ALTERNATIVE_RESULTS_DIR=/var/www/html/owd_tests/2.0
+
+# Waiting times (should be adjusted adding 00 for CI)
+GLOBAL_LONG_WAIT_TIME=36
+GLOBAL_SHORT_WAIT_TIME=18
+GLOBAL_USBLT_WAIT_TIME=72
