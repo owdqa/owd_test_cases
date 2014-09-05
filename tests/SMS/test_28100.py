@@ -1,12 +1,23 @@
-2: 
-
-Pre-requisites:
-
-
-Procedure:
-
-
-Expected results:
+#===============================================================================
+# 28100: Verify what happens if the SMS contains text followed by
+# another number (NOT phone number) followed by blank and a valid
+# phone number (e.g.:"Test1 656565678 number")
+#
+# Procedure:
+# 1. Send from another device to DUT an SMS containing text followed by
+# another number (NOT phone number) followed by blank and a valid phone
+# number (e.g. "Test1 656565656 number")
+# 2. Open in DUT the SMS APP and tap on the received SMS
+# 3. In the SMS thread view tap on the highlighted phone number
+# 4. Press "Call" button from options overlay
+#
+# Expected results:
+# 1.The SMS is received on the DUT.
+# 2.ONLY the valid phone number (9 digits) are shown highlighted as a
+# valid phone number.
+# 3.The Dialer App is launched with the phone number highlighted pre-filled
+# in at the top of the screen but the call is not automatically established
+#===============================================================================
 
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
