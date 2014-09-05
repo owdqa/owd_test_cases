@@ -28,7 +28,6 @@ from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
-from tests._mock_data.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
@@ -88,8 +87,6 @@ class test_main(GaiaTestCase):
         #
         self.messages.sendSMS()
 
-        #time.sleep(5)
-
         #
         # Obtaining file attached type
         #
@@ -104,9 +101,5 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.reporting.logResult("info", "Check how many threads are there")
         original_count = self.messages.countNumberOfThreads()
-        self.UTILS.reporting.logResult("info",
-                             "Number of threads " + str(original_count) +
-                              " in list.")
+        self.UTILS.reporting.logResult("info", "Number of threads {} in list.".format(original_count))
         self.UTILS.test.TEST(original_count == 1, "Check how many threads are there")
-
-        self.UTILS.reporting.logResult("info", "Test correctly finished")

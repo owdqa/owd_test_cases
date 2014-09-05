@@ -70,7 +70,7 @@ class test_main(GaiaTestCase):
         # Check the threads for the required elements: name, time and excerpt
         for num in [self.contact["name"], incoming_num]:
             thread = self.UTILS.element.getElementByXpath(DOM.Messages.thread_selector_xpath.format(num))
-            name = self.marionette.find_element('css selector', 'p.name', id=thread.id).text
+            name = self.marionette.find_element(*DOM.Messages.threads, id=thread.id).text
             self.UTILS.test.TEST(num == name, "Expected thread name: {} Actual value: {}".format(num, name))
             thread_time = self.marionette.find_element('css selector', 'p.summary time', id=thread.id).text
             self.UTILS.test.TEST(thread_time, "Thread time found: {}".format(thread_time))
