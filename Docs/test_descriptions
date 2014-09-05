@@ -317,7 +317,10 @@
 29901|MMS received with auto retrieve and when roaming disabled (data connection not available)
 29902|MMS received with auto retrieve and when roaming disabled (data connection and wifi available)
 29903|Verify that all the MMSs in a thread are chronologically ordered
+29909|Verify that the name of one recipient is shown correctly in 'To' field (Contact saved with name and surname)
+29910|Remove a recipient (contact) from the 'To' field (n recipients)
 29911|All recipients are shown fine (recipients are contacts and numbers entered manually) in the sms thread
+29914|Verify that when sending a mms to multiple recipients (contacts), only a new thread will be created for the message
 29915|Send a mms to a number using different prefixes (00, +XX) and verify that only a thread is created
 29916|Verify that the user can delete all mms in a thread with an unsent mms
 29917|Verify that the user can delete an mms in a thread with several mms

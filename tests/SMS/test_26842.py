@@ -1,23 +1,24 @@
+#===============================================================================
+# 26842: Open SMS app after send and receive some SMS from different
+# numbers (no contacts)
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Send some sms to phone numbers who are not contacts
+# 2- Send some sms to our device from phone numbers who are not contacts
+# 2- Opem SMS app
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected results:
+# The SMS app shows a list with all conversations held
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+import time
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 
 
 class test_main(GaiaTestCase):
-
-    test_msg = "Test message."
-
-    _RESTART_DEVICE = True
 
     def setUp(self):
         #
@@ -47,14 +48,14 @@ class test_main(GaiaTestCase):
         # Launch messages app.
         #
         self.messages.launch()
- 
-        #
-        # Send a message to myself (long and short number to get a few threads).
-        #
-        self.messages.createAndSendSMS(self.nums, "Test message")
+
+        for num in self.nums:
+            test_msg = "Test message at {} for {}".format(time.time(), num)
+            self.messages.createAndSendSMS([num], test_msg)
+            self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)
 
         x = self.UTILS.element.getElements(DOM.Messages.thread_target_names, "Threads target names")
 
         bools = [title.text in self.nums for title in x]
-        msgs = ["A thread exists for " + str(elem) for elem in self.nums]
+        msgs = ["A thread exists for {}".format(elem) for elem in self.nums]
         map(self.UTILS.test.TEST, bools, msgs)

@@ -1,6 +1,13 @@
-#
-# 28100
-#
+2: 
+
+Pre-requisites:
+
+
+Procedure:
+
+
+Expected results:
+
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS

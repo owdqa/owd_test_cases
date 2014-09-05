@@ -1,5 +1,6 @@
 #===============================================================================
-# 29902: MMS received with auto retrieve and when roaming disabled (data connection and wifi available)
+# 29902: MMS received with auto retrieve and when roaming disabled
+# (data connection and wifi available)
 #
 # Pre-requisites:
 # Data connection and wifi enabled, phone is in home network

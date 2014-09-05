@@ -1,22 +1,26 @@
+#===============================================================================
+# 26965: Verify in a sent SMS thread view that only valid URL appears
+# highlighted
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Send from Device under Test to another device an SMS including a
+# valid URL expression (f.e. "http://www.wikipedia.org/")
+# 2. Open in Device under Test the SMS APP
+# 3. Search and tap on the sent SMS
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected results:
+# The valid URL expresion is shown highlighted in the SMS thread view
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+import time
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.browser import Browser
 
 
 class test_main(GaiaTestCase):
-
-    link = "www.google.com"
-    test_msg = "Test " + link + " this."
 
     _RESTART_DEVICE = True
 
@@ -34,6 +38,9 @@ class test_main(GaiaTestCase):
         #
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
+        self.link = "www.wikipedia.org"
+        self.test_msg = "Test with link: {} at {}".format(self.link, time.time())
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -46,7 +53,7 @@ class test_main(GaiaTestCase):
         # Launch messages app.
         #
         self.messages.launch()
-        self.messages.deleteAllThreads()
+
         #
         # Create and send a new test message.
         #
@@ -55,10 +62,10 @@ class test_main(GaiaTestCase):
         #
         # Get the link of the first message
         #
-        x = self.UTILS.element.getElement(("id", "message-1"), "Message sent")
+        msg = self.UTILS.element.getElement(DOM.Messages.last_sent_message, "Last sent message")
 
         #
-        #Verify that a valid URL appears highlight
+        # Verify that a valid URL appears highlight
         #
-        y = x.find_element("tag name", "a")
-        self.UTILS.test.TEST(y.text == self.link, "The web link is in the text message")
+        y = msg.find_element("tag name", "a")
+        self.UTILS.test.TEST(y.text == self.link, "The web link is highlighted in the text message")

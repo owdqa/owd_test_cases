@@ -1,22 +1,33 @@
+#===============================================================================
+# 29909: Verify that the name of one recipient is shown correctly
+# in 'To' field (Contact saved with name and surname)
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# At least one contact saved with name and last name
 #
+# Procedure:
+# 1. Open SMS app
+# 2. Tap on new to create a new MMS(attach a file)
+# 3. Tap on '+' icon to add a recipient (ER1)
+# 4. Select a contact which has name and last name by tapping on
+# it (ER2)
+#
+# Expected results:
+# ER1. When tapping on '+' the contact list is shown. It is possible
+# to select any contact
+# ER2. The contact is added into the 'To' field. The name is shown fine
+# on that field
+#===============================================================================
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from tests._mock_data.contacts import MockContact
 
+
 class test_main(GaiaTestCase):
-
-   #
-    # Restart device to starting with wifi and 3g disabled.
-    #
-    _RESTART_DEVICE = True
-
 
     def setUp(self):
         #
@@ -26,12 +37,10 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-
         #
         # Prepare the contact we're going to insert.
         #
-        self.contact = MockContact(givenName = "Name", familyName = "Surname",name = "Name Surname")
-
+        self.contact = MockContact(givenName="Name", familyName="Surname", name="Name Surname")
         self.UTILS.general.insertContact(self.contact)
 
     def tearDown(self):
@@ -47,4 +56,3 @@ class test_main(GaiaTestCase):
         self.messages.addContactToField(self.contact["name"])
 
         self.UTILS.reporting.logResult("info", "Correct name is in the 'To' list.")
-

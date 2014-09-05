@@ -1,22 +1,24 @@
+#===============================================================================
+# 29915: Send a mms to a number using different prefixes (00, +XX)
+# and verify that only a thread is created
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Send a MMS to a number 0034 xxxxxxxxx
+# 2. Send another MMS to the same number: +34 xxxxxxxxx
+# 3. Send a third message to the same number without country code: xxxxxxxxx
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected results:
+# Only one thread is created
+#===============================================================================
 
+import time
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
-from tests._mock_data.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
-
-   #
-    # Restart device to starting with wifi and 3g disabled.
-    #
-    _RESTART_DEVICE = True
-
 
     def setUp(self):
         #
@@ -26,16 +28,14 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        self.test_msg = "Hello World"
-
-        #
-        # Establish which phone number to use.
-        #
-        #With format= +34 xxxxxxxxx
-        self.test_num_1 = "620972162"
-        self.test_num_2 = "0034620972162"
-        self.test_num_3 = "+34620972162"
-
+        # Define target phone numbers
+        num_prefix_plus = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        num_prefix_double_zero = num_prefix_plus.replace("+", "00")
+        num_no_prefix = num_prefix_plus.replace("+34", "")
+        self.target_numbers = [num_prefix_plus, num_prefix_double_zero, num_no_prefix]
+        self.corporate_sim = self.UTILS.general.get_os_variable("CORPORATE_SIM") == "True"
+        self.data_layer.delete_all_sms()
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -45,33 +45,18 @@ class test_main(GaiaTestCase):
 
         self.messages.launch()
 
-        #
-        # Create and Send an MMS
-        #
-        self.messages.createAndSendMMS("image", [self.test_num_1], self.test_msg)
-        #
-        # Return to main SMS page.
-        #
-        self.messages.closeThread()
-
-        self.messages.createAndSendMMS("image", [self.test_num_2], self.test_msg)
-          #
-        # Return to main SMS page.
-        #
-        self.messages.closeThread()
-
-        self.messages.createAndSendMMS("image", [self.test_num_3], self.test_msg)
-          #
-        # Return to main SMS page.
-        #
-        self.messages.closeThread()
+        for num in self.target_numbers:
+            test_msg = "Hello World at {} for {}".format(time.time(), num)
+            self.messages.createAndSendMMS("image", [num], test_msg)
+            self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, DOM.Messages.frame_locator,
+                                                                      timeout=120)
+            self.messages.closeThread()
+            time.sleep(3)
 
         #
         # Check how many elements are there
         #
-        self.UTILS.reporting.logResult("info", "Check how many threads are there")
-        original_count = self.messages.countNumberOfThreads()
-        self.UTILS.reporting.logResult("info",
-                             "Number of threads " + str(original_count) +
-                              " in list.")
-        self.UTILS.test.TEST(original_count == 1, "Check how many threads are there")
+        count = self.messages.countNumberOfThreads()
+        self.UTILS.reporting.logResult("info", "Number of threads {} in list.".format(count))
+        expected = 2 if self.corporate_sim else 1
+        self.UTILS.test.TEST(count == expected, "There are {} threads (expected {})".format(count, expected))

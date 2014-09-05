@@ -1,19 +1,30 @@
+#===============================================================================
+# 26973: Click on an email address and Add to an existing contact with 3
+# emails address added
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Send a sms from "device A" to "device B" who contains an email address
+# 2. Open sms app in the device A.
+# 3. Hold on the email address contained in the sms
+# 4. Click on "Add to existing contact" button
+# 5. Select a contact with 3 emails address inserted
+# 5. Insert contact photo, name, surname, company, phone number, address
+# comment and other email addrees.
+# 6. Press save button
 #
+# Expected results:
+# Contact is saved and The user returns to sms app in the conversation screen
+#===============================================================================
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
-#import time
+
 
 class test_main(GaiaTestCase):
 
@@ -29,7 +40,7 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
 
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
+        self.email_address = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
 
         self.cont = MockContact(email=[{"type": "Personal", "value": "email1@nowhere.com"},
                                {"type": "Personal", "value": "email2@nowhere.com"},
@@ -56,31 +67,31 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.phone_number], "Hello " + self.emailAddy + " old bean.")
-        x = self.messages.waitForReceivedMsgInThisThread()
+        self.messages.createAndSendSMS([self.phone_number], "Hello {} old bean.".format(self.email_address))
+        send_time = self.messages.last_sent_message_timestamp()
+        msg = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
 
         #
-        # Long press the email link.
+        # Press the email link.
         #
-        link = x.find_element("tag name", "a")
+        link = msg.find_element("tag name", "a")
         link.tap()
 
         #
         # Click 'Add to an existing contact'.
         #
-        x = self.UTILS.element.getElement(("xpath", "//button[text()='Add to an existing contact']"),
-                                   "Create new contact button")
+        x = self.UTILS.element.getElement(DOM.Messages.header_add_to_contact_btn, "Add to an existing contact button")
         x.tap()
 
         #
         # Verify that the email is in the email field.
         #
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
-        x = self.UTILS.element.getElement(DOM.Contacts.view_all_contact_HM, "Search item")
-        x.tap()
+        contact = self.UTILS.element.getElement(DOM.Contacts.contact_names, "Contact name in search page")
+        contact.tap()
 
         self.UTILS.element.waitForElements(("xpath",
-                                "//input[@type='email' and @value='{}']".format(self.emailAddy)),
+                                "//input[@type='email' and @value='{}']".format(self.email_address)),
                                 "New email address")
 
         #

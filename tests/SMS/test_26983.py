@@ -1,13 +1,23 @@
+#===============================================================================
+# 26983: Click on an email address when data and wifi are off
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# Data and wifi are off
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Procedure:
+# 1. Send a sms from "device A" to "device B" which contains an email address
+# 2. Open the thread view in the device A
+# 3. Click on the email address
+# 4. Select "Send email" option from the overlay
+# 5. Select "OK" to confirm the setup of an email account
+# 6. Fill the formulary
+# 7. Click on "Next" button
+#
+# Expected results:
+# There should be an error message to warn user that a connection is needed
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -17,7 +27,6 @@ import time
 
 class test_main(GaiaTestCase):
 
-    test_msg = "Test message."
     _RESTART_DEVICE = True
 
     def setUp(self):
@@ -27,14 +36,14 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
-        self.Email = Email(self)
+        self.email = Email(self)
 
-        self.USER1 = self.UTILS.general.get_os_variable("GMAIL_1_USER")
-        self.EMAIL1 = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
-        self.PASS1 = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
+        self.email_user = self.UTILS.general.get_os_variable("GMAIL_1_USER")
+        self.email_address = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
+        self.email_pass = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
 
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
+        self.dest_email = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
         self.incoming_sms_num = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER")
 
     def tearDown(self):
@@ -45,11 +54,12 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        #self.UTILS.messages.create_incoming_sms(self.phone_number, "Email addy {} test.".format(self.emailAddy))
-        self.data_layer.send_sms(self.phone_number, "Email addy {} test.".format(self.emailAddy))
-        self.UTILS.statusbar.wait_for_notification_toaster_title(self.phone_number, timeout=120)
-        self.UTILS.statusbar.click_on_notification_title(self.phone_number, DOM.Messages.frame_locator)
+        test_msg = "email address {} test at {}".format(self.dest_email, time.time())
+        self.data_layer.send_sms(self.phone_number, test_msg)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)
+        self.UTILS.statusbar.click_on_notification_detail(test_msg, DOM.Messages.frame_locator)
         sms = self.messages.lastMessageInThisThread()
+        time.sleep(1)
 
         #
         # Tap the 2nd email link.
@@ -70,7 +80,7 @@ class test_main(GaiaTestCase):
         #
         # Try to set up the account - Since there is no connection, it will fail.
         #
-        self.Email.setupAccountFirstStep(self.USER1, self.EMAIL1, self.PASS1)
+        self.email.setupAccountFirstStep(self.email_user, self.email_address, self.email_pass)
 
         error = self.UTILS.element.getElement(DOM.Email.new_account_error_msg, "Error message")
         self.UTILS.test.TEST(error.text == "This device is currently offline. Connect to a network and try again.",
