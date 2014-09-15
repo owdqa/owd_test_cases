@@ -61,3 +61,7 @@ GLOBAL_DOWNLOAD_URL=https://owd.tid.es/dm
 # nowSMS
 NOWSMS_USER=owd
 NOWSMS_PASS=qa
+
+# Firefox account
+GLOBAL_FXA_USER=owdqa@hotmail.es
+GLOBAL_FXA_PASS=12345678
