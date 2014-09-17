@@ -29,6 +29,9 @@ class main(GaiaTestCase):
         except:
             self.UTILS.reporting.logResult('info', "Already logged out")
 
+        self.settings.launch()
+        self.settings.fxa()
+        self.settings.fxa_log_out()
         self.apps.kill_all()
         time.sleep(2)
 
