@@ -13,6 +13,7 @@ import os
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.loop import Loop
+from OWDTestToolkit.apps.browser import Browser
 from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit import DOM
 
@@ -23,17 +24,20 @@ class main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
+        self.browser = Browser(self)
         self.settings = Settings(self)
 
         self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
         self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
+        self.market_url = "https://owd.tid.es/B3lg1r89n/market/appList.html"
         self.connect_to_network()
 
         # TODO - Uninstall & Install again Loop
         # Update loop
         result_2 = os.popen("cd tests/LOOP/aux_files &&./publish_app.sh").read()
         chops = str(result_2).split("\n")
-        self.UTILS.test.TEST("And all done, hopefully." in chops, "The script to publish an app is OK")
+        self.UTILS.reporting.logResult('info', "result: {}".format(chops))
+        self.UTILS.test.TEST("And all done, hopefully." in chops, "The script to publish an app is OK", True)
 
         # Re-install Loop
         self._reinstall_loop()
@@ -62,14 +66,10 @@ class main(GaiaTestCase):
         self.wait_for_condition(lambda m: not self.apps.is_app_installed(
             self.loop.app_name), timeout=20, message="{} is not installed".format(self.loop.app_name))
 
-        self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
-        market_locator = (
-            'xpath', '//div[contains(@class, "icon bookmark")]//span[@class="title" and contains(text(), "OWD Store")]')
-        market = self.UTILS.element.getElement(market_locator, "Market bookmark icon")
-        market.tap()
-        time.sleep(2)
+        self.browser.launch()
+        time.sleep(1)
+        self.browser.open_url(self.market_url)
 
-        self.UTILS.iframe.switchToFrame(*('src', 'market'))
         loop_link = self.UTILS.element.getElement(
             ('xpath', '//p[contains(text(), "{}")]'.format(self.loop.app_name)), "App link")
         loop_link.tap()
