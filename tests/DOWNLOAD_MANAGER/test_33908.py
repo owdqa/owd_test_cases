@@ -24,11 +24,6 @@ from OWDTestToolkit.apps.downloadmanager import DownloadManager
 
 class test_main(GaiaTestCase):
 
-    #
-    # Restart device to have a empty downloads list
-    #
-    #_RESTART_DEVICE = True
-
     def setUp(self):
 
         GaiaTestCase.setUp(self)
@@ -46,13 +41,16 @@ class test_main(GaiaTestCase):
         self.settings.downloads()
         self.download_manager.clean_downloads_list()
 
+        self.apps.kill_all()
+        time.sleep(2)
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
         self.UTILS.statusbar.clearAllStatusBarNotifs()
-        
+
         self.browser.launch()
         self.browser.open_url(self.testURL)
 

@@ -65,5 +65,4 @@ class test_main(GaiaTestCase):
         # Verifying video player
         #
         self.UTILS.iframe.switchToFrame(*DOM.Video.frame_locator)
-        time.sleep(2)
         self.video.is_this_video_being_played(self.file_name)

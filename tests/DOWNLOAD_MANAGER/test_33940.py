@@ -1,11 +1,11 @@
 # 33940: Verify that if the user click on "cancel" in "retry confirmation screen" the screen is closed
-# 
+#
 # ** Prerrequisites
-#       Having a Stopped download 
+#       Having a Stopped download
 # ** Procedure
 #       1. Opening settings app
 #       2. Opening Download list
-#       3. Click on a stopped download 
+#       3. Click on a stopped download
 #       ER1
 #       4. Click on "Cancel" button
 #       ER2
@@ -41,18 +41,6 @@ class test_main(GaiaTestCase):
         self.settings.downloads()
         self.download_manager.clean_downloads_list()
 
-        # TODO - Remove this block when bug 1050225 is RESOLVED
-        # We're doing this so that we have a previously completed download
-        # and we can see the in progress download entry in the downloads list
-        self.dummy_file = "Toast.doc"
-        self.browser.launch()
-        self.browser.open_url(self.test_url)
-        self.download_manager.download_file(self.dummy_file)
-        self.UTILS.statusbar.wait_for_notification_toaster_title("Download complete", timeout=60)
-        time.sleep(5)
-        self.apps.kill_all()
-        time.sleep(2)
-
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
@@ -63,7 +51,7 @@ class test_main(GaiaTestCase):
         self.browser.launch()
         self.browser.open_url(self.test_url)
         self.download_manager.download_file(self.file_name)
-        self.UTILS.statusbar.wait_for_notification_toaster_title("Download started", "Downloading", timeout=15)
+        self.UTILS.statusbar.wait_for_notification_toaster_title(text="Download started", notif_text="Downloading", timeout=15)
         time.sleep(5)
 
         self.apps.kill_all()
@@ -78,4 +66,3 @@ class test_main(GaiaTestCase):
 
         self.download_manager.stop_download(self.data_url, True)
         self.download_manager.restart_download(self.data_url, False)
-
