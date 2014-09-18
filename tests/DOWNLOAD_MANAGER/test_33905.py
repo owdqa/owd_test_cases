@@ -61,4 +61,5 @@ class test_main(GaiaTestCase):
         time.sleep(3)
 
         self.download_manager.verify_download_status(self.data_url, "succeeded")
-        self.download_manager.delete_download(self.data_url)
+        self._enter_edit_mode()
+        # self.download_manager.delete_download(self.data_url)

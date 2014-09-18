@@ -1,4 +1,4 @@
-# 33944: Verify that downloading icon disappears after completing the download 
+# 33944: Verify that downloading icon disappears after completing the download
 # ** Procedure
 #       1. Open a web pag in the browser which we can download files
 #       2. Click on a file to download it
@@ -49,7 +49,8 @@ class test_main(GaiaTestCase):
         self.browser.launch()
         self.browser.open_url(self.test_url)
         self.download_manager.download_file(self.file_name)
-        self.UTILS.statusbar.wait_for_notification_toaster_title("Download started", "Downloading", timeout=15)
+        self.UTILS.statusbar.wait_for_notification_toaster_title(
+            text="Download started", notif_text="Downloading", timeout=15)
 
         is_there = self.UTILS.statusbar.isIconInStatusBar(DOM.Statusbar.downloads)
         self.UTILS.test.TEST(is_there, "Verify that the download icon in status bar is active")

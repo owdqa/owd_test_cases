@@ -29,25 +29,13 @@ class test_main(GaiaTestCase):
         self.settings = Settings(self)
         self.download_manager = DownloadManager(self)
         self.test_url = self.UTILS.general.get_os_variable("GLOBAL_DOWNLOAD_URL")
-        self.file_name = "22MB.rar"
+        self.file_name = "longvideo.mp4"
         self.data_url = "{}/{}".format(self.test_url, self.file_name)
 
         self.data_layer.connect_to_cell_data()
         self.settings.launch()
         self.settings.downloads()
         self.download_manager.clean_downloads_list()
-
-        # TODO - Remove this block when bug 1050225 is RESOLVED
-        # We're doing this so that we have a previously completed download
-        # and we can see the in progress download entry in the downloads list
-        self.dummy_file = "Toast.doc"
-        self.browser.launch()
-        self.browser.open_url(self.test_url)
-        self.download_manager.download_file(self.dummy_file)
-        self.UTILS.statusbar.wait_for_notification_toaster_title("Download complete", timeout=60)
-        time.sleep(5)
-        self.apps.kill_all()
-        time.sleep(2)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -60,7 +48,8 @@ class test_main(GaiaTestCase):
         self.browser.open_url(self.test_url)
 
         self.download_manager.download_file(self.file_name)
-        self.UTILS.statusbar.wait_for_notification_toaster_title("Download started", "Downloading", timeout=15)
+        self.UTILS.statusbar.wait_for_notification_toaster_title(
+            text="Download started", notif_text="Downloading", timeout=15)
 
         self.apps.kill_all()
         time.sleep(2)
@@ -72,15 +61,5 @@ class test_main(GaiaTestCase):
         self.download_manager.verify_download_status(self.data_url, "downloading")
         self.download_manager.verify_download_graphical_status(self.data_url, "downloading")
 
-        self.UTILS.statusbar.wait_for_notification_toaster_title("Download complete", frame_to_change=DOM.Settings.frame_locator, timeout=240)
-        previous_number_of_pictures = len(self.data_layer.sdcard_files())
-        self.UTILS.reporting.logResult('info', "Previous: {}".format(previous_number_of_pictures))
-        
         # Delete download
         self.download_manager.delete_download(self.data_url)
-
-        self.UTILS.reporting.logResult('info', "Current: {}".format(len(self.data_layer.sdcard_files())))
-        # Check that picture saved to SD card
-        self.wait_for_condition(
-            lambda m: len(self.data_layer.sdcard_files()) == previous_number_of_pictures - 1, 20)
-        self.assertEqual(len(self.data_layer.sdcard_files()), previous_number_of_pictures - 1)
