@@ -380,7 +380,7 @@
 33942|Verify that downloading icon is displayed in the status bar during the download process
 33944|Verify that downloading icon disappears after completing the download
 33945|Verify that is possible download several files at the same time
-33947]Verify that download continues, if you leave settings app during download process
+33947|Verify that download continues, if you leave settings app during download process
 33948|Verify that a file with size >=1 MB and <1GB is displayed as MB
 33949|Verify that a file with size >1GB is displayed as GB
 33978|Verify that download list displays the downloads before opening settings app
