@@ -43,18 +43,6 @@ class test_main(GaiaTestCase):
         self.settings.downloads()
         self.download_manager.clean_downloads_list()
 
-        # TODO - Remove this block when bug 1050225 is RESOLVED
-        # We're doing this so that we have a previously completed download
-        # and we can see the in progress download entry in the downloads list
-        self.dummy_file = "Toast.doc"
-        self.browser.launch()
-        self.browser.open_url(self.test_url)
-        self.download_manager.download_file(self.dummy_file)
-        self.UTILS.statusbar.wait_for_notification_toaster_title("Download complete", timeout=60)
-        time.sleep(5)
-        self.apps.kill_all()
-        time.sleep(2)
-
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
@@ -62,7 +50,7 @@ class test_main(GaiaTestCase):
     def _download_multiple_files(self, file):
         self.download_manager.download_file(file)
         self.UTILS.statusbar.wait_for_notification_toaster_title(
-            "Download started", "Downloading", frame_to_change=DOM.Browser.frame_locator, timeout=15)
+            text="Download started", notif_text="Downloading", frame_to_change=DOM.Browser.frame_locator, timeout=15)
         self.browser.switch_to_content()
         time.sleep(5)
 

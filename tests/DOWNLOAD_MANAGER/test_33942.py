@@ -45,7 +45,8 @@ class test_main(GaiaTestCase):
         self.browser.launch()
         self.browser.open_url(self.test_url)
         self.download_manager.download_file(self.file_name)
-        self.UTILS.statusbar.wait_for_notification_toaster_title("Download started", "Downloading", timeout=15)
+        self.UTILS.statusbar.wait_for_notification_toaster_title(
+            text="Download started", notif_text="Downloading", timeout=15)
 
         is_there = self.UTILS.statusbar.isIconInStatusBar(DOM.Statusbar.downloads)
         self.UTILS.test.TEST(is_there, "Verify that the download icon in status bar is active")

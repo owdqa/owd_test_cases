@@ -39,6 +39,9 @@ class test_main(GaiaTestCase):
         self.settings.downloads()
         self.download_manager.clean_downloads_list()
 
+        self.apps.kill_all()
+        time.sleep(2)
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)

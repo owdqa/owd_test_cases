@@ -4,7 +4,7 @@
 #       2. Click on a file with size >=1 MB and <1GB to download it
 #       3. Opening Settings / Download list during the download process
 # ** Expected Results
-#       The user can see the total file size and the downloaded file size during 
+#       The user can see the total file size and the downloaded file size during
 #       the download process. The sizes ares displayed as MB
 import time
 import re
@@ -36,18 +36,6 @@ class test_main(GaiaTestCase):
         self.settings.downloads()
         self.download_manager.clean_downloads_list()
 
-        # TODO - Remove this block when bug 1050225 is RESOLVED
-        # We're doing this so that we have a previously completed download
-        # and we can see the in progress download entry in the downloads list
-        self.dummy_file = "Toast.doc"
-        self.browser.launch()
-        self.browser.open_url(self.test_url)
-        self.download_manager.download_file(self.dummy_file)
-        self.UTILS.statusbar.wait_for_notification_toaster_title("Download complete", timeout=60)
-        time.sleep(5)
-        self.apps.kill_all()
-        time.sleep(2)
-
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
@@ -58,7 +46,7 @@ class test_main(GaiaTestCase):
         self.browser.launch()
         self.browser.open_url(self.test_url)
         self.download_manager.download_file(self.file_name)
-        self.UTILS.statusbar.wait_for_notification_toaster_title("Download started", "Downloading", timeout=15)
+        self.UTILS.statusbar.wait_for_notification_toaster_title(text="Download started", notif_text="Downloading", timeout=15)
         time.sleep(5)
 
         self.apps.kill_all()
