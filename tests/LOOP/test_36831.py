@@ -1,5 +1,5 @@
-# 35869
-# Cancel the action of deleting an entry in the Shared URL - Setting Option
+# OWD - 36831
+# Delete the revoked URL in Shared URL when there are more than one revoked URLs - Clean Shared Links - Clean All
 
 import sys
 sys.path.insert(1, "./")
@@ -41,8 +41,7 @@ class main(GaiaTestCase):
         self.persistent_directory = "/data/local/storage/persistent"
         loop_dir = os.popen("adb shell ls {} | grep loop".format(self.persistent_directory)).read().rstrip()
         target_dir = "{}/{}/idb/".format(self.persistent_directory, loop_dir)
-        local_dir = "tests/LOOP/aux_files/scenarios/urls/multiple/available/same_day/idb"
-
+        local_dir = "tests/LOOP/aux_files/scenarios/urls/multiple/revoked/same_day/idb"
         # Prepopulate urls
         os.system("cd {} && adb push . {}".format(local_dir, target_dir))
 
@@ -68,11 +67,10 @@ class main(GaiaTestCase):
         previous = self.loop.get_number_of_urls()
 
         self.loop.open_settings()
-        self.loop.delete_all_urls(cancel=True)
+        self.loop.delete_all_urls(cancel=False)
 
-        self.UTILS.element.waitForElements(DOM.Loop.settings_panel_header, "Check we are still in Settings")
-        self.loop.settings_go_back()
-
+        self.UTILS.element.waitForElements(DOM.Loop.call_log, "Check we are returned to the call log")
         current = self.loop.get_number_of_urls()
         self.UTILS.test.TEST(
-            previous == current, "Check that after cancelling the deletion, we have the same number of urls")
+            previous - 3 == current,
+            "Check that after deleting only revoked URls when there are only revoked, there's nothing")
