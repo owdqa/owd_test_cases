@@ -57,7 +57,6 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(DOM.Contacts.settings_button, "Settings button")
         x.tap()
 
-        self.wait_for_element_displayed(*DOM.Contacts.import_contacts, timeout=30)
         x = self.UTILS.element.getElement(DOM.Contacts.import_contacts, "Import button")
         x.tap()
 
