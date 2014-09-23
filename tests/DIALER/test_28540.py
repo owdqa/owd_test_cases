@@ -60,7 +60,7 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "Screen shot of the result of tapping call button", y)
 
     def _do_the_call(self, number):
-        self.dialer.enterNumber(number)
+        self.dialer.enterNumber(number, validate=False)
         self.dialer.call_this_number_and_hangup(5)
         # This needs to be done bcs sometimes (50%) the Dialer app crushes after hanging up
         self.apps.kill_all()
