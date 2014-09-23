@@ -1,7 +1,5 @@
-# OWD - 36835
-# Delete Revoked and Available URLs in Shared URL when there are more than
-# one revoked and availabe URL in different days - Clean Shared Links -
-# Clean All links
+# OWD-35859
+# Delete a revoked URL in shared tab
 
 import sys
 sys.path.insert(1, "./")
@@ -43,7 +41,7 @@ class main(GaiaTestCase):
         self.persistent_directory = "/data/local/storage/persistent"
         loop_dir = os.popen("adb shell ls {} | grep loop".format(self.persistent_directory)).read().rstrip()
         target_dir = "{}/{}/idb/".format(self.persistent_directory, loop_dir)
-        local_dir = "tests/LOOP/aux_files/scenarios/urls/multiple/mixed/diff_day/idb"
+        local_dir = "tests/LOOP/aux_files/scenarios/urls/single/revoked/idb"
         # Prepopulate urls
         os.system("cd {} && adb push . {}".format(local_dir, target_dir))
 
@@ -67,11 +65,6 @@ class main(GaiaTestCase):
 
         self.loop.switch_to_urls()
         previous = self.loop.get_number_of_all_urls()
-
-        self.loop.open_settings()
-        self.loop.delete_all_urls(cancel=False)
-
-        self.UTILS.element.waitForElements(DOM.Loop.call_log, "Check we are returned to the call log")
+        self.loop.delete_single_entry_by_pos(0)
         current = self.loop.get_number_of_all_urls()
-        self.UTILS.test.TEST(previous > current and current == 0,
-            "Check that after deleting all URls when there both available and revoked in different days, there's nothing")
+        self.UTILS.test.TEST(current == previous - 1, "Check that the entry has beed deleted")

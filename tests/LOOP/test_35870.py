@@ -30,7 +30,7 @@ class main(GaiaTestCase):
         self.contact_family = map(str, range(1, self.number_of_contacts + 1))
         self.contact_name = ["{} {}".format(self.contact_given, self.contact_family[i])
                              for i in range(self.number_of_contacts)]
-        self.contact_numbers = ["666666666666", "777777777777", "649779117"]
+        self.contact_numbers = ["666666666666", "777777777777", "888888888888"]
 
         self.test_contacts = [MockContact(name=self.contact_name[i], givenName=self.contact_given,
                                           familyName=self.contact_family[i],
@@ -39,9 +39,9 @@ class main(GaiaTestCase):
         map(self.UTILS.general.insertContact, self.test_contacts)
 
         # Directories
-        self.persistent_directory = "/data/local/storage/persistent"
-        loop_dir = os.popen("adb shell ls {} | grep loop".format(self.persistent_directory)).read().rstrip()
-        target_dir = "{}/{}/idb/".format(self.persistent_directory, loop_dir)
+        persistent_directory = "/data/local/storage/persistent"
+        loop_dir = os.popen("adb shell ls {} | grep loop".format(persistent_directory)).read().rstrip()
+        target_dir = "{}/{}/idb/".format(persistent_directory, loop_dir)
         local_dir = "tests/LOOP/aux_files/scenarios/urls/single/revoked/idb"
 
         # Prepopulate urls
@@ -66,12 +66,12 @@ class main(GaiaTestCase):
         self.UTILS.element.waitForElements(header, "Loop main view")
 
         self.loop.switch_to_urls()
-        previous = self.loop.get_number_of_urls()
+        previous = self.loop.get_number_of_revoked_urls()
 
         self.loop.open_settings()
         self.loop.delete_just_revoked(cancel=False)
 
         self.UTILS.element.waitForElements(DOM.Loop.call_log, "Check we are returned to the call log")
-        current = self.loop.get_number_of_urls()
+        current = self.loop.get_number_of_revoked_urls()
         self.UTILS.test.TEST(
-            previous - 1 == current, "Check that after deleting the URL, we have one less")
+            current == 0 and current == previous - 1, "Check that after deleting the URL, we have one less")

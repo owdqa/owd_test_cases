@@ -19,9 +19,16 @@ class main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
+        self.settings = Settings(self)
 
         self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
         self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
+
+        self.settings.launch()
+        self.settings.fxa()
+        self.settings.fxa_log_out()
+        self.apps.kill_all()
+        time.sleep(2)
 
         # Insert our test contacts
         self.number_of_contacts = 3
@@ -29,7 +36,7 @@ class main(GaiaTestCase):
         self.contact_family = map(str, range(1, self.number_of_contacts + 1))
         self.contact_name = ["{} {}".format(self.contact_given, self.contact_family[i])
                              for i in range(self.number_of_contacts)]
-        self.contact_numbers = ["666666666666", "777777777777", "649779117"]
+        self.contact_numbers = ["666666666666", "777777777777", "888888888888"]
 
         self.test_contacts = [MockContact(name=self.contact_name[i], givenName=self.contact_given,
                                           familyName=self.contact_family[i],
@@ -45,7 +52,6 @@ class main(GaiaTestCase):
 
         # Prepopulate urls
         os.system("cd {} && adb push . {}".format(local_dir, target_dir))
-
         self.connect_to_network()
 
     def tearDown(self):
@@ -65,7 +71,7 @@ class main(GaiaTestCase):
         self.UTILS.element.waitForElements(header, "Loop main view")
 
         self.loop.switch_to_urls()
-        previous = self.loop.get_number_of_urls()
+        previous = self.loop.get_number_of_all_urls()
 
         self.loop.open_settings()
         self.loop.delete_all_urls(cancel=True)
@@ -73,6 +79,6 @@ class main(GaiaTestCase):
         self.UTILS.element.waitForElements(DOM.Loop.settings_panel_header, "Check we are still in Settings")
         self.loop.settings_go_back()
 
-        current = self.loop.get_number_of_urls()
+        current = self.loop.get_number_of_all_urls()
         self.UTILS.test.TEST(
             previous == current, "Check that after cancelling the deletion, we have the same number of urls")

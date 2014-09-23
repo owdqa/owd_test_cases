@@ -2,10 +2,6 @@
 # Delete the revoked URL in Shared URL when there are more than one
 # revoked URL - Clean Shared Links - Clean Just Disabled links
 
-# OWD - 36825
-# Delete the NO revoked URL in Shared URL when there are only Avalibale
-# URLs - Clean Shared Links - Clean Just disabled links
-
 import sys
 sys.path.insert(1, "./")
 import os
@@ -34,7 +30,7 @@ class main(GaiaTestCase):
         self.contact_family = map(str, range(1, self.number_of_contacts + 1))
         self.contact_name = ["{} {}".format(self.contact_given, self.contact_family[i])
                              for i in range(self.number_of_contacts)]
-        self.contact_numbers = ["666666666666", "777777777777", "649779117"]
+        self.contact_numbers = ["666666666666", "777777777777", "888888888888"]
 
         self.test_contacts = [MockContact(name=self.contact_name[i], givenName=self.contact_given,
                                           familyName=self.contact_family[i],
@@ -69,13 +65,13 @@ class main(GaiaTestCase):
         self.UTILS.element.waitForElements(header, "Loop main view")
 
         self.loop.switch_to_urls()
-        previous = self.loop.get_number_of_urls()
+        previous = self.loop.get_number_of_revoked_urls()
 
         self.loop.open_settings()
         self.loop.delete_just_revoked(cancel=False)
 
         self.UTILS.element.waitForElements(DOM.Loop.call_log, "Check we are returned to the call log")
-        current = self.loop.get_number_of_urls()
+        current = self.loop.get_number_of_revoked_urls()
         self.UTILS.test.TEST(
-            previous - 3 == current,
+            previous > current and current == 0,
             "Check that after deleting only revoked URls when there are only revoked, there's nothing")
