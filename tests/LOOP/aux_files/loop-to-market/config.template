@@ -1,0 +1,53 @@
+#You *MUST* edit this file and save it as .config
+
+
+###################################################################################
+# Mandatory configuration section
+###################################################################################
+# THESE VARIABLES DON'T WORK AS THEY'RE NOW! YOU *MUST* CONFIGURE THEM!!!!
+###################################################################################
+
+#WEB credentials. The credentials of a user with permission to sign applications
+WEB_CREDENTIALS=user:password
+
+# Password of the certificate file used to sign the applications
+SIGN_PASSWORD=apasswordhere
+
+#SSH ID to use to copy files to stageUsr@owdstore.hi.inet. This file should not have
+#password (if you intend to execute this automatically) and you have to add the pub
+#to the authorized_keys in stageUsr@owdstore.hi.inet
+SSH_ID=~/.ssh/id_rsa_stageUsr@owdstore
+
+#Where the loop distribution/clone is
+LOOP_LOCATION=../firefoxos-loop-client
+
+###################################################################################
+# End of mandatory configuration section
+###################################################################################
+
+
+###################################################################################
+#Optional configuration section
+###################################################################################
+
+# You can (and probably should) leave these variables alone for now)
+
+
+#STORE_PATH: The path of the store we're using. Valid values include /store/ and /storeprepro/ and
+#that other one we don't talk about. Which is the one we use... doh!
+STORE=/B3lg1r89n/
+
+#STORE_SUFFIX: Depends on which store we're using (used to copy files). Valid
+#values are '' for production and storeprepro for preproduction. And another
+#one, for the one we don't talk about
+STORE_SUFFIX=_b3lg1r89n
+
+#APP owner. The user that owns the application on the store
+APP_OWNER=amac
+
+#UUID of the app we're updating. Note that this *requires* you to upload
+#manually at least once. Sorry about that. Well, not really.
+APP_UUID=cfdb2d67-30d2-4221-9f3a-f2201417ed28
+
+#This should not really be changed for now. Leave it as it is
+APP_SUFFIX=_tmp_none
