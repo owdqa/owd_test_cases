@@ -1,13 +1,14 @@
+#===============================================================================
+# 26768: Verify that there is an icon to launch the browser application
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Verify there is a dedicated icon for the browser
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected result:
+# The icon is found
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.everythingme import EverythingMe
 from OWDTestToolkit.apps.settings import Settings
@@ -16,26 +17,20 @@ from OWDTestToolkit import DOM
 
 class test_main(GaiaTestCase):
 
-    _GROUP_NAME  = "Games"
-
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
 
-        self.UTILS      = UTILS(self)
-        self.settings   = Settings(self)
-        self.EME        = EverythingMe(self)
+        self.UTILS = UTILS(self)
+        self.settings = Settings(self)
+        self.EME = EverythingMe(self)
 
-        #
-        # Don't prompt me for geolocation (this was broken recently in Gaia, so 'try' it).
-        #
         try:
             self.apps.set_permission('Homescreen', 'geolocation', 'deny')
         except:
-            self.UTILS.reporting.logComment("(Just FYI) Unable to automatically set Homescreen geolocation permission.")
-
+            self.UTILS.reporting.error("Unable to automatically set Homescreen geolocation permission.")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -46,17 +41,11 @@ class test_main(GaiaTestCase):
         # Make sure 'things' are as we expect them to be first.
         #
         self.UTILS.network.getNetworkConnection()
- 
+
         self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
 
-        x = self.UTILS.element.getElements(DOM.Home.docked_apps, "Docked app icons", False)
-        _boolOK = False
-        for i in x:
-            if "Browser" in i.get_attribute("aria-label"):
-                _boolOK = True
-                break
-
-        self.UTILS.test.TEST(_boolOK, "Browser is in the dedicated dock icons.")
+        browser = self.marionette.find_element('xpath', DOM.Home.app_icon_xpath.format('browser'))
+        self.UTILS.test.TEST(browser, "An icon for the browser application was found")
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot:", x)

@@ -1,13 +1,16 @@
+#===============================================================================
+# 26536: Verify that it is possible to turn Wi-Fi HotSpot on/off
+# using the dedicated icon when the device has data on or it is
+# connected to a Wi-Fi network
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# Verify that it is possible to enable/disable this option
 #
-import sys
-sys.path.insert(1, "./")
+# Expected results:
+# The HotSpot can be turned on and off
+#===============================================================================
+import time
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
 
@@ -20,25 +23,13 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.settings = Settings(self)
 
-        self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
-        self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
-
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # WIFI.
-        #
+        self.data_layer.connect_to_wifi()
         self.settings.launch()
-
-        self.settings.wifi()
-        self.settings.wifi_switchOn()
-        self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
-
-        self.settings.goBack()
 
         #
         # Tap hotspot.
@@ -48,10 +39,14 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "<b>Check hotspot with WIFI on.</b>")
         self.settings.enable_hotSpot()
 
+        time.sleep(3)
         self.settings.disable_hotSpot()
         self.UTILS.network.disableAllNetworkSettings()
-        self.UTILS.statusbar.toggleViaStatusBar("data")
 
+        self.data_layer.connect_to_cell_data()
         self.settings.launch()
         self.UTILS.reporting.logResult("info", "<b>Check hotspot with DataConn on.</b>")
         self.settings.enable_hotSpot()
+
+        time.sleep(3)
+        self.settings.disable_hotSpot()

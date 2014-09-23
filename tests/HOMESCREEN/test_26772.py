@@ -68,7 +68,7 @@ class test_main(GaiaTestCase):
         except:
             pass
 
-        x = self.UTILS.element.getElement(DOM.EME.add_app_to_homescreen, "Add app to homescreen button")
+        x = self.UTILS.element.getElement(DOM.EME.add_to_home_screen_btn, "Add app to homescreen button")
         x.tap()
 
         time.sleep(2)

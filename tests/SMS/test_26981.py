@@ -68,6 +68,7 @@ class test_main(GaiaTestCase):
         #
         # Verify that the email address opens the email app.
         #
+        time.sleep(2)
         link = sms.find_element("tag name", "a")
         link.tap()
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
@@ -88,6 +89,7 @@ class test_main(GaiaTestCase):
         #
         # Verify that the email address does not open the email app.
         #
+        time.sleep(2)
         link = sms.find_element("tag name", "a")
         link.tap()
 

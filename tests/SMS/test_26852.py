@@ -1,6 +1,17 @@
+#===============================================================================
+# 26852: Delete a SMS in a conversation with several sms
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Send some sms to our device
+# 2- Open SMS app
+# 3- Open the conversation created with the last sms
+# 4- Press edit button
+# 5- Delete a SMS
 #
+# Expected results:
+# The SMS is successfully deleted
+#===============================================================================
+
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS

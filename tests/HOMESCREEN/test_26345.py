@@ -1,13 +1,27 @@
+#===============================================================================
+# 26345: Launch a packaged app - verify the app launches successfully to the
+# correct content
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Open settings app
+# 2- Select Cellular and Data option
+# 3- Activate Data connection
+# ER1
+# 4- Open Marketplace app
+# 5- Search "Privilege App Testing"
+# 6- Press install app button
+# 7- Press install button
+# ER2
+# 8- Try to open the installed packaged app
+# ER3
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected results:
+# ER1 Data connection is activated
+# ER2 The app is installed with the correct icon
+# ER3 The app is launched correctly
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.browser import Browser
 from OWDTestToolkit.apps.settings import Settings
@@ -59,7 +73,7 @@ class test_main(GaiaTestCase):
         # Install the app (these DOM items are peculiar to this little dev app,
         # so dont bother putting them in the main DOM.py file).
         #
-        x = ('id', 'install-app') 
+        x = ('id', 'install-app')
         install_btn = self.UTILS.element.getElement(x, "Install an app button")
         install_btn.tap()
 

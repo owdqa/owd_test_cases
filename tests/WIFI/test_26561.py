@@ -1,18 +1,29 @@
+#===============================================================================
+# 26561: Forget this network option
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# To have at least one known network
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Procedure:
+# 1- On the device under test turn Wi-Fi on
+# 2- Search and connect to a Wi-Fi network
+# 3- Once the connection has been done correctly, and the networks
+# appears as connected, tap on its name so the details dialog is open
+# 4- There, go to "Forget this network" option and click on it
+# 5- Verify that the network does not appear as known anymore
+#
+# Expected results:
+# There should be possible to remove a network from the known ones by
+# using the option given for that.
+# The device is able to remove the network from the known ones.
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+import time
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit.apps.browser import Browser
-import time
 
 
 class test_main(GaiaTestCase):
@@ -33,23 +44,22 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Open the Settings application.
-        #
+        self.settings.launch()
         self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
+        network = {'ssid': self.wifi_name}
+        self.wait_for_condition(lambda m: self.data_layer.is_wifi_connected(network), timeout=30)
 
-        #
-        # Return to this wifi and forget it.
-        #
+        self.UTILS.iframe.switchToFrame(*DOM.Settings.frame_locator)
         self.settings.wifi_list_tapName(self.wifi_name)
         self.settings.wifi_forget()
 
-        self.UTILS.test.TEST(self.settings.wifi_list_isNotConnected(self.wifi_name),
+        self.UTILS.test.TEST(not self.data_layer.is_wifi_connected(),
                              "{} is no longer connected".format(self.wifi_name))
 
         #
         # make sure we need to add the details again.
         #
+        self.UTILS.iframe.switchToFrame(*DOM.Settings.frame_locator)
         self.settings.wifi_list_tapName(self.wifi_name)
         time.sleep(1)
         self.UTILS.element.waitForElements(DOM.Settings.wifi_login_pass, "Password field")

@@ -31,6 +31,7 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.gallery = Gallery(self)
         self.UTILS.general.addFileToDevice('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
+        self.test_msg = "This is a test message"
 
     def tearDown(self):
         self.UTILS.general.remove_file('80x60.jpg', 'DCIM/100MZLLA')

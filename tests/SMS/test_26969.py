@@ -1,14 +1,35 @@
+#===============================================================================
+# 26969: Verify that when tapping on different valid URL's contained
+# in the same SMS, the browser is opened each time with the selected URL
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# Data or Wifi is enabled
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Procedure:
+# ER1
+# 1. Send from another device to the Device under Test an SMS including text
+# and several valid URL expressions
+# 2. Open in the Device under Test the SMS APP
+# 3. Search and tap on the received SMS
+# 4. In the SMS tap on one of the highlighted URL's
+# 5. From the Browser App tap Home button to hide Browser App and return to
+# Homescreen
+# 6. Open again the SMS APP
+# 7. Search and tap again on the received SMS
+# 8. In the SMS tap on a different highlighted URL
+# 9. Repeat steps from 5. to 8. till there aren't URL's not tried
+# ER2
+# 1. Long tap Home button
+#
+# Expected results:
+# ER1
+# The Browser APP is always opened with a new tab where the URL from the SMS
+# is the one contained in the message.
+# ER2
+# Every URL opened is actived in each tab browser.
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
-from OWDTestToolkit import DOM
+from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.browser import Browser
@@ -19,7 +40,6 @@ class test_main(GaiaTestCase):
 
     links = ["www.google.com", "www.hotmail.com", "www.wikipedia.org"]
     test_msg = "Test " + " ".join(links) + " this."
-
 
     def setUp(self):
         #
@@ -45,51 +65,38 @@ class test_main(GaiaTestCase):
         self.UTILS.network.getNetworkConnection()
 
         #
-        # Launch messages app.
-        #
-        self.messages.launch()
-  
-        #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.phone_number], self.test_msg)
-        self.messages.waitForReceivedMsgInThisThread()
+        self.data_layer.send_sms(self.phone_number, self.test_msg)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
 
-        map(self.tryTheLink, range(len(self.links)), self.links)
+        map(self.try_link, range(len(self.links)), self.links)
 
-
-    def tryTheLink(self, link_number, link):
+    def try_link(self, link_number, link):
         self.UTILS.reporting.logResult("info", "Tapping <b>{}</b> ...".format(link))
 
         #
         # Switch to messaging app.
         #
-        self.apps.kill_all()
-        time.sleep(2)
         self.messages.launch()
         self.messages.openThread(self.phone_number)
+        time.sleep(1)
 
         #
         # Get last message.
         #
-        x = self.messages.waitForReceivedMsgInThisThread()
- 
+        msg = self.messages.lastMessageInThisThread()
+
         #
         # Find all URLs
         #
-        y = x.find_elements("tag name", "a")
- 
+        l = msg.find_element("xpath", "//a[text()='{}']".format(link))
+
         #
         # Tap on required link.
         #
-        y[link_number].tap()
- 
-        #
-        # Give the browser time to start up, then
-        # switch to the browser frame and check the page loaded.
-        #
-        time.sleep(2)
-        self.UTILS.iframe.switchToFrame(*DOM.Browser.frame_locator)
+        self.UTILS.element.simulateClick(l)
 
         self.UTILS.test.TEST(self.browser.check_page_loaded(link),
-                 "Web page {} loaded correctly.".format(link_number + 1))
+                              "Web page {} loaded correctly.".format(link_number + 1))
+        time.sleep(5)

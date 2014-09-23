@@ -1,6 +1,17 @@
+#===============================================================================
+# 27048: Log in with an invalid user/password
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Open Contacts app
+# 2. Go to Settings
+# 3. Tap on Import from Hotmail
+# 4. The log in screen is shown
+# 5. Introduce a invalid user/password
 #
+# Expected result:
+# User is warned that the user/password is wrong
+#===============================================================================
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
@@ -16,8 +27,8 @@ from tests._mock_data.contacts import MockContact
 
 class test_main(GaiaTestCase):
 
-    _RESTART_DEVICE = True
-    
+    #_RESTART_DEVICE = True
+
     def setUp(self):
         #
         # Set up child objects...

@@ -1,13 +1,26 @@
+#===============================================================================
+# 26560: Connected Network Details Dialog
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# There should be any available network open or secure
 #
-import sys
-sys.path.insert(1, "./")
+# Procedure:
+# 1- On device under test activate Wi-Fi
+# 2- Connect to an available network found
+# 3- Once the connection process ends successfully and the network
+# appears as connected, tap on its name
+# 4- Verify that the Network details page is open showing correct
+# information about the network
+# 5- Verify also, that there is an option to "Forget this network"
+#
+# Expected results:
+# It is possible to check the details of the network that the device is
+# connected to by tapping on its name once the connection has been done
+# correctly.
+# In this page there is also available an option to "Forget this network"
+#===============================================================================
+import time
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
@@ -35,19 +48,30 @@ class test_main(GaiaTestCase):
         #
         # Open the Settings application.
         #
+        self.settings.launch()
         self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
+        network = {'ssid': self.wifi_name}
+        self.wait_for_condition(lambda m: self.data_layer.is_wifi_connected(network), timeout=30)
 
         #
-        # Return to this wifi and check the details.
+        # Return to this wifi and check the details, giving some seconds for the
+        # device to get an IP address
         #
+        time.sleep(10)
+        self.UTILS.iframe.switchToFrame(*DOM.Settings.frame_locator)
         self.settings.wifi_list_tapName(self.wifi_name)
 
-        self.UTILS.element.waitForElements(("xpath", "//h1[text()='%s']" % self.wifi_name), "Details for connected wifi - header", False)
-        _forget = self.UTILS.element.getElement(DOM.Settings.wifi_details_forget_btn, "Details for connected wifi - forget button")
-        _ip = self.UTILS.element.getElement(DOM.Settings.wifi_details_ipaddress , "Details for connected wifi - ip address")
-        _link = self.UTILS.element.getElement(DOM.Settings.wifi_details_linkspeed , "Details for connected wifi - link speed")
-        _sec = self.UTILS.element.getElement(DOM.Settings.wifi_details_security  , "Details for connected wifi - security")
-        _signal = self.UTILS.element.getElement(DOM.Settings.wifi_details_signal    , "Details for connected wifi - signal")
+        self.UTILS.element.waitForElements(DOM.Settings.wifi_details_header, "Wifi Details header")
+        _forget = self.UTILS.element.getElement(DOM.Settings.wifi_details_forget_btn,
+                                                "Details for connected wifi - forget button")
+        _ip = self.UTILS.element.getElement(DOM.Settings.wifi_details_ipaddress,
+                                            "Details for connected wifi - ip address")
+        _link = self.UTILS.element.getElement(DOM.Settings.wifi_details_linkspeed,
+                                              "Details for connected wifi - link speed")
+        _sec = self.UTILS.element.getElement(DOM.Settings.wifi_details_security,
+                                             "Details for connected wifi - security")
+        _signal = self.UTILS.element.getElement(DOM.Settings.wifi_details_signal,
+                                                "Details for connected wifi - signal")
 
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot: ", x)
+        screenshot = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot: ", screenshot)

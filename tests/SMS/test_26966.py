@@ -52,6 +52,7 @@ class test_main(GaiaTestCase):
         self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)
         self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
         self.UTILS.statusbar.click_on_notification_detail(self.test_msg, frame_to_change=DOM.Messages.frame_locator)
+        self.UTILS.reporting.debug("Checking last message in thread")
 
         #
         #Verify that a valid URL appears highlight
