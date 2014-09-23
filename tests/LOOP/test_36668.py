@@ -35,8 +35,8 @@ class main(GaiaTestCase):
 
         # TODO - Uninstall & Install again Loop
         # Update loop
-        result_2 = os.popen("cd tests/LOOP/aux_files &&./publish_app.sh").read()
-        chops = str(result_2).split("\n")
+        result = os.popen("cd tests/LOOP/aux_files &&./publish_app.sh").read()
+        chops = result.split("\n")
         self.UTILS.reporting.logResult('info', "result: {}".format(chops))
         self.UTILS.test.TEST("And all done, hopefully." in chops, "The script to publish an app is OK", True)
 
@@ -85,6 +85,7 @@ class main(GaiaTestCase):
         install_ok = self.UTILS.element.getElement(DOM.GLOBAL.app_install_ok, "Install button")
         install_ok.tap()
 
+        msg = "{} installed".format(self.loop.app_name)
         installed_app_msg = (DOM.GLOBAL.system_banner_msg[0], DOM.GLOBAL.system_banner_msg[
-                             1].format(self.loop.app_name + " installed"))
+                             1].format(msg))
         self.UTILS.element.waitForElements(installed_app_msg, "App installed", timeout=30)
