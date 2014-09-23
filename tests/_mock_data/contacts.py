@@ -26,15 +26,15 @@ class MockContact(dict):
 
         # Set default values
         curr_time = repr(time.time()).replace('.', '')
-        self['givenName'] = 'OWD{}'.format(curr_time[10:])
+        self['givenName'] = 'OWD{}'.format(curr_time)
         self['familyName'] = 'TEST'
         self['name'] = '{} {}'.format(self['givenName'], self['familyName'])
         self['email'] = {
             'type': 'Personal',
-            'value': '{}@testmail.net'.format(curr_time[8:])}
+            'value': '{}@testmail.net'.format(curr_time)}
         self['tel'] = {
             'type': 'Mobile',
-            'value': '655{}'.format(curr_time[6:])}
+            'value': '655{}'.format(curr_time)}
         self['addr'] = {
             'type': 'Home',
             'streetAddress': '101 Testing street',

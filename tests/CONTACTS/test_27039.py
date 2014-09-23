@@ -1,13 +1,28 @@
+#===============================================================================
+# 27039: Use the Search box to introduce characters in order to look for
+# contacts
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Open Contacts app
+# 2. Go to Settings
+# 3. Tap on Import from Gmail
+# 4. The log in screen is shown
+# 5. Introduce a valid user/password
+# 6. Tap on Sign In
+# 7. The list of contacts and the Search bar are shown
+# 8. Tap on the Search bar (ER2)
+# 9. Write some text (ER3)
 #
+# Expected results:
+# ER1. When tapping on the Search box the corresponding keyboard is open
+# ER2. It is possible to introduce text/numbers and the list is filtered
+# according to that
+# ER3. The list of contacts is filtering as characters are introduced
+#===============================================================================
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
@@ -47,9 +62,9 @@ class test_main(GaiaTestCase):
         self.contacts.import_gmail_login(self.gmail_user, self.gmail_passwd)
 
         # Get the contacts.
-        x = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list")
+        contact_list = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list")
         gmail_contacts = []
-        for y in x:
+        for y in contact_list:
             gmail_contacts.append(y.get_attribute("data-search"))
 
         search_name = gmail_contacts[0][:gmail_contacts[0].index('@')]

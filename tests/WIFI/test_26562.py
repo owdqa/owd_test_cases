@@ -1,13 +1,22 @@
+#===============================================================================
+# 26562: Advanced Settings menu is available
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- On device under test turn Wi-Fi on
+# 2- Connect to an available network
+# 3- Once the connection process finishes correctly, tap on Advanced Settings
+# 4- Verify that it is possible to see info presented there and that it is
+# correct
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected results:
+# User should be able to open Advanced Setup menu. There he should be able to find:
+# -The MAC information
+# -The known networks under the label Saved networks. Tapping on any of them, the
+# details dialog menu is open
+# -An option to Join Hidden Network
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
@@ -32,14 +41,18 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Open the Settings application.
-        #
+        self.settings.launch()
         self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
-        self.marionette.execute_script("document.getElementById('{}').scrollIntoView();".\
-                                       format(DOM.Settings.wifi_advanced_btn[1]))
-        x = self.UTILS.element.getElement(DOM.Settings.wifi_advanced_btn, "Advanced settings")
-        x.tap()
+        network = {'ssid': self.wifi_name}
+        self.wait_for_condition(lambda m: self.data_layer.is_wifi_connected(network), timeout=30)
+
+        self.UTILS.iframe.switchToFrame(*DOM.Settings.frame_locator)
+        manage_networks = self.marionette.find_element(*DOM.Settings.wifi_advanced_btn)
+        self.UTILS.element.scroll_into_view(manage_networks)
+        self.UTILS.element.waitForElements(DOM.Settings.wifi_advanced_btn, "Waiting for advanced wifi settings",
+                                           timeout=30)
+        btn = self.UTILS.element.getElement(DOM.Settings.wifi_advanced_btn, "Advanced settings")
+        btn.tap()
 
         self.UTILS.element.waitForElements(DOM.Settings.wifi_advanced_mac, "Mac address")
         self.UTILS.element.waitForElements(DOM.Settings.wifi_advanced_knownNets, "Known networks")
@@ -57,3 +70,5 @@ class test_main(GaiaTestCase):
 
         self.UTILS.element.waitForElements(DOM.Settings.wifi_advanced_forgetBtn, "'Forget network' button")
         self.UTILS.element.waitForElements(DOM.Settings.wifi_advanced_cancelBtn, "'Cancel' button")
+        forget_btn = self.marionette.find_element(*DOM.Settings.wifi_advanced_forgetBtn)
+        forget_btn.tap()

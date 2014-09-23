@@ -1,13 +1,23 @@
+#===============================================================================
+# 26993: Tap on the header showing the name of a contact (contact's number with prefix)
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# Have a contact whose phone number has a prefix.
+# Send/receive at least one SMS to have a thread
 #
+# Procedure:
+# 1. Open the SMS thread
+# 2. On the thread view tap on the header where the contact's name is shown (ER1)
+# 3. Press green key (ER2)
+#
+# Expected results:
+# ER1. The dialer is open with the contact's number pre-filled in.
+# ER2. The call is initiated
+#===============================================================================
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages

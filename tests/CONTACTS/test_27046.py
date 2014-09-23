@@ -1,13 +1,30 @@
+#===============================================================================
+# 27046: When the import finishes user is taken back to the contact
+# list where it is possible to see the new contacts imported
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# To have a gmail account with several contacts available to show/import
 #
+# Procedure:
+# 1. Open Contacts app
+# 2. Go to Settings
+# 3. Tap on Import from Gmail
+# 4. The log in screen is shown
+# 5. Introduce a valid user/password
+# 6. Tap on Sign In
+# 7. Once the list of contacts is shown, select some of them
+# 8. Then tap on Import
+# 9. Verify user is taken to the addres book
+#
+# Expected results:
+# User should be taken back to the contact list on the address book when
+# the import finishes.
+# All contacts imported are shown ok
+#===============================================================================
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
@@ -18,7 +35,7 @@ from tests._mock_data.contacts import MockContact
 class test_main(GaiaTestCase):
 
     _RESTART_DEVICE = True
-    
+
     def setUp(self):
         #
         # Set up child objects...
@@ -49,10 +66,7 @@ class test_main(GaiaTestCase):
 
         self.contacts.launch()
         self.contacts.import_gmail_login(self.gmail_user, self.gmail_passwd)
-
-        #
-        # Remember all the contacts in the list.
-        #
+        self.num_gmail_contacts = len(self.marionette.find_elements(*DOM.Contacts.import_conts_list))
 
         #
         # Import them.
@@ -62,9 +76,8 @@ class test_main(GaiaTestCase):
         self.contacts.launch()
 
         #
-        # Check all our contacts are in the list, both 'standrd' ...
+        # Check all our contacts are in the list, both 'standard' ...
         #
-        
         prepopulated_contact = (DOM.Contacts.view_all_contact_specific_contact[0],
                                 DOM.Contacts.view_all_contact_specific_contact[1].format("OWD"))
 
@@ -74,8 +87,7 @@ class test_main(GaiaTestCase):
         gmail_imported = (DOM.Contacts.view_all_contact_specific_contact[0],
                                 DOM.Contacts.view_all_contact_specific_contact[1].format("roy"))
         contacts = self.UTILS.element.getElements(gmail_imported, "Gmail imported contacts")
-        self.UTILS.test.TEST(len(contacts) == self.number_of_gmail_contacts, "All gmail contacts has been imported")
+        self.UTILS.test.TEST(len(contacts) == self.num_gmail_contacts, "All gmail contacts have been imported")
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot and details", x)
-

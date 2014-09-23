@@ -1,18 +1,28 @@
+#===============================================================================
+# 26556: Lock/unlock the device during a Wi-Fi session
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# There should be an available Wi-Fi network
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Procedure:
+# 1- Make a WiFi connection
+# 2- Launch a WEB browsing session over Wi-Fi
+# 3- Lock the device by pressing the dedicated key
+# 4- After a while unlock the device
+# 5- Check that the Wi-Fi connection remains active. Confirm browsing to
+# another WEB page
+#
+# Expected results:
+# The device is correctly locked/unlocked and the Wi-Fi connection remains
+# active.
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+import time
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit.apps.browser import Browser
-import time
 
 
 class test_main(GaiaTestCase):
@@ -22,39 +32,32 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.settings = Settings(self)
-        self.Browser = Browser(self)
-
-        self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
-        self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
+        self.browser = Browser(self)
+        self.url1 = "www.google.com"
+        self.url2 = "www.wikipedia.org"
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Open the settings application.
-        #
-        self.settings.launch()
-        self.settings.wifi()
-        self.settings.wifi_switchOn()
-        self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
+        self.data_layer.connect_to_wifi()
 
         #
         # Open the browser app.
         #
-        self.Browser.launch()
-        self.Browser.open_url("www.google.com")
+        self.browser.launch()
+        self.browser.open_url(self.url1)
+        self.UTILS.test.TEST(self.browser.check_page_loaded(self.url1), "{} successfully loaded".format(self.url1))
 
-        self.lockscreen.lock()
+        self.device.lock()
 
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Srceenshot of locked screen:", x)
+        screenshot = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Srceenshot of locked screen:", screenshot)
 
         time.sleep(3)
-        self.lockscreen.unlock()
+        self.device.unlock()
 
         self.UTILS.iframe.switchToFrame(*DOM.Browser.frame_locator)
-
-        self.Browser.open_url("www.wikipedia.com")
+        self.browser.open_url(self.url2)
+        self.UTILS.test.TEST(self.browser.check_page_loaded(self.url2), "{} successfully loaded".format(self.url2))

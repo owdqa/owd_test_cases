@@ -1,18 +1,37 @@
+#===============================================================================
+# 27058: Edit a contact that has been imported from Hotmail
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# To have a Hotmail account with several contacts available to show/import
 #
+# Procedure:
+# 1. Open Contacts app
+# 2. Go to Settings
+# 3. Tap on Import from Hotmail
+# 4. The log in screen is shown
+# 5. Introduce a valid user/password
+# 6. Tap on Sign In
+# 7. Once the list of contacts is shown, select some of them
+# 8. Then tap on Import
+# 9. On the address book tap on any of the imported contacts
+# 10. Tap on edit option
+# 11. Change/add some fields
+# 12. Save the contact
+# 13. Verify that the changes are saved correctly
+#
+# Expected results:
+# It should be possible to edit a contact that has been imported from Hotmail.
+# All fields imported from hotmail should also be editable.
+#===============================================================================
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.settings import Settings
-import time
 from tests._mock_data.contacts import MockContact
 
 
@@ -55,12 +74,14 @@ class test_main(GaiaTestCase):
 
         self.marionette.execute_script("document.getElementById('{}').click()".\
                                     format(DOM.Contacts.import_import_btn[1]))
-        
+
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
-        self.wait_for_element_displayed(DOM.Contacts.import_contacts_header[0], DOM.Contacts.import_contacts_header[1], timeout=10)
+        self.wait_for_element_displayed(DOM.Contacts.import_contacts_header[0], DOM.Contacts.import_contacts_header[1],
+                                        timeout=10)
 
-        self.wait_for_element_displayed(DOM.Contacts.import_contacts_back[0], DOM.Contacts.import_contacts_back[1], timeout=1)
+        self.wait_for_element_displayed(DOM.Contacts.import_contacts_back[0], DOM.Contacts.import_contacts_back[1],
+                                        timeout=1)
         back = self.marionette.find_element(*DOM.Contacts.import_contacts_back)
         self.UTILS.element.simulateClick(back)
 

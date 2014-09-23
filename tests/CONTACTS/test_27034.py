@@ -1,13 +1,21 @@
+#===============================================================================
+# 27034: Verify that on Contacts going to Settings, there is an option
+# to import contacts from Gmail
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Open Contacts app
+# 2. Go to Contact settings
+# 3. Verify that there is an option to import from gmail
 #
+# Expected result:
+# There should be an option on Contact settings to import contacts
+# from gmail. It is presented as well as its icon
+#===============================================================================
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
@@ -49,6 +57,7 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(DOM.Contacts.settings_button, "Settings button")
         x.tap()
 
+        self.wait_for_element_displayed(*DOM.Contacts.import_contacts, timeout=30)
         x = self.UTILS.element.getElement(DOM.Contacts.import_contacts, "Import button")
         x.tap()
 

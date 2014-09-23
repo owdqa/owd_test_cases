@@ -45,7 +45,7 @@
 26511|Airplane Mode- verify its functionality
 26512|Wi-Fi- verify its status and that can be activated from this menu
 26513|Data connection- Activation/Deactivation
-26535|Verify that Wi-Fi HotSpot is disable by default
+26535|Verify that Wi-Fi HotSpot is disabled by default
 26536|Verify that it is possible to turn Wi-Fi HotSpot on/off using the dedicated icon when the device has data on or it is connected to a Wi-Fi network
 26538|Try to turn Wi-Fi HotSpot on when the device has Data connection off
 26544|Enable/disable Wi-Fi from settings
@@ -74,7 +74,7 @@
 26741|Email containing a URL
 26750|Basic: Deleting of a e-mail in Inbox
 26761|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26761)
-26768|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26768)
+26768|Verify that there is an icon to launch the browser application
 26770|launch the everything.me page and click on the first category displayed
 26771|Launch a intallation doing a long-tap on any app shown by everything.me and press Yes button
 26772|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26772)

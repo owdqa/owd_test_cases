@@ -33,6 +33,9 @@ class test_main(GaiaTestCase):
         #
         self.nums = [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM"),
                         self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")]
+        self.own_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.data_layer.delete_all_sms()
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -52,7 +55,14 @@ class test_main(GaiaTestCase):
         for num in self.nums:
             test_msg = "Test message at {} for {}".format(time.time(), num)
             self.messages.createAndSendSMS([num], test_msg)
-            self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)
+            if num == self.own_number:
+                send_time = self.messages.last_sent_message_timestamp()
+                self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+            else:
+                self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)
+                self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+            back_btn = self.marionette.find_element(*DOM.Messages.header_back_button)
+            back_btn.tap()
 
         x = self.UTILS.element.getElements(DOM.Messages.thread_target_names, "Threads target names")
 

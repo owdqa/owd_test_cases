@@ -1,14 +1,14 @@
-# 27022: Call the number 
+# 27022: Call the number
 # ** Procedure
 #       1. Open call log
 #       2. Tap on Unknown number
 # ** Expected Results
 #       1. An entry with call to a number with unknown name is displayed
 #       2. A call to number is started
+import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.dialer import Dialer
-import time
 
 
 class test_main(GaiaTestCase):
@@ -19,7 +19,7 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.dialer = Dialer(self)
 
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("TARGET_CALL_NUMBER")
 
         self.dialer.launch()
         self.dialer.callLog_clearAll()
@@ -35,3 +35,5 @@ class test_main(GaiaTestCase):
         #
         self.dialer.openCallLog()
         self.dialer.callLog_call(self.phone_number)
+        time.sleep(3)
+        self.dialer.hangUp()

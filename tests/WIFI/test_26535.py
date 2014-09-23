@@ -1,13 +1,14 @@
+#===============================================================================
+# 26535: Verify that Wi-Fi HotSpot is disable by default
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Turn the device on
+# 2. Go to Settings, under Network & Connectivity check this setting: HotSpot
 #
-import sys
-sys.path.insert(1, "./")
+# Expected results:
+# Wi-Fi HotSpot is disabled by default when switching on the device
+#===============================================================================
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
@@ -36,9 +37,8 @@ class test_main(GaiaTestCase):
         #
         # Tap hotspot.
         #
-        self.UTILS.test.TEST(True, "Getting hotspot settings")
         self.settings.hotSpot()
 
         x = self.UTILS.element.getElement(DOM.Settings.hotspot_settings, "Hotspot settings")
         self.UTILS.test.TEST(x.get_attribute("disabled") != "disabled",
-                        "Hotspot settings are enabled by default (<b>signifying that 'hotspot' is off</b>).")
+                        "Hotspot settings are enabled by default (<b>meaning that 'hotspot' is off</b>).")

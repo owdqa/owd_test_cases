@@ -1,13 +1,24 @@
+#===============================================================================
+# 26552: Sending SMS during a Wi-Fi session
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# There should be a Wi-Fi network available to connect to.
+# Another device to send messages to is also needed
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Procedure:
+# 1- Make a WiFi connection.
+# 2- Launch a WEB browsing session over Wi-Fi
+# 3- Send a SMS to another mobile. Check that the SMS was received by another
+# mobile
+# 4- Check that the Wi-Fi connection remains active. Confirm browsing to
+# another WEB page.
+#
+# Expected results:
+# The SMS must be correctly received by another mobile and the Wi-Fi connection
+# must remain active.
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit.apps.browser import Browser
@@ -21,45 +32,36 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.settings = Settings(self)
-        self.Browser = Browser(self)
+        self.browser = Browser(self)
         self.messages = Messages(self)
 
-        self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
-        self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
-
         self.num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.url1 = "www.google.com"
+        self.url2 = "www.wikipedia.org"
+        self.test_msg = "Test message"
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Open the Settings application.
-        #
-        self.settings.launch()
-        self.settings.wifi()
-        self.settings.wifi_switchOn()
-        self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
+        self.data_layer.connect_to_wifi()
+
+        # Open the first url
+        self.browser.launch()
+        self.browser.open_url(self.url1)
+        self.UTILS.test.TEST(self.browser.check_page_loaded(self.url1), "{} successfully loaded".format(self.url1))
 
         #
-        # Open the browser app.
-        #
-        self.Browser.launch()
-
-        #
-        # Open our URL.
-        #
-        self.Browser.open_url("www.google.com")
-
-        #
-        # Open the SMS app, send a message then jump back to the browser asap.
+        # Open the SMS app, send a message then jump back to the browser.
         #
         self.messages.launch()
-        self.messages.createAndSendSMS([self.num], "Test message.")
+        self.messages.createAndSendSMS([self.num], self.test_msg)
+        send_time = self.messages.last_sent_message_timestamp()
+        self.messages.waitForReceivedMsgInThisThread(send_time)
 
         self.apps.kill_all()
 
-        self.Browser.launch()
-        self.Browser.open_url("www.wikipedia.com")
+        self.browser.launch()
+        self.browser.open_url(self.url2)
+        self.UTILS.test.TEST(self.browser.check_page_loaded(self.url2), "{} successfully loaded".format(self.url2))
