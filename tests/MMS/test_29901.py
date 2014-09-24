@@ -63,7 +63,8 @@ class test_main(GaiaTestCase):
         self.messages.createAndSendMMS("image", [self.phone_number], self.test_msg)
         self.marionette.find_element(*DOM.Messages.header_back_button).tap()
         self.UTILS.statusbar.wait_for_notification_toaster_title(self.mms_sender, timeout=120)
-        self.UTILS.statusbar.click_on_notification_title(self.mms_sender, timeout=30)
+        self.UTILS.statusbar.click_on_notification_title(
+            self.mms_sender, frame_to_change=DOM.Messages.frame_locator, timeout=30)
 
         #
         # Verify that the MMS has been received, but it contains no attached file

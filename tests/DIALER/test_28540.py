@@ -53,7 +53,8 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number field", False)
         dialer_num = x.get_attribute("value")
 
-        self.UTILS.test.TEST(str(self.test_contacts[-1]["tel"]["value"]) in dialer_num,
+        self.UTILS.reporting.logResult('info', "Dialer num: {}".format(dialer_num))
+        self.UTILS.test.TEST(str(self.test_contacts[-1]["tel"]["value"]) == dialer_num,
                              "After calling several contacts, if we press 'Call' button, we get the last one's phone_number")
 
         y = self.UTILS.debug.screenShotOnErr()
