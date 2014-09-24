@@ -1,5 +1,5 @@
 # Verify that the user can log-in into the app following the wizard
-# (first time user uses the app) - Firefox Account
+# (first time user uses the app) - Mobile ID
 
 #
 # DISCLAIMER
@@ -8,7 +8,6 @@
 # commercialy released (Like Firefox Hello). So you should re-flash
 # the device before executing it.
 #
-
 import time
 import os
 from gaiatest import GaiaTestCase
@@ -35,19 +34,13 @@ class main(GaiaTestCase):
 
         # TODO - Uninstall & Install again Loop
         # Update loop
-        result = os.popen("cd tests/LOOP/aux_files &&./publish_app.sh").read()
+        result= os.popen("cd tests/LOOP/aux_files &&./publish_app.sh").read()
         chops = result.split("\n")
         self.UTILS.reporting.logResult('info', "result: {}".format(chops))
         self.UTILS.test.TEST("And all done, hopefully." in chops, "The script to publish an app is OK", True)
 
         # Re-install Loop
         self._reinstall_loop()
-
-        self.settings.launch()
-        self.settings.fxa()
-        self.settings.fxa_log_out()
-        self.apps.kill_all()
-        time.sleep(2)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -58,8 +51,8 @@ class main(GaiaTestCase):
         result = self.loop.wizard_or_login()
 
         if result:
-            self.loop.firefox_login(self.fxa_user, self.fxa_pass)
-            self.loop.allow_permission_ffox_login()
+            self.loop.phone_login()
+            self.loop.allow_permission_phone_login()
 
             header = ('xpath', DOM.GLOBAL.app_head_specific.format("Firefox Hello"))
             self.UTILS.element.waitForElements(header, "Loop main view")
