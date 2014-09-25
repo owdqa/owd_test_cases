@@ -21,13 +21,9 @@ class main(GaiaTestCase):
         self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
         self.connect_to_network()
 
-        # Clean start
-        self.loop.launch()
-        try:
-            self.loop.open_settings()
-            self.loop.logout()
-        except:
-            self.UTILS.reporting.logResult('info', "Already logged out")
+        # Make sure Loop is installed
+        if not self.loop.is_installed():
+            self.loop.install()
 
         self.settings.launch()
         self.settings.fxa()

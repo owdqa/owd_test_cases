@@ -20,6 +20,9 @@ class main(GaiaTestCase):
         self.connect_to_network()
 
         # Clean start
+        if not self.loop.is_installed():
+            self.loop.install()
+            
         self.loop.launch()
         try:
             self.loop.open_settings()

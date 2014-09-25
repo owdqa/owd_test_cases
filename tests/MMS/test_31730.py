@@ -53,36 +53,23 @@ class test_main(GaiaTestCase):
         self.expected_sizes = ["4.8", "62.3", "175.6"]
         self.expected_names = ["80x60.jpg", "30k_basic_AMR.amr", "mpeg4.3gp"]
 
-    def tearDown(self):
-        self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
-
-    def test_run(self):
-        #
-        # Load files into the device.
-        #
         self.UTILS.general.addFileToDevice('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
         self.UTILS.general.addFileToDevice('./tests/_resources/30k_basic_AMR.amr', destination='SD/mus')
         self.UTILS.general.addFileToDevice('./tests/_resources/mpeg4.mp4', destination='SD/vid')
 
-        #
-        # Launch messages app.
-        #
+    def tearDown(self):
+        self.UTILS.general.remove_file('30k_basic_AMR.amr', '/SD/mus')
+        self.UTILS.general.remove_file('mpeg4.mp4', '/SD/vid')
+        self.UTILS.general.remove_file('80x60.jpg', 'DCIM/100MZLLA')
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
+    def test_run(self):
+
         self.messages.launch()
 
-        #
-        # Create a new SMS
-        #
         self.messages.startNewSMS()
-
-        #
-        # Insert the phone number in the To field
-        #
         self.messages.addNumbersInToField([self.phone_number])
-
-        #
-        # Create MMS.
-        #
         self.messages.enterSMSMsg(self.test_msg)
 
         self.messages.createMMSImage()
@@ -99,8 +86,8 @@ class test_main(GaiaTestCase):
         #
         self.messages.sendSMS()
         self.UTILS.statusbar.wait_for_notification_toaster_title(self.target_mms_number, timeout=120)
-        self.UTILS.statusbar.click_on_notification_title(self.target_mms_number)
-        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+        self.UTILS.statusbar.click_on_notification_title(self.target_mms_number, frame_to_change=DOM.Messages.frame_locator)
+
         last_msg = self.messages.lastMessageInThisThread()
         attachments = self.messages.get_mms_attachments_info(last_msg)
         self.UTILS.reporting.debug("*** ATTACHMENTS: {}".format(attachments))

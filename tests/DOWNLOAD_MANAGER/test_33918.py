@@ -60,9 +60,7 @@ class test_main(GaiaTestCase):
         self.download_manager.open_download(self.data_url)
         self.download_manager.tap_on_open_option()
 
-
-        #
         # Verifying video player
-        #
         self.UTILS.iframe.switchToFrame(*DOM.Video.frame_locator)
-        self.video.is_this_video_being_played(self.file_name)
+        result = self.video.is_this_video_being_played(self.file_name)
+        self.UTILS.test.TEST(result, "This video [{}] is actually being played".format(self.file_name))

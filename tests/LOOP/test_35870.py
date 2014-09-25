@@ -20,42 +20,48 @@ class main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
+        self.settings = Settings(self)
 
+        self.scenario = "scenarios/urls/single/revoked/idb"
+        self.aux_files_dir = self.UTILS.general.get_os_variable("GLOBAL_LOOP_AUX_FILES")
         self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
         self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
+        self.connect_to_network()
 
         # Insert our test contacts
-        self.number_of_contacts = 3
-        self.contact_given = "Test"
-        self.contact_family = map(str, range(1, self.number_of_contacts + 1))
-        self.contact_name = ["{} {}".format(self.contact_given, self.contact_family[i])
-                             for i in range(self.number_of_contacts)]
-        self.contact_numbers = ["666666666666", "777777777777", "888888888888"]
+        number_of_contacts = 3
+        contact_given = "Test"
+        contact_family = map(str, range(1, number_of_contacts + 1))
+        contact_name = ["{} {}".format(contact_given, contact_family[i])
+                        for i in range(number_of_contacts)]
+        contact_numbers = ["666666666666", "777777777777", "888888888888"]
 
-        self.test_contacts = [MockContact(name=self.contact_name[i], givenName=self.contact_given,
-                                          familyName=self.contact_family[i],
-                                          tel={'type': 'Mobile', 'value': self.contact_numbers[i]})
-                              for i in range(self.number_of_contacts)]
-        map(self.UTILS.general.insertContact, self.test_contacts)
+        test_contacts = [MockContact(name=contact_name[i], givenName=contact_given,
+                                     familyName=contact_family[i],
+                                     tel={'type': 'Mobile', 'value': contact_numbers[i]})
+                         for i in range(number_of_contacts)]
+        map(self.UTILS.general.insertContact, test_contacts)
 
-        # Directories
-        persistent_directory = "/data/local/storage/persistent"
-        loop_dir = os.popen("adb shell ls {} | grep loop".format(persistent_directory)).read().rstrip()
-        target_dir = "{}/{}/idb/".format(persistent_directory, loop_dir)
-        local_dir = "tests/LOOP/aux_files/scenarios/urls/single/revoked/idb"
+        # Re-install Loop
+        if self.loop.is_installed():
+            self.loop.reinstall()
+        else:
+            self.loop.install()
 
-        # Prepopulate urls
-        os.system("cd {} && adb push . {}".format(local_dir, target_dir))
-
-        self.connect_to_network()
+        # Make sure we're not logged in FxA
+        self.settings.launch()
+        self.settings.fxa()
+        self.settings.fxa_log_out()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        # First, login
         self.loop.launch()
+        # This needs to be done at this point, bcs if the app is freshly installed the persistence
+        # directories are not in its place until the app is launched for the first time
+        self.loop.update_db("{}/{}".format(self.aux_files_dir, self.scenario))
         result = self.loop.wizard_or_login()
 
         if result:

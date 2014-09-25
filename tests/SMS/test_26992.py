@@ -16,6 +16,7 @@
 # ER2. The call is initiated
 #===============================================================================
 
+import time
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
@@ -82,7 +83,10 @@ class test_main(GaiaTestCase):
         #
         # Dialer is started with the number already filled in.
         #
-        x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number")
-        self.UTILS.test.TEST(self.phone_number == x.get_attribute("value"),
+        time.sleep(2)
+        phone_field = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number field", False)
+        dialer_num = phone_field.get_attribute("value")
+
+        self.UTILS.test.TEST(self.phone_number == dialer_num,
                         "The phone is '{}' (expected '{}').".\
-                        format(x.get_attribute("value"), self.phone_number))
+                        format(dialer_num, self.phone_number))
