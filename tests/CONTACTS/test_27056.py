@@ -1,6 +1,24 @@
+#===============================================================================
+# 27056: Import all contacts at once
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# To have a Hotmail account with several contacts available to show/import
 #
+# Procedure:
+# 1. Open Contacts app
+# 2. Go to Settings
+# 3. Tap on Import from Hotmail
+# 4. The log in screen is shown
+# 5. Introduce a valid user/password
+# 6. Tap on Sign In
+# 7. Once the list of contacts is shown, tap on Select all
+# 8. Then tap on Import
+#
+# Expected results:
+# All Hotmail contacts are selected and after tapping on import, successfully
+# imported into the address book
+#===============================================================================
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase

@@ -1,18 +1,28 @@
+#===============================================================================
+# 27050: Cancel while the contact list is being obtained
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Open Contacts app
+# 2. Go to Settings
+# 3. Tap on Import from Hotmail
+# 4. The log in screen is shown
+# 5. Introduce a valid user/password
+# 6. While the contact list is being obtained, tap Cancel (X icon)
 #
+# Expected results:
+# User should have the possibility to Cancel while the contact list is being
+# retrieved.
+# User is taken back to Import contacts screen
+#===============================================================================
+
+import time
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.settings import Settings
-import time
 from tests._mock_data.contacts import MockContact
 
 
@@ -72,38 +82,19 @@ class test_main(GaiaTestCase):
         #
         # Loggin in
         #
-        
-        self.marionette.switch_to_frame()
-        try:
-            element = "//iframe[contains(@{}, '{}')]".\
-                           format(DOM.Contacts.hotmail_frame[0], DOM.Contacts.hotmail_frame[1])
-
-            self.wait_for_element_present("xpath", element, timeout=5)
-        except:
-            # #
-            # # Already logged in
-            # #
-            # self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
-
-            # #
-            # # Cancel the import process
-            # #
-            # x = self.UTILS.element.getElement(("css selector", "button"), "Cancel cross")
-            # self.UTILS.element.simulateClick(x)
-
-            # x = self.UTILS.debug.screenShotOnErr()
-            # self.UTILS.reporting.logResult("info", "Trying to cancel importation", x)
-
-            # #
-            # # Verify we are headed back to "Import contacts" screen
-            # #
-            # self.UTILS.element.waitForElements(DOM.Contacts.import_contacts_header, "Import contacts header");
-            self.UTILS.test.TEST(False, "Already logged in. Cannot continue the test")
-        
+#===============================================================================
+#        try:
+#            element = "//iframe[contains(@{}, '{}')]".\
+#                           format(DOM.Contacts.hotmail_frame[0], DOM.Contacts.hotmail_frame[1])
+#
+#            self.wait_for_element_present("xpath", element, timeout=5)
+#        except:
+#            self.UTILS.test.TEST(False, "Already logged in. Cannot continue the test")
+#===============================================================================
         #
         # Switch to the hotmail login frame.
         #
-        self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_frame)
+        #self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_frame)
         time.sleep(2)
         self.UTILS.element.waitForNotElements(DOM.Contacts.import_throbber, "Animated 'loading' indicator")
 
@@ -112,6 +103,9 @@ class test_main(GaiaTestCase):
         # I 'know' that the password field will appear though, so use that element to get the
         # timing right.
         #
+        time.sleep(3)
+        self.marionette.switch_to_frame()
+        self.UTILS.iframe.switch_to_frame("")
         self.wait_for_element_displayed(*DOM.Contacts.hotmail_password, timeout=30)
         try:
             self.wait_for_element_displayed(*DOM.Contacts.hotmail_username, timeout=2)
@@ -125,11 +119,10 @@ class test_main(GaiaTestCase):
         x.send_keys(self.hotmail_passwd)
 
         #
-        # Sig in
+        # Sign in
         #
         x = self.UTILS.element.getElement(DOM.Contacts.hotmail_signIn_button, "Sign In button")
         x.tap()
-
 
         #
         # Cancel the import process

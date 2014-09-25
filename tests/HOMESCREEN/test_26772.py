@@ -1,13 +1,18 @@
+#===============================================================================
+# 26772: Verify that if the user tries to install an already installed
+# application,she is notified about it
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Open everything.me
+# 2- Search by text to found a app which had been already installed
+# 3- Do a long-tap on this app
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected result:
+# If the user tries to install an application already installed, he is
+# notified about it
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.everythingme import EverythingMe
 from OWDTestToolkit.apps.settings import Settings
@@ -24,55 +29,39 @@ class test_main(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
 
-        self.UTILS      = UTILS(self)
-        self.settings   = Settings(self)
-        self.EME        = EverythingMe(self)
-        self.actions    = Actions(self.marionette)
+        self.UTILS = UTILS(self)
+        self.settings = Settings(self)
+        self.eme = EverythingMe(self)
+        self.actions = Actions(self.marionette)
+        self.cat_id = "207"
+        self.app_name = "Pacman"
 
-        #
-        # Don't prompt me for geolocation (this was broken recently in Gaia, so 'try' it).
-        #
         try:
             self.apps.set_permission('Homescreen', 'geolocation', 'deny')
+            self.apps.set_permission('Smart Collections', 'geolocation', 'deny')
         except:
-            self.UTILS.reporting.logComment("(Just FYI) Unable to automatically set Homescreen geolocation permission.")
+            self.UTILS.reporting.logComment("Unable to automatically set geolocation permission.")
+
+        # Try to uninstall app, just in case it was previously installed
+        self.UTILS.app.uninstallApp(self.app_name)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
+        self.data_layer.connect_to_wifi()
 
-        #
-        # Make sure 'things' are as we expect them to be first.
-        #
-        self.UTILS.network.getNetworkConnection()
- 
         self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
 
-        #
-        # First, get the name of the app we're going to install.
-        #
+        # First of all, make sure an application is installed
+        installed = self.eme.install_app(self.cat_id, self.app_name)
+        self.UTILS.test.TEST(installed, "The application {} was successfully installed".format(self.app_name))
 
-        self.EME.pick_group("Games")
+        # Go back and try to reinstall again
+        self.UTILS.home.goHome()
+        installed = self.eme.install_app(self.cat_id, self.app_name, False)
+        self.UTILS.test.TEST(not installed, "The application {} was already previously installed".\
+                                            format(self.app_name))
 
-        #
-        # Get the name of the first app which is installed (it'll be in the first apps listed).
-        #
-        x = self.UTILS.element.getElements(DOM.EME.app_to_install, "Installed apps in 'Games' group")[0]
-        _appName = x.get_attribute("data-name")
-        actions = Actions(self.marionette)
-        actions.press(x).wait(2).release()
-        try:
-            actions.perform()
-        except:
-            pass
-
-        x = self.UTILS.element.getElement(DOM.EME.add_to_home_screen_btn, "Add app to homescreen button")
-        x.tap()
-
-        time.sleep(2)
-
-        self.marionette.switch_to_frame()
-        x = self.UTILS.element.getElement(DOM.GLOBAL.modal_alert_msg3, "Alert message")
-        self.UTILS.test.TEST(_appName in x.text, "Alert ('%s') contains '%s'." % (x.text, _appName))
+        self.UTILS.app.uninstallApp(self.app_name)

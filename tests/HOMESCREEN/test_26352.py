@@ -45,7 +45,7 @@ class test_main(GaiaTestCase):
         self.EME = EverythingMe(self)
 
         #
-        # Don't prompt me for geolocation (this was broken recently in Gaia, so 'try' it).
+        # Don't prompt me for geolocation
         #
         try:
             self.apps.set_permission('Homescreen', 'geolocation', 'deny')

@@ -1,6 +1,23 @@
+#===============================================================================
+# 27057: Tap on Cancel ('x') option after selecting some contacts
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# To have a Hotmail account with several contacts available to show/import
 #
+# Procedure:
+# 1. Open Contacts app
+# 2. Go to Settings
+# 3. Tap on Import from Hotmail
+# 4. The log in screen is shown
+# 5. Introduce a valid user/password
+# 6. Tap on Sign In
+# 7. Once the list of contacts is shown select several of them
+# 8. Tap on Cancel ('x') option
+#
+# Expected results:
+# User is taken back to Contact settings without importing any contact
+#===============================================================================
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
