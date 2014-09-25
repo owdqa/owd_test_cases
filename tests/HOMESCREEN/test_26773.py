@@ -50,7 +50,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        self.UTILS.network.getNetworkConnection()
+        self.data_layer.connect_to_wifi()
 
         self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
 
