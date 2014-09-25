@@ -384,7 +384,29 @@
 33948|Verify that a file with size >=1 MB and <1GB is displayed as MB
 33949|Verify that a file with size >1GB is displayed as GB
 33978|Verify that download list displays the downloads before opening settings app
-
-
-
-
+34946|MSISDN user must be prompted to log-ing into Loop, when the app is executed previously but the user has logged and logout successfully.
+34954|MSISDN user must be able to log-out from Loop, when the app is executed previously but the user has logged successfully
+34955|FxAccount user must be able to log-out from Loop, when the app is executed previously but the user has logged successfully.
+34976|Verify ID used to log-in into Loop is available when user has logged-in with MSISDN. Verify that ID is the MSISDN number.
+34979|Verify ID used to log-in into Loop is available  when user has logged-in using Firefox Accunts. Verify that ID is the corresponding email FxAccount
+35859|Delete a revoked URL in shared tab
+35860|Delete a NO revoked URL in shared tab
+35869|Cancel the action of deleting an entry in the Shared URL - Setting Option
+35870|Delete the revoked URL in Shared URL when there is only one revoked entry - Clean Shared Links - Clean Just disabled links
+36668|Verify that the user can log-in into the app following the wizard (first time user uses the app) - Firefox Account
+36669|Verify that the user can log-in into the app following the wizard (first time user uses the app) - Mobile ID
+36812|Delete the revoked URL in Shared URL when there is only one revoked entry - Clean Shared Links - Clean All
+36813|Delete the NO revoked URL in Shared URL when there is only one Available entry - Clean Shared Links - Clean All
+36814|Delete the NO revoked URL in Shared URL when there is only one Available entry - Clean Shared Links - Clean Just Disabled links
+36818|Delete the revoked URL in Shared URL when there are revoked entries in different days - Clean Shared Links - Clean Just Disabled links
+36819|Delete the revoked URL in Shared URL when there are revoked entries in different days - Clean Shared Links - Delete All
+36820|Delete the NO revoked URL in Shared URL when there are NO revoked entries in different days - Clean Shared Links - Clean Just Disabled links
+36821|Delete the NO revoked URL in Shared URL when there are NO revoked entries in different days - Clean Shared Links - Clean All
+36822|Delete the revoked URL in Shared URL when there are revoked and available entries - Clean Shared Links - Clean Just Disabled links
+36823|Delete the revoked URL in Shared URL when there are revoked and available entries - Clean Shared Links - Clean All
+36824|Delete the NO revoked URL in Shared URL when there are only Avalibale URLs - Clean Shared Links - Clean All
+36825|Delete the NO revoked URL in Shared URL when there are only Avalibale URLs - Clean Shared Links - Clean Just disabled links
+36830|Delete the revoked URL in Shared URL when there are more than one revoked URL - Clean Shared Links - Clean Just Disabled links
+36831|Delete the revoked URL in Shared URL when there are more than one revoked URLs - Clean Shared Links - Clean All
+36834|Delete Revoked and Available URLs in Shared URL when there are more than one revoked and availabe URL in different days - Clean Shared Links - Clean Just Disabled links
+36835|Delete Revoked and Available URLs in Shared URL when there are more than one revoked and availabe URL in different days - Clean Shared Links - Clean All links
