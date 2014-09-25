@@ -1,6 +1,23 @@
+#===============================================================================
+# 27051: Verify that the number of contacts to be imported is shown
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# To have a Hotmail account with several contacts available to show/import
 #
+# Procedure:
+# 1. Open Contacts app
+# 2. Go to Settings
+# 3. Tap on Import from Hotmail
+# 4. The log in screen is shown
+# 5. Introduce a valid user/password
+# 6. Tap on Sign In
+# 7. Once the list of contacts is shown verify whether the number of contacts
+# to be imported is shown
+#
+# Expected results:
+# There should appear the number of contacts available to be imported
+#===============================================================================
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase

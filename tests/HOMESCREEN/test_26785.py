@@ -1,13 +1,21 @@
+#===============================================================================
+# 26785: Verify that an app launched from ev.me is correclty bookmarked using
+# the star icon available on the bottom bar
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Go to ev.me
+# 2. Launch any app
+# 3. Once the app is open, go to the bottom bar an click on star icon
+# 4. A dialog screen is shown giving the option to 'Add to home screen', click
+# on it
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected results:
+# The application is correctly bookmarked, it is added to the homescreen.
+# The star icon is not available anymore for that app
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+import time
+from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.everythingme import EverythingMe
 from OWDTestToolkit.apps.settings import Settings
@@ -16,39 +24,69 @@ from OWDTestToolkit import DOM
 
 class test_main(GaiaTestCase):
 
-#     _RESTART_DEVICE = True
-
     def setUp(self):
-        #
-        # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
 
-        self.UTILS      = UTILS(self)
-        self.settings   = Settings(self)
-        self.EME        = EverythingMe(self)
+        self.UTILS = UTILS(self)
+        self.settings = Settings(self)
+        self.eme = EverythingMe(self)
+        self.cat_id = "207"
+        self.app_name = "Pacman"
 
-        self.UTILS.app.setPermission('Homescreen', 'geolocation', 'deny')
+        try:
+            self.apps.set_permission('Homescreen', 'geolocation', 'deny')
+            self.apps.set_permission('Smart Collections', 'geolocation', 'deny')
+        except:
+            self.UTILS.reporting.logComment("Unable to automatically set geolocation permission.")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
+        self.data_layer.connect_to_wifi()
 
-        _appName = "Juegos Gratis"
-
-        #
-        # Make sure 'things' are as we expect them to be first.
-        #
-        self.UTILS.network.getNetworkConnection()
         self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
-        self.UTILS.app.uninstallApp(_appName)
 
         #
-        # Launch the 'everything.me' app.
+        # Launch the group
         #
-        self.UTILS.reporting.logResult("info", "Launching EME ...")
-        self.EME.launch()
-        self.EME.bookmark_app(_appName)
+        self.eme.pick_group(self.cat_id)
+        time.sleep(3)
+        pacman = self.UTILS.element.getElementByXpath(DOM.EME.app_to_install.format(self.app_name))
+        pacman_url = pacman.get_attribute("data-identifier")
+        self.UTILS.reporting.debug("Pacman URL: {}".format(pacman_url))
+        pacman.tap()
+        time.sleep(5)
+        self.UTILS.iframe.switchToFrame("src", pacman_url)
+        content = self.UTILS.element.getElement(DOM.EME.game_content, "Game contents")
+        self.UTILS.test.TEST(content, "Game content found")
 
+        self.marionette.switch_to_frame()
+        self.UTILS.element.waitForElements(DOM.EME.footer_navigation_bar, "Footer navigation bar", timeout=30)
+        bar = self.UTILS.element.getElement(DOM.EME.footer_navigation_bar, "Footer navigation bar")
+        bar.tap()
+        bookmark_btn = self.UTILS.element.getElement(DOM.EME.launched_button_bookmark, "Button bar - bookmark button")
+        bookmark_btn.tap()
+
+        self.marionette.switch_to_frame()
+        confirm_btn = self.UTILS.element.getElement(DOM.EME.bookmark_app_btn, "Confirm bookmark app button")
+        confirm_btn.tap()
+
+        self.UTILS.iframe.switchToFrame(*DOM.EME.bookmark_frame_locator)
+        time.sleep(4)
+
+        url = self.UTILS.element.getElement(DOM.EME.bookmark_url, "Bookmark_url").get_attribute("value")
+        self.UTILS.reporting.debug("Application '{}' URL: {}".format(self.app_name, url))
+        add_btn = self.UTILS.element.getElement(DOM.EME.add_bookmark_btn, "Add bookmark to Home Screen Button")
+        add_btn.tap()
+
+        self.UTILS.iframe.switchToFrame(*DOM.EME.frame_locator)
+        close_btn = self.UTILS.element.getElement(DOM.EME.bookmark_close, "Close bookmarks button")
+        close_btn.tap()
+
+        icon = self.UTILS.app.findAppIcon(self.app_name)
+        self.UTILS.test.TEST(icon, "Icon for application {} was found".format(self.app_name))
+
+        time.sleep(3)
+        self.UTILS.app.uninstallApp(self.app_name)

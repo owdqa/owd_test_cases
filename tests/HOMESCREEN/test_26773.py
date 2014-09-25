@@ -1,6 +1,16 @@
+#===============================================================================
+# 26773: Verify that the user can uninstall a everything.me app through
+# the grid edit mode
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- open home screen
+# 2- open edit mode
+# 3- press X on app installed from everything.me
 #
+# Expected results:
+# The user can uninstall a everything.me app through the grid edit mode
+#===============================================================================
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
@@ -13,59 +23,40 @@ from OWDTestToolkit.apps.everythingme import EverythingMe
 from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit import DOM
 from marionette import Actions
-import time
 
 
 class test_main(GaiaTestCase):
-
-    _appName = "Juegos Gratis"
-    _RESTART_DEVICE = True
 
     def setUp(self):
         #
         # Set up child objects...
         #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.actions    = Actions(self.marionette)
-        self.settings   = Settings(self)
-        self.EME        = EverythingMe(self)
+        self.UTILS = UTILS(self)
+        self.actions = Actions(self.marionette)
+        self.settings = Settings(self)
+        self.eme = EverythingMe(self)
+        self.cat_id = "207"
+        self.app_name = "Pacman"
 
-        self.UTILS.app.setPermission('Homescreen', 'geolocation', 'deny')
+        try:
+            self.apps.set_permission('Homescreen', 'geolocation', 'deny')
+            self.apps.set_permission('Smart Collections', 'geolocation', 'deny')
+        except:
+            self.UTILS.reporting.logComment("Unable to automatically set geolocation permission.")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Make sure 'things' are as we expect them to be first.
-        #
         self.UTILS.network.getNetworkConnection()
- 
-        #
-        # Make sure our app isn't installed already.
-        #
-        self.UTILS.app.uninstallApp(self._appName)
-    
-        #
-        # Install it.
-        #
-        self.EME.launch()
-        x = self.EME.search_for_app(self._appName)
-        actions = Actions(self.marionette)
-        actions.press(x).wait(2).release()
-        try:
-            actions.perform()
-        except:
-            pass
-
-        self.marionette.switch_to_frame()
-        x = self.UTILS.element.getElement(DOM.GLOBAL.modal_alert_ok3, "OK button")
-        x.tap()
-
-        time.sleep(2)
 
         self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
 
-        self.UTILS.app.uninstallApp(self._appName)
+        # First of all, make sure an application is installed
+        self.eme.install_app(self.cat_id, self.app_name)
+        self.UTILS.home.goHome()
+
+        # Then, proceed to uninstall the application through the Edit mode
+        self.UTILS.app.uninstallApp(self.app_name)

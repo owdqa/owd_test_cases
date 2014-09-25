@@ -1,13 +1,16 @@
+#===============================================================================
+# 26775: Verify that user can click on any app shown by everything.me
+# and launch the application
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Launch everything.me
+# 2- Click on an app
 #
-import sys
-sys.path.insert(1, "./")
+# Expected results:
+# The Application is launched correctly
+#===============================================================================
+import time
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.everythingme import EverythingMe
 from OWDTestToolkit.apps.settings import Settings
@@ -22,28 +25,37 @@ class test_main(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
 
-        self.UTILS      = UTILS(self)
-        self.settings   = Settings(self)
-        self.EME        = EverythingMe(self)
+        self.UTILS = UTILS(self)
+        self.settings = Settings(self)
+        self.eme = EverythingMe(self)
+        self.cat_id = "207"
+        self.app_name = "Pacman"
 
-        self.UTILS.app.setPermission('Homescreen', 'geolocation', 'deny')
+        try:
+            self.apps.set_permission('Homescreen', 'geolocation', 'deny')
+            self.apps.set_permission('Smart Collections', 'geolocation', 'deny')
+        except:
+            self.UTILS.reporting.logComment("Unable to automatically set geolocation permission.")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
-        #
-        # Make sure 'things' are as we expect them to be first.
-        #
-        self.UTILS.network.getNetworkConnection()
+        self.data_layer.connect_to_wifi()
 
         self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
 
         #
         # Launch the group
         #
-        self.EME.pick_group("Games")
-
-        self.EME.launch_from_group("Juegos Gratis")
+        self.eme.pick_group(self.cat_id)
+        time.sleep(3)
+        pacman = self.UTILS.element.getElementByXpath(DOM.EME.app_to_install.format(self.app_name))
+        pacman_url = pacman.get_attribute("data-identifier")
+        self.UTILS.reporting.debug("Pacman URL: {}".format(pacman_url))
+        pacman.tap()
+        time.sleep(5)
+        self.UTILS.iframe.switchToFrame("src", pacman_url)
+        content = self.UTILS.element.getElement(DOM.EME.game_content, "Game contents")
+        self.UTILS.test.TEST(content, "Game content found")

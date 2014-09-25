@@ -1,6 +1,25 @@
+#===============================================================================
+# 27053: Tap on Unselect All to unselect all the contacts
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# To have a Hotmail account with several contacts available to show/import
 #
+# Procedure:
+# 1. Open Contacts app
+# 2. Go to Settings
+# 3. Tap on Import from Hotmail
+# 4. The log in screen is shown
+# 5. Introduce a valid user/password
+# 6. Tap on Sign In
+# 7. Once the list of contacts is shown, select some of them
+# 8. Then tap on Unselect all (ER1)
+# 9. Now tap on Select all option and then on Unselect all again (ER2)
+#
+# Expected results:
+# ER1. All contacts previously selected should be unselected at once
+# ER2. All contacts previously selected should be unselected at once
+#===============================================================================
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase

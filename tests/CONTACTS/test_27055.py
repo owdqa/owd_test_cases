@@ -1,6 +1,25 @@
+#===============================================================================
+# 27055: Import one contact in a non empty addressbook
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# To have already some contacts on the address book.
+# To have a Hotmail account with several contacts available to show/import
 #
+# Procedure:
+# 1. Open Contacts app
+# 2. Go to Settings
+# 3. Tap on Import from Hotmail
+# 4. The log in screen is shown
+# 5. Introduce a valid user/password
+# 6. Tap on Sign In
+# 7. Once the list of contacts is shown, select one of the contacts
+# 8. Tap on Import
+#
+# Expected results:
+# The contacts is successfully imported into the user's address book.
+# The contacts are shown fine along with the existing contacts
+#===============================================================================
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase

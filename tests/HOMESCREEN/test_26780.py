@@ -1,13 +1,20 @@
+#===============================================================================
+# 26780: Verify that when an app is launched from everything.me a bottom
+# bar is shown so that the user can go back, go forward, refresh, bookmark
+# and close the bottom bar
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Navigate to everything.me main page
+# 2- Type a category in the search bar (e.g. Sports)
+# 3- Open an app from this category
 #
-import sys
-sys.path.insert(1, "./")
+# Expected results:
+# The wrapper occupies a minimal amount of the screen and it is only opened
+# when the user taps on it. A wizard to allow the user know about the wrapper
+# will be shown first time user opens an application with the wrapper.
+#===============================================================================
+import time
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.everythingme import EverythingMe
 from OWDTestToolkit.apps.settings import Settings
@@ -27,39 +34,42 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.settings = Settings(self)
         self.EME = EverythingMe(self)
+        self.cat_id = "207"
+        self.app_name = "Simon Says"
 
-        self.UTILS.app.setPermission('Homescreen', 'geolocation', 'deny')
+        try:
+            self.apps.set_permission('Homescreen', 'geolocation', 'deny')
+            self.apps.set_permission('Smart Collections', 'geolocation', 'deny')
+            self.apps.set_permission('Search Results', 'geolocation', 'deny')
+        except:
+            self.UTILS.reporting.logComment("Unable to automatically set geolocation permission.")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Make sure 'things' are as we expect them to be first.
-        #
-        self.UTILS.network.getNetworkConnection()
+        self.data_layer.connect_to_wifi()
 
-        #
-        # Launch the 'everything.me' app.
-        #
-        self.UTILS.reporting.logResult("info", "Launching EME ...")
         self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
 
-        #
-        # Make sure our group isn't already present.
-        #
-        self.EME.pick_group("Games")
-
-        x = self.UTILS.element.getElements(DOM.EME.app_to_install, "Installed apps in 'Games' group")[0]
-        x.tap()
-
+        search_input = self.UTILS.element.getElement(DOM.EME.search_field, "Search input field")
+        search_input.tap()
+        self.UTILS.general.keyboard.send("Games")
+        self.UTILS.iframe.switchToFrame(*DOM.EME.search_frame_locator)
+        btn = self.UTILS.element.getElement(DOM.EME.suggestions_notice_confirm_btn, "Suggestions confirmation button",
+                                            timeout=30)
+        btn.tap()
+        time.sleep(5)
+        simon = self.UTILS.element.getElementByXpath(DOM.EME.app_to_install.format(self.app_name))
+        simon_url = simon.get_attribute("data-identifier")
+        self.UTILS.reporting.debug("Simon Says URL: {}".format(simon_url))
+        simon.tap()
+        time.sleep(5)
         self.marionette.switch_to_frame()
-
-        self.UTILS.element.waitForElements(DOM.EME.launched_button_bar, "Button bar", False)
-
-        x = self.UTILS.element.getElement(DOM.EME.launched_display_button_bar, "Button bar 'displayer' element")
-        x.tap()
+        self.UTILS.element.waitForElements(DOM.EME.footer_navigation_bar, "Footer navigation bar", timeout=30)
+        bar = self.UTILS.element.getElement(DOM.EME.footer_navigation_bar, "Footer navigation bar")
+        bar.tap()
 
         self.UTILS.element.waitForElements(DOM.EME.launched_button_back, "Button bar - back button")
         self.UTILS.element.waitForElements(DOM.EME.launched_button_forward, "Button bar - forward button")
