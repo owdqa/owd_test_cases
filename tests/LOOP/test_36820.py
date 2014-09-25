@@ -18,7 +18,7 @@ from tests._mock_data.contacts import MockContact
 class main(GaiaTestCase):
 
     def setUp(self):
-       GaiaTestCase.setUp(self)
+        GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
         self.settings = Settings(self)
