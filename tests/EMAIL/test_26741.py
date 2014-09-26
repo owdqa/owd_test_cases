@@ -18,44 +18,59 @@
 # be highlighted and underlined and it shall work when accessing the link.
 #===============================================================================
 
+import time
+import sys
+sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
-from OWDTestToolkit.utils.utils import UTILS
-from OWDTestToolkit.apps.messages import Messages
+from tests.EMAIL.shared_test_functions.emailing import Emailing
 
 
-class test_main(GaiaTestCase):
+class test_26741(Emailing):
+
+    _RESTART_DEVICE = True
 
     def setUp(self):
+        self.testNum = self.__class__.__name__
+        self.testType = "gmail"
+
+        self.setUpEmail()
+        self.link = "http://www.wikipedia.org"
+        self.body = "This is the test msg with a link: {}".format(self.link)
+
         #
-        # Set up child objects...
+        # Email parameters
         #
-        GaiaTestCase.setUp(self)
-        self.UTILS = UTILS(self)
-        self.messages = Messages(self)
+        self.username1 = self.UTILS.general.get_os_variable(self.testType.upper() + "_1_USER")
+        self.email1 = self.UTILS.general.get_os_variable(self.testType.upper() + "_1_EMAIL")
+        self.passwd1 = self.UTILS.general.get_os_variable(self.testType.upper() + "_1_PASS")
+        self.user1 = {"username": self.username1, "email": self.email1, "pass": self.passwd1}
+
+        self.username2 = self.UTILS.general.get_os_variable(self.testType.upper() + "_2_USER")
+        self.email2 = self.UTILS.general.get_os_variable(self.testType.upper() + "_2_EMAIL")
+        self.passwd2 = self.UTILS.general.get_os_variable(self.testType.upper() + "_2_PASS")
+        self.user2 = {"username": self.username2, "email": self.email2, "pass": self.passwd2}
+
+        self.data_layer.connect_to_wifi()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
+        self.send_email(self.user1, self.user2)
+        time.sleep(2)
+        self.apps.kill_all()
+        time.sleep(2)
+        self.receive_email(self.user2, self.user1)
 
-        #
-        # Restart the app.
-        #
-        self.messages.launch()
+        email_body = self.UTILS.element.getElement(DOM.Email.open_email_body, "Email body")
+        self.UTILS.test.TEST(self.link in email_body.text, "The link is in the email body")
 
-        #
-        # Check things are as we'd expect.
-        #
-        self.UTILS.element.waitForNotElements(DOM.Messages.threads, "Message threads")
-        self.UTILS.element.waitForElements(DOM.Messages.create_new_message_btn,
-                                    "Create new message button")
-        self.UTILS.element.waitForElements(DOM.Messages.edit_threads_button,
-                                    "Edit threads button")
-        self.UTILS.element.waitForElements(DOM.Messages.no_threads_message,
-                                    "No message threads notification")
+        # Check link behavior
+        email_body.find_element(*DOM.Email.open_email_body_link).tap()
+        self.marionette.find_element(*DOM.Email.confirmation_browser_ok).tap()
+
+        self.UTILS.iframe.switchToFrame(*DOM.Browser.frame_locator)
+        time.sleep(2)
+        self.browser.check_page_loaded(self.link)
