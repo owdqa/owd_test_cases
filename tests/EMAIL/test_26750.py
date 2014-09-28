@@ -1,6 +1,14 @@
+# OWD-26750
+# Deleting of a e-mail in Inbox
 #
-# Imports which are standard for all test cases.
-#
+#   PROCEDURE
+#       1. Open Mail app
+#       2. Choose a mail from inbox
+#       3. Delete an e-mail from Inbox.
+#       4. Check inbox
+#       5. The mail does not appears on inbox
+#   EXPECTED RESULT
+#       E-mail is correctly deleted from device Inbox.
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
@@ -15,42 +23,26 @@ class test_main(GaiaTestCase):
 
     def setUp(self):
 
-        #
-        # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
-        self.Email = Email(self)
+        self.email = Email(self)
+
+        self.user1 = self.UTILS.general.get_os_variable("GMAIL_2_USER")
+        self.email1 = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
+        self.passwd1 = self.UTILS.general.get_os_variable("GMAIL_2_PASS")
+
+        self.data_layer.connect_to_wifi()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        self.UTILS.network.getNetworkConnection()
 
-        self.user1 = self.UTILS.general.get_os_variable("GMAIL_2_USER")
-        self.email1 = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
-        self.passwd1 = self.UTILS.general.get_os_variable("GMAIL_2_PASS")
+        self.email.launch()
+        self.email.setupAccount(self.user1, self.email1, self.passwd1)
 
-        self.UTILS.reporting.logComment("Using username '" + self.user1 + "'")
-        self.UTILS.reporting.logComment("Using password '" + self.passwd1 + "'")
-        self.UTILS.reporting.logComment("Using email    '" + self.email1 + "'")
-
-        #
-        # Launch Email app.
-        #
-        self.Email.launch()
-
-        #
-        # Login.
-        #
-        self.Email.setupAccount(self.user1, self.email1, self.passwd1)
-
-        #
-        # Delete the first email we come across.
-        #
         _subject = self.marionette.find_elements(*DOM.Email.folder_subject_list)[0].text
         self.UTILS.reporting.logComment("Deleting email with subject '" + _subject + "'.")
 
-        self.Email.deleteEmail(_subject)
+        self.email.deleteEmail(_subject)
