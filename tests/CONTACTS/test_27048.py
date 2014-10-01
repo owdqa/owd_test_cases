@@ -58,5 +58,5 @@ class test_main(GaiaTestCase):
         # Launch contacts app.
         #
         self.contacts.launch()
-        x = self.contacts.import_hotmail_login("wrongname", "wrongpass")
+        x = self.contacts.import_hotmail_login("wrongname@hotmail.com", "wrongpass")
         self.UTILS.test.TEST(x == False, "Login failed.")

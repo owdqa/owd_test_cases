@@ -53,10 +53,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Set up to use data connection.
-        #
-        self.UTILS.network.getNetworkConnection()
+        self.data_layer.connect_to_cell_data()
 
         self.contacts.launch()
 
@@ -79,59 +76,24 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(DOM.Contacts.hotmail_button, "Hotmail button")
         x.tap()
 
-        #
-        # Loggin in
-        #
-#===============================================================================
-#        try:
-#            element = "//iframe[contains(@{}, '{}')]".\
-#                           format(DOM.Contacts.hotmail_frame[0], DOM.Contacts.hotmail_frame[1])
-#
-#            self.wait_for_element_present("xpath", element, timeout=5)
-#        except:
-#            self.UTILS.test.TEST(False, "Already logged in. Cannot continue the test")
-#===============================================================================
-        #
-        # Switch to the hotmail login frame.
-        #
-        #self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_frame)
-        time.sleep(2)
-        self.UTILS.element.waitForNotElements(DOM.Contacts.import_throbber, "Animated 'loading' indicator")
-
-        #
-        # Send the login information (sometimes the username isn't required, just the password).
-        # I 'know' that the password field will appear though, so use that element to get the
-        # timing right.
-        #
-        time.sleep(3)
-        self.marionette.switch_to_frame()
-        self.UTILS.iframe.switch_to_frame("")
-        self.wait_for_element_displayed(*DOM.Contacts.hotmail_password, timeout=30)
-        try:
-            self.wait_for_element_displayed(*DOM.Contacts.hotmail_username, timeout=2)
-
-            x = self.marionette.find_element(*DOM.Contacts.hotmail_username)
-            x.send_keys(self.hotmail_user)
-        except:
-            pass
-
-        x = self.UTILS.element.getElement(DOM.Contacts.hotmail_password, "Password field")
-        x.send_keys(self.hotmail_passwd)
-
-        #
-        # Sign in
-        #
-        x = self.UTILS.element.getElement(DOM.Contacts.hotmail_signIn_button, "Sign In button")
-        x.tap()
-
+        self.contacts.hotmail_login(self.hotmail_user, self.hotmail_passwd, True)
         #
         # Cancel the import process
         #
-        x = self.UTILS.element.getElement(("id", "popup-close"), "Cancel cross")
+        self.UTILS.reporting.debug("*** Hotmail login complete")
+        self.marionette.switch_to_frame()
+        self.UTILS.iframe.switch_to_frame("communication")
+        self.UTILS.reporting.debug("*** Waiting for curtain to be displayed")
+        frame = self.marionette.find_element("id", "fb-curtain")
+        self.wait_for_condition(lambda m: "visible" in frame.get_attribute("class"),
+                                timeout=30, message="FB Curtain frame was not visible")
+        self.marionette.switch_to_frame(frame)
+        self.UTILS.reporting.debug("**** Waiting for Cancel button")
+        x = self.marionette.find_element("id", "cancel")
         x.tap()
 
         #
         # Verify we are headed back to "Import contacts" screen
         #
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
-        self.UTILS.element.waitForElements(DOM.Contacts.import_contacts_header, "Import contacts header");
+        self.UTILS.element.waitForElements(DOM.Contacts.import_contacts_header, "Import contacts header")

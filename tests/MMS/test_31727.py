@@ -2,12 +2,7 @@
 # TC_MMSTC-FEATR-002c
 # Sending PNG file
 #
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -27,9 +22,6 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.gallery = Gallery(self)
 
-        #
-        # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.target_mms_number = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
@@ -39,7 +31,6 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
         #
         # Load files into the device.
         #
@@ -73,13 +64,8 @@ class test_main(GaiaTestCase):
         #
         self.messages.sendSMS()
 
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
+        self.UTILS.statusbar.click_on_notification_detail(self.test_msg, DOM.Messages.frame_locator)
 
-        self.messages.openThread(self.target_mms_number)
-
-        #
-        # Wait for the last message in this thread to be a 'received' one.
-        #
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(returnedSMS, "A received message appeared in the thread.", True)
+        text = self.UTILS.element.getElement(DOM.Messages.last_message_mms_text, "Message text").text
+        self.UTILS.test.TEST(text == self.test_msg, "[{}] received. Expected [{}]".format(text, self.test_msg), True)
