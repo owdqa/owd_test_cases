@@ -42,7 +42,6 @@ class test_main(GaiaTestCase):
         self.email.launch()
         self.email.setupAccount(self.user1, self.email1, self.passwd1)
 
-        _subject = self.marionette.find_elements(*DOM.Email.folder_subject_list)[0].text
+        _subject = self.marionette.find_elements(*DOM.Email.folder_subject_list)[1].text
         self.UTILS.reporting.logComment("Deleting email with subject '" + _subject + "'.")
-
         self.email.deleteEmail(_subject)
