@@ -41,7 +41,7 @@ class test_main(GaiaTestCase):
         #
         # Ensure we have a connection.
         #
-        self.UTILS.network.getNetworkConnection()
+        self.connect_to_network()
 
         #
         # Make sure our app isn't installed already.

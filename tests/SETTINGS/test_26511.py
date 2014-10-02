@@ -38,7 +38,7 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.settings.launch()
 
-        self.UTILS.test.TEST(self.UTILS.network.isNetworkTypeEnabled("airplane") == False,
+        self.UTILS.test.TEST(self.UTILS.network.is_network_type_enabled("airplane") == False,
                              "Airplane mode is disabled by default.")
 
         self.UTILS.reporting.logResult("info", "Turning airplane mode on ...")
@@ -48,9 +48,9 @@ class test_main(GaiaTestCase):
         time.sleep(5)
         x.tap()
 
-        self.UTILS.network.waitForNetworkItemEnabled("airplane")
+        self.UTILS.network.wait_for_network_item_enabled("airplane")
 
-        self.UTILS.test.TEST(self.UTILS.network.isNetworkTypeEnabled("airplane") == True,
+        self.UTILS.test.TEST(self.UTILS.network.is_network_type_enabled("airplane") == True,
                              "Airplane mode is now enabled.")
         self.UTILS.test.TEST(self.data_layer.get_setting('ril.radio.disabled') == True,
                              "Radio functionality is now disabled.")

@@ -49,7 +49,7 @@ class test_main(GaiaTestCase):
         #
         # Set up email account.
         #
-        self.UTILS.network.getNetworkConnection()
+        self.connect_to_network()
 
         self.Email.launch()
         self.Email.setupAccount(self.email_user, self.email_address, self.email_pass)

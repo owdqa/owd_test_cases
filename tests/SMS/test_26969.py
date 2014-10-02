@@ -62,7 +62,7 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
 
-        self.UTILS.network.getNetworkConnection()
+        self.connect_to_network()
 
         #
         # Create and send a new test message.

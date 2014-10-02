@@ -37,7 +37,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        self.UTILS.network.getNetworkConnection()
+        self.connect_to_network()
         self.UTILS.statusbar.clearAllStatusBarNotifs()
         #
         # Launch messages app.

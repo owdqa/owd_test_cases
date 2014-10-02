@@ -62,7 +62,7 @@ class test_main(GaiaTestCase):
         #
         # Set up to use data connection.
         #
-        self.UTILS.network.getNetworkConnection()
+        self.connect_to_network()
 
         self.contacts.launch()
 

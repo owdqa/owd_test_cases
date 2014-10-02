@@ -39,7 +39,7 @@ class test_main(GaiaTestCase):
         self.data_layer.disable_wifi()
 
         self.UTILS.element.waitForNotElements(DOM.Statusbar.wifi, "Wifi icon in statusbar")
-        self.UTILS.test.TEST(self.UTILS.network.isNetworkTypeEnabled("wifi") == False,
+        self.UTILS.test.TEST(self.UTILS.network.is_network_type_enabled("wifi") == False,
                          "Wifi is disabled before we start this test.")
 
         #

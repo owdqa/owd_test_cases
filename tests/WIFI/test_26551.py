@@ -31,7 +31,7 @@ class test_main(GaiaTestCase):
         #
         # Open the Settings application.
         #
-        self.UTILS.network.getNetworkConnection()
+        self.connect_to_network()
 
         #
         # Open the browser app.

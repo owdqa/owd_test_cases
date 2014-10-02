@@ -57,7 +57,7 @@ class test_main(GaiaTestCase):
         #
         # Set up email account.
         #
-        self.UTILS.network.getNetworkConnection()
+        self.connect_to_network()
 
         #
         # Create and send a new test message.
