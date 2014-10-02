@@ -20,18 +20,15 @@
 #===============================================================================
 
 from gaiatest import GaiaTestCase
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
-import time
+
 
 class test_main(GaiaTestCase):
-    
+
     _RESTART_DEVICE = True
-    
+
     def setUp(self):
         #
         # Set up child objects...
@@ -54,16 +51,16 @@ class test_main(GaiaTestCase):
 
         self.contacts.launch()
 
-        x = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)
-        if not x or x == "ALLIMPORTED":
+        login_result = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)
+        if not login_result or login_result == "ALLIMPORTED":
             self.UTILS.reporting.logResult(False, "Cannot continue past this point without importing the contacts.")
             return
 
         # Try to get the hotmail contact (use the first one if not).
-        x = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list")
+        contact_list = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list")
         cont_number = 1
         i_counter = 0
-        for i in x:
+        for i in contact_list:
             i_counter = i_counter + 1
             if "hotmail" in i.get_attribute("data-search").lower():
                 cont_number = i_counter
@@ -81,7 +78,6 @@ class test_main(GaiaTestCase):
         back = self.UTILS.element.getElement(DOM.Contacts.import_contacts_back, "Back button", True, 10, True)
         self.UTILS.element.simulateClick(back)
 
-
         done = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Done button", True, 10, True)
         self.UTILS.element.simulateClick(done)
 
@@ -93,5 +89,5 @@ class test_main(GaiaTestCase):
 
         self.UTILS.element.waitForElements(hotmail_imported, "Hotmail imported contact")
 
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot and details", x)
+        result = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot and details", result)

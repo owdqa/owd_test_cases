@@ -15,10 +15,6 @@
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.settings import Settings
@@ -27,7 +23,7 @@ from tests._mock_data.contacts import MockContact
 
 class test_main(GaiaTestCase):
 
-    #_RESTART_DEVICE = True
+    _RESTART_DEVICE = True
 
     def setUp(self):
         #
@@ -58,5 +54,5 @@ class test_main(GaiaTestCase):
         # Launch contacts app.
         #
         self.contacts.launch()
-        x = self.contacts.import_hotmail_login("wrongname@hotmail.com", "wrongpass")
-        self.UTILS.test.TEST(x == False, "Login failed.")
+        login_result = self.contacts.import_hotmail_login("wrongname@hotmail.com", "wrongpass")
+        self.UTILS.test.TEST(login_result == False, "Login failed.")

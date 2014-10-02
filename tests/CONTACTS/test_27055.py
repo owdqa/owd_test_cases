@@ -24,13 +24,9 @@ import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
-import time
 from tests._mock_data.contacts import MockContact
 
 
@@ -62,16 +58,16 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.contacts.launch()
-        x = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)
-        
-        if not x or x == "ALLIMPORTED":
+        login_result = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)
+
+        if not login_result or login_result == "ALLIMPORTED":
             self.UTILS.reporting.logResult(False, "Cannot continue past this point without importing the contacts.")
             return
 
-        x = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list")
+        contact_list = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list")
         cont_number = 1
         i_counter = 0
-        for i in x:
+        for i in contact_list:
             i_counter = i_counter + 1
             if "hotmail" in i.get_attribute("data-search").lower():
                 cont_number = i_counter
@@ -82,13 +78,16 @@ class test_main(GaiaTestCase):
                                        format(DOM.Contacts.import_import_btn[1]))
 
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
-        self.wait_for_element_displayed(DOM.Contacts.import_contacts_header[0], DOM.Contacts.import_contacts_header[1], timeout=10)
+        self.wait_for_element_displayed(DOM.Contacts.import_contacts_header[0], DOM.Contacts.import_contacts_header[1],
+                                        timeout=10)
 
-        self.wait_for_element_displayed(DOM.Contacts.import_contacts_back[0], DOM.Contacts.import_contacts_back[1], timeout=1)
+        self.wait_for_element_displayed(DOM.Contacts.import_contacts_back[0], DOM.Contacts.import_contacts_back[1],
+                                        timeout=1)
         back = self.marionette.find_element(*DOM.Contacts.import_contacts_back)
         self.UTILS.element.simulateClick(back)
 
-        self.wait_for_element_displayed(DOM.Contacts.settings_done_button[0], DOM.Contacts.settings_done_button[1], timeout=5)
+        self.wait_for_element_displayed(DOM.Contacts.settings_done_button[0], DOM.Contacts.settings_done_button[1],
+                                        timeout=5)
         done = self.marionette.find_element(*DOM.Contacts.settings_done_button)
         self.UTILS.element.simulateClick(done)
 
@@ -105,5 +104,5 @@ class test_main(GaiaTestCase):
 
         self.UTILS.element.waitForElements(hotmail_imported, "Hotmail imported contact")
 
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot and details", x)
+        result = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot and details", result)

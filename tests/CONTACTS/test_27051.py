@@ -74,11 +74,11 @@ class test_main(GaiaTestCase):
         if login_result == "ALLIMPORTED":
             self.UTILS.test.TEST(False, "No more contacts to import")
 
-        x = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list")
-        cont_count = len(x)
+        contact_list = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list")
+        cont_count = len(contact_list)
 
-        x = self.UTILS.element.getElement(DOM.Contacts.import_num_of_conts, "Number of contacts")
-        self.UTILS.reporting.logResult("info", "Detected message '{}'.".format(x.text))
+        num_contacts = self.UTILS.element.getElement(DOM.Contacts.import_num_of_conts, "Number of contacts")
+        self.UTILS.reporting.logResult("info", "Detected message '{}'.".format(num_contacts.text))
 
-        self.UTILS.test.TEST(str(cont_count) in x.text, "'{}' contains the real count, which is {}.".\
-                        format(x.text, cont_count))
+        self.UTILS.test.TEST(str(cont_count) in num_contacts.text, "'{}' contains the real count, which is {}.".\
+                        format(num_contacts.text, cont_count))

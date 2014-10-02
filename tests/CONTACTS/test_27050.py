@@ -60,37 +60,34 @@ class test_main(GaiaTestCase):
         #
         # Hotmail import selection
         #
-        x = self.UTILS.element.getElement(DOM.Contacts.settings_button, "Settings button")
-        x.tap()
+        settings_btn = self.UTILS.element.getElement(DOM.Contacts.settings_button, "Settings button")
+        settings_btn.tap()
 
         time.sleep(2)
 
-        x = self.UTILS.element.getElement(DOM.Contacts.import_contacts, "Import button")
-        x.tap()
+        import_btn = self.UTILS.element.getElement(DOM.Contacts.import_contacts, "Import button")
+        import_btn.tap()
 
         time.sleep(2)
 
         #
         # Press the Hotmail button.
         #
-        x = self.UTILS.element.getElement(DOM.Contacts.hotmail_button, "Hotmail button")
-        x.tap()
+        hotmail_btn = self.UTILS.element.getElement(DOM.Contacts.hotmail_button, "Hotmail button")
+        hotmail_btn.tap()
 
         self.contacts.hotmail_login(self.hotmail_user, self.hotmail_passwd, True)
         #
         # Cancel the import process
         #
         self.UTILS.reporting.debug("*** Hotmail login complete")
-        self.marionette.switch_to_frame()
-        self.UTILS.iframe.switch_to_frame("communication")
-        self.UTILS.reporting.debug("*** Waiting for curtain to be displayed")
         frame = self.marionette.find_element("id", "fb-curtain")
         self.wait_for_condition(lambda m: "visible" in frame.get_attribute("class"),
                                 timeout=30, message="FB Curtain frame was not visible")
         self.marionette.switch_to_frame(frame)
         self.UTILS.reporting.debug("**** Waiting for Cancel button")
-        x = self.marionette.find_element("id", "cancel")
-        x.tap()
+        cancel_btn = self.marionette.find_element("id", "cancel")
+        cancel_btn.tap()
 
         #
         # Verify we are headed back to "Import contacts" screen
