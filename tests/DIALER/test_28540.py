@@ -14,7 +14,6 @@ from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.dialer import Dialer
 from tests._mock_data.contacts import MockContact
-import time
 
 
 class test_main(GaiaTestCase):
@@ -63,7 +62,3 @@ class test_main(GaiaTestCase):
     def _do_the_call(self, number):
         self.dialer.enterNumber(number, validate=False)
         self.dialer.call_this_number_and_hangup(5)
-        # This needs to be done bcs sometimes (50%) the Dialer app crushes after hanging up
-        self.apps.kill_all()
-        time.sleep(2)
-        self.dialer.launch()
