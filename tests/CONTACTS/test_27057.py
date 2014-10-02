@@ -22,14 +22,10 @@ import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.settings import Settings
-import time
 from tests._mock_data.contacts import MockContact
 
 
@@ -67,11 +63,11 @@ class test_main(GaiaTestCase):
 
         self.contacts.launch()
 
-        x = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
-        contacts_before = len(x)
+        contact_list = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
+        contacts_before = len(contact_list)
 
-        x = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)
-        if not x or x == "ALLIMPORTED":
+        login_result = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)
+        if not login_result or login_result == "ALLIMPORTED":
             self.UTILS.reporting.logResult(False, "Cannot continue past this point without importing the contacts.")
             return
 
@@ -82,20 +78,22 @@ class test_main(GaiaTestCase):
                                        format(DOM.Contacts.import_close_icon[1]))
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
-        self.wait_for_element_displayed(DOM.Contacts.import_contacts_header[0], DOM.Contacts.import_contacts_header[1], timeout=10)
+        self.wait_for_element_displayed(DOM.Contacts.import_contacts_header[0], DOM.Contacts.import_contacts_header[1],
+                                        timeout=10)
 
-        self.wait_for_element_displayed(DOM.Contacts.import_contacts_back[0], DOM.Contacts.import_contacts_back[1], timeout=1)
+        self.wait_for_element_displayed(DOM.Contacts.import_contacts_back[0], DOM.Contacts.import_contacts_back[1],
+                                        timeout=1)
         back = self.marionette.find_element(*DOM.Contacts.import_contacts_back)
         self.UTILS.element.simulateClick(back)
 
         done = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Settings done button")
         self.UTILS.element.simulateClick(done)
 
-        x = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
-        contacts_after = len(x)
+        contact_list = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
+        contacts_after = len(contact_list)
 
         self.UTILS.test.TEST(contacts_after == contacts_before, "No more contacts were imported ({} before and {} after)."\
                         .format(contacts_after, contacts_before))
 
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "x", x)
+        result = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "result", result)
