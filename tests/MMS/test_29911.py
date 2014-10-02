@@ -49,12 +49,11 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact1["tel"]["value"])
         self.UTILS.general.insertContact(self.contact1)
 
-        self.contact2 = MockContact(givenName="Name 2", familyName="Surname 2", name="Name 2 Surname 2")
+        self.contact2 = MockContact(givenName="Name 2", familyName="Surname 2", name="Name 2 Surname 2",
+                                    tel={"type": "Mobile", "value": self.test_num})
         self.UTILS.general.insertContact(self.contact2)
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
 
-        #
-        # Establish which phone number to use.
-        #
         self.call_number = self.UTILS.general.get_os_variable("TARGET_CALL_NUMBER")
         self.data_layer.delete_all_sms()
 
@@ -63,7 +62,6 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
         self.messages.launch()
 
         self.messages.startNewSMS()

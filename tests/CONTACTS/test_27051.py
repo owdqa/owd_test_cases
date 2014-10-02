@@ -22,9 +22,6 @@ import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
@@ -33,7 +30,7 @@ from tests._mock_data.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
-    
+
     _RESTART_DEVICE = True
 
     def setUp(self):
@@ -62,26 +59,26 @@ class test_main(GaiaTestCase):
         #
         # Set up to use data connection.
         #
-        self.connect_to_network()
+        self.data_layer.connect_to_cell_data()
 
         self.contacts.launch()
 
         login_result = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)
 
         #
-        # Login unsuccesful or no available contacts to import
+        # Login unsuccessful or no available contacts to import
         #
         if not login_result:
-            self.UTILS.test.TEST(False, "Login unsuccesful")
-            
+            self.UTILS.test.TEST(False, "Login unsuccessful")
+
         if login_result == "ALLIMPORTED":
             self.UTILS.test.TEST(False, "No more contacts to import")
 
-        x = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list")
-        cont_count = len(x)
+        contact_list = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list")
+        cont_count = len(contact_list)
 
-        x = self.UTILS.element.getElement(DOM.Contacts.import_num_of_conts, "Number of contacts")
-        self.UTILS.reporting.logResult("info", "Detected message '{}'.".format(x.text))
-        
-        self.UTILS.test.TEST(str(cont_count) in x.text, "'{}' contains the real count, which is {}.".\
-                        format(x.text, cont_count))
+        num_contacts = self.UTILS.element.getElement(DOM.Contacts.import_num_of_conts, "Number of contacts")
+        self.UTILS.reporting.logResult("info", "Detected message '{}'.".format(num_contacts.text))
+
+        self.UTILS.test.TEST(str(cont_count) in num_contacts.text, "'{}' contains the real count, which is {}.".\
+                        format(num_contacts.text, cont_count))

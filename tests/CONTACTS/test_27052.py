@@ -22,14 +22,10 @@ import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.settings import Settings
-import time
 from tests._mock_data.contacts import MockContact
 
 
@@ -64,16 +60,18 @@ class test_main(GaiaTestCase):
         self.connect_to_network()
 
         self.contacts.launch()
-        x = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)
-        if not x or x == "ALLIMPORTED":
+        login_result = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)
+        if not login_result or login_result == "ALLIMPORTED":
             self.UTILS.reporting.logResult(False, "Cannot continue past this point without importing the contacts.")
             return
 
         #
         # Check the Import button is disabled to begin with.
         #
-        x = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
-        self.UTILS.test.TEST(x.get_attribute("disabled") == "true", "Import button is disabled.")
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, via_root_frame=False)
+        import_btn = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
+        self.UTILS.test.TEST(import_btn.get_attribute("disabled") == "true", "Import button is disabled.")
 
         #
         # Select / de-select contacts and make sure Import button is enabled / disabled
@@ -82,26 +80,26 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "Enable contact 1...")
         self.contacts.import_toggle_select_contact(1)
 
-        x = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
-        self.UTILS.test.TEST(x.get_attribute("disabled") != "true", "Import button is enabled.")
+        import_btn = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
+        self.UTILS.test.TEST(import_btn.get_attribute("disabled") != "true", "Import button is enabled.")
 
         self.UTILS.reporting.logResult("info", "Enable contact 2...")
         self.contacts.import_toggle_select_contact(2)
 
-        x = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
-        self.UTILS.test.TEST(x.get_attribute("disabled") != "true", "Import button is enabled.")
+        import_btn = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
+        self.UTILS.test.TEST(import_btn.get_attribute("disabled") != "true", "Import button is enabled.")
 
         self.UTILS.reporting.logResult("info", "Disable contact 2...")
         self.contacts.import_toggle_select_contact(2)
 
-        x = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
-        self.UTILS.test.TEST(x.get_attribute("disabled") != "true", "Import button is enabled.")
+        import_btn = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
+        self.UTILS.test.TEST(import_btn.get_attribute("disabled") != "true", "Import button is enabled.")
 
         self.UTILS.reporting.logResult("info", "Disable contact 1...")
         self.contacts.import_toggle_select_contact(1)
 
-        x = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
-        self.UTILS.test.TEST(x.get_attribute("disabled") == "true", "Import button is disabled.")
+        import_btn = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
+        self.UTILS.test.TEST(import_btn.get_attribute("disabled") == "true", "Import button is disabled.")
 
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot and details", x)
+        result = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot and details", result)

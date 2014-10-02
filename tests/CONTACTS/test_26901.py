@@ -1,13 +1,22 @@
+#===============================================================================
+# 26901: Search a contact after edit contact name
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Open contact app
+# 2- Select a contact
+# 3- Edit contact nane, changing the actual name for a very long name "aaaaabbbbbccccaaaa"
+# 4- Press Done button
+# 5- Press over search field
+# 6- Type aaa
+# 7- Tap in the contact shown
 #
+# Expected result:
+# Contact detail is opened
+#===============================================================================
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.settings import Settings
