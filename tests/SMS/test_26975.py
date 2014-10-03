@@ -41,7 +41,7 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
 
-        self.UTILS.network.getNetworkConnection()
+        self.connect_to_network()
     
         #
         # Launch messages app.

@@ -50,7 +50,7 @@ class test_main(GaiaTestCase):
         #
         # Ensure we have a connection.
         #
-        self.UTILS.network.getNetworkConnection()
+        self.connect_to_network()
 
         #
         # Uninstall the app (if need be).

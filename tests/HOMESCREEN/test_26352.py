@@ -61,7 +61,7 @@ class test_main(GaiaTestCase):
         #
         # Make sure 'things' are as we expect them to be first.
         #
-        self.UTILS.network.getNetworkConnection()
+        self.connect_to_network()
 
         self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
 

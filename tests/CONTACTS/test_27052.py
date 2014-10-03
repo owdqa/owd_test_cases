@@ -57,7 +57,7 @@ class test_main(GaiaTestCase):
         #
         # Set up to use data connection.
         #
-        self.UTILS.network.getNetworkConnection()
+        self.connect_to_network()
 
         self.contacts.launch()
         login_result = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)

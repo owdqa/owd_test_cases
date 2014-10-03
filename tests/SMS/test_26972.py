@@ -56,7 +56,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        self.UTILS.network.getNetworkConnection()
+        self.connect_to_network()
 
         self.email.launch()
         self.email.setupAccount(self.emailU, self.emailE, self.emailP)

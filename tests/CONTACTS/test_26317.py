@@ -56,7 +56,7 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
 
-        self.UTILS.network.getNetworkConnection()
+        self.connect_to_network()
 
         #
         # Set up to use email (with account #1).

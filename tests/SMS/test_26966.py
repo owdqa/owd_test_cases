@@ -47,7 +47,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        self.UTILS.network.getNetworkConnection()
+        self.connect_to_network()
 
         self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)
         self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
