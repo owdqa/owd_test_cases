@@ -39,14 +39,12 @@ class test_main(GaiaTestCase):
 
         self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
 
-        self.UTILS.element.waitForNotElements(("xpath",
-                                               "//iframe[contains(@%s,'%s')]" %
-                                               (DOM.Contacts.frame_locator[0], DOM.Contacts.frame_locator[1])),
-                                              "Contacts iframe", True, 1)
-
-        self.UTILS.element.waitForNotElements(("xpath",
-                                               "//iframe[contains(@%s,'%s')]" %
-                                               (DOM.Messages.frame_locator[0], DOM.Messages.frame_locator[1])),
-                                              "Messages iframe", True, 1)
+        frame_contacts = (DOM.GLOBAL.frame_containing[0], DOM.GLOBAL.frame_containing[1].format(
+            DOM.Contacts.frame_locator[0], DOM.Contacts.frame_locator[1]))
+        frame_messages = (DOM.GLOBAL.frame_containing[0], DOM.GLOBAL.frame_containing[1].format(
+            DOM.Messages.frame_locator[0], DOM.Messages.frame_locator[1]))
+        
+        self.UTILS.element.waitForNotElements(frame_contacts, "Contacts iframe", True, 1)
+        self.UTILS.element.waitForNotElements(frame_messages, "Messages iframe", True, 1)
 
         self.UTILS.element.waitForElements(DOM.Home.grid, "Homescreen icons grid")
