@@ -57,11 +57,11 @@
 26560|Connected Network Details Dialog
 26561|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26561)
 26562|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26562)
-26565|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26565)
-26566|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26566)
-26567|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26567)
-26568|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26568)
-26571|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26571)
+26565|Verify that the user can hide the tabs tray by clicking on the (gear icon) settings icon
+26566|Verify that the user can hide the tabs tray clicking on the + to add a new tab
+26567|Verify that the user can hide the tabs tray using a gesture or by selecting the icon to close <
+26568|Verify that for an URL you can tap on the address bar and edit that URL to go to a different web site
+26571|Enter a webencoded URL (e.g. http://www.technicalinfo.net/papers/URLEmbeddedAttacks.html)
 26684|View
 26685|Selecting different views (day, week, month)
 26686|Move to next/previous day, week, month
@@ -73,7 +73,7 @@
 26731|Delete a video just recorded
 26741|Email containing a URL
 26750|Basic: Deleting of a e-mail in Inbox
-26761|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26761)
+26761|Users can navigate to the landing page from the icon grid
 26768|Verify that there is an icon to launch the browser application
 26770|launch the everything.me page and click on the first category displayed
 26771|Launch a installation doing a long-tap on any app shown by everything.me and press Yes button

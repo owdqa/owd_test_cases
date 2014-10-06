@@ -1,13 +1,20 @@
+#===============================================================================
+# 26550: Connectivity icon
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- On the device, turn Wi-Fi on
+# 2- Verify if the handset shows an icon indicating that the Wi-Fi connection
+# is activated
+# 3- Finish the Wi-Fi connection. Verify the icon disappears from the display
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected results:
+# There should be an icon on the screen or something to inform user if he is
+# connected to a Wi-Fi or not. When user is connected, the icon indicating the
+# Wi-Fi connection must appear of the display. When user disconnects the Wi-Fi,
+# the icon indicating the Wi-Fi connection must disappear of the display.
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
@@ -24,7 +31,6 @@ class test_main(GaiaTestCase):
         self.settings = Settings(self)
 
         self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
-        self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
         self.wifi_pass = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
 
     def tearDown(self):
@@ -32,7 +38,6 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
         #
         # Data conn icon is not in status bar yet.
         #
@@ -42,42 +47,20 @@ class test_main(GaiaTestCase):
         self.UTILS.test.TEST(self.UTILS.network.is_network_type_enabled("wifi") == False,
                          "Wifi is disabled before we start this test.")
 
-        #
-        # Enable wifi mode.
-        #
-        self.UTILS.debug.screenShot("test")
-        self.UTILS.statusbar.toggleViaStatusBar("wifi")
+        self.settings.launch()
+        self.settings.wifi()
+        self.settings.connect_to_wifi(self.wifi_name, self.wifi_pass)
 
-        #
-        # If required, connect to the wifi.
-        #
         self.marionette.switch_to_frame()
-        try:
-            self.wait_for_element_present("xpath", "//iframe[contains(@{},'{}')]".\
-                                           format(DOM.Settings.frame_locator[0], DOM.Settings.frame_locator[1]),
-                                           timeout=5)
-
-            #
-            # We need to supply the login details for the network.
-            #
-            self.UTILS.iframe.switchToFrame(*DOM.Settings.frame_locator)
-            self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
-
-            self.marionette.switch_to_frame()
-        except:
-            pass
-
-        #
-        # Data icon is no longer visible in status bar.
-        #
-        self.UTILS.element.waitForNotElements(DOM.Statusbar.wifi, "Wifi icon in statusbar", True, 20, False)
+        self.UTILS.element.waitForElements(DOM.Statusbar.wifi, "Wifi icon in statusbar", True, 20, False)
 
         #
         # Disable wifi mode.
         #
         self.UTILS.home.goHome()
-        self.marionette.switch_to_frame()
-        self.UTILS.statusbar.toggleViaStatusBar("wifi")
+        self.settings.launch()
+        self.settings.wifi()
+        self.settings.wifi_switchOff()
 
         #
         # Data icon is no longer visible in status bar.

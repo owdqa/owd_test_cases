@@ -9,7 +9,6 @@
 #       3. User is taken back to dialer
 #       4. Verify that now you have one contact and all info have been saved correctly
 
-import time
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
@@ -32,7 +31,7 @@ class test_main(GaiaTestCase):
         _ = setup_translations(self)
 
         self.contact_1 = MockContact()
-        self.phone_number = "0034" + self.contact_1["tel"]["value"]
+        self.phone_number = "0034" + self.UTILS.general.get_os_variable("TARGET_CALL_NUMBER")
 
         # Generate an entry in the call log
         self.dialer.launch()
