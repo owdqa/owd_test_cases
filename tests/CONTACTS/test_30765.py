@@ -1,23 +1,33 @@
+#===============================================================================
+# 30765: Verify that a contact imported from gmail is exported successfully
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Open contacts app
+# 2. Press settings button
+# 3. Press export contacs button
+# 4. Select "To Media Card" option
+# 5. Select a Gmail imported contact
+# 6. Press export button
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected result:
+# A vcard file is created in the SD card with the contacts exported.
+# A temporary layer informing the end user that contacts have been exported
+# after finish export process is displayed
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+import os
+import time
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.settings import Settings
-import os
-import time
 
 
 class test_main(GaiaTestCase):
-    #_RESTART_DEVICE=True
+
+    _RESTART_DEVICE = True
+
     def setUp(self):
         #
         # Set up child objects...
@@ -32,6 +42,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
+
         #Contacts exported to SD Card are removed
         os.system("adb shell rm sdcard/*.vcf")
 
@@ -42,7 +53,7 @@ class test_main(GaiaTestCase):
         self.connect_to_network()
 
         self.contacts.launch()
-        self.contacts.import_gmail_login(self.gmail_user, self.gmail_passwd)
+        self.contacts.import_gmail_login(self.gmail_user, self.gmail_passwd, True)
 
         #
         #Log-in in Gmail and contacts imported
@@ -53,7 +64,8 @@ class test_main(GaiaTestCase):
         for y in x:
             contact_name = y.get_attribute("data-search")
             if '#search#' not in contact_name:
-                self.UTILS.reporting.logResult("info", "Adding '{}' to the list of available contacts.".format(contact_name))
+                self.UTILS.reporting.logResult("info", "Adding '{}' to the list of available contacts.".\
+                                               format(contact_name))
                 gmail_contacts.append(contact_name)
 
         self.contacts.import_all()
