@@ -1,13 +1,21 @@
+#===============================================================================
+# 26885: Add multiple emails addresses
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Open Address book
+# 2- Select a contact and enter in contact details
+# 3- Press edit button
+# 4- Press add another mail button and typing a new email address
+# 5- Press add another mail button and typing a new email address
+# 6- Press add another mail button and typing a new email address
 #
+# Expected results:
+# All addresses are added
+#===============================================================================
+
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts

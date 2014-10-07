@@ -18,6 +18,7 @@
 # User is taken back to Contact settings without importing any contact
 #===============================================================================
 
+import time
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
@@ -71,29 +72,24 @@ class test_main(GaiaTestCase):
             self.UTILS.reporting.logResult(False, "Cannot continue past this point without importing the contacts.")
             return
 
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, via_root_frame=False)
         self.contacts.import_toggle_select_contact(1)
 
-        # El.tap() not working on this just now.
-        self.marionette.execute_script("document.getElementById('{}').click()".\
-                                       format(DOM.Contacts.import_close_icon[1]))
-        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+        time.sleep(1)
+        self.wait_for_element_displayed(*DOM.Contacts.import_import_btn, timeout=10)
 
-        self.wait_for_element_displayed(DOM.Contacts.import_contacts_header[0], DOM.Contacts.import_contacts_header[1],
-                                        timeout=10)
+        self.wait_for_element_displayed(*DOM.Contacts.import_close_icon, timeout=1)
+        close = self.marionette.find_element(*DOM.Contacts.import_close_icon)
+        self.UTILS.element.simulateClick(close)
 
-        self.wait_for_element_displayed(DOM.Contacts.import_contacts_back[0], DOM.Contacts.import_contacts_back[1],
-                                        timeout=1)
-        back = self.marionette.find_element(*DOM.Contacts.import_contacts_back)
-        self.UTILS.element.simulateClick(back)
-
-        done = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Settings done button")
-        self.UTILS.element.simulateClick(done)
-
+        self.UTILS.iframe.switch_to_frame(*DOM.Contacts.frame_locator)
+        back = self.UTILS.element.getElement(DOM.Contacts.import_contacts_back, "Import Back button")
+        back.tap()
+        done = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Settings Done button")
+        done.tap()
         contact_list = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
         contacts_after = len(contact_list)
 
-        self.UTILS.test.TEST(contacts_after == contacts_before, "No more contacts were imported ({} before and {} after)."\
-                        .format(contacts_after, contacts_before))
-
-        result = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "result", result)
+        self.UTILS.test.TEST(contacts_after == contacts_before,
+                             "No more contacts were imported ({} before and {} after)."\
+                             .format(contacts_after, contacts_before))

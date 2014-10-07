@@ -31,6 +31,8 @@ from tests._mock_data.contacts import MockContact
 
 class test_main(GaiaTestCase):
 
+    _RESTART_DEVICE = True
+
     def setUp(self):
         #
         # Set up child objects...
@@ -63,9 +65,9 @@ class test_main(GaiaTestCase):
             self.UTILS.reporting.logResult(False, "Cannot continue past this point without importing the contacts.")
             return
 
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, via_root_frame=False)
         self.contacts.import_all()
 
-        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
         self.wait_for_element_displayed(DOM.Contacts.import_contacts_header[0], DOM.Contacts.import_contacts_header[1],
                                         timeout=10)
 

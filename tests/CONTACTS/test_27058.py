@@ -70,31 +70,23 @@ class test_main(GaiaTestCase):
             self.UTILS.reporting.logResult(False, "Cannot continue past this point without importing the contacts.")
             return
 
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, via_root_frame=False)
         self.contacts.import_toggle_select_contact(1)
 
-        self.marionette.execute_script("document.getElementById('{}').click()".\
-                                    format(DOM.Contacts.import_import_btn[1]))
+        import_btn = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Contacts Import button")
+        self.UTILS.element.simulateClick(import_btn)
 
-        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+        self.UTILS.iframe.switch_to_frame(*DOM.Contacts.frame_locator)
+        self.wait_for_element_displayed(*DOM.Contacts.import_contacts_header, timeout=10)
 
-        self.wait_for_element_displayed(DOM.Contacts.import_contacts_header[0], DOM.Contacts.import_contacts_header[1],
-                                        timeout=10)
-
-        self.wait_for_element_displayed(DOM.Contacts.import_contacts_back[0], DOM.Contacts.import_contacts_back[1],
-                                        timeout=1)
+        self.wait_for_element_displayed(*DOM.Contacts.import_contacts_back, timeout=1)
         back = self.marionette.find_element(*DOM.Contacts.import_contacts_back)
         self.UTILS.element.simulateClick(back)
 
         done = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Settings done button")
         self.UTILS.element.simulateClick(done)
 
-        screen = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Before editing contact:", screen)
-
         contact_list = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")[0]
         self.contacts.edit_contact(contact_list.text, self.contact)
 
         self.contacts.check_view_contact_details(self.contact)
-
-        screen = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "After editing contact:", screen)

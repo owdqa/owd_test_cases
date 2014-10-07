@@ -1,19 +1,38 @@
+#===============================================================================
+# 26907: Remove a photo,a phone number, an email, an address and a
+# comment from a contact and restore the phone number and the comment
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Open contact app
+# 2- Select a contact with all fields filled
+# 3- Open contact details
+# 4- Press edit button
+# 5- Remove contact photo
+# 6- Remove contact phone number
+# 7- Remove contact email
+# 8- Remove contact address
+# 9- Remove contact comment
+# ER1
+# 10- Press restore phone number
+# 11- Press restore comment
+# ER2
 #
+# Expected results:
+# ER1: All deleted fields appear marked as "temporarily removed" with a
+# dark shadow and an icon that will allow to restore it for each deleted field
+# ER2: Phone number and comment fields are restored
+#===============================================================================
+
+import time
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
-import time
 from marionette.by import By
+
 
 class test_main(GaiaTestCase):
 

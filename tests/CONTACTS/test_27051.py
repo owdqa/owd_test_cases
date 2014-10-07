@@ -18,6 +18,7 @@
 # There should appear the number of contacts available to be imported
 #===============================================================================
 
+import time
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
@@ -74,6 +75,7 @@ class test_main(GaiaTestCase):
         if login_result == "ALLIMPORTED":
             self.UTILS.test.TEST(False, "No more contacts to import")
 
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, via_root_frame=False)
         contact_list = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list")
         cont_count = len(contact_list)
 
