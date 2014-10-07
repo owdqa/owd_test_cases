@@ -57,6 +57,7 @@ class test_main(GaiaTestCase):
             return
 
         # Try to get the hotmail contact (use the first one if not).
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, via_root_frame=False)
         contact_list = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list")
         cont_number = 1
         i_counter = 0
