@@ -40,7 +40,7 @@ class test_main(GaiaTestCase):
         #
         # Take a picture.
         #
-        self.camera.takePicture()
+        self.camera.take_picture()
 
         #
         # Get a screenshot of the camera at this stage.
@@ -50,7 +50,7 @@ class test_main(GaiaTestCase):
         #
         # Open the gallery application.
         #
-        self.camera.goToGallery()
+        self.camera.go_to_gallery()
 
         #
         # Check we have at least 1 picture in the thumbnails.

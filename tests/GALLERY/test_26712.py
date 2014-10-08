@@ -44,9 +44,9 @@ class test_main(GaiaTestCase):
 
         self.UTILS.iframe.switchToFrame(*DOM.Camera.frame_locator)
 
-        self.camera.takePicture()
+        self.camera.take_picture()
 
-        self.camera.goToGallery()
+        self.camera.go_to_gallery()
 
         time.sleep(3)
 

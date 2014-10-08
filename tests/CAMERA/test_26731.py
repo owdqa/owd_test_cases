@@ -41,12 +41,12 @@ class test_main(GaiaTestCase):
         #
         # record a 5 second video.
         #
-        self.camera.recordVideo(5)
+        self.camera.record_video(5)
 
         #
         # Tap the thumbnail for it (assume it's the only one).
         #
-        self.camera.clickThumbnail(0)
+        self.camera.click_on_thumbnail_at_pos(0)
 
         #
         # Tap the trash icon.

@@ -1,8 +1,18 @@
+# OWD-26327: Take a picture with camera - verify the picture is successfully taken and added to the gallery
+# ** Procedure
+#       1. Open camera app
+#       2. Take a photo
+#       3. Press home button
+#       4. Open Gallery app
+#       ER1
+#       5. Open camera app
+#       6. Take a photo
+#       7. Press on the thumbnail
+#       ER2
+# ** Expected Results
+#       ER1 The photo is added in the gallery app
+#       ER2 The photo is opened
 #
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.camera import Camera
@@ -12,9 +22,6 @@ from OWDTestToolkit.apps.gallery import Gallery
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
-        # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.gallery = Gallery(self)
@@ -27,32 +34,13 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Start the camera application.
-        #
         self.camera.launch()
+        self.camera.take_video(10)
+        
+        # self.camera.click_on_thumbnail_at_pos(0)
 
-        #
-        # Take a picture.
-        #
-        self.camera.takePicture()
+        # self.gallery.launch()
 
-        #
-        # Get a screenshot of the camera at this stage.
-        #
-        self.camera.clickThumbnail(0)
+        # self.UTILS.test.TEST(self.gallery.thumbCount() > 0, "At least one thumbnail is present in gallery.")
 
-        #
-        # Open the gallery application.
-        #
-        self.gallery.launch()
-
-        #
-        # Check we have at least 1 picture in the thumbnails.
-        #
-        self.UTILS.test.TEST(self.gallery.thumbCount() > 0, "At least one thumbnail is present in gallery.")
-
-        #
-        # Open the image (0 should be ours since we just added it!).
-        #
-        self.gallery.clickThumb(0)
+        # self.gallery.clickThumb(0)
