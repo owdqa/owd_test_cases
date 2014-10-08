@@ -52,4 +52,5 @@ nosetests.xml
 
 # Publish app to fake OWD-store config file
 .config
-
+tmpout.*
+curl_log.*
