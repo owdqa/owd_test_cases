@@ -48,7 +48,7 @@ class test_main(GaiaTestCase):
         self.messages.addNumbersInToField([self.phone_number])
         self.messages.enterSMSMsg(self.test_msg)
         self.messages.createMMSImage()
-        self.gallery.clickThumbMMS(0)
+        self.gallery.click_on_thumbnail_at_position_mms(0)
 
         time.sleep(2)
         self.messages.createMMSMusic()

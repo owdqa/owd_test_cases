@@ -12,7 +12,8 @@
 # ** Expected Results
 #       ER1 The photo is added in the gallery app
 #       ER2 The photo is opened
-#
+
+import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.camera import Camera
@@ -29,18 +30,25 @@ class test_main(GaiaTestCase):
 
         self.UTILS.app.setPermission('Camera', 'geolocation', 'deny')
 
+        self.gallery.launch()
+        time.sleep(2)
+        self.previous_thumbs = self.gallery.get_number_of_thumbnails()
+        self.apps.kill_all()
+        time.sleep(2)
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
         self.camera.launch()
-        self.camera.take_video(10)
-        
-        # self.camera.click_on_thumbnail_at_pos(0)
+        self.camera.take_picture()
+        self.camera.open_preview()
 
-        # self.gallery.launch()
+        self.gallery.launch()
+        current_thumbs = self.gallery.get_number_of_thumbnails()
+        self.UTILS.test.TEST(current_thumbs == self.previous_thumbs + 1,
+                     "After taking a picture, there's one item more in the gallery")
 
-        # self.UTILS.test.TEST(self.gallery.thumbCount() > 0, "At least one thumbnail is present in gallery.")
 
-        # self.gallery.clickThumb(0)
+        self.gallery.click_on_thumbnail_at_position(0)

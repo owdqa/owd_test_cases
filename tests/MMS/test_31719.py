@@ -41,7 +41,7 @@ class test_main(GaiaTestCase):
         self.messages.enterSMSMsg("Test")
 
         self.messages.createMMSImage()
-        self.gallery.clickThumbMMS(0)
+        self.gallery.click_on_thumbnail_at_position_mms(0)
 
         # Search for our contact.
         time.sleep(5)

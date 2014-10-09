@@ -73,7 +73,7 @@ class test_main(GaiaTestCase):
         self.messages.enterSMSMsg(self.test_msg)
 
         self.messages.createMMSImage()
-        self.gallery.clickThumbMMS(0)
+        self.gallery.click_on_thumbnail_at_position_mms(0)
 
         self.messages.createMMSMusic()
         self.music.click_on_song_mms()

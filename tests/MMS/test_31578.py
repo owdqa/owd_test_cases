@@ -78,7 +78,7 @@ class test_main(GaiaTestCase):
         #
         self.messages.enterSMSMsg(self.test_msg)
         self.messages.createMMSImage()
-        self.gallery.clickThumbMMS(0)
+        self.gallery.click_on_thumbnail_at_position_mms(0)
 
         #
         # Click send and wait for the message to be received
