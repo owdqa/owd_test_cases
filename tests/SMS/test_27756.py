@@ -1,19 +1,29 @@
+#===============================================================================
+# 27756: Send a new SMS using the option of reduced list of favourite contacts
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# The favourite contacts list contains some value.
 #
+# Procedure:
+# 1- Open SMS app
+# 2- Introduce a valid sms text
+# 3- Open the favourite Contact list window
+# 4- Select a favourite contact
+# 5- Press send button
+#
+# Expected results:
+# The user sends a sms successfully
+#===============================================================================
+
+import time
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
-
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.contacts import Contacts
 from tests._mock_data.contacts import MockContact
-import time
 
 
 class test_main(GaiaTestCase):
@@ -40,10 +50,9 @@ class test_main(GaiaTestCase):
         self.contact_4 = MockContact(tel=[{"type": "Mobile 1", "carrier": "MoviStar1", "value": "444444444"},
                                     {"type": "Mobile 2", "carrier": "MoviStar2", "value": "555555555"},
                                     {"type": "Mobile 3", "carrier": "MoviStar3", "value": "666666666"}])
-        self.contact_5 = MockContact([{"type": "", "value": "email1@nowhere.com"},
+        self.contact_5 = MockContact(email=[{"type": "", "value": "email1@nowhere.com"},
                                     {"type": "", "value": "email2@nowhere.com"},
-                                    {"type": "", "value": "email3@nowhere.com"})])
-
+                                    {"type": "", "value": "email3@nowhere.com"}])
 
         # Set a couple of them to be favorites (including the one we'll use).
         self.contact_1["category"] = "favorite"
@@ -57,6 +66,7 @@ class test_main(GaiaTestCase):
         self.UTILS.general.insertContact(self.contact_5)
 
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact_1["tel"]["value"])
+        self.test_msg = "Test message at {}".format(time.time())
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -69,34 +79,29 @@ class test_main(GaiaTestCase):
         self.messages.launch()
 
         #
-        # Type a message containing the required string 
+        # Type a message containing the required string
         #
         self.messages.startNewSMS()
-        self.messages.enterSMSMsg("Test message")
+        self.messages.enterSMSMsg(self.test_msg)
 
         #
         # Search for our contact in the favourites section.
         #
-        orig_iframe = self.messages.selectAddContactButton()
+        self.messages.selectAddContactButton()
 
-        x = self.UTILS.element.getElement(DOM.Contacts.favourite_JS,
-                                  "'" + self.contact_1['name'] + "' in the favourites section")
-        x.tap()
-
-        #
-        # Switch back to the sms iframe.
-        #
-        self.marionette.switch_to_frame()
-        self.UTILS.iframe.switchToFrame("src",orig_iframe)
+        self.UTILS.reporting.debug("*** Looking for contact named {}".format(self.contact_1['givenName']))
+        self.UTILS.iframe.switch_to_frame(*DOM.Contacts.frame_locator)
+        cont = self.UTILS.element.getElement((DOM.Contacts.favourite_by_name[0],
+                                             DOM.Contacts.favourite_by_name[1].format(self.contact_1['givenName'])),
+                                             "Favourite contact", timeout=20)
+        cont.tap()
+        self.UTILS.iframe.switch_to_frame(*DOM.Messages.frame_locator)
 
         #
         # Now check the correct name is in the 'To' list.
         #
         self.messages.checkIsInToField(self.contact_1["name"])
         self.messages.sendSMS()
-
-        #
-        # Receiving the message is not part of the test, so just wait a 
-        # few seconds for the returned sms in case it messes up the next test.
-        #
-        time.sleep(5)
+        send_time = self.messages.last_sent_message_timestamp()
+        self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+        self.messages.check_last_message_contents(self.test_msg)

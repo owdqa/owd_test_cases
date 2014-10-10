@@ -1,13 +1,8 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+#===============================================================================
+# 26538: Try to turn Wi-Fi HotSpot on when the device has Data connection off
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
@@ -26,13 +21,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # WIFI.
-        #
-        self.UTILS.network.disableAllNetworkSettings()
-
         self.settings.launch()
-        self.UTILS.reporting.logResult("info", "<b>Check hotspot with DataConn and WiFi off.</b>")
         self.settings.hotSpot()
-        x = self.UTILS.element.getElement(DOM.Settings.hotspot_switch, "Hotspot switch")
-        self.UTILS.test.TEST(not x.is_enabled(), "Hotspot switch is disabled.")
+        hotspot_switch_input = self.UTILS.element.getElement(DOM.Settings.hotspot_switch_input,
+                                                             "Hotspot switch input", timeout=20, is_displayed=False)
+        self.UTILS.test.TEST(not hotspot_switch_input.get_attribute("checked"), "Hotspot switch is disabled.")
