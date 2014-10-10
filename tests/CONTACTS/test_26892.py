@@ -69,7 +69,7 @@ class test_main(GaiaTestCase):
         x.tap()
 
         time.sleep(1)
-        self.UTILS.element.waitForNotElements( DOM.Contacts.favourites_section, "Favourites section")
+        self.UTILS.element.waitForNotElements(DOM.Contacts.favourites_section, "Favourites section")
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot at this point", x)

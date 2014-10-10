@@ -68,7 +68,7 @@ class test_main(GaiaTestCase):
         contacts_before = len(contact_list)
 
         login_result = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)
-        if not login_result or login_result == "ALLIMPORTED":
+        if not login_result:
             self.UTILS.reporting.logResult(False, "Cannot continue past this point without importing the contacts.")
             return
 
@@ -85,6 +85,7 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switch_to_frame(*DOM.Contacts.frame_locator)
         back = self.UTILS.element.getElement(DOM.Contacts.import_contacts_back, "Import Back button")
         back.tap()
+        time.sleep(2)
         done = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Settings Done button")
         done.tap()
         contact_list = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")

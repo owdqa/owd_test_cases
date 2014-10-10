@@ -1,13 +1,18 @@
+#===============================================================================
+# 26977: Verify that when in edit mode, adding email contact from sms is disabled
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Send a sms from "device A" to "device B" which contains an email address
+# 2. Open sms app in the device A.
+# 3. Tap on edit icon
+# 4. Tap on the email in the sms view
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Expected results:
+# Nothing should happen as in edit mode this functionality is disabled
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+import time
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -16,8 +21,6 @@ from marionette import Actions
 
 
 class test_main(GaiaTestCase):
-
-    test_msg = "Test message."
 
     def setUp(self):
         #
@@ -31,13 +34,13 @@ class test_main(GaiaTestCase):
 
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
+        self.test_msg = "Hello {} old bean at {}.".format(self.emailAddy, time.time())
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
         #
         # Launch messages app.
         #
@@ -46,35 +49,31 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.phone_number], "Hello " + self.emailAddy + " old bean.")
-        x = self.messages.waitForReceivedMsgInThisThread()
-
-        self.UTILS.element.waitForNotElements(DOM.Messages.edit_mode_wrapper,
-                                        "Main wrapper in edit mode")
+        self.messages.createAndSendSMS([self.phone_number], self.test_msg)
+        send_time = self.messages.last_sent_message_timestamp()
+        msg = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+        self.messages.check_last_message_contents(self.test_msg)
 
         #
         # Tap on edit mode.
         #
-        y = self.UTILS.element.getElement(DOM.Messages.edit_messages_icon, "Edit button")
-        y.tap()
+        edit_btn = self.UTILS.element.getElement(DOM.Messages.edit_messages_icon, "Edit button")
+        edit_btn.tap()
 
         #
-        # Verify that the edit wrapper is now displayed.
+        # Verify that the Delete Messages button is present and press it to enter in Edit mode
         #
-        self.UTILS.element.waitForElements(DOM.Messages.edit_mode_wrapper, "Main wrapper in edit mode")
+        delete_btn = self.UTILS.element.getElement(DOM.Messages.delete_threads_button, "Delete threads button present")
+        delete_btn.tap()
 
         #
         # Long press the email link.
         #
-        x = self.messages.waitForReceivedMsgInThisThread()
-        _link = x.find_element("tag name", "a")
+        _link = msg.find_element("tag name", "a")
         self.actions = Actions(self.marionette)
         self.actions.long_press(_link, 2).perform()
 
         #
         # Check the email address is not a link in edit mode.
         #
-        self.UTILS.element.waitForNotElements(("xpath", "//button[text()='Create new contact']"),
-                                   "Create new contact button")
-        self.messages.createAndSendSMS([self.phone_number], "Email addy {} test.".format(self.emailAddy))
-        x = self.messages.waitForReceivedMsgInThisThread()
+        self.UTILS.element.waitForNotElements(DOM.Messages.header_create_new_contact_btn, "Create new contact button")

@@ -66,7 +66,7 @@ class test_main(GaiaTestCase):
         self.contacts.launch()
 
         result = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)
-        if not result or result == "ALLIMPORTED":
+        if not result:
             self.UTILS.reporting.logResult(False, "Cannot continue past this point without importing the contacts.")
             return
 
