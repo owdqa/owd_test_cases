@@ -1,65 +1,51 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
+# OWD-26728: Go to Gallery from Camera
+# ** Procedure
+#       1- Open Camera app 
+#       2- Using the dedicated key/buttom, go to Gallery 
+#       3- Check that Gallery is correctly open 
+#       4- Check that Camera app remains in backgroud
+# ** Expected Results
+#       It is possible to go to Gallery from Camera app. The device is able to leave Camera app in background while being in Gallery
+
+import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.camera import Camera
 from OWDTestToolkit.apps.gallery import Gallery
 
-#
-# Imports particular to this test case.
-#
-
 
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
-        # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.gallery = Gallery(self)
         self.camera = Camera(self)
 
         self.UTILS.app.setPermission('Camera', 'geolocation', 'deny')
-
+        self.gallery.launch()
+        time.sleep(2)
+        self.previous_thumbs = self.gallery.get_number_of_thumbnails()
+        self.apps.kill_all()
+        time.sleep(2)
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Start the camera application.
-        #
+
         self.camera.launch()
+        self.camera.take_picture()
+        self.camera.open_preview()
+        self.camera.go_to_gallery()
 
-        #
-        # Take a picture.
-        #
-        self.camera.takePicture()
+        current_thumbs = self.gallery.get_number_of_thumbnails()
+        self.UTILS.test.TEST(current_thumbs == self.previous_thumbs + 1,
+                             "After taking a picture, there's one item more in the gallery")
 
-        #
-        # Get a screenshot of the camera at this stage.
-        #
-        img_thumb_view = self.UTILS.debug.screenShot("_THUMBNAIL_VIEW")
 
-        #
-        # Open the gallery application.
-        #
-        self.camera.goToGallery()
-
-        #
-        # Check we have at least 1 picture in the thumbnails.
-        #
-        self.UTILS.test.TEST(self.gallery.thumbCount() > 0, "At least one thumbnail is present in gallery.")
-
-        #
         # Check Camera is running in the background.
-        #
         self.UTILS.home.holdHomeButton()
         x = self.UTILS.element.getElement((DOM.Home.app_card[0], DOM.Home.app_card[1].format("camera")),
                                   "When home button is held, camera 'card'", False)

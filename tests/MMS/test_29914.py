@@ -80,7 +80,7 @@ class test_main(GaiaTestCase):
         self.UTILS.general.addFileToDevice('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
 
         self.messages.createMMSImage()
-        self.gallery.clickThumbMMS(0)
+        self.gallery.click_on_thumbnail_at_position_mms(0)
 
         #
         # Click send and wait for the message to be received
