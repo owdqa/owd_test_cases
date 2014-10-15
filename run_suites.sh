@@ -1,5 +1,5 @@
 #!/bin/bash
-export DATE=`date +"%m%d%Y"`
+export DATE=`date +"%Y%m%d"`
 export RESULTS_DIR="$HOME/Escritorio/RESULTS/SCRIPT/PUBLIC/testrun_$DATE"
 
 mkdir -p $RESULTS_DIR
