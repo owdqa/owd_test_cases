@@ -53,16 +53,10 @@ class test_main(GaiaTestCase):
         self.settings.wifi_list_tapName(self.wifi_name)
         self.settings.wifi_forget()
 
-        self.UTILS.test.TEST(not self.data_layer.is_wifi_connected(),
-                             "{} is no longer connected".format(self.wifi_name))
+        self.wait_for_condition(lambda m: not self.data_layer.is_wifi_connected(network), timeout=30)
 
-        #
         # make sure we need to add the details again.
-        #
         self.UTILS.iframe.switchToFrame(*DOM.Settings.frame_locator)
         self.settings.wifi_list_tapName(self.wifi_name)
         time.sleep(1)
         self.UTILS.element.waitForElements(DOM.Settings.wifi_login_pass, "Password field")
-
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot after forgetting network: ", x)
