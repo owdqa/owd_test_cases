@@ -48,13 +48,8 @@ class test_main(GaiaTestCase):
         self.UTILS.statusbar.click_on_notification_title(
             "Download complete", frame_to_change=DOM.Gallery.frame_locator, timeout=60)
 
-        #
         # Verify that the image is opened.
-        #
         time.sleep(2)
         title = self.UTILS.element.getElement(DOM.Gallery.file_name_header, "File name header")
         self.UTILS.test.TEST(title.text == self.file_name, "File name matches in Gallery")
-
-        is_loaded = self.UTILS.element.waitForElements(DOM.Gallery.current_image_pic,
-                                                       "Waiting for image to be loaded")
-        self.UTILS.test.TEST(is_loaded, "Image has been loaded")
+        self.UTILS.element.waitForElements(DOM.Gallery.download_manager_preview, "Waiting for image to be loaded")
