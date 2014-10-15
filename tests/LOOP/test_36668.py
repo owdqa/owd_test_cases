@@ -55,6 +55,4 @@ class main(GaiaTestCase):
         if result:
             self.loop.firefox_login(self.fxa_user, self.fxa_pass)
             self.loop.allow_permission_ffox_login()
-
-            header = ('xpath', DOM.GLOBAL.app_head_specific.format("Firefox Hello"))
-            self.UTILS.element.waitForElements(header, "Loop main view")
+            self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")

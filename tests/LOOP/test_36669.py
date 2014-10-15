@@ -50,6 +50,4 @@ class main(GaiaTestCase):
         if result:
             self.loop.phone_login()
             self.loop.allow_permission_phone_login()
-
-            header = ('xpath', DOM.GLOBAL.app_head_specific.format("Firefox Hello"))
-            self.UTILS.element.waitForElements(header, "Loop main view")
+            self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
