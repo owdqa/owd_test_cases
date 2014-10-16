@@ -65,7 +65,7 @@ class test_main(GaiaTestCase):
         self.messages.enterSMSMsg(self.test_msg)
 
         self.messages.createMMSVideo()
-        self.video.clickOnVideoMMS(0)
+        self.video.click_on_video_at_position_mms(0)
 
         #
         # Click send and wait for the message to be received
