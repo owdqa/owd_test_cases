@@ -30,6 +30,7 @@ class test_main(GaiaTestCase):
 
         self.test_contacts = [MockContact(tel={'type': 'Mobile', 'value': self.nums[i]}) for i in range(2)]
         map(self.UTILS.general.insertContact, self.test_contacts)
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -45,7 +46,6 @@ class test_main(GaiaTestCase):
         # Now create and send a SMS to both contacts.
         #
         self.messages.launch()
-        self.messages.deleteAllThreads()
         self.messages.startNewSMS()
 
         for i in range(len(self.test_contacts)):

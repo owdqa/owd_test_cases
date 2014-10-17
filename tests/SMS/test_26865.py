@@ -44,6 +44,7 @@ class test_main(GaiaTestCase):
 
         self.UTILS.general.insertContact(self.contact)
         self.cp_incoming_number = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -51,7 +52,6 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.messages.launch()
-        self.messages.deleteAllThreads()
 
         self.UTILS.messages.create_incoming_sms(self.contact["tel"]["value"], self.test_msg)
         self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)

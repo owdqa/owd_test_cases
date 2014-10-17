@@ -22,6 +22,7 @@ class test_main(GaiaTestCase):
         #
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -32,7 +33,6 @@ class test_main(GaiaTestCase):
         # Launch messages app.
         #
         self.messages.launch()
-        self.messages.deleteAllThreads()
 
         #
         # Start a new sms.

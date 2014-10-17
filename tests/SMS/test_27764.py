@@ -22,6 +22,7 @@ class test_main(GaiaTestCase):
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.incoming_sms_num = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -29,7 +30,6 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.messages.launch()
-        self.messages.deleteAllThreads()
 
         self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)
         self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
