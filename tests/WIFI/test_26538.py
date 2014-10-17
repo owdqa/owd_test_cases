@@ -23,6 +23,7 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.settings.launch()
         self.settings.hotSpot()
-        hotspot_switch_input = self.UTILS.element.getElement(DOM.Settings.hotspot_switch_input,
+        hotspot_switch = self.UTILS.element.getElement(DOM.Settings.hotspot_switch,
                                                              "Hotspot switch input", timeout=20, is_displayed=False)
-        self.UTILS.test.TEST(not hotspot_switch_input.get_attribute("checked"), "Hotspot switch is disabled.")
+        switch_input = self.marionette.find_element('css selector', 'input', id=hotspot_switch.id)
+        self.UTILS.test.TEST(not switch_input.get_attribute("checked"), "Hotspot switch is disabled.")

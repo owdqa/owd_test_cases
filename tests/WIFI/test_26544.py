@@ -1,13 +1,22 @@
+#===============================================================================
+# 26544: Enable/disable Wi-Fi from settings
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# There should be Wi-Fi networks available
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+# Procedure:
+# 1- Go to settings -> Wi-Fi and enable it
+# 2- Check the available networks listed below "Available networks"
+# 3- Scroll up/down the found networks
+#
+# Expected results:
+# It is possible to enable/disable Wi-Fi from settings menu.
+# Once the Wi-Fi is enabled, the available networks should be listed below
+# ordered according to the strength of the signal. The device shows an icon next to
+# the found networks indicating if they are open or a password will be required.
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
@@ -33,30 +42,36 @@ class test_main(GaiaTestCase):
         self.settings.wifi()
         self.settings.wifi_switchOn()
 
-        x = self.UTILS.element.getElements(DOM.Settings.wifi_available_networks, "Available networks", False)
+        available_networks = self.UTILS.element.getElements(DOM.Settings.wifi_available_networks, "Available networks")
 
-        self.UTILS.reporting.logResult("info", "Found %s networks" % len(x))
+        self.UTILS.reporting.logResult("info", "Found {} networks".format(len(available_networks)))
+        self.UTILS.debug.savePageHTML('/tmp/tests/test_123/wifi.html')
 
-        for i in x:
+        for net in available_networks:
             _secure1 = False
             _secure2 = False
 
+            self.UTILS.reporting.debug("*** Searching for 'secured' element")
             try:
-                i.find_element("xpath", ".//aside[contains(@class,'secured')]")
+                self.marionette.find_element("css selector", ".secured", net.id)
                 _secure1 = True
             except:
                 pass
-
+            self.UTILS.reporting.debug("Secured element: {}".format(_secure1))
+            self.UTILS.reporting.debug("*** Searching for 'securedBy' element")
             try:
-                i.find_element("xpath", ".//small[contains(text(), 'Secured')]")
+                self.marionette.find_element("css selector", "small[data-l10n-id=securedBy]", net.id)
                 _secure2 = True
             except:
                 pass
 
+            self.UTILS.reporting.debug("SecuredBy element: {}".format(_secure2))
+            self.UTILS.reporting.debug("*** Searching for network name")
             try:
-                _name = i.find_element("xpath", ".//a").text
+                _name = self.marionette.find_element("css selector", "a", net.id).text
             except:
-                _name = False
+                _name = None
+            self.UTILS.reporting.debug("Network name: {}".format(_name))
 
             if _name:
                 self.UTILS.test.TEST(_secure1 == _secure2,
