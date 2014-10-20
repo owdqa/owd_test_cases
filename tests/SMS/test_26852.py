@@ -49,8 +49,6 @@ class test_main(GaiaTestCase):
         # Make sure we have no threads
         #
         self.messages.launch()
-        self.messages.deleteAllThreads()
-
         time.sleep(2)
 
         for i in range(3):

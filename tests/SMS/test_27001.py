@@ -30,6 +30,7 @@ class test_main(GaiaTestCase):
 
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -40,7 +41,7 @@ class test_main(GaiaTestCase):
         # Launch messages app.
         #
         self.messages.launch()
-        self.messages.deleteAllThreads()
+
         #
         # Create and send a new test message.
         #
