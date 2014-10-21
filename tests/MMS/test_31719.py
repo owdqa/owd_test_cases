@@ -43,7 +43,9 @@ class test_main(GaiaTestCase):
 
         # Search for our contact.
         time.sleep(5)
-        orig_iframe = self.messages.selectAddContactButton()
+        self.messages.selectAddContactButton()
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+
         self.contacts.search(self.cont["name"])
         self.contacts.check_search_results(self.cont["name"])
 
@@ -53,8 +55,7 @@ class test_main(GaiaTestCase):
                 contact.tap()
                 break
 
-        self.marionette.switch_to_frame()
-        self.UTILS.iframe.switchToFrame("src", orig_iframe)
+        self.apps.switch_to_displayed_app()
 
         # Now check the correct name is in the 'To' list.
         self.messages.checkIsInToField(self.cont["name"])
