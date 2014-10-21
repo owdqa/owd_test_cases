@@ -13,13 +13,11 @@
 #       2. Open the overlay menu and shows the three contacts in alphabetical order
 #       3. Dial call to selected contact
 #
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.dialer import Dialer
-from tests._mock_data.contacts import MockContact
+from OWDTestToolkit.utils.contacts import MockContact
 import time
 
 

@@ -1,11 +1,6 @@
 #
 # MMSTC-COMPT-012b
 # Message size during composition
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
 from OWDTestToolkit.utils.utils import UTILS

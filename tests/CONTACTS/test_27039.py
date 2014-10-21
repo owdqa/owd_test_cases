@@ -20,13 +20,11 @@
 # ER3. The list of contacts is filtering as characters are introduced
 #===============================================================================
 
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
-from tests._mock_data.contacts import MockContact
+from OWDTestToolkit.utils.contacts import MockContact
 from gaiatest.apps.keyboard.app import Keyboard
 
 

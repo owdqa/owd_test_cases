@@ -8,14 +8,12 @@
 # ** Expected Results
 #       Tapping on the Call button retrieves the most recent outgoing number
 #       from the call log and the contact name is charged
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.dialer import Dialer
-from tests._mock_data.contacts import MockContact
+from OWDTestToolkit.utils.contacts import MockContact
 import time
 
 

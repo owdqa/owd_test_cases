@@ -15,8 +15,6 @@
 # The user return to sms app in the conversation screen.
 #===============================================================================
 
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
 from OWDTestToolkit import DOM
@@ -24,7 +22,7 @@ from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.email import Email
 from OWDTestToolkit.apps.contacts import Contacts
-from tests._mock_data.contacts import MockContact
+from OWDTestToolkit.utils.contacts import MockContact
 
 
 class test_main(GaiaTestCase):

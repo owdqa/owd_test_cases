@@ -7,17 +7,11 @@
 # Currently used by tests 42,43 and 44.
 #
 
-#
-# Imports which are standard for all test cases.
-#
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.apps import Ftu
 from OWDTestToolkit.utils.utils import UTILS
 
-#
-# Imports particular to this test case.
-#
 import os
 
 

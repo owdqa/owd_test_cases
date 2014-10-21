@@ -1,11 +1,6 @@
 #
 # TC_MMSTC-FEATR-003b
 # Receiving MP4 audio file
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
 from OWDTestToolkit import DOM

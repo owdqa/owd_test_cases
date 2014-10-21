@@ -1,8 +1,6 @@
 # OWD - 36831
 # Delete the revoked URL in Shared URL when there are more than one revoked URLs - Clean Shared Links - Clean All
 
-import sys
-sys.path.insert(1, "./")
 import os
 import time
 from gaiatest import GaiaTestCase
@@ -10,7 +8,7 @@ from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.loop import Loop
 from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit import DOM
-from tests._mock_data.contacts import MockContact
+from OWDTestToolkit.utils.contacts import MockContact
 
 
 class main(GaiaTestCase):
