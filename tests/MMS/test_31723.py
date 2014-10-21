@@ -1,11 +1,6 @@
 #
 # TC_MMSTC-RECVN-004c
 # JPG Image size 640x480
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
 from OWDTestToolkit import DOM

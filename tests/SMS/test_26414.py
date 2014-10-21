@@ -1,6 +1,3 @@
-#
-# Imports which are standard for all test cases.
-#
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages

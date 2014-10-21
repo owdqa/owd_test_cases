@@ -1,18 +1,13 @@
 #
 # 27001
 #
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.contacts import Contacts
-from tests._mock_data.contacts import MockContact
+from OWDTestToolkit.utils.contacts import MockContact
 
 
 class test_main(GaiaTestCase):

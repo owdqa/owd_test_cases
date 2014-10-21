@@ -11,13 +11,8 @@
 # The user can uninstall a everything.me app through the grid edit mode
 #===============================================================================
 
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
-#
-# Imports particular to this test case.
-#
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.everythingme import EverythingMe
 from OWDTestToolkit.apps.settings import Settings

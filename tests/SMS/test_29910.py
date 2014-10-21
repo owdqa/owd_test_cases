@@ -21,12 +21,10 @@
 # ER4. User is taken back to sms composer. Recipient has been removed successfully
 #===============================================================================
 
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
-from tests._mock_data.contacts import MockContact
+from OWDTestToolkit.utils.contacts import MockContact
 
 
 class test_main(GaiaTestCase):

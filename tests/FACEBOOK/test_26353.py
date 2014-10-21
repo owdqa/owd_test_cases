@@ -1,13 +1,11 @@
 import time
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.facebook import Facebook
 from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit.utils.utils import UTILS
-from tests._mock_data.contacts import MockContact
+from OWDTestToolkit.utils.contacts import MockContact
 
 
 class test_main(GaiaTestCase):

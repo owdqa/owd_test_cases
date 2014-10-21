@@ -8,14 +8,12 @@
 # ** Expected Results
 #   1. The contact which matches is shown
 #   
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.dialer import Dialer
-from tests._mock_data.contacts import MockContact
+from OWDTestToolkit.utils.contacts import MockContact
 
 
 class test_main(GaiaTestCase):

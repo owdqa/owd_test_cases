@@ -25,15 +25,13 @@
 # ER6. The message is sent correctly
 #===============================================================================
 
-import sys
-sys.path.insert(1, "./")
 from gaiatest  import GaiaTestCase
 
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
-from tests._mock_data.contacts import MockContact
+from OWDTestToolkit.utils.contacts import MockContact
 
 
 class test_main(GaiaTestCase):

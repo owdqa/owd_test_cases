@@ -9,8 +9,6 @@
 #       in which app he is or how many apps are open
 
 import time
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS

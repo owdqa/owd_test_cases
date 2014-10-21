@@ -19,7 +19,6 @@ class test_main(GaiaTestCase):
         _ = setup_translations(self)
 
     def tearDown(self):
-
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 

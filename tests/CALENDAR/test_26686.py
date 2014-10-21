@@ -1,15 +1,7 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.calendar import Calendar
 
-#
-# Imports particular to this test case.
-#
 
 
 class test_main(GaiaTestCase):

@@ -1,8 +1,3 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.apps.video import Video
 from OWDTestToolkit.apps.camera import Camera

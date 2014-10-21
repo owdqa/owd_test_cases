@@ -1,11 +1,6 @@
 #
 # TC_MMSTC_COMPT_010d
 # Message with text, audio and images
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
 from OWDTestToolkit import DOM

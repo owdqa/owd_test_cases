@@ -1,18 +1,16 @@
-# 26788: Tap in a log entry corresponding to an outgoing call with a test_contact 
+# 26788: Tap in a log entry corresponding to an outgoing call with a test_contact
 #        with photo linked to perform a call to this number
 # ** Procedure
 #
 # ** Expected Results
 #
 import time
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.dialer import Dialer
-from tests._mock_data.contacts import MockContact
+from OWDTestToolkit.utils.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
@@ -55,12 +53,11 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.dialer.launch()
         self.dialer.openCallLog()
-        
+
         entry = self.UTILS.element.getElement(("xpath",
                                                DOM.Dialer.call_log_number_xpath.format(self.test_contact["tel"]["value"])),
                                               "The call log for number {}".format(self.test_contact["tel"]["value"]))
         entry.tap()
-
 
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)
         self.UTILS.element.waitForElements(("xpath", DOM.Dialer.outgoing_call_numberXP.format(self.test_contact["name"])),

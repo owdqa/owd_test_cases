@@ -11,13 +11,11 @@
 # The SMS app shows a list with all conversations held is displayed
 #===============================================================================
 
-import sys
-sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
-from tests._mock_data.contacts import MockContact
+from OWDTestToolkit.utils.contacts import MockContact
 
 
 class test_main(GaiaTestCase):

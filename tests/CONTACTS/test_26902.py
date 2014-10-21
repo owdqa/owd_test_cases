@@ -1,14 +1,8 @@
-#
-# Imports which are standard for all test cases.
-#
 import sys
 sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
 
-#
-# Imports particular to this test case.
-#
-from tests._mock_data.contacts import MockContact
+from OWDTestToolkit.utils.contacts import MockContact
 from tests.CONTACTS.shared_test_functions import field_remove_toggle
 
 
