@@ -32,7 +32,7 @@ class test_main(GaiaTestCase):
         # Make sure we have no threads
         #
         self.messages.launch()
-        self.messages.deleteAllThreads()
+
         #
         # Remember the 'real' current date and time.
         #

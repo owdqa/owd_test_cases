@@ -23,6 +23,7 @@ class test_main(GaiaTestCase):
 
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.incoming_sms_num = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -33,7 +34,6 @@ class test_main(GaiaTestCase):
         # Launch messages app.
         #
         self.messages.launch()
-        self.messages.deleteAllThreads()
 
         #
         # Create and send a new test message containing all of our numbers..

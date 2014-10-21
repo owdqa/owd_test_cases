@@ -27,6 +27,8 @@ class test_main(GaiaTestCase):
         self.cont = MockContact(tel={"type": "Mobile", "value": self.test_num})
         self.UTILS.reporting.logComment("Using target telephone number " + self.cont["tel"]["value"])
 
+        self.data_layer.delete_all_sms()
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
@@ -36,11 +38,6 @@ class test_main(GaiaTestCase):
         # Launch messages app.
         #
         self.messages.launch()
-
-        #
-        # Clear it all
-        #
-        self.messages.deleteAllThreads()
 
         #
         # Create a new SMS

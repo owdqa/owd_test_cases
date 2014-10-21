@@ -33,16 +33,13 @@ class test_main(GaiaTestCase):
 
         self.UTILS.general.insertContact(self.contact)
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact["tel"]["value"])
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        # This is required due to bad messages sorting
-        self.messages.launch()
-        self.messages.deleteAllThreads()
-        self.apps.kill_all()
         #
         # Launch contacts app.
         #

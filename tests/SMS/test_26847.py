@@ -42,6 +42,7 @@ class test_main(GaiaTestCase):
         self.test_contacts[2]["tel"] = {'type': 'Mobile', 'value': self.incoming_sms_num[1]}
 
         map(self.UTILS.general.insertContact, self.test_contacts)
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -53,11 +54,6 @@ class test_main(GaiaTestCase):
         # Launch messages app.
         #
         self.messages.launch()
-
-        #
-        # Make sure we have no threads
-        #
-        self.messages.deleteAllThreads()
 
         #
         # Create and send a new test message.

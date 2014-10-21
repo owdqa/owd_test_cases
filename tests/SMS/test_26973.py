@@ -46,6 +46,7 @@ class test_main(GaiaTestCase):
         self.UTILS.general.insertContact(self.cont)
 
         self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -56,11 +57,6 @@ class test_main(GaiaTestCase):
         # Launch messages app.
         #
         self.messages.launch()
-
-        #
-        # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
-        #
-#         self.messages.deleteAllThreads()
 
         #
         # Create and send a new test message.
