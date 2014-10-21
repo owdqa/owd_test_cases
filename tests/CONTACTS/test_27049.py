@@ -81,6 +81,9 @@ class test_main(GaiaTestCase):
         #
         # Use the search bar to test ...
         #
+        search_field = self.UTILS.element.getElement(DOM.Contacts.search_field, "Search field")
+        self.UTILS.element.simulateClick(search_field)
+        
         search_input = self.UTILS.element.getElement(DOM.Contacts.search_contact_input, "Search Contact input")
         self.UTILS.element.simulateClick(search_input)
 
