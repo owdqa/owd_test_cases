@@ -86,6 +86,3 @@ class test_main(GaiaTestCase):
                                 DOM.Contacts.view_all_contact_specific_contact[1].format("roy"))
         contacts = self.UTILS.element.getElements(gmail_imported, "Gmail imported contacts")
         self.UTILS.test.TEST(len(contacts) == self.num_gmail_contacts, "All gmail contacts have been imported")
-
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot and details", x)
