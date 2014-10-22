@@ -16,6 +16,7 @@
 #       3. Overlay menu appears showing the 3 contacts; verify they are alphabetically ordered;
 #       4. Overlay menu is closed
 
+import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
@@ -37,10 +38,8 @@ class test_main(GaiaTestCase):
         self.test_contacts = [MockContact(givenName=self.names[i],
                                           tel=[{"type": "mobile", "value": self.values[i]}]) for i in range(3)]
 
-        #
         # This has to be done due to a MockContact malfunction. It does not
         # update the name field to the specified values of givenName and familyName
-        #
         for c in self.test_contacts:
             c["name"] = c["givenName"] + " " + c["familyName"]
 
@@ -56,9 +55,8 @@ class test_main(GaiaTestCase):
         self.dialer.enterNumber("1234")
 
         suggestion_count_btn = self.UTILS.element.getElement(DOM.Dialer.suggestion_count, "Suggestion count")
-        #
+
         # We are using this since normal .tap() method does not seem to be working
-        #
         self.UTILS.element.simulateClick(suggestion_count_btn)
 
         self.UTILS.element.waitForElements(DOM.Dialer.suggestion_list, 'Suggestion list')
@@ -75,4 +73,5 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(DOM.Dialer.suggestion_list_cancel, "Cancel button")
         x.tap()
 
-        self.UTILS.element.waitForNotElements(DOM.Dialer.suggestion_list, "Suggestion list")
+        suggestion_overlay = self.UTILS.element.getElement(DOM.Dialer.suggestion_overlay, "Suggestion overlay")
+        self.UTILS.test.TEST(suggestion_overlay.get_attribute("aria-hidden"), "Overlay is hidden after tapping on cancel button")

@@ -13,29 +13,14 @@ class test_main(GaiaTestCase):
     test_msg = "Test."
 
     def setUp(self):
-        #
-        # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.messages = Messages(self)
 
-        #
-        # Prepare the contact we're going to insert.
-        #
-        tel = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-
-        self.contact_1 = MockContact(tel={'type': 'Mobile', 'value': tel})
-
-        #
-        # Establish which phone number to use.
-        #
+        self.target_mms_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.contact_1 = MockContact(tel={'type': 'Mobile', 'value': self.target_mms_number})
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact_1["tel"]["value"])
-
-        #
-        # Import this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
-        #
         self.UTILS.general.insertContact(self.contact_1)
 
     def tearDown(self):
@@ -43,52 +28,21 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
-        #
-        # Launch contacts app.
-        #
         self.contacts.launch()
-
-        #
-        # View the details of our contact.
-        #
         self.contacts.view_contact(self.contact_1['name'])
 
-        #
         # Tap the sms button in the view details screen to go to the sms page.
-        #
-        smsBTN = self.UTILS.element.getElement(DOM.Contacts.sms_button, "Send SMS button")
-        smsBTN.tap()
+        sms_button = self.UTILS.element.getElement(DOM.Contacts.sms_button, "Send SMS button")
+        sms_button.tap()
 
-        #
-        # Switch to the 'Messages' app frame (or marionette will still be watching the
-        # 'Contacts' app!).
-        #
-        time.sleep(2)
-        self.marionette.switch_to_frame()
-        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+        self.apps.switch_to_displayed_app()
 
-        #
         # Create SMS.
-        #
         self.messages.enterSMSMsg(self.test_msg)
-
-        #
-        # Click send.
-        #
         self.messages.sendSMS()
 
-        #
         # Wait for the last message in this thread to be a 'received' one.
-        #
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(returnedSMS, "A received message appeared in the thread.", True)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
+        self.UTILS.statusbar.click_on_notification_detail(self.test_msg, DOM.Messages.frame_locator)
 
-        #
-        # TEST: The returned message is as expected (caseless in case user typed it manually).
-        #
-        sms_text = returnedSMS.find_element(*DOM.Messages.last_message_text_nested).text
-
-        self.UTILS.reporting.logResult('info', "Content of msg: {}".format(sms_text))
-        self.UTILS.test.TEST((sms_text.lower() == self.test_msg.lower()),
-                        "SMS text = '{}' (it was '{}').".format(self.test_msg, sms_text))
+        self.messages.check_last_message_contents(self.test_msg)

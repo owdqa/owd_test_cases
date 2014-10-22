@@ -9,16 +9,12 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        #
         # Prepare the contact we're going to insert.
-        #
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.contact = MockContact(tel={'type': '', 'value': self.phone_number})
 
@@ -30,33 +26,22 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
-        # Type a message containing the required string 
-        #
+        # Type a message containing the required string
         self.messages.startNewSMS()
         self.messages.enterSMSMsg("Test message")
-        orig_iframe = self.messages.selectAddContactButton()
+        self.messages.selectAddContactButton()
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
-        #
         # Press the back button.
-        #
         x = self.UTILS.element.getElement(DOM.Messages.cancel_add_contact,
-                                    "Cancel add contact button")
+                                          "Cancel add contact button")
         x.tap()
-    
-        #
-        # Switch back to the sms iframe.
-        #
-        self.marionette.switch_to_frame()
-        self.UTILS.iframe.switchToFrame("src",orig_iframe)
 
-        #
+        self.apps.switch_to_displayed_app()
+
         # Check 'Send' button is not enabled.
-        #
-        x = self.UTILS.element.getElement(DOM.Messages.send_message_button, "Send button")
-        self.UTILS.test.TEST(not x.is_enabled(), "Send button is not enabled.")
+        send_message_button = self.UTILS.element.getElement(DOM.Messages.send_message_button, "Send button")
+        self.UTILS.test.TEST(not send_message_button.is_enabled(), "Send button is not enabled.")
