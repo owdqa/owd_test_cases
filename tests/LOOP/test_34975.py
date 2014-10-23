@@ -1,11 +1,12 @@
-# OWD-34955
-# FxAccount user must be able to log-out from Loop, when the app is
-# executed previously but the user has logged successfully.
+#===============================================================================
+# 34975: Verify ID used to log-in into Loop is not available when user is
+# logged-out from loop app when has signed with FxAccount
+#===============================================================================
+
 import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.loop import Loop
-from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit import DOM
 
 
@@ -15,19 +16,20 @@ class main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
-        self.settings = Settings(self)
+
+        self.connect_to_network()
 
         self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
         self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
-        self.connect_to_network()
 
         # Make sure Loop is installed
         if not self.loop.is_installed():
             self.loop.install()
+        else:
+            self.loop.launch()
+            self.loop.open_settings()
+            self.loop.logout()
 
-        self.settings.launch()
-        self.settings.fxa()
-        self.settings.fxa_log_out()
         self.apps.kill_all()
         time.sleep(2)
 
@@ -44,8 +46,11 @@ class main(GaiaTestCase):
             self.loop.firefox_login(self.fxa_user, self.fxa_pass)
             self.loop.allow_permission_ffox_login()
             self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
+            time.sleep(5)
+            self.loop.open_settings()
+            self.loop.logout()
 
-        # Now logout
-        self.loop.open_settings()
-        self.loop.logout()
-        self.UTILS.element.waitForElements(DOM.Loop.wizard_login, "Login options prompted")
+        # The user is not logged in, so no ID is available. The screen to authenticate
+        # is shown instead
+        phone_btn = self.marionette.find_element(*DOM.Loop.wizard_login_phone_number)
+        self.UTILS.test.TEST(phone_btn, "Use phone number login button is present")
