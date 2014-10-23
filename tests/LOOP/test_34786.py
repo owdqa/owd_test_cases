@@ -53,7 +53,6 @@ class main(GaiaTestCase):
             self.loop.allow_permission_phone_login()
             self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
 
-        # Now logout
         self.loop.open_settings()
         cameras = self.marionette.find_element(*DOM.Loop.settings_select_camera)
         options = cameras.find_elements('css selector', 'option')

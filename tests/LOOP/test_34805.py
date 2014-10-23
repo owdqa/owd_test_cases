@@ -51,7 +51,6 @@ class main(GaiaTestCase):
             self.loop.allow_permission_phone_login()
             self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
 
-        # Now logout
         self.loop.open_settings()
         selected_camera = self.marionette.find_element(*DOM.Loop.settings_selected_camera)
         front_str = _("Front")
