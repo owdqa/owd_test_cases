@@ -24,13 +24,10 @@ class main(GaiaTestCase):
         # Clean start
         if not self.loop.is_installed():
             self.loop.install()
-
-        self.loop.launch()
-        try:
+        else:
+            self.loop.launch()
             self.loop.open_settings()
             self.loop.logout()
-        except:
-            self.UTILS.reporting.logResult('info', "Already logged out")
         
         self._do_fxa_logout()
 
