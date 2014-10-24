@@ -1,7 +1,7 @@
 #===============================================================================
-# 35122: Verify that, when video call button pressed, if multiple IDs (e-mail or
-# phone numbers), but none of them is a Loop ID, the user is notified about
-# that, and a fall-back mechanism is shown.
+# 35293: Verify that if there are different sharing options (emails, MSISDNs)
+# when calling (Audio/Video) a non-Loop user, it is possible to select among
+# them.
 #===============================================================================
 
 import sys
@@ -30,34 +30,21 @@ class test_main(GaiaTestCase):
         # Get details of our test contacts.
         #
         self.contact = MockContact()
-        curr_time = repr(time.time()).replace('.', '')
-        self.contact['email'] = [self.contact['email']]
-        self.contact['tel'] = [self.contact['tel']]
-        self.contact['email'].append({
-            'type': 'Job',
-            'value': '{}@testmail.net'.format(curr_time)})
-        self.contact['tel'].append({
-            'type': 'Landline',
-            'value': '91{}'.format(curr_time)})
         self.UTILS.general.insertContact(self.contact)
         self.data_layer.connect_to_wifi()
 
-        # Clean start
-        if not self.loop.is_installed():
-            self.loop.install()
-        else:
-            self.loop.launch()
-            self.loop.open_settings()
-            self.loop.logout()
+        result = self.loop.initial_test_checks()
 
-        result = self.loop.wizard_or_login()
         if result:
             self.loop.phone_login()
             self.loop.allow_permission_phone_login()
             self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
+
         self.apps.kill_all()
         time.sleep(2)
         _ = setup_translations(self)
+        self.expected_message = _("No problem! Just share the following link and they can call you back from"\
+                                  " any browser.")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -73,9 +60,16 @@ class test_main(GaiaTestCase):
                                                  DOM.Contacts.view_contact_hello_option[1].format("video"))
         video_btn.tap()
         self.loop.share_micro_and_camera()
-        not_user_str = _("Not a Firefox Hello user yet")
-        not_user_dom = (DOM.Loop.not_a_hello_user_msg[0], DOM.Loop.not_a_hello_user_msg[1].format(not_user_str))
-        self.wait_for_element_displayed(*not_user_dom, timeout=10)
-        not_a_user_msg = self.marionette.find_element(*not_user_dom)
-        self.UTILS.test.TEST(not_a_user_msg.text == not_user_str, "Message found: {} (Expected: {}".\
-                             format(not_a_user_msg.text, not_user_str))
+        self.wait_for_element_displayed(*DOM.Loop.not_a_user_explanation, timeout=10)
+        not_a_user_explanation = self.marionette.find_element(*DOM.Loop.not_a_user_explanation)
+        self.UTILS.test.TEST(not_a_user_explanation.text == self.expected_message, "Message found: {} (Expected: {}".\
+                             format(not_a_user_explanation.text, self.expected_message))
+
+        share_options = self.UTILS.element.getElements(DOM.Loop.share_link_options, "Sharing options")
+        self.UTILS.test.TEST(len(share_options) == 3, "There are {} sharing options (Expected: 3)".\
+                             format(len(share_options)))
+        self.UTILS.element.getElement(('id', DOM.Loop.share_link_option[1].format('sms')), "Share by SMS")
+        self.UTILS.element.getElement(('id', DOM.Loop.share_link_option[1].format('email')),
+                                                     "Share by email")
+        self.UTILS.element.getElement(('id', DOM.Loop.share_link_option[1].format('others')),
+                                                      "Share by others")
