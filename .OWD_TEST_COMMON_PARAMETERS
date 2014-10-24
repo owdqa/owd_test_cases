@@ -65,3 +65,5 @@ NOWSMS_PASS=qa
 # Firefox account
 GLOBAL_FXA_USER=owdqa@hotmail.es
 GLOBAL_FXA_PASS=12345678
+GLOBAL_FXA_USER2=owdqa_automation@hotmail.com
+GLOBAL_FXA_PASS2=12345678
