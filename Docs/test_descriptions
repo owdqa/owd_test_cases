@@ -55,8 +55,8 @@
 26553|Receiving SMS during a Wi-Fi session
 26556|Lock/unlock the device during a Wi-Fi session
 26560|Connected Network Details Dialog
-26561|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26561)
-26562|(Unable to get description from https://jirapdi.tid.es/browse/OWD-26562)
+26561|Forget this network option
+26562|Advanced Settings menu is available
 26565|Verify that the user can hide the tabs tray by clicking on the (gear icon) settings icon
 26566|Verify that the user can hide the tabs tray clicking on the + to add a new tab
 26567|Verify that the user can hide the tabs tray using a gesture or by selecting the icon to close <
@@ -384,11 +384,18 @@
 33948|Verify that a file with size >=1 MB and <1GB is displayed as MB
 33949|Verify that a file with size >1GB is displayed as GB
 33978|Verify that download list displays the downloads before opening settings app
+34786|Review the initial configured value will be Video for a device with at least one camera.
+34807|In case mobile phone, verify the initial configured value will be the Front Camera.
 34946|MSISDN user must be prompted to log-ing into Loop, when the app is executed previously but the user has logged and logout successfully.
 34954|MSISDN user must be able to log-out from Loop, when the app is executed previously but the user has logged successfully
 34955|FxAccount user must be able to log-out from Loop, when the app is executed previously but the user has logged successfully.
 34976|Verify ID used to log-in into Loop is available when user has logged-in with MSISDN. Verify that ID is the MSISDN number.
 34979|Verify ID used to log-in into Loop is available  when user has logged-in using Firefox Accunts. Verify that ID is the corresponding email FxAccount
+35116|Verify the presence of two buttons in contact details (video & audio calls)
+35117|Verify that Loop App is launched when the video call button is pressed in a contact details
+35118|Verify that, if the device has no connection (wifi, data), and the video button call is pressed from contact details, Loop app is launched, but the user is notified about it.
+35119|Verify that, when video call button pressed, if user has not logged-in in Loop, he is prompted to do that.
+35121|Verify that, if the selected contact has no e-mail or phone number the option video and audio call are not present
 35859|Delete a revoked URL in shared tab
 35860|Delete a NO revoked URL in shared tab
 35869|Cancel the action of deleting an entry in the Shared URL - Setting Option

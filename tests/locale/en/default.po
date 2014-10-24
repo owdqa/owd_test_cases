@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: OWD TEST v2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-27 11:13+0200\n"
-"PO-Revision-Date: 2014-09-05 11:03+0100\n"
+"POT-Creation-Date: 2014-10-23 13:23+0200\n"
+"PO-Revision-Date: 2014-10-23 13:23+0100\n"
 "Last-Translator: \n"
 "Language-Team: TID <alberto.villenaguerras@telefonica.com>\n"
 "Language: English\n"
@@ -17,10 +17,58 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: tests/DIALER/test_26835.py:57
+#: tests/OTHER_FEATURES/test_26410.py:55
+msgid "No devices paired"
+msgstr ""
+
+#: tests/DIALER/test_27029.py:68 tests/DIALER/test_27015.py:68
+#: tests/DIALER/test_27020.py:72 tests/DIALER/test_27030.py:65
+#: tests/DIALER/test_27014.py:53 tests/DIALER/test_27027.py:68
+msgid "Call log"
+msgstr ""
+
+#: tests/DIALER/test_29867.py:35
+msgid "Service has been disabled"
+msgstr ""
+
+#: tests/DIALER/test_26834.py:56 tests/DIALER/test_26835.py:58
 msgid "Airplane mode activated"
 msgstr "Airplane mode activated"
 
-#: tests/DIALER/test_26835.py:59
+#: tests/DIALER/test_26834.py:58 tests/DIALER/test_26835.py:60
 msgid "To make a call you need to disable airplane mode in settings."
 msgstr "To make a call you need to disable airplane mode in settings."
+
+#: tests/EMAIL/shared_test_functions/emailing.py:46
+msgid "Sent Mail"
+msgstr ""
+
+#: tests/EMAIL/shared_test_functions/emailing.py:49
+msgid "Sent Items"
+msgstr ""
+
+#: tests/EMAIL/shared_test_functions/emailing.py:52
+msgid "Sent"
+msgstr ""
+
+#: tests/EMAIL/shared_test_functions/emailing.py:75
+#: tests/EMAIL/shared_test_functions/emailing.py:117
+#: tests/EMAIL/shared_test_functions/emailing.py:118
+msgid "Inbox"
+msgstr ""
+
+#: tests/LOOP/test_35118.py:51
+msgid "connection failure"
+msgstr ""
+
+#: tests/LOOP/test_34786.py:64
+msgid "Video"
+msgstr ""
+
+#: tests/LOOP/test_34805.py:59
+msgid "Front"
+msgstr ""
+
+#: tests/DOWNLOAD_MANAGER/test_33931.py:41
+msgid "No downloads"
+msgstr ""

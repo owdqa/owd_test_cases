@@ -1,6 +1,4 @@
 from gaiatest import GaiaTestCase
-
-
 from OWDTestToolkit.utils.contacts import MockContact
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
