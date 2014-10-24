@@ -1,7 +1,8 @@
-# OWD - 34979
-# Verify ID used to log-in into Loop is available  when user has logged-in
-# using Firefox Accunts. Verify that ID is the corresponding email
-# FxAccount
+# OWD-34953: Verify the user does not have the option to skip the sign-in
+# dialog (e.g. he cannot access Loop Call Log or any other Loop screen).
+
+# OWD-35813: Verify that loop user is logged-out from the app if I log-out my Firefox Account from Settings
+
 import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
@@ -17,24 +18,19 @@ class main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
         self.settings = Settings(self)
+
         self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
         self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
 
         self.connect_to_network()
 
-        # Make sure Loop is installed
+        # Clean start
         if not self.loop.is_installed():
             self.loop.install()
         else:
             self.loop.launch()
             self.loop.open_settings()
             self.loop.logout()
-
-        self.settings.launch()
-        self.settings.fxa()
-        self.settings.fxa_log_out()
-        self.apps.kill_all()
-        time.sleep(2)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -46,13 +42,8 @@ class main(GaiaTestCase):
         result = self.loop.wizard_or_login()
 
         if result:
-            self.loop.firefox_login(self.fxa_user, self.fxa_pass)
-            self.loop.allow_permission_ffox_login()
-            self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
-
-        # Now logout
-        self.loop.open_settings()
-        login_info_elem = self.UTILS.element.getElement(DOM.Loop.settings_logged_as, "Login info")
-        login_info = login_info_elem.text.split("\n")[-1]
-
-        self.UTILS.test.TEST(login_info == self.fxa_user, "Login info matches [FxA]")
+            self.UTILS.element.waitForElements(DOM.Loop.wizard_login, "Loop login")
+            self.UTILS.element.waitForNotElements(DOM.Loop.app_header, "Loop main view")
+            self.UTILS.element.waitForNotElements(DOM.Loop.settings_panel, "Settings panel")
+            self.UTILS.element.waitForNotElements(DOM.Loop.calls_section, "Call log")
+            self.UTILS.element.waitForNotElements(DOM.Loop.shared_links_section , "Urls section")

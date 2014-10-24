@@ -1,6 +1,8 @@
-# OWD - 34976
-# Verify ID used to log-in into Loop is available when user has logged-in
-# with MSISDN. Verify that ID is the MSISDN number.
+# OWD-34952: Verify if the user is not signed in the device with Firefox
+# Accounts, he will be redirected to the device settings application to
+# sign-up into Firefox Accounts via that app.
+
+
 import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
@@ -16,18 +18,26 @@ class main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
         self.settings = Settings(self)
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+
+        self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
+        self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
 
         self.connect_to_network()
 
-        # Make sure Loop is installed
+        # Clean start
         if not self.loop.is_installed():
             self.loop.install()
         else:
             self.loop.launch()
             self.loop.open_settings()
             self.loop.logout()
+        
+        self._do_fxa_logout()
 
+    def _do_fxa_logout(self):
+        self.settings.launch()
+        self.settings.fxa()
+        self.settings.fxa_log_out()
         self.apps.kill_all()
         time.sleep(2)
 
@@ -41,13 +51,6 @@ class main(GaiaTestCase):
         result = self.loop.wizard_or_login()
 
         if result:
-            self.loop.phone_login()
-            self.loop.allow_permission_phone_login()
-            self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
-            
-        # Now logout
-        self.loop.open_settings()
-        login_info_elem = self.UTILS.element.getElement(DOM.Loop.settings_logged_as, "Login info")
-        login_info = login_info_elem.text.split("\n")[-1]
-        self.UTILS.reporting.logResult('info', "Login info: {}".format(login_info))
-        self.UTILS.test.TEST(login_info == self.phone_number, "Login info matches [MSISDN]")
+            self.loop.tap_on_firefox_login_button()
+            self.UTILS.iframe.switchToFrame(*DOM.Loop.ffox_account_frame_locator)
+            self.UTILS.element.waitForElements(DOM.Loop.ffox_account_login_title, "Firefox Accounts login")

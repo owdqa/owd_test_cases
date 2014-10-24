@@ -386,7 +386,14 @@
 33978|Verify that download list displays the downloads before opening settings app
 34786|Review the initial configured value will be Video for a device with at least one camera.
 34807|In case mobile phone, verify the initial configured value will be the Front Camera.
+34941|User must be prompted to log-ing into Loop, the first time the app is executed in the device. 
+34945|User must be prompted to log-ing into Loop, when the app is executed previously but no user has ever logged successfully. 
 34946|MSISDN user must be prompted to log-ing into Loop, when the app is executed previously but the user has logged and logout successfully.
+34947|FxAccount user must be prompted to log-ing into Loop, when the app is executed previously but the user has logged and logout successfully.    
+34949|FxAccount user must be prompted to log-ing into Loop, when the app is executed previously but one different FxAccount user has logged and logout successfully.        
+34951|Verify when the user is previously signed in de device with Firefox Account, the registered email will be used as ID  
+34952|Verify if the user is not signed in the device with Firefox Accounts, he will be redirected to the device settings application to sign-up into Firefox Accounts via that app. 
+34953|Verify the user does not have the option to skip the sign-in dialog (e.g. he cannot access Loop Call Log or any other Loop screen).   
 34954|MSISDN user must be able to log-out from Loop, when the app is executed previously but the user has logged successfully
 34955|FxAccount user must be able to log-out from Loop, when the app is executed previously but the user has logged successfully.
 34976|Verify ID used to log-in into Loop is available when user has logged-in with MSISDN. Verify that ID is the MSISDN number.
@@ -396,6 +403,12 @@
 35118|Verify that, if the device has no connection (wifi, data), and the video button call is pressed from contact details, Loop app is launched, but the user is notified about it.
 35119|Verify that, when video call button pressed, if user has not logged-in in Loop, he is prompted to do that.
 35121|Verify that, if the selected contact has no e-mail or phone number the option video and audio call are not present
+35813|Verify that loop user is logged-out from the app if I log-out my Firefox Account from Settings    
+35814|Verify that if Firefox Account password is invalid the user is not logged-in in the app   
+35815|Verify that the Loop permission ara show only the first time --> Accept to share the permissions  
+35816|Verify that the Loop permissions are show every time if the user DOESN'T share the permissions    
+35817|Login in Loop with MSISDN - SIM detected by app
+35818|Login in Loop with MSISDN - SIM introduced by user    
 35859|Delete a revoked URL in shared tab
 35860|Delete a NO revoked URL in shared tab
 35869|Cancel the action of deleting an entry in the Shared URL - Setting Option
