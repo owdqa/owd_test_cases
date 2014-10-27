@@ -419,6 +419,10 @@
 35298|Verify that the Destination (MSISDN) and Body (containing URL) are properly prepopulated when calling (Audio/Video) a non-Loop user
 35299|Verify that if another sharing option is selected, the corresponding activity is launched
 35300|Verify that is possible to cancel the fall back mechanism from the sharing options screen, when trying to call (Audio/Video) a non-Loop user
+35303|Verify that the user can edit the body in the SMS composer, when trying to call a non-Loop user
+35304|Verify that the user can edit the subject and body from the Email composer, when trying to call a non-Loop user
+35305|Verfify that after contacting the contact via SMS (Audio/Video), the user is returned to Loop once the user close the sms app.
+35306|Verify that after contacting the contact via Email (Audio/Video), the user is returned to Loop
 35813|Verify that loop user is logged-out from the app if I log-out my Firefox Account from Settings    
 35814|Verify that if Firefox Account password is invalid the user is not logged-in in the app   
 35815|Verify that the Loop permission ara show only the first time --> Accept to share the permissions  

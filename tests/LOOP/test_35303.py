@@ -1,6 +1,6 @@
 #===============================================================================
-# 35300: Verify that is possible to cancel the fall back mechanism from the
-# sharing options screen, when trying to call (Audio/Video) a non-Loop user
+# 35303: Verify that the user can edit the body in the SMS composer, when trying
+# to call a non-Loop user
 #===============================================================================
 
 import sys
@@ -70,6 +70,17 @@ class test_main(GaiaTestCase):
         share_options = self.UTILS.element.getElements(DOM.Loop.share_link_options, "Sharing options")
         self.UTILS.test.TEST(len(share_options) == 3, "There are {} sharing options (Expected: 3)".\
                              format(len(share_options)))
-        close_btn = self.UTILS.element.getElement(DOM.Loop.share_close_btn, "Close button")
-        close_btn.tap()
-        self.UTILS.element.getElement(DOM.Loop.open_settings_btn, "Open settings button")
+        share_by_sms = self.UTILS.element.getElement(('id', DOM.Loop.share_link_option[1].format('sms')),
+                                                     "Share by SMS")
+        share_by_sms.tap()
+        self.UTILS.iframe.switch_to_frame(*DOM.Messages.frame_locator)
+        time.sleep(2)
+        msg_body = self.UTILS.element.getElement(DOM.Messages.input_message_area, "Input message area").text
+        self.UTILS.reporting.debug("*** SMS Body before editing: {}".format(msg_body))
+        new_text = " This is more test in the SMS"
+        expected = msg_body + new_text
+        self.UTILS.general.typeThis(DOM.Messages.input_message_area, "Input message area",
+                                    new_text, p_clear=False, p_validate=False)
+        msg_body_after = self.UTILS.element.getElement(DOM.Messages.input_message_area, "Input message area")
+        self.UTILS.test.TEST(expected == msg_body_after.text, "Expected text: {} Actual text: {}".\
+                             format(expected, msg_body_after.text))
