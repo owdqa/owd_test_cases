@@ -17,13 +17,16 @@ source ./.config
 mkdir $TMP_DIR
 
 cd $LOOP_LOCATION || reportError "Hmm... $LOOP_LOCATION doesn't seem to exist"
-./pack-and-move.sh ${TMP_DIR} >/dev/null
+
+grunt release || reportError "grunt didn't work as expected. Is 'grunt release' working on ${LOOP_LOCATION}?"
 
 cd $MY_PATH || reportError "WTF! Why can't I go to $MY_PATH"
 
-APP_FILE=${TMP_DIR}/deliver/loop.dev.mozaws.net/application.zip
+APP_FILE=${TMP_DIR}/application.zip
 
-cd `dirname $APP_FILE` || reportError "Cannot cd to `dirname $APP_FILE`"
+cp ${LOOP_LOCATION}/application.zip ${APP_FILE}
+
+cd $TMP_DIR || reportError "Cannot cd to ${TMP_DIR}"
 unzip application.zip manifest.webapp
 
 # Hey, a comment! :P We have to scp the zip and manifest first...
