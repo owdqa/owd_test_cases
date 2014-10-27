@@ -1,4 +1,5 @@
-# OWD-35076: Verify that is possible to start a Loop communication to an entry of the Address Book
+# OWD-35077: Verify that it is possible to select a contact from the Address Book.    
+
 import time
 import sys
 sys.path.insert(1, "./")
@@ -57,11 +58,4 @@ class main(GaiaTestCase):
             self.loop.open_address_book()
             elem = (DOM.Contacts.view_all_contact_specific_contact[
                     0], DOM.Contacts.view_all_contact_specific_contact[1].format(self.test_contact["givenName"]))
-            entry = self.UTILS.element.getElement(elem, "Contact in address book")
-            entry.tap()
-            self.loop.share_micro_and_camera()
-            
-            time.sleep(2)
-            self.UTILS.iframe.switch_to_active_frame()
-            elem = (DOM.Loop.call_screen_contact_details[0], DOM.Loop.call_screen_contact_details[1].format(self.test_contact["name"]))
-            self.UTILS.element.waitForElements(elem, "Call to contact: {}".format(self.test_contact["name"]))
+            self.UTILS.element.waitForElements(elem, "Contact in address book")

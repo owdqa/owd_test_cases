@@ -1,4 +1,4 @@
-# OWD-35076: Verify that is possible to start a Loop communication to an entry of the Address Book
+# OWD-35078: Verify that it is possible to use a search tool to find the desired contact
 import time
 import sys
 sys.path.insert(1, "./")
@@ -6,6 +6,7 @@ from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.loop import Loop
 from OWDTestToolkit.apps.settings import Settings
+from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit import DOM
 from tests.i18nsetup import setup_translations
 from OWDTestToolkit.utils.contacts import MockContact
@@ -17,13 +18,19 @@ class main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
+        self.contacts = Contacts(self)
         self.settings = Settings(self)
-        self.test_contact = MockContact()
         self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
         self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
 
         self.connect_to_network()
-        self.UTILS.general.insertContact(self.test_contact)
+
+        self.target_name = "QA"
+        self.test_contacts = [MockContact() for i in range(5)]
+        self.test_contacts[0]["givenName"] = self.target_name
+        self.test_contacts[0]["familyName"] = "Automation"
+        map(self.UTILS.general.insertContact, self.test_contacts)
+
         # Clean start
         if not self.loop.is_installed():
             self.loop.install()
@@ -54,14 +61,6 @@ class main(GaiaTestCase):
             self.loop.allow_permission_ffox_login()
             self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
 
-            self.loop.open_address_book()
-            elem = (DOM.Contacts.view_all_contact_specific_contact[
-                    0], DOM.Contacts.view_all_contact_specific_contact[1].format(self.test_contact["givenName"]))
-            entry = self.UTILS.element.getElement(elem, "Contact in address book")
-            entry.tap()
-            self.loop.share_micro_and_camera()
-            
-            time.sleep(2)
-            self.UTILS.iframe.switch_to_active_frame()
-            elem = (DOM.Loop.call_screen_contact_details[0], DOM.Loop.call_screen_contact_details[1].format(self.test_contact["name"]))
-            self.UTILS.element.waitForElements(elem, "Call to contact: {}".format(self.test_contact["name"]))
+            self.loop.open_address_book()       
+            self.contacts.search(self.target_name)
+            self.contacts.check_search_results(self.target_name)
