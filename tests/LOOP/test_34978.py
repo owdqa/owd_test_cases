@@ -1,6 +1,9 @@
-# OWD-34955
-# FxAccount user must be able to log-out from Loop, when the app is
-# executed previously but the user has logged successfully.
+#===============================================================================
+# 34978: Verify ID used to log-in into Loop is available  when user has
+# logged-in with MSISDN and previously has logged-in (and logged-out with
+# a different FxAccount). Verify that ID is the right MSISDN number.
+#===============================================================================
+
 import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
@@ -16,14 +19,19 @@ class main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
         self.settings = Settings(self)
-
+        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
         self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
+
         self.connect_to_network()
 
         # Make sure Loop is installed
         if not self.loop.is_installed():
             self.loop.install()
+        else:
+            self.loop.launch()
+            self.loop.open_settings()
+            self.loop.logout()
 
         self.settings.launch()
         self.settings.fxa()
@@ -44,8 +52,13 @@ class main(GaiaTestCase):
             self.loop.firefox_login(self.fxa_user, self.fxa_pass)
             self.loop.allow_permission_ffox_login()
             self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
+            time.sleep(5)
+            self.loop.open_settings()
+            self.loop.logout()
 
-        # Now logout
+        self.loop.phone_login()
         self.loop.open_settings()
-        self.loop.logout()
-        self.UTILS.element.waitForElements(DOM.Loop.wizard_login, "Login options prompted")
+        login_info_elem = self.UTILS.element.getElement(DOM.Loop.settings_logged_as, "Login info")
+        login_info = login_info_elem.text.split("\n")[-1]
+        self.UTILS.reporting.logResult('info', "Login info: {}".format(login_info))
+        self.UTILS.test.TEST(login_info == self.phone_number, "Login info matches [MSISDN]")

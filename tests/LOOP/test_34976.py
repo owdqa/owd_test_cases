@@ -44,7 +44,7 @@ class main(GaiaTestCase):
             self.loop.phone_login()
             self.loop.allow_permission_phone_login()
             self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
-            
+
         # Now logout
         self.loop.open_settings()
         login_info_elem = self.UTILS.element.getElement(DOM.Loop.settings_logged_as, "Login info")

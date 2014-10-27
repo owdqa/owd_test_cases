@@ -1,7 +1,9 @@
-# OWD - 34979
-# Verify ID used to log-in into Loop is available  when user has logged-in
-# using Firefox Accounts. Verify that ID is the corresponding email
-# FxAccount
+#===============================================================================
+# 34980: Verify ID used to log-in into Loop is available when user has logged-in
+# using Firefox Accounts. and previously has logged-in (and logged-out with a
+# different FxAccount) Verify that ID is the corresponding email FxAccount
+#===============================================================================
+
 import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
@@ -19,17 +21,12 @@ class main(GaiaTestCase):
         self.settings = Settings(self)
         self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
         self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
+        self.fxa_user2 = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER2")
+        self.fxa_pass2 = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS2")
 
         self.connect_to_network()
 
-        # Make sure Loop is installed
-        if not self.loop.is_installed():
-            self.loop.install()
-        else:
-            self.loop.launch()
-            self.loop.open_settings()
-            self.loop.logout()
-
+        self.loop.initial_test_checks()
         self.logout_fxa()
         self.apps.kill_all()
         time.sleep(2)
@@ -45,11 +42,23 @@ class main(GaiaTestCase):
         result = self.loop.wizard_or_login()
 
         if result:
-            self.loop.firefox_login(self.fxa_user, self.fxa_pass)
+            self.loop.firefox_login(self.fxa_user2, self.fxa_pass2)
             self.loop.allow_permission_ffox_login()
             self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
+            time.sleep(5)
+            self.loop.open_settings()
+            self.loop.logout()
 
-        # Now logout
+        self.logout_fxa()
+        self.apps.kill_all()
+        time.sleep(2)
+
+        self.loop.launch()
+        result = self.loop.wizard_or_login()
+        if result:
+            self.loop.firefox_login(self.fxa_user, self.fxa_pass)
+
+        self.UTILS.iframe.switch_to_frame(*DOM.Loop.frame_locator)
         self.loop.open_settings()
         login_info_elem = self.UTILS.element.getElement(DOM.Loop.settings_logged_as, "Login info")
         login_info = login_info_elem.text.split("\n")[-1]
