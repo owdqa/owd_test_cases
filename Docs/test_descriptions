@@ -396,13 +396,29 @@
 34953|Verify the user does not have the option to skip the sign-in dialog (e.g. he cannot access Loop Call Log or any other Loop screen).   
 34954|MSISDN user must be able to log-out from Loop, when the app is executed previously but the user has logged successfully
 34955|FxAccount user must be able to log-out from Loop, when the app is executed previously but the user has logged successfully.
+34972|Verify ID used to log-in into Loop is not available when user is not logged in Loop app.
+34974|Verify ID used to log-in into Loop is not available when user is logged-out from loop app when has signed with MSISDN
+34975|Verify ID used to log-in into Loop is not available when user is logged-out from loop app when has signed with FxAccount
 34976|Verify ID used to log-in into Loop is available when user has logged-in with MSISDN. Verify that ID is the MSISDN number.
-34979|Verify ID used to log-in into Loop is available  when user has logged-in using Firefox Accunts. Verify that ID is the corresponding email FxAccount
+34978|Verify ID used to log-in into Loop is available  when user has logged-in with MSISDN and previously has logged-in (and logged-out with a different FxAccount). Verify that ID is the right MSISDN number.
+34979|Verify ID used to log-in into Loop is available  when user has logged-in using Firefox Accounts. Verify that ID is the corresponding email FxAccount
+34980|Verify ID used to log-in into Loop is available when user has logged-in using Firefox Accounts. and previously has logged-in (and logged-out with a different FxAccount) Verify that ID is the corresponding email FxAccount
+34981|Verify ID used to log-in into Loop is available when user has logged-in using Firefox Accounts. and previously has logged-in (and logged-out) with a MSISDN. Verify that ID is the corresponding email FxAccount 
 35116|Verify the presence of two buttons in contact details (video & audio calls)
 35117|Verify that Loop App is launched when the video call button is pressed in a contact details
 35118|Verify that, if the device has no connection (wifi, data), and the video button call is pressed from contact details, Loop app is launched, but the user is notified about it.
 35119|Verify that, when video call button pressed, if user has not logged-in in Loop, he is prompted to do that.
 35121|Verify that, if the selected contact has no e-mail or phone number the option video and audio call are not present
+35122|Verify that, when video call button pressed, if multiple IDs (e-mail or phone numbers), but none of them is a Loop ID, the user is notified about that, a fall-back mechanism is shown.
+35290|When I try to call a non-Loop user, a confirmation message is shown
+35292|When I try to call a non-Loop user, and I select the option to use for share the URL in the confirmation message window, the different sharing options are shown
+35293|Verify that if there are different sharing options (emails, MSISDNs) when calling (Audio/Video) a non-Loop user, it is possible to select among them
+35295|Verify that if the non-Loop user's email has been selected when calling (Audio/Video) a non-Loop user, the email composer will be opened via the e-mail activity
+35296|Verify that if the non-Loop user's MSISDN has been selected when calling (Audio/Video) a non-Loop user, the SMS composer will be opened
+35297|Verify that the Destination (email), Body (containing URL) and Subject are properply prepopulated when calling (Audio/Video) a non-Loop user
+35298|Verify that the Destination (MSISDN) and Body (containing URL) are properly prepopulated when calling (Audio/Video) a non-Loop user
+35299|Verify that if another sharing option is selected, the corresponding activity is launched
+35300|Verify that is possible to cancel the fall back mechanism from the sharing options screen, when trying to call (Audio/Video) a non-Loop user
 35813|Verify that loop user is logged-out from the app if I log-out my Firefox Account from Settings    
 35814|Verify that if Firefox Account password is invalid the user is not logged-in in the app   
 35815|Verify that the Loop permission ara show only the first time --> Accept to share the permissions  

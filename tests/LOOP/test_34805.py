@@ -27,11 +27,8 @@ class main(GaiaTestCase):
             self.loop.install()
 
         self.loop.launch()
-        try:
-            self.loop.open_settings()
-            self.loop.logout()
-        except:
-            self.UTILS.reporting.logResult('info', "Already logged out")
+        self.loop.open_settings()
+        self.loop.logout()
 
         self.apps.kill_all()
         time.sleep(2)

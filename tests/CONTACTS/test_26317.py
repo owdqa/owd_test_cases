@@ -7,6 +7,7 @@ from OWDTestToolkit.apps.email import Email
 from OWDTestToolkit.utils.contacts import MockContact
 import time
 
+
 class test_main(GaiaTestCase):
 
     def setUp(self):

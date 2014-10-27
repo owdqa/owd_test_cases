@@ -28,9 +28,9 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        
+
         # Set up child objects...
-        
+
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -59,32 +59,27 @@ class test_main(GaiaTestCase):
         self.email.launch()
         self.email.setupAccount(self.emailU, self.emailE, self.emailP)
 
-        
         self.messages.launch()
- 
+
         # Create and send a new test message.
         self.messages.createAndSendSMS([self.phone_number], "Hello {} old bean.".format(self.emailAddy))
         send_time = self.messages.last_sent_message_timestamp()
         x = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
 
-        
         link = x.find_element("tag name", "a")
         link.tap()
 
-        
         # Click 'create new contact'.
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
         x = self.UTILS.element.getElement(DOM.Messages.header_create_new_contact_btn, "Create new contact button")
         x.tap()
 
-        
         # Verify that the email is in the email field.
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
         x = self.UTILS.element.getElement(DOM.Contacts.email_field, "Email field")
         x_txt = x.get_attribute("value")
         self.UTILS.test.TEST(x_txt == self.emailAddy, "Email is '{}' (expected '{}')".format(x_txt, self.emailAddy))
 
-        
         # Put the contact details into each of the fields (this method
         # clears each field first).
         self._changeField('givenName', self.cont["givenName"])
@@ -95,7 +90,6 @@ class test_main(GaiaTestCase):
         self._changeField('city', self.cont["addr"]["locality"])
         self._changeField('country', self.cont["addr"]["countryName"])
 
-        
         # Add another email address.
         self.contacts.add_another_email_address(self.cont["email"]["value"])
 
@@ -106,14 +100,13 @@ class test_main(GaiaTestCase):
         self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@src,'contacts')]"),
                                               "Contact app iframe")
 
-        
         # Now return to the SMS app.
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
 
     def _changeField(self, p_field, p_valObj):
-        
+
         # To try and get around marionette issues I'm resetting Marionette every time here.
-        
+
         self.UTILS.general.checkMarionetteOK()
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
         contFields = self.contacts.get_contact_fields()
