@@ -59,9 +59,7 @@ class main(GaiaTestCase):
                     0], DOM.Contacts.view_all_contact_specific_contact[1].format(self.test_contact["givenName"]))
             entry = self.UTILS.element.getElement(elem, "Contact in address book")
             entry.tap()
-            self.loop.share_micro_and_camera()
-            
-            time.sleep(2)
+
             self.UTILS.iframe.switch_to_active_frame()
             elem = (DOM.Loop.call_screen_contact_details[0], DOM.Loop.call_screen_contact_details[1].format(self.test_contact["name"]))
             self.UTILS.element.waitForElements(elem, "Call to contact: {}".format(self.test_contact["name"]))
