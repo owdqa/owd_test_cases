@@ -1,6 +1,5 @@
-# OWD-35093: Verify that if the selected contact does not have any e-mail
-# or phone number, no connection is established and the user is notified
-# of that.
+# OWD-35094: Verify that if none of the IDs of the selected contact is a
+# LoopID, the user is notified and fall-back mechanism is shown.
 
 import time
 import sys
@@ -9,7 +8,6 @@ from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.loop import Loop
 from OWDTestToolkit.apps.settings import Settings
-from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.contacts import MockContact
 from tests.i18nsetup import setup_translations
@@ -21,22 +19,17 @@ class main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
-        self.contacts = Contacts(self)
         self.settings = Settings(self)
 
-        self.test_contact = MockContact(givenName="QA", familyName="Automation")
+        self.test_contact = MockContact()
+        self.UTILS.general.insertContact(self.test_contact)
+
         self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
         self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
         _ = setup_translations(self)
-        self.expected_msg = _("This contact does not have either a phone number or an email address.")
+        self.expected_message = _("No problem! Just share the following link and they can call you back from"
+                          " any browser.")
 
-        self.contacts.launch()
-        self.contacts.start_create_new_contact()
-        cont_fields = self.contacts.get_contact_fields()
-        self.contacts.replace_str(cont_fields['givenName'], self.test_contact['givenName'])
-        self.contacts.replace_str(cont_fields['familyName'], self.test_contact['familyName'])
-        done_button = self.UTILS.element.getElement(DOM.Contacts.done_button, "'Done' button")
-        done_button.tap()
 
         self.connect_to_network()
         self.loop.initial_test_checks()
@@ -66,9 +59,15 @@ class main(GaiaTestCase):
             entry = self.UTILS.element.getElement(elem, "Contact in address book")
             entry.tap()
 
+            self.UTILS.iframe.switch_to_active_frame()
+            elem = (DOM.Loop.call_screen_contact_details[
+                    0], DOM.Loop.call_screen_contact_details[1].format(self.test_contact["name"]))
+            self.UTILS.element.waitForElements(elem, "Call to contact: {}".format(self.test_contact["name"]))
+
             time.sleep(5)
-            self.marionette.switch_to_frame()
-            title = self.UTILS.element.getElement(DOM.GLOBAL.modal_dialog_alert_title, "Error title")
-            msg = self.UTILS.element.getElement(DOM.GLOBAL.modal_dialog_alert_msg, "Error message")
-            self.UTILS.test.TEST(title.text == "Firefox Hello", "Error title matches")
-            self.UTILS.test.TEST(msg.text == self.expected_msg, "Error message matches")
+            self.apps.switch_to_displayed_app()
+            self.UTILS.element.waitForElements(DOM.Loop.share_panel, "Share panel")
+
+            not_a_user_explanation = self.marionette.find_element(*DOM.Loop.not_a_user_explanation)
+            self.UTILS.test.TEST(not_a_user_explanation.text == self.expected_message, "Message found: {} (Expected: {}".\
+                                 format(not_a_user_explanation.text, self.expected_message))
