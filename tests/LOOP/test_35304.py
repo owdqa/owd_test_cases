@@ -41,7 +41,6 @@ class test_main(GaiaTestCase):
         self.data_layer.connect_to_wifi()
 
         result = self.loop.initial_test_checks()
-        self.loop.skip_wizard()
 
         if result:
             self.loop.phone_login()
@@ -79,17 +78,30 @@ class test_main(GaiaTestCase):
         share_options = self.UTILS.element.getElements(DOM.Loop.share_link_options, "Sharing options")
         self.UTILS.test.TEST(len(share_options) == 3, "There are {} sharing options (Expected: 3)".\
                              format(len(share_options)))
-        share_by_email = self.UTILS.element.getElement(('id', DOM.Loop.share_link_option[1].format('email')),
-                                                     "Share by Email")
+        share_by_email = self.UTILS.element.getElement(DOM.Loop.share_panel_email_share, "Share by Email")
         share_by_email.tap()
         self.UTILS.iframe.switch_to_frame(*DOM.Email.frame_locator)
         time.sleep(2)
+
+        # Modify the message subject
+        subject = self.UTILS.element.getElement(DOM.Email.compose_subject, "Subject input").get_attribute("value")
+        self.UTILS.reporting.debug("*** Email Subject before editing: {}".format(subject))
+        new_subject = " Editing subject"
+        expected = subject + new_subject
+        self.UTILS.general.typeThis(DOM.Email.compose_subject, "Subject input area", new_subject, p_clear=False,
+                                    p_validate=False)
+        subject_after = self.UTILS.element.getElement(DOM.Email.compose_subject, "Subject input").\
+                                                        get_attribute("value")
+        self.UTILS.test.TEST(expected == subject_after, "Expected subject: {} Actual subject: {}".\
+                            format(expected, subject_after))
+
+        # Modify the message body
         msg_body = self.UTILS.element.getElement(DOM.Email.compose_msg, "Input message area").text
         self.UTILS.reporting.debug("*** Email Body before editing: {}".format(msg_body))
         new_text = " This is more test in the Email"
         expected = msg_body + new_text
         self.UTILS.general.typeThis(DOM.Email.compose_msg, "Input message area",
                                    new_text, p_clear=False, p_validate=False)
-        msg_body_after = self.UTILS.element.getElement(DOM.Email.compose_msg, "Input message area")
-        self.UTILS.test.TEST(expected == msg_body_after.text, "Expected text: {} Actual text: {}".\
-                            format(expected, msg_body_after.text))
+        msg_body_after = self.UTILS.element.getElement(DOM.Email.compose_msg, "Input message area").text
+        self.UTILS.test.TEST(expected == msg_body_after, "Expected text: {} Actual text: {}".\
+                            format(expected, msg_body_after))

@@ -34,7 +34,6 @@ class test_main(GaiaTestCase):
         self.data_layer.connect_to_wifi()
 
         result = self.loop.initial_test_checks()
-        self.loop.skip_wizard()
 
         if result:
             self.loop.phone_login()
@@ -70,8 +69,7 @@ class test_main(GaiaTestCase):
         share_options = self.UTILS.element.getElements(DOM.Loop.share_link_options, "Sharing options")
         self.UTILS.test.TEST(len(share_options) == 3, "There are {} sharing options (Expected: 3)".\
                              format(len(share_options)))
-        share_by_sms = self.UTILS.element.getElement(('id', DOM.Loop.share_link_option[1].format('sms')),
-                                                     "Share by SMS")
+        share_by_sms = self.UTILS.element.getElement(DOM.Loop.share_panel_sms_share, "Share by SMS")
         share_by_sms.tap()
         self.UTILS.iframe.switch_to_frame(*DOM.Messages.frame_locator)
         self.UTILS.element.getElement(DOM.Messages.target_numbers, "Message recipients")

@@ -19,13 +19,7 @@ class main(GaiaTestCase):
 
         self.connect_to_network()
 
-        # Make sure Loop is installed
-        if not self.loop.is_installed():
-            self.loop.install()
-        else:
-            self.loop.launch()
-            self.loop.open_settings()
-            self.loop.logout()
+        self.loop.initial_test_checks()
 
         self.apps.kill_all()
         time.sleep(2)

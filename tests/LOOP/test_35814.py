@@ -10,6 +10,7 @@ from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit import DOM
 from tests.i18nsetup import setup_translations
 
+
 class main(GaiaTestCase):
 
     def setUp(self):
@@ -18,20 +19,14 @@ class main(GaiaTestCase):
         self.loop = Loop(self)
         self.settings = Settings(self)
         _ = setup_translations(self)
-        
+
         self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
         self.fxa_fake_pass = "You_shall_not_pass"
         self.expected_error_msg = _("Invalid Password")
 
         self.connect_to_network()
 
-        # Clean start
-        if not self.loop.is_installed():
-            self.loop.install()
-        else:
-            self.loop.launch()
-            self.loop.open_settings()
-            self.loop.logout()
+        self.loop.initial_test_checks()
 
         # Make sure we're not already logged in
         self.settings.launch()
@@ -51,10 +46,9 @@ class main(GaiaTestCase):
 
         if result:
             self.loop.firefox_login(self.fxa_user, self.fxa_fake_pass, is_wrong=True)
-            
+
             # We're informed of a wrong log in
             self.UTILS.element.waitForElements(DOM.Loop.ffox_account_error_overlay, "Error overlay")
             error_msg = self.UTILS.element.getElement(DOM.Loop.ffox_account_error_overlay_title, "Error overlay title")
-            self.UTILS.test.TEST(error_msg.text == self.expected_error_msg, "Invalid password message is shown") 
-            self.UTILS.element.waitForNotElements(DOM.Loop.app_header, "Loop main view") 
-            
+            self.UTILS.test.TEST(error_msg.text == self.expected_error_msg, "Invalid password message is shown")
+            self.UTILS.element.waitForNotElements(DOM.Loop.app_header, "Loop main view")

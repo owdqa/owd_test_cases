@@ -41,7 +41,6 @@ class test_main(GaiaTestCase):
         self.data_layer.connect_to_wifi()
 
         result = self.loop.initial_test_checks()
-        self.loop.skip_wizard()
 
         if result:
             self.loop.phone_login()
@@ -79,8 +78,7 @@ class test_main(GaiaTestCase):
         share_options = self.UTILS.element.getElements(DOM.Loop.share_link_options, "Sharing options")
         self.UTILS.test.TEST(len(share_options) == 3, "There are {} sharing options (Expected: 3)".\
                              format(len(share_options)))
-        share_by_email = self.UTILS.element.getElement(('id', DOM.Loop.share_link_option[1].format('email')),
-                                                     "Share by email")
+        share_by_email = self.UTILS.element.getElement(DOM.Loop.share_panel_email_share, "Share by email")
         share_by_email.tap()
         self.UTILS.iframe.switch_to_frame(*DOM.Email.frame_locator)
         to_address = self.UTILS.element.getElement(DOM.Email.compose_to_from_contacts, "Recipient Address")

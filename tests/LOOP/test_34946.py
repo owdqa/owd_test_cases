@@ -19,14 +19,7 @@ class main(GaiaTestCase):
 
         self.connect_to_network()
 
-        # Clean start
-        if not self.loop.is_installed():
-            self.loop.install()
-
-        self.loop.launch()
-        self.loop.open_settings()
-        self.loop.logout()
-
+        self.loop.initial_test_checks()
         self.apps.kill_all()
         time.sleep(2)
 
