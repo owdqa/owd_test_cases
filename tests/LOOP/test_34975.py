@@ -7,6 +7,7 @@ import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.loop import Loop
+from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit import DOM
 
 
@@ -16,6 +17,7 @@ class main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
+        self.settings = Settings(self)
 
         self.connect_to_network()
 
@@ -23,6 +25,7 @@ class main(GaiaTestCase):
         self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
 
         self.loop.initial_test_checks()
+        self.logout_fxa()
 
         self.apps.kill_all()
         time.sleep(2)
@@ -48,3 +51,8 @@ class main(GaiaTestCase):
         # is shown instead
         phone_btn = self.marionette.find_element(*DOM.Loop.wizard_login_phone_number)
         self.UTILS.test.TEST(phone_btn, "Use phone number login button is present")
+
+    def logout_fxa(self):
+        self.settings.launch()
+        self.settings.fxa()
+        self.settings.fxa_log_out()
