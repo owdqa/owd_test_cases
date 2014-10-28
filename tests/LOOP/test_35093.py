@@ -1,4 +1,7 @@
-# OWD-35088:Verify that is possible to select and call a contact whith a very long name
+# OWD-35093: Verify that if the selected contact does not have any e-mail
+# or phone number, no connection is established and the user is notified
+# of that.
+
 import time
 import sys
 sys.path.insert(1, "./")
@@ -21,15 +24,11 @@ class main(GaiaTestCase):
         self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
         self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
 
-
-        self.test_contact["givenName"] = "This is a very looooooooooooong name"
-        self.test_contact["familyName"] = "Test"
-        self.test_contact["name"] = "{} {}".format(
-            self.test_contact["givenName"], self.test_contact["familyName"])
-
+        self.test_contact["email"] = ""
+        self.test_contact["tel"] = ""
         self.UTILS.general.insertContact(self.test_contact)
 
-        self.connect_to_network()        
+        self.connect_to_network()
         self.loop.initial_test_checks()
         self.settings.launch()
         self.settings.fxa()
@@ -54,4 +53,13 @@ class main(GaiaTestCase):
             self.loop.open_address_book()
             elem = (DOM.Contacts.view_all_contact_specific_contact[
                     0], DOM.Contacts.view_all_contact_specific_contact[1].format(self.test_contact["givenName"]))
-            self.UTILS.element.waitForElements(elem, "Contact in address book")
+            entry = self.UTILS.element.getElement(elem, "Contact in address book")
+            entry.tap()
+
+            self.UTILS.iframe.switch_to_active_frame()
+            elem = (DOM.Loop.call_screen_contact_details[
+                    0], DOM.Loop.call_screen_contact_details[1].format(self.test_contact["name"]))
+            self.UTILS.element.waitForElements(elem, "Call to contact: {}".format(self.test_contact["name"]))
+
+            self.UTILS.element.waitForElements(
+                DOM.Loop.share_panel, "When we call a contact with no number or email, a fallback mechanism is shown")

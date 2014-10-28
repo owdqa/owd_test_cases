@@ -9,7 +9,6 @@ from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.loop import Loop
 from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit import DOM
-from tests.i18nsetup import setup_translations
 from OWDTestToolkit.utils.contacts import MockContact
 
 
@@ -29,21 +28,10 @@ class main(GaiaTestCase):
         self.test_contact["familyName"] = "Test"
         self.test_contact["name"] = "{} {}".format(
             self.test_contact["givenName"], self.test_contact["familyName"])
-
         self.UTILS.general.insertContact(self.test_contact)
 
         self.connect_to_network()
-        self.UTILS.general.insertContact(self.test_contact)
-        # Clean start
-        if not self.loop.is_installed():
-            self.loop.install()
-        else:
-            self.loop.launch()
-            # If already logged in, logout
-            if not self.loop.wizard_or_login():
-                self.loop.open_settings()
-                self.loop.logout()
-
+        self.loop.initial_test_checks()
         self.settings.launch()
         self.settings.fxa()
         self.settings.fxa_log_out()
