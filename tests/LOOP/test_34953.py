@@ -3,7 +3,6 @@
 
 # OWD-35813: Verify that loop user is logged-out from the app if I log-out my Firefox Account from Settings
 
-import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.loop import Loop
@@ -24,13 +23,7 @@ class main(GaiaTestCase):
 
         self.connect_to_network()
 
-        # Clean start
-        if not self.loop.is_installed():
-            self.loop.install()
-        else:
-            self.loop.launch()
-            self.loop.open_settings()
-            self.loop.logout()
+        self.loop.initial_test_checks()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -46,4 +39,4 @@ class main(GaiaTestCase):
             self.UTILS.element.waitForNotElements(DOM.Loop.app_header, "Loop main view")
             self.UTILS.element.waitForNotElements(DOM.Loop.settings_panel, "Settings panel")
             self.UTILS.element.waitForNotElements(DOM.Loop.calls_section, "Call log")
-            self.UTILS.element.waitForNotElements(DOM.Loop.shared_links_section , "Urls section")
+            self.UTILS.element.waitForNotElements(DOM.Loop.shared_links_section, "Urls section")

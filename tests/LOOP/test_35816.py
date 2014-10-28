@@ -1,4 +1,4 @@
-# OWD-35816: Verify that the Loop permissions are shown every time if the user 
+# OWD-35816: Verify that the Loop permissions are shown every time if the user
 # DOESN'T share the permissions
 
 import time
@@ -19,13 +19,7 @@ class main(GaiaTestCase):
 
         self.connect_to_network()
 
-        # Clean start
-        if not self.loop.is_installed():
-            self.loop.install()
-        else:
-            self.loop.launch()
-            self.loop.open_settings()
-            self.loop.logout()
+        self.loop.initial_test_checks()
 
         self.apps.kill_all()
         time.sleep(2)
@@ -41,5 +35,5 @@ class main(GaiaTestCase):
 
         if result:
             self.loop.phone_login()
-            #TODO: implement deny option
+            # TODO: implement deny option
             self.loop.allow_permission_phone_login()

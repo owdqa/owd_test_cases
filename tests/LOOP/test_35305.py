@@ -1,6 +1,6 @@
 #===============================================================================
-# 35299: Verify that if another sharing option is selected, the corresponding
-# activity is launched
+# 35305: Verify that after contacting the contact via SMS (Audio/Video), the
+# user is returned to Loop once the user close the sms app.
 #===============================================================================
 
 import sys
@@ -12,6 +12,7 @@ from OWDTestToolkit.utils.contacts import MockContact
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.loop import Loop
+from OWDTestToolkit.apps.messages import Messages
 from tests.i18nsetup import setup_translations
 
 
@@ -25,11 +26,13 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.loop = Loop(self)
+        self.messages = Messages(self)
 
         #
         # Get details of our test contacts.
         #
         self.contact = MockContact()
+        self.contact['tel']['value'] = self.UTILS.general.get_os_variable("TARGET_CALL_NUMBER")
         self.UTILS.general.insertContact(self.contact)
         self.data_layer.connect_to_wifi()
 
@@ -69,13 +72,15 @@ class test_main(GaiaTestCase):
         share_options = self.UTILS.element.getElements(DOM.Loop.share_link_options, "Sharing options")
         self.UTILS.test.TEST(len(share_options) == 3, "There are {} sharing options (Expected: 3)".\
                              format(len(share_options)))
-        share_by_others = self.UTILS.element.getElement(DOM.Loop.share_panel_others_share, "Share by others")
-        share_by_others.tap()
-        self.marionette.switch_to_frame()
-        self.UTILS.element.getElement((DOM.Loop.share_others_header[0],
-                                      DOM.Loop.share_others_header[1].format(_("Share with:"))),
-                                      "Share with Header")
-        options = self.UTILS.element.getElements((DOM.Loop.share_others_options[0],
-                                                  DOM.Loop.share_others_options[1].\
-                                                  format(_("Share with:"))), "Options buttons")
-        self.UTILS.test.TEST(len(options) == 3, "There are {} options (Expected: 3)".format(len(options)))
+        share_by_sms = self.UTILS.element.getElement(DOM.Loop.share_panel_sms_share, "Share by SMS")
+        share_by_sms.tap()
+        self.UTILS.iframe.switch_to_frame(*DOM.Messages.frame_locator)
+        time.sleep(2)
+        msg_body = self.UTILS.element.getElement(DOM.Messages.input_message_area, "Message body").text
+        send_btn = self.UTILS.element.getElement(DOM.Messages.send_message_button, "Send button")
+        send_btn.tap()
+        self.messages.check_last_message_contents(msg_body)
+        btn = self.UTILS.element.getElement(DOM.Messages.header_close_button, "Close button")
+        btn.tap()
+        self.UTILS.iframe.switch_to_frame(*DOM.Loop.frame_locator)
+        self.UTILS.element.getElement(DOM.Loop.open_settings_btn, "Open settings button")

@@ -21,9 +21,7 @@ class main(GaiaTestCase):
         self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
         self.connect_to_network()
 
-        # Make sure Loop is installed
-        if not self.loop.is_installed():
-            self.loop.install()
+        self.loop.initial_test_checks()
 
         self.settings.launch()
         self.settings.fxa()

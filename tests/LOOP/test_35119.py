@@ -25,16 +25,7 @@ class main(GaiaTestCase):
 
         self.connect_to_network()
 
-        # Clean start
-        if not self.loop.is_installed():
-            self.loop.install()
-
-        self.loop.launch()
-        try:
-            self.loop.open_settings()
-            self.loop.logout()
-        except:
-            self.UTILS.reporting.logResult('info', "Already logged out")
+        self.loop.initial_test_checks()
 
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)

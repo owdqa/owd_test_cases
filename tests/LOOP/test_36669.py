@@ -1,15 +1,7 @@
 # Verify that the user can log-in into the app following the wizard
 # (first time user uses the app) - Mobile ID
 
-#
-# DISCLAIMER
-# This test needs a special build which includes our own version
-# of the Market app so that we can upload apps that are not yet
-# commercialy released (Like Firefox Hello). So you should re-flash
-# the device before executing it.
-#
 import time
-import os
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.loop import Loop

@@ -1,6 +1,6 @@
 #===============================================================================
-# 35299: Verify that if another sharing option is selected, the corresponding
-# activity is launched
+# 35303: Verify that the user can edit the body in the SMS composer, when trying
+# to call a non-Loop user
 #===============================================================================
 
 import sys
@@ -69,13 +69,16 @@ class test_main(GaiaTestCase):
         share_options = self.UTILS.element.getElements(DOM.Loop.share_link_options, "Sharing options")
         self.UTILS.test.TEST(len(share_options) == 3, "There are {} sharing options (Expected: 3)".\
                              format(len(share_options)))
-        share_by_others = self.UTILS.element.getElement(DOM.Loop.share_panel_others_share, "Share by others")
-        share_by_others.tap()
-        self.marionette.switch_to_frame()
-        self.UTILS.element.getElement((DOM.Loop.share_others_header[0],
-                                      DOM.Loop.share_others_header[1].format(_("Share with:"))),
-                                      "Share with Header")
-        options = self.UTILS.element.getElements((DOM.Loop.share_others_options[0],
-                                                  DOM.Loop.share_others_options[1].\
-                                                  format(_("Share with:"))), "Options buttons")
-        self.UTILS.test.TEST(len(options) == 3, "There are {} options (Expected: 3)".format(len(options)))
+        share_by_sms = self.UTILS.element.getElement(DOM.Loop.share_panel_sms_share, "Share by SMS")
+        share_by_sms.tap()
+        self.UTILS.iframe.switch_to_frame(*DOM.Messages.frame_locator)
+        time.sleep(2)
+        msg_body = self.UTILS.element.getElement(DOM.Messages.input_message_area, "Input message area").text
+        self.UTILS.reporting.debug("*** SMS Body before editing: {}".format(msg_body))
+        new_text = " This is more test in the SMS"
+        expected = msg_body + new_text
+        self.UTILS.general.typeThis(DOM.Messages.input_message_area, "Input message area",
+                                    new_text, p_clear=False, p_validate=False)
+        msg_body_after = self.UTILS.element.getElement(DOM.Messages.input_message_area, "Input message area")
+        self.UTILS.test.TEST(expected == msg_body_after.text, "Expected text: {} Actual text: {}".\
+                             format(expected, msg_body_after.text))

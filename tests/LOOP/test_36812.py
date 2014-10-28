@@ -1,8 +1,6 @@
 # OWD - 36812
 # Delete the revoked URL in Shared URL when there is only one revoked entry - Clean Shared Links - Clean All
 
-import os
-import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.loop import Loop
@@ -65,7 +63,7 @@ class main(GaiaTestCase):
             self.loop.firefox_login(self.fxa_user, self.fxa_pass)
             self.loop.allow_permission_ffox_login()
             self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
-            
+
         self.loop.switch_to_urls()
         self.loop.open_settings()
         self.loop.delete_all_urls(cancel=False)
