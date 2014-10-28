@@ -1,6 +1,6 @@
 #===============================================================================
-# 35299: Verify that if another sharing option is selected, the corresponding
-# activity is launched
+# 35304: Verify that the user can edit the subject and body from the Email
+# composer, when trying to call a non-Loop user
 #===============================================================================
 
 import sys
@@ -11,11 +11,14 @@ from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.contacts import MockContact
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.apps.email import Email
 from OWDTestToolkit.apps.loop import Loop
 from tests.i18nsetup import setup_translations
 
 
 class test_main(GaiaTestCase):
+
+    _RESTART_DEVICE = True
 
     def setUp(self):
         #
@@ -24,8 +27,12 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
+        self.email = Email(self)
         self.loop = Loop(self)
 
+        self.email_add = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
+        self.email_pass = self.UTILS.general.get_os_variable("GMAIL_2_PASS")
+        self.email_user = self.UTILS.general.get_os_variable("GMAIL_2_USER")
         #
         # Get details of our test contacts.
         #
@@ -40,6 +47,8 @@ class test_main(GaiaTestCase):
             self.loop.allow_permission_phone_login()
             self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
 
+        self.email.launch()
+        self.email.setupAccount(self.email_user, self.email_add, self.email_pass)
         self.apps.kill_all()
         time.sleep(2)
 
@@ -69,13 +78,30 @@ class test_main(GaiaTestCase):
         share_options = self.UTILS.element.getElements(DOM.Loop.share_link_options, "Sharing options")
         self.UTILS.test.TEST(len(share_options) == 3, "There are {} sharing options (Expected: 3)".\
                              format(len(share_options)))
-        share_by_others = self.UTILS.element.getElement(DOM.Loop.share_panel_others_share, "Share by others")
-        share_by_others.tap()
-        self.marionette.switch_to_frame()
-        self.UTILS.element.getElement((DOM.Loop.share_others_header[0],
-                                      DOM.Loop.share_others_header[1].format(_("Share with:"))),
-                                      "Share with Header")
-        options = self.UTILS.element.getElements((DOM.Loop.share_others_options[0],
-                                                  DOM.Loop.share_others_options[1].\
-                                                  format(_("Share with:"))), "Options buttons")
-        self.UTILS.test.TEST(len(options) == 3, "There are {} options (Expected: 3)".format(len(options)))
+        share_by_email = self.UTILS.element.getElement(DOM.Loop.share_panel_email_share, "Share by Email")
+        share_by_email.tap()
+        self.UTILS.iframe.switch_to_frame(*DOM.Email.frame_locator)
+        time.sleep(2)
+
+        # Modify the message subject
+        subject = self.UTILS.element.getElement(DOM.Email.compose_subject, "Subject input").get_attribute("value")
+        self.UTILS.reporting.debug("*** Email Subject before editing: {}".format(subject))
+        new_subject = " Editing subject"
+        expected = subject + new_subject
+        self.UTILS.general.typeThis(DOM.Email.compose_subject, "Subject input area", new_subject, p_clear=False,
+                                    p_validate=False)
+        subject_after = self.UTILS.element.getElement(DOM.Email.compose_subject, "Subject input").\
+                                                        get_attribute("value")
+        self.UTILS.test.TEST(expected == subject_after, "Expected subject: {} Actual subject: {}".\
+                            format(expected, subject_after))
+
+        # Modify the message body
+        msg_body = self.UTILS.element.getElement(DOM.Email.compose_msg, "Input message area").text
+        self.UTILS.reporting.debug("*** Email Body before editing: {}".format(msg_body))
+        new_text = " This is more test in the Email"
+        expected = msg_body + new_text
+        self.UTILS.general.typeThis(DOM.Email.compose_msg, "Input message area",
+                                   new_text, p_clear=False, p_validate=False)
+        msg_body_after = self.UTILS.element.getElement(DOM.Email.compose_msg, "Input message area").text
+        self.UTILS.test.TEST(expected == msg_body_after, "Expected text: {} Actual text: {}".\
+                            format(expected, msg_body_after))

@@ -11,7 +11,7 @@ from OWDTestToolkit import DOM
 
 
 class main(GaiaTestCase):
-    
+
     def setUp(self):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
@@ -20,10 +20,7 @@ class main(GaiaTestCase):
 
         self.connect_to_network()
 
-        # Make sure Loop is installed
-        if not self.loop.is_installed():
-            self.loop.install()
-
+        self.loop.initial_test_checks()
         self.apps.kill_all()
         time.sleep(2)
 
@@ -45,4 +42,3 @@ class main(GaiaTestCase):
         self.loop.open_settings()
         self.loop.logout()
         self.UTILS.element.waitForElements(DOM.Loop.wizard_login, "Login options prompted")
-

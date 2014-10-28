@@ -68,8 +68,6 @@ class test_main(GaiaTestCase):
         share_options = self.UTILS.element.getElements(DOM.Loop.share_link_options, "Sharing options")
         self.UTILS.test.TEST(len(share_options) == 3, "There are {} sharing options (Expected: 3)".\
                              format(len(share_options)))
-        self.UTILS.element.getElement(('id', DOM.Loop.share_link_option[1].format('sms')), "Share by SMS")
-        self.UTILS.element.getElement(('id', DOM.Loop.share_link_option[1].format('email')),
-                                                     "Share by email")
-        self.UTILS.element.getElement(('id', DOM.Loop.share_link_option[1].format('others')),
-                                                      "Share by others")
+        self.UTILS.element.getElement(DOM.Loop.share_panel_sms_share, "Share by SMS")
+        self.UTILS.element.getElement(DOM.Loop.share_panel_email_share, "Share by email")
+        self.UTILS.element.getElement(DOM.Loop.share_panel_others_share, "Share by others")

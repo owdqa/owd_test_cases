@@ -22,13 +22,7 @@ class main(GaiaTestCase):
         self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
         self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
 
-        # Make sure Loop is installed
-        if not self.loop.is_installed():
-            self.loop.install()
-        else:
-            self.loop.launch()
-            self.loop.open_settings()
-            self.loop.logout()
+        self.loop.initial_test_checks()
 
         self.apps.kill_all()
         time.sleep(2)

@@ -18,13 +18,7 @@ class main(GaiaTestCase):
 
         self.connect_to_network()
 
-        # Clean start
-        if not self.loop.is_installed():
-            self.loop.install()
-        else:
-            self.loop.launch()
-            self.loop.open_settings()
-            self.loop.logout()
+        self.loop.initial_test_checks()
 
         self.apps.kill_all()
         time.sleep(2)
@@ -41,7 +35,7 @@ class main(GaiaTestCase):
         if result:
             self.loop.phone_login()
             self.loop.allow_permission_phone_login()
-            self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view") 
+            self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
 
         # Logout, login, and check permissio overlay is not shown ever ever again
         self.loop.open_settings()

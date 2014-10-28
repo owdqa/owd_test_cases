@@ -369,9 +369,9 @@
 33917|A user can open ﬁles by tapping on a download complete notiﬁcation
 33918|Try to open a .mp4 file from download list
 33931|Verify the downloads list, when it's empty
-33934|Verify the donwloads list with a file name very long
-33935|Verify that the user can taps on the "no" button in the confirmation stop screen
-33936|Verify that the user can taps on the "yes" button in the confirmation stop screen
+33934|Verify the downloads list with a file name very long
+33935|Verify that the user can tap on the "no" button in the confirmation stop screen
+33936|Verify that the user can tap on the "yes" button in the confirmation stop screen
 33937|Verify that if the download is stopped, the Status bar downloading icon is dismissed
 33938|Verify that the download in progress notiﬁcation is updated in the notification bar
 33939|Verify that if the user click on "retry" in "retry confirmation screen" the download is retried
@@ -385,25 +385,26 @@
 33949|Verify that a file with size >1GB is displayed as GB
 33978|Verify that download list displays the downloads before opening settings app
 34786|Review the initial configured value will be Video for a device with at least one camera.
+34805|In case mobile phone, verify the initial configured value will be the Front Camera.
 34807|In case mobile phone, verify the initial configured value will be the Front Camera.
-34941|User must be prompted to log-ing into Loop, the first time the app is executed in the device. 
-34945|User must be prompted to log-ing into Loop, when the app is executed previously but no user has ever logged successfully. 
-34946|MSISDN user must be prompted to log-ing into Loop, when the app is executed previously but the user has logged and logout successfully.
-34947|FxAccount user must be prompted to log-ing into Loop, when the app is executed previously but the user has logged and logout successfully.    
-34949|FxAccount user must be prompted to log-ing into Loop, when the app is executed previously but one different FxAccount user has logged and logout successfully.        
+34941|User must be prompted to log in into Loop, the first time the app is executed in the device. 
+34945|User must be prompted to log into Loop, when the app is executed previously but no user has ever logged successfully. 
+34946|MSISDN user must be prompted to log in to Loop, when the app is executed previously but the user has logged and logout successfully.
+34947|FxAccount user must be prompted to log in to Loop, when the app is executed previously but the user has logged and logout successfully.    
+34949|FxAccount user must be prompted to log in to Loop, when the app is executed previously but one different FxAccount user has logged and logout successfully.        
 34951|Verify when the user is previously signed in de device with Firefox Account, the registered email will be used as ID  
 34952|Verify if the user is not signed in the device with Firefox Accounts, he will be redirected to the device settings application to sign-up into Firefox Accounts via that app. 
 34953|Verify the user does not have the option to skip the sign-in dialog (e.g. he cannot access Loop Call Log or any other Loop screen).   
-34954|MSISDN user must be able to log-out from Loop, when the app is executed previously but the user has logged successfully
-34955|FxAccount user must be able to log-out from Loop, when the app is executed previously but the user has logged successfully.
-34972|Verify ID used to log-in into Loop is not available when user is not logged in Loop app.
-34974|Verify ID used to log-in into Loop is not available when user is logged-out from loop app when has signed with MSISDN
-34975|Verify ID used to log-in into Loop is not available when user is logged-out from loop app when has signed with FxAccount
-34976|Verify ID used to log-in into Loop is available when user has logged-in with MSISDN. Verify that ID is the MSISDN number.
-34978|Verify ID used to log-in into Loop is available  when user has logged-in with MSISDN and previously has logged-in (and logged-out with a different FxAccount). Verify that ID is the right MSISDN number.
-34979|Verify ID used to log-in into Loop is available  when user has logged-in using Firefox Accounts. Verify that ID is the corresponding email FxAccount
-34980|Verify ID used to log-in into Loop is available when user has logged-in using Firefox Accounts. and previously has logged-in (and logged-out with a different FxAccount) Verify that ID is the corresponding email FxAccount
-34981|Verify ID used to log-in into Loop is available when user has logged-in using Firefox Accounts. and previously has logged-in (and logged-out) with a MSISDN. Verify that ID is the corresponding email FxAccount 
+34954|MSISDN user must be able to log out from Loop, when the app is executed previously but the user has logged successfully
+34955|FxAccount user must be able to log out from Loop, when the app is executed previously but the user has logged successfully.
+34972|Verify ID used to log in to Loop is not available when user is not logged in Loop app.
+34974|Verify ID used to log in to Loop is not available when user is logged-out from loop app when has signed with MSISDN
+34975|Verify ID used to log in to Loop is not available when user is logged-out from loop app when has signed with FxAccount
+34976|Verify ID used to log in to Loop is available when user has logged-in with MSISDN. Verify that ID is the MSISDN number.
+34978|Verify ID used to log in to Loop is available  when user has logged-in with MSISDN and previously has logged-in (and logged-out with a different FxAccount). Verify that ID is the right MSISDN number.
+34979|Verify ID used to log in to Loop is available  when user has logged-in using Firefox Accounts. Verify that ID is the corresponding email FxAccount
+34980|Verify ID used to log in to Loop is available when user has logged-in using Firefox Accounts. and previously has logged-in (and logged-out with a different FxAccount) Verify that ID is the corresponding email FxAccount
+34981|Verify ID used to log in to Loop is available when user has logged-in using Firefox Accounts. and previously has logged-in (and logged-out) with a MSISDN. Verify that ID is the corresponding email FxAccount
 35116|Verify the presence of two buttons in contact details (video & audio calls)
 35117|Verify that Loop App is launched when the video call button is pressed in a contact details
 35118|Verify that, if the device has no connection (wifi, data), and the video button call is pressed from contact details, Loop app is launched, but the user is notified about it.
@@ -419,18 +420,22 @@
 35298|Verify that the Destination (MSISDN) and Body (containing URL) are properly prepopulated when calling (Audio/Video) a non-Loop user
 35299|Verify that if another sharing option is selected, the corresponding activity is launched
 35300|Verify that is possible to cancel the fall back mechanism from the sharing options screen, when trying to call (Audio/Video) a non-Loop user
-35813|Verify that loop user is logged-out from the app if I log-out my Firefox Account from Settings    
+35303|Verify that the user can edit the body in the SMS composer, when trying to call a non-Loop user
+35304|Verify that the user can edit the subject and body from the Email composer, when trying to call a non-Loop user
+35305|Verfify that after contacting the contact via SMS (Audio/Video), the user is returned to Loop once the user close the sms app.
+35306|Verify that after contacting the contact via Email (Audio/Video), the user is returned to Loop
+35813|Verify that loop user is logged-out from the app if I log out my Firefox Account from Settings    
 35814|Verify that if Firefox Account password is invalid the user is not logged-in in the app   
 35815|Verify that the Loop permission ara show only the first time --> Accept to share the permissions  
 35816|Verify that the Loop permissions are show every time if the user DOESN'T share the permissions    
-35817|Login in Loop with MSISDN - SIM detected by app
-35818|Login in Loop with MSISDN - SIM introduced by user    
+35817|Log in to Loop with MSISDN - SIM detected by app
+35818|Log in to Loop with MSISDN - SIM introduced by user    
 35859|Delete a revoked URL in shared tab
 35860|Delete a NO revoked URL in shared tab
 35869|Cancel the action of deleting an entry in the Shared URL - Setting Option
 35870|Delete the revoked URL in Shared URL when there is only one revoked entry - Clean Shared Links - Clean Just disabled links
-36668|Verify that the user can log-in into the app following the wizard (first time user uses the app) - Firefox Account
-36669|Verify that the user can log-in into the app following the wizard (first time user uses the app) - Mobile ID
+36668|Verify that the user can log in to the app following the wizard (first time user uses the app) - Firefox Account
+36669|Verify that the user can log in to the app following the wizard (first time user uses the app) - Mobile ID
 36812|Delete the revoked URL in Shared URL when there is only one revoked entry - Clean Shared Links - Clean All
 36813|Delete the NO revoked URL in Shared URL when there is only one Available entry - Clean Shared Links - Clean All
 36814|Delete the NO revoked URL in Shared URL when there is only one Available entry - Clean Shared Links - Clean Just Disabled links

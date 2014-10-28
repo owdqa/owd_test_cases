@@ -1,9 +1,5 @@
 # OWD-34941:User must be prompted to log-ing into Loop, the first time the app is executed in the device.
 
-# OWD-34945: User must be prompted to log-ing into Loop, when the app is
-# executed previously but no user has ever logged successfully.
-
-import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.loop import Loop
@@ -26,7 +22,7 @@ class main(GaiaTestCase):
             self.loop.install()
         else:
             self.loop.reinstall()
-            
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
@@ -34,5 +30,5 @@ class main(GaiaTestCase):
     def test_run(self):
         # First, login not finished
         self.loop.launch()
-        result = self.loop.wizard_or_login()
+        self.loop.wizard_or_login()
         self.UTILS.element.waitForElements(DOM.Loop.wizard_login, "Login options prompted")
