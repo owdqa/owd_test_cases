@@ -38,11 +38,7 @@ class main(GaiaTestCase):
                          for i in range(number_of_contacts)]
         map(self.UTILS.general.insertContact, test_contacts)
 
-        # Re-install Loop
-        if self.loop.is_installed():
-            self.loop.reinstall()
-        else:
-            self.loop.install()
+        self.loop.initial_test_checks()
 
         # Make sure we're not logged in FxA
         self.settings.launch()
