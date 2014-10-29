@@ -18,10 +18,10 @@ class main(GaiaTestCase):
         self.connect_to_network()
 
         # Clean start
-        if not self.loop.is_installed():
-            self.loop.install()
-        else:
+        if self.loop.is_installed():
             self.loop.reinstall()
+        else:
+            self.loop.install()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()

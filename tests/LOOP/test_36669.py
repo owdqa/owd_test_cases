@@ -19,11 +19,7 @@ class main(GaiaTestCase):
 
         self.connect_to_network()
 
-        # Re-install Loop
-        if self.loop.is_installed():
-            self.loop.reinstall()
-        else:
-            self.loop.install()
+        self.loop.initial_test_checks()
 
         self.settings.launch()
         self.settings.fxa()

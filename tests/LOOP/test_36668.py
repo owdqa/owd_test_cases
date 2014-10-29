@@ -24,11 +24,7 @@ class main(GaiaTestCase):
         # Update loop
         self.loop.update_and_publish()
 
-        # Re-install Loop
-        if self.loop.is_installed():
-            self.loop.reinstall()
-        else:
-            self.loop.install()
+        self.loop.initial_test_checks()
 
         self.settings.launch()
         self.settings.fxa()
