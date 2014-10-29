@@ -48,3 +48,5 @@ GLOBAL_USBLT_WAIT_TIME=72
 # LOOP PARS - Paths must be absolute
 GLOBAL_LOOP_DIR=~/aux_repos/firefoxos-loop-client/
 GLOBAL_LOOP_AUX_FILES=~/OWD/owd_test_cases/tests/LOOP/aux_files
+# Valid values: Grunt | Market
+GLOBAL_LOOP_VIA=Grunt
