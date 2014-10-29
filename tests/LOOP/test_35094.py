@@ -1,4 +1,6 @@
-# OWD-35088:Verify that is possible to select and call a contact whith a very long name
+# OWD-35094: Verify that if none of the IDs of the selected contact is a
+# LoopID, the user is notified and fall-back mechanism is shown.
+
 import time
 import sys
 sys.path.insert(1, "./")
@@ -8,6 +10,7 @@ from OWDTestToolkit.apps.loop import Loop
 from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.contacts import MockContact
+from tests.i18nsetup import setup_translations
 
 
 class main(GaiaTestCase):
@@ -17,19 +20,18 @@ class main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
         self.settings = Settings(self)
+
         self.test_contact = MockContact()
-        self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
-        self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
-
-
-        self.test_contact["givenName"] = "This is a very looooooooooooong name"
-        self.test_contact["familyName"] = "Test"
-        self.test_contact["name"] = "{} {}".format(
-            self.test_contact["givenName"], self.test_contact["familyName"])
-
         self.UTILS.general.insertContact(self.test_contact)
 
-        self.connect_to_network()        
+        self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
+        self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
+        _ = setup_translations(self)
+        self.expected_message = _("No problem! Just share the following link and they can call you back from"
+                          " any browser.")
+
+
+        self.connect_to_network()
         self.loop.initial_test_checks()
         self.settings.launch()
         self.settings.fxa()
@@ -54,4 +56,18 @@ class main(GaiaTestCase):
             self.loop.open_address_book()
             elem = (DOM.Contacts.view_all_contact_specific_contact[
                     0], DOM.Contacts.view_all_contact_specific_contact[1].format(self.test_contact["givenName"]))
-            self.UTILS.element.waitForElements(elem, "Contact in address book")
+            entry = self.UTILS.element.getElement(elem, "Contact in address book")
+            entry.tap()
+
+            self.UTILS.iframe.switch_to_active_frame()
+            elem = (DOM.Loop.call_screen_contact_details[
+                    0], DOM.Loop.call_screen_contact_details[1].format(self.test_contact["name"]))
+            self.UTILS.element.waitForElements(elem, "Call to contact: {}".format(self.test_contact["name"]))
+
+            time.sleep(5)
+            self.apps.switch_to_displayed_app()
+            self.UTILS.element.waitForElements(DOM.Loop.share_panel, "Share panel")
+
+            not_a_user_explanation = self.marionette.find_element(*DOM.Loop.not_a_user_explanation)
+            self.UTILS.test.TEST(not_a_user_explanation.text == self.expected_message, "Message found: {} (Expected: {}".\
+                                 format(not_a_user_explanation.text, self.expected_message))

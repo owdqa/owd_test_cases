@@ -1,6 +1,7 @@
-#-*- coding: utf-8 -*-
-#
-# OWD-35087: Verify that is possible to select and call a contact whith strange characters
+# OWD-35093: Verify that if the selected contact does not have any e-mail
+# or phone number, no connection is established and the user is notified
+# of that.
+
 import time
 import sys
 sys.path.insert(1, "./")
@@ -8,8 +9,10 @@ from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.loop import Loop
 from OWDTestToolkit.apps.settings import Settings
+from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.contacts import MockContact
+from tests.i18nsetup import setup_translations
 
 
 class main(GaiaTestCase):
@@ -18,17 +21,22 @@ class main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
+        self.contacts = Contacts(self)
         self.settings = Settings(self)
-        self.test_contact = MockContact()
+
+        self.test_contact = MockContact(givenName="QA", familyName="Automation")
         self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
         self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
+        _ = setup_translations(self)
+        self.expected_msg = _("This contact does not have either a phone number or an email address.")
 
-
-        self.test_contact["givenName"] = u"ásdfuquñ".encode("utf-8")
-        self.test_contact["familyName"] = "Test"
-        self.test_contact["name"] = "{} {}".format(
-            self.test_contact["givenName"], self.test_contact["familyName"])
-        self.UTILS.general.insertContact(self.test_contact)
+        self.contacts.launch()
+        self.contacts.start_create_new_contact()
+        cont_fields = self.contacts.get_contact_fields()
+        self.contacts.replace_str(cont_fields['givenName'], self.test_contact['givenName'])
+        self.contacts.replace_str(cont_fields['familyName'], self.test_contact['familyName'])
+        done_button = self.UTILS.element.getElement(DOM.Contacts.done_button, "'Done' button")
+        done_button.tap()
 
         self.connect_to_network()
         self.loop.initial_test_checks()
@@ -55,4 +63,12 @@ class main(GaiaTestCase):
             self.loop.open_address_book()
             elem = (DOM.Contacts.view_all_contact_specific_contact[
                     0], DOM.Contacts.view_all_contact_specific_contact[1].format(self.test_contact["givenName"]))
-            self.UTILS.element.waitForElements(elem, "Contact in address book")
+            entry = self.UTILS.element.getElement(elem, "Contact in address book")
+            entry.tap()
+
+            time.sleep(5)
+            self.marionette.switch_to_frame()
+            title = self.UTILS.element.getElement(DOM.GLOBAL.modal_dialog_alert_title, "Error title")
+            msg = self.UTILS.element.getElement(DOM.GLOBAL.modal_dialog_alert_msg, "Error message")
+            self.UTILS.test.TEST(title.text == "Firefox Hello", "Error title matches")
+            self.UTILS.test.TEST(msg.text == self.expected_msg, "Error message matches")

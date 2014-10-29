@@ -8,7 +8,6 @@ from OWDTestToolkit.apps.loop import Loop
 from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit import DOM
-from tests.i18nsetup import setup_translations
 from OWDTestToolkit.utils.contacts import MockContact
 
 
@@ -23,30 +22,19 @@ class main(GaiaTestCase):
         self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
         self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
 
-        self.connect_to_network()
-
         self.target_name = "QA"
         self.test_contacts = [MockContact() for i in range(3)]
         self.test_contacts[0]["givenName"] = self.target_name
         self.test_contacts[0]["familyName"] = "Automation"
         self.test_contacts[0]["name"] = "{} {}".format(
             self.test_contacts[0]["givenName"], self.test_contacts[0]["familyName"])
-
         map(self.UTILS.general.insertContact, self.test_contacts)
-
+        
         self.contacts.launch()
         self._add_contact_as_favorite(self.test_contacts[0])
 
-        # Clean start
-        if not self.loop.is_installed():
-            self.loop.install()
-        else:
-            self.loop.launch()
-            # If already logged in, logout
-            if not self.loop.wizard_or_login():
-                self.loop.open_settings()
-                self.loop.logout()
-
+        self.connect_to_network()
+        self.loop.initial_test_checks()
         self.settings.launch()
         self.settings.fxa()
         self.settings.fxa_log_out()
