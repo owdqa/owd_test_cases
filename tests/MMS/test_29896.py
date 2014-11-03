@@ -43,7 +43,6 @@ class test_main(GaiaTestCase):
         # Establish which phone number to use.
         #
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.mms_sender = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
 
     def tearDown(self):
@@ -54,10 +53,10 @@ class test_main(GaiaTestCase):
         #
         # Create and Send an MMS
         #
-        self.messages.createAndSendMMS("image", [self.phone_number], self.test_msg)
+        self.messages.create_and_send_mms("image", [self.phone_number], self.test_msg)
 
         #
         # Verify that the MMS has been received.
         #
-        self.UTILS.statusbar.wait_for_notification_toaster_title(self.mms_sender, timeout=120)
-        self.messages.verifyMMSReceived("img", self.mms_sender)
+        self.messages.wait_for_message()
+        self.messages.verify_mms_received("img", self.phone_number)

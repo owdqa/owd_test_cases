@@ -45,7 +45,6 @@ class test_main(GaiaTestCase):
         # Establish which phone number to use.
         #
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.target_mms_number = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()

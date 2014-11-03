@@ -50,7 +50,6 @@ class test_main(GaiaTestCase):
         # Establish which phone number to use.
         #
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.target_mms_number = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
         self.UTILS.statusbar.clearAllStatusBarNotifs()
@@ -62,55 +61,15 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.data_layer.connect_to_cell_data()
 
-        #
-        # Load sample image into the gallery.
-        #
-        self.UTILS.general.addFileToDevice('./tests/_resources/imgd.jpg', destination='DCIM/100MZLLA')
-
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
-
-        #
-        # Create a new SMS
-        #
-        self.messages.startNewSMS()
-
-        #
-        # Insert the phone number in the To field
-        #
-        self.messages.addNumbersInToField([self.phone_number])
-
-        #
-        # Create MMS.
-        #
-        self.messages.enterSMSMsg(self.test_msg)
-
-        self.messages.createMMSImage()
-        self.gallery.click_on_thumbnail_at_position_mms(0)
-
-        #
-        # Click send and wait for the message to be received
-        #
-        self.messages.sendSMS()
-        self.UTILS.statusbar.wait_for_notification_toaster_title(self.target_mms_number, timeout=120)
-        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
-
-        self.messages.openThread(self.target_mms_number)
-
-        #
-        # Find all URLs
-        #
-        x = self.messages.lastMessageInThisThread()
-        y = x.find_elements("tag name", "a")
+        self.messages.create_and_send_mms('image', [self.phone_number], self.test_msg)
+        self.messages.wait_for_message()
+        last_msg = self.messages.last_message_in_this_thread()
+        tags = last_msg.find_elements("tag name", "a")
 
         #
         # Tap on required link.
         #
-        y[0].tap()
+        tags[0].tap()
 
         #
         # Give the browser time to start up, then

@@ -33,7 +33,6 @@ class test_main(GaiaTestCase):
         num_prefix_double_zero = num_prefix_plus.replace("+", "00")
         num_no_prefix = num_prefix_plus.replace("+34", "")
         self.target_numbers = [num_prefix_plus, num_prefix_double_zero, num_no_prefix]
-        self.corporate_sim = self.UTILS.general.get_os_variable("CORPORATE_SIM") == "True"
         self.data_layer.delete_all_sms()
         self.UTILS.statusbar.clearAllStatusBarNotifs()
 
@@ -47,9 +46,8 @@ class test_main(GaiaTestCase):
 
         for num in self.target_numbers:
             test_msg = "Hello World at {} for {}".format(time.time(), num)
-            self.messages.createAndSendMMS("image", [num], test_msg)
-            self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, DOM.Messages.frame_locator,
-                                                                      timeout=120)
+            self.messages.create_and_send_mms("image", [num], test_msg)
+            self.messages.wait_for_message()
             self.messages.closeThread()
             time.sleep(3)
 
@@ -58,5 +56,4 @@ class test_main(GaiaTestCase):
         #
         count = self.messages.countNumberOfThreads()
         self.UTILS.reporting.logResult("info", "Number of threads {} in list.".format(count))
-        expected = 2 if self.corporate_sim else 1
-        self.UTILS.test.TEST(count == expected, "There are {} threads (expected {})".format(count, expected))
+        self.UTILS.test.TEST(count == 1, "There are {} threads (expected {})".format(count, 1))

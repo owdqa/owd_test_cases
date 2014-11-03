@@ -67,7 +67,7 @@ class test_main(GaiaTestCase):
         self.data_layer.send_sms(self.phone_number, msg_text)
         self.UTILS.statusbar.wait_for_notification_toaster_detail(msg_text, timeout=120)
         self.UTILS.statusbar.click_on_notification_detail(msg_text, DOM.Messages.frame_locator)
-        sms = self.messages.lastMessageInThisThread()
+        sms = self.messages.last_message_in_this_thread()
         time.sleep(1)
 
         #

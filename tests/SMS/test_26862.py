@@ -85,6 +85,6 @@ class test_main(GaiaTestCase):
 
         # Check an error indication is shown in message
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
-        msg = self.messages.lastMessageInThisThread()
+        msg = self.messages.last_message_in_this_thread()
         indication = msg.get_attribute("class").index("error") != -1
         self.UTILS.test.TEST(indication == True, "An indication error was found")

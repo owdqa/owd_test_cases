@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-23 13:23+0200\n"
+"POT-Creation-Date: 2014-10-24 11:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,15 +57,25 @@ msgstr ""
 msgid "Inbox"
 msgstr ""
 
-#: tests/LOOP/test_35118.py:51
+#: tests/LOOP/test_35118.py:49
 msgid "connection failure"
 msgstr ""
 
-#: tests/LOOP/test_34786.py:64
+#: tests/LOOP/test_35122.py:76
+msgid "Not a Firefox Hello user yet"
+msgstr ""
+
+#: tests/LOOP/test_35290.py:51
+msgid ""
+"No problem! Just share the following link and they can call you back from "
+"any browser."
+msgstr ""
+
+#: tests/LOOP/test_34786.py:60
 msgid "Video"
 msgstr ""
 
-#: tests/LOOP/test_34805.py:59
+#: tests/LOOP/test_34805.py:53
 msgid "Front"
 msgstr ""
 

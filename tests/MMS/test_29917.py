@@ -37,7 +37,6 @@ class test_main(GaiaTestCase):
         # Establish which phone number to use.
         #
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.mms_sender = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
 
@@ -50,23 +49,21 @@ class test_main(GaiaTestCase):
 
         self.create_test_msgs([self.test_msg1, self.test_msg2])
 
-        self.messages.openThread(self.mms_sender)
+        self.messages.openThread(self.phone_number)
         import time
         time.sleep(5)
         self.messages.deleteMessagesInThisThread([0])
 
         time.sleep(5)
-        # After deleting one message, check there is only one message left, and that it
-        # is the one with text "Hello World 2"
+        # After deleting one message, check there are three messages left
         msg_list = self.UTILS.element.getElements(DOM.Messages.message_list, "Remaining messages")
-        self.UTILS.test.TEST(len(msg_list) == 1, "There are {} messages left (expected {})".format(len(msg_list), 1))
+        self.UTILS.test.TEST(len(msg_list) == 3, "There are {} messages left (expected {})".format(len(msg_list), 3))
 
     def create_test_msgs(self, msgs):
         for msg in msgs:
             #
             # Create and Send a MMS.
             #
-            self.messages.createAndSendMMS("image", [self.phone_number], msg)
-            self.UTILS.statusbar.wait_for_notification_toaster_title(self.mms_sender, timeout=60)
-            self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+            self.messages.create_and_send_mms("image", [self.phone_number], msg)
+            self.messages.wait_for_message()
             self.messages.closeThread()

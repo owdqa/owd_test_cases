@@ -37,7 +37,6 @@ class test_main(GaiaTestCase):
 
         # Establish which phone number to use.
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.mms_sender = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
 
@@ -48,14 +47,10 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         # Create and Send an MMS with a audio attached.
-        self.messages.createAndSendMMS("audio", [self.phone_number], self.test_msg)
+        self.messages.create_and_send_mms("audio", [self.phone_number], self.test_msg)
 
-        # Verify that the MMS has been received.
-        self.UTILS.statusbar.wait_for_notification_toaster_title(self.mms_sender, timeout=120)
-        self.UTILS.statusbar.click_on_notification_title(
-            self.mms_sender, frame_to_change=DOM.Messages.frame_locator, timeout=30)
-
-        self.messages.verifyMMSReceived("audio", self.mms_sender)
+        self.messages.wait_for_message()
+        self.messages.verify_mms_received("audio", self.phone_number)
         self.messages.open_attached_file(DOM.Music.frame_locator)
         time.sleep(5)
         self.music.is_player_playing()

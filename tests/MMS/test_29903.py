@@ -34,7 +34,7 @@ class test_main(GaiaTestCase):
         #
         # Import contact (adjust the correct number).
         #
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_os_variable("TARGET_CALL_NUMBER")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
         self.UTILS.statusbar.clearAllStatusBarNotifs()
@@ -50,7 +50,7 @@ class test_main(GaiaTestCase):
         # Create and Send all MMS
         #
         for msg in ["Test {}".format(i) for i in range(3)]:
-            self.messages.createAndSendMMS("image", [self.phone_number], msg)
+            self.messages.create_and_send_mms("image", [self.phone_number], msg)
             self.messages.closeThread()
 
         #
