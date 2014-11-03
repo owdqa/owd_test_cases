@@ -42,7 +42,6 @@ class test_main(GaiaTestCase):
         # Establish which phone number to use.
         #
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.target_mms_number = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
         self.test_msg = "Hello World"
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
@@ -54,37 +53,5 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.UTILS.statusbar.clearAllStatusBarNotifs()
-        #
-        # Load files into the device.
-        self.UTILS.general.addFileToDevice('./tests/_resources/mpeg4.mp4', destination='SD/mus')
-
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
-
-        #
-        # Create a new SMS
-        #
-        self.messages.startNewSMS()
-
-        #
-        # Insert the phone number in the To field
-        #
-        self.messages.addNumbersInToField([self.phone_number])
-
-        #
-        # Create MMS.
-        #
-        self.messages.enterSMSMsg(self.test_msg)
-
-        self.messages.createMMSVideo()
-        self.video.click_on_video_at_position_mms(0)
-
-        #
-        # Click send and wait for the message to be received
-        #
-        self.messages.sendSMS()
-        self.UTILS.statusbar.wait_for_notification_toaster_title(self.target_mms_number, timeout=120)
-        self.UTILS.statusbar.click_on_notification_title(self.target_mms_number, timeout=30)
-        self.messages.verifyMMSReceived("video", self.target_mms_number)
+        self.messages.create_and_send_mms('video', [self.phone_number], self.test_msg)
+        self.messages.verify_mms_received("video", self.phone_number)

@@ -27,7 +27,6 @@
 
 from gaiatest  import GaiaTestCase
 
-from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
@@ -46,11 +45,6 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.gallery = Gallery(self)
-
-        #
-        # Establish which phone number to use.
-        #
-        self.target_mms_number = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
 
         #
         # Prepare the contact we're going to insert.
@@ -97,11 +91,6 @@ class test_main(GaiaTestCase):
         # Click send and wait for the message to be received
         #
         self.messages.sendSMS()
-        self.UTILS.statusbar.wait_for_notification_toaster_title(self.target_mms_number, timeout=120)
-        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        self.messages.wait_for_message()
 
-        self.messages.openThread(self.target_mms_number)
-
-        self.messages.forwardMessageToMultipleRecipients("mms", self.target_mms_number, self.contact["name"])
+        self.messages.forwardMessageToMultipleRecipients("mms", self.phone_number, self.contact["name"])

@@ -20,7 +20,6 @@
 #===============================================================================
 
 from gaiatest import GaiaTestCase
-from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
@@ -45,7 +44,6 @@ class test_main(GaiaTestCase):
         # Establish which phone number to use.
         #
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.mms_sender = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
 
@@ -60,13 +58,6 @@ class test_main(GaiaTestCase):
         #
         self.settings.configureMMSAutoRetrieve("on_without_r")
 
-        self.messages.createAndSendMMS("image", [self.phone_number], self.test_msg)
-        self.marionette.find_element(*DOM.Messages.header_back_button).tap()
-        self.UTILS.statusbar.wait_for_notification_toaster_title(self.mms_sender, timeout=120)
-        self.UTILS.statusbar.click_on_notification_title(
-            self.mms_sender, frame_to_change=DOM.Messages.frame_locator, timeout=30)
-
-        #
-        # Verify that the MMS has been received, but it contains no attached file
-        #
-        self.messages.verifyMMSReceived("img", self.mms_sender)
+        send_time = self.messages.create_and_send_mms("image", [self.phone_number], self.test_msg)
+        self.messages.wait_for_message(send_time)
+        self.messages.verify_mms_received("img", self.phone_number)

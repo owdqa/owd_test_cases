@@ -11,6 +11,7 @@ from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.gallery import Gallery
 
+
 class test_main(GaiaTestCase):
 
     test_msg = "Test."
@@ -37,10 +38,6 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
-        #
-        # Load sample image into the gallery.
-        #
         self.UTILS.general.addFileToDevice('./tests/_resources/imgd.jpg', destination='DCIM/100MZLLA')
 
         #
@@ -70,9 +67,7 @@ class test_main(GaiaTestCase):
         # Click send and wait for the message to be received
         #
         self.messages.sendSMS()
-
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        send_time = self.messages.last_sent_message_timestamp()
 
         #
         # Open contacts app and create a contact with the same phone number used to send the MMS in the
@@ -92,3 +87,4 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.reporting.logComment("Trying to open the thread with name: " + self.cont["name"])
         self.messages.openThread(self.cont["name"])
+        self.messages.wait_for_message(send_time)

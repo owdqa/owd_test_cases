@@ -27,7 +27,6 @@ class test_main(GaiaTestCase):
 
         # Establish which phone number to use.
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.target_mms_number = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
 
         # Load files into the device.
@@ -55,10 +54,6 @@ class test_main(GaiaTestCase):
         self.music.click_on_song_mms()
 
         self.messages.sendSMS()
-
-        self.UTILS.statusbar.wait_for_notification_toaster_title(self.target_mms_number, timeout=120)
-        self.UTILS.statusbar.click_on_notification_title(
-            self.target_mms_number, frame_to_change=DOM.Messages.frame_locator, timeout=30)
-
-        self.messages.verifyMMSReceived("img", self.target_mms_number)
-        self.messages.verifyMMSReceived("audio", self.target_mms_number)
+        self.messages.wait_for_message()
+        self.messages.verify_mms_received("img", self.phone_number)
+        self.messages.verify_mms_received("audio", self.phone_number)

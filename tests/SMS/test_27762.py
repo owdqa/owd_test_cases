@@ -42,7 +42,7 @@ class test_main(GaiaTestCase):
         self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
         title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.cp_incoming_number, timeout=5)
         self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
-        last_msg = self.messages.lastMessageInThisThread()
+        last_msg = self.messages.last_message_in_this_thread()
         last_msg.find_element("tag name", "a").tap()
 
         x = self.UTILS.element.getElement(DOM.Messages.header_call_btn, "Call button")

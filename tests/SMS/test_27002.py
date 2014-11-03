@@ -44,7 +44,7 @@ class test_main(GaiaTestCase):
         self.UTILS.statusbar.wait_for_notification_toaster_detail(sms_msg, timeout=120)
         title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.incoming_sms_num, timeout=5)
         self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
-        sms = self.messages.lastMessageInThisThread()
+        sms = self.messages.last_message_in_this_thread()
 
         #
         # Tap the numbers to call.
@@ -77,5 +77,5 @@ class test_main(GaiaTestCase):
 
             # We need to recover the last message and the numbers, since the reference is lost in
             # the frame changes
-            sms = self.messages.lastMessageInThisThread()
+            sms = self.messages.last_message_in_this_thread()
             msg_nums = sms.find_elements("tag name", "a")

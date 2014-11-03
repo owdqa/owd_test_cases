@@ -26,6 +26,7 @@ from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
+from OWDTestToolkit.utils.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
@@ -44,9 +45,20 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.test_nums = ["1111111", "2222222", "333333333", "444444444"]
+        num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.contact1 = MockContact(givenName="Name 1", familyName="Surname 1",
+                                    name="Name 1 Surname 1", tel={"type": "Mobile", "value": num1})
+        self.UTILS.reporting.logComment("Using target telephone number " + self.contact1["tel"]["value"])
+        self.UTILS.general.insertContact(self.contact1)
+
+        num2 = self.UTILS.general.get_os_variable("TARGET_CALL_NUMBER")
+        self.contact2 = MockContact(givenName="Name 3", familyName="Surname 3",
+                                    name="Name 3 Surname 3", tel={"type": "Mobile", "value": num2})
+        self.UTILS.reporting.logComment("Using target telephone number " + self.contact2["tel"]["value"])
+        self.UTILS.general.insertContact(self.contact2)
         self.data_layer.delete_all_sms()
         self.UTILS.statusbar.clearAllStatusBarNotifs()
+        self.test_nums = [self.contact1["tel"]["value"], self.contact2["tel"]["value"]]
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -84,15 +96,21 @@ class test_main(GaiaTestCase):
         # Click send and wait for the message to be received
         #
         self.messages.sendSMS()
+        send_time = self.messages.last_sent_message_timestamp()
+        self.messages.closeThread()
+        self.messages.openThread(self.contact1["name"])
+        self.messages.wait_for_message(send_time=send_time)
 
         #
         # Obtaining file attached type
         #
-        x = self.UTILS.element.getElement(DOM.Messages.attach_preview_img_type, "preview type")
-        typ = x.get_attribute("data-attachment-type")
+        img_type = self.UTILS.element.getElement(DOM.Messages.attach_preview_img_type, "preview type")
+        typ = img_type.get_attribute("data-attachment-type")
 
         if typ != "img":
             self.UTILS.test.quitTest("Incorrect file type. The file must be img ")
+
+        self.messages.closeThread()
 
         #
         # Check how many elements are there
@@ -100,4 +118,4 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "Check how many threads are there")
         original_count = self.messages.countNumberOfThreads()
         self.UTILS.reporting.logResult("info", "Number of threads {} in list.".format(original_count))
-        self.UTILS.test.TEST(original_count == 1, "Check how many threads are there")
+        self.UTILS.test.TEST(original_count == 2, "Check how many threads are there")

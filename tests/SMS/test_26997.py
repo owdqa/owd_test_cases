@@ -41,7 +41,7 @@ class test_main(GaiaTestCase):
         self.UTILS.statusbar.wait_for_notification_toaster_detail(msg_text, timeout=120)
         title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.incoming_sms_num, timeout=5)
         self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
-        sms = self.messages.lastMessageInThisThread()
+        sms = self.messages.last_message_in_this_thread()
 
         #
         # Tap the number to call.
@@ -64,7 +64,7 @@ class test_main(GaiaTestCase):
         time.sleep(3)
         self.messages.launch()
         self.messages.openThread(title)
-        x = self.messages.lastMessageInThisThread()
+        x = self.messages.last_message_in_this_thread()
         msg_nums = x.find_elements("tag name", "a")
         self.try_number(msg_nums, 0)
 

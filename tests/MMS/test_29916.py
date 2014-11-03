@@ -47,8 +47,8 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         for msg in self.test_msgs:
-            self.messages.createAndSendMMS("image", [self.phone_number], msg)
-            self.UTILS.statusbar.wait_for_notification_toaster_detail(msg, DOM.Messages.frame_locator, timeout=120)
+            self.messages.create_and_send_mms("image", [self.phone_number], msg)
+            self.messages.wait_for_message()
             self.messages.closeThread()
 
         self.messages.openThread(self.phone_number)

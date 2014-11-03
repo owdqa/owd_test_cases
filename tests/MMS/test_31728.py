@@ -26,7 +26,6 @@ class test_main(GaiaTestCase):
         # Establish which phone number to use.
         #
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.target_mms_number = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
 
     def tearDown(self):
@@ -34,46 +33,6 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
-        #
-        # Load files into the device.
-        self.UTILS.general.addFileToDevice('./tests/_resources/MP4.mp4', destination='SD/mus')
-
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
-
-        #
-        # Create a new SMS
-        #
-        self.messages.startNewSMS()
-
-        #
-        # Insert the phone number in the To field
-        #
-        self.messages.addNumbersInToField([self.phone_number])
-
-        #
-        # Create MMS.
-        #
-        self.messages.enterSMSMsg(self.test_msg)
-
-        self.messages.createMMSMusic()
-        self.music.click_on_song_mms()
-
-        #
-        # Click send and wait for the message to be received
-        #
-        self.messages.sendSMS()
-
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
-
-        self.messages.openThread(self.target_mms_number)
-
-        #
-        # Wait for the last message in this thread to be a 'received' one.
-        #
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(returnedSMS, "A received message appeared in the thread.", True)
+        self.messages.create_and_send_mms('audio', [self.phone_number], self.test_msg)
+        self.messages.wait_for_message()
+        self.messages.verify_mms_received('audio', self.phone_number)

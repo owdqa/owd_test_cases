@@ -46,7 +46,6 @@ class test_main(GaiaTestCase):
         # Establish which phone number to use.
         #
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.target_mms_number = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
         self.UTILS.statusbar.clearAllStatusBarNotifs()
@@ -85,10 +84,7 @@ class test_main(GaiaTestCase):
         # Click send and wait for the message to be received
         #
         self.messages.sendSMS()
-        self.UTILS.statusbar.wait_for_notification_toaster_title(self.target_mms_number, timeout=120)
-        self.UTILS.statusbar.click_on_notification_title(self.target_mms_number, frame_to_change=DOM.Messages.frame_locator)
-
-        last_msg = self.messages.lastMessageInThisThread()
+        last_msg = self.messages.wait_for_message()
         attachments = self.messages.get_mms_attachments_info(last_msg)
         self.UTILS.reporting.debug("*** ATTACHMENTS: {}".format(attachments))
 

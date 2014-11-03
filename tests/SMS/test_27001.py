@@ -45,7 +45,7 @@ class test_main(GaiaTestCase):
         self.UTILS.statusbar.wait_for_notification_toaster_detail(msg_text, timeout=120)
         title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.incoming_sms_num, timeout=5)
         self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
-        sms = self.messages.lastMessageInThisThread()
+        sms = self.messages.last_message_in_this_thread()
 
         #
         # Long press the embedded number link.

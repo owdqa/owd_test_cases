@@ -61,7 +61,7 @@ class test_main(GaiaTestCase):
         # Open sms option with longtap on it
         #
         self.UTILS.reporting.logResult("info", "Open sms option with longtap on it")
-        sms = self.messages.lastMessageInThisThread()
+        sms = self.messages.last_message_in_this_thread()
         body = self.marionette.find_element(*DOM.Messages.last_message_body, id=sms.id)
         self.actions.long_press(body, 2).perform()
 

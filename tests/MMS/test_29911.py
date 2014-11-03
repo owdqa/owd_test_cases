@@ -22,10 +22,14 @@
 # Numbers of recipients not stored as contacts are shown ok too.
 #===============================================================================
 
+import sys
+sys.path.insert(1, "./")
 from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.utils.contacts import MockContact
+from tests.i18nsetup import setup_translations
 
 
 class test_main(GaiaTestCase):
@@ -47,13 +51,10 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact1["tel"]["value"])
         self.UTILS.general.insertContact(self.contact1)
 
-        self.contact2 = MockContact(givenName="Name 2", familyName="Surname 2", name="Name 2 Surname 2",
-                                    tel={"type": "Mobile", "value": self.test_num})
-        self.UTILS.general.insertContact(self.contact2)
-        self.UTILS.statusbar.clearAllStatusBarNotifs()
-
         self.call_number = self.UTILS.general.get_os_variable("TARGET_CALL_NUMBER")
         self.data_layer.delete_all_sms()
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
+        _ = setup_translations(self)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -65,13 +66,14 @@ class test_main(GaiaTestCase):
         self.messages.startNewSMS()
 
         self.messages.addContactToField(self.contact1["name"])
-        self.messages.addContactToField(self.contact2["name"])
 
         #
         # Insert the phone number in the To field
         #
         self.messages.addNumbersInToField([self.call_number])
 
+        search_str = _("2 recipients")
+        self.UTILS.element.headerCheck(search_str)
         #
         # Enter the message.
         #
@@ -82,7 +84,8 @@ class test_main(GaiaTestCase):
         # Send the message.
         #
         self.messages.sendSMS()
-        self.UTILS.reporting.logResult("info", "Send the message.")
+        self.UTILS.statusbar.wait_for_notification_toaster_title(self.contact1["name"])
+        self.UTILS.iframe.switch_to_frame(*DOM.Messages.frame_locator)
 
         #
         # Verify the number is shown in the header as there is no contact name

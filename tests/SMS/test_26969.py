@@ -85,7 +85,7 @@ class test_main(GaiaTestCase):
         #
         # Get last message.
         #
-        msg = self.messages.lastMessageInThisThread()
+        msg = self.messages.last_message_in_this_thread()
 
         #
         # Find all URLs

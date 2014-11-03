@@ -22,15 +22,12 @@ class test_main(GaiaTestCase):
         # Establish which phone number to use.
         #
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.target_mms_number = self.UTILS.general.get_os_variable("TARGET_MMS_NUM")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
-
         #
         # Launch messages app.
         #
@@ -56,7 +53,6 @@ class test_main(GaiaTestCase):
         #
         self.messages.addSubject(self.test_subject)
 
-
         #
         # Press cancel options button
         #
@@ -66,10 +62,7 @@ class test_main(GaiaTestCase):
         # Review settings options button
         #
         self.UTILS.reporting.logResult("info", "Cliking on messages options button")
-        x = self.UTILS.element.getElement(DOM.Messages.messages_options_btn,
+        options_btn = self.UTILS.element.getElement(DOM.Messages.messages_options_btn,
             "Messages option button is displayed")
 
-        self.UTILS.test.TEST(x, "Settings options.", True)
-
-        self.UTILS.reporting.logResult("info",
-                             "Test working")
+        self.UTILS.test.TEST(options_btn, "Settings options.", True)

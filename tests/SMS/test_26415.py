@@ -52,6 +52,6 @@ class test_main(GaiaTestCase):
         # Check that this last message is not marked as failed.
         #
         time.sleep(1)
-        x = self.messages.lastMessageInThisThread()
+        x = self.messages.last_message_in_this_thread()
         self.UTILS.test.TEST("error" not in x.get_attribute("class"),
                          "The last message in this thread is not marked with error icon.")
