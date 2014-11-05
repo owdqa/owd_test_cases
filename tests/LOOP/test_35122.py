@@ -71,5 +71,5 @@ class test_main(GaiaTestCase):
         not_user_dom = (DOM.Loop.not_a_hello_user_msg[0], DOM.Loop.not_a_hello_user_msg[1].format(not_user_str))
         self.wait_for_element_displayed(*not_user_dom, timeout=10)
         not_a_user_msg = self.marionette.find_element(*not_user_dom)
-        self.UTILS.test.TEST(not_a_user_msg.text == not_user_str, "Message found: {} (Expected: {}".\
+        self.UTILS.test.test(not_a_user_msg.text == not_user_str, "Message found: {} (Expected: {}".\
                              format(not_a_user_msg.text, not_user_str))

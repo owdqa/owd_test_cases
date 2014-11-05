@@ -64,7 +64,7 @@ class test_main(GaiaTestCase):
         # We will also check there is one thread for each contact in the To field
         name_xpath = DOM.Messages.thread_selector_xpath.format(self.test_contacts[0]['name'])
         thread = self.UTILS.element.getElementByXpath(name_xpath)
-        self.UTILS.test.TEST(thread, "Thread for {} found".format(self.test_contacts[0]['name']))
+        self.UTILS.test.test(thread, "Thread for {} found".format(self.test_contacts[0]['name']))
         name_xpath = DOM.Messages.thread_selector_xpath.format(self.test_contacts[1]['name'])
         thread = self.UTILS.element.getElementByXpath(name_xpath)
-        self.UTILS.test.TEST(thread, "Thread for {} found".format(self.test_contacts[1]['name']))
+        self.UTILS.test.test(thread, "Thread for {} found".format(self.test_contacts[1]['name']))

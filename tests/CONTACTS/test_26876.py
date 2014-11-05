@@ -43,7 +43,7 @@ class test_main(GaiaTestCase):
             x = self.UTILS.element.getElement(("xpath", DOM.Contacts.view_contact_tels_xpath.\
                                        format(self.contact["tel"][i]["value"])),
                                        "Telephone number button for {}".format(self.contact["tel"][i]["value"]))
-            self.UTILS.test.TEST(self.contact["tel"][i]["value"] in x.text,
+            self.UTILS.test.test(self.contact["tel"][i]["value"] in x.text,
                         "Phone number '{}' matches the expacted value ('{}')".\
                         format(x.text, self.contact["tel"][i]["value"]))
 

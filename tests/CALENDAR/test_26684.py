@@ -36,12 +36,12 @@ class test_main(GaiaTestCase):
         #
         x = self.UTILS.element.getElement(DOM.Calendar.current_view_header, "Header")
         expected_str = "{} {}".format(now.month_name, now.year)
-        self.UTILS.test.TEST(expected_str.lower() in x.text.lower(),
+        self.UTILS.test.test(expected_str.lower() in x.text.lower(),
                         "Header: '{}' contains today's details ('{}').".format(x.text, expected_str))
 
         x = self.UTILS.element.getElement(DOM.Calendar.mview_selected_day_title, "Selected day detail string")
         expected_str = "{}".format(now.mday)
-        self.UTILS.test.TEST(expected_str.lower() in x.text.lower(),
+        self.UTILS.test.test(expected_str.lower() in x.text.lower(),
                         "Day detail string: '{}' contains today's details ('{}').".format(x.text, expected_str))
 
         x = self.UTILS.debug.screenShotOnErr()

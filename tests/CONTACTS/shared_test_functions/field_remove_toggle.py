@@ -75,7 +75,7 @@ class field_remove_toggle(GaiaTestCase):
                              "click the icon to set them to 'remove' ...</b>")
         for i in item_nums:
             x = self.UTILS.element.getElements(field_locator, "Field being tested (item {})".format(i))[i]
-            self.UTILS.test.TEST("removed" not in x.get_attribute("class"),
+            self.UTILS.test.test("removed" not in x.get_attribute("class"),
                             "The item is NOT marked as temporarily removed.")
 
             x = self.UTILS.element.getElements(del_icon_locator, "Field reset button (item {})".format(i))[i]
@@ -85,7 +85,7 @@ class field_remove_toggle(GaiaTestCase):
             self.UTILS.reporting.logResult("info", "Screenshot at this point:", x)
 
             x = self.UTILS.element.getElements(field_locator, "Field being tested (item {})".format(i))[i]
-            self.UTILS.test.TEST("removed" in x.get_attribute("class"), "The item IS now marked as temporarily removed.")
+            self.UTILS.test.test("removed" in x.get_attribute("class"), "The item IS now marked as temporarily removed.")
 
         self.UTILS.reporting.logResult("info", "<b>For each of our items for this field, "\
                              "click the icon to turn off 'remove' ...</b>")
@@ -97,5 +97,5 @@ class field_remove_toggle(GaiaTestCase):
             self.UTILS.reporting.logResult("info", "Screenshot at this point:", x)
 
             x = self.UTILS.element.getElements(field_locator, "Field being tested (item {})".format(i))[i]
-            self.UTILS.test.TEST("removed" not in x.get_attribute("class"),
+            self.UTILS.test.test("removed" not in x.get_attribute("class"),
                             "The item is now NOT marked as temporarily removed.")

@@ -51,7 +51,7 @@ class test_main(GaiaTestCase):
         dialer_num = x.get_attribute("value")
 
         self.UTILS.reporting.logResult('info', "Dialer num: {}".format(dialer_num))
-        self.UTILS.test.TEST(str(self.test_contacts[-1]["tel"]["value"]) == dialer_num,
+        self.UTILS.test.test(str(self.test_contacts[-1]["tel"]["value"]) == dialer_num,
                              "After calling several contacts, if we press 'Call' button, we get the last one's phone_number")
 
         y = self.UTILS.debug.screenShotOnErr()

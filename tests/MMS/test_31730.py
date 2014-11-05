@@ -90,7 +90,7 @@ class test_main(GaiaTestCase):
 
         # Check the names and sizes of all attachments are as expected
         for (i, att) in enumerate(attachments):
-            self.UTILS.test.TEST(self.expected_names[i] == att["name"] and self.expected_sizes[i] == att["size"],
+            self.UTILS.test.test(self.expected_names[i] == att["name"] and self.expected_sizes[i] == att["size"],
                                  "Attachment [{}] ({}kb)     Expected [{}] ({}kb)".\
                                  format(self.expected_names[i], self.expected_sizes[i],
                                         att["name"], att["size"]))

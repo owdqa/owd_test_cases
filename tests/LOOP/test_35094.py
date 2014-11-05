@@ -69,5 +69,5 @@ class main(GaiaTestCase):
             self.UTILS.element.waitForElements(DOM.Loop.share_panel, "Share panel")
 
             not_a_user_explanation = self.marionette.find_element(*DOM.Loop.not_a_user_explanation)
-            self.UTILS.test.TEST(not_a_user_explanation.text == self.expected_message, "Message found: {} (Expected: {}".\
+            self.UTILS.test.test(not_a_user_explanation.text == self.expected_message, "Message found: {} (Expected: {}".\
                                  format(not_a_user_explanation.text, self.expected_message))

@@ -49,7 +49,7 @@ class test_main(GaiaTestCase):
             if i.text == "123456":
                 bool7OK = False
     
-        self.UTILS.test.TEST(bool4OK, "The 4-digit number is not highlighted.")
-        self.UTILS.test.TEST(bool6OK, "The 6-digit number is not highlighted.")
+        self.UTILS.test.test(bool4OK, "The 4-digit number is not highlighted.")
+        self.UTILS.test.test(bool6OK, "The 6-digit number is not highlighted.")
 
         

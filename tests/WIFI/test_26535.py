@@ -40,5 +40,5 @@ class test_main(GaiaTestCase):
         self.settings.hotSpot()
 
         x = self.UTILS.element.getElement(DOM.Settings.hotspot_settings, "Hotspot settings")
-        self.UTILS.test.TEST(x.get_attribute("disabled") != "disabled",
+        self.UTILS.test.test(x.get_attribute("disabled") != "disabled",
                         "Hotspot settings are enabled by default (<b>meaning that 'hotspot' is off</b>).")

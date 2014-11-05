@@ -118,4 +118,4 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "Check how many threads are there")
         original_count = self.messages.countNumberOfThreads()
         self.UTILS.reporting.logResult("info", "Number of threads {} in list.".format(original_count))
-        self.UTILS.test.TEST(original_count == 2, "Check how many threads are there")
+        self.UTILS.test.test(original_count == 2, "Check how many threads are there")

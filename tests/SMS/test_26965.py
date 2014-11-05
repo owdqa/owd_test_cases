@@ -68,4 +68,4 @@ class test_main(GaiaTestCase):
         # Verify that a valid URL appears highlight
         #
         y = msg.find_element("tag name", "a")
-        self.UTILS.test.TEST(y.text == self.link, "The web link is highlighted in the text message")
+        self.UTILS.test.test(y.text == self.link, "The web link is highlighted in the text message")

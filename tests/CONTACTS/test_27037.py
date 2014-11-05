@@ -39,4 +39,4 @@ class test_main(GaiaTestCase):
 
         x = self.contacts.import_gmail_login("wrongname", "wrongpass")
 
-        self.UTILS.test.TEST(x == False, "Login failed.")
+        self.UTILS.test.test(x == False, "Login failed.")

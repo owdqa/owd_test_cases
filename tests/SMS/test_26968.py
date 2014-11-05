@@ -47,7 +47,7 @@ class test_main(GaiaTestCase):
         # and click the link.
         #
         x = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(x, "Received a message.", True)
+        self.UTILS.test.test(x, "Received a message.", True)
 
 
 
@@ -58,4 +58,4 @@ class test_main(GaiaTestCase):
             boolOK = True
 
 
-        self.UTILS.test.TEST(boolOK, "The web address is not a link in the text message")
+        self.UTILS.test.test(boolOK, "The web address is not a link in the text message")

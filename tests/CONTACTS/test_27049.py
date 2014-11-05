@@ -88,17 +88,17 @@ class test_main(GaiaTestCase):
         self.marionette.switch_to_frame()
         self.wait_for_element_displayed('css selector', 'iframe[src*=keyboard]', timeout=15)
         keyboard = self.marionette.find_element('css selector', 'iframe[src*=keyboard]')
-        self.UTILS.test.TEST(keyboard, "ER1: Keyboard found after tapping search input")
+        self.UTILS.test.test(keyboard, "ER1: Keyboard found after tapping search input")
         keyboard.send_keys(search_name)
 
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, via_root_frame=False)
         search_input = self.UTILS.element.getElement(DOM.Contacts.search_contact_result_input,
                                                      "Search Contact results input")
-        self.UTILS.test.TEST(search_input.get_attribute("value") == search_name, "ER2: Text and numbers in search box")
+        self.UTILS.test.test(search_input.get_attribute("value") == search_name, "ER2: Text and numbers in search box")
 
         after_search_count = self.UTILS.element.getElements(DOM.Contacts.search_results_list, "Search list")
 
-        self.UTILS.test.TEST(len(after_search_count) == 1,
+        self.UTILS.test.test(len(after_search_count) == 1,
                         "ER3: After typing the name '{}' the search list contains 1 contact (out of {}).".\
                         format(search_name, len(hotmail_contacts)))

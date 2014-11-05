@@ -43,7 +43,7 @@ class test_main(GaiaTestCase):
         # Verify list has 'num_contacts' contacts.
         #
         the_list = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
-        self.UTILS.test.TEST(self.num_contacts == len(the_list), "All contacts are showed")
+        self.UTILS.test.test(self.num_contacts == len(the_list), "All contacts are showed")
 
         #
         # Verify contacts shown are the contact inserted.
@@ -56,4 +56,4 @@ class test_main(GaiaTestCase):
                     count += 1
                     break
 
-        self.UTILS.test.TEST(count == self.num_contacts, "All contacts inserted")
+        self.UTILS.test.test(count == self.num_contacts, "All contacts inserted")

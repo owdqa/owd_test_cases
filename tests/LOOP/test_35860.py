@@ -64,4 +64,4 @@ class main(GaiaTestCase):
         previous = self.loop.get_number_of_all_urls()
         self.loop.delete_single_entry_by_pos(0)
         current = self.loop.get_number_of_all_urls()
-        self.UTILS.test.TEST(current == previous - 1, "Check that the entry has been deleted")
+        self.UTILS.test.test(current == previous - 1, "Check that the entry has been deleted")

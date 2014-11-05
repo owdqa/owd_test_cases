@@ -86,4 +86,4 @@ class test_main(GaiaTestCase):
 
         result = all([self.pre_progresses[i] < self.post_progresses[i]
                       for i in range(len(self.file_names))])
-        self.UTILS.test.TEST(result, "The progress bar grows during the download.")
+        self.UTILS.test.test(result, "The progress bar grows during the download.")

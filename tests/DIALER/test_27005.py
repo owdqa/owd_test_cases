@@ -61,11 +61,11 @@ class test_main(GaiaTestCase):
 
         self.UTILS.element.waitForElements(DOM.Dialer.suggestion_list, 'Suggestion list')
         items = self.UTILS.element.getElements(DOM.Dialer.suggestion_item_name, "Suggestion items", timeout=10)
-        self.UTILS.test.TEST(len(items) == 3, "There are 3 contacts listed.")
+        self.UTILS.test.test(len(items) == 3, "There are 3 contacts listed.")
 
         i = 0
         for c in self.test_contacts:
-            self.UTILS.test.TEST(c["name"] in items[i].text,
+            self.UTILS.test.test(c["name"] in items[i].text,
                                  "The contact ({}) in suggestion list contains appears in suggestion list ({})"
                                  .format(c["name"], items[i].text))
             i += 1
@@ -74,4 +74,4 @@ class test_main(GaiaTestCase):
         x.tap()
 
         suggestion_overlay = self.UTILS.element.getElement(DOM.Dialer.suggestion_overlay, "Suggestion overlay")
-        self.UTILS.test.TEST(suggestion_overlay.get_attribute("aria-hidden"), "Overlay is hidden after tapping on cancel button")
+        self.UTILS.test.test(suggestion_overlay.get_attribute("aria-hidden"), "Overlay is hidden after tapping on cancel button")

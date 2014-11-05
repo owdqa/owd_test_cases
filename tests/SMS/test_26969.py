@@ -97,6 +97,6 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.element.simulateClick(l)
 
-        self.UTILS.test.TEST(self.browser.check_page_loaded(link),
+        self.UTILS.test.test(self.browser.check_page_loaded(link),
                               "Web page {} loaded correctly.".format(link_number + 1))
         time.sleep(5)

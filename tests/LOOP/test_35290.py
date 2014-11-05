@@ -60,5 +60,5 @@ class test_main(GaiaTestCase):
         self.loop.share_micro_and_camera()
         self.wait_for_element_displayed(*DOM.Loop.not_a_user_explanation, timeout=10)
         not_a_user_explanation = self.marionette.find_element(*DOM.Loop.not_a_user_explanation)
-        self.UTILS.test.TEST(not_a_user_explanation.text == self.expected_message, "Message found: {} (Expected: {}".\
+        self.UTILS.test.test(not_a_user_explanation.text == self.expected_message, "Message found: {} (Expected: {}".\
                              format(not_a_user_explanation.text, self.expected_message))

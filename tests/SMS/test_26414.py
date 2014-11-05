@@ -50,6 +50,6 @@ class test_main(GaiaTestCase):
         # Wait for the last message in this thread to be a 'received' one.
         #
         returnedSMS = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
-        self.UTILS.test.TEST(returnedSMS, "A received message appeared in the thread.", True)
+        self.UTILS.test.test(returnedSMS, "A received message appeared in the thread.", True)
 
         self.messages.check_last_message_contents(sms_message)

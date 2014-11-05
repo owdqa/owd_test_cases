@@ -25,7 +25,7 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.UTILS.network.disableAllNetworkSettings()
 
-        self.UTILS.test.TEST(self.UTILS.network.is_network_type_enabled("data") == False, "Data conn is disabled.")
+        self.UTILS.test.test(self.UTILS.network.is_network_type_enabled("data") == False, "Data conn is disabled.")
 
         self.settings.launch()
         self.settings.cellular_and_data()
@@ -40,4 +40,4 @@ class test_main(GaiaTestCase):
 
         self.UTILS.network.wait_for_network_item_enabled("data")
 
-        self.UTILS.test.TEST(self.UTILS.network.is_network_type_enabled("data") == True, "Data conn is now enabled.")
+        self.UTILS.test.test(self.UTILS.network.is_network_type_enabled("data") == True, "Data conn is now enabled.")

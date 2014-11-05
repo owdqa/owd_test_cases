@@ -43,7 +43,7 @@ class FtuLangKb(GaiaTestCase):
         x = p_x + " keyboard image = "
         x = x + str(p_a) + " bytes (it was " + str(p_b)
         x = x + "). See the screenshot for details."
-        self.UTILS.test.TEST((p_a == p_b), x)
+        self.UTILS.test.test((p_a == p_b), x)
 
     def run(self):
         #
@@ -54,7 +54,7 @@ class FtuLangKb(GaiaTestCase):
         #
         # LANGUAGE.
         #
-        self.UTILS.test.TEST(self.ftu.setLanguage(self.lang),
+        self.UTILS.test.test(self.ftu.setLanguage(self.lang),
             "Language '" + self.lang + "' is available on this device.", True)
         self.ftu.nextScreen()
 

@@ -26,14 +26,14 @@ class test_main(GaiaTestCase):
 
         # Verify that the 'DONE' button is disabled just now.
         done_button = self.UTILS.element.getElement(DOM.Contacts.done_button, "'Done' button")
-        self.UTILS.test.TEST(not done_button.is_enabled(), "Done button is disabled by default.")
+        self.UTILS.test.test(not done_button.is_enabled(), "Done button is disabled by default.")
 
         # Add some info. to the email field.
         self.UTILS.general.typeThis(DOM.Contacts.email_field, "Email field", self.email_address)
 
         # Verify that the 'DONE' button is enabled just now.
         done_button = self.UTILS.element.getElement(DOM.Contacts.done_button, "'Done' button")
-        self.UTILS.test.TEST(done_button.is_enabled() == True, "Done button is enabled if email is filled in.")
+        self.UTILS.test.test(done_button.is_enabled() == True, "Done button is enabled if email is filled in.")
 
         # Press the DONE button and return to the view all contacts screen.
         done_button.tap()

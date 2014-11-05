@@ -40,5 +40,5 @@ class test_main(GaiaTestCase):
                                                  DOM.Contacts.view_contact_hello_option[1].format("audio"))
         video_btn = self.marionette.find_element(DOM.Contacts.view_contact_hello_option[0],
                                                  DOM.Contacts.view_contact_hello_option[1].format("video"))
-        self.UTILS.test.TEST(audio_btn, "Audio button present in contact")
-        self.UTILS.test.TEST(video_btn, "Video button present in contact")
+        self.UTILS.test.test(audio_btn, "Audio button present in contact")
+        self.UTILS.test.test(video_btn, "Video button present in contact")

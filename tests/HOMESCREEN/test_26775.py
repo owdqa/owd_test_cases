@@ -58,4 +58,4 @@ class test_main(GaiaTestCase):
         time.sleep(5)
         self.UTILS.iframe.switchToFrame("src", pacman_url)
         content = self.UTILS.element.getElement(DOM.EME.game_content, "Game contents")
-        self.UTILS.test.TEST(content, "Game content found")
+        self.UTILS.test.test(content, "Game content found")

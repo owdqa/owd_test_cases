@@ -49,4 +49,4 @@ class test_main(GaiaTestCase):
             text="Download started", notif_text="Downloading", timeout=15)
 
         is_there = self.UTILS.statusbar.isIconInStatusBar(DOM.Statusbar.downloads)
-        self.UTILS.test.TEST(is_there, "Verify that the download icon in status bar is active")
+        self.UTILS.test.test(is_there, "Verify that the download icon in status bar is active")

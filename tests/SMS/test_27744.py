@@ -66,4 +66,4 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.element.headerCheck("Messages")
         threads = self.UTILS.element.getElement(DOM.Messages.no_threads_message, "No threads message")
-        self.UTILS.test.TEST(threads, "There are no threads, as expected")
+        self.UTILS.test.test(threads, "There are no threads, as expected")

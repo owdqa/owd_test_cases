@@ -69,8 +69,8 @@ class test_main(GaiaTestCase):
         for num in [self.contact["name"], incoming_num]:
             thread = self.UTILS.element.getElementByXpath(DOM.Messages.thread_selector_xpath.format(num))
             name = self.marionette.find_element(*DOM.Messages.threads, id=thread.id).text
-            self.UTILS.test.TEST(num == name, "Expected thread name: {} Actual value: {}".format(num, name))
+            self.UTILS.test.test(num == name, "Expected thread name: {} Actual value: {}".format(num, name))
             thread_time = self.marionette.find_element('css selector', 'p.summary time', id=thread.id).text
-            self.UTILS.test.TEST(thread_time, "Thread time found: {}".format(thread_time))
+            self.UTILS.test.test(thread_time, "Thread time found: {}".format(thread_time))
             excerpt = self.marionette.find_element('css selector', 'p.summary span.body-text', id=thread.id)
-            self.UTILS.test.TEST(excerpt, "Thread excerpt found: {}".format(excerpt))
+            self.UTILS.test.test(excerpt, "Thread excerpt found: {}".format(excerpt))

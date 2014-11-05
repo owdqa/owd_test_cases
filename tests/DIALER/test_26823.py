@@ -45,4 +45,4 @@ class test_main(GaiaTestCase):
         time.sleep(2)
 
         self.UTILS.reporting.logResult('info', "displayed_app: {}".format(self.apps.displayed_app.name))
-        self.UTILS.test.TEST(self.apps.displayed_app.name == "Phone", "The dialer app is now displayed.")
+        self.UTILS.test.test(self.apps.displayed_app.name == "Phone", "The dialer app is now displayed.")

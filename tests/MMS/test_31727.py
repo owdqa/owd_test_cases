@@ -33,5 +33,5 @@ class test_main(GaiaTestCase):
         self.messages.create_and_send_mms('image', [self.phone_number], self.test_msg)
         self.messages.wait_for_message()
         text = self.UTILS.element.getElement(DOM.Messages.last_message_mms_text, "Message text").text
-        self.UTILS.test.TEST(text == self.test_msg, "[{}] received. Expected [{}]".format(text, self.test_msg), True)
+        self.UTILS.test.test(text == self.test_msg, "[{}] received. Expected [{}]".format(text, self.test_msg), True)
         self.messages.verify_mms_received('img', self.phone_number)

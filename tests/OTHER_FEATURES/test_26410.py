@@ -52,7 +52,7 @@ class test_main(GaiaTestCase):
         time.sleep(3)
 
         bluetooth_description = self.UTILS.element.getElement(DOM.Settings.bluetooth_desc, "Bluetooth description")
-        self.UTILS.test.TEST(bluetooth_description.text == _("No devices paired"), "Bluetooth is marked as turned on.")
+        self.UTILS.test.test(bluetooth_description.text == _("No devices paired"), "Bluetooth is marked as turned on.")
 
         self.UTILS.statusbar.toggleViaStatusBar("bluetooth")
         self.marionette.switch_to_frame()

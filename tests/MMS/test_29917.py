@@ -57,7 +57,7 @@ class test_main(GaiaTestCase):
         time.sleep(5)
         # After deleting one message, check there are three messages left
         msg_list = self.UTILS.element.getElements(DOM.Messages.message_list, "Remaining messages")
-        self.UTILS.test.TEST(len(msg_list) == 3, "There are {} messages left (expected {})".format(len(msg_list), 3))
+        self.UTILS.test.test(len(msg_list) == 3, "There are {} messages left (expected {})".format(len(msg_list), 3))
 
     def create_test_msgs(self, msgs):
         for msg in msgs:

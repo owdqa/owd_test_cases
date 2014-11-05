@@ -88,7 +88,7 @@ class test_main(GaiaTestCase):
         #
         expected_to = self.contact["email"][1]["value"]
         y = self.UTILS.element.getElement(DOM.Email.compose_to_from_contacts, "'To' field")
-        self.UTILS.test.TEST(y.text == expected_to,
+        self.UTILS.test.test(y.text == expected_to,
                         "The 'to' field contains '" + expected_to + "' (it was (" + y.text + ").")
 
         #

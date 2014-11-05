@@ -64,4 +64,4 @@ class test_main(GaiaTestCase):
 
         self.browser.launch()
         self.browser.open_url("www.wikipedia.com")
-        self.UTILS.test.TEST(self.browser.check_page_loaded("www.wikipedia.com"), "Web page loaded correctly.")
+        self.UTILS.test.test(self.browser.check_page_loaded("www.wikipedia.com"), "Web page loaded correctly.")

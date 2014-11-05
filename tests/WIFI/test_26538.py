@@ -25,4 +25,4 @@ class test_main(GaiaTestCase):
         self.settings.hotSpot()
         hotspot_switch_input = self.UTILS.element.getElement(DOM.Settings.hotspot_switch_input,
                                                              "Hotspot switch input", timeout=20, is_displayed=False)
-        self.UTILS.test.TEST(not hotspot_switch_input.get_attribute("checked"), "Hotspot switch is disabled.")
+        self.UTILS.test.test(not hotspot_switch_input.get_attribute("checked"), "Hotspot switch is disabled.")

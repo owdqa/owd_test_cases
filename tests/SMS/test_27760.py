@@ -55,7 +55,7 @@ class test_main(GaiaTestCase):
         # Check the 'Send' button is now enabled.
         #
         send_btn = self.UTILS.element.getElement(DOM.Messages.send_message_button, "Send message button")
-        self.UTILS.test.TEST(send_btn.is_enabled(), "Send button is enabled when everything's filled in.")
+        self.UTILS.test.test(send_btn.is_enabled(), "Send button is enabled when everything's filled in.")
 
         #
         # Delete the text (we should already be in the message area with the
@@ -66,12 +66,12 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
 
         msg_area = self.UTILS.element.getElement(DOM.Messages.input_message_area, "Message area")
-        self.UTILS.test.TEST(msg_area.text == "", "Message area is clear after deleting all characters in it.")
+        self.UTILS.test.test(msg_area.text == "", "Message area is clear after deleting all characters in it.")
 
         #
         # Check the Send button isn't enabled any more.
         #
         send_btn = self.UTILS.element.getElement(DOM.Messages.send_message_button, "Send message button")
-        self.UTILS.test.TEST(not send_btn.is_enabled(), 
+        self.UTILS.test.test(not send_btn.is_enabled(), 
                         "Send button is not enabled after target number is supplied, but message still empty.")
 

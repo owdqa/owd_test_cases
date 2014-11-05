@@ -58,4 +58,4 @@ class main(GaiaTestCase):
 
             self.UTILS.iframe.switch_to_active_frame()
             video_mode = self.UTILS.element.getElement(DOM.Loop.call_screen_video_mode, "Video")
-            self.UTILS.test.TEST("setting-disabled" in video_mode.get_attribute("class"), "Video is disabled when call mode is set to 'Audio'")
+            self.UTILS.test.test("setting-disabled" in video_mode.get_attribute("class"), "Video is disabled when call mode is set to 'Audio'")

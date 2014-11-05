@@ -48,7 +48,7 @@ class test_main(GaiaTestCase):
         #
         msg_nums = sms.find_elements("tag name", "a")
 
-        self.UTILS.test.TEST(len(msg_nums) == 2,
+        self.UTILS.test.test(len(msg_nums) == 2,
                     "There are <b>{}</b> numbers highlighted in the received text (expected <b>2</b>).".\
                     format(len(msg_nums)))
 
@@ -85,5 +85,5 @@ class test_main(GaiaTestCase):
                                        format(link_num), x)
         x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number")
         x_num = x.get_attribute("value")
-        self.UTILS.test.TEST(link_num in x_num, "Expected number ({}) matches number in dialer ({}).".\
+        self.UTILS.test.test(link_num in x_num, "Expected number ({}) matches number in dialer ({}).".\
                              format(link_num, x_num))

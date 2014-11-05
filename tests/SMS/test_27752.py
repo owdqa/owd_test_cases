@@ -55,4 +55,4 @@ class test_main(GaiaTestCase):
         self.marionette.switch_to_frame()
         self.UTILS.iframe.switchToFrame(*DOM.Browser.frame_locator)
 
-        self.UTILS.test.TEST(self.browser.check_page_loaded(self.link), "Web page loaded correctly.")
+        self.UTILS.test.test(self.browser.check_page_loaded(self.link), "Web page loaded correctly.")

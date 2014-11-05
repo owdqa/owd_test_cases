@@ -67,12 +67,12 @@ class test_main(GaiaTestCase):
         # Press the favourites button.
         #
         x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Favourite toggle button")
-        self.UTILS.test.TEST(x.text == "Remove as Favorite",
+        self.UTILS.test.test(x.text == "Remove as Favorite",
                         "Favourite toggle button says 'Remove as Favorite' before contact is removed as a favorite.")
         x.tap()
         time.sleep(2)
         x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Favourite toggle button")
-        self.UTILS.test.TEST(x.text == "Add as Favorite",
+        self.UTILS.test.test(x.text == "Add as Favorite",
                         "Favourite toggle button says 'Add as Favorite' after contact is removed as a favorite.")
 
         #

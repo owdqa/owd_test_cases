@@ -136,7 +136,7 @@ class test_main(GaiaTestCase):
         self.messages.openThread(self.num)
         time.sleep(2)
         x = self.UTILS.element.getElements(DOM.Messages.message_timestamps, "Message date header", False)[-1]
-        self.UTILS.test.TEST(p_str == x.text.encode("utf8"),
+        self.UTILS.test.test(p_str == x.text.encode("utf8"),
                         "<b>Last message timestamp header is <u>'{}'</u> </b>(expected <b>'{}'</b>).".\
                         format(x.text, p_str), stop_on_error=True)
         time.sleep(3)

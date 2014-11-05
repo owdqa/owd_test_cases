@@ -52,10 +52,10 @@ class test_main(GaiaTestCase):
         #
         expect = self.contact["tel"]["type"]
         actual = self.messages.threadType()
-        self.UTILS.test.TEST(expect == actual, "The type is listed as: '{}' (subheader was '{}').".\
+        self.UTILS.test.test(expect == actual, "The type is listed as: '{}' (subheader was '{}').".\
                              format(expect, actual))
 
         expect = self.contact["tel"]["value"]
         actual = self.messages.threadCarrier()
-        self.UTILS.test.TEST(expect == actual, "The carrier is listed as: '{}' (subheader was '{}').".\
+        self.UTILS.test.test(expect == actual, "The carrier is listed as: '{}' (subheader was '{}').".\
                              format(expect, actual))

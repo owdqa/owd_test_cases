@@ -45,5 +45,5 @@ class main(GaiaTestCase):
         self.loop.open_settings()
         selected_camera = self.marionette.find_element(*DOM.Loop.settings_selected_camera)
         front_str = _("Front")
-        self.UTILS.test.TEST(selected_camera.text == front_str, "Default camera is {} (Expected: {})".\
+        self.UTILS.test.test(selected_camera.text == front_str, "Default camera is {} (Expected: {})".\
                              format(selected_camera.text, front_str))

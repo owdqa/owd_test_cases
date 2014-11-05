@@ -70,6 +70,6 @@ class main(GaiaTestCase):
 
         self.UTILS.element.waitForElements(DOM.Loop.call_log, "Check we are returned to the call log")
         current = self.loop.get_number_of_available_urls()
-        self.UTILS.test.TEST(
+        self.UTILS.test.test(
             previous > current,
             "Check that after deleting only revoked URls when there both available and revoked in different days, only available remains")

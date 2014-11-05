@@ -31,4 +31,4 @@ class test_main(GaiaTestCase):
 
         x = self.UTILS.element.getElement(DOM.Dialer.call_log_edit_btn, "Edit button", False)
         #Try with attribute aria-disabled
-        self.UTILS.test.TEST(x.get_attribute("aria-disabled"), "The edit button is disabled.") 
+        self.UTILS.test.test(x.get_attribute("aria-disabled"), "The edit button is disabled.") 

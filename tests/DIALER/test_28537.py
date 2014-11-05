@@ -54,8 +54,8 @@ class test_main(GaiaTestCase):
         # Make sure that after tapping, we get the last outgoing call in the call log
         x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number field", False)
         dialer_num = x.get_attribute("value")
-        self.UTILS.test.TEST(True, "Dialer_num: {}".format(dialer_num))
-        #self.UTILS.test.TEST(self.contact_number in dialer_num, "After calling '{}', "\
+        self.UTILS.test.test(True, "Dialer_num: {}".format(dialer_num))
+        #self.UTILS.test.test(self.contact_number in dialer_num, "After calling '{}', "\
         #                     "and tapping call button, phone number field contains '{}'.".\
         #                     format(self.contact_number, dialer_num))
 

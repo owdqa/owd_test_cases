@@ -74,7 +74,7 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, via_root_frame=False)
         import_btn = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
-        self.UTILS.test.TEST(import_btn.get_attribute("disabled") == "true", "Import button is disabled.")
+        self.UTILS.test.test(import_btn.get_attribute("disabled") == "true", "Import button is disabled.")
 
         #
         # Tap the Select All button (can't be done with marionette yet).
@@ -88,7 +88,7 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "Screenshot and details", result)
 
         import_btn = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
-        self.UTILS.test.TEST(import_btn.get_attribute("disabled") != "true", "Import button is enabled.")
+        self.UTILS.test.test(import_btn.get_attribute("disabled") != "true", "Import button is enabled.")
 
         #
         # The only way I can see to test that all contacts are selected is to toggle
@@ -102,7 +102,7 @@ class test_main(GaiaTestCase):
             self.contacts.import_toggle_select_contact(i_num)
 
         import_btn = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
-        self.UTILS.test.TEST(import_btn.get_attribute("disabled") == "true", "Import button is disabled.")
+        self.UTILS.test.test(import_btn.get_attribute("disabled") == "true", "Import button is disabled.")
 
         result = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot and details", result)

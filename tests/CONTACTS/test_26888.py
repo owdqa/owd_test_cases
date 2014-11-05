@@ -75,5 +75,5 @@ class test_main(GaiaTestCase):
                 foundNormal = True
                 break
 
-        self.UTILS.test.TEST(foundNormal, "Found the non-favourite lists.")
-        self.UTILS.test.TEST(foundFav, "Found the favourite lists before the non-favourite lists.")
+        self.UTILS.test.test(foundNormal, "Found the non-favourite lists.")
+        self.UTILS.test.test(foundFav, "Found the favourite lists before the non-favourite lists.")

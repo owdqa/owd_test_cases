@@ -71,7 +71,7 @@ class test_main(GaiaTestCase):
         time.sleep(3)
         found = self.EME.pick_group(self._group_games_id)
         self.UTILS.reporting.debug("*** Group found: {}".format(found))
-        self.UTILS.test.TEST(found, "Group '{}' exists in EverythingME.".format(self._group_name), True)
+        self.UTILS.test.test(found, "Group '{}' exists in EverythingME.".format(self._group_name), True)
 
         self.UTILS.iframe.switchToFrame(*DOM.EME.frame_locator)
         app_name = self.UTILS.element.getElementByXpath(DOM.EME.app_to_install.format("Pacman")).text
@@ -87,7 +87,7 @@ class test_main(GaiaTestCase):
         # Pick a group.
         #
         found = self.EME.pick_group(self._group_games_id)
-        self.UTILS.test.TEST(found, "Group '{}' exists in EverythingME.".format(self._group_name), True)
+        self.UTILS.test.test(found, "Group '{}' exists in EverythingME.".format(self._group_name), True)
         time.sleep(2)
 
         #
@@ -102,12 +102,12 @@ class test_main(GaiaTestCase):
         add_btn = self.UTILS.element.getElement(DOM.EME.add_bookmark_btn, "Add bookmark to Home Screen Button")
         add_btn.tap()
 
-        self.UTILS.test.TEST(added, "Application '{}' is added to the homescreen.".format(app_name), True)
+        self.UTILS.test.test(added, "Application '{}' is added to the homescreen.".format(app_name), True)
 
         #
         # Go back to the homescreen and check it's installed.
         #
-        self.UTILS.test.TEST(self.UTILS.app.launchAppViaHomescreen(app_name), app_name + " is installed.", True)
+        self.UTILS.test.test(self.UTILS.app.launchAppViaHomescreen(app_name), app_name + " is installed.", True)
 
         #
         # Give it 10 seconds to start up, switch to the frame for it and grab a screenshot.

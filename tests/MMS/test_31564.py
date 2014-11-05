@@ -65,4 +65,4 @@ class test_main(GaiaTestCase):
         options_btn = self.UTILS.element.getElement(DOM.Messages.messages_options_btn,
             "Messages option button is displayed")
 
-        self.UTILS.test.TEST(options_btn, "Settings options.", True)
+        self.UTILS.test.test(options_btn, "Settings options.", True)

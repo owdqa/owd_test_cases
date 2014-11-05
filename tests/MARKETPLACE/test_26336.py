@@ -57,11 +57,11 @@ class test_main(GaiaTestCase):
         #
         # Install our app.
         #
-        self.UTILS.test.TEST(self.market.install_app(self.APP_NAME, self.APP_AUTHOR),
+        self.UTILS.test.test(self.market.install_app(self.APP_NAME, self.APP_AUTHOR),
                         "Successfully installed application '" + self.APP_NAME + "'.", True)
 
         #
         # Find the app icon on the homescreen.
         #
-        self.UTILS.test.TEST(self.UTILS.app.findAppIcon(self.APP_NAME),
+        self.UTILS.test.test(self.UTILS.app.findAppIcon(self.APP_NAME),
                         "Application '" + self.APP_NAME + "' is present on the homescreen.")

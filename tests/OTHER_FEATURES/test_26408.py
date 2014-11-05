@@ -15,7 +15,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        self.UTILS.test.TEST(not self.UTILS.network.is_network_type_enabled("airplane"),
+        self.UTILS.test.test(not self.UTILS.network.is_network_type_enabled("airplane"),
                              "Airplane mode is disabled before we start this test.")
 
         self.UTILS.statusbar.toggleViaStatusBar("airplane")
