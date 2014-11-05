@@ -51,6 +51,6 @@ class test_main(GaiaTestCase):
                 _name = False
 
             if _name:
-                self.UTILS.test.TEST(_secure1 == _secure2,
+                self.UTILS.test.test(_secure1 == _secure2,
                                      "Network '{}' has matching 'network is secured' details ({} "\
                                      "for icon and {} for description).".format(_name, _secure1, _secure2))

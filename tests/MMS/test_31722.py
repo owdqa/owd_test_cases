@@ -78,4 +78,4 @@ class test_main(GaiaTestCase):
         time.sleep(3)
         self.UTILS.iframe.switchToFrame(*DOM.Browser.frame_locator)
 
-        self.UTILS.test.TEST(self.browser.check_page_loaded(self.link1), "Web page loaded correctly.")
+        self.UTILS.test.test(self.browser.check_page_loaded(self.link1), "Web page loaded correctly.")

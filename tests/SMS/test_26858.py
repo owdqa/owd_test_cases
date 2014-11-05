@@ -57,5 +57,5 @@ class test_main(GaiaTestCase):
                                                 frame_to_change=DOM.Messages.frame_locator, timeout=5)
 
         tot = self.messages.timeOfThread(incoming_num)
-        self.UTILS.test.TEST(tot.index(expected_time) != -1 and tot.index(expected_ampm) != -1,
+        self.UTILS.test.test(tot.index(expected_time) != -1 and tot.index(expected_ampm) != -1,
                              "Expected: {}({}) Actual: {}".format(expected_time, expected_ampm, tot))

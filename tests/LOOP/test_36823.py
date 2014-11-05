@@ -69,6 +69,6 @@ class main(GaiaTestCase):
 
         self.UTILS.element.waitForElements(DOM.Loop.call_log, "Check we are returned to the call log")
         current = self.loop.get_number_of_all_urls()
-        self.UTILS.test.TEST(
+        self.UTILS.test.test(
             previous > current and current == 0,
             "Check that after deleting all URLs when there are only available, there's nothing")

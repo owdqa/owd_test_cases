@@ -66,4 +66,4 @@ class main(GaiaTestCase):
 
         self.UTILS.element.waitForElements(DOM.Loop.call_log, "Check we are returned to the call log")
         current = self.loop.get_number_of_revoked_urls()
-        self.UTILS.test.TEST(current == 0, "Check that after deleting the URL, we have one less")
+        self.UTILS.test.test(current == 0, "Check that after deleting the URL, we have one less")

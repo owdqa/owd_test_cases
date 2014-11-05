@@ -50,4 +50,4 @@ class test_main(GaiaTestCase):
         self.wait_for_element_displayed(*msg_dom,
                                         timeout=15)
         error_msg = self.marionette.find_element(*msg_dom)
-        self.UTILS.test.TEST(error_msg, "Error message due to connection failure was found")
+        self.UTILS.test.test(error_msg, "Error message due to connection failure was found")

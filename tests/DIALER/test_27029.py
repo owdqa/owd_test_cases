@@ -74,5 +74,5 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(("xpath", DOM.Dialer.call_log_number_xpath.format(self.phone_number)),
                                           "The call log for phone_number {}".format(self.phone_number))
 
-        self.UTILS.test.TEST(self.test_contact["name"] in x.text, "Call log now shows '{}'.".
+        self.UTILS.test.test(self.test_contact["name"] in x.text, "Call log now shows '{}'.".
                              format(self.test_contact["name"]))

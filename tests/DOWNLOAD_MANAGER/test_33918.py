@@ -63,4 +63,4 @@ class test_main(GaiaTestCase):
         # Verifying video player
         self.UTILS.iframe.switchToFrame(*DOM.Video.frame_locator)
         result = self.video.is_this_video_being_played(self.file_name)
-        self.UTILS.test.TEST(result, "This video [{}] is actually being played".format(self.file_name))
+        self.UTILS.test.test(result, "This video [{}] is actually being played".format(self.file_name))

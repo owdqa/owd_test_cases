@@ -67,4 +67,4 @@ class test_main(GaiaTestCase):
 
         is_there = self.UTILS.statusbar.isIconInStatusBar(DOM.Statusbar.downloads)
 
-        self.UTILS.test.TEST(not is_there, "Verify that the download icon in status bar is dismissed")
+        self.UTILS.test.test(not is_there, "Verify that the download icon in status bar is dismissed")

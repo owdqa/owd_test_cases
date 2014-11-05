@@ -52,8 +52,8 @@ class test_main(GaiaTestCase):
             if i.text == "123456789":
                 bool9OK = True
     
-        self.UTILS.test.TEST(bool7OK, "The 8-digit number is highlighted.")
-        self.UTILS.test.TEST(bool8OK, "The 8-digit number is highlighted.")
-        self.UTILS.test.TEST(bool9OK, "The 9-digit number is highlighted.")
+        self.UTILS.test.test(bool7OK, "The 8-digit number is highlighted.")
+        self.UTILS.test.test(bool8OK, "The 8-digit number is highlighted.")
+        self.UTILS.test.test(bool9OK, "The 9-digit number is highlighted.")
 
         

@@ -49,7 +49,7 @@ class test_main(GaiaTestCase):
         # and click the link.
         #
         x = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(x, "Received a message.", True)
+        self.UTILS.test.test(x, "Received a message.", True)
 
         # Go into messages Settings..
         #
@@ -66,7 +66,7 @@ class test_main(GaiaTestCase):
         y.tap()
    
         z = self.UTILS.element.getElement(DOM.Messages.edit_msgs_header,"1 selected message")
-        self.UTILS.test.TEST(z.text == "1 selected", 
+        self.UTILS.test.test(z.text == "1 selected", 
             "Into edit mode, if you tap on link, the browser is not open and the message is selected.")
 
 

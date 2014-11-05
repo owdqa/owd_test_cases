@@ -41,7 +41,7 @@ class test_main(GaiaTestCase):
         # Press the favourites button.
         #
         x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Favourite toggle button")
-        self.UTILS.test.TEST(x.text == "Add as Favorite",
+        self.UTILS.test.test(x.text == "Add as Favorite",
                         "Favourite 'toggle' button is labelled 'Add as Favourite'.")
         x.tap()
 
@@ -49,7 +49,7 @@ class test_main(GaiaTestCase):
         # Verify the favourite toggle button label changes correctly.
         #
         x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Favourite toggle button")
-        self.UTILS.test.TEST(x.text == "Remove as Favorite",
+        self.UTILS.test.test(x.text == "Remove as Favorite",
                         "Favourite 'toggle' button is labelled 'Remove as Favourite'.")
 
         #

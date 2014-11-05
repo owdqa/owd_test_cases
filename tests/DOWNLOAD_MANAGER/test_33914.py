@@ -61,7 +61,7 @@ class test_main(GaiaTestCase):
         time.sleep(5)
 
         title = self.UTILS.element.getElement(DOM.Music.title_song, "Getting song title in music player")
-        self.UTILS.test.TEST(title.text in self.file_name, "Mp3 file title")
+        self.UTILS.test.test(title.text in self.file_name, "Mp3 file title")
 
-        self.UTILS.test.TEST(self.music.is_player_playing(), "Mp3 file is being played")
+        self.UTILS.test.test(self.music.is_player_playing(), "Mp3 file is being played")
 

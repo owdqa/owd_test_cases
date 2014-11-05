@@ -72,4 +72,4 @@ class test_main(GaiaTestCase):
         self.messages.createMMSImage()
         self.gallery.click_on_thumbnail_at_position_mms(0)
         container = self.UTILS.element.getElement(DOM.Messages.attach_preview_img_type, "Preview of attached image")
-        self.UTILS.test.TEST(container, "Image preview container found")
+        self.UTILS.test.test(container, "Image preview container found")

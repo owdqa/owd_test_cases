@@ -56,7 +56,7 @@ class test_main(GaiaTestCase):
         # and click the link.
         #
         x = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(x, "Received a message.", True)
+        self.UTILS.test.test(x, "Received a message.", True)
 
         a = x.find_element("tag name", "a")
 

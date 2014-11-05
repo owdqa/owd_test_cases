@@ -88,7 +88,7 @@ class Emailing(GaiaTestCase):
         #
         self.Email.openMailFolder(self.sentFolderName)
         time.sleep(10)
-        self.UTILS.test.TEST(self.Email.emailIsInFolder(self.subject),
+        self.UTILS.test.test(self.Email.emailIsInFolder(self.subject),
                              "Email '" + self.subject + "' found in the Sent folder.", False)
 
     def receive_email(self, account_to_load, sender, prefix="", many_recipients=False, files_attached=False):
@@ -120,7 +120,7 @@ class Emailing(GaiaTestCase):
         #
         # Open the email (we'll already be in the Inbox).
         #
-        self.UTILS.test.TEST(self.Email.openMsg(prefix + self.subject),
+        self.UTILS.test.test(self.Email.openMsg(prefix + self.subject),
                              "Email was opened successfully.", True)
 
         #
@@ -131,7 +131,7 @@ class Emailing(GaiaTestCase):
 
         x = self.UTILS.element.getElement(DOM.Email.open_email_from, "'From' field")
 
-        self.UTILS.test.TEST((x.text == sender["email"] or x.text == from_name),
+        self.UTILS.test.test((x.text == sender["email"] or x.text == from_name),
                              "'To' field = '" + sender["email"] + "', (it was '" + x.text + "').")
 
         if many_recipients:
@@ -141,16 +141,16 @@ class Emailing(GaiaTestCase):
             isThere = account_to_load["email"] in to_fields_text or to_name in to_fields_text \
                 or account_to_load["username"] in to_fields_text
 
-            self.UTILS.test.TEST(isThere,
+            self.UTILS.test.test(isThere,
                                  "'From' field shows the sender (it was '{}').".format(" ".join(to_fields_text)))
         else:
             x = self.UTILS.element.getElement(DOM.Email.open_email_to, "'To' field")
-            self.UTILS.test.TEST((x.text == account_to_load["email"] or x.text == to_name
+            self.UTILS.test.test((x.text == account_to_load["email"] or x.text == to_name
                                   or x.text == account_to_load["username"]),
                                  "'From' field shows the sender (it was '" + x.text + "').")
 
         x = self.UTILS.element.getElement(DOM.Email.open_email_subject, "'Subject' field")
-        self.UTILS.test.TEST(x.text == prefix + self.subject,
+        self.UTILS.test.test(x.text == prefix + self.subject,
                              "'Subject' field = '" + prefix + self.subject + "', (it was '" + x.text + "').")
 
         if files_attached:

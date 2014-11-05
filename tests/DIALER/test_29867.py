@@ -32,4 +32,4 @@ class test_main(GaiaTestCase):
         call_button.tap()
 
         msg = self.UTILS.element.getElement(DOM.Dialer.message_callerID, "Message Call ID")
-        self.UTILS.test.TEST(msg.text == _("Service has been disabled"), "Caller ID NOT restricted")
+        self.UTILS.test.test(msg.text == _("Service has been disabled"), "Caller ID NOT restricted")

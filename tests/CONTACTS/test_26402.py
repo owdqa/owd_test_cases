@@ -57,7 +57,7 @@ class test_main(GaiaTestCase):
                                    "Dialog confirmation message", True, 10, False)
 
         msg = "You are not set up to send or receive email. Would you like to do that now?"
-        self.UTILS.test.TEST(msg == x.text,  "Verifying confirmation msg")
+        self.UTILS.test.test(msg == x.text,  "Verifying confirmation msg")
 
         #
         # Tap Ok button for confirmation.

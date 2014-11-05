@@ -51,5 +51,5 @@ class test_main(GaiaTestCase):
         # Verify that the image is opened.
         time.sleep(2)
         title = self.UTILS.element.getElement(DOM.Gallery.file_name_header, "File name header")
-        self.UTILS.test.TEST(title.text == self.file_name, "File name matches in Gallery")
+        self.UTILS.test.test(title.text == self.file_name, "File name matches in Gallery")
         self.UTILS.element.waitForElements(DOM.Gallery.download_manager_preview, "Waiting for image to be loaded")

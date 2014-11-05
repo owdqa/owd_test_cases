@@ -43,4 +43,4 @@ class test_main(GaiaTestCase):
         video_btn.tap()
         self.loop.share_micro_and_camera()
         header = self.marionette.find_element(*DOM.Loop.app_header)
-        self.UTILS.test.TEST(header, "Firefox Hello launched successfully")
+        self.UTILS.test.test(header, "Firefox Hello launched successfully")

@@ -66,7 +66,7 @@ class test_main(GaiaTestCase):
             #
             time.sleep(1)
             x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number")
-            self.UTILS.test.TEST(num_text == x.get_attribute("value"),
+            self.UTILS.test.test(num_text == x.get_attribute("value"),
                             "The dialer number contains '{}' (expected '{}').".\
                             format(num_text, x.get_attribute("value")))
 

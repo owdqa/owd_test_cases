@@ -156,7 +156,7 @@ class test_main(GaiaTestCase):
             is_editable = True
         except:
             is_editable = False
-        self.UTILS.test.TEST(is_editable == editable, _comment + "editable.")
+        self.UTILS.test.test(is_editable == editable, _comment + "editable.")
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
     def check_kbd_appears(self, item, desc, kbd_displayed):
@@ -189,7 +189,7 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "Is keyboard really there? {}".format(kbd))
         self.UTILS.reporting.logResult("info", "Expected: {}".format(kbd_displayed))
 
-        self.UTILS.test.TEST(kbd == kbd_displayed, comment)
+        self.UTILS.test.test(kbd == kbd_displayed, comment)
 
         #
         # Return to the contacts iframe.

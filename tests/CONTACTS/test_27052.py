@@ -69,7 +69,7 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, via_root_frame=False)
         import_btn = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
-        self.UTILS.test.TEST(import_btn.get_attribute("disabled") == "true", "Import button is disabled.")
+        self.UTILS.test.test(import_btn.get_attribute("disabled") == "true", "Import button is disabled.")
 
         #
         # Select / de-select contacts and make sure Import button is enabled / disabled
@@ -79,25 +79,25 @@ class test_main(GaiaTestCase):
         self.contacts.import_toggle_select_contact(1)
 
         import_btn = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
-        self.UTILS.test.TEST(import_btn.get_attribute("disabled") != "true", "Import button is enabled.")
+        self.UTILS.test.test(import_btn.get_attribute("disabled") != "true", "Import button is enabled.")
 
         self.UTILS.reporting.logResult("info", "Enable contact 2...")
         self.contacts.import_toggle_select_contact(2)
 
         import_btn = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
-        self.UTILS.test.TEST(import_btn.get_attribute("disabled") != "true", "Import button is enabled.")
+        self.UTILS.test.test(import_btn.get_attribute("disabled") != "true", "Import button is enabled.")
 
         self.UTILS.reporting.logResult("info", "Disable contact 2...")
         self.contacts.import_toggle_select_contact(2)
 
         import_btn = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
-        self.UTILS.test.TEST(import_btn.get_attribute("disabled") != "true", "Import button is enabled.")
+        self.UTILS.test.test(import_btn.get_attribute("disabled") != "true", "Import button is enabled.")
 
         self.UTILS.reporting.logResult("info", "Disable contact 1...")
         self.contacts.import_toggle_select_contact(1)
 
         import_btn = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
-        self.UTILS.test.TEST(import_btn.get_attribute("disabled") == "true", "Import button is disabled.")
+        self.UTILS.test.test(import_btn.get_attribute("disabled") == "true", "Import button is disabled.")
 
         result = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot and details", result)

@@ -75,7 +75,7 @@ class test_main(GaiaTestCase):
         # Wait for the last message in this thread to be a 'received' one.
         #
         returnedSMS = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
-        self.UTILS.test.TEST(returnedSMS, "A received message appeared in the thread.", True)
+        self.UTILS.test.test(returnedSMS, "A received message appeared in the thread.", True)
         self.messages.check_last_message_contents(self.test_msg)
 
         #
@@ -83,7 +83,7 @@ class test_main(GaiaTestCase):
         #
         expect = self.contact["tel"]["type"]
         actual = self.messages.threadType()
-        self.UTILS.test.TEST(expect == actual, "The type is listed as: '{}' (subheader was '{}').".\
+        self.UTILS.test.test(expect == actual, "The type is listed as: '{}' (subheader was '{}').".\
                              format(expect, actual))
 
         #
@@ -91,5 +91,5 @@ class test_main(GaiaTestCase):
         #
         expect = self.contact["tel"]["value"]
         actual = self.messages.threadCarrier()
-        self.UTILS.test.TEST(expect == actual, "The telephone number is: '{}' (subheader was '{}').".\
+        self.UTILS.test.test(expect == actual, "The telephone number is: '{}' (subheader was '{}').".\
                              format(expect, actual))

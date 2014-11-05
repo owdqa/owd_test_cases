@@ -95,5 +95,5 @@ class test_main(GaiaTestCase):
         _new_msg_timestamp = self.messages.timeOfLastMessageInThread()
         self.UTILS.reporting.debug("*** new message timestamp = '{}'".format(_new_msg_timestamp))
 
-        self.UTILS.test.TEST(_orig_thread_timestamp != _new_thread_timestamp, "Thread timestamp has changed.")
-        self.UTILS.test.TEST(_orig_msg_timestamp != _new_msg_timestamp, "Message timestamp has changed.")
+        self.UTILS.test.test(_orig_thread_timestamp != _new_thread_timestamp, "Thread timestamp has changed.")
+        self.UTILS.test.test(_orig_msg_timestamp != _new_msg_timestamp, "Message timestamp has changed.")

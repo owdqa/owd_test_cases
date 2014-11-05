@@ -67,5 +67,5 @@ class test_main(GaiaTestCase):
 
         phone_field = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number field", False)
         dialer_number = phone_field.get_attribute("value")
-        self.UTILS.test.TEST(str(self.phone_number) in dialer_number,
+        self.UTILS.test.test(str(self.phone_number) in dialer_number,
                              "After cancelling, phone number field still contains '{}'".format(self.phone_number))

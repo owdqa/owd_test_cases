@@ -63,11 +63,11 @@ class test_main(GaiaTestCase):
         self.loop.share_micro_and_camera()
         self.wait_for_element_displayed(*DOM.Loop.not_a_user_explanation, timeout=10)
         not_a_user_explanation = self.marionette.find_element(*DOM.Loop.not_a_user_explanation)
-        self.UTILS.test.TEST(not_a_user_explanation.text == self.expected_message, "Message found: {} (Expected: {}".\
+        self.UTILS.test.test(not_a_user_explanation.text == self.expected_message, "Message found: {} (Expected: {}".\
                              format(not_a_user_explanation.text, self.expected_message))
 
         share_options = self.UTILS.element.getElements(DOM.Loop.share_link_options, "Sharing options")
-        self.UTILS.test.TEST(len(share_options) == 3, "There are {} sharing options (Expected: 3)".\
+        self.UTILS.test.test(len(share_options) == 3, "There are {} sharing options (Expected: 3)".\
                              format(len(share_options)))
         share_by_others = self.UTILS.element.getElement(DOM.Loop.share_panel_others_share, "Share by others")
         share_by_others.tap()
@@ -78,4 +78,4 @@ class test_main(GaiaTestCase):
         options = self.UTILS.element.getElements((DOM.Loop.share_others_options[0],
                                                   DOM.Loop.share_others_options[1].\
                                                   format(_("Share with:"))), "Options buttons")
-        self.UTILS.test.TEST(len(options) == 3, "There are {} options (Expected: 3)".format(len(options)))
+        self.UTILS.test.test(len(options) == 3, "There are {} options (Expected: 3)".format(len(options)))

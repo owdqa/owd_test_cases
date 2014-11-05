@@ -70,4 +70,4 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
         x = self.UTILS.element.getElement(("id", "email_0"), "Email field")
         x_txt = x.get_attribute("value")
-        self.UTILS.test.TEST(x_txt == self.emailAddy, "Email is '{}' (expected '{}')".format(x_txt, self.emailAddy))
+        self.UTILS.test.test(x_txt == self.emailAddy, "Email is '{}' (expected '{}')".format(x_txt, self.emailAddy))

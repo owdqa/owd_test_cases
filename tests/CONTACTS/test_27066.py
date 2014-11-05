@@ -87,10 +87,10 @@ class test_main(GaiaTestCase):
                     self.UTILS.reporting.logResult("info", "No image present for contact {} | NO image expected".format(result.text))
                     boolOK2 = True
             else:
-                self.UTILS.test.TEST(False, "This contact does not appear in the list: {}".format(result.text))
+                self.UTILS.test.test(False, "This contact does not appear in the list: {}".format(result.text))
 
-        self.UTILS.test.TEST(boolOK1, "Contact 1 has image displayed.")
-        self.UTILS.test.TEST(boolOK2, "Contact 2 has no image displayed.")
+        self.UTILS.test.test(boolOK1, "Contact 1 has image displayed.")
+        self.UTILS.test.test(boolOK2, "Contact 2 has no image displayed.")
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot of search results", x)

@@ -56,4 +56,4 @@ class test_main(GaiaTestCase):
         #
         delete_btn = self.UTILS.element.getElement(DOM.Messages.threads_delete_button, "Delete button")
         disabled = delete_btn.get_attribute("disabled")
-        self.UTILS.test.TEST(delete_btn.get_attribute("disabled") == "true", "Delete button is not enabled.")
+        self.UTILS.test.test(delete_btn.get_attribute("disabled") == "true", "Delete button is not enabled.")

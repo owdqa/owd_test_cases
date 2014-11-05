@@ -67,7 +67,7 @@ class test_main(GaiaTestCase):
         self.marionette.switch_to_frame()
         share_menu = self.UTILS.element.getElement(DOM.GLOBAL.action_menu, "Share menu")
         options = share_menu.find_elements(*self.button_locator)
-        self.UTILS.test.TEST(len(options) > 0, "A list with several options to share is shown")
+        self.UTILS.test.test(len(options) > 0, "A list with several options to share is shown")
 
         self._show_option(options)
 

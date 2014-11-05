@@ -47,5 +47,5 @@ class test_main(GaiaTestCase):
         current_thumbs = self.gallery.get_number_of_thumbnails()
         self.UTILS.reporting.logResult('info', 'current_thumbs: {}'.format(current_thumbs))
         self.UTILS.reporting.logResult('info', 'previous_thumbs: {}'.format(self.previous_thumbs))
-        self.UTILS.test.TEST(current_thumbs == self.previous_thumbs - len(positions_to_delete),
+        self.UTILS.test.test(current_thumbs == self.previous_thumbs - len(positions_to_delete),
                              "After deleting {} picture/s we have the rest".format(len(positions_to_delete)))

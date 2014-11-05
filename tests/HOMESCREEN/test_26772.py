@@ -56,12 +56,12 @@ class test_main(GaiaTestCase):
 
         # First of all, make sure an application is installed
         installed = self.eme.install_app(self.cat_id, self.app_name)
-        self.UTILS.test.TEST(installed, "The application {} was successfully installed".format(self.app_name))
+        self.UTILS.test.test(installed, "The application {} was successfully installed".format(self.app_name))
 
         # Go back and try to reinstall again
         self.UTILS.home.goHome()
         installed = self.eme.install_app(self.cat_id, self.app_name, False)
-        self.UTILS.test.TEST(not installed, "The application {} was already previously installed".\
+        self.UTILS.test.test(not installed, "The application {} was already previously installed".\
                                             format(self.app_name))
 
         self.UTILS.app.uninstallApp(self.app_name)

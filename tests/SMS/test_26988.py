@@ -58,7 +58,7 @@ class test_main(GaiaTestCase):
         # Check the phone number.
         #
         x = self.UTILS.element.getElement(("id", "number_1"), "2nd phone number.")
-        self.UTILS.test.TEST(x.get_attribute("value") == self.phone_number,
+        self.UTILS.test.test(x.get_attribute("value") == self.phone_number,
                         "Contact now has a 2nd number which is '{}' (it was '{}').".format(self.phone_number, x.get_attribute("value")))
 
         #
@@ -80,7 +80,7 @@ class test_main(GaiaTestCase):
         # Verify the header is now the name,
         #
         x = self.UTILS.element.getElement(DOM.Messages.message_header, "Message header")
-        self.UTILS.test.TEST(x.text == self.contact["name"],
+        self.UTILS.test.test(x.text == self.contact["name"],
                         "Message header has been changed to match the contact (it was '{}').".format(x.text))
 
         #

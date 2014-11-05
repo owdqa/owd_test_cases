@@ -45,7 +45,7 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
 
         browser = self.marionette.find_element('xpath', DOM.Home.app_icon_xpath.format('browser'))
-        self.UTILS.test.TEST(browser, "An icon for the browser application was found")
+        self.UTILS.test.test(browser, "An icon for the browser application was found")
 
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot:", x)

@@ -37,7 +37,7 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "Screenshot at this point", x)
 
         x = self.UTILS.element.getElement(DOM.Contacts.done_button, "Done button")
-        self.UTILS.test.TEST(not x.is_enabled(), "Done button is not enabled")
+        self.UTILS.test.test(not x.is_enabled(), "Done button is not enabled")
 
         contFields = self.contacts.get_contact_fields()
 
@@ -51,7 +51,7 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "Screenshot at this point", x)
 
         x = self.UTILS.element.getElement(DOM.Contacts.done_button, "Done button")
-        self.UTILS.test.TEST(x.is_enabled(), "Done button is not enabled")
+        self.UTILS.test.test(x.is_enabled(), "Done button is not enabled")
         x.tap()
 
         self.contacts.view_contact(self.contact["name"])

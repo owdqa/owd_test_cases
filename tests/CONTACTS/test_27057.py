@@ -89,6 +89,6 @@ class test_main(GaiaTestCase):
         contact_list = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
         contacts_after = len(contact_list)
 
-        self.UTILS.test.TEST(contacts_after == contacts_before,
+        self.UTILS.test.test(contacts_after == contacts_before,
                              "No more contacts were imported ({} before and {} after)."\
                              .format(contacts_after, contacts_before))

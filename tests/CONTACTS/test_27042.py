@@ -47,7 +47,7 @@ class test_main(GaiaTestCase):
         # Check the Import button is disabled to begin with.
         #
         x = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
-        self.UTILS.test.TEST(x.get_attribute("disabled") == "true", "Import button is disabled.")
+        self.UTILS.test.test(x.get_attribute("disabled") == "true", "Import button is disabled.")
 
         #
         # Tap the Select All button (can't be done with marionette yet).
@@ -61,7 +61,7 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "Screenshot and details", x)
 
         x = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
-        self.UTILS.test.TEST(x.get_attribute("disabled") != "true", "Import button is enabled.")
+        self.UTILS.test.test(x.get_attribute("disabled") != "true", "Import button is enabled.")
 
         self.UTILS.reporting.logResult("info", "Tapping the 'Deselect All' button ...")
         self.marionette.execute_script("document.getElementById('{}').click()".\
@@ -72,14 +72,14 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "Screenshot and details", x)
 
         x = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
-        self.UTILS.test.TEST(x.get_attribute("disabled") == "true", "Import button is disabled.")
+        self.UTILS.test.test(x.get_attribute("disabled") == "true", "Import button is disabled.")
 
         #
         # Now select one contact and press Deselect all...
         #
         self.contacts.import_toggle_select_contact(1)
         x = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
-        self.UTILS.test.TEST(x.get_attribute("disabled") != "true", "Import button is enabled.")
+        self.UTILS.test.test(x.get_attribute("disabled") != "true", "Import button is enabled.")
 
         self.UTILS.reporting.logResult("info", "Tapping the 'Deselect All' button ...")
         self.marionette.execute_script("document.getElementById('{}').click()".\
@@ -90,4 +90,4 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "Screenshot and details", x)
 
         x = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
-        self.UTILS.test.TEST(x.get_attribute("disabled") == "true", "Import button is disabled.")
+        self.UTILS.test.test(x.get_attribute("disabled") == "true", "Import button is disabled.")

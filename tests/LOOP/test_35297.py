@@ -72,22 +72,22 @@ class test_main(GaiaTestCase):
         self.loop.share_micro_and_camera()
         self.wait_for_element_displayed(*DOM.Loop.not_a_user_explanation, timeout=10)
         not_a_user_explanation = self.marionette.find_element(*DOM.Loop.not_a_user_explanation)
-        self.UTILS.test.TEST(not_a_user_explanation.text == self.expected_message, "Message found: {} (Expected: {}".\
+        self.UTILS.test.test(not_a_user_explanation.text == self.expected_message, "Message found: {} (Expected: {}".\
                              format(not_a_user_explanation.text, self.expected_message))
 
         share_options = self.UTILS.element.getElements(DOM.Loop.share_link_options, "Sharing options")
-        self.UTILS.test.TEST(len(share_options) == 3, "There are {} sharing options (Expected: 3)".\
+        self.UTILS.test.test(len(share_options) == 3, "There are {} sharing options (Expected: 3)".\
                              format(len(share_options)))
         share_by_email = self.UTILS.element.getElement(DOM.Loop.share_panel_email_share, "Share by email")
         share_by_email.tap()
         self.UTILS.iframe.switch_to_frame(*DOM.Email.frame_locator)
         to_address = self.UTILS.element.getElement(DOM.Email.compose_to_from_contacts, "Recipient Address")
-        self.UTILS.test.TEST(to_address.text == self.contact['email']['value'], "Recipient address: {} Expected: {}".\
+        self.UTILS.test.test(to_address.text == self.contact['email']['value'], "Recipient address: {} Expected: {}".\
                              format(to_address.text, self.contact['email']['value']))
         subject = self.UTILS.element.getElement(DOM.Email.compose_subject, "Email subject")
-        self.UTILS.test.TEST(subject.get_attribute("value") == "Firefox Hello", "Email subject: {} Expected:"\
+        self.UTILS.test.test(subject.get_attribute("value") == "Firefox Hello", "Email subject: {} Expected:"\
                              " Firefox Hello".format(subject.get_attribute("value")))
         compose_msg = self.UTILS.element.getElement(DOM.Email.compose_msg, "Message body")
         expected_body = _("Click on the link and answer the call! https://hello.firefox.com/#call")
-        self.UTILS.test.TEST(expected_body in compose_msg.text, "Message body: {} Expected: {}".\
+        self.UTILS.test.test(expected_body in compose_msg.text, "Message body: {} Expected: {}".\
                              format(compose_msg.text, expected_body))

@@ -64,7 +64,7 @@ class test_main(GaiaTestCase):
         # Dialer is started with the number already filled in.
         #
         current = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number").get_attribute("value")
-        self.UTILS.test.TEST(self.phone_number == current,
+        self.UTILS.test.test(self.phone_number == current,
                         "The phone number contains '{}' (expected '{}').".format(current, self.phone_number))
 
         #

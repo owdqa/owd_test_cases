@@ -48,4 +48,4 @@ class test_main(GaiaTestCase):
         self.camera.go_to_gallery()
 
         after_pics = len(self.UTILS.element.getElements(DOM.Gallery.thumbnail_items, "Gallery thumbnails"))
-        self.UTILS.test.TEST(after_pics == before_pics + 1, "After photo taken, we have {} thunbnails".format(after_pics))
+        self.UTILS.test.test(after_pics == before_pics + 1, "After photo taken, we have {} thunbnails".format(after_pics))

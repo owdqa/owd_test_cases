@@ -80,7 +80,7 @@ class test_main(GaiaTestCase):
         # Check convert notice appears
         #
         convert_notice = self.marionette.find_element(*DOM.Messages.message_convert_notice)
-        self.UTILS.test.TEST(convert_notice.text, "Converting to multimedia message.", True)
+        self.UTILS.test.test(convert_notice.text, "Converting to multimedia message.", True)
 
         #
         # Delete subject
@@ -91,4 +91,4 @@ class test_main(GaiaTestCase):
         # Check convert notice appears
         #
         convert_notice = self.marionette.find_element(*DOM.Messages.message_convert_notice)
-        self.UTILS.test.TEST(convert_notice.text, "Converting to text message.", True)
+        self.UTILS.test.test(convert_notice.text, "Converting to text message.", True)

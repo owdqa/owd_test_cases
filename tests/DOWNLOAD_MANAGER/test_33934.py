@@ -62,5 +62,5 @@ class test_main(GaiaTestCase):
         value = self.UTILS.element.get_css_value(entry_name, "text-overflow")
         is_ellipsis = self.UTILS.element.is_ellipsis_active(entry_name)
 
-        self.UTILS.test.TEST(value == "ellipsis" and is_ellipsis,
+        self.UTILS.test.test(value == "ellipsis" and is_ellipsis,
                              "Download list shows ellipsis(...) for a long entry [{}]".format(self.file_name))

@@ -92,5 +92,5 @@ class test_main(GaiaTestCase):
         #
         # Go back to the home page and check the app is installed.
         #
-        self.UTILS.test.TEST(self.UTILS.app.launchAppViaHomescreen(self._appName),
+        self.UTILS.test.test(self.UTILS.app.launchAppViaHomescreen(self._appName),
                         "Application '" + self._appName + "' can be launched from the homescreen.", True)

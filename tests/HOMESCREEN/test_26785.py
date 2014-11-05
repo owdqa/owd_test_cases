@@ -60,7 +60,7 @@ class test_main(GaiaTestCase):
         time.sleep(5)
         self.UTILS.iframe.switchToFrame("src", pacman_url)
         content = self.UTILS.element.getElement(DOM.EME.game_content, "Game contents")
-        self.UTILS.test.TEST(content, "Game content found")
+        self.UTILS.test.test(content, "Game content found")
 
         self.marionette.switch_to_frame()
         self.UTILS.element.waitForElements(DOM.EME.footer_navigation_bar, "Footer navigation bar", timeout=30)
@@ -86,7 +86,7 @@ class test_main(GaiaTestCase):
         close_btn.tap()
 
         icon = self.UTILS.app.findAppIcon(self.app_name)
-        self.UTILS.test.TEST(icon, "Icon for application {} was found".format(self.app_name))
+        self.UTILS.test.test(icon, "Icon for application {} was found".format(self.app_name))
 
         time.sleep(3)
         self.UTILS.app.uninstallApp(self.app_name)

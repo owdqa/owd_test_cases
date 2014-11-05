@@ -70,5 +70,5 @@ class main(GaiaTestCase):
             self.marionette.switch_to_frame()
             title = self.UTILS.element.getElement(DOM.GLOBAL.modal_dialog_alert_title, "Error title")
             msg = self.UTILS.element.getElement(DOM.GLOBAL.modal_dialog_alert_msg, "Error message")
-            self.UTILS.test.TEST(title.text == "Firefox Hello", "Error title matches")
-            self.UTILS.test.TEST(msg.text == self.expected_msg, "Error message matches")
+            self.UTILS.test.test(title.text == "Firefox Hello", "Error title matches")
+            self.UTILS.test.test(msg.text == self.expected_msg, "Error message matches")

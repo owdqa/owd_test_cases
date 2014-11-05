@@ -74,7 +74,7 @@ class test_main(GaiaTestCase):
         now_ampm = time.strftime("%r")[-2:]
         now_time = now_hhmm + now_ampm
 
-        self.UTILS.test.TEST(now_time == device_time,
+        self.UTILS.test.test(now_time == device_time,
                         "Digital display time is correct (now = '" + now_time + "', display = '" + device_time + "').",
                         False)
 

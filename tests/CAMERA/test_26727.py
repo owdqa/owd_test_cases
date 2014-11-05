@@ -44,5 +44,5 @@ class test_main(GaiaTestCase):
         time.sleep(2)
         current_thumbs = self.gallery.get_number_of_thumbnails()
 
-        self.UTILS.test.TEST(current_thumbs == self.previous_thumbs,
+        self.UTILS.test.test(current_thumbs == self.previous_thumbs,
                              "After taking a picture and delete it, we remain the same")

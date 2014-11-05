@@ -44,4 +44,4 @@ class main(GaiaTestCase):
         login_info_elem = self.UTILS.element.getElement(DOM.Loop.settings_logged_as, "Login info")
         login_info = login_info_elem.text.split("\n")[-1]
         self.UTILS.reporting.logResult('info', "Login info: {}".format(login_info))
-        self.UTILS.test.TEST(login_info == self.phone_number, "Login info matches [MSISDN]")
+        self.UTILS.test.test(login_info == self.phone_number, "Login info matches [MSISDN]")

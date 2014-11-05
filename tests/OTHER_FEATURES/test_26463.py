@@ -27,7 +27,7 @@ class test_main(GaiaTestCase):
         self.data_layer.set_setting('ril.radio.disabled', False)
         self.wait_for_condition(lambda m: not self.data_layer.get_setting(
             'ril.radio.disabled'), timeout=20, message="Device attached to a mobile network")
-        self.UTILS.test.TEST(not self.data_layer.get_setting('ril.radio.disabled'), "Radio comms is again enabled.")
+        self.UTILS.test.test(not self.data_layer.get_setting('ril.radio.disabled'), "Radio comms is again enabled.")
 
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
@@ -53,7 +53,7 @@ class test_main(GaiaTestCase):
         self.UTILS.element.waitForElements(DOM.Statusbar.dataConn, "Data conn icon in statusbar", True, 5, False)
 
         self.UTILS.statusbar.toggleViaStatusBar("airplane")
-        self.UTILS.test.TEST(self.data_layer.get_setting('ril.radio.disabled'), "Radio comms is now disabled.")
+        self.UTILS.test.test(self.data_layer.get_setting('ril.radio.disabled'), "Radio comms is now disabled.")
 
         # Visual checking
         self.marionette.switch_to_frame()
