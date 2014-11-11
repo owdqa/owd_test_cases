@@ -68,5 +68,5 @@ class test_main(GaiaTestCase):
         # Make sure the number is automatically in the contact details.
         #
         x = self.UTILS.element.getElement(("id", "number_0"), "Mobile number field")
-        self.UTILS.test.TEST(x.get_attribute("value") == self.test_num,
+        self.UTILS.test.test(x.get_attribute("value") == self.test_num,
                         "The correct number is automatically entered in the new contact's number field.")

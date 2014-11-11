@@ -25,7 +25,7 @@ class test_main(GaiaTestCase):
         self.data_layer.bluetooth_disable()
 
         self.UTILS.element.waitForNotElements(DOM.Statusbar.bluetooth, "Bluetooth icon in statusbar")
-        self.UTILS.test.TEST(self.UTILS.network.is_network_type_enabled("bluetooth") == False,
+        self.UTILS.test.test(self.UTILS.network.is_network_type_enabled("bluetooth") == False,
                          "Bluetooth is disabled before we start this test.")
 
         #

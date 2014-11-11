@@ -16,7 +16,9 @@ from OWDTestToolkit.apps.settings import Settings
 
 class test_main(GaiaTestCase):
 
-    _RESTART_DEVICE = True
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
         # Set up child objects...
@@ -40,5 +42,5 @@ class test_main(GaiaTestCase):
         self.settings.hotSpot()
 
         x = self.UTILS.element.getElement(DOM.Settings.hotspot_settings, "Hotspot settings")
-        self.UTILS.test.TEST(x.get_attribute("disabled") != "disabled",
+        self.UTILS.test.test(x.get_attribute("disabled") != "disabled",
                         "Hotspot settings are enabled by default (<b>meaning that 'hotspot' is off</b>).")

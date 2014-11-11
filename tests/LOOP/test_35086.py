@@ -29,7 +29,7 @@ class main(GaiaTestCase):
         self.test_contacts[0]["name"] = "{} {}".format(
             self.test_contacts[0]["givenName"], self.test_contacts[0]["familyName"])
         map(self.UTILS.general.insertContact, self.test_contacts)
-        
+    
         self.contacts.launch()
         self._add_contact_as_favorite(self.test_contacts[0])
 

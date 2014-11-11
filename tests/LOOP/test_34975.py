@@ -50,7 +50,7 @@ class main(GaiaTestCase):
         # The user is not logged in, so no ID is available. The screen to authenticate
         # is shown instead
         phone_btn = self.marionette.find_element(*DOM.Loop.wizard_login_phone_number)
-        self.UTILS.test.TEST(phone_btn, "Use phone number login button is present")
+        self.UTILS.test.test(phone_btn, "Use phone number login button is present")
 
     def logout_fxa(self):
         self.settings.launch()

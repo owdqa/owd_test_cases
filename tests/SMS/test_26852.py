@@ -78,6 +78,6 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElements(DOM.Messages.message_list, "Messages")
         final_count = len(x)
         real_count = original_count - 1
-        self.UTILS.test.TEST(final_count == (original_count - 1),
+        self.UTILS.test.test(final_count == (original_count - 1),
                         "After deleting the message, there were {} messages in this thread ({}) found).".\
                         format(real_count, final_count))

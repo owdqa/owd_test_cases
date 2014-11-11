@@ -29,7 +29,9 @@ from OWDTestToolkit.utils.contacts import MockContact
 
 class test_main(GaiaTestCase):
 
-    _RESTART_DEVICE = True
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
         #
@@ -91,7 +93,7 @@ class test_main(GaiaTestCase):
         hotmail_imported = (DOM.Contacts.view_all_contact_specific_contact[0],
                                 DOM.Contacts.view_all_contact_specific_contact[1].format("roy"))
         contacts = self.UTILS.element.getElements(hotmail_imported, "Gmail imported contacts")
-        self.UTILS.test.TEST(len(contacts) == self.number_of_hotmail_contacts, "All gmail contacts has been imported")
+        self.UTILS.test.test(len(contacts) == self.number_of_hotmail_contacts, "All gmail contacts has been imported")
 
         result = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot and details", result)

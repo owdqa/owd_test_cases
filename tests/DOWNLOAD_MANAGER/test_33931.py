@@ -40,5 +40,5 @@ class test_main(GaiaTestCase):
         # Verify no downloads are present
         no_downloads = self.UTILS.element.getElement(
             DOM.DownloadManager.download_empty_list_content, "Getting empty list content")
-        self.UTILS.test.TEST(no_downloads.text == _("No downloads"),
+        self.UTILS.test.test(no_downloads.text == _("No downloads"),
                              "Verifying '{}' message is displayed".format(_("No downloads")))

@@ -34,7 +34,7 @@ class test_main(GaiaTestCase):
     def test_run(self):
 
         self.connect_to_network()
-    
+
         #
         # Launch messages app.
         #
@@ -49,8 +49,8 @@ class test_main(GaiaTestCase):
         # Wait for the last message in this thread to be a 'received' one
         # and click the link.
         #
-        x = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(x, "Received a message.", True)
+        x = self.messages.wait_for_received_msg_in_this_thread()
+        self.UTILS.test.test(x, "Received a message.", True)
 
         #
         # Long-press the link.
@@ -61,7 +61,7 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(DOM.Messages.header_add_to_contact_btn,
                                     "'Add to an existing contact' button")
         x.tap()
-    
+
         #
         # Check for warning message.
         #

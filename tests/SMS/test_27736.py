@@ -34,7 +34,7 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.messages.launch()
-        
+    
         sms_msg = "Just creating a message thread."
         self.UTILS.messages.create_incoming_sms(self.phone_number, sms_msg)
         self.UTILS.statusbar.wait_for_notification_toaster_detail(sms_msg, timeout=120)
@@ -56,4 +56,4 @@ class test_main(GaiaTestCase):
         #
         delete_btn = self.UTILS.element.getElement(DOM.Messages.threads_delete_button, "Delete button")
         disabled = delete_btn.get_attribute("disabled")
-        self.UTILS.test.TEST(delete_btn.get_attribute("disabled") == "true", "Delete button is not enabled.")
+        self.UTILS.test.test(delete_btn.get_attribute("disabled") == "true", "Delete button is not enabled.")

@@ -41,7 +41,7 @@ class test_main(GaiaTestCase):
             DOM.Contacts.frame_locator[0], DOM.Contacts.frame_locator[1]))
         frame_messages = (DOM.GLOBAL.frame_containing[0], DOM.GLOBAL.frame_containing[1].format(
             DOM.Messages.frame_locator[0], DOM.Messages.frame_locator[1]))
-        
+    
         self.UTILS.element.waitForNotElements(frame_contacts, "Contacts iframe", True, 1)
         self.UTILS.element.waitForNotElements(frame_messages, "Messages iframe", True, 1)
 

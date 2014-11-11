@@ -55,8 +55,8 @@ class test_main(GaiaTestCase):
         # Wait for the last message in this thread to be a 'received' one
         # and click the link.
         #
-        x = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(x, "Received a message.", True)
+        x = self.messages.wait_for_received_msg_in_this_thread()
+        self.UTILS.test.test(x, "Received a message.", True)
 
         a = x.find_element("tag name", "a")
 

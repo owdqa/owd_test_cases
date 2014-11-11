@@ -66,7 +66,7 @@ class test_main(GaiaTestCase):
         for (pos, msg) in enumerate(msg_list):
             # Do the check of each message.
             #
-            self.UTILS.test.TEST(msg.find_element("css selector", "p span").text == "Test {}".format(pos),
+            self.UTILS.test.test(msg.find_element("css selector", "p span").text == "Test {}".format(pos),
                         "The message at position {} contains the string 'Test {}'.".format(pos, pos))
-            self.UTILS.test.TEST("outgoing" in msg.get_attribute("class"),
+            self.UTILS.test.test("outgoing" in msg.get_attribute("class"),
                         "The message at position {} is  outgoing.".format(pos))

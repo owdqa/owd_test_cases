@@ -30,7 +30,9 @@ from OWDTestToolkit.utils.contacts import MockContact
 
 class test_main(GaiaTestCase):
 
-    _RESTART_DEVICE = True
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
         #
@@ -68,7 +70,7 @@ class test_main(GaiaTestCase):
         # Login unsuccessful or no available contacts to import
         #
         if not login_result:
-            self.UTILS.test.TEST(False, "Login unsuccessful")
+            self.UTILS.test.test(False, "Login unsuccessful")
 
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, via_root_frame=False)
         contact_list = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list")
@@ -77,5 +79,5 @@ class test_main(GaiaTestCase):
         num_contacts = self.UTILS.element.getElement(DOM.Contacts.import_num_of_conts, "Number of contacts")
         self.UTILS.reporting.logResult("info", "Detected message '{}'.".format(num_contacts.text))
 
-        self.UTILS.test.TEST(str(cont_count) in num_contacts.text, "'{}' contains the real count, which is {}.".\
+        self.UTILS.test.test(str(cont_count) in num_contacts.text, "'{}' contains the real count, which is {}.".\
                         format(num_contacts.text, cont_count))

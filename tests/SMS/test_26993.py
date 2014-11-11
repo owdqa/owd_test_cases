@@ -69,7 +69,7 @@ class test_main(GaiaTestCase):
         self.messages.enterSMSMsg("Test message.")
         self.messages.sendSMS()
 
-        x = self.messages.waitForReceivedMsgInThisThread()
+        x = self.messages.wait_for_received_msg_in_this_thread()
 
         #
         # Tap the header to call.
@@ -80,5 +80,5 @@ class test_main(GaiaTestCase):
         # Dialler is started with the number already filled in.
         #
         x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number")
-        self.UTILS.test.TEST(self.num2 in x.get_attribute("value"),
+        self.UTILS.test.test(self.num2 in x.get_attribute("value"),
                         "The phone number contains '{}' (it was '{}').".format(self.num1, x.get_attribute("value")))

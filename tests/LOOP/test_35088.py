@@ -29,7 +29,7 @@ class main(GaiaTestCase):
 
         self.UTILS.general.insertContact(self.test_contact)
 
-        self.connect_to_network()        
+        self.connect_to_network()    
         self.loop.initial_test_checks()
         self.settings.launch()
         self.settings.fxa()

@@ -8,7 +8,7 @@
 #       3. Open settings contact list
 #       4. Press the toggle to delete all facebook contacts
 #       5. Press Remove
-#       
+#   
 # ** Expected Results
 # FB contacts are deleted. If a contact was linked to one of Facebook. 
 # The contact is displayed as if you had unlinked

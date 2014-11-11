@@ -48,7 +48,7 @@ class test_main(GaiaTestCase):
         self.messages.launch()
 
         self.messages.createAndSendSMS([self.contact["tel"]["value"]], "Test message")
-        self.messages.waitForReceivedMsgInThisThread()
+        self.messages.wait_for_received_msg_in_this_thread()
 
         x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
@@ -95,6 +95,6 @@ class test_main(GaiaTestCase):
         msg_count = self.UTILS.element.getElements(DOM.Messages.message_list, "Thread messages", False, 5, False)
 
         if msg_count:
-            self.UTILS.test.TEST(len(msg_count) > 1, "There are <i>some</i> messages in this thread already.")
+            self.UTILS.test.test(len(msg_count) > 1, "There are <i>some</i> messages in this thread already.")
         else:
             self.UTILS.reporting.logResult(False, "There are <i>some</i> messages in this thread already.")

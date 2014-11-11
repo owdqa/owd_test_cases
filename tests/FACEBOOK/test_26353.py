@@ -20,7 +20,7 @@ class test_main(GaiaTestCase):
 
         self.fb_user = self.UTILS.general.get_os_variable("T19392_FB_USERNAME")
         self.fb_pass = self.UTILS.general.get_os_variable("T19392_FB_PASSWORD")
-        
+    
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
         self.connect_to_network()
@@ -47,7 +47,7 @@ class test_main(GaiaTestCase):
         fb_contacts = self.UTILS.element.getElements(DOM.Contacts.social_network_contacts,
                                                      "Social network contact list", True, 20, False)
 
-        self.UTILS.test.TEST(
+        self.UTILS.test.test(
             len(fb_contacts) == friend_count, "Checking all contacts ({}) have been imported".format(friend_count))
 
         time.sleep(2)
@@ -55,5 +55,5 @@ class test_main(GaiaTestCase):
 
         total_fb = self.UTILS.element.getElement(DOM.Facebook.totals, "Facebook totals")
         shown_msg = str(friend_count) + "/" + str(friend_count) + " friends imported"
-        self.UTILS.test.TEST(
+        self.UTILS.test.test(
             total_fb.text == shown_msg, "Check that the message actually matches the number of contacts imported")

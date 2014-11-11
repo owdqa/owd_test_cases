@@ -33,7 +33,7 @@ class test_main(GaiaTestCase):
         #
         self.dialer.launch()
         self.dialer.callLog_clearAll()
-        
+    
         self.dialer.createMultipleCallLogEntries(self.phone_number, 2)
 
     def tearDown(self):

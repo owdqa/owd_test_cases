@@ -17,7 +17,9 @@ from OWDTestToolkit.apps.settings import Settings
 
 class test_main(GaiaTestCase):
 
-    _RESTART_DEVICE = True
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
         #
@@ -40,4 +42,4 @@ class test_main(GaiaTestCase):
 
         self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
 
-        self.UTILS.test.TEST(self.UTILS.network.is_network_type_enabled("wifi") == True, "Wifi mode is now enabled.")
+        self.UTILS.test.test(self.UTILS.network.is_network_type_enabled("wifi") == True, "Wifi mode is now enabled.")

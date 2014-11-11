@@ -70,7 +70,7 @@ class test_main(GaiaTestCase):
         # Check the phone number.
         #
         num = self.UTILS.element.getElement(("id", "number_1"), "2nd phone number.")
-        self.UTILS.test.TEST(num.get_attribute("value") == "111111111",
+        self.UTILS.test.test(num.get_attribute("value") == "111111111",
                         "Contact now has a 2nd number which is '111111111' (it was '{}').".\
                         format(num.get_attribute("value")))
 

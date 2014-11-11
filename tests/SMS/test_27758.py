@@ -34,7 +34,7 @@ class test_main(GaiaTestCase):
         # avoids some blocking bugs just now). 
         #
         self.messages.createAndSendSMS([self.telNum], "Test message.")
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
+        returnedSMS = self.messages.wait_for_received_msg_in_this_thread()
 
         #
         # Leave this thread.

@@ -30,7 +30,7 @@ class test_main(GaiaTestCase):
         #
         test_str = "Four 1234 seven 1234567 eight 12345678 nine 123456789 numbers."
         self.messages.createAndSendSMS([self.phone_number], test_str)
-        x = self.messages.waitForReceivedMsgInThisThread()
+        x = self.messages.wait_for_received_msg_in_this_thread()
 
         #
         # Check how many are links.
@@ -51,9 +51,9 @@ class test_main(GaiaTestCase):
                 bool8OK = True
             if i.text == "123456789":
                 bool9OK = True
-    
-        self.UTILS.test.TEST(bool7OK, "The 8-digit number is highlighted.")
-        self.UTILS.test.TEST(bool8OK, "The 8-digit number is highlighted.")
-        self.UTILS.test.TEST(bool9OK, "The 9-digit number is highlighted.")
+
+        self.UTILS.test.test(bool7OK, "The 8-digit number is highlighted.")
+        self.UTILS.test.test(bool8OK, "The 8-digit number is highlighted.")
+        self.UTILS.test.test(bool9OK, "The 9-digit number is highlighted.")
 
         

@@ -56,6 +56,6 @@ class test_main(GaiaTestCase):
         incoming_num = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.incoming_sms_num,
                                                 frame_to_change=DOM.Messages.frame_locator, timeout=5)
 
-        tot = self.messages.timeOfThread(incoming_num)
-        self.UTILS.test.TEST(tot.index(expected_time) != -1 and tot.index(expected_ampm) != -1,
+        tot = self.messages.time_of_thread(incoming_num)
+        self.UTILS.test.test(tot.index(expected_time) != -1 and tot.index(expected_ampm) != -1,
                              "Expected: {}({}) Actual: {}".format(expected_time, expected_ampm, tot))

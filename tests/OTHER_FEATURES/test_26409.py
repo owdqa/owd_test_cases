@@ -10,7 +10,7 @@ class test_main(GaiaTestCase):
         #
         GaiaTestCase.setUp(self)
         self.UTILS     = UTILS(self)
-    
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)

@@ -55,7 +55,7 @@ class test_main(GaiaTestCase):
             self.UTILS.iframe.switchToFrame(*DOM.EME.frame_locator)
             items = self.UTILS.element.getElements(DOM.EME.apps_not_installed, "Getting available applications")
             group_name = self.UTILS.element.getElement(DOM.EME.bookmark_group_name, "Bookmark group name")
-            self.UTILS.test.TEST(items, "There are {} applications available for group {}".\
+            self.UTILS.test.test(items, "There are {} applications available for group {}".\
                                         format(len(items), group_name.text))
             btn = self.UTILS.element.getElement(DOM.EME.bookmark_close, "Bookmarks Close button")
             btn.tap()

@@ -55,6 +55,6 @@ class test_main(GaiaTestCase):
         self.UTILS.element.getElements(DOM.Dialer.outgoing_call_locator, "Outgoing Call in progress")
 
         outgoing_number = self.UTILS.element.getElement(DOM.Dialer.outgoing_call_number, "Outgoing number being called")
-        self.UTILS.test.TEST(outgoing_number.text == self.contact["givenName"] + " " + self.contact["familyName"], 
+        self.UTILS.test.test(outgoing_number.text == self.contact["givenName"] + " " + self.contact["familyName"], 
                                         "Outgoing contact being called matches the stored in the address book")
 

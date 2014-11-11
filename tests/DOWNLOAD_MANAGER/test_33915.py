@@ -43,7 +43,7 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.UTILS.statusbar.clearAllStatusBarNotifs()
-        
+    
         self.browser.launch()
         self.browser.open_url(self.test_url)
         self.download_manager.download_file(self.file_name)
@@ -63,8 +63,8 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.iframe.switchToFrame(*DOM.Gallery.frame_locator)
         title = self.UTILS.element.getElement(DOM.Gallery.file_name_header, "File name header")
-        self.UTILS.test.TEST(title.text == self.file_name, "File name matches in Gallery")
+        self.UTILS.test.test(title.text == self.file_name, "File name matches in Gallery")
 
         is_loaded = self.UTILS.element.waitForElements(DOM.Gallery.current_image_pic,
                                                        "Waiting for image to be loaded")
-        self.UTILS.test.TEST(is_loaded, "Image has been loaded")
+        self.UTILS.test.test(is_loaded, "Image has been loaded")

@@ -46,22 +46,22 @@ class test_main(GaiaTestCase):
 
         self.UTILS.reporting.logResult("info", "<b>Checking when sorted by given name (first name) ...</b>")
         x = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
-        self.UTILS.test.TEST(x[0].text == self.contact_list[0]["name"], "'{}' is the first contact listed.".\
+        self.UTILS.test.test(x[0].text == self.contact_list[0]["name"], "'{}' is the first contact listed.".\
                         format(self.contact_list[0]["name"]))
-        self.UTILS.test.TEST(x[1].text == self.contact_list[1]["name"], "'{}' is the second contact listed.".\
+        self.UTILS.test.test(x[1].text == self.contact_list[1]["name"], "'{}' is the second contact listed.".\
                         format(self.contact_list[1]["name"]))
-        self.UTILS.test.TEST(x[2].text == self.contact_list[2]["name"], "'{}' is the thrid contact listed.".\
+        self.UTILS.test.test(x[2].text == self.contact_list[2]["name"], "'{}' is the thrid contact listed.".\
                         format(self.contact_list[2]["name"]))
 
         self.toggle_search_order()
 
         self.UTILS.reporting.logResult("info", "<b>Checking when sorted by family name (last name) ...</b>")
         x = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
-        self.UTILS.test.TEST(x[0].text == self.contact_list[2]["name"], "'{}' is the first contact listed.".\
+        self.UTILS.test.test(x[0].text == self.contact_list[2]["name"], "'{}' is the first contact listed.".\
                         format(self.contact_list[2]["name"]))
-        self.UTILS.test.TEST(x[1].text == self.contact_list[1]["name"], "'{}' is the second contact listed.".\
+        self.UTILS.test.test(x[1].text == self.contact_list[1]["name"], "'{}' is the second contact listed.".\
                         format(self.contact_list[1]["name"]))
-        self.UTILS.test.TEST(x[2].text == self.contact_list[0]["name"], "'{}' is the third contact listed.".\
+        self.UTILS.test.test(x[2].text == self.contact_list[0]["name"], "'{}' is the third contact listed.".\
                         format(self.contact_list[0]["name"]))
 
     def toggle_search_order(self):

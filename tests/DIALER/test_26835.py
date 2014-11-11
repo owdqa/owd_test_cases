@@ -63,7 +63,7 @@ class test_main(GaiaTestCase):
 
         self.UTILS.element.getElement(warning_header, "Airplane mode warning [header]")
         self.UTILS.element.getElement(warning_content, "Airplane mode warning [content]")
-        
+    
         ok_btn = self.UTILS.element.getElement(DOM.GLOBAL.confirmation_msg_ok_btn, "OK button")
         ok_btn.tap()
 

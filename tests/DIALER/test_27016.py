@@ -56,7 +56,7 @@ class test_main(GaiaTestCase):
         #
         self.apps.kill_all()
         time.sleep(2)
-        
+    
         self.contacts.launch()
         self.contacts.view_contact(self.test_contact["name"])
 

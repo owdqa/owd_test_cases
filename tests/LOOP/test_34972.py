@@ -35,4 +35,4 @@ class main(GaiaTestCase):
         # The user is not logged in, so no ID is available. The screen to authenticate
         # is shown instead
         ffox_btn = self.marionette.find_element(*DOM.Loop.wizard_login_ffox_account)
-        self.UTILS.test.TEST(ffox_btn, "Use Firefox Accounts login button is present")
+        self.UTILS.test.test(ffox_btn, "Use Firefox Accounts login button is present")

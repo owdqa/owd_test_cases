@@ -70,5 +70,5 @@ class main(GaiaTestCase):
         self.loop.settings_go_back()
 
         current = self.loop.get_number_of_all_urls()
-        self.UTILS.test.TEST(
+        self.UTILS.test.test(
             previous == current, "Check that after cancelling the deletion, we have the same number of urls")

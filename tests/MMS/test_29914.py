@@ -108,7 +108,7 @@ class test_main(GaiaTestCase):
         typ = img_type.get_attribute("data-attachment-type")
 
         if typ != "img":
-            self.UTILS.test.quitTest("Incorrect file type. The file must be img ")
+            self.UTILS.test.quit_test("Incorrect file type. The file must be img ")
 
         self.messages.closeThread()
 
@@ -118,4 +118,4 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "Check how many threads are there")
         original_count = self.messages.countNumberOfThreads()
         self.UTILS.reporting.logResult("info", "Number of threads {} in list.".format(original_count))
-        self.UTILS.test.TEST(original_count == 2, "Check how many threads are there")
+        self.UTILS.test.test(original_count == 2, "Check how many threads are there")

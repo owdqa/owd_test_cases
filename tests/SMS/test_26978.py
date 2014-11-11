@@ -31,7 +31,9 @@ import time
 
 class test_main(GaiaTestCase):
 
-    _RESTART_DEVICE = True
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
         #
@@ -96,7 +98,7 @@ class test_main(GaiaTestCase):
         # Verify the email address is in the To field.
         #
         x = self.UTILS.element.getElement(DOM.Email.compose_to_from_contacts, "To field")
-        self.UTILS.test.TEST(x.text == self.dest_email,
+        self.UTILS.test.test(x.text == self.dest_email,
                              "To field contains '{0}' (it was '{0}').".format(self.dest_email))
 
         #

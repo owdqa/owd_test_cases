@@ -51,7 +51,7 @@ class test_main(GaiaTestCase):
         phone_field = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number field", False)
         dialer_num = phone_field.get_attribute("value")
 
-        self.UTILS.test.TEST(self.test_contact["tel"]["value"] in dialer_num,
+        self.UTILS.test.test(self.test_contact["tel"]["value"] in dialer_num,
                              "After calling '{}', and tapping call button, phone number field contains '{}'.".
                              format(self.test_contact["tel"]["value"], dialer_num))
 

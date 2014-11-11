@@ -22,7 +22,9 @@ from OWDTestToolkit.apps.email import Email
 
 class test_main(GaiaTestCase):
 
-    _RESTART_DEVICE = True
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
         #
@@ -88,5 +90,5 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.iframe.switchToFrame(*DOM.Email.frame_locator)
         x = self.UTILS.element.getElement(DOM.Email.compose_to_from_contacts, "To field")
-        self.UTILS.test.TEST(x.text == self.emailAddy,
+        self.UTILS.test.test(x.text == self.emailAddy,
                              "To field contains '{}' (it was '{}').".format(self.emailAddy, self.emailAddy))

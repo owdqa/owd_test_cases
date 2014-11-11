@@ -69,7 +69,7 @@ class test_main(GaiaTestCase):
         #
         # Check the statusbar icon exists.
         #
-        self.UTILS.test.TEST(self.clock.checkStatusbarIcon(), "Alarm icon is present in statusbar.")
+        self.UTILS.test.test(self.clock.checkStatusbarIcon(), "Alarm icon is present in statusbar.")
 
         #
         # Wait for the alarm to start.

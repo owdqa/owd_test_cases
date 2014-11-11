@@ -27,7 +27,9 @@ import time
 
 class test_main(GaiaTestCase):
 
-    _RESTART_DEVICE = True
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
         #
@@ -83,5 +85,5 @@ class test_main(GaiaTestCase):
         self.email.setupAccountFirstStep(self.email_user, self.email_address, self.email_pass)
 
         error = self.UTILS.element.getElement(DOM.Email.new_account_error_msg, "Error message")
-        self.UTILS.test.TEST(error.text == "This device is currently offline. Connect to a network and try again.",
+        self.UTILS.test.test(error.text == "This device is currently offline. Connect to a network and try again.",
             "Verifying error message")

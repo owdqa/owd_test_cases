@@ -45,7 +45,7 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.UTILS.statusbar.clearAllStatusBarNotifs()
-        
+    
         self.browser.launch()
         self.browser.open_url(self.test_url)
         self.download_manager.download_file(self.file_name)
@@ -63,4 +63,4 @@ class test_main(GaiaTestCase):
         # Verifying video player
         self.UTILS.iframe.switchToFrame(*DOM.Video.frame_locator)
         result = self.video.is_this_video_being_played(self.file_name)
-        self.UTILS.test.TEST(result, "This video [{}] is actually being played".format(self.file_name))
+        self.UTILS.test.test(result, "This video [{}] is actually being played".format(self.file_name))

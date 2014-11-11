@@ -40,11 +40,11 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-     
+ 
         self.browser.launch()
         self.browser.open_url(self.test_url)
 
-       
+   
         self.download_manager.download_file(self.file_name)
         self.UTILS.statusbar.wait_for_notification_toaster_title("Download complete", timeout=60)
         time.sleep(5)

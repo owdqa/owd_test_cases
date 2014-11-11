@@ -1,4 +1,4 @@
-# OWD-35077: Verify that it is possible to select a contact from the Address Book.    
+# OWD-35077: Verify that it is possible to select a contact from the Address Book.
 
 import time
 import sys

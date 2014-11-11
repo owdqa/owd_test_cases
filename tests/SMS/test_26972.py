@@ -64,7 +64,7 @@ class test_main(GaiaTestCase):
         # Create and send a new test message.
         self.messages.createAndSendSMS([self.phone_number], "Hello {} old bean.".format(self.emailAddy))
         send_time = self.messages.last_sent_message_timestamp()
-        x = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+        x = self.messages.wait_for_received_msg_in_this_thread(send_time=send_time)
 
         link = x.find_element("tag name", "a")
         link.tap()
@@ -78,7 +78,7 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
         x = self.UTILS.element.getElement(DOM.Contacts.email_field, "Email field")
         x_txt = x.get_attribute("value")
-        self.UTILS.test.TEST(x_txt == self.emailAddy, "Email is '{}' (expected '{}')".format(x_txt, self.emailAddy))
+        self.UTILS.test.test(x_txt == self.emailAddy, "Email is '{}' (expected '{}')".format(x_txt, self.emailAddy))
 
         # Put the contact details into each of the fields (this method
         # clears each field first).

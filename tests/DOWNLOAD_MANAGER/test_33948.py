@@ -60,4 +60,4 @@ class test_main(GaiaTestCase):
         download_info = self.download_manager.get_download_info(self.data_url)
 
         match = re.search(r"(\d)+(.(\d)+)*\s(GB|MB|KB)\sof\s(\d)+(.(\d)+)*\sMB$", download_info.text)
-        self.UTILS.test.TEST(match is not None, "Verify the the text is: 'X' MB of 'Y' MB")
+        self.UTILS.test.test(match is not None, "Verify the the text is: 'X' MB of 'Y' MB")

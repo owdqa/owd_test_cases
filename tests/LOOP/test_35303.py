@@ -63,11 +63,11 @@ class test_main(GaiaTestCase):
         self.loop.share_micro_and_camera()
         self.wait_for_element_displayed(*DOM.Loop.not_a_user_explanation, timeout=10)
         not_a_user_explanation = self.marionette.find_element(*DOM.Loop.not_a_user_explanation)
-        self.UTILS.test.TEST(not_a_user_explanation.text == self.expected_message, "Message found: {} (Expected: {}".\
+        self.UTILS.test.test(not_a_user_explanation.text == self.expected_message, "Message found: {} (Expected: {}".\
                              format(not_a_user_explanation.text, self.expected_message))
 
         share_options = self.UTILS.element.getElements(DOM.Loop.share_link_options, "Sharing options")
-        self.UTILS.test.TEST(len(share_options) == 3, "There are {} sharing options (Expected: 3)".\
+        self.UTILS.test.test(len(share_options) == 3, "There are {} sharing options (Expected: 3)".\
                              format(len(share_options)))
         share_by_sms = self.UTILS.element.getElement(DOM.Loop.share_panel_sms_share, "Share by SMS")
         share_by_sms.tap()
@@ -80,5 +80,5 @@ class test_main(GaiaTestCase):
         self.UTILS.general.typeThis(DOM.Messages.input_message_area, "Input message area",
                                     new_text, p_clear=False, p_validate=False)
         msg_body_after = self.UTILS.element.getElement(DOM.Messages.input_message_area, "Input message area")
-        self.UTILS.test.TEST(expected == msg_body_after.text, "Expected text: {} Actual text: {}".\
+        self.UTILS.test.test(expected == msg_body_after.text, "Expected text: {} Actual text: {}".\
                              format(expected, msg_body_after.text))

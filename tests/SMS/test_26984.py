@@ -51,7 +51,7 @@ class test_main(GaiaTestCase):
         expected = "Test {} number.".format(self.target_number)
         self.messages.createAndSendSMS([self.phone_number], expected)
         send_time = self.messages.last_sent_message_timestamp()
-        self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+        self.messages.wait_for_received_msg_in_this_thread(send_time=send_time)
         self.messages.check_last_message_contents(expected)
 
         #

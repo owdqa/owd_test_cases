@@ -29,7 +29,7 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
 
         self.corporate_sim = self.UTILS.general.get_os_variable("CORPORATE_SIM") == "True"
-        self.UTILS.test.TEST(self.corporate_sim, "Using a corporate SIM. The test can continue", True)
+        self.UTILS.test.test(self.corporate_sim, "Using a corporate SIM. The test can continue", True)
 
         #
         # Establish which phone number to use.
@@ -60,7 +60,7 @@ class test_main(GaiaTestCase):
             self.messages.createAndSendSMS([num], test_msg)
             if num == self.own_number:
                 send_time = self.messages.last_sent_message_timestamp()
-                self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+                self.messages.wait_for_received_msg_in_this_thread(send_time=send_time)
             else:
                 self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)
                 self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)

@@ -58,7 +58,7 @@ class test_main(GaiaTestCase):
         # Click send and wait for the message to be received
         #
         self.messages.sendSMS()
-        self.messages.waitForReceivedMsgInThisThread()
+        self.messages.wait_for_received_msg_in_this_thread()
         x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
 

@@ -47,7 +47,7 @@ class test_main(GaiaTestCase):
 
         self.gallery.launch()
         current_thumbs = self.gallery.get_number_of_thumbnails()
-        self.UTILS.test.TEST(current_thumbs == self.previous_thumbs + 1,
+        self.UTILS.test.test(current_thumbs == self.previous_thumbs + 1,
                      "After taking a picture, there's one item more in the gallery")
 
 

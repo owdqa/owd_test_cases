@@ -9,7 +9,7 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     _gmail_pseudo_locator = ("data-url", "google")
-    
+
     def setUp(self):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)

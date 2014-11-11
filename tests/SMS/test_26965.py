@@ -22,7 +22,9 @@ from OWDTestToolkit.apps.browser import Browser
 
 class test_main(GaiaTestCase):
 
-    _RESTART_DEVICE = True
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
         #
@@ -68,4 +70,4 @@ class test_main(GaiaTestCase):
         # Verify that a valid URL appears highlight
         #
         y = msg.find_element("tag name", "a")
-        self.UTILS.test.TEST(y.text == self.link, "The web link is highlighted in the text message")
+        self.UTILS.test.test(y.text == self.link, "The web link is highlighted in the text message")

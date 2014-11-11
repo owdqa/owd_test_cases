@@ -66,5 +66,5 @@ class test_main(GaiaTestCase):
 
             self.UTILS.reporting.logResult("info", "Value of css property: {}".format(value))
             self.UTILS.reporting.logResult("info", "isEllipsisActive? {}".format(isEllipsis))
-            self.UTILS.test.TEST(
+            self.UTILS.test.test(
                 value == "ellipsis" and isEllipsis, "Long entry in call log displays the ellipsis (...)")

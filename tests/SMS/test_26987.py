@@ -34,7 +34,7 @@ class test_main(GaiaTestCase):
         # Create and send a new test message.
         #
         self.messages.createAndSendSMS([self.phone_number], "Test message.")
-        x = self.messages.waitForReceivedMsgInThisThread()
+        x = self.messages.wait_for_received_msg_in_this_thread()
 
         #
         # Tap the header to create a contact.
@@ -68,7 +68,7 @@ class test_main(GaiaTestCase):
         # Verify the header is now the name,
         #
         x = self.UTILS.element.getElement(DOM.Messages.message_header, "Message header")
-        self.UTILS.test.TEST(x.text == "Test Testerton", 
+        self.UTILS.test.test(x.text == "Test Testerton", 
                         "Message header has been changed to match the contact (it was '{}').".format(x.text))
 
         #

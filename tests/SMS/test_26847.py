@@ -90,4 +90,4 @@ class test_main(GaiaTestCase):
         # Check there is now only 1 thread.
         #
         msgs = self.UTILS.element.getElements(DOM.Messages.threads_list, "Message threads after deletion")
-        self.UTILS.test.TEST(len(msgs) == 1, "Only 1 thread is left after deleting the other two.")
+        self.UTILS.test.test(len(msgs) == 1, "Only 1 thread is left after deleting the other two.")

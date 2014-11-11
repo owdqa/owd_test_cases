@@ -22,7 +22,9 @@ from tests.EMAIL.shared_test_functions.emailing import Emailing
 
 class test_26340(Emailing):
 
-    _RESTART_DEVICE = True
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
         self.testNum = self.__class__.__name__

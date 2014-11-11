@@ -49,7 +49,7 @@ class test_main(GaiaTestCase):
         #
         self.marionette.find_element("xpath", '//h1[@id="contact-form-title"]').tap()
         given_name = self.UTILS.element.getElement(DOM.Contacts.given_name_field, "Given name field")
-        self.UTILS.test.TEST(given_name.text == "", "Given name field is empty after being cleared.")
+        self.UTILS.test.test(given_name.text == "", "Given name field is empty after being cleared.")
 
         #
         # Add some info. to the field.
@@ -67,4 +67,4 @@ class test_main(GaiaTestCase):
         #
         self.marionette.find_element("xpath", '//h1[@id="contact-form-title"]').tap()
         surname = self.UTILS.element.getElement(DOM.Contacts.family_name_field, "Surname field")
-        self.UTILS.test.TEST(surname.text == "", "Surname field is empty after being cleared.")
+        self.UTILS.test.test(surname.text == "", "Surname field is empty after being cleared.")

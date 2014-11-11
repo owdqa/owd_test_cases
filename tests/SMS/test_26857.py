@@ -36,7 +36,7 @@ class test_main(GaiaTestCase):
         #
         msg_text = str(time.time())
         self.messages.createAndSendSMS([self.num], msg_text)
-        self.messages.waitForReceivedMsgInThisThread()
+        self.messages.wait_for_received_msg_in_this_thread()
 
         #
         # Add another message to the same thread
@@ -44,7 +44,7 @@ class test_main(GaiaTestCase):
         msg_text = str(time.time())
         self.messages.enterSMSMsg(msg_text)
         self.messages.sendSMS()
-        self.messages.waitForReceivedMsgInThisThread()
+        self.messages.wait_for_received_msg_in_this_thread()
 
         #
         # Return to the threads view.
@@ -57,6 +57,6 @@ class test_main(GaiaTestCase):
         #
         preview_text = self.messages.getThreadText(self.num)
 
-        self.UTILS.test.TEST(preview_text in msg_text,
+        self.UTILS.test.test(preview_text in msg_text,
                         "Preview text (" + preview_text + ") is in the original message text(" + msg_text + ").")
 

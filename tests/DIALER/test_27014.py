@@ -4,7 +4,7 @@
 #       2. Select "Cancel"
 # ** Expected Results
 #       2. User is taken back to the dialer
-#      
+#  
 import time
 import sys
 sys.path.insert(1, "./")

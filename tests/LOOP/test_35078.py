@@ -61,6 +61,6 @@ class main(GaiaTestCase):
             self.loop.allow_permission_ffox_login()
             self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
 
-            self.loop.open_address_book()       
+            self.loop.open_address_book()   
             self.contacts.search(self.target_name)
             self.contacts.check_search_results(self.target_name)

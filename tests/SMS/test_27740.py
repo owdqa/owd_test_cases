@@ -48,5 +48,5 @@ class test_main(GaiaTestCase):
         #
         preview_text = self.messages.getThreadText(self.phone_number)
 
-        self.UTILS.test.TEST(preview_text in msg_text,
+        self.UTILS.test.test(preview_text in msg_text,
                         "Preview text ({}) is in the original message text({}).".format(preview_text, msg_text))

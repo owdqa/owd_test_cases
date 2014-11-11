@@ -12,7 +12,7 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.dialer     = Dialer(self)
 
-    
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
@@ -32,5 +32,5 @@ class test_main(GaiaTestCase):
 
         x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number field", False)
         dialer_num = x.get_attribute("value")
-        self.UTILS.test.TEST(str(_num) in dialer_num, "After cancelling, phone number field still contains '%s' (it was %s)." % \
+        self.UTILS.test.test(str(_num) in dialer_num, "After cancelling, phone number field still contains '%s' (it was %s)." % \
                                                        (_num,dialer_num))

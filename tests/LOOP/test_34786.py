@@ -52,7 +52,7 @@ class main(GaiaTestCase):
             default_mode = self.marionette.find_element(*DOM.Loop.settings_selected_call_mode)
             self.UTILS.reporting.debug("*** Default call mode: {}".format(default_mode.text))
             video_str = _("Video")
-            self.UTILS.test.TEST(default_mode.text == video_str, "Default call mode is {} (Expected: {})".\
+            self.UTILS.test.test(default_mode.text == video_str, "Default call mode is {} (Expected: {})".\
                                  format(default_mode.text, video_str))
         else:
             self.UTILS.reporting.debug("No camera detected")

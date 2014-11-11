@@ -44,11 +44,11 @@ class test_main(GaiaTestCase):
         self.contacts.view_contact(self.contact['name'])
 
         x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
-        self.UTILS.test.TEST(x.text == self.add_fav_str, "Toggle favourite button text is '{}'.".\
+        self.UTILS.test.test(x.text == self.add_fav_str, "Toggle favourite button text is '{}'.".\
                         format(self.add_fav_str))
         x.tap()
         x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (after tap)")
-        self.UTILS.test.TEST(x.text == self.remove_fav_str, "Toggle favourite button text is '{}'.".\
+        self.UTILS.test.test(x.text == self.remove_fav_str, "Toggle favourite button text is '{}'.".\
                         format(self.remove_fav_str))
 
         x = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
@@ -65,11 +65,11 @@ class test_main(GaiaTestCase):
         self.contacts.view_contact(self.contact['name'])
 
         x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
-        self.UTILS.test.TEST(x.text == self.remove_fav_str, "Toggle favourite button text is '{}'.".\
+        self.UTILS.test.test(x.text == self.remove_fav_str, "Toggle favourite button text is '{}'.".\
                         format(self.remove_fav_str))
         x.tap()
         x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (after tap)")
-        self.UTILS.test.TEST(x.text == self.add_fav_str, "Toggle favourite button text is '{}'.".\
+        self.UTILS.test.test(x.text == self.add_fav_str, "Toggle favourite button text is '{}'.".\
                         format(self.add_fav_str))
 
         x = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")

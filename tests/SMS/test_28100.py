@@ -86,7 +86,7 @@ class test_main(GaiaTestCase):
         msg_nums = sms.find_elements("tag name", "a")
 
         description = "There are <b>{}</b> numbers highlighted in the received text (expected <b>{}</b>)."
-        self.UTILS.test.TEST(len(msg_nums) == len(tappables), description.format(len(msg_nums), len(tappables)))
+        self.UTILS.test.test(len(msg_nums) == len(tappables), description.format(len(msg_nums), len(tappables)))
         for i in range(len(msg_nums)):
             msg_nums[i].tap()
 
@@ -104,7 +104,7 @@ class test_main(GaiaTestCase):
             time.sleep(1)
             number = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number").get_attribute("value")
             description = "The phone number is '{}' (expected '{}').".format(number, nums[tappables[i]])
-            self.UTILS.test.TEST(nums[tappables[i]] == number, description)
+            self.UTILS.test.test(nums[tappables[i]] == number, description)
 
             #
             # Kill everything, then re-launch the messaging app etc ...

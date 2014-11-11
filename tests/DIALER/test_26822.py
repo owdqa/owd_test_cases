@@ -11,7 +11,7 @@ class test_main(GaiaTestCase):
         self.UTILS      = UTILS(self)
         self.dialer     = Dialer(self)
 
-    
+
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)

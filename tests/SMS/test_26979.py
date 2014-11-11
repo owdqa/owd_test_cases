@@ -48,7 +48,7 @@ class test_main(GaiaTestCase):
         #
         self.messages.createAndSendSMS([self.phone_number], "Email {} one.".format(self.emailAddy))
         send_time = self.messages.last_sent_message_timestamp()
-        last_msg = self.messages.waitForReceivedMsgInThisThread(send_time)
+        last_msg = self.messages.wait_for_received_msg_in_this_thread(send_time)
 
         #
         # Tap the email link.
@@ -64,5 +64,5 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.iframe.switchToFrame(*DOM.Email.frame_locator)
         to_field = self.UTILS.element.getElement(DOM.Email.compose_to_from_contacts, "To field")
-        self.UTILS.test.TEST(to_field.text == self.emailAddy,
+        self.UTILS.test.test(to_field.text == self.emailAddy,
                         "To field contains '{0}' (it was '{0}').".format(self.emailAddy))

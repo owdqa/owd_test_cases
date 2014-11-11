@@ -26,7 +26,7 @@ class test_main(GaiaTestCase):
         self.dialer.enterNumber("1111")
 
         x = self.UTILS.element.getElement(DOM.Dialer.suggestion_item_single, "Suggestion item")
-        self.UTILS.test.TEST(self.cont1["tel"][0]["value"] in x.text, 
+        self.UTILS.test.test(self.cont1["tel"][0]["value"] in x.text, 
                         "'{}' is shown as a suggestion (it was '{}').".format(self.cont1["tel"][0]["value"], x.text))
 
         self.dialer.enterNumber("2")

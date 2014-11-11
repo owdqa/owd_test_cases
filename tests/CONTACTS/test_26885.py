@@ -76,7 +76,7 @@ class test_main(GaiaTestCase):
         # Verify there are 3 more.
         #
         diff = (new_count - orig_count)
-        self.UTILS.test.TEST(diff == 2,
+        self.UTILS.test.test(diff == 2,
                         "3 more emails listed for this contact before saving the changes (there were {}) .".\
                         format(diff))
 
@@ -115,7 +115,7 @@ class test_main(GaiaTestCase):
                 if btn_name == "two@myemail.com":
                     email2_found = True
 
-        self.UTILS.test.TEST(view_count == new_count, str(new_count) + " emails are displayed.")
+        self.UTILS.test.test(view_count == new_count, str(new_count) + " emails are displayed.")
 
-        self.UTILS.test.TEST(email1_found, "First added email is present.")
-        self.UTILS.test.TEST(email2_found, "Second added email is present.")
+        self.UTILS.test.test(email1_found, "First added email is present.")
+        self.UTILS.test.test(email2_found, "Second added email is present.")

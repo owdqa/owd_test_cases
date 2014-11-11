@@ -50,5 +50,5 @@ class main(GaiaTestCase):
             # We're informed of a wrong log in
             self.UTILS.element.waitForElements(DOM.Loop.ffox_account_error_overlay, "Error overlay")
             error_msg = self.UTILS.element.getElement(DOM.Loop.ffox_account_error_overlay_title, "Error overlay title")
-            self.UTILS.test.TEST(error_msg.text == self.expected_error_msg, "Invalid password message is shown")
+            self.UTILS.test.test(error_msg.text == self.expected_error_msg, "Invalid password message is shown")
             self.UTILS.element.waitForNotElements(DOM.Loop.app_header, "Loop main view")

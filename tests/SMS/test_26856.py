@@ -51,5 +51,5 @@ class test_main(GaiaTestCase):
         # Check the 'Send button isn't enabled yet.
         #
         x = self.UTILS.element.getElement(DOM.Messages.send_message_button, "Send message button")
-        self.UTILS.test.TEST(not x.is_enabled(), 
+        self.UTILS.test.test(not x.is_enabled(), 
                         "Send button is not enabled after target number is supplied, but message still empty.")

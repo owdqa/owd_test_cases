@@ -30,7 +30,9 @@ from gaiatest.apps.keyboard.app import Keyboard
 
 class test_main(GaiaTestCase):
 
-    _RESTART_DEVICE = True
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
         #
@@ -97,6 +99,6 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.gmail_import_frame, via_root_frame=False)
         after_search_count = self.UTILS.element.getElements(DOM.Contacts.import_search_list, "Search list")
 
-        self.UTILS.test.TEST(len(after_search_count) == 1,
+        self.UTILS.test.test(len(after_search_count) == 1,
                         "After typing the name '{}' the search list contains 1 contact (out of {}).".\
                         format(search_name, len(gmail_contacts)))

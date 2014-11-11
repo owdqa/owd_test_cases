@@ -50,7 +50,7 @@ class test_main(GaiaTestCase):
         #
         self.messages.createAndSendSMS([self.phone_number], self.test_msg)
         send_time = self.messages.last_sent_message_timestamp()
-        x = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+        x = self.messages.wait_for_received_msg_in_this_thread(send_time=send_time)
 
         #
         # Long press the 2nd email link.
@@ -70,4 +70,4 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
         x = self.UTILS.element.getElement(("id", "email_0"), "Email field")
         x_txt = x.get_attribute("value")
-        self.UTILS.test.TEST(x_txt == self.emailAddy, "Email is '{}' (expected '{}')".format(x_txt, self.emailAddy))
+        self.UTILS.test.test(x_txt == self.emailAddy, "Email is '{}' (expected '{}')".format(x_txt, self.emailAddy))

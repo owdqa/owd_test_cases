@@ -55,7 +55,7 @@ class test_main(GaiaTestCase):
         #
         # Verify the number is in the number field.
         #
-        self.UTILS.test.TEST("123456789" in contFields['tel'].get_attribute("value"),
+        self.UTILS.test.test("123456789" in contFields['tel'].get_attribute("value"),
                         "Our target number is in the telephone field (expected {}).".\
                         format(contFields['tel'].get_attribute("value")))
 

@@ -48,11 +48,11 @@ class test_main(GaiaTestCase):
         # Wait for the last message in this thread to be a 'received' one
         # and click the link.
         #
-        x = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.test.TEST(x, "Received a message.", True)
+        x = self.messages.wait_for_received_msg_in_this_thread()
+        self.UTILS.test.test(x, "Received a message.", True)
 
         x.find_element("tag name", "a").tap()
-    
+
         #
         # Give the browser time to start up, then
         # switch to the browser frame and check the page loaded.
@@ -61,7 +61,7 @@ class test_main(GaiaTestCase):
         self.marionette.switch_to_frame()
         self.UTILS.iframe.switchToFrame(*DOM.Browser.frame_locator)
 
-        self.UTILS.test.TEST(self.browser.check_page_loaded(self.link),
+        self.UTILS.test.test(self.browser.check_page_loaded(self.link),
                         "Web page loaded correctly.")
 
 

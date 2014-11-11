@@ -45,17 +45,17 @@ class test_main(GaiaTestCase):
         self.messages.createAndSendSMS([self.contact["tel"]["value"]],
                                         "Test message.")
         send_time = self.messages.last_sent_message_timestamp()
-        self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+        self.messages.wait_for_received_msg_in_this_thread(send_time=send_time)
 
         #
         # Examine the carrier.
         #
         expect = self.contact["tel"]["type"]
         actual = self.messages.threadType()
-        self.UTILS.test.TEST(expect == actual, "The type is listed as: '{}' (subheader was '{}').".\
+        self.UTILS.test.test(expect == actual, "The type is listed as: '{}' (subheader was '{}').".\
                              format(expect, actual))
 
         expect = self.contact["tel"]["value"]
         actual = self.messages.threadCarrier()
-        self.UTILS.test.TEST(expect == actual, "The carrier is listed as: '{}' (subheader was '{}').".\
+        self.UTILS.test.test(expect == actual, "The carrier is listed as: '{}' (subheader was '{}').".\
                              format(expect, actual))

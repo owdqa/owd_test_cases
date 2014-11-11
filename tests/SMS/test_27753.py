@@ -53,7 +53,7 @@ class test_main(GaiaTestCase):
         msgapp = self.messages.launch()
         self.messages.createAndSendSMS([self.phone_number], "Test")
         send_time = self.messages.last_sent_message_timestamp()
-        self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+        self.messages.wait_for_received_msg_in_this_thread(send_time=send_time)
 
         x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()

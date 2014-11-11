@@ -77,13 +77,13 @@ class test_main(GaiaTestCase):
     def dayViewTests(self, now):
         x = self.UTILS.element.getElement(DOM.Calendar.current_view_header, "Day view header")
 
-        self.UTILS.test.TEST(now.day_name.lower() in x.text.lower(),
+        self.UTILS.test.test(now.day_name.lower() in x.text.lower(),
                         "'{}' is in the header ('{}').".format(now.day_name, x.text))
 
-        self.UTILS.test.TEST(now.month_name[:3].lower() in x.text.lower(),
+        self.UTILS.test.test(now.month_name[:3].lower() in x.text.lower(),
                         "'{}' is in the header ('{}').".format(now.month_name[:3], x.text))
 
-        self.UTILS.test.TEST(str(now.mday) in x.text,
+        self.UTILS.test.test(str(now.mday) in x.text,
                         "'{}' is in the header ('{}').".format(now.mday, x.text))
 
         x = self.UTILS.debug.screenShotOnErr()
@@ -103,13 +103,13 @@ class test_main(GaiaTestCase):
             if testStr in x[i].text:
                 boolOK = True
 
-        self.UTILS.test.TEST(boolOK, "Selected day ('{}') is one of the displayed days: '{}'".format(testStr, x_str))
+        self.UTILS.test.test(boolOK, "Selected day ('{}') is one of the displayed days: '{}'".format(testStr, x_str))
 
         x = self.UTILS.element.getElement(DOM.Calendar.current_view_header, "Week view header")
-        self.UTILS.test.TEST(now.month_name.lower() in x.text.lower(),
+        self.UTILS.test.test(now.month_name.lower() in x.text.lower(),
                         "'{}' is in the header ('{}').".format(now.month_name, x.text))
 
-        self.UTILS.test.TEST(str(now.year) in x.text,
+        self.UTILS.test.test(str(now.year) in x.text,
                         "'{}' is in the header ('{}').".format(now.year, x.text))
 
         x = self.UTILS.debug.screenShotOnErr()
@@ -126,16 +126,16 @@ class test_main(GaiaTestCase):
         if today:
             x = self.UTILS.element.getElement(DOM.Calendar.mview_selected_day_title, "Selected day detail string")
             _expected_str = "{}".format(now.mday)
-            self.UTILS.test.TEST(_expected_str.lower() in x.text.lower(),
+            self.UTILS.test.test(_expected_str.lower() in x.text.lower(),
                             "Day detail string: '{}' contains today's details ('{}').".format(x.text, _expected_str))
         else:
             x = self.UTILS.element.getElement(DOM.Calendar.mview_selected_day_title_future, "Selected day detail string")
 
         x = self.UTILS.element.getElement(DOM.Calendar.current_view_header, "Month view header")
-        self.UTILS.test.TEST(now.month_name.lower() in x.text.lower(),
+        self.UTILS.test.test(now.month_name.lower() in x.text.lower(),
                         "'{}' is in the header ('{}').".format(now.month_name, x.text))
 
-        self.UTILS.test.TEST(str(now.year) in x.text,
+        self.UTILS.test.test(str(now.year) in x.text,
                         "'{}' is in the header ('{}').".format(now.year, x.text))
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot in month view with 'today' selected:", x)
