@@ -53,7 +53,7 @@ class test_main(GaiaTestCase):
 
         # Go into messages Settings..
         #
-        z= self.UTILS.element.getElement(DOM.Messages.edit_messages_icon, "Edit button")
+        z = self.UTILS.element.getElement(DOM.Messages.edit_messages_icon, "Edit button")
         z.tap()
 
         #
