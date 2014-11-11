@@ -46,7 +46,7 @@ class test_main(GaiaTestCase):
         # Wait for the last message in this thread to be a 'received' one
         # and click the link.
         #
-        x = self.messages.wait_for_received_msg_in_this_thread()
+        x = self.messages.wait_for_message()
         self.UTILS.test.test(x, "Received a message.", True)
 
 

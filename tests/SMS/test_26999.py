@@ -33,7 +33,7 @@ class test_main(GaiaTestCase):
         #
         test_str = "Nine 123456789 numbers."
         self.messages.createAndSendSMS([self.phone_number], test_str)
-        x = self.messages.wait_for_received_msg_in_this_thread()
+        x = self.messages.wait_for_message()
 
         #
         # Long press the emedded number link.

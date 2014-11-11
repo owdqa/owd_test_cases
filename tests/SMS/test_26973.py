@@ -45,7 +45,7 @@ class test_main(GaiaTestCase):
                                {"type": "Personal", "value": "email3@nowhere.com"}])
         self.UTILS.general.insertContact(self.cont)
 
-        self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
         self.data_layer.delete_all_sms()
 
     def tearDown(self):
@@ -63,7 +63,7 @@ class test_main(GaiaTestCase):
         #
         self.messages.createAndSendSMS([self.phone_number], "Hello {} old bean.".format(self.email_address))
         send_time = self.messages.last_sent_message_timestamp()
-        msg = self.messages.wait_for_received_msg_in_this_thread(send_time=send_time)
+        msg = self.messages.wait_for_message(send_time=send_time)
 
         #
         # Press the email link.

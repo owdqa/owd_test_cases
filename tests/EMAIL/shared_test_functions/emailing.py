@@ -35,7 +35,7 @@ class Emailing(GaiaTestCase):
         #
         # Create (and record) a unique 'subject'.
         #
-        self.subject = "TEST " + str(time.time())
+        self.subject = "test " + str(time.time())
         self.body = "This is the test email body."
 
         #
@@ -54,7 +54,7 @@ class Emailing(GaiaTestCase):
         self.marionette.set_search_timeout(50)
 
     def set_subject(self):
-        self.subject = "TEST " + str(time.time())
+        self.subject = "test " + str(time.time())
 
     def send_email(self, account_to_load, to):
         self.UTILS.reporting.logComment("[SEND]Using subject \"" + self.subject + "\".")

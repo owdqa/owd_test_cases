@@ -40,7 +40,7 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.general.insertContact(self.contact)
 
-        self._email_subject = "TEST " + str(time.time())
+        self._email_subject = "test " + str(time.time())
         self._email_message = "Test message"
 
     def tearDown(self):

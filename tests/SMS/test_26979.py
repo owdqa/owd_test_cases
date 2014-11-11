@@ -48,7 +48,7 @@ class test_main(GaiaTestCase):
         #
         self.messages.createAndSendSMS([self.phone_number], "Email {} one.".format(self.emailAddy))
         send_time = self.messages.last_sent_message_timestamp()
-        last_msg = self.messages.wait_for_received_msg_in_this_thread(send_time)
+        last_msg = self.messages.wait_for_message(send_time)
 
         #
         # Tap the email link.

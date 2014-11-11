@@ -69,7 +69,7 @@ class test_main(GaiaTestCase):
         self.messages.enterSMSMsg("Test message.")
         self.messages.sendSMS()
 
-        x = self.messages.wait_for_received_msg_in_this_thread()
+        x = self.messages.wait_for_message()
 
         #
         # Tap the header to call.

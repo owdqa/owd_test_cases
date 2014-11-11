@@ -42,7 +42,7 @@ class test_main(GaiaTestCase):
         # avoids some blocking bugs just now).
         #
         self.messages.createAndSendSMS([self.contact_1["tel"]["value"]], "Test message.")
-        self.messages.wait_for_received_msg_in_this_thread()
+        self.messages.wait_for_message()
 
         #
         # Open contacts app and modify the contact used to send the SMS in the previous step

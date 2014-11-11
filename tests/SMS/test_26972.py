@@ -43,7 +43,7 @@ class test_main(GaiaTestCase):
         self.emailP = self.UTILS.general.get_os_variable("GMAIL_2_PASS")
         self.emailU = self.UTILS.general.get_os_variable("GMAIL_2_USER")
 
-        self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
         self.test_msg = "Test message."
 
         self.cont = MockContact()
@@ -64,7 +64,7 @@ class test_main(GaiaTestCase):
         # Create and send a new test message.
         self.messages.createAndSendSMS([self.phone_number], "Hello {} old bean.".format(self.emailAddy))
         send_time = self.messages.last_sent_message_timestamp()
-        x = self.messages.wait_for_received_msg_in_this_thread(send_time=send_time)
+        x = self.messages.wait_for_message(send_time=send_time)
 
         link = x.find_element("tag name", "a")
         link.tap()

@@ -48,7 +48,7 @@ class field_remove_toggle(GaiaTestCase):
         self.UTILS.general.insertContact(contact)
 
         # Add image.
-        self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
         self.contacts.launch()
         self.contacts.view_contact(contact['name'])
         self.contacts.press_edit_contact_button()

@@ -71,7 +71,7 @@ class test_main(GaiaTestCase):
         self.messages.sendSMS()
         send_time = self.messages.last_sent_message_timestamp()
 
-        self.messages.wait_for_received_msg_in_this_thread(send_time=send_time)
+        self.messages.wait_for_message(send_time=send_time)
 
         #
         # Tap the header to call.

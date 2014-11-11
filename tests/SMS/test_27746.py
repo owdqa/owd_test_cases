@@ -45,7 +45,7 @@ class test_main(GaiaTestCase):
         self.messages.createAndSendSMS([self.contact["tel"]["value"]],
                                         "Test message.")
         send_time = self.messages.last_sent_message_timestamp()
-        self.messages.wait_for_received_msg_in_this_thread(send_time=send_time)
+        self.messages.wait_for_message(send_time=send_time)
 
         #
         # Examine the carrier.

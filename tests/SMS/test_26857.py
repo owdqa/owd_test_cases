@@ -36,7 +36,7 @@ class test_main(GaiaTestCase):
         #
         msg_text = str(time.time())
         self.messages.createAndSendSMS([self.num], msg_text)
-        self.messages.wait_for_received_msg_in_this_thread()
+        self.messages.wait_for_message()
 
         #
         # Add another message to the same thread
@@ -44,7 +44,7 @@ class test_main(GaiaTestCase):
         msg_text = str(time.time())
         self.messages.enterSMSMsg(msg_text)
         self.messages.sendSMS()
-        self.messages.wait_for_received_msg_in_this_thread()
+        self.messages.wait_for_message()
 
         #
         # Return to the threads view.

@@ -52,9 +52,9 @@ class test_main(GaiaTestCase):
         self.expected_sizes = ["4.8", "62.3", "175.6"]
         self.expected_names = ["80x60.jpg", "30k_basic_AMR.amr", "mpeg4.3gp"]
 
-        self.UTILS.general.addFileToDevice('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
-        self.UTILS.general.addFileToDevice('./tests/_resources/30k_basic_AMR.amr', destination='SD/mus')
-        self.UTILS.general.addFileToDevice('./tests/_resources/mpeg4.mp4', destination='SD/vid')
+        self.UTILS.general.add_file_to_device('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/30k_basic_AMR.amr', destination='SD/mus')
+        self.UTILS.general.add_file_to_device('./tests/_resources/mpeg4.mp4', destination='SD/vid')
 
     def tearDown(self):
         self.UTILS.general.remove_file('30k_basic_AMR.amr', '/SD/mus')

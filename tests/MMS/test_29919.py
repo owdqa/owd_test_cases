@@ -39,7 +39,7 @@ class test_main(GaiaTestCase):
         #
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
-        self.UTILS.general.addFileToDevice('./tests/_resources/mpeg4.mp4', destination='/SD/mus')
+        self.UTILS.general.add_file_to_device('./tests/_resources/mpeg4.mp4', destination='/SD/mus')
         self.data_layer.delete_all_sms()
         self.UTILS.statusbar.clearAllStatusBarNotifs()
 

@@ -25,7 +25,7 @@ class test_main(GaiaTestCase):
         #
         # Insert a contact without email addresses
         #
-        self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
         self.contact = MockContact(email={'type': 'Personal', 'value': ''})
 
         self.UTILS.general.insertContact(self.contact)
@@ -55,7 +55,7 @@ class test_main(GaiaTestCase):
         # Wait for the last message in this thread to be a 'received' one
         # and click the link.
         #
-        x = self.messages.wait_for_received_msg_in_this_thread()
+        x = self.messages.wait_for_message()
         self.UTILS.test.test(x, "Received a message.", True)
 
         a = x.find_element("tag name", "a")

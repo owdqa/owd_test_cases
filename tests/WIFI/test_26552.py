@@ -58,7 +58,7 @@ class test_main(GaiaTestCase):
         self.messages.launch()
         self.messages.createAndSendSMS([self.num], self.test_msg)
         send_time = self.messages.last_sent_message_timestamp()
-        self.messages.wait_for_received_msg_in_this_thread(send_time)
+        self.messages.wait_for_message(send_time)
 
         self.apps.kill_all()
 

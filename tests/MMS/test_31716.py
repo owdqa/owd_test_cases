@@ -38,7 +38,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        self.UTILS.general.addFileToDevice('./tests/_resources/imgd.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/imgd.jpg', destination='DCIM/100MZLLA')
 
         #
         # Launch messages app.

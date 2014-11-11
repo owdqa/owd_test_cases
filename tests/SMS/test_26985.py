@@ -33,7 +33,7 @@ class test_main(GaiaTestCase):
         # Create and send a new test message.
         #
         self.messages.createAndSendSMS([self.num1], "Test {} number.".format(self.num2))
-        x = self.messages.wait_for_received_msg_in_this_thread()
+        x = self.messages.wait_for_message()
 
         #
         # Enter edit mode.

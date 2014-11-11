@@ -48,7 +48,7 @@ class test_main(GaiaTestCase):
         self.messages.launch()
 
         self.messages.createAndSendSMS([self.contact["tel"]["value"]], "Test message")
-        self.messages.wait_for_received_msg_in_this_thread()
+        self.messages.wait_for_message()
 
         x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()

@@ -60,4 +60,4 @@ class test_main(GaiaTestCase):
         bools = [title.text in contacts_names for title in thread_names]
 
         msgs = ["A thread exists for {}".format(elem) for elem in contacts_names]
-        map(self.UTILS.test.TEST, bools, msgs)
+        map(self.UTILS.test.test, bools, msgs)

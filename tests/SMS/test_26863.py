@@ -66,7 +66,7 @@ class test_main(GaiaTestCase):
         #
         # Wait for the SMS to arrive.
         #
-        self.messages.wait_for_received_msg_in_this_thread(send_time=send_time)
+        self.messages.wait_for_message(send_time=send_time)
 
         self.UTILS.home.goHome()
 

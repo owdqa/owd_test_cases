@@ -101,5 +101,5 @@ class test_main(GaiaTestCase):
         self.messages.checkIsInToField(self.contact_1["name"])
         self.messages.sendSMS()
         send_time = self.messages.last_sent_message_timestamp()
-        self.messages.wait_for_received_msg_in_this_thread(send_time=send_time)
+        self.messages.wait_for_message(send_time=send_time)
         self.messages.check_last_message_contents(self.test_msg)

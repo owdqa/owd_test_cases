@@ -60,7 +60,7 @@ class test_main(GaiaTestCase):
             self.messages.createAndSendSMS([num], test_msg)
             if num == self.own_number:
                 send_time = self.messages.last_sent_message_timestamp()
-                self.messages.wait_for_received_msg_in_this_thread(send_time=send_time)
+                self.messages.wait_for_message(send_time=send_time)
             else:
                 self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)
                 self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
@@ -71,4 +71,4 @@ class test_main(GaiaTestCase):
 
         bools = [title.text in self.nums for title in x]
         msgs = ["A thread exists for {}".format(elem) for elem in self.nums]
-        map(self.UTILS.test.TEST, bools, msgs)
+        map(self.UTILS.test.test, bools, msgs)

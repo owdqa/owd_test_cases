@@ -39,7 +39,7 @@ class test_main(GaiaTestCase):
         # avoids some blocking bugs just now). 
         #
         self.messages.createAndSendSMS( [self.contact["tel"]["value"]], "Test message.")
-        returnedSMS = self.messages.wait_for_received_msg_in_this_thread()
+        returnedSMS = self.messages.wait_for_message()
 
         #
         # Examine the header.

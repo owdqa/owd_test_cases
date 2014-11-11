@@ -36,7 +36,7 @@ class test_main(GaiaTestCase):
         #
         # Store our picture on the device.
         #
-        self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
 
         #
         # Launch contacts app.

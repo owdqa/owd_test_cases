@@ -55,7 +55,7 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
 
         #
-        # TEST: this automatically opens the 'send SMS' screen, so
+        # test: this automatically opens the 'send SMS' screen, so
         # check the correct name is in the 'to' field of this sms.
         #
         self.messages.checkIsInToField(self.contact['name'])

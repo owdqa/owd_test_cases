@@ -41,7 +41,7 @@ class test_main(GaiaTestCase):
         #
         self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
-        self.UTILS.general.addFileToDevice('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
 
     def tearDown(self):
         self.UTILS.general.remove_file('80x60.jpg', 'DCIM/100MZLLA')

@@ -51,7 +51,7 @@ class test_main(GaiaTestCase):
         #
         # Wait for the last message in this thread to be a 'received' one.
         #
-        self.messages.wait_for_received_msg_in_this_thread()
+        self.messages.wait_for_message()
 
         #
         # Verify the number is shown in the header as there is no contact name

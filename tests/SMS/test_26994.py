@@ -30,7 +30,7 @@ class test_main(GaiaTestCase):
         #
         test_str = "Four 1234 seven 1234567 eight 12345678 nine 123456789 numbers."
         self.messages.createAndSendSMS([self.phone_number], test_str)
-        x = self.messages.wait_for_received_msg_in_this_thread()
+        x = self.messages.wait_for_message()
 
         #
         # Check how many are links.

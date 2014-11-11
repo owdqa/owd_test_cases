@@ -34,7 +34,7 @@ class test_main(GaiaTestCase):
         # Create and send a new test message.
         #
         self.messages.createAndSendSMS([self.phone_number], "Test message.")
-        x = self.messages.wait_for_received_msg_in_this_thread()
+        x = self.messages.wait_for_message()
 
         #
         # Tap the header to create a contact.

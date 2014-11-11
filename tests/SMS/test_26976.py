@@ -50,7 +50,7 @@ class test_main(GaiaTestCase):
         #
         self.messages.createAndSendSMS([self.phone_number], self.test_msg)
         send_time = self.messages.last_sent_message_timestamp()
-        x = self.messages.wait_for_received_msg_in_this_thread(send_time=send_time)
+        x = self.messages.wait_for_message(send_time=send_time)
 
         #
         # Long press the 2nd email link.
