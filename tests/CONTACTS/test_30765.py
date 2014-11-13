@@ -109,4 +109,4 @@ class test_main(GaiaTestCase):
         if contacts_imported[8] == contacts_exported[0]:
             self.UTILS.reporting.logResult("info", "OK same contacts imported than exported")
         else:
-            self.UTILS.test.quit_test("Different contacts exported than imported")
+            self.UTILS.test.test(False, "Different contacts exported than imported")

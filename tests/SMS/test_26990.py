@@ -31,7 +31,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.phone_number], "Test message")
+        self.messages.create_and_send_sms([self.phone_number], "Test message")
 
         #
         # The returned message won't come to this thread, so just tap the header.

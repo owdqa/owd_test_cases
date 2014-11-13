@@ -56,7 +56,7 @@ class test_main(GaiaTestCase):
         # Open the SMS app, send a message then jump back to the browser.
         #
         self.messages.launch()
-        self.messages.createAndSendSMS([self.num], self.test_msg)
+        self.messages.create_and_send_sms([self.num], self.test_msg)
         send_time = self.messages.last_sent_message_timestamp()
         self.messages.wait_for_message(send_time)
 

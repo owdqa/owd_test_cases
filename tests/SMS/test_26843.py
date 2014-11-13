@@ -52,7 +52,7 @@ class test_main(GaiaTestCase):
         #
         # Send a message to myself (long and short number to get a few threads).
         #
-        self.messages.createAndSendSMS(self.nums, "Test message")
+        self.messages.create_and_send_sms(self.nums, "Test message")
 
         thread_names = self.UTILS.element.getElements(DOM.Messages.thread_target_names, "Threads target names")
 

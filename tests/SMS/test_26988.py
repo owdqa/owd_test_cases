@@ -41,7 +41,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.phone_number], "Test message.")
+        self.messages.create_and_send_sms([self.phone_number], "Test message.")
         x = self.messages.wait_for_message()
 
         #

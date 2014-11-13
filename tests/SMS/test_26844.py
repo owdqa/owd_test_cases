@@ -57,7 +57,7 @@ class test_main(GaiaTestCase):
         #
         # Send a message to myself (long and short number to get a few threads).
         #
-        self.messages.createAndSendSMS([self.num1], self.test_msg)
+        self.messages.create_and_send_sms([self.num1], self.test_msg)
         self.UTILS.messages.create_incoming_sms(self.num1, self.test_msg)
         x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()

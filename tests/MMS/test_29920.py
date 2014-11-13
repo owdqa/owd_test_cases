@@ -69,7 +69,7 @@ class test_main(GaiaTestCase):
         # Create MMS.
         #
         self.messages.enterSMSMsg(self.test_msg)
-        self.messages.createMMSMusic()
+        self.messages.create_mms_music()
         self.music.click_on_song_mms()
         container = self.UTILS.element.getElement(DOM.Messages.attach_preview_video_audio_type, "Audio container")
         self.UTILS.test.test(container.get_attribute("data-attachment-type") == "audio", "Audio container found")

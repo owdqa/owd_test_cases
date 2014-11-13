@@ -46,11 +46,11 @@ class test_main(GaiaTestCase):
         self.messages.startNewSMS()
         self.messages.addNumbersInToField([self.phone_number])
         self.messages.enterSMSMsg(self.test_msg)
-        self.messages.createMMSImage()
+        self.messages.create_mms_image()
         self.gallery.click_on_thumbnail_at_position_mms(0)
 
         time.sleep(2)
-        self.messages.createMMSMusic()
+        self.messages.create_mms_music()
         self.music.click_on_song_mms()
 
         self.messages.sendSMS()

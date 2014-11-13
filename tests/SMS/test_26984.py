@@ -49,7 +49,7 @@ class test_main(GaiaTestCase):
         # Create and send a new test message.
         #
         expected = "Test {} number.".format(self.target_number)
-        self.messages.createAndSendSMS([self.phone_number], expected)
+        self.messages.create_and_send_sms([self.phone_number], expected)
         send_time = self.messages.last_sent_message_timestamp()
         self.messages.wait_for_message(send_time=send_time)
         self.messages.check_last_message_contents(expected)

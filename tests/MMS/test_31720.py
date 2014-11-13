@@ -76,7 +76,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.phone_number], sms_message)
+        self.messages.create_and_send_sms([self.phone_number], sms_message)
         self.messages.wait_for_message()
         x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
@@ -95,7 +95,7 @@ class test_main(GaiaTestCase):
         #
         self.messages.enterSMSMsg(sms_message)
 
-        self.messages.createMMSImage()
+        self.messages.create_mms_image()
         self.gallery.click_on_thumbnail_at_position_mms(0)
 
         #

@@ -35,7 +35,7 @@ class test_main(GaiaTestCase):
         # outgoing message
         #
         msg_text = str(time.time())
-        self.messages.createAndSendSMS([self.num], msg_text)
+        self.messages.create_and_send_sms([self.num], msg_text)
         self.messages.wait_for_message()
 
         #

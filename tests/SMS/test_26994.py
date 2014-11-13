@@ -29,7 +29,7 @@ class test_main(GaiaTestCase):
         # Create and send a new test message.
         #
         test_str = "Four 1234 seven 1234567 eight 12345678 nine 123456789 numbers."
-        self.messages.createAndSendSMS([self.phone_number], test_str)
+        self.messages.create_and_send_sms([self.phone_number], test_str)
         x = self.messages.wait_for_message()
 
         #

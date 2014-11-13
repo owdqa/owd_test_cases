@@ -32,5 +32,5 @@ class test_main(GaiaTestCase):
         # Launch messages app.
         #
         self.messages.launch()
-        self.messages.deleteAllThreads()
+        self.messages.delete_all_threads()
         self.UTILS.element.headerCheck("Messages")

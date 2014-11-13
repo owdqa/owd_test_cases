@@ -68,7 +68,7 @@ class test_main(GaiaTestCase):
         # Create MMS.
         #
         self.messages.enterSMSMsg(self.test_msg)
-        self.messages.createMMSVideo()
+        self.messages.create_mms_video()
         self.video.click_on_video_at_position_mms(0)
         container = self.UTILS.element.getElement(DOM.Messages.attach_preview_video_audio_type, "Video container")
         self.UTILS.test.test(container.get_attribute("data-attachment-type") == "video", "Video container found")

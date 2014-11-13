@@ -57,7 +57,7 @@ class test_main(GaiaTestCase):
 
         for num in self.nums:
             test_msg = "Test message at {} for {}".format(time.time(), num)
-            self.messages.createAndSendSMS([num], test_msg)
+            self.messages.create_and_send_sms([num], test_msg)
             if num == self.own_number:
                 send_time = self.messages.last_sent_message_timestamp()
                 self.messages.wait_for_message(send_time=send_time)

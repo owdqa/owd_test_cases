@@ -18,7 +18,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        test_url = "http://www.technicalinfo.net/papers/URLEmbeddedAttacks.html"
+        test_url = "http://qatecnico.blogspot.com.es/search/label/Automatizaci%C3%B3n%20de%20Pruebas"
 
         #
         # Wifi needs to be off for this test to work.

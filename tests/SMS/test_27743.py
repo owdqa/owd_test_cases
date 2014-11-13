@@ -41,7 +41,7 @@ class test_main(GaiaTestCase):
         # Send a message to create a thread (use number, not name as this
         # avoids some blocking bugs just now).
         #
-        self.messages.createAndSendSMS([self.contact_1["tel"]["value"]], "Test message.")
+        self.messages.create_and_send_sms([self.contact_1["tel"]["value"]], "Test message.")
         self.messages.wait_for_message()
 
         #

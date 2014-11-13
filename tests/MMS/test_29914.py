@@ -89,7 +89,7 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.general.add_file_to_device('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
 
-        self.messages.createMMSImage()
+        self.messages.create_mms_image()
         self.gallery.click_on_thumbnail_at_position_mms(0)
 
         #
@@ -108,7 +108,7 @@ class test_main(GaiaTestCase):
         typ = img_type.get_attribute("data-attachment-type")
 
         if typ != "img":
-            self.UTILS.test.quit_test("Incorrect file type. The file must be img ")
+            self.UTILS.test.test(False, "Incorrect file type. The file must be img ")
 
         self.messages.closeThread()
 

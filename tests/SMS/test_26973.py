@@ -61,7 +61,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.phone_number], "Hello {} old bean.".format(self.email_address))
+        self.messages.create_and_send_sms([self.phone_number], "Hello {} old bean.".format(self.email_address))
         send_time = self.messages.last_sent_message_timestamp()
         msg = self.messages.wait_for_message(send_time=send_time)
 

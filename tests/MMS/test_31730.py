@@ -71,13 +71,13 @@ class test_main(GaiaTestCase):
         self.messages.addNumbersInToField([self.phone_number])
         self.messages.enterSMSMsg(self.test_msg)
 
-        self.messages.createMMSImage()
+        self.messages.create_mms_image()
         self.gallery.click_on_thumbnail_at_position_mms(0)
 
-        self.messages.createMMSMusic()
+        self.messages.create_mms_music()
         self.music.click_on_song_mms()
 
-        self.messages.createMMSVideo()
+        self.messages.create_mms_video()
         self.video.click_on_video_at_position_mms(0)
 
         #

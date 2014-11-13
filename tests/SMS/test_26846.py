@@ -36,7 +36,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send some new tests messages.
         #
-        self.messages.createAndSendSMS([self.phone_number], self.test_msg)
+        self.messages.create_and_send_sms([self.phone_number], self.test_msg)
         self.messages.wait_for_message()
 
         #

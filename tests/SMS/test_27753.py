@@ -51,7 +51,7 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         msgapp = self.messages.launch()
-        self.messages.createAndSendSMS([self.phone_number], "Test")
+        self.messages.create_and_send_sms([self.phone_number], "Test")
         send_time = self.messages.last_sent_message_timestamp()
         self.messages.wait_for_message(send_time=send_time)
 

@@ -13,7 +13,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.browser = Browser(self)
-        self.testURL = self.UTILS.general.get_os_variable("GLOBAL_test_URL")
+        self.testURL = self.UTILS.general.get_os_variable("GLOBAL_TEST_URL")
 
         self.UTILS.reporting.logComment("Using " + self.testURL)
 

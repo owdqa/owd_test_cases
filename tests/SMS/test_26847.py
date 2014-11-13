@@ -59,7 +59,7 @@ class test_main(GaiaTestCase):
         # Create and send a new test message.
         #
         self.UTILS.reporting.debug("*** Sending SMS to {}".format(self.test_contacts[0]["tel"]["value"]))
-        self.messages.createAndSendSMS([self.test_contacts[0]["tel"]["value"]], self.test_msg)
+        self.messages.create_and_send_sms([self.test_contacts[0]["tel"]["value"]], self.test_msg)
         back_btn = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         back_btn.tap()
 
