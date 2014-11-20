@@ -35,7 +35,7 @@ class test_main(GaiaTestCase):
         self.browser = Browser(self)
         self.messages = Messages(self)
 
-        self.num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.num = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.url1 = "www.google.com"
         self.url2 = "www.wikipedia.org"
         self.test_msg = "Test message"

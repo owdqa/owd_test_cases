@@ -29,7 +29,7 @@ class test_main(GaiaTestCase):
         self.settings = Settings(self)
         self.download_manager = DownloadManager(self)
         self.music = Music(self)
-        self.test_url = self.UTILS.general.get_os_variable("GLOBAL_DOWNLOAD_URL")
+        self.test_url = self.UTILS.general.get_config_variable("GLOBAL_DOWNLOAD_URL")
         self.file_name = "GOSPEL.mp3"
         self.data_url = "{}/{}".format(self.test_url, self.file_name)
 

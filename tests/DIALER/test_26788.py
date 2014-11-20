@@ -52,7 +52,7 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.dialer.launch()
-        self.dialer.openCallLog()
+        self.dialer.open_call_log()
 
         entry = self.UTILS.element.getElement(("xpath",
                                                DOM.Dialer.call_log_number_xpath.format(self.test_contact["tel"]["value"])),

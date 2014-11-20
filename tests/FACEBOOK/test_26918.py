@@ -30,9 +30,9 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.facebook = Facebook(self)
 
-        self.fb_user = self.UTILS.general.get_os_variable("T19180_FB_USERNAME")
-        self.fb_pass = self.UTILS.general.get_os_variable("T19180_FB_PASSWORD")
-        self.fb_email = self.UTILS.general.get_os_variable("T19180_FB_LINK_EMAIL_ADDRESS")
+        self.fb_user = self.UTILS.general.get_config_variable("T19180_FB_USERNAME")
+        self.fb_pass = self.UTILS.general.get_config_variable("T19180_FB_PASSWORD")
+        self.fb_email = self.UTILS.general.get_config_variable("T19180_FB_LINK_EMAIL_ADDRESS")
 
         self.test_contact = MockContact()
         self.UTILS.general.insertContact(self.test_contact)

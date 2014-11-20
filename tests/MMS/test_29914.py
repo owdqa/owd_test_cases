@@ -45,13 +45,13 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        num1 = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.contact1 = MockContact(givenName="Name 1", familyName="Surname 1",
                                     name="Name 1 Surname 1", tel={"type": "Mobile", "value": num1})
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact1["tel"]["value"])
         self.UTILS.general.insertContact(self.contact1)
 
-        num2 = self.UTILS.general.get_os_variable("TARGET_CALL_NUMBER")
+        num2 = self.UTILS.general.get_config_variable("TARGET_CALL_NUMBER")
         self.contact2 = MockContact(givenName="Name 3", familyName="Surname 3",
                                     name="Name 3 Surname 3", tel={"type": "Mobile", "value": num2})
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact2["tel"]["value"])

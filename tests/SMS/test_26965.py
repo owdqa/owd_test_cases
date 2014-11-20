@@ -38,7 +38,7 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
         self.link = "www.wikipedia.org"
         self.test_msg = "Test with link: {} at {}".format(self.link, time.time())

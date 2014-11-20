@@ -33,9 +33,9 @@ class test_main(GaiaTestCase):
         #
         # Get own number and incoming
         #
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.reporting.logComment("Calling to " + self.phone_number)
-        self.incoming_number = self.UTILS.general.get_os_variable("GLOBAL_NUM_FOR_INCOMING_CALL")
+        self.incoming_number = self.UTILS.general.get_config_variable("GLOBAL_NUM_FOR_INCOMING_CALL")
 
         #
         # Generate the incoming call

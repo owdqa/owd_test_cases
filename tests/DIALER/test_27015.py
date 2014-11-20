@@ -31,7 +31,7 @@ class test_main(GaiaTestCase):
         _ = setup_translations(self)
 
         self.contact_1 = MockContact()
-        self.phone_number = "0034" + self.UTILS.general.get_os_variable("TARGET_CALL_NUMBER")
+        self.phone_number = "0034" + self.UTILS.general.get_config_variable("TARGET_CALL_NUMBER")
 
         # Generate an entry in the call log
         self.dialer.launch()

@@ -20,7 +20,7 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.gallery = Gallery(self)
 
-        self.test_num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.test_num = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.cont = MockContact(tel={"type": "Mobile", "value": self.test_num})
 
         self.UTILS.general.insertContact(self.cont)

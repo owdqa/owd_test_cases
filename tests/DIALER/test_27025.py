@@ -26,7 +26,7 @@ class test_main(GaiaTestCase):
         self.dialer = Dialer(self)
         self.contacts = Contacts(self)
 
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
 
         #
         # Create a call log entry
@@ -44,7 +44,7 @@ class test_main(GaiaTestCase):
         #
         # Open the call log and select Add to Contact.
         #
-        self.dialer.openCallLog()
+        self.dialer.open_call_log()
 
         edit_btn = self.UTILS.element.getElement(DOM.Dialer.call_log_edit_btn, "Edit button")
         edit_btn.tap()

@@ -40,7 +40,7 @@ class test_main(GaiaTestCase):
         #
         # Set the one we'll match to have a valid phone number.
         self.contact_1 = MockContact(tel={"type": "Mobile",
-                        "value": self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")})
+                        "value": self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")})
         self.contact_2 = MockContact()
         self.contact_3 = MockContact(givenName="AAAAAAAAAAAAAAAALEX",
                                     familyName="SMITHXXXXXXXX",

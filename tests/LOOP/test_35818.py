@@ -15,7 +15,7 @@ class main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
         self.settings = Settings(self)
-        self.phone_number_without_prefix = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")[3:]
+        self.phone_number_without_prefix = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")[3:]
 
         self.connect_to_network()
 

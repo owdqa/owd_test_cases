@@ -46,7 +46,7 @@ class test_main(GaiaTestCase):
 
         for contact in self.test_contacts:
             self.dialer.createMultipleCallLogEntries(contact["tel"]["value"], 2)
-        self.dialer.openCallLog()
+        self.dialer.open_call_log()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()

@@ -22,8 +22,8 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.settings = Settings(self)
 
-        self.gmail_user = self.UTILS.general.get_os_variable("GMAIL_1_USER")
-        self.gmail_passwd = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
+        self.gmail_user = self.UTILS.general.get_config_variable("GMAIL_1_USER")
+        self.gmail_passwd = self.UTILS.general.get_config_variable("GMAIL_1_PASS")
         self.number_of_gmail_contacts = 2
         #
         # Create test contacts.

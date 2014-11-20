@@ -25,7 +25,7 @@ class test_main(GaiaTestCase):
         self.dialer.launch()
 
 
-        self.dialer.openCallLog()
+        self.dialer.open_call_log()
 
         time.sleep(2)
         x = self.UTILS.debug.screenShotOnErr()

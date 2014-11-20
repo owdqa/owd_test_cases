@@ -13,11 +13,11 @@ class test_main(GaiaTestCase):
         self.settings = Settings(self)
         self.browser = Browser(self)
 
-        self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
-        self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
+        self.wifi_name = self.UTILS.general.get_config_variable("GLOBAL_WIFI_NAME")
+        self.wifi_user = self.UTILS.general.get_config_variable("GLOBAL_WIFI_USERNAME")
+        self.wifi_pass = self.UTILS.general.get_config_variable("GLOBAL_WIFI_PASSWORD")
 
-        self.testURL = self.UTILS.general.get_os_variable("GLOBAL_TEST_URL")
+        self.testURL = self.UTILS.general.get_config_variable("GLOBAL_TEST_URL")
 
         # switch off keyboard FTU screen
         self.data_layer.set_setting("keyboard.ftu.enabled", False)
