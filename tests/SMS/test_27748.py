@@ -66,7 +66,6 @@ class test_main(GaiaTestCase):
         #
         time.sleep(2)
         msg_list = self.UTILS.element.getElements(DOM.Messages.message_list, "Message list", False)
-        self.UTILS.debug.savePageHTML('/tmp/tests/test_123/messages.html')
         msgs = [(text, direction) for text in self.texts for direction in self.directions]
         for (msg, expected) in zip(msg_list, msgs):
             direction = "outgoing" if "outgoing" in msg.get_attribute("class") else "incoming"

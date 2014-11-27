@@ -28,15 +28,13 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        self.corporate_sim = self.UTILS.general.get_config_variable("CORPORATE_SIM") == "True"
-        self.UTILS.test.test(self.corporate_sim, "Using a corporate SIM. The test can continue", True)
+        #=======================================================================
+        # self.corporate_sim = self.UTILS.general.get_config_variable("CORPORATE_SIM") == "True"
+        # self.UTILS.test.test(self.corporate_sim, "Using a corporate SIM. The test can continue", True)
+        #=======================================================================
 
-        #
-        # Establish which phone number to use.
-        #
-        self.nums = [self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM"),
-                        self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM_SHORT")]
         self.own_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.nums = [self.own_number, self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM_SHORT")]
         self.data_layer.delete_all_sms()
         self.UTILS.statusbar.clearAllStatusBarNotifs()
 
@@ -45,14 +43,9 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Make sure we have no contacts.
-        #
         self.data_layer.remove_all_contacts()
 
-        #
         # Launch messages app.
-        #
         self.messages.launch()
 
         for num in self.nums:

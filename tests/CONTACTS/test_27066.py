@@ -1,3 +1,18 @@
+#===============================================================================
+# 27066: Type a number to look for a contact which has picture
+#
+# Pre-requisites
+# To have some contacts from SIM, facebook, gmail or hotmail with picture
+#
+# Procedure:
+# 1. Open Contacts app
+# 2. Tap on Search box
+# 3. Insert a phone number which matches with a contact with picture number
+#
+# Expected Result:
+# Contacts with picture also appear on the list shown when looking for
+# contacts by phone number
+#===============================================================================
 
 from gaiatest import GaiaTestCase
 
@@ -33,64 +48,49 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
         # Store our picture on the device.
-        #
         self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
 
-        #
-        # Launch contacts app.
-        #
+        # Create and verify contact
         self.contacts.launch()
-
-        #
-        # Create our contact.
-        #
         self.contacts.create_contact(self.contact, "gallery")
-
-        #
-        # Verify our contact.
-        #
         self.contacts.verify_image_in_all_contacts(self.contact['name'])
 
         #
         # Search for our contacts.
         #
-        self.contacts.search("12")
+        self.contacts.search("test")
         self.contacts.check_search_results(self.contact["givenName"])
         self.contacts.check_search_results(self.contact2["givenName"])
 
-        #
         # Verify that the image is present for the right contact.
-        #
-        boolOK1 = False
-        boolOK2 = True
         results_list = self.UTILS.element.getElements(DOM.Contacts.search_results_list, "Search results")
+        tuples = zip(results_list, [self.contact, self.contact2], [True, False])
+        for t in tuples:
+            ok = self.verify_img_for_contact(t[0], t[1], t[2])
+            self.UTILS.test.test(ok, "Image was {}found (Expected: {})".format("" if ok else "not ", t[2]))
 
-        for result in results_list:
-            if result.get_attribute("data-order") == self.contact["name"].replace(" ", ""):
-                # Contact 1
-                try:
-                    img = result.find_element("xpath", "//span[@data-type='img']")
-                    if ("blob" in img.get_attribute("data-src")):
-                        boolOK1 = True
-                except:
-                    self.UTILS.reporting.logResult("info", "No image present for contact {} | The image was indeed expected".format(result.text))
+        screenshot = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot of search results", screenshot)
 
-            elif result.get_attribute("data-order") == self.contact2["name"].replace(" ", ""):
-                # Contact 2
-                try:
-                    img = result.find_element("xpath", "//span[@data-type='img']")
-                    if not ("blob" in img.get_attribute("data-src")):
-                        boolOK2 = False
-                except:
-                    self.UTILS.reporting.logResult("info", "No image present for contact {} | NO image expected".format(result.text))
-                    boolOK2 = True
-            else:
-                self.UTILS.test.test(False, "This contact does not appear in the list: {}".format(result.text))
+    def verify_img_for_contact(self, result, contact, expect_image):
+        """Verify if an image is present for the result list item.
 
-        self.UTILS.test.test(boolOK1, "Contact 1 has image displayed.")
-        self.UTILS.test.test(boolOK2, "Contact 2 has no image displayed.")
-
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot of search results", x)
+        The result item must be the specified by contact.
+        Return True if the contact has a image and expected_image is True.
+        False otherwise.
+        """
+        found = False
+        if result.get_attribute("data-order") == contact["name"].replace(" ", "").upper():
+            try:
+                img = result.find_element("css selector", "li.contact-item[data-order*='{}'] span[data-type=img]".\
+                                          format(contact['givenName']))
+                if "blob" in img.get_attribute("data-src"):
+                    found = True
+            except:
+                self.UTILS.reporting.logResult("info", "No image present for contact {} |"\
+                                               " The image was indeed expected".format(result.text))
+        else:
+            self.UTILS.test.test(False, "This contact does not appear in the list: {}".format(result.text))
+        res = found == expect_image
+        return res

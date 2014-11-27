@@ -1,10 +1,22 @@
+#===============================================================================
+# 26887: Remove a contact from the favorites list
+#
+# Procedure:
+# 1- Open Address book
+# 2- Select a contact and enter in contact details
+# 3- Remove the contact from the favorites list
+#
+# Expected results:
+# The contact is removed from the list
+# Favourite button changes from active to inactive state.
+#===============================================================================
+
 from gaiatest import GaiaTestCase
 
 from OWDTestToolkit.utils.contacts import MockContact
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
-from OWDTestToolkit.apps.settings import Settings
 import time
 
 
@@ -43,42 +55,42 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "<b>Setting up a contact in favourites ...</b>")
         self.contacts.view_contact(self.contact['name'])
 
-        x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
-        self.UTILS.test.test(x.text == self.add_fav_str, "Toggle favourite button text is '{}'.".\
+        fav_btn = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
+        self.UTILS.test.test(fav_btn.text == self.add_fav_str, "Toggle favourite button text is '{}'.".\
                         format(self.add_fav_str))
-        x.tap()
-        x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (after tap)")
-        self.UTILS.test.test(x.text == self.remove_fav_str, "Toggle favourite button text is '{}'.".\
+        fav_btn.tap()
+        fav_btn = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (after tap)")
+        self.UTILS.test.test(fav_btn.text == self.remove_fav_str, "Toggle favourite button text is '{}'.".\
                         format(self.remove_fav_str))
 
-        x = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
-        x.tap()
+        back_btn = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
+        back_btn.tap()
 
         string = self.contact['givenName'] + self.contact['familyName']
-        favs = ("xpath", DOM.Contacts.favourites_list_xpath.format(string))
+        favs = ("xpath", DOM.Contacts.favourites_list_xpath.format(string.upper()))
         self.UTILS.element.waitForElements(favs, "'" + self.contact['name'] + "' in the favourites list")
 
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot at this point", x)
+        screenshot = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot at this point", screenshot)
 
         self.UTILS.reporting.logResult("info", "<b>removing contact from favourites ...</b>")
         self.contacts.view_contact(self.contact['name'])
 
-        x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
-        self.UTILS.test.test(x.text == self.remove_fav_str, "Toggle favourite button text is '{}'.".\
+        fav_btn = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
+        self.UTILS.test.test(fav_btn.text == self.remove_fav_str, "Toggle favourite button text is '{}'.".\
                         format(self.remove_fav_str))
-        x.tap()
-        x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (after tap)")
-        self.UTILS.test.test(x.text == self.add_fav_str, "Toggle favourite button text is '{}'.".\
+        fav_btn.tap()
+        fav_btn = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (after tap)")
+        self.UTILS.test.test(fav_btn.text == self.add_fav_str, "Toggle favourite button text is '{}'.".\
                         format(self.add_fav_str))
 
-        x = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
-        x.tap()
+        back_btn = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
+        back_btn.tap()
 
         time.sleep(1)
         string = self.contact['givenName'] + " " + self.contact['familyName']
-        favs = ("xpath", DOM.Contacts.favourites_list_xpath.format(string))
+        favs = ("xpath", DOM.Contacts.favourites_list_xpath.format(string.upper()))
         self.UTILS.element.waitForNotElements(favs, "'" + self.contact['name'] + "' in the favourites list")
 
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot at this point", x)
+        screenshot = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot at this point", screenshot)

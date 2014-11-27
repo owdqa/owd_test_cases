@@ -3,7 +3,6 @@ from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.calendar import Calendar
 
 
-
 class test_main(GaiaTestCase):
 
     day_num = 0

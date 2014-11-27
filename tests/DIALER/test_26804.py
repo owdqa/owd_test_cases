@@ -30,7 +30,7 @@ class test_main(GaiaTestCase):
         self.dialer.launch()
         self.dialer.enterNumber(self.num)
 
-        self.dialer.callThisNumber()
+        self.dialer.call_this_number()
 
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)
         x = self.UTILS.debug.screenShotOnErr()

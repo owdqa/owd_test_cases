@@ -38,7 +38,7 @@ class test_main(GaiaTestCase):
         # Delete all previous alarms.
         #
         #
-        self.clock.deleteAllAlarms()
+        self.clock.delete_all_alarms()
 
         #
         # Create an alarm that is 1 minute in the future.
@@ -58,7 +58,7 @@ class test_main(GaiaTestCase):
         t = datetime.datetime.now() + datetime.timedelta(minutes=1)
 
         title = "Test alarm"
-        self.clock.createAlarm(t.hour, t.minute, title)
+        self.clock.create_alarm(t.hour, t.minute, title)
 
         #
         # Return to the main screen (since this is where the user will

@@ -1,18 +1,18 @@
 # OWD-26340
 # Send email via imap with gmail.com - verify the email is sent to the respective account
 #   PROCEDURE
-#     1- Open email app 
-#     2- Select gmail account 
-#     3- Insert a valid gmail account and password 
-#     4- Press next button 
-#     5- Press new email button 
-#     6- Insert an email address to send the email in To: field 
-#     7- Insert a text in Subject: field 
-#     8- Insert the email content 
+#     1- Open email app
+#     2- Select gmail account
+#     3- Insert a valid gmail account and password
+#     4- Press next button
+#     5- Press new email button
+#     6- Insert an email address to send the email in To: field
+#     7- Insert a text in Subject: field
+#     8- Insert the email content
 #     9- Press send button
-# 
+#
 #   EXPECTED RESULT
-#       The email is sent and appears in Sent folder 
+#       The email is sent and appears in Sent folder
 
 import sys
 sys.path.insert(1, "./")
@@ -24,7 +24,7 @@ class test_26340(Emailing):
 
     def __init__(self, *args, **kwargs):
         kwargs['restart'] = True
-        super(test_main, self).__init__(*args, **kwargs)
+        super(test_26340, self).__init__(*args, **kwargs)
 
     def setUp(self):
         self.testNum = self.__class__.__name__

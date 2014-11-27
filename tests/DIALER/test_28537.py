@@ -38,7 +38,7 @@ class test_main(GaiaTestCase):
 
         # Call
         self.dialer.enterNumber(self.contact_number)
-        self.dialer.callThisNumber()
+        self.dialer.call_this_number()
 
         time.sleep(2)
 

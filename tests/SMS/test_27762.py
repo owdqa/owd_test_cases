@@ -55,7 +55,7 @@ class test_main(GaiaTestCase):
         #
         # Dial the number.
         #
-        self.Dialer.callThisNumber()
+        self.Dialer.call_this_number()
 
         #
         # Wait 2 seconds, then hangup.

@@ -18,7 +18,6 @@ from OWDTestToolkit.apps.everythingme import EverythingMe
 from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit import DOM
 from marionette import Actions
-import time
 
 
 class test_main(GaiaTestCase):

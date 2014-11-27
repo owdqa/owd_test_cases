@@ -1,9 +1,8 @@
 #
-# TC_MMSTC-FEATR-003b
-# Receiving MP4 audio file
+# 31728 - Receiving MP4 audio file
+
 from gaiatest import GaiaTestCase
 
-from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.music import Music

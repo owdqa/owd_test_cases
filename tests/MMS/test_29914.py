@@ -51,7 +51,7 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact1["tel"]["value"])
         self.UTILS.general.insertContact(self.contact1)
 
-        num2 = self.UTILS.general.get_config_variable("TARGET_CALL_NUMBER")
+        num2 = self.UTILS.general.get_config_variable("GLOBAL_NUM_FOR_INCOMING_CALL")
         self.contact2 = MockContact(givenName="Name 3", familyName="Surname 3",
                                     name="Name 3 Surname 3", tel={"type": "Mobile", "value": num2})
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact2["tel"]["value"])
@@ -67,34 +67,22 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.messages.launch()
 
-        #
         # Create a new SMS
-        #
         self.messages.startNewSMS()
 
-        #
-        # Insert the phone number in the To field
-        #
-        #
+        # Insert the phone numbers in the To field
         for num in self.test_nums:
             self.messages.addNumbersInToField([num])
 
-        #
         # Create MMS.
-        #
         self.messages.enterSMSMsg(self.test_msg)
 
-        #
         # Add an image file
-        #
         self.UTILS.general.add_file_to_device('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
-
         self.messages.create_mms_image()
         self.gallery.click_on_thumbnail_at_position_mms(0)
 
-        #
         # Click send and wait for the message to be received
-        #
         self.messages.sendSMS()
         send_time = self.messages.last_sent_message_timestamp()
         self.messages.closeThread()

@@ -32,6 +32,7 @@ class test_main(GaiaTestCase):
 
     _group_name = "Games"
     _group_games_id = "207"
+
     def __init__(self, *args, **kwargs):
         kwargs['restart'] = True
         super(test_main, self).__init__(*args, **kwargs)
@@ -109,6 +110,7 @@ class test_main(GaiaTestCase):
         #
         # Go back to the homescreen and check it's installed.
         #
+        self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
         self.UTILS.test.test(self.UTILS.app.launchAppViaHomescreen(app_name), app_name + " is installed.", True)
 
         #

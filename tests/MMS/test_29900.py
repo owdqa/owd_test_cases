@@ -63,7 +63,7 @@ class test_main(GaiaTestCase):
         #
         # Configure Auto Retrieve as "on_with_r = On with roaming option" from messaging settings
         #
-        self.settings.configureMMSAutoRetrieve("on_with_r")
+        self.settings.configure_mms_auto_retrieve("on_with_r")
 
         self.messages.create_and_send_mms("image", [self.phone_number], self.test_msg)
         self.messages.wait_for_message()

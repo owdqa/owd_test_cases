@@ -3,14 +3,14 @@
 # received from the correct account the email was sent from
 #
 #   PROCEDURE
-#       1- Open email app 
-#       2- Select hotmail account 
-#       3- Insert a valid hotmail account and password 
-#       4- Press next button 
-#       5- Open Inbox folder 
-#       6- Send an email(with subject and content) from another account to the email address configured in the device 
+#       1- Open email app
+#       2- Select hotmail account
+#       3- Insert a valid hotmail account and password
+#       4- Press next button
+#       5- Open Inbox folder
+#       6- Send an email(with subject and content) from another account to the email address configured in the device
 #       7- Press update button in the device
-#   
+#
 #   EXPECTED RESULT
 #       The email is received an shows the correct information
 import time
@@ -20,11 +20,11 @@ from gaiatest import GaiaTestCase
 from tests.EMAIL.shared_test_functions.emailing import Emailing
 
 
-class test_26338(Emailing):
+class test_26339(Emailing):
 
     def __init__(self, *args, **kwargs):
         kwargs['restart'] = True
-        super(test_main, self).__init__(*args, **kwargs)
+        super(test_26339, self).__init__(*args, **kwargs)
 
     def setUp(self):
         self.testNum = self.__class__.__name__
