@@ -28,11 +28,6 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        #=======================================================================
-        # self.corporate_sim = self.UTILS.general.get_config_variable("CORPORATE_SIM") == "True"
-        # self.UTILS.test.test(self.corporate_sim, "Using a corporate SIM. The test can continue", True)
-        #=======================================================================
-
         self.own_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.nums = [self.own_number, self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM_SHORT")]
         self.data_layer.delete_all_sms()
