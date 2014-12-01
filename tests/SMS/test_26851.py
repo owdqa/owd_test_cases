@@ -33,7 +33,7 @@ class test_main(GaiaTestCase):
         self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)
 
         # Lock the phone immediately.
-        self.device.lock()
+        self.data_layer.set_setting("lockscreen.enabled", True)
 
         # Wait for the notification.
         self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)

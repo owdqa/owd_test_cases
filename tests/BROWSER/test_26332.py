@@ -28,11 +28,6 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         #
-        # Forget all networks (so we have to chose one).
-        # Roy- *might* want this, but if we're already connected then this is a 'pass' anyway.
-        # self.data_layer.forget_all_networks()
-
-        #
         # Open the settings application.
         #
         self.settings.launch()
