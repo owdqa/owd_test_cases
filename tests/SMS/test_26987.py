@@ -18,7 +18,7 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.contacts = Contacts(self)
 
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -33,8 +33,8 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.phone_number], "Test message.")
-        x = self.messages.waitForReceivedMsgInThisThread()
+        self.messages.create_and_send_sms([self.phone_number], "Test message.")
+        x = self.messages.wait_for_message()
 
         #
         # Tap the header to create a contact.

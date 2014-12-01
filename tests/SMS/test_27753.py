@@ -37,7 +37,7 @@ class test_main(GaiaTestCase):
         #
         # Prepare the contact we're going to insert.
         #
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.contact = MockContact(tel={'type': '', 'value': self.phone_number})
         self.test_msg = "Test."
 
@@ -51,9 +51,9 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         msgapp = self.messages.launch()
-        self.messages.createAndSendSMS([self.phone_number], "Test")
+        self.messages.create_and_send_sms([self.phone_number], "Test")
         send_time = self.messages.last_sent_message_timestamp()
-        self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+        self.messages.wait_for_message(send_time=send_time)
 
         x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()

@@ -20,7 +20,7 @@ class main(GaiaTestCase):
         self.settings = Settings(self)
         _ = setup_translations(self)
 
-        self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
+        self.fxa_user = self.UTILS.general.get_config_variable("GLOBAL_FXA_USER")
         self.fxa_fake_pass = "You_shall_not_pass"
         self.expected_error_msg = _("Invalid Password")
 

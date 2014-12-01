@@ -33,8 +33,8 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use and set up the contacts.
         #
-        self.nums = [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM"),
-                        self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")]
+        self.nums = [self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM"),
+                        self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM_SHORT")]
 
         self.test_contacts = [MockContact(tel={'type': 'Mobile', 'value': num}) for num in self.nums]
         map(self.UTILS.general.insertContact, self.test_contacts)
@@ -52,7 +52,7 @@ class test_main(GaiaTestCase):
         #
         # Send a message to myself (long and short number to get a few threads).
         #
-        self.messages.createAndSendSMS(self.nums, "Test message")
+        self.messages.create_and_send_sms(self.nums, "Test message")
 
         thread_names = self.UTILS.element.getElements(DOM.Messages.thread_target_names, "Threads target names")
 
@@ -60,4 +60,4 @@ class test_main(GaiaTestCase):
         bools = [title.text in contacts_names for title in thread_names]
 
         msgs = ["A thread exists for {}".format(elem) for elem in contacts_names]
-        map(self.UTILS.test.TEST, bools, msgs)
+        map(self.UTILS.test.test, bools, msgs)

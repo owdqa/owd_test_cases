@@ -11,7 +11,10 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     test_msg = "Test."
-    _RESTART_DEVICE = True
+
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
         #
@@ -25,7 +28,7 @@ class test_main(GaiaTestCase):
         #
         # Prepare the contact we're going to insert.
         #
-        tlf = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        tlf = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.contact = MockContact(tel={'type': 'Mobile', 'value': tlf})
 
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact["tel"]["value"])

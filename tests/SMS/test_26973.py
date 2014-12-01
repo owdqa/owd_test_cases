@@ -37,15 +37,15 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.contacts = Contacts(self)
 
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.email_address = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.email_address = self.UTILS.general.get_config_variable("GMAIL_1_EMAIL")
 
         self.cont = MockContact(email=[{"type": "Personal", "value": "email1@nowhere.com"},
                                {"type": "Personal", "value": "email2@nowhere.com"},
                                {"type": "Personal", "value": "email3@nowhere.com"}])
         self.UTILS.general.insertContact(self.cont)
 
-        self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
         self.data_layer.delete_all_sms()
 
     def tearDown(self):
@@ -61,9 +61,9 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.phone_number], "Hello {} old bean.".format(self.email_address))
+        self.messages.create_and_send_sms([self.phone_number], "Hello {} old bean.".format(self.email_address))
         send_time = self.messages.last_sent_message_timestamp()
-        msg = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+        msg = self.messages.wait_for_message(send_time=send_time)
 
         #
         # Press the email link.

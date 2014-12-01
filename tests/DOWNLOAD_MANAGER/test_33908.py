@@ -33,7 +33,7 @@ class test_main(GaiaTestCase):
         self.browser = Browser(self)
         self.settings = Settings(self)
         self.download_manager = DownloadManager(self)
-        self.testURL = self.UTILS.general.get_os_variable("GLOBAL_DOWNLOAD_URL")
+        self.testURL = self.UTILS.general.get_config_variable("GLOBAL_DOWNLOAD_URL")
         self.file_names = ["Toast.doc", "Porridge.doc"]
 
         self.connect_to_network()

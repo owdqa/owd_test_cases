@@ -63,7 +63,7 @@ class test_main(GaiaTestCase):
         #
         # Go back to contacts start page
         #
-        
+    
         back = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
         self.UTILS.element.simulateClick(back)
 

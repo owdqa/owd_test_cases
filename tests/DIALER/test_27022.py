@@ -19,7 +19,7 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.dialer = Dialer(self)
 
-        self.phone_number = self.UTILS.general.get_os_variable("TARGET_CALL_NUMBER")
+        self.phone_number = self.UTILS.general.get_config_variable("TARGET_CALL_NUMBER")
 
         self.dialer.launch()
         self.dialer.callLog_clearAll()
@@ -33,7 +33,7 @@ class test_main(GaiaTestCase):
         #
         # Open the call log and tap on the phone_number.
         #
-        self.dialer.openCallLog()
+        self.dialer.open_call_log()
         self.dialer.callLog_call(self.phone_number)
         time.sleep(3)
         self.dialer.hangUp()

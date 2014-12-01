@@ -22,8 +22,8 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.target_email = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.target_email = self.UTILS.general.get_config_variable("GMAIL_1_EMAIL")
 
         self.msg = "Testing email link with " + self.target_email
 
@@ -34,7 +34,7 @@ class test_main(GaiaTestCase):
     def test_run(self):
 
         self.connect_to_network()
-    
+
         #
         # Launch messages app.
         #
@@ -43,13 +43,13 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.phone_number], self.msg)
+        self.messages.create_and_send_sms([self.phone_number], self.msg)
   
         #
         # Wait for the last message in this thread to be a 'received' one
         # and click the link.
         #
-        x = self.messages.waitForReceivedMsgInThisThread()
+        x = self.messages.wait_for_message()
         self.UTILS.test.test(x, "Received a message.", True)
 
         #
@@ -61,7 +61,7 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(DOM.Messages.header_add_to_contact_btn,
                                     "'Add to an existing contact' button")
         x.tap()
-    
+
         #
         # Check for warning message.
         #

@@ -20,8 +20,8 @@ class main(GaiaTestCase):
         self.loop = Loop(self)
         self.contacts = Contacts(self)
         self.settings = Settings(self)
-        self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
-        self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
+        self.fxa_user = self.UTILS.general.get_config_variable("GLOBAL_FXA_USER")
+        self.fxa_pass = self.UTILS.general.get_config_variable("GLOBAL_FXA_PASS")
 
         self.connect_to_network()
 
@@ -61,6 +61,6 @@ class main(GaiaTestCase):
             self.loop.allow_permission_ffox_login()
             self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
 
-            self.loop.open_address_book()       
+            self.loop.open_address_book()   
             self.contacts.search(self.target_name)
             self.contacts.check_search_results(self.target_name)

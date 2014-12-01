@@ -36,5 +36,4 @@ class test_main(GaiaTestCase):
         # Open our URL.
         #
         self.browser.open_url(url1)
-        self.browser.open_url(url2, timeout=60) # bbc is heavier
-        
+        self.browser.open_url(url2, timeout=60)  # bbc is heavier

@@ -27,9 +27,9 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.msg = "Test {}".format(time.time())
-        self.cp_incoming_number = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
+        self.cp_incoming_number = self.UTILS.general.get_config_variable("GLOBAL_CP_NUMBER").split(',')
         self.data_layer.delete_all_sms()
 
     def tearDown(self):

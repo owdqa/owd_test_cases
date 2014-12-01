@@ -29,8 +29,8 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.contacts = Contacts(self)
 
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.emailAddy = self.UTILS.general.get_config_variable("GMAIL_1_EMAIL")
         self.test_msg = "Email {} one, email {} two, email {} three.".\
                         format("one@test.com", self.emailAddy, "three@test.com")
         self.data_layer.delete_all_sms()
@@ -48,9 +48,9 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.phone_number], self.test_msg)
+        self.messages.create_and_send_sms([self.phone_number], self.test_msg)
         send_time = self.messages.last_sent_message_timestamp()
-        x = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+        x = self.messages.wait_for_message(send_time=send_time)
 
         #
         # Long press the 2nd email link.

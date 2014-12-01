@@ -4,7 +4,7 @@
 #       2. Select "Cancel"
 # ** Expected Results
 #       2. User is taken back to the dialer
-#      
+#  
 import time
 import sys
 sys.path.insert(1, "./")
@@ -27,7 +27,7 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         _ = setup_translations(self)
 
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.test_contact = MockContact()
         self.UTILS.general.insertContact(self.test_contact)
 

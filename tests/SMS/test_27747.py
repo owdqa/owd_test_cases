@@ -21,7 +21,7 @@ class test_main(GaiaTestCase):
         #
         # Prepare the contact we're going to insert.
         #
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.contact = MockContact(givenName = '', familyName = '', name = '', tel = {'type': '', 'value': self.phone_number})
 
         self.UTILS.general.insertContact(self.contact)
@@ -51,7 +51,7 @@ class test_main(GaiaTestCase):
         #
         # Wait for the last message in this thread to be a 'received' one.
         #
-        self.messages.waitForReceivedMsgInThisThread()
+        self.messages.wait_for_message()
 
         #
         # Verify the number is shown in the header as there is no contact name

@@ -35,7 +35,7 @@ class test_main(GaiaTestCase):
         self.browser = Browser(self)
         self.messages = Messages(self)
 
-        self.num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.num = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.url1 = "www.google.com"
         self.url2 = "www.wikipedia.org"
         self.test_msg = "Test message"
@@ -56,9 +56,9 @@ class test_main(GaiaTestCase):
         # Open the SMS app, send a message then jump back to the browser.
         #
         self.messages.launch()
-        self.messages.createAndSendSMS([self.num], self.test_msg)
+        self.messages.create_and_send_sms([self.num], self.test_msg)
         send_time = self.messages.last_sent_message_timestamp()
-        self.messages.waitForReceivedMsgInThisThread(send_time)
+        self.messages.wait_for_message(send_time)
 
         self.apps.kill_all()
 

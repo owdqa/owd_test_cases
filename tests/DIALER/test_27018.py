@@ -14,7 +14,7 @@ class test_main(GaiaTestCase):
         self.dialer     = Dialer(self)
         self.contacts   = Contacts(self)
 
-        self.num  = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.num  = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -42,6 +42,6 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
         self.UTILS.element.waitForElements( ("xpath", "//*[contains(text(), 'Cannot add to contact')]"), 
                                     "Warning that there are no contacts.", True, 5, False)
-    
+
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screen shot of current position:", x)

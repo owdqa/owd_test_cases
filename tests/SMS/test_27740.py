@@ -15,7 +15,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
 
         # Start with no SMS.
         self.data_layer.delete_all_sms()
@@ -35,7 +35,7 @@ class test_main(GaiaTestCase):
         # outgoing message..
         #
         msg_text = str(time.time())
-        self.messages.createAndSendSMS([self.phone_number], msg_text)
+        self.messages.create_and_send_sms([self.phone_number], msg_text)
 
         #
         # Return to the threads view.

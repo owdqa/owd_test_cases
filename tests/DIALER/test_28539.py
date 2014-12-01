@@ -38,7 +38,7 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.dialer.launch()
 
-        #x = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        #x = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         # create logs entries from contacts
         self.dialer.createMultipleCallLogEntries(self.contact_number_1, 3)
         self.dialer.createMultipleCallLogEntries(self.contact_number_2, 2)

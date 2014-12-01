@@ -42,7 +42,7 @@ class test_main(GaiaTestCase):
         #
         # Insert the phone number in the To field
         #
-        self.messages.addNumbersInToField([self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")])
+        self.messages.addNumbersInToField([self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")])
 
         #
         # Create SMS.

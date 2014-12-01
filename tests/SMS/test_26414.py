@@ -16,7 +16,7 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
 
@@ -43,13 +43,13 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.phone_number], sms_message)
+        self.messages.create_and_send_sms([self.phone_number], sms_message)
         send_time = self.messages.last_sent_message_timestamp()
 
         #
         # Wait for the last message in this thread to be a 'received' one.
         #
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+        returnedSMS = self.messages.wait_for_message(send_time=send_time)
         self.UTILS.test.test(returnedSMS, "A received message appeared in the thread.", True)
 
         self.messages.check_last_message_contents(sms_message)

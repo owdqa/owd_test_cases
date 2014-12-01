@@ -26,8 +26,8 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.settings = Settings(self)
 
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.cp_incoming_number = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.cp_incoming_number = self.UTILS.general.get_config_variable("GLOBAL_CP_NUMBER").split(',')
         self.test_msg = "Test message."
         self.data_layer.delete_all_sms()
 
@@ -51,7 +51,7 @@ class test_main(GaiaTestCase):
         # Check the time of this message.
         #
         time.sleep(2)
-        _orig_msg_timestamp = self.messages.timeOfLastMessageInThread()
+        _orig_msg_timestamp = self.messages.time_of_last_message_in_thread()
         self.UTILS.reporting.debug("*** original message timestamp = '{}'".format(_orig_msg_timestamp))
 
         #
@@ -64,7 +64,7 @@ class test_main(GaiaTestCase):
         #
         # Get the time of this thread.
         #
-        _orig_thread_timestamp = self.messages.timeOfThread(title)
+        _orig_thread_timestamp = self.messages.time_of_thread(title)
         self.UTILS.reporting.debug("*** original thread timestamp = '{}'".format(_orig_thread_timestamp))
 
         #
@@ -81,7 +81,7 @@ class test_main(GaiaTestCase):
         #
         # Get the new thread time.
         #
-        _new_thread_timestamp = self.messages.timeOfThread(title)
+        _new_thread_timestamp = self.messages.time_of_thread(title)
         self.UTILS.reporting.debug("*** new thread timestamp = '{}'".format(_new_thread_timestamp))
 
         #
@@ -92,7 +92,7 @@ class test_main(GaiaTestCase):
         #
         # Get the new message time.
         #
-        _new_msg_timestamp = self.messages.timeOfLastMessageInThread()
+        _new_msg_timestamp = self.messages.time_of_last_message_in_thread()
         self.UTILS.reporting.debug("*** new message timestamp = '{}'".format(_new_msg_timestamp))
 
         self.UTILS.test.test(_orig_thread_timestamp != _new_thread_timestamp, "Thread timestamp has changed.")

@@ -62,7 +62,7 @@ class test_main(GaiaTestCase):
         time.sleep(2)
 
         #
-        # TEST: this automatically opens the 'send SMS' screen, so
+        # test: this automatically opens the 'send SMS' screen, so
         # check the correct name is in the header of this sms.
         #
         self.UTILS.element.headerCheck("1 recipient")

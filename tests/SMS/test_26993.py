@@ -36,7 +36,7 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.Dialer = Dialer(self)
 
-        phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         prefix = "0034"
         self.num1 = prefix + phone_number if not phone_number.startswith("+34") else prefix + phone_number[3:]
         self.num2 = phone_number[3:] if phone_number.startswith("+34") else phone_number
@@ -69,7 +69,7 @@ class test_main(GaiaTestCase):
         self.messages.enterSMSMsg("Test message.")
         self.messages.sendSMS()
 
-        x = self.messages.waitForReceivedMsgInThisThread()
+        x = self.messages.wait_for_message()
 
         #
         # Tap the header to call.

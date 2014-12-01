@@ -32,7 +32,7 @@ class test_main(GaiaTestCase):
         # Get details of our test contacts.
         #
         self.contact = MockContact()
-        self.contact['tel']['value'] = self.UTILS.general.get_os_variable("TARGET_CALL_NUMBER")
+        self.contact['tel']['value'] = self.UTILS.general.get_config_variable("TARGET_CALL_NUMBER")
         self.UTILS.general.insertContact(self.contact)
         self.data_layer.connect_to_wifi()
 

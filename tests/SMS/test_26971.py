@@ -34,8 +34,8 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.incoming_number = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.incoming_number = self.UTILS.general.get_config_variable("GLOBAL_CP_NUMBER").split(',')
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
         self.emails = ["email1@test.com", "email2@test.com"]
         self.test_msg = "Test with email addresses: {} and {} at {}".format(self.emails[0], self.emails[1],
@@ -51,9 +51,9 @@ class test_main(GaiaTestCase):
 
         self.messages.launch()
 
-        self.messages.createAndSendSMS([self.phone_number], self.test_msg)
+        self.messages.create_and_send_sms([self.phone_number], self.test_msg)
         send_time = self.messages.last_sent_message_timestamp()
-        msg = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+        msg = self.messages.wait_for_message(send_time=send_time)
 
         #
         #Verify that a valid URL appears highlight on message received.

@@ -30,7 +30,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        self.UTILS.general.addFileToDevice('./tests/_resources/img1.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/img1.jpg', destination='DCIM/100MZLLA')
         self.gallery.launch()
         self.gallery.wait_for_thumbnails_number(1)
         self.gallery.delete_thumbnails([0])

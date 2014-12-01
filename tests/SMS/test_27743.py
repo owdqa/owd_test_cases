@@ -20,7 +20,7 @@ class test_main(GaiaTestCase):
         #
         # Prepare the contact we're going to insert.
         #
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.contact_1 = MockContact(tel={'type': '', 'value': self.phone_number})
         self.contact_2 = MockContact(tel={'type': '', 'value': self.phone_number})
 
@@ -41,8 +41,8 @@ class test_main(GaiaTestCase):
         # Send a message to create a thread (use number, not name as this
         # avoids some blocking bugs just now).
         #
-        self.messages.createAndSendSMS([self.contact_1["tel"]["value"]], "Test message.")
-        self.messages.waitForReceivedMsgInThisThread()
+        self.messages.create_and_send_sms([self.contact_1["tel"]["value"]], "Test message.")
+        self.messages.wait_for_message()
 
         #
         # Open contacts app and modify the contact used to send the SMS in the previous step

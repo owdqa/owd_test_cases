@@ -24,7 +24,9 @@ from tests.EMAIL.shared_test_functions.emailing import Emailing
 
 class test_26341(Emailing):
 
-    _RESTART_DEVICE = True
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_26341, self).__init__(*args, **kwargs)
 
     def setUp(self):
         self.testNum = self.__class__.__name__
@@ -35,14 +37,14 @@ class test_26341(Emailing):
         #
         # Email parameters
         #
-        self.username1 = self.UTILS.general.get_os_variable(self.testType.upper() + "_1_USER")
-        self.email1 = self.UTILS.general.get_os_variable(self.testType.upper() + "_1_EMAIL")
-        self.passwd1 = self.UTILS.general.get_os_variable(self.testType.upper() + "_1_PASS")
+        self.username1 = self.UTILS.general.get_config_variable(self.testType.upper() + "_1_USER")
+        self.email1 = self.UTILS.general.get_config_variable(self.testType.upper() + "_1_EMAIL")
+        self.passwd1 = self.UTILS.general.get_config_variable(self.testType.upper() + "_1_PASS")
         self.user1 = {"username": self.username1, "email": self.email1, "pass": self.passwd1}
 
-        self.username2 = self.UTILS.general.get_os_variable(self.testType.upper() + "_2_USER")
-        self.email2 = self.UTILS.general.get_os_variable(self.testType.upper() + "_2_EMAIL")
-        self.passwd2 = self.UTILS.general.get_os_variable(self.testType.upper() + "_2_PASS")
+        self.username2 = self.UTILS.general.get_config_variable(self.testType.upper() + "_2_USER")
+        self.email2 = self.UTILS.general.get_config_variable(self.testType.upper() + "_2_EMAIL")
+        self.passwd2 = self.UTILS.general.get_config_variable(self.testType.upper() + "_2_PASS")
         self.user2 = {"username": self.username2, "email": self.email2, "pass": self.passwd2}
 
         self.data_layer.connect_to_wifi()

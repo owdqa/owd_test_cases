@@ -22,10 +22,10 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.Dialer = Dialer(self)
 
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
 
         self.dummy_nums = ["00342222222", "+343333333"]
-        self.incoming_sms_num = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
+        self.incoming_sms_num = self.UTILS.general.get_config_variable("GLOBAL_CP_NUMBER").split(',')
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()

@@ -17,7 +17,9 @@ from OWDTestToolkit.apps.settings import Settings
 
 class test_main(GaiaTestCase):
 
-    _RESTART_DEVICE = True
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
         #
@@ -27,9 +29,9 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.settings = Settings(self)
 
-        self.wifi_name = self.UTILS.general.get_os_variable("GLOBAL_WIFI_NAME")
-        self.wifi_user = self.UTILS.general.get_os_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass = self.UTILS.general.get_os_variable("GLOBAL_WIFI_PASSWORD")
+        self.wifi_name = self.UTILS.general.get_config_variable("GLOBAL_WIFI_NAME")
+        self.wifi_user = self.UTILS.general.get_config_variable("GLOBAL_WIFI_USERNAME")
+        self.wifi_pass = self.UTILS.general.get_config_variable("GLOBAL_WIFI_PASSWORD")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()

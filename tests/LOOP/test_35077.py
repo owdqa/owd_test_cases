@@ -1,4 +1,4 @@
-# OWD-35077: Verify that it is possible to select a contact from the Address Book.    
+# OWD-35077: Verify that it is possible to select a contact from the Address Book.
 
 import time
 import sys
@@ -19,8 +19,8 @@ class main(GaiaTestCase):
         self.loop = Loop(self)
         self.settings = Settings(self)
         self.test_contact = MockContact()
-        self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
-        self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
+        self.fxa_user = self.UTILS.general.get_config_variable("GLOBAL_FXA_USER")
+        self.fxa_pass = self.UTILS.general.get_config_variable("GLOBAL_FXA_PASS")
         self.UTILS.general.insertContact(self.test_contact)
 
         self.connect_to_network()

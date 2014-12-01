@@ -24,8 +24,8 @@ class main(GaiaTestCase):
         self.test_contact = MockContact()
         self.UTILS.general.insertContact(self.test_contact)
 
-        self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
-        self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
+        self.fxa_user = self.UTILS.general.get_config_variable("GLOBAL_FXA_USER")
+        self.fxa_pass = self.UTILS.general.get_config_variable("GLOBAL_FXA_PASS")
         _ = setup_translations(self)
         self.expected_message = _("No problem! Just share the following link and they can call you back from"
                           " any browser.")

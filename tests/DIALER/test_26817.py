@@ -25,7 +25,7 @@ class test_main(GaiaTestCase):
         self.dialer = Dialer(self)
         self.contacts = Contacts(self)
 
-        num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        num = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.test_contact = MockContact(tel={'type': 'Mobile', 'value': num})
 
     def tearDown(self):
@@ -37,7 +37,7 @@ class test_main(GaiaTestCase):
         self.dialer.callLog_clearAll()
 
         self.dialer.createMultipleCallLogEntries(self.test_contact["tel"]["value"], 1)
-        self.dialer.openCallLog()
+        self.dialer.open_call_log()
 
         _number_el = DOM.Dialer.call_log_number_xpath.format(self.test_contact["tel"]["value"])
         elem = ('xpath', _number_el)
@@ -55,7 +55,7 @@ class test_main(GaiaTestCase):
         self.contacts.create_contact(self.test_contact)
 
         self.dialer.launch()
-        self.dialer.openCallLog()
+        self.dialer.open_call_log()
 
         self.UTILS.element.waitForElements(("xpath", DOM.Dialer.call_log_name_xpath.format(self.test_contact["name"])),
                                            "The name {} in the call log".format(self.test_contact["name"]))

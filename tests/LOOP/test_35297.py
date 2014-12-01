@@ -18,7 +18,9 @@ from tests.i18nsetup import setup_translations
 
 class test_main(GaiaTestCase):
 
-    _RESTART_DEVICE = True
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
         #
@@ -30,9 +32,9 @@ class test_main(GaiaTestCase):
         self.email = Email(self)
         self.loop = Loop(self)
 
-        self.email_add = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
-        self.email_pass = self.UTILS.general.get_os_variable("GMAIL_2_PASS")
-        self.email_user = self.UTILS.general.get_os_variable("GMAIL_2_USER")
+        self.email_add = self.UTILS.general.get_config_variable("GMAIL_2_EMAIL")
+        self.email_pass = self.UTILS.general.get_config_variable("GMAIL_2_PASS")
+        self.email_user = self.UTILS.general.get_config_variable("GMAIL_2_USER")
         #
         # Get details of our test contacts.
         #

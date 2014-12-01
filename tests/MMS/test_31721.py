@@ -26,12 +26,12 @@ class test_main(GaiaTestCase):
         self.music = Music(self)
 
         # Establish which phone number to use.
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
 
         # Load files into the device.
-        self.UTILS.general.addFileToDevice('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
-        self.UTILS.general.addFileToDevice('./tests/_resources/AMR.amr', destination='SD/mus')
+        self.UTILS.general.add_file_to_device('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/AMR.amr', destination='SD/mus')
 
     def tearDown(self):
         self.UTILS.general.remove_file('80x60.jpg', 'DCIM/100MZLLA')
@@ -46,11 +46,11 @@ class test_main(GaiaTestCase):
         self.messages.startNewSMS()
         self.messages.addNumbersInToField([self.phone_number])
         self.messages.enterSMSMsg(self.test_msg)
-        self.messages.createMMSImage()
+        self.messages.create_mms_image()
         self.gallery.click_on_thumbnail_at_position_mms(0)
 
         time.sleep(2)
-        self.messages.createMMSMusic()
+        self.messages.create_mms_music()
         self.music.click_on_song_mms()
 
         self.messages.sendSMS()

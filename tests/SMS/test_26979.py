@@ -18,12 +18,12 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.Email = Email(self)
 
-        self.email_user = self.UTILS.general.get_os_variable("GMAIL_1_USER")
-        self.email_address = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
-        self.email_pass = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
+        self.email_user = self.UTILS.general.get_config_variable("GMAIL_1_USER")
+        self.email_address = self.UTILS.general.get_config_variable("GMAIL_1_EMAIL")
+        self.email_pass = self.UTILS.general.get_config_variable("GMAIL_1_PASS")
 
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.emailAddy = self.UTILS.general.get_config_variable("GMAIL_2_EMAIL")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -46,9 +46,9 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.phone_number], "Email {} one.".format(self.emailAddy))
+        self.messages.create_and_send_sms([self.phone_number], "Email {} one.".format(self.emailAddy))
         send_time = self.messages.last_sent_message_timestamp()
-        last_msg = self.messages.waitForReceivedMsgInThisThread(send_time)
+        last_msg = self.messages.wait_for_message(send_time)
 
         #
         # Tap the email link.

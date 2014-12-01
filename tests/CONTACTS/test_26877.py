@@ -22,7 +22,7 @@ class test_main(GaiaTestCase):
         #
         # Prepare the contact we're going to insert.
         #
-        tlf = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        tlf = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.contact = MockContact(tel={'type': 'Mobile', 'value': tlf})
 
         #
@@ -47,13 +47,13 @@ class test_main(GaiaTestCase):
         self.contacts.launch()
         self.messages.launch()
 
-        self.messages.createAndSendSMS([self.contact["tel"]["value"]], "Test message")
-        self.messages.waitForReceivedMsgInThisThread()
+        self.messages.create_and_send_sms([self.contact["tel"]["value"]], "Test message")
+        self.messages.wait_for_message()
 
         x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
 
-        self.messages.createAndSendSMS([self.num2], "Thread for a different number")
+        self.messages.create_and_send_sms([self.num2], "Thread for a different number")
 
         self.UTILS.reporting.logResult("info", " ")
         self.UTILS.reporting.logResult("info", "=================================================================")

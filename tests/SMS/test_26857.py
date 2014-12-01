@@ -17,7 +17,7 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
 
         # Get the correct number for the sms device.
-        self.num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.num = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -35,8 +35,8 @@ class test_main(GaiaTestCase):
         # outgoing message
         #
         msg_text = str(time.time())
-        self.messages.createAndSendSMS([self.num], msg_text)
-        self.messages.waitForReceivedMsgInThisThread()
+        self.messages.create_and_send_sms([self.num], msg_text)
+        self.messages.wait_for_message()
 
         #
         # Add another message to the same thread
@@ -44,7 +44,7 @@ class test_main(GaiaTestCase):
         msg_text = str(time.time())
         self.messages.enterSMSMsg(msg_text)
         self.messages.sendSMS()
-        self.messages.waitForReceivedMsgInThisThread()
+        self.messages.wait_for_message()
 
         #
         # Return to the threads view.

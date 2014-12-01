@@ -28,15 +28,8 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        self.corporate_sim = self.UTILS.general.get_os_variable("CORPORATE_SIM") == "True"
-        self.UTILS.test.test(self.corporate_sim, "Using a corporate SIM. The test can continue", True)
-
-        #
-        # Establish which phone number to use.
-        #
-        self.nums = [self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM"),
-                        self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")]
-        self.own_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.own_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.nums = [self.own_number, self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM_SHORT")]
         self.data_layer.delete_all_sms()
         self.UTILS.statusbar.clearAllStatusBarNotifs()
 
@@ -45,22 +38,17 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Make sure we have no contacts.
-        #
         self.data_layer.remove_all_contacts()
 
-        #
         # Launch messages app.
-        #
         self.messages.launch()
 
         for num in self.nums:
             test_msg = "Test message at {} for {}".format(time.time(), num)
-            self.messages.createAndSendSMS([num], test_msg)
+            self.messages.create_and_send_sms([num], test_msg)
             if num == self.own_number:
                 send_time = self.messages.last_sent_message_timestamp()
-                self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+                self.messages.wait_for_message(send_time=send_time)
             else:
                 self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)
                 self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
@@ -71,4 +59,4 @@ class test_main(GaiaTestCase):
 
         bools = [title.text in self.nums for title in x]
         msgs = ["A thread exists for {}".format(elem) for elem in self.nums]
-        map(self.UTILS.test.TEST, bools, msgs)
+        map(self.UTILS.test.test, bools, msgs)

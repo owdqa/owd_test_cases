@@ -18,8 +18,8 @@ class main(GaiaTestCase):
         self.loop = Loop(self)
         self.settings = Settings(self)
         self.test_contact = MockContact()
-        self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
-        self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
+        self.fxa_user = self.UTILS.general.get_config_variable("GLOBAL_FXA_USER")
+        self.fxa_pass = self.UTILS.general.get_config_variable("GLOBAL_FXA_PASS")
 
 
         self.test_contact["givenName"] = "This is a very looooooooooooong name"
@@ -29,7 +29,7 @@ class main(GaiaTestCase):
 
         self.UTILS.general.insertContact(self.test_contact)
 
-        self.connect_to_network()        
+        self.connect_to_network()    
         self.loop.initial_test_checks()
         self.settings.launch()
         self.settings.fxa()

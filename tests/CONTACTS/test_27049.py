@@ -29,7 +29,9 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     # Just to try and avoid the hotmail 'all your contacts are already imported' issue...
-    _RESTART_DEVICE = True
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
         #
@@ -40,8 +42,8 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.settings = Settings(self)
 
-        self.hotmail_user = self.UTILS.general.get_os_variable("HOTMAIL_1_EMAIL")
-        self.hotmail_passwd = self.UTILS.general.get_os_variable("HOTMAIL_1_PASS")
+        self.hotmail_user = self.UTILS.general.get_config_variable("HOTMAIL_1_EMAIL")
+        self.hotmail_passwd = self.UTILS.general.get_config_variable("HOTMAIL_1_PASS")
 
         #
         # Get details of our test contacts.
@@ -81,7 +83,7 @@ class test_main(GaiaTestCase):
         #
         search_field = self.UTILS.element.getElement(DOM.Contacts.search_field, "Search field")
         self.UTILS.element.simulateClick(search_field)
-        
+    
         search_input = self.UTILS.element.getElement(DOM.Contacts.search_contact_input, "Search Contact input")
         self.UTILS.element.simulateClick(search_input)
 

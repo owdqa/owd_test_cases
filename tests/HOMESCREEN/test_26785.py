@@ -81,9 +81,7 @@ class test_main(GaiaTestCase):
         add_btn = self.UTILS.element.getElement(DOM.EME.add_bookmark_btn, "Add bookmark to Home Screen Button")
         add_btn.tap()
 
-        self.UTILS.iframe.switchToFrame(*DOM.EME.frame_locator)
-        close_btn = self.UTILS.element.getElement(DOM.EME.bookmark_close, "Close bookmarks button")
-        close_btn.tap()
+        self.apps.kill_all()
 
         icon = self.UTILS.app.findAppIcon(self.app_name)
         self.UTILS.test.test(icon, "Icon for application {} was found".format(self.app_name))

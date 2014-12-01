@@ -16,7 +16,7 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.telNum = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.telNum = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.reporting.logComment("Using target telephone number " + self.telNum)
 
     def tearDown(self):
@@ -33,8 +33,8 @@ class test_main(GaiaTestCase):
         # Send a message to create a thread (use number, not name as this
         # avoids some blocking bugs just now). 
         #
-        self.messages.createAndSendSMS([self.telNum], "Test message.")
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
+        self.messages.create_and_send_sms([self.telNum], "Test message.")
+        returnedSMS = self.messages.wait_for_message()
 
         #
         # Leave this thread.

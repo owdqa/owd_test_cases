@@ -34,8 +34,8 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use and set up the contact.
         #
-        self.num1 = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.incoming_sms_num = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
+        self.num1 = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.incoming_sms_num = self.UTILS.general.get_config_variable("GLOBAL_CP_NUMBER").split(',')
         self.contact = MockContact(tel={'type': 'Mobile', 'value': self.num1})
 
         self.UTILS.general.insertContact(self.contact)
@@ -57,7 +57,7 @@ class test_main(GaiaTestCase):
         #
         # Send a message to myself (long and short number to get a few threads).
         #
-        self.messages.createAndSendSMS([self.num1], self.test_msg)
+        self.messages.create_and_send_sms([self.num1], self.test_msg)
         self.UTILS.messages.create_incoming_sms(self.num1, self.test_msg)
         x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()

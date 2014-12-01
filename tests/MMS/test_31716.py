@@ -29,7 +29,7 @@ class test_main(GaiaTestCase):
         #
         # Import contact (adjust to the correct number).
         #
-        self.test_num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.test_num = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.cont = MockContact(tel={"type": "Mobile", "value": self.test_num})
         self.UTILS.reporting.logComment("Using target telephone number " + self.cont["tel"]["value"])
 
@@ -38,7 +38,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        self.UTILS.general.addFileToDevice('./tests/_resources/imgd.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/imgd.jpg', destination='DCIM/100MZLLA')
 
         #
         # Launch messages app.
@@ -60,7 +60,7 @@ class test_main(GaiaTestCase):
         #
         self.messages.enterSMSMsg(self.test_msg)
 
-        self.messages.createMMSImage()
+        self.messages.create_mms_image()
         self.gallery.click_on_thumbnail_at_position_mms(0)
 
         #

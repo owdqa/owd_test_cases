@@ -27,7 +27,7 @@ class test_main(GaiaTestCase):
         self.dialer.launch()
         self.dialer.callLog_clearAll()
 
-        self.dialer.openCallLog()
+        self.dialer.open_call_log()
 
         x = self.UTILS.element.getElement(DOM.Dialer.call_log_edit_btn, "Edit button", False)
         #Try with attribute aria-disabled

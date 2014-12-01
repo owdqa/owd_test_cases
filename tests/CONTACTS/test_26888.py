@@ -1,5 +1,17 @@
-from gaiatest import GaiaTestCase
+#===============================================================================
+# 26888: Verify that the favourite contacts will be listed on the top of the full
+# contact list
+#
+# Procedure:
+# 1- Open Address book app
+# 2- Navigate to the top of contacts lists.
+#
+# Expected results:
+# The favourite contacts are listed on the top of the full contact list and in
+# letter position.
+#===============================================================================
 
+from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.contacts import MockContact
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
@@ -16,9 +28,7 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
 
-        #
         # Prepare the contacts.
-        #
         self.contact_list = [MockContact() for i in range(3)]
         map(self.UTILS.general.insertContact, self.contact_list)
 
@@ -27,48 +37,37 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
-        #
-        # Launch contacts app.
-        #
         self.contacts.launch()
 
-        #
         # View the details of our contact and make him a favourite.
-        #
         self.UTILS.reporting.logResult("info", "<b>Setting up a contact in favourites ...</b>")
         self.contacts.view_contact(self.contact_list[0]['name'])
 
-        #
         # Mark contact as favourite
-        #
-        x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
-        x.tap()
+        fav_btn = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
+        fav_btn.tap()
 
         #
         # Go back to all contacts list
         #
-        x = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
-        x.tap()
+        back_btn = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
+        back_btn.tap()
 
         #
         # Check the contact is in the favourite list
         #
         string = self.contact_list[0]['givenName'] + self.contact_list[0]['familyName']
-        favs = ("xpath", DOM.Contacts.favourites_list_xpath.format(string))
+        favs = ("xpath", DOM.Contacts.favourites_list_xpath.format(string.upper()))
         self.UTILS.element.waitForElements(favs, "'" + self.contact_list[0]['name'] + "' in the favourites list")
 
-
-        #
         # Now check the favourites list appears first.
-        #
-        x = self.UTILS.element.getElements(("tag name", "ol"), "Contact lists")
+        fav_list = self.UTILS.element.getElements(("tag name", "ol"), "Contact lists")
         fav_id = "contacts-list-favorites"
         normal_ids = "contacts-list-"
 
         foundFav = False
         foundNormal = False
-        for i in x:
+        for i in fav_list:
             if fav_id in i.get_attribute("id"):
                 foundFav = True
             if normal_ids in i.get_attribute("id"):

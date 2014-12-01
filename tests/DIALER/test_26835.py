@@ -33,7 +33,7 @@ class test_main(GaiaTestCase):
         self.dialer = Dialer(self)
         _ = setup_translations(self)
 
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
 
         # Fill the call log with some entries
         self.dialer.launch()
@@ -48,7 +48,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        self.dialer.openCallLog()
+        self.dialer.open_call_log()
 
         elem = ("xpath", DOM.Dialer.call_log_number_xpath.format(self.phone_number))
         entry = self.UTILS.element.getElement(elem, "The call log for number {}".format(self.phone_number))
@@ -63,7 +63,7 @@ class test_main(GaiaTestCase):
 
         self.UTILS.element.getElement(warning_header, "Airplane mode warning [header]")
         self.UTILS.element.getElement(warning_content, "Airplane mode warning [content]")
-        
+    
         ok_btn = self.UTILS.element.getElement(DOM.GLOBAL.confirmation_msg_ok_btn, "OK button")
         ok_btn.tap()
 

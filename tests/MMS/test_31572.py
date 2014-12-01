@@ -45,7 +45,7 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
         self.UTILS.statusbar.clearAllStatusBarNotifs()
@@ -59,7 +59,7 @@ class test_main(GaiaTestCase):
         #
         # Load an image file into the device.
         #
-        self.UTILS.general.addFileToDevice('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
 
         #
         # Launch messages app.
@@ -80,7 +80,7 @@ class test_main(GaiaTestCase):
         # Create MMS.
         #
         self.messages.enterSMSMsg(self.test_msg)
-        self.messages.createMMSImage()
+        self.messages.create_mms_image()
         self.gallery.click_on_thumbnail_at_position_mms(0)
 
         #

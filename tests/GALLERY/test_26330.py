@@ -28,7 +28,7 @@ class test_main(GaiaTestCase):
     def test_run(self):
         # Load sample images into the gallery.
         for i in self.img_list:
-            self.UTILS.general.addFileToDevice('./tests/_resources/' + i, destination='DCIM/100MZLLA')
+            self.UTILS.general.add_file_to_device('./tests/_resources/' + i, destination='DCIM/100MZLLA')
 
         self.gallery.launch()
         self.gallery.wait_for_thumbnails_number(self.length)

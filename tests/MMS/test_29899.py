@@ -43,7 +43,7 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
 
     def tearDown(self):
@@ -54,7 +54,7 @@ class test_main(GaiaTestCase):
         #
         # Configure Auto Retrieve as "on_with_r = On with roaming option" from messaging settings
         #
-        self.settings.configureMMSAutoRetrieve("on_with_r")
+        self.settings.configure_mms_auto_retrieve("on_with_r")
 
         self.messages.create_and_send_mms("image", [self.phone_number], self.test_msg)
         self.messages.wait_for_message()

@@ -1,0 +1,15 @@
+{
+    "26918": "BUG 879830",
+    "26761": "Scroll homescreen does not work now with vertical home",
+    "26781": "BUG 885238",
+    "26473": "BUG 867987",
+    "26347": "BUG 867987",
+    "26348": "Automation issue: cannot work out how to automate the scroller for seeting the alarm time.",
+    "26885": "Pending review",
+    "28542": "Pending review",
+    "26973": "Pending review",
+    "26907": "Unable to figure out how to detect how not the keyboard is displayed (previously opened)",
+    "36669": "Automation misbehavior when using Mobile ID login, server connection error, retry",
+    "36834": "When you have disabled and available shared_links, there's a bug -> all revoked",
+    "36835": "When you have disabled and available shared_links, there's a bug -> all revoked"
+}

@@ -30,8 +30,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.incoming_sms_num = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.incoming_sms_num = self.UTILS.general.get_config_variable("GLOBAL_CP_NUMBER").split(',')
 
         #
         # Import details of our test contacts.
@@ -59,7 +59,7 @@ class test_main(GaiaTestCase):
         # Create and send a new test message.
         #
         self.UTILS.reporting.debug("*** Sending SMS to {}".format(self.test_contacts[0]["tel"]["value"]))
-        self.messages.createAndSendSMS([self.test_contacts[0]["tel"]["value"]], self.test_msg)
+        self.messages.create_and_send_sms([self.test_contacts[0]["tel"]["value"]], self.test_msg)
         back_btn = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         back_btn.tap()
 

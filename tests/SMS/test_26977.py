@@ -32,8 +32,8 @@ class test_main(GaiaTestCase):
 
         self.contacts = Contacts(self)
 
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.emailAddy = self.UTILS.general.get_config_variable("GMAIL_1_EMAIL")
         self.test_msg = "Hello {} old bean at {}.".format(self.emailAddy, time.time())
 
     def tearDown(self):
@@ -49,9 +49,9 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.phone_number], self.test_msg)
+        self.messages.create_and_send_sms([self.phone_number], self.test_msg)
         send_time = self.messages.last_sent_message_timestamp()
-        msg = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+        msg = self.messages.wait_for_message(send_time=send_time)
         self.messages.check_last_message_contents(self.test_msg)
 
         #

@@ -12,7 +12,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -29,8 +29,8 @@ class test_main(GaiaTestCase):
         # Create and send a new test message.
         #
         test_str = "Four 1234 six 123456 seven 1234567 eight 12345678 nine 123456789 numbers."
-        self.messages.createAndSendSMS([self.phone_number], test_str)
-        x = self.messages.waitForReceivedMsgInThisThread()
+        self.messages.create_and_send_sms([self.phone_number], test_str)
+        x = self.messages.wait_for_message()
 
         #
         # Check how many are links.
@@ -39,7 +39,7 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "Screenshot (for reference):", fnam)
 
         y = x.find_elements("tag name", "a")  
-    
+
         bool4OK = True
         bool6OK = True
         for i in y:
@@ -48,7 +48,7 @@ class test_main(GaiaTestCase):
                 bool4OK = False
             if i.text == "123456":
                 bool7OK = False
-    
+
         self.UTILS.test.test(bool4OK, "The 4-digit number is not highlighted.")
         self.UTILS.test.test(bool6OK, "The 6-digit number is not highlighted.")
 

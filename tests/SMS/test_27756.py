@@ -40,7 +40,7 @@ class test_main(GaiaTestCase):
         #
         # Set the one we'll match to have a valid phone number.
         self.contact_1 = MockContact(tel={"type": "Mobile",
-                        "value": self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")})
+                        "value": self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")})
         self.contact_2 = MockContact()
         self.contact_3 = MockContact(givenName="AAAAAAAAAAAAAAAALEX",
                                     familyName="SMITHXXXXXXXX",
@@ -101,5 +101,5 @@ class test_main(GaiaTestCase):
         self.messages.checkIsInToField(self.contact_1["name"])
         self.messages.sendSMS()
         send_time = self.messages.last_sent_message_timestamp()
-        self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+        self.messages.wait_for_message(send_time=send_time)
         self.messages.check_last_message_contents(self.test_msg)

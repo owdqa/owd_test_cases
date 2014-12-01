@@ -51,7 +51,7 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
 
@@ -61,7 +61,7 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.UTILS.statusbar.clearAllStatusBarNotifs()
-        self.UTILS.general.addFileToDevice('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
 
         #
         # Create message.
@@ -76,7 +76,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.phone_number], sms_message)
+        self.messages.create_and_send_sms([self.phone_number], sms_message)
         self.messages.wait_for_message()
         x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
@@ -95,7 +95,7 @@ class test_main(GaiaTestCase):
         #
         self.messages.enterSMSMsg(sms_message)
 
-        self.messages.createMMSImage()
+        self.messages.create_mms_image()
         self.gallery.click_on_thumbnail_at_position_mms(0)
 
         #

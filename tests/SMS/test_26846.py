@@ -19,7 +19,7 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
 
@@ -36,8 +36,8 @@ class test_main(GaiaTestCase):
         #
         # Create and send some new tests messages.
         #
-        self.messages.createAndSendSMS([self.phone_number], self.test_msg)
-        self.messages.waitForReceivedMsgInThisThread()
+        self.messages.create_and_send_sms([self.phone_number], self.test_msg)
+        self.messages.wait_for_message()
 
         #
         # Go back..

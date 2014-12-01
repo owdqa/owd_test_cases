@@ -38,9 +38,9 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
-        self.UTILS.general.addFileToDevice('./tests/_resources/MP3.mp3', destination='/SD/mus')
+        self.UTILS.general.add_file_to_device('./tests/_resources/MP3.mp3', destination='/SD/mus')
         self.data_layer.delete_all_sms()
         self.UTILS.statusbar.clearAllStatusBarNotifs()
 
@@ -69,7 +69,7 @@ class test_main(GaiaTestCase):
         # Create MMS.
         #
         self.messages.enterSMSMsg(self.test_msg)
-        self.messages.createMMSMusic()
+        self.messages.create_mms_music()
         self.music.click_on_song_mms()
         container = self.UTILS.element.getElement(DOM.Messages.attach_preview_video_audio_type, "Audio container")
         self.UTILS.test.test(container.get_attribute("data-attachment-type") == "audio", "Audio container found")

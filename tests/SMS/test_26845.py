@@ -23,7 +23,7 @@ class test_main(GaiaTestCase):
         #
         # Import contact (adjust to the correct number).
         #
-        self.test_num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.test_num = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.cont = MockContact(tel={"type": "Mobile", "value": self.test_num})
         self.UTILS.reporting.logComment("Using target telephone number " + self.cont["tel"]["value"])
 
@@ -58,7 +58,7 @@ class test_main(GaiaTestCase):
         # Click send and wait for the message to be received
         #
         self.messages.sendSMS()
-        self.messages.waitForReceivedMsgInThisThread()
+        self.messages.wait_for_message()
         x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
         x.tap()
 

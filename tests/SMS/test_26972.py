@@ -37,13 +37,13 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.email = Email(self)
 
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.emailAddy = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
-        self.emailE = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
-        self.emailP = self.UTILS.general.get_os_variable("GMAIL_2_PASS")
-        self.emailU = self.UTILS.general.get_os_variable("GMAIL_2_USER")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.emailAddy = self.UTILS.general.get_config_variable("GMAIL_1_EMAIL")
+        self.emailE = self.UTILS.general.get_config_variable("GMAIL_2_EMAIL")
+        self.emailP = self.UTILS.general.get_config_variable("GMAIL_2_PASS")
+        self.emailU = self.UTILS.general.get_config_variable("GMAIL_2_USER")
 
-        self.UTILS.general.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
         self.test_msg = "Test message."
 
         self.cont = MockContact()
@@ -62,9 +62,9 @@ class test_main(GaiaTestCase):
         self.messages.launch()
 
         # Create and send a new test message.
-        self.messages.createAndSendSMS([self.phone_number], "Hello {} old bean.".format(self.emailAddy))
+        self.messages.create_and_send_sms([self.phone_number], "Hello {} old bean.".format(self.emailAddy))
         send_time = self.messages.last_sent_message_timestamp()
-        x = self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+        x = self.messages.wait_for_message(send_time=send_time)
 
         link = x.find_element("tag name", "a")
         link.tap()

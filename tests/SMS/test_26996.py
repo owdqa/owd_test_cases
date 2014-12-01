@@ -24,7 +24,7 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -39,13 +39,13 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.phone_number], self.test_msg)
+        self.messages.create_and_send_sms([self.phone_number], self.test_msg)
 
         #
         # Wait for the last message in this thread to be a 'received' one
         # and click the link.
         #
-        x = self.messages.waitForReceivedMsgInThisThread()
+        x = self.messages.wait_for_message()
         self.UTILS.test.test(x, "Received a message.", True)
 
         a = x.find_element("tag name", "a")
@@ -59,7 +59,7 @@ class test_main(GaiaTestCase):
         #
         # Dial the number.
         #
-        self.Dialer.callThisNumber()
+        self.Dialer.call_this_number()
 
         #
         # Wait 2 seconds, then hangup.

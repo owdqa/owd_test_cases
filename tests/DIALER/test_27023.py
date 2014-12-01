@@ -25,7 +25,7 @@ class test_main(GaiaTestCase):
         self.dialer = Dialer(self)
         self.contacts = Contacts(self)
 
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.test_contact = MockContact(tel={'type': 'Mobile', 'value': self.phone_number})
 
         self.UTILS.general.insertContact(self.test_contact)
@@ -40,7 +40,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        self.dialer.openCallLog()
+        self.dialer.open_call_log()
 
         self.dialer.callLog_long_tap(self.test_contact["tel"]["value"])
         time.sleep(2)

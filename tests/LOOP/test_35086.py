@@ -19,8 +19,8 @@ class main(GaiaTestCase):
         self.loop = Loop(self)
         self.contacts = Contacts(self)
         self.settings = Settings(self)
-        self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
-        self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
+        self.fxa_user = self.UTILS.general.get_config_variable("GLOBAL_FXA_USER")
+        self.fxa_pass = self.UTILS.general.get_config_variable("GLOBAL_FXA_PASS")
 
         self.target_name = "QA"
         self.test_contacts = [MockContact() for i in range(3)]
@@ -29,7 +29,7 @@ class main(GaiaTestCase):
         self.test_contacts[0]["name"] = "{} {}".format(
             self.test_contacts[0]["givenName"], self.test_contacts[0]["familyName"])
         map(self.UTILS.general.insertContact, self.test_contacts)
-        
+    
         self.contacts.launch()
         self._add_contact_as_favorite(self.test_contacts[0])
 

@@ -16,7 +16,7 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -31,7 +31,7 @@ class test_main(GaiaTestCase):
         #
         # Create and send a new test message.
         #
-        self.messages.createAndSendSMS([self.phone_number], "Test message")
+        self.messages.create_and_send_sms([self.phone_number], "Test message")
 
         #
         # The returned message won't come to this thread, so just tap the header.
@@ -51,7 +51,7 @@ class test_main(GaiaTestCase):
                                     "Add to existing contact button")
         self.UTILS.element.waitForElements(DOM.Messages.contact_cancel_btn,
                                     "Cancel button")
-    
+
 
 
 

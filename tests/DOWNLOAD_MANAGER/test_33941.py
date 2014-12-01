@@ -26,7 +26,7 @@ class test_main(GaiaTestCase):
         self.settings = Settings(self)
         self.download_manager = DownloadManager(self)
         self.video = Video(self)
-        self.test_url = self.UTILS.general.get_os_variable("GLOBAL_DOWNLOAD_URL")
+        self.test_url = self.UTILS.general.get_config_variable("GLOBAL_DOWNLOAD_URL")
         self.file_name = "clipcanvas_14348_H264_320x180.mp4"
         self.data_url = "{}/{}".format(self.test_url, self.file_name)
 
@@ -41,7 +41,7 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.UTILS.statusbar.clearAllStatusBarNotifs()
-        
+    
         self.browser.launch()
         self.browser.open_url(self.test_url)
         self.download_manager.download_file(self.file_name)

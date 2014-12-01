@@ -22,8 +22,8 @@ class test_main(GaiaTestCase):
         #
         # Remove number and import contact.
         #
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.incoming_sms_num = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.incoming_sms_num = self.UTILS.general.get_config_variable("GLOBAL_CP_NUMBER").split(',')
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
 
     def tearDown(self):

@@ -40,7 +40,7 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.Dialer = Dialer(self)
 
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
 
         self.contact = MockContact(tel={'type': 'Mobile', 'value': self.phone_number})
 
@@ -71,7 +71,7 @@ class test_main(GaiaTestCase):
         self.messages.sendSMS()
         send_time = self.messages.last_sent_message_timestamp()
 
-        self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+        self.messages.wait_for_message(send_time=send_time)
 
         #
         # Tap the header to call.

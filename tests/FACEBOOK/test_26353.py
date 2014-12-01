@@ -18,9 +18,9 @@ class test_main(GaiaTestCase):
         self.facebook = Facebook(self)
         self.settings = Settings(self)
 
-        self.fb_user = self.UTILS.general.get_os_variable("T19392_FB_USERNAME")
-        self.fb_pass = self.UTILS.general.get_os_variable("T19392_FB_PASSWORD")
-        
+        self.fb_user = self.UTILS.general.get_config_variable("T19392_FB_USERNAME")
+        self.fb_pass = self.UTILS.general.get_config_variable("T19392_FB_PASSWORD")
+    
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
         self.connect_to_network()

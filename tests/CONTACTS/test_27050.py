@@ -26,7 +26,9 @@ from OWDTestToolkit.utils.contacts import MockContact
 
 class test_main(GaiaTestCase):
 
-    _RESTART_DEVICE = True
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
         #
@@ -37,8 +39,8 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.settings = Settings(self)
 
-        self.hotmail_user = self.UTILS.general.get_os_variable("HOTMAIL_1_EMAIL")
-        self.hotmail_passwd = self.UTILS.general.get_os_variable("HOTMAIL_1_PASS")
+        self.hotmail_user = self.UTILS.general.get_config_variable("HOTMAIL_1_EMAIL")
+        self.hotmail_passwd = self.UTILS.general.get_config_variable("HOTMAIL_1_PASS")
 
         #
         # Get details of our test contacts.

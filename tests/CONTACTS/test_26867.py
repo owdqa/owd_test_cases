@@ -36,7 +36,7 @@ class test_main(GaiaTestCase):
         # Launch contacts app.
         #
         self.contacts.launch()
-        
+    
         screenshot = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult('info', "Screenshot", screenshot)
         #

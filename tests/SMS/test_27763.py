@@ -18,7 +18,7 @@ class test_main(GaiaTestCase):
         #
         # Prepare the contact we're going to insert.
         #
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.contact = MockContact(tel={'type': '', 'value': self.phone_number})
 
         self.UTILS.general.insertContact(self.contact)
@@ -38,8 +38,8 @@ class test_main(GaiaTestCase):
         # Send a message to create a thread (use number, not name as this
         # avoids some blocking bugs just now). 
         #
-        self.messages.createAndSendSMS( [self.contact["tel"]["value"]], "Test message.")
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
+        self.messages.create_and_send_sms( [self.contact["tel"]["value"]], "Test message.")
+        returnedSMS = self.messages.wait_for_message()
 
         #
         # Examine the header.

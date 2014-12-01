@@ -45,16 +45,16 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
         self.UTILS.statusbar.clearAllStatusBarNotifs()
         self.expected_sizes = ["4.8", "62.3", "175.6"]
         self.expected_names = ["80x60.jpg", "30k_basic_AMR.amr", "mpeg4.3gp"]
 
-        self.UTILS.general.addFileToDevice('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
-        self.UTILS.general.addFileToDevice('./tests/_resources/30k_basic_AMR.amr', destination='SD/mus')
-        self.UTILS.general.addFileToDevice('./tests/_resources/mpeg4.mp4', destination='SD/vid')
+        self.UTILS.general.add_file_to_device('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/30k_basic_AMR.amr', destination='SD/mus')
+        self.UTILS.general.add_file_to_device('./tests/_resources/mpeg4.mp4', destination='SD/vid')
 
     def tearDown(self):
         self.UTILS.general.remove_file('30k_basic_AMR.amr', '/SD/mus')
@@ -71,13 +71,13 @@ class test_main(GaiaTestCase):
         self.messages.addNumbersInToField([self.phone_number])
         self.messages.enterSMSMsg(self.test_msg)
 
-        self.messages.createMMSImage()
+        self.messages.create_mms_image()
         self.gallery.click_on_thumbnail_at_position_mms(0)
 
-        self.messages.createMMSMusic()
+        self.messages.create_mms_music()
         self.music.click_on_song_mms()
 
-        self.messages.createMMSVideo()
+        self.messages.create_mms_video()
         self.video.click_on_video_at_position_mms(0)
 
         #

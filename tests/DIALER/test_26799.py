@@ -39,7 +39,7 @@ class test_main(GaiaTestCase):
         self.dialer.launch()
 
         self.dialer.enterNumber(self.phone_number)
-        self.dialer.callThisNumber()
+        self.dialer.call_this_number()
 
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)
         self.UTILS.element.waitForElements(("xpath", DOM.Dialer.outgoing_call_numberXP.format(self._name)),

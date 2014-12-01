@@ -26,14 +26,14 @@ class test_main(GaiaTestCase):
         self.dialer = Dialer(self)
         self.contacts = Contacts(self)
 
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
 
         #
         # Create a call log entry
         #
         self.dialer.launch()
         self.dialer.callLog_clearAll()
-        
+    
         self.dialer.createMultipleCallLogEntries(self.phone_number, 2)
 
     def tearDown(self):
@@ -44,7 +44,7 @@ class test_main(GaiaTestCase):
         #
         # Open the call log and select Add to Contact.
         #
-        self.dialer.openCallLog()
+        self.dialer.open_call_log()
 
         edit_btn = self.UTILS.element.getElement(DOM.Dialer.call_log_edit_btn, "Edit button")
         edit_btn.tap()

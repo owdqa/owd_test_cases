@@ -18,9 +18,9 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        self.phone_number = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
-        self.cp_incoming_number = self.UTILS.general.get_os_variable("GLOBAL_CP_NUMBER").split(',')
+        self.cp_incoming_number = self.UTILS.general.get_config_variable("GLOBAL_CP_NUMBER").split(',')
         self.data_layer.delete_all_sms()
 
     def tearDown(self):
@@ -33,7 +33,7 @@ class test_main(GaiaTestCase):
         self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)
 
         # Lock the phone immediately.
-        self.device.lock()
+        self.data_layer.set_setting("lockscreen.enabled", True)
 
         # Wait for the notification.
         self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)

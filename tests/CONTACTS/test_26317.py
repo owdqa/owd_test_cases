@@ -22,9 +22,9 @@ class test_main(GaiaTestCase):
         #
         # Get details of our test contacts.
         #
-        email1 = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
-        email2 = self.UTILS.general.get_os_variable("GMAIL_2_EMAIL")
-        email3 = self.UTILS.general.get_os_variable("HOTMAIL_1_EMAIL")
+        email1 = self.UTILS.general.get_config_variable("GMAIL_1_EMAIL")
+        email2 = self.UTILS.general.get_config_variable("GMAIL_2_EMAIL")
+        email3 = self.UTILS.general.get_config_variable("HOTMAIL_1_EMAIL")
         self.contact = MockContact(email=[{
             'type': 'Personal',
             'value': email1}, {
@@ -40,7 +40,7 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.general.insertContact(self.contact)
 
-        self._email_subject = "TEST " + str(time.time())
+        self._email_subject = "test " + str(time.time())
         self._email_message = "Test message"
 
     def tearDown(self):
@@ -54,9 +54,9 @@ class test_main(GaiaTestCase):
         #
         # Set up to use email (with account #1).
         #
-        em_user = self.UTILS.general.get_os_variable("GMAIL_1_USER")
-        em_email = self.UTILS.general.get_os_variable("GMAIL_1_EMAIL")
-        em_pass = self.UTILS.general.get_os_variable("GMAIL_1_PASS")
+        em_user = self.UTILS.general.get_config_variable("GMAIL_1_USER")
+        em_email = self.UTILS.general.get_config_variable("GMAIL_1_EMAIL")
+        em_pass = self.UTILS.general.get_config_variable("GMAIL_1_PASS")
         self.email.launch()
         self.email.setupAccount(em_user, em_email, em_pass)
 

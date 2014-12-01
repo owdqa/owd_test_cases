@@ -20,11 +20,11 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.gallery = Gallery(self)
 
-        self.test_num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.test_num = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.cont = MockContact(tel={"type": "Mobile", "value": self.test_num})
 
         self.UTILS.general.insertContact(self.cont)
-        self.UTILS.general.addFileToDevice('./tests/_resources/imga.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/imga.jpg', destination='DCIM/100MZLLA')
         self.UTILS.reporting.logComment("Using target telephone number " + self.cont["tel"]["value"])
 
     def tearDown(self):
@@ -38,7 +38,7 @@ class test_main(GaiaTestCase):
         self.messages.startNewSMS()
         self.messages.enterSMSMsg("Test")
 
-        self.messages.createMMSImage()
+        self.messages.create_mms_image()
         self.gallery.click_on_thumbnail_at_position_mms(0)
 
         # Search for our contact.

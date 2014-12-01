@@ -25,8 +25,8 @@ class main(GaiaTestCase):
         self.settings = Settings(self)
 
         self.test_contact = MockContact(givenName="QA", familyName="Automation")
-        self.fxa_user = self.UTILS.general.get_os_variable("GLOBAL_FXA_USER")
-        self.fxa_pass = self.UTILS.general.get_os_variable("GLOBAL_FXA_PASS")
+        self.fxa_user = self.UTILS.general.get_config_variable("GLOBAL_FXA_USER")
+        self.fxa_pass = self.UTILS.general.get_config_variable("GLOBAL_FXA_PASS")
         _ = setup_translations(self)
         self.expected_msg = _("This contact does not have either a phone number or an email address.")
 

@@ -32,7 +32,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
-        self.target_num = self.UTILS.general.get_os_variable("GLOBAL_TARGET_SMS_NUM")
+        self.target_num = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
         self.test_msg = "Test."
         self.data_layer.delete_all_sms()
 
@@ -66,7 +66,7 @@ class test_main(GaiaTestCase):
         #
         # Wait for the SMS to arrive.
         #
-        self.messages.waitForReceivedMsgInThisThread(send_time=send_time)
+        self.messages.wait_for_message(send_time=send_time)
 
         self.UTILS.home.goHome()
 
