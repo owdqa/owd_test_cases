@@ -37,11 +37,11 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.email = Email(self)
 
-        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
-        self.emailAddy = self.UTILS.general.get_config_variable("GMAIL_1_EMAIL")
-        self.emailE = self.UTILS.general.get_config_variable("GMAIL_2_EMAIL")
-        self.emailP = self.UTILS.general.get_config_variable("GMAIL_2_PASS")
-        self.emailU = self.UTILS.general.get_config_variable("GMAIL_2_USER")
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.emailAddy = self.UTILS.general.get_config_variable("gmail_1_email", "common")
+        self.emailE = self.UTILS.general.get_config_variable("gmail_2_email", "common")
+        self.emailP = self.UTILS.general.get_config_variable("gmail_2_pass", "common")
+        self.emailU = self.UTILS.general.get_config_variable("gmail_2_user", "common")
 
         self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
         self.test_msg = "Test message."

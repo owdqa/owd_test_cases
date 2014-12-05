@@ -29,8 +29,8 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.contacts = Contacts(self)
 
-        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
-        self.emailAddy = self.UTILS.general.get_config_variable("GMAIL_1_EMAIL")
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.emailAddy = self.UTILS.general.get_config_variable("gmail_1_email", "common")
         self.test_msg = "Email {} one, email {} two, email {} three.".\
                         format("one@test.com", self.emailAddy, "three@test.com")
         self.data_layer.delete_all_sms()

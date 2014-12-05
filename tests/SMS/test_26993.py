@@ -36,7 +36,7 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.Dialer = Dialer(self)
 
-        phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         prefix = "0034"
         self.num1 = prefix + phone_number if not phone_number.startswith("+34") else prefix + phone_number[3:]
         self.num2 = phone_number[3:] if phone_number.startswith("+34") else phone_number

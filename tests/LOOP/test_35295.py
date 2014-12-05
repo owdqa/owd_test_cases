@@ -33,9 +33,9 @@ class test_main(GaiaTestCase):
         self.email = Email(self)
         self.loop = Loop(self)
 
-        self.email_add = self.UTILS.general.get_config_variable("GMAIL_2_EMAIL")
-        self.email_pass = self.UTILS.general.get_config_variable("GMAIL_2_PASS")
-        self.email_user = self.UTILS.general.get_config_variable("GMAIL_2_USER")
+        self.email_add = self.UTILS.general.get_config_variable("gmail_2_email", "common")
+        self.email_pass = self.UTILS.general.get_config_variable("gmail_2_pass", "common")
+        self.email_user = self.UTILS.general.get_config_variable("gmail_2_user", "common")
         #
         # Get details of our test contacts.
         #

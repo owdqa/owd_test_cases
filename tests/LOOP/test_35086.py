@@ -19,8 +19,8 @@ class main(GaiaTestCase):
         self.loop = Loop(self)
         self.contacts = Contacts(self)
         self.settings = Settings(self)
-        self.fxa_user = self.UTILS.general.get_config_variable("GLOBAL_FXA_USER")
-        self.fxa_pass = self.UTILS.general.get_config_variable("GLOBAL_FXA_PASS")
+        self.fxa_user = self.UTILS.general.get_config_variable("fxa_user", "common")
+        self.fxa_pass = self.UTILS.general.get_config_variable("fxa_pass", "common")
 
         self.target_name = "QA"
         self.test_contacts = [MockContact() for i in range(3)]

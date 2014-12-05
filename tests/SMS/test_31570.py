@@ -22,10 +22,10 @@ class test_main(GaiaTestCase):
         #
         # Prepare the contact we're going to insert.
         #
-        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.contact = MockContact(tel={'type': '', 'value': self.phone_number})
         self.UTILS.general.insertContact(self.contact)
-        self.incoming_sms_num = self.UTILS.general.get_config_variable("GLOBAL_CP_NUMBER").split(',')
+        self.incoming_sms_num = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
         self.data_layer.delete_all_sms()
 
     def tearDown(self):

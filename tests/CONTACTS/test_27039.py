@@ -43,8 +43,8 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.keyboard = Keyboard(self.marionette)
 
-        self.gmail_user = self.UTILS.general.get_config_variable("GMAIL_1_USER")
-        self.gmail_passwd = self.UTILS.general.get_config_variable("GMAIL_1_PASS")
+        self.gmail_user = self.UTILS.general.get_config_variable("gmail_1_user", "common")
+        self.gmail_passwd = self.UTILS.general.get_config_variable("gmail_1_pass", "common")
 
         self.connect_to_network()
         #

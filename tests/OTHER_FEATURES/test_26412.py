@@ -12,9 +12,8 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.settings = Settings(self)
 
-        self.wifi_name = self.UTILS.general.get_config_variable("GLOBAL_WIFI_NAME")
-        self.wifi_user = self.UTILS.general.get_config_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass = self.UTILS.general.get_config_variable("GLOBAL_WIFI_PASSWORD")
+        self.wifi_name = self.UTILS.general.get_config_variable("ssid", "wifi")
+        self.wifi_pass = self.UTILS.general.get_config_variable("password", "wifi")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -38,7 +37,7 @@ class test_main(GaiaTestCase):
             # We need to supply the login details for the network.
             #
             self.UTILS.iframe.switchToFrame(*DOM.Settings.frame_locator)
-            self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
+            self.settings.connect_to_wifi(self.wifi_name, self.wifi_pass)
             self.marionette.switch_to_frame()
         except:
             pass

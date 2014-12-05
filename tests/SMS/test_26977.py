@@ -32,8 +32,8 @@ class test_main(GaiaTestCase):
 
         self.contacts = Contacts(self)
 
-        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
-        self.emailAddy = self.UTILS.general.get_config_variable("GMAIL_1_EMAIL")
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.emailAddy = self.UTILS.general.get_config_variable("gmail_1_email", "common")
         self.test_msg = "Hello {} old bean at {}.".format(self.emailAddy, time.time())
 
     def tearDown(self):

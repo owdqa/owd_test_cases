@@ -17,7 +17,7 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
 
         self.Contact_1 = MockContact()
-        self.num = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.num = self.UTILS.general.get_config_variable("phone_number", "custom")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()

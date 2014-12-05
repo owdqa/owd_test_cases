@@ -40,13 +40,13 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.email = Email(self)
 
-        self.email_user = self.UTILS.general.get_config_variable("GMAIL_1_USER")
-        self.email_address = self.UTILS.general.get_config_variable("GMAIL_1_EMAIL")
-        self.email_pass = self.UTILS.general.get_config_variable("GMAIL_1_PASS")
+        self.email_user = self.UTILS.general.get_config_variable("gmail_1_user", "common")
+        self.email_address = self.UTILS.general.get_config_variable("gmail_1_email", "common")
+        self.email_pass = self.UTILS.general.get_config_variable("gmail_1_pass", "common")
 
-        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
-        self.dest_email = self.UTILS.general.get_config_variable("GMAIL_2_EMAIL")
-        self.incoming_sms_num = self.UTILS.general.get_config_variable("GLOBAL_CP_NUMBER")
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.dest_email = self.UTILS.general.get_config_variable("gmail_2_email", "common")
+        self.incoming_sms_num = self.UTILS.general.get_config_variable("sms_platform_numbers", "common")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()

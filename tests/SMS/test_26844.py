@@ -34,8 +34,8 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use and set up the contact.
         #
-        self.num1 = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
-        self.incoming_sms_num = self.UTILS.general.get_config_variable("GLOBAL_CP_NUMBER").split(',')
+        self.num1 = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.incoming_sms_num = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
         self.contact = MockContact(tel={'type': 'Mobile', 'value': self.num1})
 
         self.UTILS.general.insertContact(self.contact)

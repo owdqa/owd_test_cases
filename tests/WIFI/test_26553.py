@@ -36,8 +36,8 @@ class test_main(GaiaTestCase):
         self.browser = Browser(self)
         self.messages = Messages(self)
 
-        self.num = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
-        self.cp_incoming_number = self.UTILS.general.get_config_variable("GLOBAL_CP_NUMBER").split(',')
+        self.num = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.cp_incoming_number = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
         self.data_layer.delete_all_sms()
 
     def tearDown(self):
