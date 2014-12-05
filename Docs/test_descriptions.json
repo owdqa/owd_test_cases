@@ -306,6 +306,7 @@
     "28538": "Press call button while the last outgoing call is a contact number",
     "28539": "Press call button after delete all the calls from the call log",
     "28540": "Press call button while the call log contains different outgoing calls",
+    "28542": "Verify that the user can cancel a importation from "SD CARD" while it's in process",
     "29867": "Verifying the calling line identification presentation status, when it's provisioned",
     "29873": "Hide number 'CLIR' by MMI code and verify that settings options are updated",
     "29875": "Show number 'CLIR' by MMI code and verify the status using other MMI code ",
