@@ -21,12 +21,12 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.Email = Email(self)
 
-        self.email_user = self.UTILS.general.get_config_variable("GMAIL_1_USER")
-        self.email_address = self.UTILS.general.get_config_variable("GMAIL_1_EMAIL")
-        self.email_pass = self.UTILS.general.get_config_variable("GMAIL_1_PASS")
+        self.email_user = self.UTILS.general.get_config_variable("gmail_1_user", "common")
+        self.email_address = self.UTILS.general.get_config_variable("gmail_1_email", "common")
+        self.email_pass = self.UTILS.general.get_config_variable("gmail_1_pass", "common")
  
-        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
-        self.emailAddy = self.UTILS.general.get_config_variable("GMAIL_2_EMAIL")
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.emailAddy = self.UTILS.general.get_config_variable("gmail_2_email", "common")
 
         self.contact = MockContact(email = {'type': 'Personal', 'value': self.emailAddy})
 

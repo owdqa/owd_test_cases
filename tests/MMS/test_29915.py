@@ -29,7 +29,7 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
 
         # Define target phone numbers
-        num_prefix_plus = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        num_prefix_plus = self.UTILS.general.get_config_variable("phone_number", "custom")
         num_prefix_double_zero = num_prefix_plus.replace("+", "00")
         num_no_prefix = num_prefix_plus.replace("+34", "")
         self.target_numbers = [num_prefix_plus, num_prefix_double_zero, num_no_prefix]

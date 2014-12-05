@@ -37,8 +37,8 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.contacts = Contacts(self)
 
-        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
-        self.email_address = self.UTILS.general.get_config_variable("GMAIL_1_EMAIL")
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.email_address = self.UTILS.general.get_config_variable("gmail_1_email", "common")
 
         self.cont = MockContact(email=[{"type": "Personal", "value": "email1@nowhere.com"},
                                {"type": "Personal", "value": "email2@nowhere.com"},

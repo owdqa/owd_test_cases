@@ -4,7 +4,6 @@ from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.messages import Messages
-import time
 from OWDTestToolkit.utils.contacts import MockContact
 
 
@@ -18,7 +17,7 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.messages = Messages(self)
 
-        self.target_mms_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.target_mms_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.contact_1 = MockContact(tel={'type': 'Mobile', 'value': self.target_mms_number})
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact_1["tel"]["value"])
         self.UTILS.general.insertContact(self.contact_1)

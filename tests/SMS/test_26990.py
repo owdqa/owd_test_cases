@@ -16,7 +16,7 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
+        self.phone_number = self.UTILS.general.get_config_variable("short_phone_number", "custom")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()

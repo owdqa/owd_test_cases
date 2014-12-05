@@ -32,7 +32,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
-        self.target_num = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.target_num = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.test_msg = "Test."
         self.data_layer.delete_all_sms()
 

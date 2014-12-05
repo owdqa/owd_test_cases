@@ -26,8 +26,8 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
         self.settings = Settings(self)
 
-        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
-        self.cp_incoming_number = self.UTILS.general.get_config_variable("GLOBAL_CP_NUMBER").split(',')
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.cp_incoming_number = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
         self.test_msg = "Test message."
         self.data_layer.delete_all_sms()
 

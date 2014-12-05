@@ -17,7 +17,7 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
 
         # Get the correct number for the sms device.
-        self.num = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.num = self.UTILS.general.get_config_variable("phone_number", "custom")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()

@@ -36,7 +36,7 @@ class test_main(GaiaTestCase):
         #
         # Import contact (adjust the correct number).
         #
-        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.data_layer.delete_all_sms()
 
     def tearDown(self):

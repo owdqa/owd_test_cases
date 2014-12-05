@@ -33,7 +33,7 @@ class test_main(GaiaTestCase):
         self.dialer = Dialer(self)
         _ = setup_translations(self)
 
-        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
 
         # Fill the call log with some entries
         self.dialer.launch()

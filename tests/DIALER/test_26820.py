@@ -29,7 +29,7 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.dialer.launch()
 
-        self.dialer.createMultipleCallLogEntries(self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM"), 3)
+        self.dialer.createMultipleCallLogEntries(self.UTILS.general.get_config_variable("phone_number", "custom"), 3)
 
         screenshot = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Screenshot of multiple entries:", screenshot)

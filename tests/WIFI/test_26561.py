@@ -35,9 +35,8 @@ class test_main(GaiaTestCase):
         self.settings = Settings(self)
         self.Browser = Browser(self)
 
-        self.wifi_name = self.UTILS.general.get_config_variable("GLOBAL_WIFI_NAME")
-        self.wifi_user = self.UTILS.general.get_config_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass = self.UTILS.general.get_config_variable("GLOBAL_WIFI_PASSWORD")
+        self.wifi_name = self.UTILS.general.get_config_variable("ssid", "wifi")
+        self.wifi_pass = self.UTILS.general.get_config_variable("password", "wifi")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -45,7 +44,7 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.settings.launch()
-        self.settings.wifi_connect(self.wifi_name, self.wifi_user, self.wifi_pass)
+        self.settings.connect_to_wifi(self.wifi_name, self.wifi_pass)
         network = {'ssid': self.wifi_name}
         self.wait_for_condition(lambda m: self.data_layer.is_wifi_connected(network), timeout=30)
 

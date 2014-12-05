@@ -28,8 +28,8 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        self.own_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
-        self.nums = [self.own_number, self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM_SHORT")]
+        self.own_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.nums = [self.own_number, self.UTILS.general.get_config_variable("short_phone_number", "custom")]
         self.data_layer.delete_all_sms()
         self.UTILS.statusbar.clearAllStatusBarNotifs()
 

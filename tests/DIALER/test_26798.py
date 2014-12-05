@@ -21,7 +21,7 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.dialer = Dialer(self)
 
-        self.phone_number = self.UTILS.general.get_config_variable("TARGET_CALL_NUMBER")
+        self.phone_number = self.UTILS.general.get_config_variable("target_call_number", "common")
         self.prefixes = ["0034", "+34"]
         self.test_numbers = [prefix + self.phone_number for prefix in self.prefixes]
 

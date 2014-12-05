@@ -34,7 +34,7 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         _ = setup_translations(self)
 
-        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.test_contact = MockContact()
 
         # Generate an entry in the call log

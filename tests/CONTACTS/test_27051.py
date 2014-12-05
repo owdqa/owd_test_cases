@@ -43,8 +43,8 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
         self.settings = Settings(self)
 
-        self.hotmail_user = self.UTILS.general.get_config_variable("HOTMAIL_2_EMAIL")
-        self.hotmail_passwd = self.UTILS.general.get_config_variable("HOTMAIL_2_PASS")
+        self.hotmail_user = self.UTILS.general.get_config_variable("hotmail_2_email", "common")
+        self.hotmail_passwd = self.UTILS.general.get_config_variable("hotmail_2_pass", "common")
 
         #
         # Get details of our test contacts.

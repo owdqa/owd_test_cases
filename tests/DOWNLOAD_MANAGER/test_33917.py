@@ -27,7 +27,7 @@ class test_main(GaiaTestCase):
         self.browser = Browser(self)
         self.settings = Settings(self)
         self.download_manager = DownloadManager(self)
-        self.test_url = self.UTILS.general.get_config_variable("GLOBAL_DOWNLOAD_URL")
+        self.test_url = self.UTILS.general.get_config_variable("download_url", "common")
         self.file_name = "Crazy_Horse.jpg"
         self.data_url = "{}/{}".format(self.test_url, self.file_name)
 

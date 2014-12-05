@@ -22,8 +22,8 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use.
         #
-        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_TARGET_SMS_NUM")
-        self.target_email = self.UTILS.general.get_config_variable("GMAIL_1_EMAIL")
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.target_email = self.UTILS.general.get_config_variable("gmail_1_email", "common")
 
         self.msg = "Testing email link with " + self.target_email
 

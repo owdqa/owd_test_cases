@@ -27,9 +27,9 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.email = Email(self)
 
-        self.user1 = self.UTILS.general.get_config_variable("GMAIL_2_USER")
-        self.email1 = self.UTILS.general.get_config_variable("GMAIL_2_EMAIL")
-        self.passwd1 = self.UTILS.general.get_config_variable("GMAIL_2_PASS")
+        self.user1 = self.UTILS.general.get_config_variable("gmail_2_user", "common")
+        self.email1 = self.UTILS.general.get_config_variable("gmail_2_email", "common")
+        self.passwd1 = self.UTILS.general.get_config_variable("gmail_2_pass", "common")
 
         self.data_layer.connect_to_wifi()
 

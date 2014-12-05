@@ -31,7 +31,7 @@ class test_main(GaiaTestCase):
 
         self.test_msg = "Hello World"
 
-        self.phone_number = self.UTILS.general.get_config_variable("GLOBAL_NUM_FOR_INCOMING_CALL")
+        self.phone_number = self.UTILS.general.get_config_variable("incoming_call_number", "common")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
         self.UTILS.statusbar.clearAllStatusBarNotifs()

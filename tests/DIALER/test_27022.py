@@ -19,7 +19,7 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.dialer = Dialer(self)
 
-        self.phone_number = self.UTILS.general.get_config_variable("TARGET_CALL_NUMBER")
+        self.phone_number = self.UTILS.general.get_config_variable("target_call_number", "common")
 
         self.dialer.launch()
         self.dialer.callLog_clearAll()
