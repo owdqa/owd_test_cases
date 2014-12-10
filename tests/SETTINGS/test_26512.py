@@ -38,7 +38,7 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.settings.launch()
-
+        self.settings.wifi()
         self.settings.connect_to_wifi(self.wifi_name, self.wifi_pass)
 
         self.UTILS.test.test(self.UTILS.network.is_network_type_enabled("wifi") == True, "Wifi mode is now enabled.")

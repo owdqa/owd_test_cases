@@ -41,6 +41,7 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.settings.launch()
+        self.settings.wifi()
         self.settings.connect_to_wifi(self.wifi_name, self.wifi_pass)
         network = {'ssid': self.wifi_name}
         self.wait_for_condition(lambda m: self.data_layer.is_wifi_connected(network), timeout=30)
