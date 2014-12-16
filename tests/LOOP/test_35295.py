@@ -51,7 +51,7 @@ class test_main(GaiaTestCase):
             self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
 
         self.email.launch()
-        self.email.setupAccount(self.email_user, self.email_add, self.email_pass)
+        self.email.setup_account(self.email_user, self.email_add, self.email_pass)
         self.apps.kill_all()
         time.sleep(2)
 

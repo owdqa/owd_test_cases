@@ -26,30 +26,26 @@ class Emailing(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
 
-        self.Email = Email(self)
+        self.email = Email(self)
         self.settings = Settings(self)
         self.browser = Browser(self)
 
         _ = setup_translations(self)
 
-        #
         # Create (and record) a unique 'subject'.
-        #
         self.subject = "test " + str(time.time())
         self.body = "This is the test email body."
 
-        #
         # Set up specific folder names.
-        #
-        if "gmail" in self.testType.lower():
+        if "gmail" in self.test_type:
             self.UTILS.reporting.logComment("Gmail account being used.")
-            self.sentFolderName = _("Sent Mail")
-        elif "exchange" in self.testType.lower():
+            self.sent_folder_name = _("Sent Mail")
+        elif "exchange" in self.test_type:
             self.UTILS.reporting.logComment("Exchange account being used.")
-            self.sentFolderName = _("Sent Items")
+            self.sent_folder_name = _("Sent Items")
         else:
             self.UTILS.reporting.logComment("Non-gmail account being used.")
-            self.sentFolderName = _("Sent")
+            self.sent_folder_name = _("Sent")
 
         self.marionette.set_search_timeout(50)
 
@@ -59,73 +55,39 @@ class Emailing(GaiaTestCase):
     def send_email(self, account_to_load, to):
         self.UTILS.reporting.logComment("[SEND]Using subject \"" + self.subject + "\".")
 
-        #
-        # Launch Email app.
-        #
-        self.Email.launch()
+        self.email.launch()
+        self.email.setup_account(account_to_load["username"], account_to_load["email"], account_to_load["pass"])
+        self.email.open_folder(_("Inbox"))
 
-        #
-        # Login.
-        #
-        self.Email.setupAccount(account_to_load["username"], account_to_load["email"], account_to_load["pass"])
-
-        #
-        # Return to the Inbox.
-        #
-        self.Email.openMailFolder(_("Inbox"))
-
-        #
         # At the inbox, compose and send a new email (or fail).
-        #
         if type(to) is list:
             to_addresses = [account["email"] for account in to]
-            self.Email.send_new_email(to_addresses, self.subject, self.body)
+            self.email.send_new_email(to_addresses, self.subject, self.body)
         else:
-            self.Email.send_new_email(to["email"], self.subject, self.body)
+            self.email.send_new_email(to["email"], self.subject, self.body)
 
-        #
         # Check our email is in the sent folder.
-        #
-        self.Email.openMailFolder(self.sentFolderName)
-        time.sleep(10)
-        self.UTILS.test.test(self.Email.emailIsInFolder(self.subject),
-                             "Email '" + self.subject + "' found in the Sent folder.", False)
+        self.email.open_folder(self.sent_folder_name)
+        self.UTILS.test.test(self.email.email_is_in_folder(self.subject),
+                             "Email with subject [{}] found in the Sent folder.".format(self.subject))
 
     def receive_email(self, account_to_load, sender, prefix="", many_recipients=False, files_attached=False):
 
         self.UTILS.reporting.logComment("[RECEIVE]Using subject \"" + self.subject + "\".")
 
-        #
-        # Launch Email app.
-        #
-        self.Email.launch()
+        self.email.launch()
+        self.email.setup_account(account_to_load["username"], account_to_load["email"], account_to_load["pass"])
 
-        #
-        # Login.
-        #
-        self.Email.setupAccount(account_to_load["username"], account_to_load["email"], account_to_load["pass"])
-
-        self.UTILS.reporting.logResult("info", "Finished setting up the account to log in with.")
-
-        #
         # Make sure we're in the inbox
-        #
-
         header_text = self.UTILS.element.getElement(DOM.GLOBAL.app_head, "Application header").text
         self.UTILS.reporting.logResult("info", "Header name in <b>receive_email</b> method: {}".format(header_text))
 
         if header_text != _("Inbox"):
-            self.Email.openMailFolder(_("Inbox"))
+            self.email.open_folder(_("Inbox"))
 
-        #
-        # Open the email (we'll already be in the Inbox).
-        #
-        self.UTILS.test.test(self.Email.openMsg(prefix + self.subject),
+        self.UTILS.test.test(self.email.open_msg(prefix + self.subject),
                              "Email was opened successfully.", True)
 
-        #
-        # Verify the contents - the email address is shortened to just the name (sometimes!).
-        #
         to_name = account_to_load["email"].split("@")[0]
         from_name = sender["email"].split("@")[0]
 

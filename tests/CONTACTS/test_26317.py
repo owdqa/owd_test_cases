@@ -58,7 +58,7 @@ class test_main(GaiaTestCase):
         em_email = self.UTILS.general.get_config_variable("gmail_1_email", "common")
         em_pass = self.UTILS.general.get_config_variable("gmail_1_pass", "common")
         self.email.launch()
-        self.email.setupAccount(em_user, em_email, em_pass)
+        self.email.setup_account(em_user, em_email, em_pass)
 
         #
         # Launch contacts app.
@@ -100,5 +100,5 @@ class test_main(GaiaTestCase):
         #
         # Send the message.
         #
-        # self.email.sendTheMessageAndSwitchFrame(self.contact['name'], DOM.Contacts.frame_locator)
-        self.email.sendTheMessage()
+        # self.email.send_the_email_and_switch_frame(self.contact['name'], DOM.Contacts.frame_locator)
+        self.email.send_the_email()

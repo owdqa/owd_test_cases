@@ -50,7 +50,7 @@ class test_main(GaiaTestCase):
             self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
 
         self.email.launch()
-        self.email.setupAccount(self.email_user, self.email_add, self.email_pass)
+        self.email.setup_account(self.email_user, self.email_add, self.email_pass)
         self.apps.kill_all()
         time.sleep(2)
 
@@ -84,6 +84,6 @@ class test_main(GaiaTestCase):
         share_by_email.tap()
         self.UTILS.iframe.switch_to_frame(*DOM.Email.frame_locator)
         time.sleep(2)
-        self.email.sendTheMessage()
+        self.email.send_the_email()
         self.UTILS.iframe.switch_to_frame(*DOM.Loop.frame_locator)
         self.UTILS.element.getElement(DOM.Loop.open_settings_btn, "Open settings button")
