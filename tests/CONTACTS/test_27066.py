@@ -49,7 +49,7 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         # Store our picture on the device.
-        self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg')
 
         # Create and verify contact
         self.contacts.launch()

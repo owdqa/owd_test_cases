@@ -24,7 +24,7 @@ class test_main(GaiaTestCase):
         self.cont = MockContact(tel={"type": "Mobile", "value": self.test_num})
 
         self.UTILS.general.insertContact(self.cont)
-        self.UTILS.general.add_file_to_device('./tests/_resources/imga.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/imga.jpg')
         self.UTILS.reporting.logComment("Using target telephone number " + self.cont["tel"]["value"])
 
     def tearDown(self):

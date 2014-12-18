@@ -43,7 +43,7 @@ class test_main(GaiaTestCase):
         #
         # Insert a contact without email addresses
         #
-        self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg')
         self.contact = MockContact(email={'type': 'Personal', 'value': ''})
 
         self.UTILS.general.insertContact(self.contact)

@@ -45,7 +45,7 @@ class test_main(GaiaTestCase):
                                {"type": "Personal", "value": "email3@nowhere.com"}])
         self.UTILS.general.insertContact(self.cont)
 
-        self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg')
         self.data_layer.delete_all_sms()
 
     def tearDown(self):

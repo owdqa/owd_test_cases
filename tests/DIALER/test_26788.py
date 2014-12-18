@@ -30,7 +30,7 @@ class test_main(GaiaTestCase):
         self.dialer.createMultipleCallLogEntries(self.test_contact["tel"]["value"], 1)
 
         # Create contact with image
-        self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg')
         self.dialer.callLog_createContact(self.test_contact["tel"]["value"])
 
         contFields = self.contacts.get_contact_fields()

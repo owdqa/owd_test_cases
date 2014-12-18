@@ -78,7 +78,7 @@ class test_main(GaiaTestCase):
         self.messages.enterSMSMsg(self.test_msg)
 
         # Add an image file
-        self.UTILS.general.add_file_to_device('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/80x60.jpg')
         self.messages.create_mms_image()
         self.gallery.click_on_thumbnail_at_position_mms(0)
 
