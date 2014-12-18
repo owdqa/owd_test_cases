@@ -78,8 +78,7 @@ class test_main(GaiaTestCase):
         #
         self.messages.create_and_send_sms([self.phone_number], sms_message)
         self.messages.wait_for_message()
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        self.messages.go_back()
 
         self.UTILS.element.waitForNotElements(DOM.Messages.mms_icon, "MMS Icon")
 
@@ -105,7 +104,6 @@ class test_main(GaiaTestCase):
         self.messages.wait_for_message()
 
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        self.messages.go_back()
 
         self.messages.checkMMSIcon(self.phone_number)

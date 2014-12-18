@@ -52,8 +52,7 @@ class test_main(GaiaTestCase):
         #
         # Click the back button.
         #
-        back_btn = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        back_btn.tap()
+        self.messages.go_back()
 
         #
         # Check for the save/discard popup.

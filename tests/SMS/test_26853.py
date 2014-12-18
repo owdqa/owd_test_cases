@@ -1,3 +1,20 @@
+#===============================================================================
+# 26853: Delete all SMS in a conversation with several sms
+#
+# Procedure:
+# 1- Send some sms to our device
+# 2- Open SMS app
+# 3- Open the conversation created with the last sms
+# 4- Press edit button
+# 5- Press Select all button
+# 6- Press Delete button
+# 7- Press OK
+#
+# Expected results:
+# All SMS are deleted successfully and the conversation is deleted
+# automatically
+#===============================================================================
+
 from gaiatest import GaiaTestCase
 
 from OWDTestToolkit import DOM
@@ -45,21 +62,15 @@ class test_main(GaiaTestCase):
         #
         # Go into edit mode..
         #
-        x = self.UTILS.element.getElement(DOM.Messages.edit_messages_icon, "Edit button")
-        x.tap()
+        edit_btn = self.UTILS.element.getElement(DOM.Messages.edit_messages_icon, "Edit button")
+        edit_btn.tap()
 
-        #
-        # Select Delete Messages
-        #
+        select_btn = self.UTILS.element.getElement(DOM.Messages.edit_msgs_select_btn, "Select messages button")
+        select_btn.tap()
 
-        x = self.UTILS.element.getElement(DOM.Messages.delete_messages_btn, "Delete messages button")
-        x.tap()
-
-        #
-        # Tap Selected all
-        #
-        x = self.UTILS.element.getElement(DOM.Messages.edit_msgs_sel_all_btn, "Select all button")
-        x.tap()
+        # Select all
+        select_all_btn = self.UTILS.element.getElement(DOM.Messages.check_all_messages_btn, "Select all button")
+        select_all_btn.tap()
 
         #
         # Tap delete

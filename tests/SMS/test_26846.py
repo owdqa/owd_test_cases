@@ -39,11 +39,7 @@ class test_main(GaiaTestCase):
         self.messages.create_and_send_sms([self.phone_number], self.test_msg)
         self.messages.wait_for_message()
 
-        #
-        # Go back..
-        #
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        self.messages.go_back()
 
         #
         # Delete this thread.

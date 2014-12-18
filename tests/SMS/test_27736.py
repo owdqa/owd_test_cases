@@ -1,6 +1,16 @@
+#===============================================================================
+# 27736: Press delete without any conversation selected
 #
-# 27736
+# Procedure:
+# 1- Access to SMS app
+# 2- Press edit button
+# 3- Try Press delete button
 #
+# Expected results:
+# It is impossible to press the button "delete" or if we press the button,
+# it doesn't do anything
+#===============================================================================
+
 from gaiatest import GaiaTestCase
 
 from OWDTestToolkit import DOM
@@ -34,7 +44,7 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.messages.launch()
-    
+
         sms_msg = "Just creating a message thread."
         self.UTILS.messages.create_incoming_sms(self.phone_number, sms_msg)
         self.UTILS.statusbar.wait_for_notification_toaster_detail(sms_msg, timeout=120)
@@ -56,4 +66,4 @@ class test_main(GaiaTestCase):
         #
         delete_btn = self.UTILS.element.getElement(DOM.Messages.threads_delete_button, "Delete button")
         disabled = delete_btn.get_attribute("disabled")
-        self.UTILS.test.test(delete_btn.get_attribute("disabled") == "true", "Delete button is not enabled.")
+        self.UTILS.test.test(disabled, "Delete button is not enabled.")

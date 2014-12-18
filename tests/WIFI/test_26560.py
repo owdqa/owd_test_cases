@@ -48,6 +48,7 @@ class test_main(GaiaTestCase):
         # Open the Settings application.
         #
         self.settings.launch()
+        time.sleep(2)
         self.settings.wifi()
         self.settings.connect_to_wifi(self.wifi_name, self.wifi_pass)
         network = {'ssid': self.wifi_name}

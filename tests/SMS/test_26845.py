@@ -59,8 +59,7 @@ class test_main(GaiaTestCase):
         #
         self.messages.sendSMS()
         self.messages.wait_for_message()
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        self.messages.go_back()
 
         #
         # Open contacts app and create a contact with the same phone number used to send the SMS in the
