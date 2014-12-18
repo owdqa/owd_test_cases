@@ -57,9 +57,7 @@ class test_main(GaiaTestCase):
         self.UTILS.general.add_file_to_device('./tests/_resources/mpeg4.mp4')
 
     def tearDown(self):
-        self.UTILS.general.remove_file('30k_basic_AMR.amr', '/SD/mus')
-        self.UTILS.general.remove_file('mpeg4.mp4', '/SD/vid')
-        self.UTILS.general.remove_file('80x60.jpg', 'DCIM/100MZLLA')
+        self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 

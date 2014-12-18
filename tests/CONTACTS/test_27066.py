@@ -44,6 +44,7 @@ class test_main(GaiaTestCase):
         self.UTILS.general.insertContact(self.contact2)
 
     def tearDown(self):
+        self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 

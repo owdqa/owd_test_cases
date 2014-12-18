@@ -22,6 +22,7 @@ class test_main(GaiaTestCase):
         self.length = len(self.img_list)
 
     def tearDown(self):
+        self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 

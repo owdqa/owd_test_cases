@@ -20,6 +20,7 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
 
     def tearDown(self):
+        self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 

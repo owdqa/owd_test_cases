@@ -34,6 +34,7 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logComment("Using target telephone number " + self.cont["tel"]["value"])
 
     def tearDown(self):
+        self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 

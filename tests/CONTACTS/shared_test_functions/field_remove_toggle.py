@@ -21,6 +21,7 @@ class field_remove_toggle(GaiaTestCase):
         self.contacts = Contacts(self)
 
     def tearDown(self):
+        self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
 
     def field_remove_toggle_test(self, contact, field_definition, item_nums=[0]):

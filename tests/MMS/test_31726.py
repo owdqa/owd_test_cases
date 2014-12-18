@@ -47,7 +47,7 @@ class test_main(GaiaTestCase):
         self.data_layer.delete_all_sms()
 
     def tearDown(self):
-        self.UTILS.general.remove_file('mpeg4.mp4', "SD/mus")
+        self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 

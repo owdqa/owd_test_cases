@@ -61,6 +61,7 @@ class test_main(GaiaTestCase):
         self.test_nums = [self.contact1["tel"]["value"], self.contact2["tel"]["value"]]
 
     def tearDown(self):
+        self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 

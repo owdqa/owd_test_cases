@@ -46,7 +46,7 @@ class test_main(GaiaTestCase):
         time.sleep(2)
 
     def tearDown(self):
-        self.UTILS.general.remove_file('contact_face.jpg', 'DCIM/100MZLLA')
+        self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 

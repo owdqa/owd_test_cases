@@ -52,6 +52,7 @@ class test_main(GaiaTestCase):
         self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg')
 
     def tearDown(self):
+        self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
