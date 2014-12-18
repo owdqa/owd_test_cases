@@ -57,7 +57,7 @@ class test_main(GaiaTestCase):
         self.connect_to_network()
 
         self.email.launch()
-        self.email.setupAccount(self.emailU, self.emailE, self.emailP)
+        self.email.setup_account(self.emailU, self.emailE, self.emailP)
 
         self.messages.launch()
 

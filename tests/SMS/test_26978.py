@@ -92,7 +92,7 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(DOM.Email.email_not_setup_ok, "Set up account confirmation")
         x.tap()
 
-        self.email.setupAccount(self.email_user, self.email_address, self.email_pass)
+        self.email.setup_account(self.email_user, self.email_address, self.email_pass)
 
         #
         # Verify the email address is in the To field.

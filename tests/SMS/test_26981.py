@@ -54,7 +54,7 @@ class test_main(GaiaTestCase):
         self.connect_to_network()
 
         self.email.launch()
-        self.email.setupAccount(self.email_user, self.email_address, self.email_pass)
+        self.email.setup_account(self.email_user, self.email_address, self.email_pass)
 
         #
         # Launch messages app.

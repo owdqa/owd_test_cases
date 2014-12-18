@@ -13,7 +13,7 @@ from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.email import Email
-
+import time
 
 class test_main(GaiaTestCase):
 
@@ -38,10 +38,11 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
         self.email.launch()
-        self.email.setupAccount(self.user1, self.email1, self.passwd1)
+        self.email.setup_account(self.user1, self.email1, self.passwd1)
 
-        _subject = self.marionette.find_elements(*DOM.Email.folder_subject_list)[1].text
+        # Let's erase the first visible mail
+        first_mail = self.email.mails()[0]
+        _subject = first_mail.find_element(*DOM.Email.folder_subject_list).text
         self.UTILS.reporting.logComment("Deleting email with subject '" + _subject + "'.")
-        self.email.deleteEmail(_subject)
+        self.email.delete_email(_subject)
