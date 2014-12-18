@@ -1,3 +1,21 @@
+#===============================================================================
+# 26974: Click on an email address and Add to an existing contact without email
+# address added
+#
+# Procedure:
+# 1. Send a sms from "device A" to "device B" who contains an email address
+# 2. Open sms app in the device A.
+# 3. Hold on the email address contained in the sms
+# 4. Click on "Add to existing contact" button
+# 5. Select a contact without email address inserted
+# 5. Insert contact photo, name, surname, company, phone number, address
+# comment and other email address.
+# 6. Press save button
+#
+# Expected results:
+# Contact is created and The user returns to sms app in the conversation screen
+#===============================================================================
+
 from gaiatest import GaiaTestCase
 
 from OWDTestToolkit import DOM

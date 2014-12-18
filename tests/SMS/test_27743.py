@@ -1,3 +1,19 @@
+#===============================================================================
+# 27743: Edit a contact name and verify that the SMS list now shows the new name
+#
+# Procedure:
+# 1- Send a sms to our device from phone number who is a contact
+# 2- Open SMS app
+# ER1
+# 3- Edit the contact name who sended the last sms
+# 4- Open SMS app
+# ER2
+#
+# Expected results:
+# ER1- verify that the SMS list shows the name
+# ER2- verify that the SMS list now shows the new name
+#===============================================================================
+
 from gaiatest import GaiaTestCase
 
 from OWDTestToolkit.utils.utils import UTILS

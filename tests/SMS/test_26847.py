@@ -60,8 +60,7 @@ class test_main(GaiaTestCase):
         #
         self.UTILS.reporting.debug("*** Sending SMS to {}".format(self.test_contacts[0]["tel"]["value"]))
         self.messages.create_and_send_sms([self.test_contacts[0]["tel"]["value"]], self.test_msg)
-        back_btn = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        back_btn.tap()
+        self.messages.go_back()
 
         for i in range(2):
             self.test_msg = "Test message {} at {}".format(i, time.time())
@@ -77,8 +76,8 @@ class test_main(GaiaTestCase):
         edit_btn = self.UTILS.element.getElement(DOM.Messages.edit_threads_button, "Edit threads button")
         edit_btn.tap()
 
-        delete_threads_btn = self.UTILS.element.getElement(DOM.Messages.delete_threads_button, "Delete threads button")
-        delete_threads_btn.tap()
+        select_btn = self.UTILS.element.getElement(DOM.Messages.edit_msgs_select_threads_btn, "Select messages button")
+        select_btn.tap()
 
         thread_list = self.UTILS.element.getElements(DOM.Messages.threads_list, "Message threads")
         for i in range(len(thread_list) - 1):

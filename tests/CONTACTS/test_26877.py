@@ -43,15 +43,14 @@ class test_main(GaiaTestCase):
         #
         # Create a thread for this contact.
         #
-        #(Just so we can switch to it later)
+        # (Just so we can switch to it later)
         self.contacts.launch()
         self.messages.launch()
 
         self.messages.create_and_send_sms([self.contact["tel"]["value"]], "Test message")
         self.messages.wait_for_message()
 
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        self.messages.go_back()
 
         self.messages.create_and_send_sms([self.num2], "Thread for a different number")
 

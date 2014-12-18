@@ -46,8 +46,7 @@ class test_main(GaiaTestCase):
 
         self.messages.check_last_message_contents(self.test_msg)
 
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        self.messages.go_back()
 
         #
         # Check the message via the thread.

@@ -38,18 +38,16 @@ class test_main(GaiaTestCase):
         msg_text = str(time.time())
         self.messages.create_and_send_sms([self.phone_number], msg_text)
         self.messages.wait_for_message()
- 
+
         #
         # Return to the threads view.
         #
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        self.messages.go_back()
 
         #
         # Get the preview txt for our test.
         #
         preview_text = self.messages.getThreadText(self.phone_number)
 
-        self.UTILS.test.test(preview_text in msg_text, 
+        self.UTILS.test.test(preview_text in msg_text,
                         "Preview text ({}) is in the original message text({}).".format(preview_text, msg_text))
-

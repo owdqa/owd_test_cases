@@ -23,6 +23,10 @@ import time
 
 class test_main(GaiaTestCase):
 
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
+
     def setUp(self):
         #
         # Set up child objects...
@@ -30,7 +34,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
-        self.Email = Email(self)
+        self.email = Email(self)
 
         self.email_user = self.UTILS.general.get_config_variable("gmail_1_user", "common")
         self.email_address = self.UTILS.general.get_config_variable("gmail_1_email", "common")
@@ -49,8 +53,8 @@ class test_main(GaiaTestCase):
         #
         self.connect_to_network()
 
-        self.Email.launch()
-        self.Email.setup_account(self.email_user, self.email_address, self.email_pass)
+        self.email.launch()
+        self.email.setup_account(self.email_user, self.email_address, self.email_pass)
 
         #
         # Launch messages app.

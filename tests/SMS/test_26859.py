@@ -57,8 +57,7 @@ class test_main(GaiaTestCase):
         #
         # Return to the threads screen and check the time of this thread.
         #
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        self.messages.go_back()
         time.sleep(1)
 
         #

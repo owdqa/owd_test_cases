@@ -68,12 +68,11 @@ class test_main(GaiaTestCase):
         # Verify the header is now the name,
         #
         x = self.UTILS.element.getElement(DOM.Messages.message_header, "Message header")
-        self.UTILS.test.test(x.text == "Test Testerton", 
+        self.UTILS.test.test(x.text == "Test Testerton",
                         "Message header has been changed to match the contact (it was '{}').".format(x.text))
 
         #
         # Go back to the threads view and check the message name there too.
         #
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        self.messages.go_back()
         self.messages.openThread("Test Testerton")

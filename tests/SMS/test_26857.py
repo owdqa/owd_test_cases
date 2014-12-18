@@ -49,8 +49,7 @@ class test_main(GaiaTestCase):
         #
         # Return to the threads view.
         #
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        self.messages.go_back()
 
         #
         # Get the preview txt for our test.

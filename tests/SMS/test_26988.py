@@ -5,7 +5,7 @@ from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.utils.contacts import MockContact
-#import time
+# import time
 
 
 class test_main(GaiaTestCase):
@@ -86,6 +86,5 @@ class test_main(GaiaTestCase):
         #
         # Go back to the threads view and check the message name there too.
         #
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        self.messages.go_back()
         self.messages.openThread(self.contact["name"])

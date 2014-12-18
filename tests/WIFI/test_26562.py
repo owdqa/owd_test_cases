@@ -16,6 +16,7 @@
 # -An option to Join Hidden Network
 #===============================================================================
 
+import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
@@ -41,6 +42,7 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.settings.launch()
+        time.sleep(2)
         self.settings.wifi()
         self.settings.connect_to_wifi(self.wifi_name, self.wifi_pass)
         network = {'ssid': self.wifi_name}
@@ -58,8 +60,8 @@ class test_main(GaiaTestCase):
         self.UTILS.element.waitForElements(DOM.Settings.wifi_advanced_knownNets, "Known networks")
         self.UTILS.element.waitForElements(DOM.Settings.wifi_advanced_joinHidden, "Join hidden network button")
 
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot at this point:", x)
+        screenshot = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot at this point:", screenshot)
 
         x = self.UTILS.element.getElements(DOM.Settings.wifi_advanced_knownNets,
                                            "Known networks (should only be 1).")[0]

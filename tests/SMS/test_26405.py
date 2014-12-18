@@ -1,3 +1,21 @@
+#===============================================================================
+# 26405: Press cancel button in the screen to select a contact phone number
+#
+# Procedure:
+# 1- Open sms app
+# 2- Press new sms button
+# 3- Press select contact button
+# 4- Select a contact with 2 phone numbers
+# ER1
+# Press cancel button
+# ER2
+#
+# Expected results:
+# ER1 User accesses to selection of contact phone number
+# ER2 User exits the selection of contact phone number and no phone number
+# is added
+#===============================================================================
+
 from gaiatest import GaiaTestCase
 
 from OWDTestToolkit import DOM
@@ -14,7 +32,7 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.contacts = Contacts(self)
-        self.contact = MockContact(tel=[{'type': 'Mobile', 'value': '11111111'},
+        self.contact = MockContact(tel=[{'type': 'Mobile', 'value': '111111111'},
                                         {'type': 'Mobile', 'value': '222222222'}])
 
         self.UTILS.general.insertContact(self.contact)
@@ -34,4 +52,5 @@ class test_main(GaiaTestCase):
         self.messages.selectAddContactButton()
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
         self.contacts.search(self.contact['name'])
-        self.contacts.select_search_result_several_phones(self.contact['name'], 0)
+        self.contacts.select_search_result_several_phones(self.contact['name'],
+                                                          self.contact['tel'][0]['value'], cancel=True)
