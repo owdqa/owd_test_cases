@@ -10,9 +10,8 @@ class test_main(GaiaTestCase):
     _now = ""
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -27,22 +26,19 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.UTILS.statusbar.clearAllStatusBarNotifs()
-        #
-        # Launch messages app & delete all Threads
-        # Make sure we have no threads
-        #
+        """
+        Launch messages app & delete all Threads
+        Make sure we have no threads
+        """
+
         self.messages.launch()
 
-        #
         # Remember the 'real' current date and time.
-        #
         one_day = 86400
         self.NOW_EPOCH = time.time()
         self._now = self.UTILS.date_and_time.getDateTimeFromEpochSecs(self.NOW_EPOCH)
 
-        #
         #=============================================================================
-        #
         self.UTILS.reporting.logResult("info", " ")
         self.UTILS.reporting.logResult("info", "--------------------------")
         self.UTILS.reporting.logResult("info", "<b><u>Reading an sms from 2 months ago...</u></b>")
@@ -56,9 +52,7 @@ class test_main(GaiaTestCase):
         self.UTILS.statusbar.wait_for_notification_toaster_detail("2 months ago", timeout=120)
         self._checkTimeStamp(expected_str)
 
-        #
         #=============================================================================
-        #
         self.UTILS.reporting.logResult("info", " ")
         self.UTILS.reporting.logResult("info", "--------------------------")
         self.UTILS.reporting.logResult("info", "<b><u>Reading an sms from 6 days ago...</u></b>")
@@ -72,9 +66,7 @@ class test_main(GaiaTestCase):
         self.UTILS.statusbar.wait_for_notification_toaster_detail("6 days ago", timeout=120)
         self._checkTimeStamp(expected_str)
 
-        #
         #=============================================================================
-        #
         days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
         for i in range(5, 1, -1):
             self.UTILS.reporting.logResult("info", " ")
@@ -91,9 +83,7 @@ class test_main(GaiaTestCase):
             self.UTILS.statusbar.wait_for_notification_toaster_detail(text, timeout=120)
             self._checkTimeStamp(_dayname.upper())
 
-        #
         #=============================================================================
-        #
         self.UTILS.reporting.logResult("info", " ")
         self.UTILS.reporting.logResult("info", "--------------------------")
         self.UTILS.reporting.logResult("info", "<b><u>Reading an sms from yesterday...</u></b>")
@@ -103,9 +93,7 @@ class test_main(GaiaTestCase):
         self.UTILS.statusbar.wait_for_notification_toaster_detail("DAY: YESTERDAY", timeout=120)
         self._checkTimeStamp("YESTERDAY")
 
-        #
         #=============================================================================
-        #
         self.UTILS.reporting.logResult("info", " ")
         self.UTILS.reporting.logResult("info", "--------------------------")
         self.UTILS.reporting.logResult("info", "<b><u>Reading an sms from today ...</u></b>")
@@ -116,10 +104,11 @@ class test_main(GaiaTestCase):
         self._checkTimeStamp("TODAY")
 
     def _checkTimeStamp(self, p_str):
-        #
-        # Sets the device time back to 'now', opens the sms / thread and
-        # checks that the expected timestamp header is present.
-        #
+        """
+        Sets the device time back to 'now', opens the sms / thread and
+        checks that the expected timestamp header is present.
+        """
+
         # This is slow, but I can't find a way to see headers that are off the top
         # of the screen, so I ended up doing it this way.
         #

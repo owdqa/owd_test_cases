@@ -22,17 +22,14 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.UTILS.date_and_time.setTimeToNow()
 
-        #
         # Launch contacts app.
-        #
         self.calendar.launch()
 
         _today = self.UTILS.date_and_time.getDateTimeFromEpochSecs(int(time.time()))
 
         #===================================================================================================
-        #
+
         # MONTH view
-        #
         self.calendar.setView("month")
 
         self.UTILS.reporting.logResult("info", "<b>Testing <u>month</u> view for <i>today</i> ...</b>")
@@ -45,9 +42,8 @@ class test_main(GaiaTestCase):
         self.monthViewTests(x, False)
 
         #===================================================================================================
-        #
+
         # WEEK view
-        #
         self.calendar.setView("week")
 
         self.UTILS.reporting.logResult("info", "<b>Testing <i>week</i> view for <i>today</i> ...</b>")
@@ -60,9 +56,8 @@ class test_main(GaiaTestCase):
         self.weekViewTests(x)
 
         #===================================================================================================
-        #
+
         # DAY view
-        #
         self.calendar.setView("day")
 
         self.UTILS.reporting.logResult("info", "<b>Testing <i>day</i> view for <i>today</i> ...</b>")

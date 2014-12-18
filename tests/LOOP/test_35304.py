@@ -23,9 +23,8 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
@@ -35,9 +34,8 @@ class test_main(GaiaTestCase):
         self.email_add = self.UTILS.general.get_config_variable("gmail_2_email", "common")
         self.email_pass = self.UTILS.general.get_config_variable("gmail_2_pass", "common")
         self.email_user = self.UTILS.general.get_config_variable("gmail_2_user", "common")
-        #
+
         # Get details of our test contacts.
-        #
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
         self.data_layer.connect_to_wifi()
@@ -63,9 +61,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch contacts app.
-        #
         self.contacts.launch()
         self.contacts.view_contact(self.contact['name'])
         video_btn = self.marionette.find_element(DOM.Contacts.view_contact_hello_option[0],

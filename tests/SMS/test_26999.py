@@ -30,9 +30,8 @@ from OWDTestToolkit.apps.contacts import Contacts
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -45,58 +44,40 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
 
-        #
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Create and send a new test message.
-        #
         test_str = "Nine 123456789 numbers."
         self.messages.create_and_send_sms([self.phone_number], test_str)
         msg = self.messages.wait_for_message()
 
-        #
         # Long press the emedded number link.
-        #
         tag = msg.find_element("tag name", "a")
         tag.tap()
 
-        #
         # Select create new contact.
-        #
         create_btn = self.UTILS.element.getElement(DOM.Messages.header_create_new_contact_btn,
                                     "Create new contact button")
         create_btn.tap()
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
-        #
         # Cancel the action.
-        #
         form_header = self.UTILS.element.getElement(DOM.Contacts.contact_form_header, "Cancel button")
         form_header.tap(25, 25)
 
-        #
         # Wait for the contacts app to go away.
-        #
         self.marionette.switch_to_frame()
         self.UTILS.element.waitForNotElements(("xpath",
                                         "//iframe[contains(@src, '{}')]".format(DOM.Contacts.frame_locator[1])),
                                         "Contacts iframe")
 
-        #
         # Kill the SMS app (and all others).
-        #
         self.apps.kill_all()
 
-        #
         # Open the contacts app.
-        #
         self.contacts.launch()
 
-        #
         # Verify that there are no contacts.
-        #
         self.UTILS.element.waitForElements(("xpath", "//p[contains(text(), 'No contacts')]"),
                                     "No contacts message")

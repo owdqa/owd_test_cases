@@ -28,9 +28,8 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
 
         self.UTILS = UTILS(self)
@@ -51,13 +50,9 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
 
-        #
         # Select a category (group).
-        #
         self.EME.pick_group(self.cat_id)
 
-        #
         # Verify that the message is displayed.
-        #
         self.UTILS.element.waitForElements(DOM.EME.offline_message,
                                    "Connection message (without using with a network first)", timeout=30)

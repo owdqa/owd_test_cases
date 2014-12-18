@@ -35,9 +35,8 @@ class test_main(GaiaTestCase):
     _appOK = True
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.settings = Settings(self)
@@ -49,30 +48,22 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
 
-        #
         # Ensure we have a connection.
-        #
         self.connect_to_network()
 
-        #
         # Uninstall the app (if need be).
-        #
         self.UTILS.app.uninstallApp(self._appName)
 
-        #
         # Open the browser app.
-        #
         self.Browser.launch()
 
-        #
         # Open our URL.
-        #
         self.Browser.open_url(self._URL)
+        """
+        Install the app (these DOM items are peculiar to this little dev app,
+        so dont bother putting them in the main DOM.py file).
+        """
 
-        #
-        # Install the app (these DOM items are peculiar to this little dev app,
-        # so dont bother putting them in the main DOM.py file).
-        #
         x = ('id', 'install-app')
         install_btn = self.UTILS.element.getElement(x, "Install an app button")
         install_btn.tap()
@@ -89,8 +80,6 @@ class test_main(GaiaTestCase):
         btn = self.UTILS.element.getElement(DOM.GLOBAL.modal_alert_ok, "Ok button")
         btn.tap()
 
-        #
         # Go back to the home page and check the app is installed.
-        #
         self.UTILS.test.test(self.UTILS.app.launchAppViaHomescreen(self._appName),
                         "Application '" + self._appName + "' can be launched from the homescreen.", True)

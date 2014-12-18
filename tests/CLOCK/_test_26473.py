@@ -10,9 +10,8 @@ import time
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.clock = Clock(self)
@@ -23,20 +22,15 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch clock app.
-        #
         self.clock.launch()
 
-        #
         # Delete all previous alarms.
-        #
         #
         self.clock.delete_all_alarms()
 
-        #
         # Create an alarm that is 2 minutes in the future.
-        #
         # (Make sure we're not about to do this at the end of a minute or an hour.)
         #
         now_mins = time.strftime("%M", time.gmtime())
@@ -54,12 +48,8 @@ class test_main(GaiaTestCase):
         title = "Test alarm"
         self.clock.create_alarm(t.hour, t.minute, title)
 
-        #
         # Restart the Clock app.
-        #
         self.clock.launch()
 
-        #
         # Delete the alarm.
-        #
         self.clock.delete_all_alarms()

@@ -35,9 +35,8 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
@@ -47,9 +46,8 @@ class test_main(GaiaTestCase):
         self.gmail_passwd = self.UTILS.general.get_config_variable("gmail_1_pass", "common")
 
         self.connect_to_network()
-        #
+
         # Create test contacts.
-        #
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
 
@@ -69,9 +67,7 @@ class test_main(GaiaTestCase):
 
         search_name = gmail_contacts[0][:gmail_contacts[0].index('@')]
 
-        #
         # Use the search bar to test ...
-        #
         self.marionette.execute_script("document.getElementById('search-start').click();")
 
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)

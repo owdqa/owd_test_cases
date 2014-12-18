@@ -41,14 +41,11 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Open the call log and add to our contact, cancelling the process
-        #
         self.dialer.callLog_addToContact(self.phone_number, self.test_contact["name"], cancel_process=True)
 
-        #
         # Check we're back in the call log.
-        #
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator)
         header = ('xpath', DOM.GLOBAL.app_head_specific.format(_("Call log")))
         self.UTILS.element.waitForElements(header, "Call log header")

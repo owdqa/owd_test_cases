@@ -31,9 +31,8 @@ class test_main(GaiaTestCase):
     test_msg = "Test message."
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -52,14 +51,10 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
 
-        #
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Create and send a new test message.
-        #
         self.messages.startNewSMS()
 
         self.messages.selectAddContactButton()
@@ -73,14 +68,10 @@ class test_main(GaiaTestCase):
 
         self.messages.wait_for_message(send_time=send_time)
 
-        #
         # Tap the header to call.
-        #
         self.messages.header_call()
 
-        #
         # Dialer is started with the number already filled in.
-        #
         time.sleep(2)
         phone_field = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number field", False)
         dialer_num = phone_field.get_attribute("value")

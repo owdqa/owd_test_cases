@@ -11,17 +11,14 @@ import time
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.dialer = Dialer(self)
 
-        #
         # Get details of our test contacts.
-        #
         self.Contact_1 = MockContact(tel={'type': 'Mobile', 'value': '665666666'})
         self.UTILS.general.insertContact(self.Contact_1)
 
@@ -33,9 +30,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch dialer app.
-        #
         self.dialer.launch()
 
         self.dialer.enterNumber(self.phone_number)

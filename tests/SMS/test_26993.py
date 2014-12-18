@@ -27,9 +27,8 @@ from OWDTestToolkit.apps.dialer import Dialer
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -51,14 +50,10 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
 
-        #
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Create and send a new test message to this contact.
-        #
         self.messages.startNewSMS()
 
         self.messages.selectAddContactButton()
@@ -71,14 +66,10 @@ class test_main(GaiaTestCase):
 
         x = self.messages.wait_for_message()
 
-        #
         # Tap the header to call.
-        #
         self.messages.header_call()
 
-        #
         # Dialler is started with the number already filled in.
-        #
         x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number")
         self.UTILS.test.test(self.num2 in x.get_attribute("value"),
                         "The phone number contains '{}' (it was '{}').".format(self.num1, x.get_attribute("value")))

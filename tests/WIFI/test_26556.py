@@ -43,9 +43,7 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.data_layer.connect_to_wifi()
 
-        #
         # Open the browser app.
-        #
         self.browser.launch()
         self.browser.open_url(self.url1)
         self.UTILS.test.test(self.browser.check_page_loaded(self.url1), "{} successfully loaded".format(self.url1))

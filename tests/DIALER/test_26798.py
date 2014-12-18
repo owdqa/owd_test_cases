@@ -14,9 +14,8 @@ from OWDTestToolkit.apps.dialer import Dialer
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.dialer = Dialer(self)
@@ -34,8 +33,7 @@ class test_main(GaiaTestCase):
         self.dialer.call_this_number_and_hangup(5)
 
     def test_run(self):
-        #
+
         # Launch dialer app.
-        #
         self.dialer.launch()
         map(self._do_the_call, self.test_numbers)

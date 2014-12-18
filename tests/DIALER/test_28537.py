@@ -26,9 +26,8 @@ class test_main(GaiaTestCase):
         self.contact_number = self.Contact_1["tel"]["value"]
 
     def tearDown(self):
-        #
+
         # Delete the contact. (REVISAR)
-        #
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 

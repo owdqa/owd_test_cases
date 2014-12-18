@@ -37,18 +37,15 @@ class test_main(GaiaTestCase):
     test_msg = "Open this URL: " + link1
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.gallery = Gallery(self)
         self.browser = Browser(self)
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
@@ -66,15 +63,13 @@ class test_main(GaiaTestCase):
         last_msg = self.messages.last_message_in_this_thread()
         tags = last_msg.find_elements("tag name", "a")
 
-        #
         # Tap on required link.
-        #
         tags[0].tap()
+        """
+        Give the browser time to start up, then
+        switch to the browser frame and check the page loaded.
+        """
 
-        #
-        # Give the browser time to start up, then
-        # switch to the browser frame and check the page loaded.
-        #
         time.sleep(3)
         self.UTILS.iframe.switchToFrame(*DOM.Browser.frame_locator)
 

@@ -9,9 +9,8 @@ from datetime import datetime
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.calendar = Calendar(self)
@@ -24,9 +23,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch contacts app.
-        #
         self.calendar.launch()
 
         self.calendar.createEvent()

@@ -32,17 +32,15 @@ class test_main(GaiaTestCase):
     test_msg = "Test."
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
-        #
+
         # Put the phone into airplane mode.
-        #
         self.data_layer.set_setting('airplaneMode.enabled', True)
         self.data_layer.delete_all_sms()
         self.UTILS.statusbar.clearAllStatusBarNotifs()
@@ -56,31 +54,21 @@ class test_main(GaiaTestCase):
 
         self.messages.launch()
 
-        #
         # Create a new SMS
-        #
         self.messages.startNewSMS()
 
-        #
         # Insert the phone number in the To field
-        #
         self.messages.addNumbersInToField([self.phone_number])
 
-        #
         # Create SMS.
-        #
         self.messages.enterSMSMsg(self.test_msg)
 
-        #
         # Click send.
-        #
         self.messages.sendSMS()
 
         time.sleep(3)
 
-        #
         # Check that popup appears.
-        #
         self.messages.checkAirplaneModeWarning()
 
         # Check an error indication is shown in message

@@ -11,17 +11,14 @@ class test_main(GaiaTestCase):
     test_msg = "Test " + link + " this."
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.browser = Browser(self)
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
 
@@ -32,20 +29,16 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.connect_to_network()
 
-        #
         # Launch messages app.
-        #
         self.messages.launch()
-  
-        #
+
         # Create and send a new test message.
-        #
         self.messages.create_and_send_sms([self.phone_number], self.test_msg)
-  
-        #
-        # Wait for the last message in this thread to be a 'received' one
-        # and click the link.
-        #
+        """
+        Wait for the last message in this thread to be a 'received' one
+        and click the link.
+        """
+
         x = self.messages.wait_for_message()
         self.UTILS.test.test(x, "Received a message.", True)
 

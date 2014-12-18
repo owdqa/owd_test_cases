@@ -10,16 +10,13 @@ class test_main(GaiaTestCase):
 
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
 
-        #
         # Prepare the contact.
-        #
         self.contact = MockContact()
 
     def tearDown(self):
@@ -27,9 +24,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch contacts app.
-        #
         self.contacts.launch()
         self.contacts.start_create_new_contact()
 
@@ -40,11 +36,11 @@ class test_main(GaiaTestCase):
         self.UTILS.test.test(not x.is_enabled(), "Done button is not enabled")
 
         contFields = self.contacts.get_contact_fields()
+        """
+        Put the contact details into each of the fields (this method
+        clears each field first).
+        """
 
-        #
-        # Put the contact details into each of the fields (this method
-        # clears each field first).
-        #
         self.contacts.replace_str(contFields['tel'], self.contact["tel"]["value"])
 
         x = self.UTILS.debug.screenShotOnErr()

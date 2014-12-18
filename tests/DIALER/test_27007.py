@@ -33,11 +33,11 @@ class test_main(GaiaTestCase):
         self.values = ["991234999", "999123499", "999912349"]
         self.test_contacts = [MockContact(givenName=self.names[i],
                                           tel=[{"type": "mobile", "value": self.values[i]}]) for i in range(3)]
+        """
+        This has to be done due to a MockContact malfunction. It does not
+        update the name field to the specified values of givenName and familyName
+        """
 
-        #
-        # This has to be done due to a MockContact malfunction. It does not
-        # update the name field to the specified values of givenName and familyName
-        #
         for c in self.test_contacts:
             c["name"] = c["givenName"] + " " + c["familyName"]
 
@@ -53,9 +53,8 @@ class test_main(GaiaTestCase):
         self.dialer.enterNumber("1234")
 
         suggestion_count_btn = self.UTILS.element.getElement(DOM.Dialer.suggestion_count, "Suggestion count")
-        #
+
         # We are using this since normal .tap() method does not seem to be working
-        #
         self.UTILS.element.simulateClick(suggestion_count_btn)
 
         self.UTILS.element.waitForElements(DOM.Dialer.suggestion_list, 'Suggestion list')

@@ -9,9 +9,8 @@ import time
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -25,23 +24,20 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
 
-        #
-        # Send a message to an invalid number to create a thread with just an
-        # outgoing message..
-        #
+        # Launch messages app.
+        self.messages.launch()
+        """
+        Send a message to an invalid number to create a thread with just an
+        outgoing message..
+        """
+
         msg_text = str(time.time())
         self.messages.create_and_send_sms([self.phone_number], msg_text)
 
         self.messages.go_back()
 
-        #
         # Get the preview txt for our test.
-        #
         preview_text = self.messages.getThreadText(self.phone_number)
 
         self.UTILS.test.test(preview_text in msg_text,

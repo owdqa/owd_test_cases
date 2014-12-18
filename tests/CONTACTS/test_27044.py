@@ -14,9 +14,8 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
@@ -25,9 +24,8 @@ class test_main(GaiaTestCase):
         self.gmail_user = self.UTILS.general.get_config_variable("gmail_1_user", "common")
         self.gmail_passwd = self.UTILS.general.get_config_variable("gmail_1_pass", "common")
         self.number_of_gmail_contacts = 2
-        #
+
         # Create test contacts.
-        #
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
 
@@ -36,28 +34,21 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Set up to use data connection.
-        #
         self.connect_to_network()
 
         self.contacts.launch()
         self.contacts.import_gmail_login(self.gmail_user, self.gmail_passwd)
 
-        #
         # Remember all the contacts in the list.
-        #
 
-        #
         # Import them.
-        #
         self.contacts.import_all()
         self.apps.kill_all()
         self.contacts.launch()
 
-        #
         # Check all our contacts are in the list, both 'standrd' ...
-        #
     
         prepopulated_contact = (DOM.Contacts.view_all_contact_specific_contact[0],
                                 DOM.Contacts.view_all_contact_specific_contact[1].format("OWD"))

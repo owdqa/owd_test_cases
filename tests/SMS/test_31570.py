@@ -12,16 +12,13 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        #
         # Prepare the contact we're going to insert.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.contact = MockContact(tel={'type': '', 'value': self.phone_number})
         self.UTILS.general.insertContact(self.contact)
@@ -34,9 +31,8 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.UTILS.statusbar.clearAllStatusBarNotifs()
-        #
+
         # Create message - 5 x 10 chars.
-        #
         timestamp = " {}".format(time.time())
         sms_message = "0123456789" * 5 + timestamp
         self.UTILS.reporting.logComment("Message length sent: {}".format((len(sms_message))))

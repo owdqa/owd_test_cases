@@ -19,15 +19,12 @@ import time
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
 
-        #
         # Don't prompt me for geolocation (this was broken recently in Gaia, so 'try' it).
-        #
         try:
             self.apps.set_permission('Homescreen', 'geolocation', 'deny')
         except:

@@ -9,9 +9,8 @@ import time
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
@@ -22,14 +21,11 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Set up to use data connection.
-        #
         self.contacts.launch()
 
-        #
         # Check the Memory Card button is enabled to begin with.
-        #
         self.contacts.import_memory_card()
         time.sleep(2)
 

@@ -48,14 +48,11 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Open the call log and add to our contact.
-        #
         self.dialer.callLog_addToContact(self.phone_number, self.test_contact["name"])
 
-        #
         # Verify that this contact has been modified in contacts.
-        #
         self.contacts.launch()
         self.contacts.view_contact(self.test_contact["name"])
 

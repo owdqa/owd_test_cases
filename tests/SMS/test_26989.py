@@ -8,9 +8,8 @@ from OWDTestToolkit.apps.messages import Messages
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -24,26 +23,19 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Create and send a new test message to this contact.
-        #
         self.messages.create_and_send_sms([self.num1], "Test message")
         self.messages.wait_for_message()
 
-        #
         # Tap the header.
-        #
         x = self.UTILS.element.getElement(DOM.Messages.message_header, "Thread header")
         x.tap()
 
-        #
         # Verify that each expected item is present.
-        #
         self.UTILS.element.waitForElements(DOM.Messages.header_call_btn,
                                     "Call button")
         self.UTILS.element.waitForElements(DOM.Messages.header_create_new_contact_btn,

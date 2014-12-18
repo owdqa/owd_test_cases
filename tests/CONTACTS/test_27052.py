@@ -30,9 +30,8 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
@@ -41,9 +40,7 @@ class test_main(GaiaTestCase):
         self.hotmail_user = self.UTILS.general.get_config_variable("hotmail_1_email", "common")
         self.hotmail_passwd = self.UTILS.general.get_config_variable("hotmail_1_pass", "common")
 
-        #
         # Get details of our test contacts.
-        #
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
 
@@ -52,9 +49,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Set up to use data connection.
-        #
         self.connect_to_network()
 
         self.contacts.launch()
@@ -63,18 +59,16 @@ class test_main(GaiaTestCase):
             self.UTILS.reporting.logResult(False, "Cannot continue past this point without importing the contacts.")
             return
 
-        #
         # Check the Import button is disabled to begin with.
-        #
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, via_root_frame=False)
         import_btn = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
         self.UTILS.test.test(import_btn.get_attribute("disabled") == "true", "Import button is disabled.")
+        """
+        Select / de-select contacts and make sure Import button is enabled / disabled
+        as expected.
+        """
 
-        #
-        # Select / de-select contacts and make sure Import button is enabled / disabled
-        # as expected.
-        #
         self.UTILS.reporting.logResult("info", "Enable contact 1...")
         self.contacts.import_toggle_select_contact(1)
 

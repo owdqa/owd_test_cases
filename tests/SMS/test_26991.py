@@ -27,9 +27,8 @@ from OWDTestToolkit.apps.dialer import Dialer
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -48,26 +47,19 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Create and send a new test message.
-        #
         self.data_layer.send_sms(self.phone_number, self.test_msg)
         self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
         self.UTILS.statusbar.click_on_notification_detail(self.test_msg, DOM.Messages.frame_locator)
 
-        #
         # Tap the header to call.
-        #
         self.messages.header_call()
 
-        #
         # Dialer is started with the number already filled in.
-        #
         current = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number").get_attribute("value")
         self.UTILS.test.test(self.phone_number == current,
                         "The phone number contains '{}' (expected '{}').".format(current, self.phone_number))
 
-        #
         # Dial the number.
-        #
         self.Dialer.call_this_number_and_hangup(5)

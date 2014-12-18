@@ -37,16 +37,13 @@ class test_main(GaiaTestCase):
     _keyboard_frame_locator = (By.CSS_SELECTOR, '#keyboards iframe:not([hidden])')
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
 
-        #
         # Create test contacts.
-        #
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
         self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg')
@@ -57,20 +54,15 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch contacts app.
-        #
         self.UTILS.reporting.logResult("info", "Setting up contact ...")
         self.contacts.launch()
 
-        #
         # View our contact.
-        #
         self.contacts.view_contact(self.contact['name'])
 
-        #
         # Edit our contact.
-        #
         self.contacts.press_edit_contact_button()
 
         self.UTILS.reporting.logResult("info", "Starting tests ...")
@@ -86,13 +78,10 @@ class test_main(GaiaTestCase):
         self.check_field(False, "photo", "thumbnail-action")
 
     def check_field(self, text, field_name, field_id, reset_btn_name=""):
-        #
-        # Test a text field: default, with reset enabled, with reset disabled.
-        #
 
-        #
+        # Test a text field: default, with reset enabled, with reset disabled.
+
         # try to make sure the field is in view (pretty hideous, but it does the job!).
-        #
         try:
             self.marionette.execute_script("document.getElementById('" + field_id + "').scrollIntoView();")
             self.marionette.execute_script("document.getElementById('contact-form-title').scrollIntoView();")
@@ -116,9 +105,8 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", " ")
 
     def toggle_reset_button(self, element):
-        #
+
         # Press reset button on the required fields ...
-        #
         reset_btn = DOM.Contacts.reset_field_xpath
 
         if element == "photo":
@@ -162,10 +150,11 @@ class test_main(GaiaTestCase):
 
     def check_kbd_appears(self, item, desc, kbd_displayed):
         time.sleep(1)
-        #
-        # Taps the field and checks to see if the keyboard appears.
-        # When marionette "is_enabled()" is working , we can forget all this.
-        #
+        """
+        Taps the field and checks to see if the keyboard appears.
+        When marionette "is_enabled()" is working , we can forget all this.
+        """
+
         comment = "The " + desc + " field can" + ("not" if not kbd_displayed else "") + " be edited."
 
         x = self.UTILS.element.getElement(("id", "{}_0".format(item)), "Field for " + desc)
@@ -192,14 +181,10 @@ class test_main(GaiaTestCase):
 
         self.UTILS.test.test(kbd == kbd_displayed, comment)
 
-        #
         # Return to the contacts iframe.
-        #
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
-        #
         # Tap the header to remove the keyboard.
-        #
         self.wait_for_element_displayed(*DOM.Contacts.edit_contact_header)
         x = self.marionette.find_element(*DOM.Contacts.edit_contact_header)
         x.tap()

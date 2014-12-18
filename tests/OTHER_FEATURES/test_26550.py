@@ -23,9 +23,8 @@ from OWDTestToolkit.apps.settings import Settings
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.settings = Settings(self)
@@ -38,9 +37,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Data conn icon is not in status bar yet.
-        #
         self.data_layer.disable_wifi()
 
         self.UTILS.element.waitForNotElements(DOM.Statusbar.wifi, "Wifi icon in statusbar")
@@ -54,15 +52,11 @@ class test_main(GaiaTestCase):
         self.marionette.switch_to_frame()
         self.UTILS.element.waitForElements(DOM.Statusbar.wifi, "Wifi icon in statusbar", True, 20, False)
 
-        #
         # Disable wifi mode.
-        #
         self.UTILS.home.goHome()
         self.settings.launch()
         self.settings.wifi()
         self.settings.wifi_switchOff()
 
-        #
         # Data icon is no longer visible in status bar.
-        #
         self.UTILS.element.waitForNotElements(DOM.Statusbar.wifi, "Wifi icon not in statusbar")

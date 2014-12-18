@@ -31,14 +31,11 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Open the Settings application.
-        #
         self.settings.launch()
 
-        #
         # Tap hotspot.
-        #
         self.settings.hotSpot()
 
         x = self.UTILS.element.getElement(DOM.Settings.hotspot_settings, "Hotspot settings")

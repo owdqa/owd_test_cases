@@ -52,9 +52,7 @@ class test_main(GaiaTestCase):
         self.browser.open_url(self.url1)
         self.UTILS.test.test(self.browser.check_page_loaded(self.url1), "{} successfully loaded".format(self.url1))
 
-        #
         # Open the SMS app, send a message then jump back to the browser.
-        #
         self.messages.launch()
         self.messages.create_and_send_sms([self.num], self.test_msg)
         send_time = self.messages.last_sent_message_timestamp()

@@ -28,9 +28,7 @@ class test_main(GaiaTestCase):
 
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
 
-        #
         # Create a call log entry
-        #
         self.dialer.launch()
         self.dialer.callLog_clearAll()
     
@@ -41,17 +39,14 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Open the call log and select Add to Contact.
-        #
         self.dialer.open_call_log()
 
         edit_btn = self.UTILS.element.getElement(DOM.Dialer.call_log_edit_btn, "Edit button")
         edit_btn.tap()
 
-        #
         # Now tap the number and verify that we're not taken to the menu,
-        #
         entry = self.UTILS.element.getElement(("xpath", DOM.Dialer.call_log_number_xpath.format(self.phone_number)),
                                               "The call log for number {}".format(self.phone_number))
         entry.tap()

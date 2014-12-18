@@ -21,9 +21,8 @@ from OWDTestToolkit.apps.messages import Messages
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -51,9 +50,7 @@ class test_main(GaiaTestCase):
             self.messages.closeThread()
             time.sleep(3)
 
-        #
         # Check how many elements are there
-        #
         count = self.messages.countNumberOfThreads()
         self.UTILS.reporting.logResult("info", "Number of threads {} in list.".format(count))
         self.UTILS.test.test(count == 1, "There are {} threads (expected {})".format(count, 1))

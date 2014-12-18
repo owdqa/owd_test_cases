@@ -31,9 +31,8 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
@@ -49,17 +48,14 @@ class test_main(GaiaTestCase):
         os.system("adb shell rm sdcard/*.vcf")
 
     def test_run(self):
-        #
+
         # Set up to use data connection.
-        #
         self.connect_to_network()
 
         self.contacts.launch()
         self.contacts.import_gmail_login(self.gmail_user, self.gmail_passwd, True)
 
-        #
         # Log-in in Gmail and contacts imported
-        #
         x = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list", False)
 
         gmail_contacts = []
@@ -82,9 +78,7 @@ class test_main(GaiaTestCase):
 
         self.contacts.launch()
 
-        #
         # Exporting to SD Card
-        #
         self.contacts.export_sd_card()
 
         x = self.UTILS.element.getElement(DOM.Contacts.export_select_all, "Select All")

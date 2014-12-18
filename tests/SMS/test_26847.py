@@ -24,18 +24,15 @@ class test_main(GaiaTestCase):
     test_msg = "Test message."
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.incoming_sms_num = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
 
-        #
         # Import details of our test contacts.
-        #
         self.test_contacts = [MockContact() for i in range(3)]
         self.test_contacts[0]["tel"] = {'type': 'Mobile', 'value': self.phone_number}
         self.test_contacts[1]["tel"] = {'type': 'Mobile', 'value': self.incoming_sms_num[0]}
@@ -50,14 +47,11 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.UTILS.statusbar.clearAllStatusBarNotifs()
-        #
+
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Create and send a new test message.
-        #
         self.UTILS.reporting.debug("*** Sending SMS to {}".format(self.test_contacts[0]["tel"]["value"]))
         self.messages.create_and_send_sms([self.test_contacts[0]["tel"]["value"]], self.test_msg)
         self.messages.go_back()
@@ -69,9 +63,7 @@ class test_main(GaiaTestCase):
 
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
 
-        #
         # Delete all threads, except the last one.
-        #
         self.messages.threadEditModeON()
         edit_btn = self.UTILS.element.getElement(DOM.Messages.edit_threads_button, "Edit threads button")
         edit_btn.tap()
@@ -85,8 +77,6 @@ class test_main(GaiaTestCase):
 
         self.messages.deleteSelectedThreads()
 
-        #
         # Check there is now only 1 thread.
-        #
         msgs = self.UTILS.element.getElements(DOM.Messages.threads_list, "Message threads after deletion")
         self.UTILS.test.test(len(msgs) == 1, "Only 1 thread is left after deleting the other two.")

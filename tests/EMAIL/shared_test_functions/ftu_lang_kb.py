@@ -33,9 +33,7 @@ class FtuLangKb(GaiaTestCase):
         self.marionette.set_search_timeout(50)
         self.parent.lockscreen.unlock()
 
-        #
         # Turn off all networking.
-        #
         self.parent.data_layer.disable_cell_data()
         self.parent.data_layer.disable_wifi()
 
@@ -46,54 +44,37 @@ class FtuLangKb(GaiaTestCase):
         self.UTILS.test.test((p_a == p_b), x)
 
     def run(self):
-        #
+
         # Launch ftu app.
-        #
         self.ftu.launch()
 
-        #
         # LANGUAGE.
-        #
         self.UTILS.test.test(self.ftu.setLanguage(self.lang),
             "Language '" + self.lang + "' is available on this device.", True)
         self.ftu.nextScreen()
 
-        #
         # DATA CONNECTIVITY (skip).
-        #
         self.ftu.nextScreen()
 
-        #
         # WIFI CONNECTIVITY (skip).
-        #
         self.ftu.nextScreen()
 
-        #
         # TIMEZONE (skip).
-        #
         self.ftu.nextScreen()
 
-        #
         # IMPORT CONTACTS (skip).
-        #
         self.ftu.nextScreen()
 
-        #
         # PRIVACY SCREEN - share data (skip).
-        #
         self.ftu.nextScreen()
 
-        #
         # PRIVACY SCREEN - info. email.
-        #
         # Click the email area to display the keyboard.
         x = self.UTILS.element.getElement(DOM.ftu.privacy_email, "Privacy policy email address")
         x.tap()
         self.parent.keyboard._switch_to_keyboard()
 
-        #
         # Take a screenshot of each view and check the size.
-        #
 
         imgnam = self.UTILS.debug.screenShot("42_lowercase_alpha")
         self.UTILS.reporting.logComment("Screenshot of lowercase alpha keyboard = " + imgnam)

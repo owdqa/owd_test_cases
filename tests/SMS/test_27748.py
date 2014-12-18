@@ -26,16 +26,13 @@ from OWDTestToolkit.apps.messages import Messages
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        #
         # Import contact (adjust the correct number).
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.data_layer.delete_all_sms()
 
@@ -44,26 +41,19 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Send some messages to create a thread
-        #
         self.texts = ["Test 1", "Test 2", "Test 3"]
         self.directions = ["outgoing", "incoming"]
         self.create_test_sms(self.phone_number, self.texts)
 
-        #
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Enter the thread.
-        #
         self.messages.openThread(self.phone_number)
 
-        #
         # Find the first message.
-        #
         time.sleep(2)
         msg_list = self.UTILS.element.getElements(DOM.Messages.message_list, "Message list", False)
         msgs = [(text, direction) for text in self.texts for direction in self.directions]
@@ -73,15 +63,12 @@ class test_main(GaiaTestCase):
             self.UTILS.test.test(text == expected[0], "**** Text: {}  Expected: {}".format(text, expected[0]))
             self.UTILS.test.test(direction == expected[1], "Direction: {}  Expected: {}".\
                                  format(direction, expected[1]))
-        #
+
         # Tap the message area.
-        #
         x = self.UTILS.element.getElement(DOM.Messages.input_message_area, "Message area")
         x.tap()
 
-        #
         # Check the keyboard is now present.
-        #
         self.UTILS.iframe.switchToFrame(*DOM.Keyboard.frame_locator)
 
     def create_test_sms(self, number, msg_list):

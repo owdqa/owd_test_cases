@@ -23,9 +23,8 @@ from marionette import Actions
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -41,36 +40,27 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Create and send a new test message.
-        #
         self.messages.create_and_send_sms([self.phone_number], self.test_msg)
         send_time = self.messages.last_sent_message_timestamp()
         msg = self.messages.wait_for_message(send_time=send_time)
         self.messages.check_last_message_contents(self.test_msg)
 
-        #
         # Tap on edit mode.
-        #
         edit_btn = self.UTILS.element.getElement(DOM.Messages.edit_messages_icon, "Edit button")
         edit_btn.tap()
 
         select_btn = self.UTILS.element.getElement(DOM.Messages.edit_msgs_select_btn, "Select button")
         select_btn.tap()
 
-        #
         # Long press the email link.
-        #
         _link = msg.find_element("tag name", "a")
         self.actions = Actions(self.marionette)
         self.actions.long_press(_link, 2).perform()
 
-        #
         # Check the email address is not a link in edit mode.
-        #
         self.UTILS.element.waitForNotElements(DOM.Messages.header_create_new_contact_btn, "Create new contact button")

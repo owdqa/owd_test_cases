@@ -18,9 +18,8 @@ from tests.i18nsetup import setup_translations
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
@@ -36,9 +35,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch contacts app.
-        #
         self.contacts.launch()
         self.contacts.view_contact(self.contact['name'])
         video_btn = self.marionette.find_element(DOM.Contacts.view_contact_hello_option[0],

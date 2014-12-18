@@ -9,16 +9,13 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
 
-        #
         # Create our test contacts.
-        #
         self.contact_list = [MockContact(tel={'type': 'Mobile', 'value': "{}".format(i) * 9}) for i in range(3)]
         map(self.UTILS.general.insertContact, self.contact_list)
 
@@ -27,17 +24,12 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch contacts app.
-        #
         self.contacts.launch()
 
-        #
         # Search for our new contact.
-        #
         self.contacts.search("999999999")
 
-        #
         # Verify that there are no results.
-        #
         self.UTILS.element.waitForElements(DOM.Contacts.search_no_contacts_found, "'No contacts found' message")

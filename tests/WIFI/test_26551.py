@@ -20,19 +20,14 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Open the Settings application.
-        #
         self.connect_to_network()
 
-        #
         # Open the browser app.
-        #
         self.Browser.launch()
 
-        #
         # Open our URL.
-        #
         self.Browser.open_url("www.google.com")
         self.UTILS.iframe.switchToFrame(*DOM.Browser.frame_locator)
 

@@ -10,9 +10,8 @@ import time
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.clock = Clock(self)
@@ -24,25 +23,17 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
 
-        #
         # Set the volume to be low (no need to wake up the office! ;o)
-        #
         self.settings.setAlarmVolume(0)
 
-        #
         # Launch clock app.
-        #
         self.clock.launch()
 
-        #
         # Delete all previous alarms.
-        #
         #
         self.clock.delete_all_alarms()
 
-        #
         # Create an alarm that is 1 minute in the future.
-        #
         # (Make sure we're not about to do this at the end of a minute or an hour.)
         #
         now_mins = time.strftime("%M", time.gmtime())
@@ -59,19 +50,15 @@ class test_main(GaiaTestCase):
 
         title = "Test alarm"
         self.clock.create_alarm(t.hour, t.minute, title)
+        """
+        Return to the main screen (since this is where the user will
+        most likely be when the alarm goes off).
+        """
 
-        #
-        # Return to the main screen (since this is where the user will
-        # most likely be when the alarm goes off).
-        #
         self.UTILS.home.goHome()
 
-        #
         # Check the statusbar icon exists.
-        #
         self.UTILS.test.test(self.clock.checkStatusbarIcon(), "Alarm icon is present in statusbar.")
 
-        #
         # Wait for the alarm to start.
-        #
         self.clock.checkAlarmRingDetails(t.hour, t.minute, title)

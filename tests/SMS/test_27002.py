@@ -13,9 +13,8 @@ from OWDTestToolkit.apps.dialer import Dialer
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -30,14 +29,11 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Create and send a new test message containing all of our numbers..
-        #
         nums = ["12345678", "123456789", "01234567", "012345678"]
         sms_msg = "Test numbers {}".format(", ".join(nums))
         self.UTILS.messages.create_incoming_sms(self.phone_number, sms_msg)
@@ -46,9 +42,7 @@ class test_main(GaiaTestCase):
         self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
         sms = self.messages.last_message_in_this_thread()
 
-        #
         # Tap the numbers to call.
-        #
         msg_nums = sms.find_elements("tag name", "a")
 
         for i in range(len(msg_nums)):
@@ -61,18 +55,14 @@ class test_main(GaiaTestCase):
 
             self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator)
 
-            #
             # Dialer is started with the number already filled in.
-            #
             time.sleep(1)
             x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number")
             self.UTILS.test.test(num_text == x.get_attribute("value"),
                             "The dialer number contains '{}' (expected '{}').".\
                             format(num_text, x.get_attribute("value")))
 
-            #
             # Switch back to messaging app (without killing anything) etc ...
-            #
             self.messages.launch()
 
             # We need to recover the last message and the numbers, since the reference is lost in

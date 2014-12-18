@@ -16,18 +16,15 @@ class test_main(GaiaTestCase):
     test_msg = "Testing " + test_num + " number."
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.Dialer = Dialer(self)
         self.contacts = Contacts(self)
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.cp_incoming_number = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
@@ -40,9 +37,8 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.connect_to_network()
         self.UTILS.statusbar.clearAllStatusBarNotifs()
-        #
+
         # Launch messages app.
-        #
         self.messages.launch()
 
         self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)
@@ -59,14 +55,10 @@ class test_main(GaiaTestCase):
 
         time.sleep(5)
 
-        #
         # Create a contact from this number.
-        #
         self.Dialer.createContactFromThisNum()
 
-        #
         # Make sure the number is automatically in the contact details.
-        #
         number_field = self.UTILS.element.getElement(("id", "number_0"), "Mobile number field")
         self.UTILS.test.test(number_field.get_attribute("value") == self.test_num,
                         "The correct number is automatically entered in the new contact's number field.")

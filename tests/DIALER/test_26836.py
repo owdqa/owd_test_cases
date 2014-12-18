@@ -10,17 +10,14 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.dialer = Dialer(self)
 
-        #
         # Get details of our test contacts.
-        #
         self.Contact_1 = MockContact()
         self.UTILS.general.insertContact(self.Contact_1)
 
@@ -31,25 +28,17 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.UTILS.statusbar.toggleViaStatusBar("airplane")
 
-        #
         # Launch contacts app.
-        #
         self.contacts.launch()
 
-        #
         # Search for our new contact.
-        #
         self.contacts.view_contact(self.Contact_1["name"])
 
-        #
         # Tap the phone number.
-        #
         x = self.UTILS.element.getElement(DOM.Contacts.view_contact_tel_field, "Telephone number")
         x.tap()
 
-        #
         # Switch to dialer.
-        #
         _warn = self.UTILS.element.getElement(("xpath", "//p[contains(text(), 'airplane mode')]"),
                                     "Airplane mode warning")
         if _warn:

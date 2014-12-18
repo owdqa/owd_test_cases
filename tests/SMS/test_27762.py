@@ -15,17 +15,14 @@ class test_main(GaiaTestCase):
     test_msg = "Test number " + test_num + " for dialing."
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.Dialer = Dialer(self)
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.cp_incoming_number = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
@@ -52,14 +49,10 @@ class test_main(GaiaTestCase):
 
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator)
 
-        #
         # Dial the number.
-        #
         self.Dialer.call_this_number()
 
-        #
         # Wait 2 seconds, then hangup.
-        #
         time.sleep(2)
         self.Dialer.hangUp()
         self.data_layer.kill_active_call()

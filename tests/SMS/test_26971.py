@@ -23,17 +23,14 @@ from OWDTestToolkit.apps.browser import Browser
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.browser = Browser(self)
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.incoming_number = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
@@ -55,9 +52,7 @@ class test_main(GaiaTestCase):
         send_time = self.messages.last_sent_message_timestamp()
         msg = self.messages.wait_for_message(send_time=send_time)
 
-        #
         #Verify that a valid URL appears highlight on message received.
-        #
         email_elems = msg.find_elements("tag name", "a")
         emails = [email.text for email in email_elems]
         all_found = all([email in emails for email in self.emails])

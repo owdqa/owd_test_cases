@@ -32,9 +32,8 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -42,9 +41,7 @@ class test_main(GaiaTestCase):
 
         self.test_msg = "Hello World"
 
-        #
         # Establish which phone number to use.
-        #
         num1 = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.contact1 = MockContact(givenName="Name 1", familyName="Surname 1",
                                     name="Name 1 Surname 1", tel={"type": "Mobile", "value": num1})
@@ -90,9 +87,7 @@ class test_main(GaiaTestCase):
         self.messages.openThread(self.contact1["name"])
         self.messages.wait_for_message(send_time=send_time)
 
-        #
         # Obtaining file attached type
-        #
         img_type = self.UTILS.element.getElement(DOM.Messages.attach_preview_img_type, "preview type")
         typ = img_type.get_attribute("data-attachment-type")
 
@@ -101,9 +96,7 @@ class test_main(GaiaTestCase):
 
         self.messages.closeThread()
 
-        #
         # Check how many elements are there
-        #
         self.UTILS.reporting.logResult("info", "Check how many threads are there")
         original_count = self.messages.countNumberOfThreads()
         self.UTILS.reporting.logResult("info", "Number of threads {} in list.".format(original_count))

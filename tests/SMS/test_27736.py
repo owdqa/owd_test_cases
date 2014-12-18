@@ -22,17 +22,14 @@ from OWDTestToolkit.apps.contacts import Contacts
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.messages = Messages(self)
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Using target telephone number " + self.phone_number)
         self.incoming_sms_num = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
@@ -51,19 +48,13 @@ class test_main(GaiaTestCase):
         title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.incoming_sms_num, timeout=5)
         self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
 
-        #
         # Return to main SMS page.
-        #
         self.messages.closeThread()
 
-        #
         # Press the edit button (without selecting any threads).
-        #
         self.messages.editAndSelectThreads([])
 
-        #
         # Check that the delete button is not enabled.
-        #
         delete_btn = self.UTILS.element.getElement(DOM.Messages.threads_delete_button, "Delete button")
         disabled = delete_btn.get_attribute("disabled")
         self.UTILS.test.test(disabled, "Delete button is not enabled.")

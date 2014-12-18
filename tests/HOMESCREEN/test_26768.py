@@ -18,9 +18,8 @@ from OWDTestToolkit import DOM
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
 
         self.UTILS = UTILS(self)
@@ -37,9 +36,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Make sure 'things' are as we expect them to be first.
-        #
         self.connect_to_network()
 
         self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)

@@ -21,9 +21,8 @@ from OWDTestToolkit.apps.contacts import Contacts
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -40,33 +39,24 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Create and send a new test message.
-        #
         self.messages.create_and_send_sms([self.phone_number], self.test_msg)
         send_time = self.messages.last_sent_message_timestamp()
         x = self.messages.wait_for_message(send_time=send_time)
 
-        #
         # Long press the 2nd email link.
-        #
         link = x.find_elements("tag name", "a")
         link[1].tap()
 
-        #
         # Click 'create new contact'.
-        #
         x = self.UTILS.element.getElement(DOM.Messages.header_create_new_contact_btn, "Create new contact button")
         x.tap()
 
-        #
         # Verify that the email is in the email field.
-        #
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
         x = self.UTILS.element.getElement(("id", "email_0"), "Email field")
         x_txt = x.get_attribute("value")

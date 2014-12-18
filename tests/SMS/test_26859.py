@@ -18,9 +18,8 @@ import time
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -39,58 +38,41 @@ class test_main(GaiaTestCase):
         self.UTILS.statusbar.clearAllStatusBarNotifs()
 
         self.UTILS.date_and_time.setTimeToNow("Europe", "Madrid")
-        #
+
         # Create and send a new test message.
-        #
         self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)
         self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
         title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.cp_incoming_number, timeout=5)
         self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
 
-        #
         # Check the time of this message.
-        #
         time.sleep(2)
         _orig_msg_timestamp = self.messages.time_of_last_message_in_thread()
         self.UTILS.reporting.debug("*** original message timestamp = '{}'".format(_orig_msg_timestamp))
 
-        #
         # Return to the threads screen and check the time of this thread.
-        #
         self.messages.go_back()
         time.sleep(1)
 
-        #
         # Get the time of this thread.
-        #
         _orig_thread_timestamp = self.messages.time_of_thread(title)
         self.UTILS.reporting.debug("*** original thread timestamp = '{}'".format(_orig_thread_timestamp))
 
-        #
         # Change to a (unlikely!) timezone.
-        #
         self.apps.kill_all()
         self.UTILS.date_and_time.setTimeToNow("Antarctica", "Casey")
 
-        #
         # Open the sms app again.
-        #
         self.messages.launch()
 
-        #
         # Get the new thread time.
-        #
         _new_thread_timestamp = self.messages.time_of_thread(title)
         self.UTILS.reporting.debug("*** new thread timestamp = '{}'".format(_new_thread_timestamp))
 
-        #
         # Open our thread.
-        #
         self.messages.openThread(title)
 
-        #
         # Get the new message time.
-        #
         _new_msg_timestamp = self.messages.time_of_last_message_in_thread()
         self.UTILS.reporting.debug("*** new message timestamp = '{}'".format(_new_msg_timestamp))
 

@@ -27,16 +27,13 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
 
-        #
         # Get details of our test contacts.
-        #
         self.phones = ["198111111", "198222222", "133333333"]
 
         self.test_contacts = [MockContact(tel={'type': 'Mobile', 'value': self.phones[i]})\
@@ -48,19 +45,14 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch contacts app.
-        #
         self.contacts.launch()
 
-        #
         # Search for our new contact.
-        #
         self.contacts.search("98")
 
-        #
         # Verify our contact is listed.
-        #
         conditions = [True, True, False]
         names = [c["givenName"] for c in self.test_contacts]
         map(self.contacts.check_search_results, names, conditions)

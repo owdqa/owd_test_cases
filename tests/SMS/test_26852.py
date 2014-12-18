@@ -24,16 +24,13 @@ class test_main(GaiaTestCase):
     test_msgs = ["First message", "Second message", "Third message"]
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
@@ -44,10 +41,11 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.UTILS.statusbar.clearAllStatusBarNotifs()
-        #
-        # Launch messages app & delete all Threads
-        # Make sure we have no threads
-        #
+        """
+        Launch messages app & delete all Threads
+        Make sure we have no threads
+        """
+
         self.messages.launch()
         time.sleep(2)
 
@@ -60,21 +58,15 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
         self.messages.openThread(self.phone_number)
 
-        #
         # Check how many elements are there
-        #
         original_count = self.messages.countMessagesInThisThread()
         self.UTILS.reporting.logResult("info", "Before deletion there were {} messages in this thread.".\
                                        format(original_count))
 
-        #
         # Select the messages to be deleted.
-        #
         self.messages.deleteMessagesInThisThread([1])
 
-        #
         # Check message isn't there anymore.
-        #
         msg_list = self.UTILS.element.getElements(DOM.Messages.message_list, "Messages")
         final_count = len(msg_list)
         real_count = original_count - 1

@@ -11,9 +11,8 @@ from OWDTestToolkit.apps.settings import Settings
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.settings = Settings(self)
@@ -33,9 +32,7 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(DOM.Settings.celldata_DataConn_switch, "Data connection switch")
         x.tap()
 
-        #
         # Wait for confirmation screen
-        #
         self.settings.confirm_data_conn()
 
         self.UTILS.network.wait_for_network_item_enabled("data")

@@ -18,9 +18,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Open the Settings application.
-        #
         self.settings.launch()
         self.settings.wifi()
         self.settings.wifi_switchOn()

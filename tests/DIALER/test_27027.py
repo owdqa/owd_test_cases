@@ -56,9 +56,7 @@ class test_main(GaiaTestCase):
         done_button = self.UTILS.element.getElement(DOM.Contacts.done_button, "'Done' button")
         done_button.tap()
 
-        #
         # Verify that the contacts app is closed and we are returned to the call log.
-        #
         self.marionette.switch_to_frame()
         self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@{}, '{}')]".\
                                                format(DOM.Contacts.frame_locator[0], DOM.Contacts.frame_locator[1])),
@@ -68,9 +66,7 @@ class test_main(GaiaTestCase):
         header = ('xpath', DOM.GLOBAL.app_head_specific.format(_("Call log")))
         self.UTILS.element.waitForElements(header, "Call log header")
 
-        #
         # Verify that this contact has been created in contacts.
-        #
         self.apps.kill_all()
         time.sleep(2)
         self.contacts.launch()

@@ -12,17 +12,14 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.messages = Messages(self)
 
-        #
         # Establish which phone number to use and set up the contacts.
-        #
         self.nums = [self.UTILS.general.get_config_variable("phone_number", "custom"),
                         self.UTILS.general.get_config_variable("short_phone_number", "custom")]
 
@@ -35,14 +32,11 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # First, we need to make sure there are no statusbar notifications.
-        #
         self.UTILS.statusbar.clearAllStatusBarNotifs()
 
-        #
         # Now create and send a SMS to both contacts.
-        #
         self.messages.launch()
         self.messages.startNewSMS()
 

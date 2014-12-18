@@ -9,16 +9,13 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
 
-        #
         # Create test contacts.
-        #
         self.contact_list = [MockContact(givenName=chr(65 + i) + "givenname", familyName=chr(67 - i) + "familyname")\
                              for i in range(3)]
         for i in range(3):
@@ -31,14 +28,11 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch contacts app.
-        #
         self.contacts.launch()
 
-        #
         # Because we don't know what the initial state of the search order is, check it twice.
-        #
         x = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
         if x[0].text != self.contact_list[0]["name"]:
             self.UTILS.reporting.logResult("info", "(NOTE: it looks like the initial search order may need to be changed)")

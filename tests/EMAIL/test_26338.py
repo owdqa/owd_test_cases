@@ -33,9 +33,7 @@ class test_26338(Emailing):
 
         self.setUpEmail()
 
-        #
         # Email parameters
-        #
         self.username1 = self.UTILS.general.get_config_variable(self.test_type + "_1_user", "common")
         self.email1 = self.UTILS.general.get_config_variable(self.test_type + "_1_email", "common")
         self.passwd1 = self.UTILS.general.get_config_variable(self.test_type + "_1_pass", "common")

@@ -23,16 +23,13 @@ class test_main(GaiaTestCase):
     test_msg = "Test message."
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        #
         # Establish which phone number to use and set up the contacts.
-        #
         self.nums = [self.UTILS.general.get_config_variable("phone_number", "custom"),
                         self.UTILS.general.get_config_variable("short_phone_number", "custom")]
 
@@ -44,14 +41,11 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Send a message to myself (long and short number to get a few threads).
-        #
         self.messages.create_and_send_sms(self.nums, "Test message")
 
         thread_names = self.UTILS.element.getElements(DOM.Messages.thread_target_names, "Threads target names")

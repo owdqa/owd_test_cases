@@ -36,9 +36,8 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -56,14 +55,11 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Set up email account.
-        #
         self.connect_to_network()
 
-        #
         # Create and send a new test message.
-        #
         test_msg = "email address {} test at {}".format(self.dest_email, time.time())
         self.data_layer.send_sms(self.phone_number, test_msg)
         self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)
@@ -71,39 +67,30 @@ class test_main(GaiaTestCase):
         sms = self.messages.last_message_in_this_thread()
         time.sleep(1)
 
-        #
         # Tap the 2nd email link.
-        #
         self.UTILS.reporting.logResult("info", "Click the email address in this message: '{}'.".format(sms.text))
         _link = sms.find_element("tag name", "a")
         _link.tap()
 
-        #
         # Tap on "Send email" button from the overlay
-        #
         x = self.UTILS.element.getElement(DOM.Messages.header_send_email_btn, "Send email button")
         x.tap()
 
         time.sleep(4)
         self.UTILS.iframe.switchToFrame(*DOM.Email.frame_locator)
-        #
+
         # Confirm we want to setUp our email account
-        #
         x = self.UTILS.element.getElement(DOM.Email.email_not_setup_ok, "Set up account confirmation")
         x.tap()
 
         self.email.setup_account(self.email_user, self.email_address, self.email_pass)
 
-        #
         # Verify the email address is in the To field.
-        #
         x = self.UTILS.element.getElement(DOM.Email.compose_to_from_contacts, "To field")
         self.UTILS.test.test(x.text == self.dest_email,
                              "To field contains '{0}' (it was '{0}').".format(self.dest_email))
 
-        #
         # Fill in the details and send the email.
-        #
         self.UTILS.general.typeThis(DOM.Email.compose_subject, "'Subject' field", "Test email", True, False)
         self.UTILS.general.typeThis(DOM.Email.compose_msg, "Message field", "Just a test", True, False, False)
 

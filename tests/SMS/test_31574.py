@@ -24,18 +24,15 @@ import time
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
         self.actions = Actions(self.marionette)
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.incoming_sms_num = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
@@ -57,17 +54,13 @@ class test_main(GaiaTestCase):
         title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.incoming_sms_num, timeout=5)
         self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
 
-        #
         # Open sms option with longtap on it
-        #
         self.UTILS.reporting.logResult("info", "Open sms option with longtap on it")
         sms = self.messages.last_message_in_this_thread()
         body = self.marionette.find_element(*DOM.Messages.last_message_body, id=sms.id)
         self.actions.long_press(body, 2).perform()
 
-        #
         # Press cancel button
-        #
         self.UTILS.reporting.logResult("info", "Clicking cancel button")
         time.sleep(2)
         cancel_btn = self.UTILS.element.getElement(DOM.Messages.cancel_btn_msg_opt, "Cancel button is displayed")

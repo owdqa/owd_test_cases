@@ -28,16 +28,13 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        #
         # Prepare the contact we're going to insert.
-        #
         self.contact = MockContact(givenName="Name", familyName="Surname", name="Name Surname")
         self.UTILS.general.insertContact(self.contact)
 

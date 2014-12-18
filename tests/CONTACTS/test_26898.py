@@ -10,16 +10,13 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
 
-        #
         # Prepare the contact.
-        #
         self.contact = MockContact()
 
     def tearDown(self):
@@ -27,14 +24,11 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch contacts app.
-        #
         self.contacts.launch()
 
-        #
         # Create the contact.
-        #
         self.contacts.start_create_new_contact()
         contFields = self.contacts.get_contact_fields()
         self.contacts.replace_str(contFields['givenName'], self.contact["givenName"])
