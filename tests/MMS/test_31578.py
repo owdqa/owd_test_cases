@@ -48,6 +48,7 @@ class test_main(GaiaTestCase):
         self.UTILS.statusbar.clearAllStatusBarNotifs()
 
     def tearDown(self):
+        self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
@@ -55,7 +56,7 @@ class test_main(GaiaTestCase):
         #
         # Load an image file into the device.
         #
-        self.UTILS.general.add_file_to_device('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/80x60.jpg')
 
         #
         # Launch messages app.

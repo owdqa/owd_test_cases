@@ -23,9 +23,10 @@ class test_main(GaiaTestCase):
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
         self.test_msg = "Test message for test 31727"
-        self.UTILS.general.add_file_to_device('./tests/_resources/300x300.png', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/300x300.png')
 
     def tearDown(self):
+        self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 

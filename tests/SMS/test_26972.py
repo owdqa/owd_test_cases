@@ -43,13 +43,14 @@ class test_main(GaiaTestCase):
         self.emailP = self.UTILS.general.get_config_variable("gmail_2_pass", "common")
         self.emailU = self.UTILS.general.get_config_variable("gmail_2_user", "common")
 
-        self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg')
         self.test_msg = "Test message."
 
         self.cont = MockContact()
         self.data_layer.delete_all_sms()
 
     def tearDown(self):
+        self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 

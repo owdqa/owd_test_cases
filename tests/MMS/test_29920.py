@@ -40,12 +40,12 @@ class test_main(GaiaTestCase):
         #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
-        self.UTILS.general.add_file_to_device('./tests/_resources/MP3.mp3', destination='/SD/mus')
+        self.UTILS.general.add_file_to_device('./tests/_resources/MP3.mp3')
         self.data_layer.delete_all_sms()
         self.UTILS.statusbar.clearAllStatusBarNotifs()
 
     def tearDown(self):
-        self.UTILS.general.remove_file('MP3.mp3', '/SD/mus')
+        self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 

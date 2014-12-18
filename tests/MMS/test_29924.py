@@ -30,11 +30,11 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.gallery = Gallery(self)
-        self.UTILS.general.add_file_to_device('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/80x60.jpg')
         self.test_msg = "This is a test message"
 
     def tearDown(self):
-        self.UTILS.general.remove_file('80x60.jpg', 'DCIM/100MZLLA')
+        self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 

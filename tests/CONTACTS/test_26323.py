@@ -12,10 +12,10 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
 
         self.test_contact = MockContact()
-        self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg')
 
     def tearDown(self):
-        self.cleanup_storage()
+        self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 

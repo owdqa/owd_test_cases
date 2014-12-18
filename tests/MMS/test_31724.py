@@ -29,6 +29,7 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
 
     def tearDown(self):
+        self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
@@ -36,7 +37,7 @@ class test_main(GaiaTestCase):
         #
         # Load files into the device.
         #
-        self.UTILS.general.add_file_to_device('./tests/_resources/640x480.gif', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/640x480.gif')
 
         #
         # Launch messages app.

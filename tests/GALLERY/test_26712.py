@@ -25,9 +25,10 @@ class test_main(GaiaTestCase):
         self.gallery = Gallery(self)
         self.camera = Camera(self)
         self.UTILS.app.setPermission('Camera', 'geolocation', 'deny')
-        self.UTILS.general.add_file_to_device('./tests/_resources/img1.jpg', destination='DCIM/100MZLLA')
+        self.UTILS.general.add_file_to_device('./tests/_resources/img1.jpg')
 
     def tearDown(self):
+        self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 

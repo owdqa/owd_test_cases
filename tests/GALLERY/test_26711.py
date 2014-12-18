@@ -25,7 +25,7 @@ class test_main(GaiaTestCase):
         self.length = len(self.img_list)
         # Load sample images into the gallery.
         for i in self.img_list:
-            self.UTILS.general.add_file_to_device('./tests/_resources/' + i, destination='DCIM/100MZLLA')
+            self.UTILS.general.add_file_to_device('./tests/_resources/' + i)
 
         self.gallery.launch()
         time.sleep(2)
@@ -34,6 +34,7 @@ class test_main(GaiaTestCase):
         time.sleep(2)
 
     def tearDown(self):
+        self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
