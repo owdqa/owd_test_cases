@@ -31,11 +31,11 @@ class test_main(GaiaTestCase):
 
         self.test_contacts[0]["givenName"] = "LongGivennamexxxxxxxxxxx"
         self.test_contacts[1]["familyName"] = "LongFamilynamexxxxxxxxxxx"
+        """
+        This has to be done due to a MockContact malfunction. It does not
+        update the name field to the specified values of givenName and familyName
+        """
 
-        #
-        # This has to be done due to a MockContact malfunction. It does not
-        # update the name field to the specified values of givenName and familyName
-        #
         for c in self.test_contacts:
             c["name"] = c["givenName"] + " " + c["familyName"]
 

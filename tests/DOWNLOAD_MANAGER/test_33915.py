@@ -58,9 +58,7 @@ class test_main(GaiaTestCase):
         self.download_manager.open_download(self.data_url)
         self.download_manager.tap_on_open_option()
 
-        #
         # Verify that the image is opened.
-        #
         self.UTILS.iframe.switchToFrame(*DOM.Gallery.frame_locator)
         title = self.UTILS.element.getElement(DOM.Gallery.file_name_header, "File name header")
         self.UTILS.test.test(title.text == self.file_name, "File name matches in Gallery")

@@ -23,17 +23,14 @@ from OWDTestToolkit.apps.browser import Browser
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.browser = Browser(self)
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.incoming_number = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
@@ -54,9 +51,7 @@ class test_main(GaiaTestCase):
         self.UTILS.statusbar.click_on_notification_detail(self.test_msg, frame_to_change=DOM.Messages.frame_locator)
         self.UTILS.reporting.debug("Checking last message in thread")
 
-        #
         #Verify that a valid URL appears highlight
-        #
         msg = self.messages.last_message_in_this_thread()
         y = msg.find_element("tag name", "a")
         self.UTILS.test.test(y.text == self.link, "The web link is highlighted in the text message")

@@ -27,9 +27,8 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -48,22 +47,16 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
 
-        #
         # Set up email account.
-        #
         self.connect_to_network()
 
         self.Email.launch()
         self.Email.setup_account(self.email_user, self.email_address, self.email_pass)
 
-        #
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Create and send a new test message.
-        #
         msg_text = "Email one one@tester.com, two {} , three three@tester.com at {}".\
                     format(self.emailAddy, time.time())
         self.data_layer.send_sms(self.phone_number, msg_text)
@@ -72,22 +65,16 @@ class test_main(GaiaTestCase):
         sms = self.messages.last_message_in_this_thread()
         time.sleep(1)
 
-        #
         # Tap the 2nd email link.
-        #
         self.UTILS.reporting.logResult("info", "Click the email address in this message: '{}'.".format(sms.text))
         _link = sms.find_elements("tag name", "a")[1]
         _link.tap()
 
-        #
         # Click on "Send email" button from the overlay
-        #
         send_btn = self.UTILS.element.getElement(DOM.Messages.header_send_email_btn, "Send email button")
         send_btn.tap()
 
-        #
         # Switch to email frame and verify the email address is in the To field.
-        #
         self.UTILS.iframe.switchToFrame(*DOM.Email.frame_locator)
         x = self.UTILS.element.getElement(DOM.Email.compose_to_from_contacts, "To field")
         self.UTILS.test.test(x.text == self.emailAddy,

@@ -40,17 +40,14 @@ from OWDTestToolkit.apps.gallery import Gallery
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.gallery = Gallery(self)
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
@@ -64,19 +61,13 @@ class test_main(GaiaTestCase):
         self.UTILS.statusbar.clearAllStatusBarNotifs()
         self.UTILS.general.add_file_to_device('./tests/_resources/80x60.jpg')
 
-        #
         # Create message.
-        #
         sms_message = "Test"
 
-        #
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Create and send a new test message.
-        #
         self.messages.create_and_send_sms([self.phone_number], sms_message)
         self.messages.wait_for_message()
         self.messages.go_back()
@@ -85,22 +76,16 @@ class test_main(GaiaTestCase):
 
         self.messages.startNewSMS()
 
-        #
         # Insert the phone number in the To field
-        #
         self.messages.addNumbersInToField([self.phone_number])
 
-        #
         # Create MMS.
-        #
         self.messages.enterSMSMsg(sms_message)
 
         self.messages.create_mms_image()
         self.gallery.click_on_thumbnail_at_position_mms(0)
 
-        #
         # Click send and wait for the message to be received
-        #
         self.messages.sendSMS()
         self.messages.wait_for_message()
 

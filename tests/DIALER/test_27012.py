@@ -24,24 +24,19 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Enter a number in the dialer.
-        #
         self.dialer.launch()
         self.dialer.enterNumber(self.num)
 
-        #
         # Press the add to contacts button, then select 'add to existing contact'.
-        #
         x = self.UTILS.element.getElement(DOM.Dialer.add_to_contacts_button, "Add to contacts button")
         x.tap()
 
         x = self.UTILS.element.getElement(DOM.Dialer.create_new_contact_btn, "Create new contact button")
         x.tap()
 
-        #
         # Enter the details of the new contact.
-        #
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
         contFields = self.contacts.get_contact_fields()
         self.contacts.replace_str(contFields['givenName'], self.Contact_1["givenName"])
@@ -50,18 +45,14 @@ class test_main(GaiaTestCase):
         done_button = self.UTILS.element.getElement(DOM.Contacts.done_button, "'Done' button")
         done_button.tap()
 
-        #
         # Verify that the contacts app is closed and we are returned to the call log.
-        #
         self.marionette.switch_to_frame()
         self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@{}, '{}')]".\
                                                format(DOM.Contacts.frame_locator[0], DOM.Contacts.frame_locator[1])),
                                               "Contacts frame")
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator)
 
-        #
         # Verify that this contact has been created in contacts.
-        #
         self.apps.kill_all()
         self.contacts.launch()
         self.contacts.view_contact(self.Contact_1["name"])

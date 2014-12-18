@@ -23,9 +23,8 @@ from OWDTestToolkit.apps.gallery import Gallery
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -39,14 +38,11 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Create a new SMS
-        #
         self.messages.startNewSMS()
 
         self.messages.enterSMSMsg(self.test_msg)
@@ -54,15 +50,11 @@ class test_main(GaiaTestCase):
         self.messages.create_mms_image()
         self.gallery.click_on_thumbnail_at_position_mms(0)
 
-        #
         # Open attached file options
-        #
         x = self.UTILS.element.getElement(DOM.Messages.attach_preview_img_type, "Open attached file options")
         x.tap()
 
-        #
         # Remove attached file
-        #
         x = self.UTILS.element.getElement(DOM.Messages.attached_opt_remove, "Remove attached file")
         x.tap()
 

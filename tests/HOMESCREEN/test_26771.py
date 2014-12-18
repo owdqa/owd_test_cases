@@ -35,18 +35,15 @@ class test_main(GaiaTestCase):
     _GROUP_NAME = "Games"
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
 
         self.UTILS = UTILS(self)
         self.settings = Settings(self)
         self.EME = EverythingMe(self)
 
-        #
         # Don't prompt me for geolocation
-        #
         try:
             self.apps.set_permission('Homescreen', 'geolocation', 'deny')
             self.apps.set_permission('Smart Collections', 'geolocation', 'deny')

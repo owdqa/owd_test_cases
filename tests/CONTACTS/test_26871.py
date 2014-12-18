@@ -8,16 +8,13 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
 
-        #
         # Get details of our test contacts.
-        #
         self.test_contacts = [MockContact() for i in range(3)]
         self.test_contacts[2]["givenName"] = "Rnameer"
         self.test_contacts[2]["familyName"] = "Tnameir"
@@ -31,23 +28,16 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch contacts app.
-        #
         self.contacts.launch()
 
-        #
         # Search for the sought contact.
-        #
         self.contacts.search(self.midWord)
 
-        #
         # Verify our contact is listed.
-        #
         self.contacts.check_search_results(self.test_contacts[2]["givenName"])
 
-        #
         # Verify the other contact is NOT listed.
-        #
         self.contacts.check_search_results(self.test_contacts[1]["givenName"], False)
         self.contacts.check_search_results(self.test_contacts[0]["givenName"], False)

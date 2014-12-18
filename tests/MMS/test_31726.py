@@ -30,17 +30,14 @@ from OWDTestToolkit.apps.video import Video
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.video = Video(self)
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.test_msg = "Hello World"
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)

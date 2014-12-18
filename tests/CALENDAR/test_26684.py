@@ -9,9 +9,8 @@ from OWDTestToolkit.apps.calendar import Calendar
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.calendar = Calendar(self)
@@ -23,17 +22,13 @@ class test_main(GaiaTestCase):
     def test_run(self):
         now = self.UTILS.date_and_time.getDateTimeFromEpochSecs(int(time.time()))
 
-        #
         # Launch contacts app.
-        #
         self.calendar.launch()
 
         self.calendar.setView("month")
         self.calendar.setView("today")
 
-        #
         # Check month view details are correct for 'today'.
-        #
         x = self.UTILS.element.getElement(DOM.Calendar.current_view_header, "Header")
         expected_str = "{} {}".format(now.month_name, now.year)
         self.UTILS.test.test(expected_str.lower() in x.text.lower(),

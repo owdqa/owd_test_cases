@@ -34,9 +34,8 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
@@ -45,9 +44,7 @@ class test_main(GaiaTestCase):
         self.hotmail_user = self.UTILS.general.get_config_variable("hotmail_1_email", "common")
         self.hotmail_passwd = self.UTILS.general.get_config_variable("hotmail_1_pass", "common")
 
-        #
         # Get details of our test contacts.
-        #
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
 
@@ -56,9 +53,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Set up to use data connection.
-        #
         self.connect_to_network()
 
         self.contacts.launch()
@@ -78,9 +74,7 @@ class test_main(GaiaTestCase):
         search_name = hotmail_contacts[0]
         self.UTILS.reporting.debug("*** Hotmail contacts: {}".format(hotmail_contacts))
 
-        #
         # Use the search bar to test ...
-        #
         search_field = self.UTILS.element.getElement(DOM.Contacts.search_field, "Search field")
         self.UTILS.element.simulateClick(search_field)
     

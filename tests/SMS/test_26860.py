@@ -16,16 +16,13 @@ class test_main(GaiaTestCase):
     test_msg = "Test message."
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.cp_incoming_number = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
@@ -37,9 +34,8 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.UTILS.statusbar.clearAllStatusBarNotifs()
-        #
+
         # Create and send a new test message.
-        #
         self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)
 
         self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)

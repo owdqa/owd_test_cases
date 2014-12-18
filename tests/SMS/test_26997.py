@@ -14,9 +14,8 @@ class test_main(GaiaTestCase):
     test_msg = "Test message."
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -32,9 +31,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Create and send a new test message containing all of our CORRECT numbers..
-        #
         msg_app = self.messages.launch()
         msg_text = "International num: {}, and {}.".format(self.dummy_nums[0], self.dummy_nums[1])
         self.UTILS.messages.create_incoming_sms(self.phone_number, msg_text)
@@ -43,9 +41,7 @@ class test_main(GaiaTestCase):
         self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
         sms = self.messages.last_message_in_this_thread()
 
-        #
         # Tap the number to call.
-        #
         msg_nums = sms.find_elements("tag name", "a")
 
         self.UTILS.test.test(len(msg_nums) == 2,
@@ -57,9 +53,7 @@ class test_main(GaiaTestCase):
 
         self.try_number(msg_nums, 1)
 
-        #
         # Kill everything, then re-launch the messaging app etc ...
-        #
         self.apps.kill(msg_app)
         time.sleep(3)
         self.messages.launch()

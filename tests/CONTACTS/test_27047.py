@@ -10,17 +10,14 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.settings = Settings(self)
 
-        #
         # Create test contacts.
-        #
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
 
@@ -29,9 +26,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch contacts app.
-        #
         self.contacts.launch()
         x = self.UTILS.element.getElement(DOM.Contacts.settings_button, "Settings button")
         x.tap()
@@ -39,9 +35,7 @@ class test_main(GaiaTestCase):
         x = self.UTILS.element.getElement(DOM.Contacts.import_contacts, "Import button")
         x.tap()
 
-        #
         # Wait for the Hotmail button.
-        #
         x = self.UTILS.element.getElement(DOM.Contacts.hotmail_button, "Hotmail button")
         x_dis = x.get_attribute("disabled")
         self.UTILS.test.test(x_dis == "true", "The Hotmail button is disabled ('disabled' was set to '{}').".format(x_dis))

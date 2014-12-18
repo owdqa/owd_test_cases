@@ -30,9 +30,8 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -41,9 +40,7 @@ class test_main(GaiaTestCase):
 
         self.test_msg = "Hello World"
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
 
@@ -53,22 +50,16 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Turn on 3g connection.
-        #
         self.data_layer.connect_to_cell_data()
 
-        #
         # Turn on wifi connection.
-        #
         self.data_layer.connect_to_wifi()
 
-        #
         # Create and Send an MMS
-        #
         self.messages.create_and_send_mms("image", [self.phone_number], self.test_msg)
-        #
+
         # Verify that the MMS has been received.
-        #
         self.messages.wait_for_message()
         self.messages.verify_mms_received("img", self.phone_number)

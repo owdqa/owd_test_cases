@@ -34,9 +34,8 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
@@ -47,9 +46,7 @@ class test_main(GaiaTestCase):
 
         self.data_layer.connect_to_wifi()
 
-        #
         # Create test contacts.
-        #
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
 
@@ -81,9 +78,7 @@ class test_main(GaiaTestCase):
         done = self.marionette.find_element(*DOM.Contacts.settings_done_button)
         self.UTILS.element.simulateClick(done)
 
-        #
         # Check our three contacts are in the list.
-        #
         prepopulated_contact = (DOM.Contacts.view_all_contact_specific_contact[0],
                                 DOM.Contacts.view_all_contact_specific_contact[1].format("OWD"))
 

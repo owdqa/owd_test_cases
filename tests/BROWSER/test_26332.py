@@ -26,23 +26,16 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Open the settings application.
-        #
         self.settings.launch()
 
-        #
         # Connect to the wifi.
-        #
         self.settings.wifi()
         self.settings.connect_to_wifi(self.wifi_name, self.wifi_pass)
 
-        #
         # Open the browser app.
-        #
         self.browser.launch()
 
-        #
         # Open our URL.
-        #
         self.browser.open_url(self.testURL)

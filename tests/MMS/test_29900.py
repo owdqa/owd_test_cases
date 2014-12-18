@@ -35,9 +35,8 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -46,9 +45,7 @@ class test_main(GaiaTestCase):
 
         self.test_msg = "Hello World"
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
 
@@ -60,14 +57,11 @@ class test_main(GaiaTestCase):
         self.UTILS.general.connect_to_cell_data()
         self.data_layer.connect_to_wifi()
 
-        #
         # Configure Auto Retrieve as "on_with_r = On with roaming option" from messaging settings
-        #
         self.settings.configure_mms_auto_retrieve("on_with_r")
 
         self.messages.create_and_send_mms("image", [self.phone_number], self.test_msg)
         self.messages.wait_for_message()
-        #
+
         # Verify that the MMS has been received.
-        #
         self.messages.verify_mms_received("img", self.phone_number)

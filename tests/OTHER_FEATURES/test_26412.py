@@ -33,9 +33,7 @@ class test_main(GaiaTestCase):
                                           format(DOM.Settings.frame_locator[0], DOM.Settings.frame_locator[1]),
                                           timeout=10)
 
-            #
             # We need to supply the login details for the network.
-            #
             self.UTILS.iframe.switchToFrame(*DOM.Settings.frame_locator)
             self.settings.connect_to_wifi(self.wifi_name, self.wifi_pass)
             self.marionette.switch_to_frame()

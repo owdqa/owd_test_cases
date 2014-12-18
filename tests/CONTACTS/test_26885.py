@@ -23,16 +23,13 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
 
-        #
         # Get details of our test contacts.
-        #
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
 
@@ -41,65 +38,44 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch contacts app.
-        #
         self.contacts.launch()
 
-        #
         # View the contact details.
-        #
         self.contacts.view_contact(self.contact['name'])
 
-        #
         # Edit the contact.
-        #
         self.contacts.press_edit_contact_button()
 
-        #
         # Count the current email addresses.
-        #
         orig_count = self.contacts.count_email_addresses_while_editing()
 
-        #
         # Add a few email addresses.
-        #
         self.contacts.add_another_email_address("one@myemail.com")
         self.contacts.add_another_email_address("two@myemail.com")
 
-        #
         # Get the new count.
-        #
         new_count = self.contacts.count_email_addresses_while_editing()
 
-        #
         # Verify there are 3 more.
-        #
         diff = (new_count - orig_count)
         self.UTILS.test.test(diff == 2,
                         "3 more emails listed for this contact before saving the changes (there were {}) .".\
                         format(diff))
 
-        #
         # Save the changes.
-        #
         x = self.UTILS.element.getElement(DOM.Contacts.edit_update_button, "Update button")
         x.tap()
 
-        #
         # Back to 'view all' screen.
-        #
         x = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
         x.tap()
 
-        #
         # View the contact again.
-        #
         self.contacts.view_contact(self.contact['name'])
 
-        #
         # Count the email fields.
-        #
         x = self.UTILS.element.getElements(DOM.Contacts.email_address_list, "Email addresses", False)
         view_count = 0
         email1_found = False

@@ -17,25 +17,20 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.messages = Messages(self)
 
-        #
         # Prepare the contact we're going to insert.
-        #
         tlf = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.contact = MockContact(tel={'type': 'Mobile', 'value': tlf})
 
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact["tel"]["value"])
 
-        #
         # Add this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
-        #
         self.UTILS.general.insertContact(self.contact)
 
     def tearDown(self):
@@ -43,37 +38,28 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch contacts app.
-        #
         self.contacts.launch()
 
-        #
         # View the details of our contact.
-        #
         self.contacts.view_contact(self.contact['name'])
 
-        #
         # Tap the sms button in the view details screen to go to the sms page.
-        #
         smsBTN = self.UTILS.element.getElement(DOM.Contacts.sms_button, "Send SMS button")
         smsBTN.tap()
+        """
+        Switch to the 'Messages' app frame (or marionette will still be watching the
+        'Contacts' app!).
+        """
 
-        #
-        # Switch to the 'Messages' app frame (or marionette will still be watching the
-        # 'Contacts' app!).
-        #
         time.sleep(2)
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
 
-        #
         # Create SMS.
-        #
         x = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "frame", x)
         self.messages.enterSMSMsg(self.test_msg)
 
-        #
         # Click send.
-        #
         self.messages.sendSMS()

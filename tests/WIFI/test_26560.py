@@ -44,20 +44,19 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Open the Settings application.
-        #
         self.settings.launch()
         time.sleep(2)
         self.settings.wifi()
         self.settings.connect_to_wifi(self.wifi_name, self.wifi_pass)
         network = {'ssid': self.wifi_name}
         self.wait_for_condition(lambda m: self.data_layer.is_wifi_connected(network), timeout=30)
+        """
+        Return to this wifi and check the details, giving some seconds for the
+        device to get an IP address
+        """
 
-        #
-        # Return to this wifi and check the details, giving some seconds for the
-        # device to get an IP address
-        #
         time.sleep(10)
         self.UTILS.iframe.switchToFrame(*DOM.Settings.frame_locator)
         self.settings.wifi_list_tapName(self.wifi_name)

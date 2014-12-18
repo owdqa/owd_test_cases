@@ -55,9 +55,7 @@ class test_main(GaiaTestCase):
         self.settings.launch()
         self.settings.downloads()
 
-        #
         # Check the file is there
-        #
         entry_name = self.download_manager.get_download_entry(self.data_url).find_element(*('css selector', 'p.fileName'))
         value = self.UTILS.element.get_css_value(entry_name, "text-overflow")
         is_ellipsis = self.UTILS.element.is_ellipsis_active(entry_name)

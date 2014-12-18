@@ -27,16 +27,13 @@ class test_main(GaiaTestCase):
     test_msgs = ["First message", "Second message", "Third message"]
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
@@ -46,10 +43,11 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Launch messages app & delete all Threads
-        # Make sure we have no threads
-        #
+        """
+        Launch messages app & delete all Threads
+        Make sure we have no threads
+        """
+
         self.messages.launch()
 
         for i in range(3):
@@ -59,9 +57,8 @@ class test_main(GaiaTestCase):
 
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
         self.messages.openThread(self.phone_number)
-        #
+
         # Go into edit mode..
-        #
         edit_btn = self.UTILS.element.getElement(DOM.Messages.edit_messages_icon, "Edit button")
         edit_btn.tap()
 
@@ -72,14 +69,10 @@ class test_main(GaiaTestCase):
         select_all_btn = self.UTILS.element.getElement(DOM.Messages.check_all_messages_btn, "Select all button")
         select_all_btn.tap()
 
-        #
         # Tap delete
-        #
         self.messages.deleteSelectedMessages()
 
-        #
         # Check conversation isn't there anymore.
-        #
         self.UTILS.element.waitForNotElements(("xpath",
             DOM.Messages.thread_selector_xpath.format(self.phone_number)), "Thread")
 

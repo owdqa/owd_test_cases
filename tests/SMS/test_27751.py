@@ -13,22 +13,17 @@ class test_main(GaiaTestCase):
     test_msg = "Test."
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.contacts = Contacts(self)
 
-        #
         # Put the phone into airplane mode.
-        #
         self.data_layer.set_setting('airplaneMode.enabled', True)
 
-        #
         # Prepare the contact we're going to insert.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.contact = MockContact(tel={'type': '', 'value': self.phone_number})
 
@@ -41,9 +36,7 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
 
-        #
         # Open sms app and delete every thread to start a new one
-        #
         self.contacts.launch()
         self.contacts.view_contact(self.contact["name"])
         x = self.UTILS.element.getElement(DOM.Contacts.sms_button, "SMS button")
@@ -53,18 +46,12 @@ class test_main(GaiaTestCase):
         self.marionette.switch_to_frame()
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
 
-        #
         # Create SMS.
-        #
         self.messages.enterSMSMsg(self.test_msg)
 
-        #
         # Click send.
-        #
         self.messages.sendSMS()
         time.sleep(3)
 
-        #
         # Check that popup appears.
-        #
         self.messages.checkAirplaneModeWarning()

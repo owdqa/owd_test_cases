@@ -11,28 +11,21 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.messages = Messages(self)
 
-        #
         # Prepare the contact we're going to insert.
-        #
         tlf = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.contact = MockContact(tel={'type': 'Mobile', 'value': tlf})
 
-        #
         # Establish which phone number to use.
-        #
         self.num2 = "123456789"
 
-        #
         # Add this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
-        #
         self.UTILS.general.insertContact(self.contact)
 
     def tearDown(self):
@@ -40,9 +33,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Create a thread for this contact.
-        #
         # (Just so we can switch to it later)
         self.contacts.launch()
         self.messages.launch()
@@ -66,17 +58,14 @@ class test_main(GaiaTestCase):
         self._doTest()
 
     def _doTest(self):
-        #
+
         # Launch contacts app etc...
-        #
         self.UTILS.app.switchToApp("Contacts")
         self.contacts.view_contact(self.contact['name'], False)
         smsBTN = self.UTILS.element.getElement(DOM.Contacts.sms_button, "Send SMS button")
         smsBTN.tap()
 
-        #
         # Switch to sms frame and complete the tests + send the message.
-        #
         time.sleep(5)
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
         self.UTILS.reporting.logResult("info", "<b>NOTE: </b>expecting to be in a 'compose new sms' screen (not a thread) ...")
@@ -84,9 +73,7 @@ class test_main(GaiaTestCase):
         self.messages.enterSMSMsg("Test msg.")
         self.messages.sendSMS()
 
-        #
         # Verify that we are now in the thread for this contact.
-        #
         self.UTILS.reporting.logResult("info",
                              "<b>NOTE: </b> expecting to be automatically taken to the thread for '{}' ...".\
                              format(self.contact['name']))

@@ -25,9 +25,8 @@ from OWDTestToolkit.apps.music import Music
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -35,9 +34,7 @@ class test_main(GaiaTestCase):
 
         self.test_msg = "Hello World"
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
         self.UTILS.general.add_file_to_device('./tests/_resources/MP3.mp3')
@@ -50,24 +47,17 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Create a new SMS
-        #
         self.messages.startNewSMS()
 
-        #
         # Insert the phone number in the To field
-        #
         self.messages.addNumbersInToField([self.phone_number])
 
-        #
         # Create MMS.
-        #
         self.messages.enterSMSMsg(self.test_msg)
         self.messages.create_mms_music()
         self.music.click_on_song_mms()

@@ -26,9 +26,8 @@ import time
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -41,58 +40,40 @@ class test_main(GaiaTestCase):
         self.UTILS.statusbar.toggleViaStatusBar('airplane')
 
     def test_run(self):
-        #
+
         # Create a new SMS
-        #
         self.messages.launch()
         self.messages.startNewSMS()
 
-        #
         # Insert the phone number in the To field
-        #
         self.messages.addNumbersInToField([self.target_num])
 
-        #
         # Create SMS.
-        #
         self.messages.enterSMSMsg(self.test_msg)
 
-        #
         # Click send.
-        #
         self.messages.sendSMS()
         send_time = self.messages.last_sent_message_timestamp()
 
-        #
         # Wait for the SMS to arrive.
-        #
         self.messages.wait_for_message(send_time=send_time)
 
         self.UTILS.home.goHome()
 
-        #
         # Put the phone into airplane mode.
-        #
         self.UTILS.statusbar.toggleViaStatusBar('airplane')
 
         self.UTILS.reporting.debug("*** Launching messages again!!!")
         self.messages.launch()
-        #
+
         # Open sms app and go to the previous thread
-        #
         self.messages.openThread(self.target_num)
 
-        #
         # Create another SMS.
-        #
         self.messages.enterSMSMsg(self.test_msg)
 
-        #
         # Click send.
-        #
         self.messages.sendSMS()
 
-        #
         # Check that popup appears.
-        #
         self.messages.checkAirplaneModeWarning()

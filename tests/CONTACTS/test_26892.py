@@ -10,16 +10,13 @@ import time
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
 
-        #
         # Prepare the contact.
-        #
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
 
@@ -29,14 +26,10 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
 
-        #
         # Launch contacts app.
-        #
         self.contacts.launch()
 
-        #
         # View the details of our contact and make him a favourite.
-        #
         self.UTILS.reporting.logResult("info", "<b>Setting up a contact in favourites ...</b>")
         self.contacts.view_contact(self.contact['name'])
 

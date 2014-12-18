@@ -30,16 +30,13 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        #
         # Prepare the contact we're going to insert.
-        #
         self.contacts = []
         for i in range(3):
             given_name = "Name {}".format(i)
@@ -62,14 +59,10 @@ class test_main(GaiaTestCase):
         for c in self.contacts:
             self.messages.addContactToField(c["name"])
 
-        #
         # Remove it.
-        #
         self.messages.removeContactFromToField(self.contacts[1]["name"])
 
-        #
         # Verify the contact name is not present after removal
-        #
         self.messages.checkIsInToField(self.contacts[1]["name"], False)
 
         self.UTILS.reporting.logResult("info", "It is not the 'To' list.")

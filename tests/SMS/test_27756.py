@@ -27,17 +27,14 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.contacts = Contacts(self)
 
-        #
         # Import some contacts.
-        #
         # Set the one we'll match to have a valid phone number.
         self.contact_1 = MockContact(tel={"type": "Mobile",
                         "value": self.UTILS.general.get_config_variable("phone_number", "custom")})
@@ -71,20 +68,15 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Type a message containing the required string
-        #
         self.messages.startNewSMS()
         self.messages.enterSMSMsg(self.test_msg)
 
-        #
         # Search for our contact in the favourites section.
-        #
         self.messages.selectAddContactButton()
 
         self.UTILS.reporting.debug("*** Looking for contact named {}".format(self.contact_1['givenName']))
@@ -95,9 +87,7 @@ class test_main(GaiaTestCase):
         cont.tap()
         self.UTILS.iframe.switch_to_frame(*DOM.Messages.frame_locator)
 
-        #
         # Now check the correct name is in the 'To' list.
-        #
         self.messages.checkIsInToField(self.contact_1["name"])
         self.messages.sendSMS()
         send_time = self.messages.last_sent_message_timestamp()

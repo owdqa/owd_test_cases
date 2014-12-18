@@ -13,17 +13,14 @@ class test_main(GaiaTestCase):
     test_msg = "Test."
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.gallery = Gallery(self)
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
 
@@ -35,24 +32,16 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.UTILS.general.add_file_to_device('./tests/_resources/imgd.jpg')
 
-        #
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Create a new SMS
-        #
         self.messages.startNewSMS()
 
-        #
         # Insert the phone number in the To field
-        #
         self.messages.addNumbersInToField([self.phone_number])
 
-        #
         # Create MMS.
-        #
         self.messages.enterSMSMsg(self.test_msg)
 
         self.messages.create_mms_image()

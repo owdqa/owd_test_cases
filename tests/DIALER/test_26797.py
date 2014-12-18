@@ -11,17 +11,14 @@ import time
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.dialer = Dialer(self)
 
-        #
         # Get details of our test contacts.
-        #
         self.Contact_1 = MockContact()
         self.UTILS.general.insertContact(self.Contact_1)
 
@@ -32,25 +29,20 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch dialer app.
-        #
         self.dialer.launch()
 
         x = self.UTILS.element.getElement(DOM.Dialer.option_bar_contacts, "Contacts option")
         x.tap()
 
-        #
         # Go to the view details screen for this contact.
-        #
         self.contacts.view_contact(self.contact_name, header_check=False)
 
         x = self.UTILS.element.getElement(DOM.Contacts.view_contact_tel_field, "Telephone number")
         x.tap()
 
-        #
         # The call is tested.
-        #
         time.sleep(1)
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)
         self.UTILS.element.waitForElements(("xpath", DOM.Dialer.outgoing_call_numberXP.format(self.Contact_1["name"])),

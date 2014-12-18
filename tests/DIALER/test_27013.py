@@ -28,16 +28,13 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Add a number and add it to an existing contact.
-        #
         self.dialer.launch()
         self.dialer.enterNumber(self.num)
         self.dialer.addThisNumberToContact(self.Contact_1["name"])
- 
-        #
+
         # Verify that this contact has been modified in contacts.
-        #
         self.apps.kill_all()
         self.contacts.launch()
         self.contacts.view_contact(self.Contact_1["name"])

@@ -9,16 +9,13 @@ from OWDTestToolkit.apps.contacts import Contacts
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
 
-        #
         # Get details of our test contacts.
-        #
         self.contact = MockContact(tel=[{'type': 'Mobile', 'value': '555555555'},
                                         {'type': 'Mobile', 'value': '666666666'}])
         self.UTILS.general.insertContact(self.contact)
@@ -28,14 +25,11 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch contacts app.
-        #
         self.contacts.launch()
 
-        #
         # Search for our new contact.
-        #
         self.contacts.view_contact(self.contact["name"])
 
         tel_counter = len(self.contact["tel"])

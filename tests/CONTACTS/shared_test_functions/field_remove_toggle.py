@@ -25,26 +25,23 @@ class field_remove_toggle(GaiaTestCase):
         self.UTILS.reporting.reportResults()
 
     def field_remove_toggle_test(self, contact, field_definition, item_nums=[0]):
-        #
-        # Imports a contact, goes to the contact, edits it and tests the required 'remove' icon
-        # (on and then off).
-        # p_field_num: The number of the item, for example if there's >1 phone number, then '0' would
-        # be the first one etc... (defaults to zero in case there's only one item).
-        #
+        """
+        Imports a contact, goes to the contact, edits it and tests the required 'remove' icon
+        (on and then off).
+        p_field_num: The number of the item, for example if there's >1 phone number, then '0' would
+        be the first one etc... (defaults to zero in case there's only one item).
+        """
 
         del_icon_locator = ("xpath", DOM.Contacts.reset_field_xpath.format(field_definition))
 
         if field_definition == "thumbnail-action":
-            #
+
             # The thumbnail is different from the rest.
-            #
             field_locator = DOM.Contacts.edit_image
         else:
             field_locator = ("xpath", "//div[@id='{}']/div".format(field_definition))
 
-        #
         # Get details of our test contacts.
-        #
         self.UTILS.reporting.logResult("info", "Setting up contact ...")
         self.UTILS.general.insertContact(contact)
 
@@ -57,9 +54,7 @@ class field_remove_toggle(GaiaTestCase):
 
         self.UTILS.reporting.logResult("info", "Starting tests ...")
 
-        #
         # Try to make sure this field section is in view (pretty hideous, but it does the job!).
-        #
         try:
             self.marionette.execute_script("document.getElementById('{}').scrollIntoView();".format(field_definition))
             self.marionette.execute_script("document.getElementById('contact-form-title').scrollIntoView();")

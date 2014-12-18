@@ -12,16 +12,13 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
 
-        #
         # Create our test contacts.
-        #
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
 
@@ -30,14 +27,11 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Set up to use data connection.
-        #
         self.connect_to_network()
 
-        #
         # Launch contacts app.
-        #
         self.contacts.launch()
 
         x = self.contacts.import_gmail_login("wrongname", "wrongpass")

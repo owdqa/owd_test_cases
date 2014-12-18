@@ -15,9 +15,8 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
@@ -26,9 +25,7 @@ class test_main(GaiaTestCase):
         self.gmail_user = self.UTILS.general.get_config_variable("gmail_1_user", "common")
         self.gmail_passwd = self.UTILS.general.get_config_variable("gmail_1_pass", "common")
 
-        #
         # Create test contacts.
-        #
         self.contact_list = [MockContact() for i in range(2)]
         self.contact_list[1]['email'] = {}
 
@@ -39,9 +36,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Set up to use data connection.
-        #
         self.connect_to_network()
 
         self.contacts.launch()
@@ -71,9 +67,7 @@ class test_main(GaiaTestCase):
         editBTN.tap()
         self.UTILS.element.waitForElements(DOM.Contacts.edit_contact_header, "'Edit contacts' screen header")
 
-        #
         # Enter the new contact details.
-        #
         contact_fields = self.contacts.get_contact_fields()
         self.contacts.replace_str(contact_fields['givenName'], self.contact_list[1]["givenName"])
         self.contacts.replace_str(contact_fields['familyName'], self.contact_list[1]["familyName"])
@@ -83,9 +77,7 @@ class test_main(GaiaTestCase):
         self.contacts.replace_str(contact_fields['city'], self.contact_list[1]["addr"]["locality"])
         self.contacts.replace_str(contact_fields['country'], self.contact_list[1]["addr"]["countryName"])
 
-        #
         # Save the changes
-        #
         updateBTN = self.UTILS.element.getElement(DOM.Contacts.edit_update_button, "Edit 'update' button")
         updateBTN.tap()
 

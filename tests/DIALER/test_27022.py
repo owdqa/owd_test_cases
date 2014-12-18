@@ -30,9 +30,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Open the call log and tap on the phone_number.
-        #
         self.dialer.open_call_log()
         self.dialer.callLog_call(self.phone_number)
         time.sleep(3)

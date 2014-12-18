@@ -16,9 +16,8 @@ class test_main(GaiaTestCase):
     test_msg = "Test."
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -26,9 +25,7 @@ class test_main(GaiaTestCase):
         self.music = Music(self)
         self.settings = Settings(self)
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
 
@@ -39,30 +36,20 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
 
-        #
         # Load files into the device.
-        #
         self.UTILS.general.add_file_to_device('./tests/_resources/imgd.jpg')
         self.UTILS.general.add_file_to_device('./tests/_resources/MP3.mp3')
 
-        #
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Create a new SMS
-        #
         self.messages.startNewSMS()
 
-        #
         # Insert the phone number in the To field
-        #
         self.messages.addNumbersInToField([self.phone_number])
 
-        #
         # Create MMS.
-        #
         self.messages.enterSMSMsg(self.test_msg)
 
         self.messages.create_mms_image()
@@ -71,9 +58,7 @@ class test_main(GaiaTestCase):
         self.messages.create_mms_music()
         self.music.click_on_song_mms()
 
-        #
         # Click send and wait for the message to be received
-        #
         self.messages.sendSMS()
         self.messages.wait_for_message()
         self.messages.verify_mms_received('img', self.phone_number)

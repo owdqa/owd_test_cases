@@ -53,9 +53,7 @@ class test_main(GaiaTestCase):
 
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator)
 
-        #
         # Re-open the call log and Verify that it now shows the contact name,
-        #
         self.marionette.switch_to_frame()
         self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@{}, '{}')]".
                                                format(DOM.Contacts.frame_locator[0], DOM.Contacts.frame_locator[1])),

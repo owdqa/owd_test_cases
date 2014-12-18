@@ -20,9 +20,8 @@ from OWDTestToolkit import DOM
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
 
         self.UTILS = UTILS(self)
@@ -46,9 +45,7 @@ class test_main(GaiaTestCase):
 
         self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
 
-        #
         # Launch the group
-        #
         self.eme.pick_group(self.cat_id)
         time.sleep(3)
         pacman = self.UTILS.element.getElementByXpath(DOM.EME.app_to_install.format(self.app_name))

@@ -12,9 +12,8 @@ class test_main(GaiaTestCase):
     _img_list = ('img1.jpg', 'img2.jpg')
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
@@ -25,17 +24,14 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Load a couple of images into the gallery.
-        #
         for i in self._img_list:
             self.UTILS.general.add_file_to_device('./tests/_resources/' + i)
 
         self.UTILS.home.goHome()
 
-        #
         # launch the test apps (lifted directly from gaiatest).
-        #
         gallery_app = {
             'name': "Gallery",
             'app': self.apps.launch("Gallery"),
@@ -56,9 +52,7 @@ class test_main(GaiaTestCase):
 
         self.UTILS.element.waitForElements(DOM.Home.cards_view, "App 'cards' list")
 
-        #
         # For now just click the close_button
-        #
         self.UTILS.reporting.logComment("(Didn't drag the app 'up' to close it, I just clicked the 'close' button.)")
 
         # Kill the radio.

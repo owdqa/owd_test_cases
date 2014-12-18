@@ -42,17 +42,14 @@ class test_main(GaiaTestCase):
     test_msg = "Test " + " ".join(links) + " this."
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.browser = Browser(self)
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
 
@@ -64,9 +61,7 @@ class test_main(GaiaTestCase):
 
         self.connect_to_network()
 
-        #
         # Create and send a new test message.
-        #
         self.data_layer.send_sms(self.phone_number, self.test_msg)
         self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
 
@@ -75,26 +70,18 @@ class test_main(GaiaTestCase):
     def try_link(self, link_number, link):
         self.UTILS.reporting.logResult("info", "Tapping <b>{}</b> ...".format(link))
 
-        #
         # Switch to messaging app.
-        #
         self.messages.launch()
         self.messages.openThread(self.phone_number)
         time.sleep(1)
 
-        #
         # Get last message.
-        #
         msg = self.messages.last_message_in_this_thread()
 
-        #
         # Find all URLs
-        #
         l = msg.find_element("xpath", "//a[text()='{}']".format(link))
 
-        #
         # Tap on required link.
-        #
         self.UTILS.element.simulateClick(l)
 
         self.UTILS.test.test(self.browser.check_page_loaded(link),

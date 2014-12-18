@@ -12,9 +12,8 @@ class test_main(GaiaTestCase):
     test_msg = "Test message\n\nwith line breaks."
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -36,7 +35,5 @@ class test_main(GaiaTestCase):
         title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.incoming_sms_num, timeout=5)
         self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
 
-        #
         # Check the received message.
-        #
         self.messages.check_last_message_contents(self.test_msg)

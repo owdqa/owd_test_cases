@@ -19,9 +19,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Enter a number in the dialer.
-        #
         self.dialer.launch()
 
         x = self.UTILS.element.getElement(DOM.Dialer.option_bar_keypad, "Keypad option")

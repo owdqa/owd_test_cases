@@ -24,16 +24,13 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        #
         # Establish which phone number to use and set up the contact.
-        #
         self.num1 = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.incoming_sms_num = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
         self.contact = MockContact(tel={'type': 'Mobile', 'value': self.num1})
@@ -47,16 +44,13 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch messages app.
-        #
         self.messages.launch()
 
         self.test_msg = "Test message at {}".format(time.time())
 
-        #
         # Send a message to myself (long and short number to get a few threads).
-        #
         self.messages.create_and_send_sms([self.num1], self.test_msg)
         self.UTILS.messages.create_incoming_sms(self.num1, self.test_msg)
         self.messages.go_back()

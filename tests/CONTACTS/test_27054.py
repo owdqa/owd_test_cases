@@ -32,9 +32,8 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
@@ -84,9 +83,7 @@ class test_main(GaiaTestCase):
         done = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Done button", True, 10, True)
         self.UTILS.element.simulateClick(done)
 
-        #
         # Check our contact is in the list.
-        #
         hotmail_imported = (DOM.Contacts.view_all_contact_specific_contact[0],
                                 DOM.Contacts.view_all_contact_specific_contact[1].format("roy"))
 

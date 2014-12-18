@@ -35,9 +35,8 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
@@ -46,9 +45,7 @@ class test_main(GaiaTestCase):
         self.hotmail_user = self.UTILS.general.get_config_variable("hotmail_2_email", "common")
         self.hotmail_passwd = self.UTILS.general.get_config_variable("hotmail_2_pass", "common")
 
-        #
         # Get details of our test contacts.
-        #
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
 
@@ -57,18 +54,15 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Set up to use data connection.
-        #
         self.data_layer.connect_to_cell_data()
 
         self.contacts.launch()
 
         login_result = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)
 
-        #
         # Login unsuccessful or no available contacts to import
-        #
         if not login_result:
             self.UTILS.test.test(False, "Login unsuccessful")
 

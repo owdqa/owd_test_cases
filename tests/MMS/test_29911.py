@@ -35,16 +35,13 @@ from tests.i18nsetup import setup_translations
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        #
         # Import contact (adjust to the correct number).
-        #
         self.test_num = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.contact1 = MockContact(givenName="Name 1", familyName="Surname 1",
                                     name="Name 1 Surname 1", tel={"type": "Mobile", "value": self.test_num})
@@ -67,42 +64,31 @@ class test_main(GaiaTestCase):
 
         self.messages.addContactToField(self.contact1["name"])
 
-        #
         # Insert the phone number in the To field
-        #
         self.messages.addNumbersInToField([self.call_number])
 
         search_str = _("2 recipients")
         self.UTILS.element.headerCheck(search_str)
-        #
+
         # Enter the message.
-        #
         self.UTILS.reporting.logResult("info", "Enter the message.")
         self.messages.enterSMSMsg("Test 29911")
 
-        #
         # Send the message.
-        #
         self.messages.sendSMS()
         self.UTILS.statusbar.wait_for_notification_toaster_title(self.contact1["name"])
         self.UTILS.iframe.switch_to_frame(*DOM.Messages.frame_locator)
 
-        #
         # Verify the number is shown in the header as there is no contact name
-        #
         self.messages.openThread(self.call_number)
         self.messages.checkThreadHeader(self.call_number)
 
         self.UTILS.reporting.logResult("info", "Verify the number is shown in the header as there is no contact name")
 
-        #
         # Return to main SMS page.
-        #
         self.messages.closeThread()
 
-        #
         # Verify the thread now contains the name of the contact instead of the phone number
-        #
         self.UTILS.reporting.logResult("info", "Trying to open the thread with name: " + self.contact1["name"])
         self.messages.openThread(self.contact1["name"])
         self.messages.checkThreadHeaderWithNameSurname(self.contact1["name"])

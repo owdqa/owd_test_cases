@@ -10,16 +10,13 @@ from OWDTestToolkit.apps.messages import Messages
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
@@ -29,40 +26,27 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Start a new sms.
-        #
         self.messages.startNewSMS()
 
-        #
         # Enter a number in the target field.
-        #
         self.messages.addNumbersInToField([self.phone_number])
 
-        #
         # Enter a message the message area.
-        #
         self.messages.enterSMSMsg("xxx")
 
-        #
         # Click the back button.
-        #
         self.messages.go_back()
 
-        #
         # Check for the save/discard popup.
-        #
         discard_btn = self.UTILS.element.getElement(DOM.Messages.discard_msg_btn, "Discard button")
         discard_btn.tap()
 
-        #
         # Verify that we're now in the correct place.
-        #
         self.UTILS.element.headerCheck("Messages")
         threads = self.UTILS.element.getElement(DOM.Messages.no_threads_message, "No threads message")
         self.UTILS.test.test(threads, "There are no threads, as expected")

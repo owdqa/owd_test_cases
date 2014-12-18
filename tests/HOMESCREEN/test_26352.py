@@ -38,18 +38,15 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
 
         self.UTILS = UTILS(self)
         self.settings = Settings(self)
         self.EME = EverythingMe(self)
 
-        #
         # Don't prompt me for geolocation
-        #
         try:
             self.apps.set_permission('Homescreen', 'geolocation', 'deny')
             self.apps.set_permission('Smart Collections', 'geolocation', 'deny')
@@ -61,16 +58,13 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Make sure 'things' are as we expect them to be first.
-        #
         self.connect_to_network()
 
         self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
 
-        #
         # First, get the name of the app we're going to install.
-        #
         time.sleep(3)
         found = self.EME.pick_group(self._group_games_id)
         self.UTILS.reporting.debug("*** Group found: {}".format(found))
@@ -81,21 +75,15 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "App name is <b>{}</b>".format(app_name))
         self.UTILS.home.goHome()
 
-        #
         # Make sure our app isn't installed already.
-        #
         self.UTILS.app.uninstallApp(app_name)
 
-        #
         # Pick a group.
-        #
         found = self.EME.pick_group(self._group_games_id)
         self.UTILS.test.test(found, "Group '{}' exists in EverythingME.".format(self._group_name), True)
         time.sleep(2)
 
-        #
         # Add the app to the homescreen.
-        #
         added = self.EME.add_app_to_homescreen(app_name)
 
         self.UTILS.iframe.switchToFrame(*DOM.EME.bookmark_frame_locator)
@@ -107,15 +95,11 @@ class test_main(GaiaTestCase):
 
         self.UTILS.test.test(added, "Application '{}' is added to the homescreen.".format(app_name), True)
 
-        #
         # Go back to the homescreen and check it's installed.
-        #
         self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
         self.UTILS.test.test(self.UTILS.app.launchAppViaHomescreen(app_name), app_name + " is installed.", True)
 
-        #
         # Give it 10 seconds to start up, switch to the frame for it and grab a screenshot.
-        #
         time.sleep(3)
         self.marionette.switch_to_frame()
         self.UTILS.iframe.switchToFrame("src", url)

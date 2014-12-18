@@ -13,9 +13,8 @@ class test_main(GaiaTestCase):
     test_msg = "Test message."
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -37,40 +36,29 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Set up email account.
-        #
         self.connect_to_network()
 
         self.Email.launch()
         self.Email.setup_account(self.email_user, self.email_address, self.email_pass)
- 
-        #
+
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Create and send a new test message.
-        #
         self.messages.create_and_send_sms([self.phone_number], "Email {} one.".format(self.emailAddy))
         x = self.messages.wait_for_message()
 
-        #
         # Tap the email link.
-        #
         link = x.find_element("tag name", "a")
         link.tap()
 
-        #
         # Press 'add to existing contact' button.
-        #
         w = self.UTILS.element.getElement(DOM.Messages.header_send_email_btn, "Send email button")
         w.tap()
 
-        #
         # Switch to email frame and verify the email address is in the To field.
-        #
         self.UTILS.iframe.switchToFrame(*DOM.Email.frame_locator)
         x = self.UTILS.element.getElement(DOM.Email.compose_to_from_contacts, "To field")
         self.UTILS.test.test(x.text == self.emailAddy, 

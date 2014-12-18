@@ -26,17 +26,14 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.messages = Messages(self)
 
-        #
         # Prepare the contact we're going to insert.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.contact = MockContact(tel={'type': '', 'value': self.phone_number})
         self.test_msg = "Test."
@@ -58,15 +55,11 @@ class test_main(GaiaTestCase):
         self.messages.go_back()
         self.messages.openThread(self.contact["name"])
 
-        #
         # Delete the contact
-        #
         self.apps.kill(msgapp)
         self.contacts.launch()
         self.contacts.delete_contact(self.contact["name"])
 
-        #
         # Go back to SMS app and try to open the thread by phone number
-        #
         self.messages.launch()
         self.messages.openThread(self.contact["tel"]["value"])

@@ -23,17 +23,14 @@ class test_main(GaiaTestCase):
     test_msg = "Test."
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.messages = Messages(self)
 
-        #
         # Prepare the contact we're going to insert.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.contact = MockContact(givenName='AAAAAAAAAAAAAAAALEX',
                                     familyName='SMITHXXXXXXXX',
@@ -56,19 +53,13 @@ class test_main(GaiaTestCase):
         title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.cp_incoming_number, timeout=5)
         self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
 
-        #
         # Launch contacts app.
-        #
         self.contacts.launch()
 
-        #
         # View the details of our contact.
-        #
         self.contacts.view_contact(self.contact['name'])
 
-        #
         # Tap the sms button in the view details screen to go to the sms page.
-        #
         smsBTN = self.UTILS.element.getElement(DOM.Contacts.sms_button, "Send SMS button")
         smsBTN.tap()
 

@@ -30,16 +30,12 @@ class test_main(GaiaTestCase):
 
         self.dialer = Dialer(self)
 
-        #
         # Get own number and incoming
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Calling to " + self.phone_number)
         self.incoming_number = self.UTILS.general.get_config_variable("incoming_call_number", "common")
 
-        #
         # Generate the incoming call
-        #
         self.marionette.switch_to_frame()
         self.data_layer.send_sms(self.incoming_number, "Call:" + self.phone_number)
         self.dialer.answer_and_hangup(2)

@@ -21,9 +21,8 @@ from OWDTestToolkit.apps.contacts import Contacts
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
@@ -47,15 +46,11 @@ class test_main(GaiaTestCase):
         fav_btn = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
         fav_btn.tap()
 
-        #
         # Go back to all contacts list
-        #
         back_btn = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
         back_btn.tap()
 
-        #
         # Check the contact is in the favourite list
-        #
         string = self.contact_list[0]['givenName'] + self.contact_list[0]['familyName']
         favs = ("xpath", DOM.Contacts.favourites_list_xpath.format(string.upper()))
         self.UTILS.element.waitForElements(favs, "'" + self.contact_list[0]['name'] + "' in the favourites list")

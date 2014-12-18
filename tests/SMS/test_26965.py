@@ -27,17 +27,14 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.browser = Browser(self)
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
         self.link = "www.wikipedia.org"
@@ -51,23 +48,15 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.connect_to_network()
 
-        #
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Create and send a new test message.
-        #
         self.messages.create_and_send_sms([self.phone_number], self.test_msg)
 
-        #
         # Get the link of the first message
-        #
         msg = self.UTILS.element.getElement(DOM.Messages.last_sent_message, "Last sent message")
 
-        #
         # Verify that a valid URL appears highlight
-        #
         y = msg.find_element("tag name", "a")
         self.UTILS.test.test(y.text == self.link, "The web link is highlighted in the text message")

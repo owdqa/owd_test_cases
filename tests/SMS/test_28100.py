@@ -29,9 +29,8 @@ import time
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -47,9 +46,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Create and send a new test message containing all of our CORRECT numbers..
-        #
         self.UTILS.reporting.logResult("info", "<b>Check CORRECT numbers are ok ...</b>")
         nums = ["12345678", "123456789"]
         self.check_numbers(nums, range(2))
@@ -63,16 +61,13 @@ class test_main(GaiaTestCase):
         self.check_numbers(nums, [1])
 
     def check_numbers(self, nums, tappables):
-        #
+
         # Generate a string of the type: "Test0 <number> Test1 <number>...."
-        #
         fill_text = ["Test{}".format(i) for i in range(len(nums))]
         sms_msg = "Test numbers: {}".format(" ".join([item for sublist in map(None, fill_text, nums)
                                                       for item in sublist]))
 
-        #
         # Start each test run from scratch.
-        #
         self.apps.kill_all()
         self.UTILS.messages.create_incoming_sms(self.phone_number, sms_msg)
         self.UTILS.statusbar.wait_for_notification_toaster_detail(sms_msg, timeout=120)
@@ -80,9 +75,7 @@ class test_main(GaiaTestCase):
         self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
         sms = self.messages.last_message_in_this_thread()
 
-        #
         # Get the numbers in the SMS
-        #
         msg_nums = sms.find_elements("tag name", "a")
 
         description = "There are <b>{}</b> numbers highlighted in the received text (expected <b>{}</b>)."
@@ -90,25 +83,19 @@ class test_main(GaiaTestCase):
         for i in range(len(msg_nums)):
             msg_nums[i].tap()
 
-            #
             # Press Call button from options overlay
-            #
             x = self.UTILS.element.getElement(DOM.Messages.header_call_btn, "Call button")
             x.tap()
 
             self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator)
 
-            #
             # Dialer is started with the number already filled in.
-            #
             time.sleep(1)
             number = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number").get_attribute("value")
             description = "The phone number is '{}' (expected '{}').".format(number, nums[tappables[i]])
             self.UTILS.test.test(nums[tappables[i]] == number, description)
 
-            #
             # Kill everything, then re-launch the messaging app etc ...
-            #
             self.messages.launch()
 
             sms = self.messages.last_message_in_this_thread()

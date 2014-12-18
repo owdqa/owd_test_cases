@@ -46,14 +46,11 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.data_layer.connect_to_wifi()
-        #
+
         # Open the browser app.
-        #
         self.browser.launch()
 
-        #
         # Open our URL.
-        #
         self.browser.open_url("www.google.com")
 
         test_msg = "This is a test message sent at {} while connected to a wifi".format(time.time())

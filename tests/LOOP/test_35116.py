@@ -13,16 +13,13 @@ from OWDTestToolkit.apps.contacts import Contacts
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
 
-        #
         # Get details of our test contacts.
-        #
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
 
@@ -31,9 +28,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch contacts app.
-        #
         self.contacts.launch()
         self.contacts.view_contact(self.contact['name'])
         audio_btn = self.marionette.find_element(DOM.Contacts.view_contact_hello_option[0],

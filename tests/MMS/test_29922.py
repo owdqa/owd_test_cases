@@ -23,9 +23,8 @@ from OWDTestToolkit.apps.gallery import Gallery
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -33,9 +32,7 @@ class test_main(GaiaTestCase):
 
         self.test_msg = "Hello World"
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
@@ -45,9 +42,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Create and Send an MMS with a video attached.
-        #
         self.messages.create_and_send_mms("video", [self.phone_number], self.test_msg)
         self.messages.wait_for_message()
         self.messages.verify_mms_received("video", self.phone_number)

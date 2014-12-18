@@ -19,9 +19,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Enter a number in the dialer.
-        #
         self.dialer.launch()
 
 

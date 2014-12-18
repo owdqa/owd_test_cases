@@ -11,9 +11,8 @@ class test_main(GaiaTestCase):
     test_msg = "Test message."
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)

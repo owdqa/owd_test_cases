@@ -23,17 +23,14 @@ from OWDTestToolkit.apps.settings import Settings
 
 class test_main(GaiaTestCase):
 
-    #
     # Restart device to start with wifi and 3g disabled.
-    #
     def __init__(self, *args, **kwargs):
         kwargs['restart'] = True
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -42,9 +39,7 @@ class test_main(GaiaTestCase):
 
         self.test_msg = "Hello World"
 
-        #
         # Establish which phone number to use.
-        #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
 
@@ -57,12 +52,9 @@ class test_main(GaiaTestCase):
         # Turn on 3g connection.
         self.data_layer.connect_to_cell_data()
 
-        #
         # Create and Send an MMS
-        #
         self.messages.create_and_send_mms("image", [self.phone_number], self.test_msg)
-        #
+
         # Verify that the MMS has been received.
-        #
         self.messages.wait_for_message()
         self.messages.verify_mms_received("img", self.phone_number)

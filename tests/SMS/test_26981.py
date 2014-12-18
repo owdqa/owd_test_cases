@@ -28,9 +28,8 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -48,30 +47,24 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Set up email account.
-        #
         self.connect_to_network()
 
         self.email.launch()
         self.email.setup_account(self.email_user, self.email_address, self.email_pass)
 
-        #
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Create and send a new test message.
-        #
         test_msg = "Email address {} test at {}".format(self.emailAddy, time.time())
         self.data_layer.send_sms(self.phone_number, test_msg)
         self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)
         self.UTILS.statusbar.click_on_notification_detail(test_msg, DOM.Messages.frame_locator)
         sms = self.messages.last_message_in_this_thread()
-        #
+
         # Verify that the email address opens the email app.
-        #
         time.sleep(2)
         link = sms.find_element("tag name", "a")
         link.tap()
@@ -80,9 +73,7 @@ class test_main(GaiaTestCase):
         cancel = self.UTILS.element.getElement(DOM.Messages.contact_cancel_btn, "Cancel button")
         cancel.tap()
 
-        #
         # Go into edit mode.
-        #
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
         x = self.UTILS.element.getElement(DOM.Messages.edit_messages_icon, "Edit button")
         x.tap()
@@ -90,15 +81,12 @@ class test_main(GaiaTestCase):
         delete_btn.tap()
 
         sms = self.messages.last_message_in_this_thread()
-        #
+
         # Verify that the email address does not open the email app.
-        #
         time.sleep(2)
         link = sms.find_element("tag name", "a")
         link.tap()
 
-        #
         # Now try to find the email app iframe.
-        #
         time.sleep(2)
         self.wait_for_element_not_displayed(*DOM.Messages.header_send_message_btn, timeout=30)

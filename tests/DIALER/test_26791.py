@@ -26,16 +26,13 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Enter a number in the dialer.
-        #
 
         self.dialer.launch()
         self.dialer.enterNumber(self._testNum)
 
-        #
         # Press the add to contacts button, then select 'add to existing contact'.
-        #
         x = self.UTILS.element.getElement(DOM.Dialer.add_to_contacts_button, "Add to contacts button")
         x.tap()
 

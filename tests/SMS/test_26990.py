@@ -9,9 +9,8 @@ class test_main(GaiaTestCase):
     test_msg = "Test message."
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -23,26 +22,19 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Launch messages app.
-        #
         self.messages.launch()
 
-        #
         # Create and send a new test message.
-        #
         self.messages.create_and_send_sms([self.phone_number], "Test message")
 
-        #
         # The returned message won't come to this thread, so just tap the header.
-        #
         x = self.UTILS.element.getElement(DOM.Messages.message_header,
                                     "Thread header (edit header)")
         x.tap()
 
-        #
         # Verify that the options appear.
-        #
         self.UTILS.element.waitForElements(DOM.Messages.header_call_btn,
                                     "Call button")
         self.UTILS.element.waitForElements(DOM.Messages.header_create_new_contact_btn,

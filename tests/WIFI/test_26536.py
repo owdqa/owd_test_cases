@@ -31,9 +31,7 @@ class test_main(GaiaTestCase):
         self.data_layer.connect_to_wifi()
         self.settings.launch()
 
-        #
         # Tap hotspot.
-        #
         self.settings.hotSpot()
 
         self.UTILS.reporting.logResult("info", "<b>Check hotspot with WIFI on.</b>")
