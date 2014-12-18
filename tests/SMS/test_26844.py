@@ -59,8 +59,7 @@ class test_main(GaiaTestCase):
         #
         self.messages.create_and_send_sms([self.num1], self.test_msg)
         self.UTILS.messages.create_incoming_sms(self.num1, self.test_msg)
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        self.messages.go_back()
         self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
         incoming_num = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.incoming_sms_num,
                                                 frame_to_change=DOM.Messages.frame_locator, timeout=5)

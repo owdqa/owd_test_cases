@@ -52,11 +52,10 @@ class test_main(GaiaTestCase):
             else:
                 self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)
                 self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
-            back_btn = self.marionette.find_element(*DOM.Messages.header_back_button)
-            back_btn.tap()
+            self.messages.go_back()
 
-        x = self.UTILS.element.getElements(DOM.Messages.thread_target_names, "Threads target names")
+        target_names = self.UTILS.element.getElements(DOM.Messages.thread_target_names, "Threads target names")
 
-        bools = [title.text in self.nums for title in x]
+        bools = [title.text in self.nums for title in target_names]
         msgs = ["A thread exists for {}".format(elem) for elem in self.nums]
         map(self.UTILS.test.test, bools, msgs)

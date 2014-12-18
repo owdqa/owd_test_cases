@@ -55,8 +55,7 @@ class test_main(GaiaTestCase):
         send_time = self.messages.last_sent_message_timestamp()
         self.messages.wait_for_message(send_time=send_time)
 
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        self.messages.go_back()
         self.messages.openThread(self.contact["name"])
 
         #

@@ -37,11 +37,7 @@ class test_main(GaiaTestCase):
         msg_text = str(time.time())
         self.messages.create_and_send_sms([self.phone_number], msg_text)
 
-        #
-        # Return to the threads view.
-        #
-        x = self.UTILS.element.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        self.messages.go_back()
 
         #
         # Get the preview txt for our test.

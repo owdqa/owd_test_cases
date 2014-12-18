@@ -2,6 +2,7 @@ from gaiatest import GaiaTestCase
 
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.utils.contacts import MockContact
 
@@ -13,6 +14,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
+        self.contacts = Contacts(self)
 
         # Prepare the contact we're going to insert.
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
@@ -36,9 +38,7 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
         # Press the back button.
-        x = self.UTILS.element.getElement(DOM.Messages.cancel_add_contact,
-                                          "Cancel add contact button")
-        x.tap()
+        self.contacts.go_back()
 
         self.apps.switch_to_displayed_app()
 

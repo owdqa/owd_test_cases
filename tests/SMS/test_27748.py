@@ -69,7 +69,7 @@ class test_main(GaiaTestCase):
         msgs = [(text, direction) for text in self.texts for direction in self.directions]
         for (msg, expected) in zip(msg_list, msgs):
             direction = "outgoing" if "outgoing" in msg.get_attribute("class") else "incoming"
-            text = self.marionette.find_element('css selector', '.message-body p', id=msg.id).text
+            text = self.marionette.find_element(*DOM.Messages.last_message_text_nested, id=msg.id).text
             self.UTILS.test.test(text == expected[0], "**** Text: {}  Expected: {}".format(text, expected[0]))
             self.UTILS.test.test(direction == expected[1], "Direction: {}  Expected: {}".\
                                  format(direction, expected[1]))

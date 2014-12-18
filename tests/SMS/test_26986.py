@@ -42,12 +42,13 @@ class test_main(GaiaTestCase):
         # Tap the header to create a contact.
         #
         self.messages.header_createContact()
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
         #
         # Cancel the action.
         #
-        x = self.UTILS.element.getElement(DOM.Contacts.edit_cancel_button, "Cancel button")
-        x.tap()
+        form_header = self.UTILS.element.getElement(DOM.Contacts.contact_form_header, "Contact form header")
+        form_header.tap(25, 25)
 
         #
         # Wait for the contacts app to go away.

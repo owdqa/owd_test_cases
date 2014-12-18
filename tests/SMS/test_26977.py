@@ -60,11 +60,8 @@ class test_main(GaiaTestCase):
         edit_btn = self.UTILS.element.getElement(DOM.Messages.edit_messages_icon, "Edit button")
         edit_btn.tap()
 
-        #
-        # Verify that the Delete Messages button is present and press it to enter in Edit mode
-        #
-        delete_btn = self.UTILS.element.getElement(DOM.Messages.delete_threads_button, "Delete threads button present")
-        delete_btn.tap()
+        select_btn = self.UTILS.element.getElement(DOM.Messages.edit_msgs_select_btn, "Select button")
+        select_btn.tap()
 
         #
         # Long press the email link.
