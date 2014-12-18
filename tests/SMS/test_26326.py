@@ -46,9 +46,7 @@ class test_main(GaiaTestCase):
 
         self.messages.check_last_message_contents(self.test_msg)
 
-        self.UTILS.reporting.debug("Going back")
         self.messages.go_back()
-        self.UTILS.reporting.debug("After going back")
 
         #
         # Check the message via the thread.
