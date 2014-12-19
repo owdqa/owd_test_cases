@@ -1,3 +1,18 @@
+#===============================================================================
+# 31564: Cancel adding a subject in new message/multimedia message
+#
+# Procedure:
+# 1. Open Messaging/multimedia message app
+# 2. Create a new message/multimedia message
+# 3.Tap on the top-right icon to show the options menu (ER1)
+# 4. Tap on Cancel (ER2)
+#
+# Expected result:
+# ER1. It appears a screen giving options to Add subject and Cancel
+# ER2. User is taken back to the compose message view from which the
+# Add subject screen was launched
+#===============================================================================
+
 from gaiatest import GaiaTestCase
 
 from OWDTestToolkit import DOM
