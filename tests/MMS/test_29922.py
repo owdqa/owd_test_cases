@@ -1,5 +1,5 @@
 #===============================================================================
-# 29922: Verify that the user can receive attached a file .mp4 in a MMS and
+# 29922: Verify that the user can receive an attached .mp4 file in an MMS and
 # it is displayed as video
 #
 # Procedure:

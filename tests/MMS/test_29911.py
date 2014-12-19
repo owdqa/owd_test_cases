@@ -48,7 +48,7 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact1["tel"]["value"])
         self.UTILS.general.insertContact(self.contact1)
 
-        self.call_number = self.UTILS.general.get_config_variable("target_call_number", "common")
+        self.call_number = self.UTILS.general.get_config_variable("incoming_call_number", "common")
         self.data_layer.delete_all_sms()
         self.UTILS.statusbar.clearAllStatusBarNotifs()
         _ = setup_translations(self)
