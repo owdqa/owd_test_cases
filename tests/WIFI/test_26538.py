@@ -2,6 +2,7 @@
 # 26538: Try to turn Wi-Fi HotSpot on when the device has Data connection off
 #===============================================================================
 
+import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
@@ -21,8 +22,10 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
+        self.data_layer.connect_to_cell_data()
         self.settings.launch()
         self.settings.hotSpot()
-        hotspot_switch_input = self.UTILS.element.getElement(DOM.Settings.hotspot_switch_input,
-                                                             "Hotspot switch input", timeout=20, is_displayed=False)
-        self.UTILS.test.test(not hotspot_switch_input.get_attribute("checked"), "Hotspot switch is disabled.")
+        hotspot_settings_btn = self.UTILS.element.getElement(DOM.Settings.hotspot_settings, "Hotspot settings button",
+                                                             timeout=20)
+        self.UTILS.test.test(hotspot_settings_btn.get_attribute("disabled"), "Hotspot button is disabled.")
+        time.sleep(5)

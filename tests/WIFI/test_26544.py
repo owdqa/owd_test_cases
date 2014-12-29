@@ -24,11 +24,11 @@ class test_main(GaiaTestCase):
         self.settings.wifi()
         self.settings.wifi_switchOn()
 
-        x = self.UTILS.element.getElements(DOM.Settings.wifi_available_networks, "Available networks", False)
+        available_networks = self.UTILS.element.getElements(DOM.Settings.wifi_available_networks, "Available networks", False)
 
-        self.UTILS.reporting.logResult("info", "Found %s networks" % len(x))
+        self.UTILS.reporting.logResult("info", "Found {} networks".format(len(available_networks)))
 
-        for i in x:
+        for i in available_networks:
             _secure1 = False
             _secure2 = False
 

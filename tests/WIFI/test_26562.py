@@ -49,12 +49,7 @@ class test_main(GaiaTestCase):
         self.wait_for_condition(lambda m: self.data_layer.is_wifi_connected(network), timeout=30)
 
         self.UTILS.iframe.switchToFrame(*DOM.Settings.frame_locator)
-        manage_networks = self.marionette.find_element(*DOM.Settings.wifi_advanced_btn)
-        self.UTILS.element.scroll_into_view(manage_networks)
-        self.UTILS.element.waitForElements(DOM.Settings.wifi_advanced_btn, "Waiting for advanced wifi settings",
-                                           timeout=30)
-        btn = self.UTILS.element.getElement(DOM.Settings.wifi_advanced_btn, "Advanced settings")
-        btn.tap()
+        self.UTILS.element.getElement(DOM.Settings.wifi_advanced_manage, "Manage networks button").tap()
 
         self.UTILS.element.waitForElements(DOM.Settings.wifi_advanced_mac, "Mac address")
         self.UTILS.element.waitForElements(DOM.Settings.wifi_advanced_knownNets, "Known networks")
