@@ -10,6 +10,7 @@
 # The Wi-Fi is disabled. It can be activated from this menu
 #===============================================================================
 
+import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
@@ -37,6 +38,7 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.settings.launch()
+        time.sleep(1)
         self.settings.wifi()
         self.settings.connect_to_wifi(self.wifi_name, self.wifi_pass)
 

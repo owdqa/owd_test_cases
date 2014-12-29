@@ -2,6 +2,7 @@
 # 26513: Data connection- Activation/Deactivation
 #===============================================================================
 
+import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
@@ -27,10 +28,11 @@ class test_main(GaiaTestCase):
         self.UTILS.test.test(self.UTILS.network.is_network_type_enabled("data") == False, "Data conn is disabled.")
 
         self.settings.launch()
+        time.sleep(1)
         self.settings.cellular_and_data()
 
-        x = self.UTILS.element.getElement(DOM.Settings.celldata_DataConn_switch, "Data connection switch")
-        x.tap()
+        data_switch = self.UTILS.element.getElement(DOM.Settings.celldata_DataConn_switch, "Data connection switch")
+        data_switch.tap()
 
         # Wait for confirmation screen
         self.settings.confirm_data_conn()
