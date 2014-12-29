@@ -43,11 +43,16 @@ class test_main(GaiaTestCase):
         self.dialer.open_call_log()
 
         self.dialer.callLog_long_tap(self.test_contact["tel"]["value"])
-        time.sleep(2)
-        self.UTILS.iframe.switchToFrame(*DOM.Dialer.call_log_contact_name_iframe, via_root_frame=False)
+        call_info = self.UTILS.element.getElement(DOM.Dialer.call_log_numtap_call_info, "Call information button")
+        call_info.tap()
+
+        call_info_header = self.UTILS.element.getElement(DOM.Dialer.call_info_title, "Call info title")
+        self.UTILS.test.test(call_info_header.text == self.test_contact['name'], 'Header title matches with contact')
+
+        go_to_contact_details_button = self.UTILS.element.getElement(DOM.Dialer.call_info_contact_go_to_contact_details, "Go to contact detail")
 
         self.UTILS.element.waitForElements(("xpath", "//button[contains(@class,'remark') and @data-tel='{}']".\
                                             format(self.test_contact["tel"]["value"])), "Highlighted number")
 
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Final screenshot:", x)
+        screenshot = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Final screenshot:", screenshot)

@@ -3,7 +3,7 @@
 #       1. Dial the number and press "add to contact" button
 #       2. Select "Cancel"
 # ** Expected Results
-#       2. User is taken back to the dialer
+#       2. User is taken back to contact info
 #  
 import time
 import sys
@@ -41,14 +41,10 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
         # Open the call log and add to our contact, cancelling the process
         self.dialer.callLog_addToContact(self.phone_number, self.test_contact["name"], cancel_process=True)
 
         # Check we're back in the call log.
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator)
-        header = ('xpath', DOM.GLOBAL.app_head_specific.format(_("Call log")))
-        self.UTILS.element.waitForElements(header, "Call log header")
-
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Final screenshot and html dump:", x)
+        call_info_header = self.UTILS.element.getElement(DOM.Dialer.call_info_title, "Call info header")
+        self.UTILS.test.test(call_info_header.text == self.phone_number, "We are back to call info screen")

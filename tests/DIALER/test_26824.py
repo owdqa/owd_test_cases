@@ -11,7 +11,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS      = UTILS(self)
         self.dialer     = Dialer(self)
-
+        self.test_number = "123456789"
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -19,18 +19,15 @@ class test_main(GaiaTestCase):
 
     def test_run(self):
         self.dialer.launch()
+        self.dialer.enterNumber(self.test_number)
 
-        _num = "123456789"
+        add_to_contacts_button = self.UTILS.element.getElement(DOM.Dialer.add_to_contacts_button, "Add to contacts button")
+        add_to_contacts_button.tap()
 
-        self.dialer.enterNumber(_num)
+        cancel_button = self.UTILS.element.getElement(DOM.Dialer.cancel_action, "Cancel button")
+        cancel_button.tap()
 
-        x = self.UTILS.element.getElement(DOM.Dialer.add_to_contacts_button, "Add to contacts button")
-        x.tap()
-
-        x = self.UTILS.element.getElement(DOM.Dialer.call_log_numtap_cancel, "Cancel button")
-        x.tap()
-
-        x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number field", False)
-        dialer_num = x.get_attribute("value")
-        self.UTILS.test.test(str(_num) in dialer_num, "After cancelling, phone number field still contains '%s' (it was %s)." % \
-                                                       (_num,dialer_num))
+        phone_field = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number field", False)
+        dialer_num = phone_field.get_attribute("value")
+        self.UTILS.test.test(str(self.test_number) in dialer_num, "After cancelling, phone number field still contains '%s' (it was %s)." % \
+                                                       (self.test_number,dialer_num))

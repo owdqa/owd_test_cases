@@ -20,7 +20,6 @@ class test_main(GaiaTestCase):
         self.dialer = Dialer(self)
 
         self.phone_number = self.UTILS.general.get_config_variable("target_call_number", "common")
-
         self.dialer.launch()
         self.dialer.callLog_clearAll()
         self.dialer.createMultipleCallLogEntries(self.phone_number, 1)
@@ -30,7 +29,6 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
         # Open the call log and tap on the phone_number.
         self.dialer.open_call_log()
         self.dialer.callLog_call(self.phone_number)

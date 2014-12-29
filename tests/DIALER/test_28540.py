@@ -41,19 +41,14 @@ class test_main(GaiaTestCase):
         map(self._do_the_call, self.test_numbers)
 
         # Tapping call button
-        x = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call button")
-        x.tap()
+        call_button = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call button")
+        call_button.tap()
 
         # Make sure that after tapping, we get the last outgoing call in the call log
-        x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number field", False)
-        dialer_num = x.get_attribute("value")
-
-        self.UTILS.reporting.logResult('info', "Dialer num: {}".format(dialer_num))
-        self.UTILS.test.test(str(self.test_contacts[-1]["tel"]["value"]) == dialer_num,
+        dialed_num = self.marionette.execute_script("return window.wrappedJSObject.KeypadManager._phoneNumber")
+        self.UTILS.reporting.logResult(u'info', "Dialer num: {}".format(dialed_num))        
+        self.UTILS.test.test(str(self.test_contacts[-1]["tel"]["value"]) == dialed_num,
                              "After calling several contacts, if we press 'Call' button, we get the last one's phone_number")
-
-        y = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screen shot of the result of tapping call button", y)
 
     def _do_the_call(self, number):
         self.dialer.enterNumber(number, validate=False)

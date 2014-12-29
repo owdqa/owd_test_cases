@@ -55,13 +55,7 @@ class test_main(GaiaTestCase):
         warning_header = (DOM.GLOBAL.confirmation_msg_header[0],
                           DOM.GLOBAL.confirmation_msg_header[1].format(_("Airplane mode activated")))
 
-        _content = _("To make a call you need to disable airplane mode in settings.")
-        warning_content = (DOM.GLOBAL.confirmation_msg_content[0],
-                           DOM.GLOBAL.confirmation_msg_content[1].format(_content))
-
         self.UTILS.element.getElement(warning_header, "Airplane mode warning [header]")
-        self.UTILS.element.getElement(warning_content, "Airplane mode warning [content]")
-
         ok_btn = self.UTILS.element.getElement(DOM.GLOBAL.confirmation_msg_ok_btn, "OK button")
         ok_btn.tap()
 

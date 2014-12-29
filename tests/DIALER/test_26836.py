@@ -35,17 +35,15 @@ class test_main(GaiaTestCase):
         self.contacts.view_contact(self.Contact_1["name"])
 
         # Tap the phone number.
-        x = self.UTILS.element.getElement(DOM.Contacts.view_contact_tel_field, "Telephone number")
-        x.tap()
+        phone_field = self.UTILS.element.getElement(DOM.Contacts.view_contact_tel_field, "Telephone number")
+        phone_field.tap()
 
         # Switch to dialer.
-        _warn = self.UTILS.element.getElement(("xpath", "//p[contains(text(), 'airplane mode')]"),
-                                    "Airplane mode warning")
-        if _warn:
-            x = self.UTILS.debug.screenShotOnErr()
-            self.UTILS.reporting.logResult("info", "Airplane mode warning displayed: \"%s\"" % _warn.text, x)
+        warning_header = (DOM.GLOBAL.confirmation_msg_header[0],
+                          DOM.GLOBAL.confirmation_msg_header[1].format(_("Airplane mode activated")))
 
-        x = self.UTILS.element.getElement(("xpath", "//button[text()='OK']"), "OK button")
-        x.tap()
+        self.UTILS.element.getElement(warning_header, "Airplane mode warning [header]")
+        ok_btn = self.UTILS.element.getElement(DOM.GLOBAL.confirmation_msg_ok_btn, "OK button")
+        ok_btn.tap()
 
         self.UTILS.element.waitForElements(DOM.Contacts.view_details_title, "Contact details")
