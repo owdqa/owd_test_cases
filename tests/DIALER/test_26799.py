@@ -1,5 +1,11 @@
+# OWD 26799:  [DIALER] Make a call by typing a phone number of a contact  
+# ** Procedure
+#       1- Open dialer app
+#       2- Write a contact number 
+#       3- Make the call
+# ** Expected Results
+#       The call is successful and the contact name is shown
 from gaiatest import GaiaTestCase
-
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
@@ -11,35 +17,34 @@ import time
 class test_main(GaiaTestCase):
 
     def setUp(self):
-
-        # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.dialer = Dialer(self)
 
         # Get details of our test contacts.
-        self.Contact_1 = MockContact(tel={'type': 'Mobile', 'value': '665666666'})
-        self.UTILS.general.insertContact(self.Contact_1)
+        self.test_contact = MockContact(tel={'type': 'Mobile', 'value': '665666666'})
+        self.UTILS.general.insertContact(self.test_contact)
 
-        self._name = self.Contact_1["name"]
-        self.phone_number = self.Contact_1["tel"]["value"]
+        self._name = self.test_contact["name"]
+        self.phone_number = self.test_contact["tel"]["value"]
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
-        # Launch dialer app.
         self.dialer.launch()
 
         self.dialer.enterNumber(self.phone_number)
         self.dialer.call_this_number()
 
         self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator_calling)
-        self.UTILS.element.waitForElements(("xpath", DOM.Dialer.outgoing_call_numberXP.format(self._name)),
-                                    "Outgoing call found with name matching '{}'".format(self._name))
 
+        outgoing_number = self.UTILS.element.getElement(DOM.Dialer.outgoing_call_number, "Outgoing number").text.encode("utf-8")
+        self.UTILS.reporting.logResult('info', 'Outgoing number: {}'.format(outgoing_number))
+        
+        # We use 'in' since it's possible that the displayed outgoing contact name is ellipsed
+        self.UTILS.test.test(outgoing_number in self._name, "Outgoing call found with name matches '{}'".format(self._name))
         time.sleep(2)
         self.dialer.hangUp()

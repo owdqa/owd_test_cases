@@ -1,5 +1,4 @@
 from gaiatest import GaiaTestCase
-
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
@@ -8,6 +7,39 @@ from OWDTestToolkit.utils.contacts import MockContact
 
 
 class test_main(GaiaTestCase):
+
+    def setUp(self):
+
+        # Set up child objects...
+        GaiaTestCase.setUp(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.dialer = Dialer(self)
+
+        self.test_contacts = [MockContact() for i in range(3)]
+        self.test_numbers = [self.test_contacts[i]["tel"]["value"] for i in range(len(self.test_contacts))]
+
+    def tearDown(self):
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
+    def test_run(self):
+        self.dialer.launch()
+
+        # Delete all call log
+        self.dialer.callLog_clearAll()
+
+        # Call each number
+        map(self._do_the_call, self.test_numbers)
+
+        screen_1 = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot of multiple entries:", screen_1)
+
+        self.dialer.callLog_clearAll()
+
+        screen_2 = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot of multiple entries removed:", screen_2)
+
 
     def setUp(self):
         GaiaTestCase.setUp(self)
@@ -54,12 +86,12 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logResult("info", "Screenshot of multiple entries removed:", x)
 
         #Go back to dialer keypad
-        x = self.UTILS.element.getElement(DOM.Dialer.option_bar_keypad, "Keypad Option")
-        x.tap()
+        keypad_options = self.UTILS.element.getElement(DOM.Dialer.option_bar_keypad, "Keypad Option")
+        keypad_options.tap()
 
         #Tap call button
-        x = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call button")
-        x.tap()
+        call_button = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call button")
+        call_button.tap()
 
         #Assert that nothing is presented in the input area
         x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number field")

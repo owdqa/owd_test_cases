@@ -8,7 +8,7 @@
 
 # ** Expected Result
 #       The call log entry must display the ellipsis (...) and the number of grouped calls.
-#       EX: nameverylonghere... (2)
+#       EX: verylongnamehere... (2)
 
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM

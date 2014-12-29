@@ -51,17 +51,14 @@ class test_main(GaiaTestCase):
         # Launch dialer app.
         self.dialer.launch()
 
-        x = self.UTILS.element.getElement(DOM.Dialer.option_bar_keypad, "Keypad Option")
-        x.tap()
+        keypad_option = self.UTILS.element.getElement(DOM.Dialer.option_bar_keypad, "Keypad Option")
+        keypad_option.tap()
 
-        x = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call button")
-        x.tap()
+        call_button = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call button")
+        call_button.tap()
 
         # Make sure that after tapping, we get the last outgoing call in the call log
-        x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number field", False)
-        dialer_num = x.get_attribute("value")
+        phone_field = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number field", False)
+        dialer_num = phone_field.get_attribute("value")
 
-        self.assertEqual(dialer_num, "", "Nothing in the input area")
-
-        y = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screen shot of the result of tapping call button", y)
+        self.UTILS.test.test(dialer_num == "", "Nothing in the input area")
