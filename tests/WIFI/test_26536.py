@@ -41,9 +41,14 @@ class test_main(GaiaTestCase):
         self.settings.disable_hotSpot()
         self.UTILS.network.disableAllNetworkSettings()
 
+        self.apps.kill_all()
+        time.sleep(2)
+
         self.data_layer.connect_to_cell_data()
         self.settings.launch()
         self.UTILS.reporting.logResult("info", "<b>Check hotspot with DataConn on.</b>")
+        time.sleep(2)
+        self.settings.hotSpot()
         self.settings.enable_hotSpot()
 
         time.sleep(3)

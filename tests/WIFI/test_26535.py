@@ -38,6 +38,6 @@ class test_main(GaiaTestCase):
         # Tap hotspot.
         self.settings.hotSpot()
 
-        x = self.UTILS.element.getElement(DOM.Settings.hotspot_settings, "Hotspot settings")
-        self.UTILS.test.test(x.get_attribute("disabled") != "disabled",
+        hotspot_settings = self.UTILS.element.getElement(DOM.Settings.hotspot_settings, "Hotspot settings")
+        self.UTILS.test.test(hotspot_settings.is_enabled(),
                         "Hotspot settings are enabled by default (<b>meaning that 'hotspot' is off</b>).")
