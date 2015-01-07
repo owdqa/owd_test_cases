@@ -1,5 +1,5 @@
 #===============================================================================
-# 26785: Verify that an app launched from ev.me is correclty bookmarked using
+# 26785: Verify that an app launched from ev.me is correctly bookmarked using
 # the star icon available on the bottom bar
 #
 # Procedure:
@@ -61,25 +61,16 @@ class test_main(GaiaTestCase):
         self.UTILS.test.test(content, "Game content found")
 
         self.marionette.switch_to_frame()
-        self.UTILS.element.waitForElements(DOM.EME.footer_navigation_bar, "Footer navigation bar", timeout=30)
-        bar = self.UTILS.element.getElement(DOM.EME.footer_navigation_bar, "Footer navigation bar")
-        bar.tap()
-        bookmark_btn = self.UTILS.element.getElement(DOM.EME.launched_button_bookmark, "Button bar - bookmark button")
-        bookmark_btn.tap()
-
-        self.marionette.switch_to_frame()
-        confirm_btn = self.UTILS.element.getElement(DOM.EME.bookmark_app_btn, "Confirm bookmark app button")
-        confirm_btn.tap()
-
-        self.UTILS.iframe.switchToFrame(*DOM.EME.bookmark_frame_locator)
-        time.sleep(4)
-
-        url = self.UTILS.element.getElement(DOM.EME.bookmark_url, "Bookmark_url").get_attribute("value")
-        self.UTILS.reporting.debug("Application '{}' URL: {}".format(self.app_name, url))
-        add_btn = self.UTILS.element.getElement(DOM.EME.add_bookmark_btn, "Add bookmark to Home Screen Button")
+        menu = self.UTILS.element.getElement(DOM.EME.launched_menu_button, "Menu button")
+        menu.tap()
+        add_btn = self.UTILS.element.getElement(DOM.EME.launched_add_to_homescreen, "Add to homescreen button")
         add_btn.tap()
+        self.UTILS.iframe.switchToFrame(*DOM.EME.bookmark_frame_locator)
+        done_btn = self.UTILS.element.getElement(DOM.EME.add_to_homescreen_done_btn, "Add Done button")
+        done_btn.tap()
 
         self.apps.kill_all()
+        time.sleep(2)
 
         icon = self.UTILS.app.findAppIcon(self.app_name)
         self.UTILS.test.test(icon, "Icon for application {} was found".format(self.app_name))
