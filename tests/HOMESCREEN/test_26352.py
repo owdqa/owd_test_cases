@@ -88,9 +88,8 @@ class test_main(GaiaTestCase):
 
         self.UTILS.iframe.switchToFrame(*DOM.EME.bookmark_frame_locator)
         time.sleep(4)
-        url = self.UTILS.element.getElement(DOM.EME.bookmark_url, "Bookmark_url").get_attribute("value")
-        self.UTILS.reporting.debug("**** URL: {}".format(url))
-        add_btn = self.UTILS.element.getElement(DOM.EME.add_bookmark_btn, "Add bookmark to Home Screen Button")
+        add_btn = self.UTILS.element.getElement(DOM.EME.add_to_homescreen_done_btn,
+                                                "Add bookmark to Home Screen Button")
         add_btn.tap()
 
         self.UTILS.test.test(added, "Application '{}' is added to the homescreen.".format(app_name), True)
@@ -102,7 +101,9 @@ class test_main(GaiaTestCase):
         # Give it 10 seconds to start up, switch to the frame for it and grab a screenshot.
         time.sleep(3)
         self.marionette.switch_to_frame()
-        self.UTILS.iframe.switchToFrame("src", url)
+        iframe = self.marionette.find_element('css selector', 'iframe.browser:not(.hidden)')
+        self.marionette.switch_to_frame(iframe)
 
-        x = self.UTILS.debug.screenShot(app_name)
-        self.UTILS.reporting.logResult("info", "NOTE: For a screenshot of the game running, please see this: " + x)
+        screenshot = self.UTILS.debug.screenShot(app_name)
+        self.UTILS.reporting.logResult("info", "NOTE: For a screenshot of the game running, please see this: " +
+                                       screenshot)

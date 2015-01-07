@@ -77,7 +77,7 @@
     "26761": "Users can navigate to the landing page from the icon grid",
     "26768": "Verify that there is an icon to launch the browser application",
     "26770": "launch the everything.me page and click on the first category displayed",
-    "26771": "Launch a installation doing a long-tap on any app shown by everything.me and press Yes button",
+    "26771": "Launch an installation doing a long-tap on any app shown by everything.me and press Yes button",
     "26772": "Verify that if the user tries to install an already installed application,she is notified about it",
     "26773": "Verify that the user can uninstall a everything.me app through the grid edit mode",
     "26774": "Verify that user can click on 'Add more categories' in everything.me grid so I am shown again the list and can add more categories",

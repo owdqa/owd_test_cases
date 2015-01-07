@@ -67,7 +67,8 @@ class test_main(GaiaTestCase):
 
         self.UTILS.iframe.switchToFrame(*DOM.EME.bookmark_frame_locator)
         time.sleep(2)
-        add_btn = self.UTILS.element.getElement(DOM.EME.add_bookmark_btn, "Add bookmark to Home Screen Button")
+        add_btn = self.UTILS.element.getElement(DOM.EME.add_to_homescreen_done_btn,
+                                                "Add bookmark to Home Screen Button")
         add_btn.tap()
         time.sleep(4)
 

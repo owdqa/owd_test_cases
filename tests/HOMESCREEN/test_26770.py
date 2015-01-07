@@ -10,13 +10,12 @@
 # applications related with that category are shown
 #===============================================================================
 
-
+import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.everythingme import EverythingMe
 from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit import DOM
-import time
 
 
 class test_main(GaiaTestCase):
@@ -50,10 +49,10 @@ class test_main(GaiaTestCase):
         for i in range(3):
             self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
             self.EME.pick_group(self.ids[i])
-            self.UTILS.iframe.switchToFrame(*DOM.EME.frame_locator)
+            time.sleep(2)
+            self.UTILS.iframe.switch_to_frame(*DOM.EME.frame_locator)
             items = self.UTILS.element.getElements(DOM.EME.apps_not_installed, "Getting available applications")
             group_name = self.UTILS.element.getElement(DOM.EME.bookmark_group_name, "Bookmark group name")
             self.UTILS.test.test(items, "There are {} applications available for group {}".\
                                         format(len(items), group_name.text))
-            btn = self.UTILS.element.getElement(DOM.EME.bookmark_close, "Bookmarks Close button")
-            btn.tap()
+            self.marionette.find_element('css selector', 'gaia-header[action=close]').tap(25, 25)
