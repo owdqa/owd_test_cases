@@ -8,11 +8,12 @@
 #       3. Open settings contact list
 #       4. Press the toggle to delete all facebook contacts
 #       5. Press Remove
-#   
+#
 # ** Expected Results
-# FB contacts are deleted. If a contact was linked to one of Facebook. 
+# FB contacts are deleted. If a contact was linked to one of Facebook.
 # The contact is displayed as if you had unlinked
 
+import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.apps.contacts import Contacts
@@ -23,8 +24,11 @@ from OWDTestToolkit.utils.contacts import MockContact
 
 class test_main(GaiaTestCase):
 
-    def setUp(self):
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
 
+    def setUp(self):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
