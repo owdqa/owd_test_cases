@@ -19,8 +19,8 @@
 # imported into the address book
 #===============================================================================
 
+import time
 from gaiatest import GaiaTestCase
-
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
@@ -34,8 +34,6 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-
-        # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
@@ -46,7 +44,6 @@ class test_main(GaiaTestCase):
 
         self.data_layer.connect_to_wifi()
 
-        # Create test contacts.
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
 
@@ -65,13 +62,10 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, via_root_frame=False)
         self.contacts.import_all()
 
-        self.wait_for_element_displayed(DOM.Contacts.import_contacts_header[0], DOM.Contacts.import_contacts_header[1],
-                                        timeout=10)
-
-        self.wait_for_element_displayed(DOM.Contacts.import_contacts_back[0], DOM.Contacts.import_contacts_back[1],
-                                        timeout=1)
-        back = self.marionette.find_element(*DOM.Contacts.import_contacts_back)
-        self.UTILS.element.simulateClick(back)
+        import_header = self.UTILS.element.getElement(
+            DOM.Contacts.import_contacts_header, "Import Contacts Header", True, 10, True)
+        time.sleep(1)
+        import_header.tap(25, 25)
 
         self.wait_for_element_displayed(DOM.Contacts.settings_done_button[0], DOM.Contacts.settings_done_button[1],
                                         timeout=5)
@@ -86,7 +80,7 @@ class test_main(GaiaTestCase):
 
         # ... and the hotmail contacts ...
         hotmail_imported = (DOM.Contacts.view_all_contact_specific_contact[0],
-                                DOM.Contacts.view_all_contact_specific_contact[1].format("roy"))
+                            DOM.Contacts.view_all_contact_specific_contact[1].format("roy"))
         contacts = self.UTILS.element.getElements(hotmail_imported, "Gmail imported contacts")
         self.UTILS.test.test(len(contacts) == self.number_of_hotmail_contacts, "All gmail contacts has been imported")
 

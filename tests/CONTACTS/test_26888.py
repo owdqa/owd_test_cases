@@ -47,8 +47,7 @@ class test_main(GaiaTestCase):
         fav_btn.tap()
 
         # Go back to all contacts list
-        back_btn = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
-        back_btn.tap()
+        self.contacts.go_back_from_contact_details()
 
         # Check the contact is in the favourite list
         string = self.contact_list[0]['givenName'] + self.contact_list[0]['familyName']

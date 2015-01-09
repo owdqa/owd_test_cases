@@ -26,13 +26,10 @@ class test_main(GaiaTestCase):
     remove_fav_str = "Remove as Favorite"
 
     def setUp(self):
-
-        # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
 
-        # Prepare the contact.
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
 
@@ -41,8 +38,6 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
-        # Launch contacts app.
         self.contacts.launch()
 
         # View the details of our contact and make him a favourite.
@@ -50,15 +45,13 @@ class test_main(GaiaTestCase):
         self.contacts.view_contact(self.contact['name'])
 
         fav_btn = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
-        self.UTILS.test.test(fav_btn.text == self.add_fav_str, "Toggle favourite button text is '{}'.".\
-                        format(self.add_fav_str))
+        self.UTILS.test.test(fav_btn.text == self.add_fav_str, "Toggle favourite button text is '{}'.".
+                             format(self.add_fav_str))
         fav_btn.tap()
         fav_btn = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (after tap)")
-        self.UTILS.test.test(fav_btn.text == self.remove_fav_str, "Toggle favourite button text is '{}'.".\
-                        format(self.remove_fav_str))
-
-        back_btn = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
-        back_btn.tap()
+        self.UTILS.test.test(fav_btn.text == self.remove_fav_str, "Toggle favourite button text is '{}'.".
+                             format(self.remove_fav_str))
+        self.contacts.go_back_from_contact_details()
 
         string = self.contact['givenName'] + self.contact['familyName']
         favs = ("xpath", DOM.Contacts.favourites_list_xpath.format(string.upper()))
@@ -71,20 +64,15 @@ class test_main(GaiaTestCase):
         self.contacts.view_contact(self.contact['name'])
 
         fav_btn = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
-        self.UTILS.test.test(fav_btn.text == self.remove_fav_str, "Toggle favourite button text is '{}'.".\
-                        format(self.remove_fav_str))
+        self.UTILS.test.test(fav_btn.text == self.remove_fav_str, "Toggle favourite button text is '{}'.".
+                             format(self.remove_fav_str))
         fav_btn.tap()
         fav_btn = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (after tap)")
-        self.UTILS.test.test(fav_btn.text == self.add_fav_str, "Toggle favourite button text is '{}'.".\
-                        format(self.add_fav_str))
-
-        back_btn = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
-        back_btn.tap()
+        self.UTILS.test.test(fav_btn.text == self.add_fav_str, "Toggle favourite button text is '{}'.".
+                             format(self.add_fav_str))
+        self.contacts.go_back_from_contact_details()
 
         time.sleep(1)
         string = self.contact['givenName'] + " " + self.contact['familyName']
         favs = ("xpath", DOM.Contacts.favourites_list_xpath.format(string.upper()))
         self.UTILS.element.waitForNotElements(favs, "'" + self.contact['name'] + "' in the favourites list")
-
-        screenshot = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot at this point", screenshot)

@@ -51,8 +51,7 @@ class test_main(GaiaTestCase):
 
         # Go back to view all contacts and check this contact is listed in the
         # 'favourites' section.
-        back_btn = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
-        back_btn.tap()
+        self.contacts.go_back_from_contact_details()
 
         # Check our test contact is listed in the group favourites.
         string = self.contact['givenName'] + self.contact['familyName']
@@ -66,17 +65,16 @@ class test_main(GaiaTestCase):
         # Press the favourites button.
         fav_btn = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Favourite toggle button")
         self.UTILS.test.test(fav_btn.text == "Remove as Favorite",
-                        "Favourite toggle button says 'Remove as Favorite' before contact is removed as a favorite.")
+                             "Favourite toggle button says 'Remove as Favorite' before contact is removed as a favorite.")
         fav_btn.tap()
         time.sleep(2)
         fav_btn = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Favourite toggle button")
         self.UTILS.test.test(fav_btn.text == "Add as Favorite",
-                        "Favourite toggle button says 'Add as Favorite' after contact is removed as a favorite.")
+                             "Favourite toggle button says 'Add as Favorite' after contact is removed as a favorite.")
 
         # Go back to view all contacts and check this contact is listed in the
         # 'favourites' section.
-        back_btn = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
-        back_btn.tap()
+        self.contacts.go_back_from_contact_details()
 
         # Check our test contact is no longer listed in the group favourites.
         string = self.contact['givenName'] + self.contact['familyName']

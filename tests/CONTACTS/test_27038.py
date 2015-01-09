@@ -37,8 +37,9 @@ class test_main(GaiaTestCase):
 
         # Cancel the login
         self.marionette.switch_to_frame()
-        cancel = self.UTILS.element.getElements(DOM.Contacts.import_cancel_login, "Cancel icon")
-        cancel[-1].tap()
+        cancel = self.UTILS.element.getElement(('xpath', '//h1[contains(text(), "Google")]/..'), "Cancel icon")
+        # TODO: Change this when ShadowDOM marionette bug fixed (Bug 1061698)
+        cancel.tap(25, 25)
 
         self.marionette.switch_to_frame()
         self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@{}, '{}')]".\

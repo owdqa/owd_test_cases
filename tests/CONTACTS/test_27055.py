@@ -20,8 +20,8 @@
 # The contacts are shown fine along with the existing contacts
 #===============================================================================
 
+import time
 from gaiatest import GaiaTestCase
-
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
@@ -78,13 +78,10 @@ class test_main(GaiaTestCase):
                                        format(DOM.Contacts.import_import_btn[1]))
 
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
-        self.wait_for_element_displayed(DOM.Contacts.import_contacts_header[0], DOM.Contacts.import_contacts_header[1],
-                                        timeout=10)
-
-        self.wait_for_element_displayed(DOM.Contacts.import_contacts_back[0], DOM.Contacts.import_contacts_back[1],
-                                        timeout=1)
-        back = self.marionette.find_element(*DOM.Contacts.import_contacts_back)
-        self.UTILS.element.simulateClick(back)
+        import_header = self.UTILS.element.getElement(DOM.Contacts.import_contacts_header, "Import contacts header")
+        time.sleep(1)
+        # TODO: Change this when ShadowDOM marionette bug fixed (Bug 1061698)
+        import_header.tap(25, 25)
 
         self.wait_for_element_displayed(DOM.Contacts.settings_done_button[0], DOM.Contacts.settings_done_button[1],
                                         timeout=5)

@@ -65,25 +65,24 @@ class test_main(GaiaTestCase):
                         format(diff))
 
         # Save the changes.
-        x = self.UTILS.element.getElement(DOM.Contacts.edit_update_button, "Update button")
-        x.tap()
+        update_btn = self.UTILS.element.getElement(DOM.Contacts.edit_update_button, "Update button")
+        update_btn.tap()
 
         # Back to 'view all' screen.
-        x = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
-        x.tap()
+        self.contacts.go_back_from_contact_details()
 
         # View the contact again.
         self.contacts.view_contact(self.contact['name'])
 
         # Count the email fields.
-        x = self.UTILS.element.getElements(DOM.Contacts.email_address_list, "Email addresses", False)
+        emails = self.UTILS.element.getElements(DOM.Contacts.email_address_list, "Email addresses", False)
         view_count = 0
         email1_found = False
         email2_found = False
-        for i in x:
-            if "email-details-template-" in i.get_attribute("id"):
+        for mail in emails:
+            if "email-details-template-" in mail.get_attribute("id"):
                 view_count = view_count + 1
-                btn_name = i.find_element("tag name", "button").text
+                btn_name = mail.find_element("tag name", "button").text
 
                 self.UTILS.reporting.logResult("info", "    - " + btn_name)
                 if btn_name == "one@myemail.com":

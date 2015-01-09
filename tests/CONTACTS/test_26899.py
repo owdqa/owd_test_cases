@@ -1,5 +1,4 @@
 from gaiatest import GaiaTestCase
-
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
@@ -9,8 +8,6 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-
-        # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
@@ -24,7 +21,6 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
         # Launch contacts app.
         self.contacts.launch()
 
@@ -42,13 +38,10 @@ class test_main(GaiaTestCase):
         cancel_deletion.tap()
 
         # Cancel contact edition
-        cancel_edition = self.UTILS.element.getElement(DOM.Contacts.edit_cancel_button, "Cancel edition")
-        self.UTILS.element.simulateClick(cancel_edition)
+        self.contacts.press_cancel_edit_button()
 
         # Go back to contacts start page
-    
-        back = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
-        self.UTILS.element.simulateClick(back)
+        self.contacts.go_back_from_contact_details()
 
         # Now actually delete our contact.
         self.contacts.delete_contact(self.contact['name'])

@@ -54,8 +54,10 @@ class test_main(GaiaTestCase):
         self.marionette.switch_to_frame()
         self.UTILS.element.waitForElements(DOM.Contacts.gmail_frame, "Gmail login iframe")
         time.sleep(1)
-        cancel_btn = self.UTILS.element.getElement(DOM.Contacts.import_cancel_login, "Cancel button")
-        cancel_btn.tap()
+        
+        cancel = self.UTILS.element.getElement(('xpath', '//h1[contains(text(), "Google")]/..'), "Cancel icon")
+        # TODO: Change this when ShadowDOM marionette bug fixed (Bug 1061698)
+        cancel.tap(25, 25)
 
         self.UTILS.reporting.logResult("info", "Check that the gmail login frame is no longer present ...")
         self.marionette.switch_to_frame()

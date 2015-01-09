@@ -20,7 +20,6 @@
 
 import time
 from gaiatest import GaiaTestCase
-
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
@@ -35,8 +34,6 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-
-        # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
@@ -45,19 +42,15 @@ class test_main(GaiaTestCase):
         self.hotmail_user = self.UTILS.general.get_config_variable("hotmail_2_email", "common")
         self.hotmail_passwd = self.UTILS.general.get_config_variable("hotmail_2_pass", "common")
 
-        # Create our test contacts.
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
+        self.connect_to_network()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
-        # Set up to use data connection.
-        self.connect_to_network()
-
         self.contacts.launch()
 
         contact_list = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
@@ -68,25 +61,33 @@ class test_main(GaiaTestCase):
             self.UTILS.reporting.logResult(False, "Cannot continue past this point without importing the contacts.")
             return
 
-        self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, via_root_frame=False)
+        # self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, via_root_frame=False)
+        frame = self.marionette.find_element(*('id', 'fb-extensions'))
+        self.marionette.switch_to_frame(frame)
+
         self.contacts.import_toggle_select_contact(1)
-
         time.sleep(1)
-        self.wait_for_element_displayed(*DOM.Contacts.import_import_btn, timeout=10)
 
-        self.wait_for_element_displayed(*DOM.Contacts.import_close_icon, timeout=1)
-        close = self.marionette.find_element(*DOM.Contacts.import_close_icon)
-        self.UTILS.element.simulateClick(close)
+        header_close = self.UTILS.element.getElement(DOM.Contacts.hotmail_header, "Outlook header")
+        time.sleep(1)
+        self.UTILS.element.simulateClickAtPos(header_close, 25, 25)
 
-        self.UTILS.iframe.switch_to_frame(*DOM.Contacts.frame_locator)
-        back = self.UTILS.element.getElement(DOM.Contacts.import_contacts_back, "Import Back button")
-        back.tap()
-        time.sleep(2)
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+        screenshot = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult('info', "Screenshot yeah", screenshot)
+
+        self.wait_for_element_displayed(*DOM.Contacts.import_contacts_header)
+        import_header = self.marionette.find_element(*DOM.Contacts.import_contacts_header)
+        time.sleep(1)
+        import_header.tap(25, 25)
+
         done = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Settings Done button")
+        time.sleep(1)
         done.tap()
+
         contact_list = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
         contacts_after = len(contact_list)
 
         self.UTILS.test.test(contacts_after == contacts_before,
-                             "No more contacts were imported ({} before and {} after)."\
+                             "No more contacts were imported ({} before and {} after)."
                              .format(contacts_after, contacts_before))

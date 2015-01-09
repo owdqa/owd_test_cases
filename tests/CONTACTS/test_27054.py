@@ -32,8 +32,6 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-
-        # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
@@ -49,7 +47,6 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
         self.contacts.launch()
 
         login_result = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)
@@ -70,22 +67,21 @@ class test_main(GaiaTestCase):
 
         self.contacts.import_toggle_select_contact(cont_number)
 
-        self.marionette.execute_script("document.getElementById('{}').click()".\
+        self.marionette.execute_script("document.getElementById('{}').click()".
                                        format(DOM.Contacts.import_import_btn[1]))
 
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
-        self.UTILS.element.waitForElements(DOM.Contacts.import_contacts_header, "Import contacts header", True, 10, True)
-
-        back = self.UTILS.element.getElement(DOM.Contacts.import_contacts_back, "Back button", True, 10, True)
-        self.UTILS.element.simulateClick(back)
+        import_header = self.UTILS.element.getElement(
+            DOM.Contacts.import_contacts_header, "Import Contacts Header", True, 10, True)
+        import_header.tap(25, 25)
 
         done = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Done button", True, 10, True)
         self.UTILS.element.simulateClick(done)
 
         # Check our contact is in the list.
         hotmail_imported = (DOM.Contacts.view_all_contact_specific_contact[0],
-                                DOM.Contacts.view_all_contact_specific_contact[1].format("roy"))
+                            DOM.Contacts.view_all_contact_specific_contact[1].format("roy"))
 
         self.UTILS.element.waitForElements(hotmail_imported, "Hotmail imported contact")
 

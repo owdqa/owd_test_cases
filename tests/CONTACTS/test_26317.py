@@ -1,5 +1,4 @@
 from gaiatest import GaiaTestCase
-
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
@@ -62,9 +61,9 @@ class test_main(GaiaTestCase):
         self.contacts.view_contact(self.contact['name'])
 
         # Click the 2nd email button
-        emailBTN = self.UTILS.element.getElement(("id", DOM.Contacts.email_button_spec_id.format(1)),
+        email_btn = self.UTILS.element.getElement(("id", DOM.Contacts.email_button_spec_id.format(1)),
                                         "2nd send Email address in for this contact")
-        emailBTN.tap()
+        email_btn.tap()
 
         # Switch to email frame.
         time.sleep(1)
@@ -81,5 +80,4 @@ class test_main(GaiaTestCase):
         self.UTILS.general.typeThis(DOM.Email.compose_msg, "Message field", self._email_message, True, False, False)
 
         # Send the message.
-        # self.email.send_the_email_and_switch_frame(self.contact['name'], DOM.Contacts.frame_locator)
-        self.email.send_the_email()
+        self.email.send_the_email_and_switch_frame(self.contact['name'], DOM.Contacts.frame_locator)
