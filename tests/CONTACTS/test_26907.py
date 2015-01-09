@@ -107,7 +107,7 @@ class test_main(GaiaTestCase):
     def toggle_reset_button(self, element):
 
         # Press reset button on the required fields ...
-        reset_btn = DOM.Contacts.reset_field_xpath
+        reset_btn = DOM.Contacts.reset_field_css
 
         if element == "photo":
             x = self.UTILS.element.getElement(("xpath", reset_btn.format("thumbnail-action")), "Photo reset button")
