@@ -110,19 +110,19 @@ class test_main(GaiaTestCase):
         reset_btn = DOM.Contacts.reset_field_css
 
         if element == "photo":
-            x = self.UTILS.element.getElement(("css", reset_btn.format("thumbnail-action")), "Photo reset button")
+            x = self.UTILS.element.getElement(("css selector", reset_btn.format("thumbnail-action")), "Photo reset button")
             x.tap()
 
         if element == "phone":
-            x = self.UTILS.element.getElement(("css", reset_btn.format("add-phone-0")), "Phone reset button")
+            x = self.UTILS.element.getElement(("css selector", reset_btn.format("add-phone-0")), "Phone reset button")
             x.tap()
 
         if element == "email":
-            x = self.UTILS.element.getElement(("css", reset_btn.format("add-email-0")), "Email reset button")
+            x = self.UTILS.element.getElement(("css selector", reset_btn.format("add-email-0")), "Email reset button")
             x.tap()
 
         if element == "address":
-            x = self.UTILS.element.getElement(("css", reset_btn.format("add-address-0")), "Address reset button")
+            x = self.UTILS.element.getElement(("css selector", reset_btn.format("add-address-0")), "Address reset button")
             x.tap()
 
     def check_photo_tap(self, editable):
