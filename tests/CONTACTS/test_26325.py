@@ -1,5 +1,5 @@
+import time
 from gaiatest import GaiaTestCase
-
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
@@ -35,6 +35,10 @@ class test_main(GaiaTestCase):
         sms_button.tap()
 
         self.apps.switch_to_displayed_app()
+        time.sleep(10)
+
+        self.wait_for_condition(lambda m: m.find_element(*DOM.Messages.target_numbers).text ==
+                                self.contact_1['name'], timeout=10, message="To field is already prepulated with our contact info")
 
         # Create SMS.
         self.messages.enterSMSMsg(self.test_msg)

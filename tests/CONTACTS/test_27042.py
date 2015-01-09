@@ -50,10 +50,6 @@ class test_main(GaiaTestCase):
         self.marionette.execute_script("document.getElementById('{}').click()".\
                                        format(DOM.Contacts.import_select_all[1]))
         time.sleep(1)
-
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot and details", x)
-
         x = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
         self.UTILS.test.test(x.get_attribute("disabled") != "true", "Import button is enabled.")
 
@@ -61,10 +57,6 @@ class test_main(GaiaTestCase):
         self.marionette.execute_script("document.getElementById('{}').click()".\
                                        format(DOM.Contacts.import_desel_all[1]))
         time.sleep(1)
-
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot and details", x)
-
         x = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
         self.UTILS.test.test(x.get_attribute("disabled") == "true", "Import button is disabled.")
 
@@ -77,9 +69,5 @@ class test_main(GaiaTestCase):
         self.marionette.execute_script("document.getElementById('{}').click()".\
                                        format(DOM.Contacts.import_desel_all[1]))
         time.sleep(1)
-
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot and details", x)
-
         x = self.UTILS.element.getElement(DOM.Contacts.import_import_btn, "Import button")
         self.UTILS.test.test(x.get_attribute("disabled") == "true", "Import button is disabled.")

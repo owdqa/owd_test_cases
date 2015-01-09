@@ -25,17 +25,13 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-
-        # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
 
-        # Get details of our test contacts.
         self.contact = MockContact(tel={'type': 'Mobile', 'value': '123111111'})
         self.contact2 = MockContact(tel={'type': 'Mobile', 'value': '123222222'})
 
-        # Make sure we can find both of them with a search.
         self.UTILS.general.insertContact(self.contact2)
 
     def tearDown(self):

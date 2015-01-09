@@ -107,22 +107,22 @@ class test_main(GaiaTestCase):
     def toggle_reset_button(self, element):
 
         # Press reset button on the required fields ...
-        reset_btn = DOM.Contacts.reset_field_xpath
+        reset_btn = DOM.Contacts.reset_field_css
 
         if element == "photo":
-            x = self.UTILS.element.getElement(("xpath", reset_btn.format("thumbnail-action")), "Photo reset button")
+            x = self.UTILS.element.getElement(("css selector", reset_btn.format("thumbnail-action")), "Photo reset button")
             x.tap()
 
         if element == "phone":
-            x = self.UTILS.element.getElement(("xpath", reset_btn.format("add-phone-0")), "Phone reset button")
+            x = self.UTILS.element.getElement(("css selector", reset_btn.format("add-phone-0")), "Phone reset button")
             x.tap()
 
         if element == "email":
-            x = self.UTILS.element.getElement(("xpath", reset_btn.format("add-email-0")), "Email reset button")
+            x = self.UTILS.element.getElement(("css selector", reset_btn.format("add-email-0")), "Email reset button")
             x.tap()
 
         if element == "address":
-            x = self.UTILS.element.getElement(("xpath", reset_btn.format("add-address-0")), "Address reset button")
+            x = self.UTILS.element.getElement(("css selector", reset_btn.format("add-address-0")), "Address reset button")
             x.tap()
 
     def check_photo_tap(self, editable):

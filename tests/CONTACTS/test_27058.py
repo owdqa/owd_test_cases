@@ -24,8 +24,8 @@
 # All fields imported from hotmail should also be editable.
 #===============================================================================
 
+import time
 from gaiatest import GaiaTestCase
-
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
@@ -51,16 +51,14 @@ class test_main(GaiaTestCase):
         self.hotmail_passwd = self.UTILS.general.get_config_variable("hotmail_2_pass", "common")
 
         self.contact = MockContact()
+        # Set up to use data connection.
+        self.connect_to_network()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
-        # Set up to use data connection.
-        self.connect_to_network()
-
         self.contacts.launch()
 
         result = self.contacts.import_hotmail_login(self.hotmail_user, self.hotmail_passwd)
@@ -75,16 +73,14 @@ class test_main(GaiaTestCase):
         self.UTILS.element.simulateClick(import_btn)
 
         self.UTILS.iframe.switch_to_frame(*DOM.Contacts.frame_locator)
-        self.wait_for_element_displayed(*DOM.Contacts.import_contacts_header, timeout=10)
-
-        self.wait_for_element_displayed(*DOM.Contacts.import_contacts_back, timeout=1)
-        back = self.marionette.find_element(*DOM.Contacts.import_contacts_back)
-        self.UTILS.element.simulateClick(back)
+        import_header = self.UTILS.element.getElement(
+            DOM.Contacts.import_contacts_header, "Import Contacts Header", True, 10, True)
+        time.sleep(1)
+        import_header.tap(25, 25)
 
         done = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Settings done button")
         self.UTILS.element.simulateClick(done)
 
         contact_list = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")[0]
         self.contacts.edit_contact(contact_list.text, self.contact)
-
         self.contacts.check_view_contact_details(self.contact)

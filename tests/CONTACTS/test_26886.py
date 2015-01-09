@@ -52,8 +52,7 @@ class test_main(GaiaTestCase):
 
         # Go back to view all contacts and check this contact is listed in the
         # 'favourites' section.
-        back_btn = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
-        back_btn.tap()
+        self.contacts.go_back_from_contact_details()
 
         string = self.contact['givenName'] + self.contact['familyName']
         favs = ("xpath", DOM.Contacts.favourites_list_xpath.format(string.upper()))

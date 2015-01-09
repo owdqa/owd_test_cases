@@ -24,37 +24,20 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
-    def test_run(self):
+    def toggle_fav(self, contact_name):
+        self.contacts.view_contact(contact_name)
+        fav_btn = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
+        fav_btn.tap()
+        self.contacts.go_back_from_contact_details()
 
-        # Launch contacts app.
+    def test_run(self):
         self.contacts.launch()
 
         # View the details of our contact and make him a favourite.
         self.UTILS.reporting.logResult("info", "<b>Setting up a contact in favourites ...</b>")
-        self.contacts.view_contact(self.contact['name'])
-
-        x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
-        x.tap()
-
-        x = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
-        x.tap()
-
+        self.toggle_fav(self.contact["name"])
         self.UTILS.element.waitForElements(DOM.Contacts.favourites_section, "Favourites section")
 
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot at this point", x)
-
-        self.UTILS.reporting.logResult("info", "<b>removing contact from favourites ...</b>")
-        self.contacts.view_contact(self.contact['name'])
-
-        x = self.UTILS.element.getElement(DOM.Contacts.favourite_button, "Toggle favourite button (before tap)")
-        x.tap()
-
-        x = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
-        x.tap()
-
-        time.sleep(1)
+        self.UTILS.reporting.logResult("info", "<b>Removing contact from favourites ...</b>")
+        self.toggle_fav(self.contact['name'])
         self.UTILS.element.waitForNotElements(DOM.Contacts.favourites_section, "Favourites section")
-
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot at this point", x)
