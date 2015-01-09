@@ -32,7 +32,7 @@ class field_remove_toggle(GaiaTestCase):
         be the first one etc... (defaults to zero in case there's only one item).
         """
 
-        del_icon_locator = ("xpath", DOM.Contacts.reset_field_css.format(field_definition))
+        del_icon_locator = ("css", DOM.Contacts.reset_field_css.format(field_definition))
 
         if field_definition == "thumbnail-action":
 
