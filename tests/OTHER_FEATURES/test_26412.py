@@ -59,9 +59,6 @@ class test_main(GaiaTestCase):
             self.UTILS.iframe.switchToFrame(*DOM.Settings.frame_locator)
             self.settings.connect_to_wifi(self.wifi_name, self.wifi_pass)
             self.marionette.switch_to_frame()
-            time.sleep(5)
-            self.UTILS.debug.screenShot('rootframe')
-            self.UTILS.debug.save_page_html('/tmp/tests/details/rootframe.html')
         except:
             pass
 

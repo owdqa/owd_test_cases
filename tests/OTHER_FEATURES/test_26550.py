@@ -52,8 +52,6 @@ class test_main(GaiaTestCase):
 
         self.marionette.switch_to_frame()
         time.sleep(5)
-        self.UTILS.debug.screenShot('rootframe2')
-        self.UTILS.debug.save_page_html('/tmp/tests/details/rootframe2.html')
         self.UTILS.element.waitForElements(DOM.Statusbar.wifi, "Wifi icon in statusbar", True, 20, False)
 
         # Disable wifi mode.
