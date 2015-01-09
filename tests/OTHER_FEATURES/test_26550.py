@@ -14,6 +14,7 @@
 # the icon indicating the Wi-Fi connection must disappear of the display.
 #===============================================================================
 
+import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
@@ -22,8 +23,11 @@ from OWDTestToolkit.apps.settings import Settings
 
 class test_main(GaiaTestCase):
 
-    def setUp(self):
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
 
+    def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
@@ -37,10 +41,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
-        # Data conn icon is not in status bar yet.
         self.data_layer.disable_wifi()
-
         self.UTILS.element.waitForNotElements(DOM.Statusbar.wifi, "Wifi icon in statusbar")
         self.UTILS.test.test(self.UTILS.network.is_network_type_enabled("wifi") == False,
                          "Wifi is disabled before we start this test.")
@@ -50,6 +51,7 @@ class test_main(GaiaTestCase):
         self.settings.connect_to_wifi(self.wifi_name, self.wifi_pass)
 
         self.marionette.switch_to_frame()
+        time.sleep(5)
         self.UTILS.element.waitForElements(DOM.Statusbar.wifi, "Wifi icon in statusbar", True, 20, False)
 
         # Disable wifi mode.
