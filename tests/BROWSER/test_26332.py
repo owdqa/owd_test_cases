@@ -37,3 +37,5 @@ class test_main(GaiaTestCase):
 
         # Open the browser app.
         self.browser.launch()
+        # Open our URL.
+        self.browser.open_url(self.testURL)
