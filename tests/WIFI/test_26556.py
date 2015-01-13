@@ -46,9 +46,11 @@ class test_main(GaiaTestCase):
         # Open the browser app.
         self.browser.launch()
         self.browser.open_url(self.url1)
-        self.UTILS.test.test(self.browser.check_page_loaded(self.url1), "{} successfully loaded".format(self.url1))
+        self.marionette.switch_to_frame()
+        self.browser.wait_for_page_to_load()
+        self.UTILS.test.test(self.url1 in self.browser.loaded_url(), "{} successfully loaded".format(self.url1))
 
-        self.device.lock()
+        self.device.turn_screen_off()
 
         screenshot = self.UTILS.debug.screenShotOnErr()
         self.UTILS.reporting.logResult("info", "Srceenshot of locked screen:", screenshot)
@@ -56,6 +58,7 @@ class test_main(GaiaTestCase):
         time.sleep(3)
         self.device.unlock()
 
-        self.UTILS.iframe.switchToFrame(*DOM.Browser.frame_locator)
         self.browser.open_url(self.url2)
-        self.UTILS.test.test(self.browser.check_page_loaded(self.url2), "{} successfully loaded".format(self.url2))
+        self.marionette.switch_to_frame()
+        self.browser.wait_for_page_to_load()
+        self.UTILS.test.test(self.url2 in self.browser.loaded_url(), "{} successfully loaded".format(self.url2))

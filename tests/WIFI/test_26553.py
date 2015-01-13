@@ -39,6 +39,8 @@ class test_main(GaiaTestCase):
         self.num = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.cp_incoming_number = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
         self.data_layer.delete_all_sms()
+        self.url1 = "www.google.com"
+        self.url2 = "www.wikipedia.org"
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -51,7 +53,7 @@ class test_main(GaiaTestCase):
         self.browser.launch()
 
         # Open our URL.
-        self.browser.open_url("www.google.com")
+        self.browser.open_url(self.url1)
 
         test_msg = "This is a test message sent at {} while connected to a wifi".format(time.time())
         self.UTILS.messages.create_incoming_sms(self.num, test_msg)
@@ -60,5 +62,7 @@ class test_main(GaiaTestCase):
         self.messages.check_last_message_contents(test_msg)
 
         self.browser.launch()
-        self.browser.open_url("www.wikipedia.com")
-        self.UTILS.test.test(self.browser.check_page_loaded("www.wikipedia.com"), "Web page loaded correctly.")
+        self.browser.open_url(self.url2)
+        self.marionette.switch_to_frame()
+        self.browser.wait_for_page_to_load()
+        self.UTILS.test.test(self.url2 in self.browser.loaded_url(), "Web page loaded correctly.")

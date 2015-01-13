@@ -33,8 +33,8 @@ import time
 
 class test_main(GaiaTestCase):
 
-    link1 = "www.google.com"
-    test_msg = "Open this URL: " + link1
+    link = "www.google.com"
+    test_msg = "Open this URL: " + link
 
     def setUp(self):
 
@@ -69,8 +69,7 @@ class test_main(GaiaTestCase):
         Give the browser time to start up, then
         switch to the browser frame and check the page loaded.
         """
-
         time.sleep(3)
-        self.UTILS.iframe.switchToFrame(*DOM.Browser.frame_locator)
-
-        self.UTILS.test.test(self.browser.check_page_loaded(self.link1), "Web page loaded correctly.")
+        self.marionette.switch_to_frame()
+        self.browser.wait_for_page_to_load()
+        self.UTILS.test.test(self.link in self.browser.loaded_url(), "Web page loaded correctly.")
