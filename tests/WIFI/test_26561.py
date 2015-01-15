@@ -50,13 +50,13 @@ class test_main(GaiaTestCase):
         self.wait_for_condition(lambda m: self.data_layer.is_wifi_connected(network), timeout=30)
 
         self.UTILS.iframe.switchToFrame(*DOM.Settings.frame_locator)
-        self.settings.wifi_list_tapName(self.wifi_name)
+        self.settings.wifi_list_tap_name(self.wifi_name)
         self.settings.wifi_forget()
 
         self.wait_for_condition(lambda m: not self.data_layer.is_wifi_connected(network), timeout=30)
 
         # make sure we need to add the details again.
         self.UTILS.iframe.switchToFrame(*DOM.Settings.frame_locator)
-        self.settings.wifi_list_tapName(self.wifi_name)
+        self.settings.wifi_list_tap_name(self.wifi_name)
         time.sleep(1)
         self.UTILS.element.waitForElements(DOM.Settings.wifi_login_pass, "Password field")

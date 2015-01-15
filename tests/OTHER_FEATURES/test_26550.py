@@ -58,7 +58,7 @@ class test_main(GaiaTestCase):
         self.UTILS.home.goHome()
         self.settings.launch()
         self.settings.wifi()
-        self.settings.wifi_switchOff()
+        self.settings.wifi_switch_off()
 
         # Data icon is no longer visible in status bar.
         self.UTILS.element.waitForNotElements(DOM.Statusbar.wifi, "Wifi icon not in statusbar")

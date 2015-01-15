@@ -37,7 +37,7 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.UTILS.statusbar.clearAllStatusBarNotifs()
 
-        self.UTILS.date_and_time.setTimeToNow("Europe", "Madrid")
+        self.UTILS.date_and_time.set_time_to_now("Europe", "Madrid")
 
         # Create and send a new test message.
         self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)
@@ -60,7 +60,7 @@ class test_main(GaiaTestCase):
 
         # Change to a (unlikely!) timezone.
         self.apps.kill_all()
-        self.UTILS.date_and_time.setTimeToNow("Antarctica", "Casey")
+        self.UTILS.date_and_time.set_time_to_now("Antarctica", "Casey")
 
         # Open the sms app again.
         self.messages.launch()

@@ -36,7 +36,7 @@ class test_main(GaiaTestCase):
         self.settings.launch()
 
         # Tap hotspot.
-        self.settings.hotSpot()
+        self.settings.hotspot()
 
         hotspot_settings = self.UTILS.element.getElement(DOM.Settings.hotspot_settings, "Hotspot settings")
         self.UTILS.test.test(hotspot_settings.is_enabled(),

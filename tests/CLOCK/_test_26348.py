@@ -24,7 +24,7 @@ class test_main(GaiaTestCase):
     def test_run(self):
 
         # Set the volume to be low (no need to wake up the office! ;o)
-        self.settings.setAlarmVolume(0)
+        self.settings.set_alarm_volume(0)
 
         # Launch clock app.
         self.clock.launch()
