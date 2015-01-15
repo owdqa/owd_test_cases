@@ -24,7 +24,7 @@ class test_main(GaiaTestCase):
     def test_run(self):
         self.data_layer.connect_to_cell_data()
         self.settings.launch()
-        self.settings.hotSpot()
+        self.settings.hotspot()
         hotspot_settings_btn = self.UTILS.element.getElement(DOM.Settings.hotspot_settings, "Hotspot settings button",
                                                              timeout=20)
         self.UTILS.test.test(hotspot_settings_btn.get_attribute("disabled"), "Hotspot button is disabled.")

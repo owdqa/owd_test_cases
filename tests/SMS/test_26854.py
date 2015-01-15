@@ -17,7 +17,7 @@ class test_main(GaiaTestCase):
         self.messages = Messages(self)
 
         self.num = self.UTILS.general.get_config_variable("phone_number", "custom")
-        self.UTILS.date_and_time.setTimeToNow()
+        self.UTILS.date_and_time.set_time_to_now()
         self.data_layer.delete_all_sms()
 
     def tearDown(self):

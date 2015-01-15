@@ -59,7 +59,7 @@ class test_main(GaiaTestCase):
 
         time.sleep(10)
         self.UTILS.iframe.switchToFrame(*DOM.Settings.frame_locator)
-        self.settings.wifi_list_tapName(self.wifi_name)
+        self.settings.wifi_list_tap_name(self.wifi_name)
 
         self.UTILS.element.waitForElements(DOM.Settings.wifi_details_header, "Wifi Details header")
         _forget = self.UTILS.element.getElement(DOM.Settings.wifi_details_forget_btn,

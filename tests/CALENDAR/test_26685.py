@@ -20,7 +20,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        self.UTILS.date_and_time.setTimeToNow()
+        self.UTILS.date_and_time.set_time_to_now()
 
         # Launch contacts app.
         self.calendar.launch()

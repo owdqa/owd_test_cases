@@ -1,5 +1,4 @@
 from gaiatest import GaiaTestCase
-
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
@@ -22,7 +21,7 @@ class test_main(GaiaTestCase):
         # Open the Settings application.
         self.settings.launch()
         self.settings.wifi()
-        self.settings.wifi_switchOn()
+        self.settings.wifi_switch_on()
 
         available_networks = self.UTILS.element.getElements(DOM.Settings.wifi_available_networks, "Available networks", False)
 
