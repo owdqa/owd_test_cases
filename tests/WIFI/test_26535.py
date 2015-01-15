@@ -1,5 +1,5 @@
 #===============================================================================
-# 26535: Verify that Wi-Fi HotSpot is disable by default
+# 26535: Verify that Wi-Fi HotSpot is disabled by default
 #
 # Procedure:
 # 1. Turn the device on
