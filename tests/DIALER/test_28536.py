@@ -38,6 +38,7 @@ class test_main(GaiaTestCase):
         # Generate the incoming call
         self.marionette.switch_to_frame()
         self.data_layer.send_sms(self.incoming_number, "Call:" + self.phone_number)
+        self.dialer.wait_for_incoming_call(self.incoming_number.split("+34")[-1])
         self.dialer.answer_and_hangup(2)
 
         self.apps.kill_all()
@@ -48,7 +49,6 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        # Launch dialer app.
         self.dialer.launch()
 
         keypad_option = self.UTILS.element.getElement(DOM.Dialer.option_bar_keypad, "Keypad Option")

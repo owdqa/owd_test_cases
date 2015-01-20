@@ -12,23 +12,19 @@ class test_main(GaiaTestCase):
     _testNum = "123456789"
 
     def setUp(self):
-        # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.dialer = Dialer(self)
         self.contacts = Contacts(self)
 
-        self.Contact_1 = MockContact(tel={'type': 'Mobile', 'value': '111111111'})
-        self.UTILS.general.insertContact(self.Contact_1)
+        self.test_contact = MockContact(tel={'type': 'Mobile', 'value': '111111111'})
+        self.UTILS.general.insertContact(self.test_contact)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
-        # Enter a number in the dialer.
-
         self.dialer.launch()
         self.dialer.enterNumber(self._testNum)
 
@@ -40,11 +36,11 @@ class test_main(GaiaTestCase):
         x.tap()
 
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
-        self.contacts.view_contact(self.Contact_1["name"], header_check=False)
+        self.contacts.view_contact(self.test_contact["givenName"], header_check=False)
 
         x = self.UTILS.element.getElement(("name", "tel[0][value]"), "Phone number 1")
-        self.UTILS.test.test(x.get_attribute("value") == self.Contact_1["tel"]["value"],
-                             "1st number is {} (it was {}).".format(self.Contact_1["tel"]["value"],
+        self.UTILS.test.test(x.get_attribute("value") == self.test_contact["tel"]["value"],
+                             "1st number is {} (it was {}).".format(self.test_contact["tel"]["value"],
                                                                     x.get_attribute("value")))
 
         x = self.UTILS.element.getElement(("name", "tel[1][value]"), "Phone number 2")

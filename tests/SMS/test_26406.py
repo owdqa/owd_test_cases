@@ -31,12 +31,13 @@ class test_main(GaiaTestCase):
         # Start a new SMS and add the message and contact name.
         self.messages.startNewSMS()
         self.messages.selectAddContactButton()
-        self.contacts.view_contact(self.contact["familyName"], False)
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+        self.contacts.view_contact(self.contact["givenName"], False)
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
         self.messages.checkIsInToField(self.contact["name"], True)
 
         # Remove it.
         self.messages.removeContactFromToField(self.contact["name"])
 
-        # Verify the contact name is present before removing it.
+        # Verify the contact name is no longer present before removing it.
         self.messages.checkIsInToField(self.contact["name"], False)

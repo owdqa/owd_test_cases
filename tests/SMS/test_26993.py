@@ -41,7 +41,6 @@ class test_main(GaiaTestCase):
         self.num2 = phone_number[3:] if phone_number.startswith("+34") else phone_number
 
         self.contact = MockContact(tel={'type': 'Mobile', 'value': self.num1})
-
         self.UTILS.general.insertContact(self.contact)
 
     def tearDown(self):
@@ -49,27 +48,25 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
-        # Launch messages app.
         self.messages.launch()
 
         # Create and send a new test message to this contact.
         self.messages.startNewSMS()
-
         self.messages.selectAddContactButton()
-        self.contacts.view_contact(self.contact["familyName"], False)
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+        self.contacts.view_contact(self.contact["givenName"], False)
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
         self.messages.checkIsInToField(self.contact["name"], True)
 
         self.messages.enterSMSMsg("Test message.")
         self.messages.sendSMS()
 
-        x = self.messages.wait_for_message()
+        self.messages.wait_for_message()
 
         # Tap the header to call.
         self.messages.header_call()
 
         # Dialler is started with the number already filled in.
-        x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number")
-        self.UTILS.test.test(self.num2 in x.get_attribute("value"),
-                        "The phone number contains '{}' (it was '{}').".format(self.num1, x.get_attribute("value")))
+        phone_field = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number")
+        self.UTILS.test.test(self.num2 in phone_field.get_attribute("value"),
+                        "The phone number contains '{}' (it was '{}').".format(self.num1, phone_field.get_attribute("value")))

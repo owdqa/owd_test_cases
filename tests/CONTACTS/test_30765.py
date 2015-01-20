@@ -40,20 +40,17 @@ class test_main(GaiaTestCase):
 
         self.gmail_user = self.UTILS.general.get_config_variable("gmail_1_user", "common")
         self.gmail_passwd = self.UTILS.general.get_config_variable("gmail_1_pass", "common")
-
-    def tearDown(self):
-        self.UTILS.reporting.reportResults()
-
-        # Contacts exported to SD Card are removed
-        os.system("adb shell rm sdcard/*.vcf")
-
-    def test_run(self):
-
         # Set up to use data connection.
         self.connect_to_network()
 
+    def tearDown(self):
+        os.system("adb shell rm sdcard/*.vcf")
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
+    def test_run(self):
         self.contacts.launch()
-        self.contacts.import_gmail_login(self.gmail_user, self.gmail_passwd, True)
+        self.contacts.import_gmail_login(self.gmail_user, self.gmail_passwd)
 
         # Log-in in Gmail and contacts imported
         x = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list", False)
@@ -69,38 +66,29 @@ class test_main(GaiaTestCase):
         self.contacts.import_all()
         # Saving the number of contacts imported
         self.UTILS.element.waitForElements(("id", "statusMsg"), "x/y contact imported")
-        y = self.UTILS.element.getElement(DOM.Contacts.export_import_banner, "Updated x contacts")
-        self.UTILS.reporting.logResult("info", y.text)
-        contacts_imported = y.text
+        banner = self.UTILS.element.getElement(DOM.Contacts.export_import_banner, "Updated x contacts")
+        contacts_imported = banner.text
 
         # Exit contacts
         self.apps.kill_all()
-
-        self.contacts.launch()
-
-        # Exporting to SD Card
-        self.contacts.export_sd_card()
-
-        x = self.UTILS.element.getElement(DOM.Contacts.export_select_all, "Select All")
-        x.tap()
         time.sleep(2)
 
-        x = self.UTILS.element.getElement(DOM.Contacts.export, "Export button")
-        x.tap()
+        self.contacts.launch()
+        self.contacts.export_sd_card()
+
+        select_all_btn = self.UTILS.element.getElement(DOM.Contacts.export_select_all, "Select All")
+        select_all_btn.tap()
+        time.sleep(2)
+
+        export_btn = self.UTILS.element.getElement(DOM.Contacts.export, "Export button")
+        export_btn.tap()
 
         # Check that there is a layer informing about the success export
-        self.UTILS.element.waitForElements(("id", "statusMsg"), "x/y contact exported")
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot and details", x)
+        self.UTILS.element.waitForElements(("id", "statusMsg"), "x/y contact exported msg")
+        banner = self.UTILS.element.getElement(DOM.Contacts.export_import_banner, "x/y contacts exported")
+        contacts_exported = banner.text
 
-        x = self.UTILS.element.getElement(DOM.Contacts.export_import_banner, "x/y contacts exported")
-
-        contacts_exported = x.text
         # Check that the number of contact imported/exported is the same
-        self.UTILS.reporting.logResult("info", contacts_exported[0])
-        self.UTILS.reporting.logResult("info", contacts_imported[8])
-
-        if contacts_imported[8] == contacts_exported[0]:
-            self.UTILS.reporting.logResult("info", "OK same contacts imported than exported")
-        else:
-            self.UTILS.test.test(False, "Different contacts exported than imported")
+        self.UTILS.reporting.logResult("info", "Contacts imported: {}".format(contacts_imported))
+        self.UTILS.reporting.logResult("info", "Contacts exported: {}".format(contacts_exported))
+        self.UTILS.test.test(contacts_exported.split("/")[0] in contacts_imported, "OK, same contacts exported than imported")

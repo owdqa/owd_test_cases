@@ -32,8 +32,14 @@ class test_main(GaiaTestCase):
         self.contacts = Contacts(self)
 
         self.phones = ["177111111", "177222222", "133333333"]
-        self.test_contacts = [MockContact(tel={'type': 'Mobile', 'value': self.phones[i]})
-                              for i in range(3)]
+        self.given_names = ["Contact"] * len(self.phones)
+        self.family_names = map(str, range(1, len(self.phones) + 1))
+
+        self.test_contacts = [MockContact(tel={'type': 'Mobile', 'value': self.phones[i]},
+                                          givenName=self.given_names[i],
+                                          familyName=self.family_names[i],
+                                          name="{} {}".format(self.given_names[i], self.family_names[i]))
+                              for i in range(len(self.phones))]
         map(self.UTILS.general.insertContact, self.test_contacts)
 
     def tearDown(self):
@@ -48,5 +54,5 @@ class test_main(GaiaTestCase):
 
         # Verify our contact is listed.
         conditions = [True, True, False]
-        names = [c["givenName"] for c in self.test_contacts]
+        names = [c["familyName"] for c in self.test_contacts]
         map(self.contacts.check_search_results, names, conditions)

@@ -73,9 +73,6 @@ class test_main(GaiaTestCase):
         self.UTILS.element.simulateClickAtPos(header_close, 25, 25)
 
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
-        screenshot = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult('info', "Screenshot yeah", screenshot)
-
         self.wait_for_element_displayed(*DOM.Contacts.import_contacts_header)
         import_header = self.marionette.find_element(*DOM.Contacts.import_contacts_header)
         time.sleep(1)
