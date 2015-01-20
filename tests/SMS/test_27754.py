@@ -12,8 +12,6 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-
-        # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
@@ -32,8 +30,6 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
-        # First, we need to make sure there are no statusbar notifications.
         self.UTILS.statusbar.clearAllStatusBarNotifs()
 
         # Now create and send a SMS to both contacts.
@@ -42,6 +38,7 @@ class test_main(GaiaTestCase):
 
         for i in range(len(self.test_contacts)):
             self.messages.selectAddContactButton()
+            self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
             self.contacts.view_contact(self.test_contacts[i]["name"], False)
             self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
             self.messages.checkIsInToField(self.test_contacts[i]["name"], True)

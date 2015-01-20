@@ -31,18 +31,14 @@ class test_main(GaiaTestCase):
     test_msg = "Test message."
 
     def setUp(self):
-
-        # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.contacts = Contacts(self)
         self.Dialer = Dialer(self)
 
-        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
-
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom").split("+34")[-1]
         self.contact = MockContact(tel={'type': 'Mobile', 'value': self.phone_number})
-
         self.UTILS.general.insertContact(self.contact)
 
     def tearDown(self):
@@ -50,15 +46,13 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
-        # Launch messages app.
         self.messages.launch()
 
         # Create and send a new test message.
         self.messages.startNewSMS()
-
         self.messages.selectAddContactButton()
-        self.contacts.view_contact(self.contact["familyName"], False)
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+        self.contacts.view_contact(self.contact["givenName"], False)
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
         self.messages.checkIsInToField(self.contact["name"], True)
 

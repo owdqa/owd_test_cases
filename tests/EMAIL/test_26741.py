@@ -71,6 +71,6 @@ class test_26741(Emailing):
         email_body.find_element(*DOM.Email.open_email_body_link).tap()
         self.marionette.find_element(*DOM.Email.confirmation_browser_ok).tap()
 
-        self.UTILS.iframe.switchToFrame(*DOM.Browser.frame_locator)
-        time.sleep(2)
-        self.browser.check_page_loaded(self.link)
+        self.marionette.switch_to_frame()
+        self.browser.wait_for_page_to_load()
+        self.UTILS.test.test(self.link in self.browser.loaded_url(), "Web page loaded correctly.")

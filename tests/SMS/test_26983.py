@@ -76,7 +76,7 @@ class test_main(GaiaTestCase):
         x.tap()
 
         # Try to set up the account - Since there is no connection, it will fail.
-        self.email.setup_account_first_step(self.email_user, self.email_address, self.email_pass)
+        self.email.setup_account_first_step(self.email_user, self.email_address)
 
         error = self.UTILS.element.getElement(DOM.Email.new_account_error_msg, "Error message")
         self.UTILS.test.test(error.text == "This device is currently offline. Connect to a network and try again.",

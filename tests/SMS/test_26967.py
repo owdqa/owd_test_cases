@@ -49,12 +49,7 @@ class test_main(GaiaTestCase):
         Give the browser time to start up, then
         switch to the browser frame and check the page loaded.
         """
-
-        time.sleep(2)
         self.marionette.switch_to_frame()
-        self.UTILS.iframe.switchToFrame(*DOM.Browser.frame_locator)
-
-        self.UTILS.test.test(self.browser.check_page_loaded(self.link),
-                        "Web page loaded correctly.")
-
-
+        self.browser.wait_for_page_to_load()
+        self.UTILS.test.test(
+            self.link in self.browser.loaded_url(), "Web page loaded ({}) correctly.".format(self.link))

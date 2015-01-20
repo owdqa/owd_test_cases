@@ -84,6 +84,7 @@ class test_main(GaiaTestCase):
         # Tap on required link.
         self.UTILS.element.simulateClick(l)
 
-        self.UTILS.test.test(self.browser.check_page_loaded(link),
-                              "Web page {} loaded correctly.".format(link_number + 1))
-        time.sleep(5)
+        self.marionette.switch_to_frame()
+        self.browser.wait_for_page_to_load()
+        self.UTILS.test.test(
+            link in self.browser.loaded_url(), "Web page loaded #{} correctly.".format(link_number + 1))

@@ -1,8 +1,22 @@
-#
-# 27001
-#
+# OWD-27001: Verify that if the user accepts "Add to an existing contact" from the "Edit contact" form,
+# contact is correctly updated and he is returned to the SMS thread view
+# ** Procedure
+#         1. Send from another device to Device under test an SMS including text and a number 
+#            with 9 DIGITS (e.g. 666777888)
+#         2. Open in Device under test the SMS APP
+#         3. Search and tap on the received SMS
+#         4. In the SMS thread view long press on the highlighted phone number
+#         5. In the Dialog Menu tap on the option : "Add to existing contact "
+#         6. From the Contact list screen search and select one contact by tapping on it
+#         7. In the "Update form" fill in the other contact fields (the passed number is already 
+#            filled -in in the phone number section)
+#         8. In the "Update form" tap on the icon "UPDATE" in order to update the new contact
+#         9. Open Contacts APP
+#         10. Search the new contact created
+#         11. Tap on the contact to edit it
+# ** Expected Results
+#       All the data filled in the contact fields are properly  kept and shown (including the phone number selected)
 from gaiatest import GaiaTestCase
-
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -49,18 +63,18 @@ class test_main(GaiaTestCase):
 
         # Select add to existing contact.
         add_btn = self.UTILS.element.getElement(DOM.Messages.header_add_to_contact_btn,
-                                    "Add to existing contact button")
+                                                "Add to existing contact button")
         add_btn.tap()
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
         # Select our contact.
-        self.contacts.view_contact(self.contact["familyName"], False)
+        self.contacts.view_contact(self.contact["givenName"], False)
 
         # Check the phone number.
         num = self.UTILS.element.getElement(("id", "number_1"), "2nd phone number.")
         self.UTILS.test.test(num.get_attribute("value") == "111111111",
-                        "Contact now has a 2nd number which is '111111111' (it was '{}').".\
-                        format(num.get_attribute("value")))
+                             "Contact now has a 2nd number which is '111111111' (it was '{}').".
+                             format(num.get_attribute("value")))
 
         # Press the update button.
         update_btn = self.UTILS.element.getElement(DOM.Contacts.edit_update_button, "Update button")
@@ -68,7 +82,7 @@ class test_main(GaiaTestCase):
 
         # Wait for contacts app to close and return to sms app.
         self.marionette.switch_to_frame()
-        self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@src, '{}')]".\
+        self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@src, '{}')]".
                                                format(DOM.Contacts.frame_locator[1])), "Contacts iframe")
 
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
