@@ -73,28 +73,28 @@ class test_main(GaiaTestCase):
         _link.tap()
 
         # Tap on "Send email" button from the overlay
-        x = self.UTILS.element.getElement(DOM.Messages.header_send_email_btn, "Send email button")
-        x.tap()
+        send_btn = self.UTILS.element.getElement(DOM.Messages.header_send_email_btn, "Send email button")
+        send_btn.tap()
 
         time.sleep(4)
         self.UTILS.iframe.switchToFrame(*DOM.Email.frame_locator)
 
         # Confirm we want to setUp our email account
-        x = self.UTILS.element.getElement(DOM.Email.email_not_setup_ok, "Set up account confirmation")
-        x.tap()
+        confirm = self.UTILS.element.getElement(DOM.Email.email_not_setup_ok, "Set up account confirmation")
+        confirm.tap()
 
         self.email.setup_account(self.email_user, self.email_address, self.email_pass)
 
         # Verify the email address is in the To field.
-        x = self.UTILS.element.getElement(DOM.Email.compose_to_from_contacts, "To field")
-        self.UTILS.test.test(x.text == self.dest_email,
+        to_field = self.UTILS.element.getElement(DOM.Email.compose_to_from_contacts, "To field")
+        self.UTILS.test.test(to_field.text == self.dest_email,
                              "To field contains '{0}' (it was '{0}').".format(self.dest_email))
 
         # Fill in the details and send the email.
         self.UTILS.general.typeThis(DOM.Email.compose_subject, "'Subject' field", "Test email", True, False)
         self.UTILS.general.typeThis(DOM.Email.compose_msg, "Message field", "Just a test", True, False, False)
 
-        x = self.UTILS.element.getElement(DOM.Email.compose_send_btn, "Send button")
-        x.tap()
+        send_btn = self.UTILS.element.getElement(DOM.Email.compose_send_btn, "Send button")
+        send_btn.tap()
         self.UTILS.element.waitForNotElements(DOM.Messages.send_email_failed, "Sending email error message",
                                               timeout=10)

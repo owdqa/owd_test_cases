@@ -10,7 +10,7 @@
 # 3. Click on the email address
 # 4. Select "Send email" option from the overlay
 # 5. Select "OK" to confirm the setup of an email account
-# 6. Fill the formulary
+# 6. Fill in the form
 # 7. Click on "Next" button
 #
 # Expected results:
@@ -66,18 +66,19 @@ class test_main(GaiaTestCase):
         _link = sms.find_element("tag name", "a")
         _link.tap()
 
-        x = self.UTILS.element.getElement(DOM.Messages.header_send_email_btn, "Send email button")
-        x.tap()
+        send_btn = self.UTILS.element.getElement(DOM.Messages.header_send_email_btn, "Send email button")
+        send_btn.tap()
 
         time.sleep(4)
 
         self.UTILS.iframe.switchToFrame(*DOM.Email.frame_locator)
-        x = self.UTILS.element.getElement(DOM.Email.email_not_setup_ok, "Set up account confirmation")
-        x.tap()
+        setup_confirm = self.UTILS.element.getElement(DOM.Email.email_not_setup_ok, "Set up account confirmation")
+        setup_confirm.tap()
 
         # Try to set up the account - Since there is no connection, it will fail.
         self.email.setup_account_first_step(self.email_user, self.email_address)
 
-        error = self.UTILS.element.getElement(DOM.Email.new_account_error_msg, "Error message")
-        self.UTILS.test.test(error.text == "This device is currently offline. Connect to a network and try again.",
-            "Verifying error message")
+        time.sleep(5)
+        self.UTILS.iframe.switch_to_frame("data-url", "google")
+        self.UTILS.element.getElement(('css selector', 'h1[data-l10n-id=unable-to-connect]'),
+                                      "Unable to connect message")
