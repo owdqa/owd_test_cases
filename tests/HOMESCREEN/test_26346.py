@@ -40,7 +40,7 @@ class test_main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.browser = Browser(self)
-        
+
         self.connect_to_network()
         # Uninstall the app (if need be).
         self.UTILS.app.uninstallApp(self._appName)
@@ -61,10 +61,11 @@ class test_main(GaiaTestCase):
         self.marionette.switch_to_frame()
         install_btn = self.UTILS.element.getElement(self.confirm_install_locator, "Install button", True, 30)
         install_btn.tap()
-        
+
         ok_btn = self.UTILS.element.getElement(DOM.GLOBAL.modal_dialog_alert_ok, "Ok button")
+        time.sleep(1)
         ok_btn.tap()
-        
+
         expected_msg = "{} installed".format(self._appName)
         system_banner = self.UTILS.element.getElement(DOM.GLOBAL.system_banner, "System notification banner")
         self.UTILS.test.test(system_banner.text == expected_msg, "Banner matches expected message")

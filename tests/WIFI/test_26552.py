@@ -17,7 +17,7 @@
 # The SMS must be correctly received by another mobile and the Wi-Fi connection
 # must remain active.
 #===============================================================================
-
+import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
@@ -61,6 +61,7 @@ class test_main(GaiaTestCase):
         self.messages.wait_for_message(send_time)
 
         self.apps.kill_all()
+        time.sleep(2)
 
         self.browser.launch()
         self.browser.open_url(self.url2)

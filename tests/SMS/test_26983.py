@@ -32,8 +32,6 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-
-        # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -52,7 +50,6 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
         # Create and send a new test message.
         test_msg = "email address {} test at {}".format(self.dest_email, time.time())
         self.data_layer.send_sms(self.phone_number, test_msg)
@@ -66,18 +63,24 @@ class test_main(GaiaTestCase):
         _link = sms.find_element("tag name", "a")
         _link.tap()
 
-        x = self.UTILS.element.getElement(DOM.Messages.header_send_email_btn, "Send email button")
-        x.tap()
-
-        time.sleep(4)
-
+        send_email_btn = self.UTILS.element.getElement(DOM.Messages.header_send_email_btn, "Send email button")
+        send_email_btn.tap()
         self.UTILS.iframe.switchToFrame(*DOM.Email.frame_locator)
-        x = self.UTILS.element.getElement(DOM.Email.email_not_setup_ok, "Set up account confirmation")
-        x.tap()
+        confirm_btn = self.UTILS.element.getElement(DOM.Email.email_not_setup_ok, "Set up account confirmation")
+        confirm_btn.tap()
 
         # Try to set up the account - Since there is no connection, it will fail.
         self.email.setup_account_first_step(self.email_user, self.email_address)
 
-        error = self.UTILS.element.getElement(DOM.Email.new_account_error_msg, "Error message")
-        self.UTILS.test.test(error.text == "This device is currently offline. Connect to a network and try again.",
-            "Verifying error message")
+        # Switch to oauth frame and look for error msg
+        # auth_frame = self.marionette.find_element(*('css selector', 'iframe.sup-oauth2-browser'))
+        # self.UTILS.reporting.logResult('info', 'Auth frame: {}'.format(auth_frame.text))
+        self.UTILS.iframe.switchToFrame(*('src', 'oauth2'))
+        element = auth_frame.find_element(*('id', 'error-title'))
+
+        self.UTILS.reporting.logResult('info', "Gimmme da content, you son of a bitch : {}".format(element.text))
+        # self.marionette.switch_to_frame(auth_frame)
+
+        # error = self.UTILS.element.getElement(('id', 'error-title'), "Error message")
+        # self.UTILS.test.test(error.text == "Unable to connect",
+        #     "Verifying error message")

@@ -13,12 +13,12 @@
 # ER2 will not be highlighted for each email address and the user can't click on it
 #===============================================================================
 
+import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.email import Email
-import time
 
 
 class test_main(GaiaTestCase):
@@ -28,8 +28,6 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-
-        # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -41,23 +39,18 @@ class test_main(GaiaTestCase):
 
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.emailAddy = self.UTILS.general.get_config_variable("gmail_2_email", "common")
+        self.connect_to_network()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
-        # Set up email account.
-        self.connect_to_network()
-
         self.email.launch()
         self.email.setup_account(self.email_user, self.email_address, self.email_pass)
 
-        # Launch messages app.
-        self.messages.launch()
-
         # Create and send a new test message.
+        self.messages.launch()
         test_msg = "Email address {} test at {}".format(self.emailAddy, time.time())
         self.data_layer.send_sms(self.phone_number, test_msg)
         self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)
@@ -65,28 +58,26 @@ class test_main(GaiaTestCase):
         sms = self.messages.last_message_in_this_thread()
 
         # Verify that the email address opens the email app.
-        time.sleep(2)
         link = sms.find_element("tag name", "a")
         link.tap()
-        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
         self.wait_for_element_displayed(*DOM.Messages.header_send_message_btn, timeout=30)
+
         cancel = self.UTILS.element.getElement(DOM.Messages.contact_cancel_btn, "Cancel button")
         cancel.tap()
 
         # Go into edit mode.
-        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
-        x = self.UTILS.element.getElement(DOM.Messages.edit_messages_icon, "Edit button")
-        x.tap()
-        delete_btn = self.UTILS.element.getElement(DOM.Messages.delete_threads_button, "Delete messages button")
-        delete_btn.tap()
+        edit_btn = self.UTILS.element.getElement(DOM.Messages.edit_messages_icon, "Edit button")
+        edit_btn.tap()
 
-        sms = self.messages.last_message_in_this_thread()
+        # Select Messages mode
+        select_msgs_btn = self.UTILS.element.getElement(DOM.Messages.edit_msgs_select_btn, "Select messages button")
+        select_msgs_btn.tap()
+        self.UTILS.element.waitForElements(DOM.Messages.edit_msgs_header, "Edit messages mode header")
 
         # Verify that the email address does not open the email app.
-        time.sleep(2)
+        sms = self.messages.last_message_in_this_thread()
         link = sms.find_element("tag name", "a")
         link.tap()
 
         # Now try to find the email app iframe.
-        time.sleep(2)
         self.wait_for_element_not_displayed(*DOM.Messages.header_send_message_btn, timeout=30)

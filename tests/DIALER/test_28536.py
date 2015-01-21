@@ -27,7 +27,6 @@ class test_main(GaiaTestCase):
     def setUp(self):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
-
         self.dialer = Dialer(self)
 
         # Get own number and incoming
@@ -60,5 +59,4 @@ class test_main(GaiaTestCase):
         # Make sure that after tapping, we get the last outgoing call in the call log
         phone_field = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number field", False)
         dialer_num = phone_field.get_attribute("value")
-
         self.UTILS.test.test(dialer_num == "", "Nothing in the input area")
