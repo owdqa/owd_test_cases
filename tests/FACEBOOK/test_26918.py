@@ -48,7 +48,6 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
         self.contacts.launch()
         self.contacts.tapSettingsButton()
         self.contacts.enable_FB_import()
@@ -63,7 +62,7 @@ class test_main(GaiaTestCase):
         back_btn.tap()
 
         # View the contact details.
-        self.contacts.view_contact(self.test_contact['name'])
+        self.contacts.view_contact(self.test_contact['givenName'])
 
         # Press the link button.
         self.contacts.tapLinkContact()
@@ -75,4 +74,4 @@ class test_main(GaiaTestCase):
         self.UTILS.element.headerCheck(self.test_contact['name'])
 
         # Verify that we're now linked.
-        self.contacts.verify_linked(self.test_contact['name'], self.fb_email)
+        self.contacts.verify_linked(self.test_contact['givenName'], self.fb_email)

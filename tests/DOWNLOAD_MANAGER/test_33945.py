@@ -49,8 +49,10 @@ class test_main(GaiaTestCase):
 
     def _download_multiple_files(self, file):
         self.download_manager.download_file(file)
+        self.marionette.switch_to_frame()
         self.UTILS.statusbar.wait_for_notification_toaster_title(
-            text="Download started", notif_text="Downloading", frame_to_change=DOM.Browser.frame_locator, timeout=15)
+            text="Download started", frame_to_change=DOM.Browser.frame_locator, timeout=15, notif_text="Downloading")
+        self.UTILS.reporting.logResult('info', 'Looking for next link!!!!')
         self.browser.switch_to_content()
         time.sleep(5)
 
