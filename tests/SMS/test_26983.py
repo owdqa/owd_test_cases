@@ -10,7 +10,7 @@
 # 3. Click on the email address
 # 4. Select "Send email" option from the overlay
 # 5. Select "OK" to confirm the setup of an email account
-# 6. Fill the formulary
+# 6. Fill in the form
 # 7. Click on "Next" button
 #
 # Expected results:
@@ -32,9 +32,8 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -53,9 +52,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
+
         # Create and send a new test message.
-        #
         test_msg = "email address {} test at {}".format(self.dest_email, time.time())
         self.data_layer.send_sms(self.phone_number, test_msg)
         self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)
@@ -63,27 +61,24 @@ class test_main(GaiaTestCase):
         sms = self.messages.last_message_in_this_thread()
         time.sleep(1)
 
-        #
         # Tap the 2nd email link.
-        #
         self.UTILS.reporting.logResult("info", u"Click the email address in this message: '{}'.".format(sms.text))
         _link = sms.find_element("tag name", "a")
         _link.tap()
 
-        x = self.UTILS.element.getElement(DOM.Messages.header_send_email_btn, "Send email button")
-        x.tap()
+        send_btn = self.UTILS.element.getElement(DOM.Messages.header_send_email_btn, "Send email button")
+        send_btn.tap()
 
         time.sleep(4)
 
         self.UTILS.iframe.switchToFrame(*DOM.Email.frame_locator)
-        x = self.UTILS.element.getElement(DOM.Email.email_not_setup_ok, "Set up account confirmation")
-        x.tap()
+        setup_confirm = self.UTILS.element.getElement(DOM.Email.email_not_setup_ok, "Set up account confirmation")
+        setup_confirm.tap()
 
-        #
         # Try to set up the account - Since there is no connection, it will fail.
-        #
-        self.email.setupAccountFirstStep(self.email_user, self.email_address, self.email_pass)
+        self.email.setup_account_first_step(self.email_user, self.email_address)
 
-        error = self.UTILS.element.getElement(DOM.Email.new_account_error_msg, "Error message")
-        self.UTILS.test.test(error.text == "This device is currently offline. Connect to a network and try again.",
-            "Verifying error message")
+        time.sleep(5)
+        self.UTILS.iframe.switch_to_frame("data-url", "google")
+        self.UTILS.element.getElement(('css selector', 'h1[data-l10n-id=unable-to-connect]'),
+                                      "Unable to connect message")
