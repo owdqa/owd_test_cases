@@ -44,7 +44,7 @@ class test_main(GaiaTestCase):
         self.connect_to_network()
 
     def tearDown(self):
-        os.system("adb shell rm sdcard/*.vcf")
+        os.system("adb shell rm sdcard/*.vcf > /dev/null 2>&1")
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
@@ -80,7 +80,7 @@ class test_main(GaiaTestCase):
         select_all_btn.tap()
         time.sleep(2)
 
-        export_btn = self.UTILS.element.getElement(DOM.Contacts.export, "Export button")
+        export_btn = self.UTILS.element.getElement(DOM.Contacts.select_action, "Export button")
         export_btn.tap()
 
         # Check that there is a layer informing about the success export

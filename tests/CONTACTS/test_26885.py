@@ -23,74 +23,44 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(GaiaTestCase):
 
     def setUp(self):
-
-        # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
 
-        # Get details of our test contacts.
-        self.contact = MockContact()
-        self.UTILS.general.insertContact(self.contact)
+        self.test_contact = MockContact()
+        self.UTILS.general.insertContact(self.test_contact)
+        self.email_1 = "one@myemail.com"
+        self.email_2 = "two@myemail.com"
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
-        # Launch contacts app.
         self.contacts.launch()
-
-        # View the contact details.
-        self.contacts.view_contact(self.contact['name'])
-
-        # Edit the contact.
+        self.contacts.view_contact(self.test_contact['name'])
         self.contacts.press_edit_contact_button()
 
         # Count the current email addresses.
         orig_count = self.contacts.count_email_addresses_while_editing()
 
         # Add a few email addresses.
-        self.contacts.add_another_email_address("one@myemail.com")
-        self.contacts.add_another_email_address("two@myemail.com")
+        self.contacts.add_another_email_address(self.email_1)
+        self.contacts.add_another_email_address(self.email_2)
 
-        # Get the new count.
+        # Get the new count and check it's been updated
         new_count = self.contacts.count_email_addresses_while_editing()
+        self.UTILS.test.test(new_count == orig_count + 2,
+                             "After adding two email, there are three")
 
-        # Verify there are 3 more.
-        diff = (new_count - orig_count)
-        self.UTILS.test.test(diff == 2,
-                        "3 more emails listed for this contact before saving the changes (there were {}) .".\
-                        format(diff))
-
-        # Save the changes.
         update_btn = self.UTILS.element.getElement(DOM.Contacts.edit_update_button, "Update button")
         update_btn.tap()
-
-        # Back to 'view all' screen.
         self.contacts.go_back_from_contact_details()
-
-        # View the contact again.
-        self.contacts.view_contact(self.contact['name'])
+        self.contacts.view_contact(self.test_contact['name'])
 
         # Count the email fields.
-        emails = self.UTILS.element.getElements(DOM.Contacts.email_address_list, "Email addresses", False)
-        view_count = 0
-        email1_found = False
-        email2_found = False
-        for mail in emails:
-            if "email-details-template-" in mail.get_attribute("id"):
-                view_count = view_count + 1
-                btn_name = mail.find_element("tag name", "button").text
+        emails_elements = self.UTILS.element.getElements(DOM.Contacts.email_address_list, "Email addresses")
+        emails = [elem.find_element(*('css selector', 'button b')).text for elem in emails_elements]
 
-                self.UTILS.reporting.logResult("info", "    - " + btn_name)
-                if btn_name == "one@myemail.com":
-                    email1_found = True
-                if btn_name == "two@myemail.com":
-                    email2_found = True
-
-        self.UTILS.test.test(view_count == new_count, str(new_count) + " emails are displayed.")
-
-        self.UTILS.test.test(email1_found, "First added email is present.")
-        self.UTILS.test.test(email2_found, "Second added email is present.")
+        self.UTILS.test.test(self.email_1 in emails, "Email 1 has been saved")
+        self.UTILS.test.test(self.email_2 in emails, "Email 2 has been saved")

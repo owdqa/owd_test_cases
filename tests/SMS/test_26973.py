@@ -29,8 +29,6 @@ class test_main(GaiaTestCase):
     test_msg = "Test message."
 
     def setUp(self):
-
-        # Set up child objects...
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
@@ -39,10 +37,10 @@ class test_main(GaiaTestCase):
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.email_address = self.UTILS.general.get_config_variable("gmail_1_email", "common")
 
-        self.cont = MockContact(email=[{"type": "Personal", "value": "email1@nowhere.com"},
-                               {"type": "Personal", "value": "email2@nowhere.com"},
-                               {"type": "Personal", "value": "email3@nowhere.com"}])
-        self.UTILS.general.insertContact(self.cont)
+        self.test_contact = MockContact(email=[{"type": "Personal", "value": "email1@nowhere.com"},
+                                               {"type": "Personal", "value": "email2@nowhere.com"},
+                                               {"type": "Personal", "value": "email3@nowhere.com"}])
+        self.UTILS.general.insertContact(self.test_contact)
 
         self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg')
         self.data_layer.delete_all_sms()
@@ -52,11 +50,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-
-        # Launch messages app.
         self.messages.launch()
 
-        # Create and send a new test message.
         self.messages.create_and_send_sms([self.phone_number], "Hello {} old bean.".format(self.email_address))
         send_time = self.messages.last_sent_message_timestamp()
         msg = self.messages.wait_for_message(send_time=send_time)
@@ -65,30 +60,21 @@ class test_main(GaiaTestCase):
         link = msg.find_element("tag name", "a")
         link.tap()
 
-        # Click 'Add to an existing contact'.
-        x = self.UTILS.element.getElement(DOM.Messages.header_add_to_contact_btn, "Add to an existing contact button")
-        x.tap()
+        add_btn = self.UTILS.element.getElement(DOM.Messages.header_add_to_contact_btn, "Add to an existing contact button")
+        add_btn.tap()
 
         # Verify that the email is in the email field.
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
-        contact = self.UTILS.element.getElement(DOM.Contacts.contact_names, "Contact name in search page")
-        contact.tap()
-
+        self.contacts.view_contact(self.test_contact["givenName"], False)
         self.UTILS.element.waitForElements(("xpath",
-                                "//input[@type='email' and @value='{}']".format(self.email_address)),
-                                "New email address")
+                                            "//input[@type='email' and @value='{}']".format(self.email_address)),
+                                           "New email address")
 
-        # Add gallery image.
         self.contacts.add_gallery_image_to_contact(0)
-
-        # Press the Update button.
         done_button = self.UTILS.element.getElement(DOM.Contacts.edit_update_button, "'Update' button")
         done_button.tap()
 
         # Check that the contacts iframe is now gone.
         self.marionette.switch_to_frame()
         self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@src,'contacts')]"),
-                                       "Contact app iframe")
-
-        # Now return to the SMS app.
-        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+                                              "Contact app iframe")
