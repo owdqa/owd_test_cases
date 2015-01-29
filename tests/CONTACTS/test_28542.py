@@ -38,7 +38,7 @@ class test_main(GaiaTestCase):
         self.contacts.launch()
         self.contacts.export_sd_card()
 
-        select_all_btn = self.UTILS.element.getElement(DOM.Contacts.export_select_all, "Select All")
+        select_all_btn = self.UTILS.element.getElement(DOM.Contacts.action_select_all, "Select All")
         select_all_btn.tap()
         export_btn = self.UTILS.element.getElement(DOM.Contacts.select_action, "Export button")
         export_btn.tap()
