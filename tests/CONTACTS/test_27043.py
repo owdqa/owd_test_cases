@@ -47,6 +47,7 @@ class test_main(GaiaTestCase):
         time.sleep(1)
 
         self.apps.kill_all()
+        time.sleep(2)
         self.contacts.launch()
 
         # Check our two contacts are in the list.
@@ -60,5 +61,5 @@ class test_main(GaiaTestCase):
 
         self.UTILS.element.waitForElements(gmail_imported, "Gmail imported contact")
 
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot and details", x)
+        screenshot = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot and details", screenshot)
