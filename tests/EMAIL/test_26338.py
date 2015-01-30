@@ -51,6 +51,7 @@ class test_26338(Emailing):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
+        self.UTILS.reporting.logResult('info', 'Account info: {}'.format(self.user1))
         self.send_email(self.user1, self.user2)
         time.sleep(2)
         self.apps.kill_all()
