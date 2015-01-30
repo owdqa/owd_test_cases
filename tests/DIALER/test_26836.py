@@ -1,10 +1,13 @@
-from gaiatest import GaiaTestCase
+import sys
+sys.path.insert(1, "./")
 
+from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.dialer import Dialer
 from OWDTestToolkit.utils.contacts import MockContact
+from tests.i18nsetup import setup_translations
 
 
 class test_main(GaiaTestCase):
@@ -20,6 +23,7 @@ class test_main(GaiaTestCase):
         # Get details of our test contacts.
         self.Contact_1 = MockContact()
         self.UTILS.general.insertContact(self.Contact_1)
+        _ = setup_translations(self)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
