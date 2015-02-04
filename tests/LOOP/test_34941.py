@@ -19,10 +19,8 @@ class main(GaiaTestCase):
 
         # Clean start
         if self.loop.is_installed():
-            self.UTILS.reporting.logResult('info', 'Installed!!!!')
             self.loop.reinstall()
         else:
-            self.UTILS.reporting.logResult('info', 'NOT Installed!!!!')
             self.loop.install()
 
     def tearDown(self):

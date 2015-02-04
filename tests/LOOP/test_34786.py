@@ -39,7 +39,7 @@ class main(GaiaTestCase):
         result = self.loop.wizard_or_login()
 
         if result:
-            self.loop.phone_login()
+            self.loop.phone_login_auto()
             self.loop.allow_permission_phone_login()
             self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
 
@@ -50,7 +50,7 @@ class main(GaiaTestCase):
             self.UTILS.reporting.debug("*** Found {} options for camera".format(len(options)))
             default_mode = self.marionette.find_element(*DOM.Loop.settings_selected_call_mode)
             self.UTILS.reporting.debug("*** Default call mode: {}".format(default_mode.text))
-            video_str = _("Video")
+            video_str = _("Default mode: Video")
             self.UTILS.test.test(default_mode.text == video_str, "Default call mode is {} (Expected: {})".\
                                  format(default_mode.text, video_str))
         else:

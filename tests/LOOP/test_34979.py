@@ -21,7 +21,6 @@ class main(GaiaTestCase):
         self.fxa_pass = self.UTILS.general.get_config_variable("fxa_pass", "common")
 
         self.connect_to_network()
-
         self.loop.initial_test_checks()
 
         self.logout_fxa()

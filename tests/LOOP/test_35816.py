@@ -34,6 +34,6 @@ class main(GaiaTestCase):
         result = self.loop.wizard_or_login()
 
         if result:
-            self.loop.phone_login()
+            self.loop.phone_login_auto()
             # TODO: implement deny option
             self.loop.allow_permission_phone_login()

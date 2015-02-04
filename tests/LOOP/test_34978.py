@@ -50,7 +50,7 @@ class main(GaiaTestCase):
             self.loop.open_settings()
             self.loop.logout()
 
-        self.loop.phone_login()
+        self.loop.phone_login_auto()
         self.loop.open_settings()
         login_info_elem = self.UTILS.element.getElement(DOM.Loop.settings_logged_as, "Login info")
         login_info = login_info_elem.text.split("\n")[-1]
