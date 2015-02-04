@@ -19,14 +19,13 @@ class main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
+        _ = setup_translations(self)
 
         self.connect_to_network()
-
         self.loop.initial_test_checks()
 
         self.apps.kill_all()
         time.sleep(2)
-        _ = setup_translations(self)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
