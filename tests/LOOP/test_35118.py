@@ -18,17 +18,14 @@ from tests.i18nsetup import setup_translations
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
-        # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.loop = Loop(self)
 
         # Insert test contact
-        self.contact = MockContact()
-        self.UTILS.general.insertContact(self.contact)
+        self.test_contact = MockContact()
+        self.UTILS.general.insertContact(self.test_contact)
         _ = setup_translations(self)
 
     def tearDown(self):
@@ -36,18 +33,22 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Launch contacts app.
-        #
         self.contacts.launch()
-        self.contacts.view_contact(self.contact['name'])
+        self.contacts.view_contact(self.test_contact['name'])
         video_btn = self.marionette.find_element(DOM.Contacts.view_contact_hello_option[0],
                                                  DOM.Contacts.view_contact_hello_option[1].format("video"))
         video_btn.tap()
-        self.loop.share_micro_and_camera()
-        self.marionette.switch_to_frame()
-        msg_dom = (DOM.Loop.connection_error_msg[0], DOM.Loop.connection_error_msg[1].format(_("connection failure")))
-        self.wait_for_element_displayed(*msg_dom,
-                                        timeout=15)
-        error_msg = self.marionette.find_element(*msg_dom)
-        self.UTILS.test.test(error_msg, "Error message due to connection failure was found")
+        self.apps.switch_to_displayed_app()
+        self.loop.tap_on_firefox_login_button()
+
+        self.wait_for_element_displayed(DOM.Loop.error_msg[0], DOM.Loop.error_msg[1], timeout=15)
+        error_msg = self.marionette.find_element(*DOM.Loop.error_msg)
+        self.UTILS.test.test(error_msg.text == _("Please check your Internet connection"), "No connection messaged shown")
+        
+        error_ok = self.marionette.find_element(*DOM.Loop.error_screen_ok)
+        error_ok.tap()
+
+        self.loop.tap_on_phone_login_button()
+        self.wait_for_element_displayed(DOM.Loop.error_msg[0], DOM.Loop.error_msg[1], timeout=15)
+        error_msg = self.marionette.find_element(*DOM.Loop.error_msg)
+        self.UTILS.test.test(error_msg.text == _("Please check your Internet connection"), "No connection messaged shown")

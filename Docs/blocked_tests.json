@@ -8,8 +8,5 @@
     "26885": "Pending review",
     "28542": "Pending review",
     "26973": "Pending review",
-    "26907": "Unable to figure out how to detect how not the keyboard is displayed (previously opened)",
-    "36669": "Automation misbehavior when using Mobile ID login, server connection error, retry",
-    "36834": "When you have disabled and available shared_links, there's a bug -> all revoked",
-    "36835": "When you have disabled and available shared_links, there's a bug -> all revoked"
+    "26907": "Unable to figure out how to detect how not the keyboard is displayed (previously opened)"
 }

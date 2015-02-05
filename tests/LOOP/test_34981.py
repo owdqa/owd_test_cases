@@ -10,6 +10,7 @@ from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.loop import Loop
 from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.decorators import retry
 
 
 class main(GaiaTestCase):
@@ -48,11 +49,12 @@ class main(GaiaTestCase):
             self.loop.open_settings()
             self.loop.logout()
 
-        self.loop.launch()
+        # self.loop.launch()
         result = self.loop.wizard_or_login()
         if result:
             self.loop.firefox_login(self.fxa_user, self.fxa_pass)
-
+            self.loop.allow_permission_ffox_login()
+            
         self.UTILS.iframe.switch_to_frame(*DOM.Loop.frame_locator)
         self.loop.open_settings()
         login_info_elem = self.UTILS.element.getElement(DOM.Loop.settings_logged_as, "Login info")
