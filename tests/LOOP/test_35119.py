@@ -27,8 +27,8 @@ class main(GaiaTestCase):
 
         self.loop.initial_test_checks()
 
-        self.contact = MockContact()
-        self.UTILS.general.insertContact(self.contact)
+        self.test_contact = MockContact()
+        self.UTILS.general.insertContact(self.test_contact)
 
         self.apps.kill_all()
         time.sleep(2)
@@ -40,13 +40,15 @@ class main(GaiaTestCase):
 
     def test_run(self):
         self.contacts.launch()
-        self.contacts.view_contact(self.contact['name'])
+        self.contacts.view_contact(self.test_contact['name'])
         video_btn = self.marionette.find_element(DOM.Contacts.view_contact_hello_option[0],
                                                  DOM.Contacts.view_contact_hello_option[1].format("video"))
         video_btn.tap()
-        self.loop.share_micro_and_camera()
-        header = self.marionette.find_element(*DOM.Loop.app_header)
-        self.UTILS.test.test(header, "Firefox Hello launched successfully")
-        self.UTILS.iframe.switch_to_frame(*DOM.Loop.frame_locator)
+        self.apps.switch_to_displayed_app()
+        time.sleep(2)
+
         phone_btn = self.marionette.find_element(*DOM.Loop.wizard_login_phone_number)
-        self.UTILS.test.test(phone_btn, "Login using phone number button present")
+        self.UTILS.test.test(phone_btn.is_displayed(), "Login using phone number button present")
+        
+        ffox_btn = self.marionette.find_element(*DOM.Loop.wizard_login_ffox_account)
+        self.UTILS.test.test(ffox_btn.is_displayed(), "Login using phone number button present")

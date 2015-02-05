@@ -22,8 +22,6 @@ class main(GaiaTestCase):
         self.connect_to_network()
 
         # Update loop
-        self.loop.update_and_publish()
-
         self.loop.initial_test_checks()
 
         self.settings.launch()

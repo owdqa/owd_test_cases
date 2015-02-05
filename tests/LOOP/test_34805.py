@@ -19,14 +19,13 @@ class main(GaiaTestCase):
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
+        _ = setup_translations(self)
 
         self.connect_to_network()
-
         self.loop.initial_test_checks()
 
         self.apps.kill_all()
         time.sleep(2)
-        _ = setup_translations(self)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -38,12 +37,12 @@ class main(GaiaTestCase):
         result = self.loop.wizard_or_login()
 
         if result:
-            self.loop.phone_login()
+            self.loop.phone_login_auto()
             self.loop.allow_permission_phone_login()
             self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
 
         self.loop.open_settings()
         selected_camera = self.marionette.find_element(*DOM.Loop.settings_selected_camera)
-        front_str = _("Front")
+        front_str = _("Back camera")
         self.UTILS.test.test(selected_camera.text == front_str, "Default camera is {} (Expected: {})".\
                              format(selected_camera.text, front_str))

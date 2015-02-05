@@ -33,6 +33,6 @@ class main(GaiaTestCase):
         result = self.loop.wizard_or_login()
 
         if result:
-            self.loop.phone_login_manually(self.phone_number_without_prefix)
+            self.loop.phone_login_auto(self.phone_number_without_prefix)
             self.loop.allow_permission_phone_login()
             self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")

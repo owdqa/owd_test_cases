@@ -14,18 +14,13 @@ from OWDTestToolkit.apps.loop import Loop
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
-        # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.loop = Loop(self)
-        #
-        # Get details of our test contacts.
-        #
-        self.contact = MockContact()
-        self.UTILS.general.insertContact(self.contact)
+
+        self.test_contact = MockContact()
+        self.UTILS.general.insertContact(self.test_contact)
         self.data_layer.connect_to_wifi()
 
     def tearDown(self):
@@ -33,11 +28,8 @@ class test_main(GaiaTestCase):
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Launch contacts app.
-        #
         self.contacts.launch()
-        self.contacts.view_contact(self.contact['name'])
+        self.contacts.view_contact(self.test_contact['name'])
         video_btn = self.marionette.find_element(DOM.Contacts.view_contact_hello_option[0],
                                                  DOM.Contacts.view_contact_hello_option[1].format("video"))
         video_btn.tap()
