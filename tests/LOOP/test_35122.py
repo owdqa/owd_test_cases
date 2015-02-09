@@ -48,8 +48,7 @@ class test_main(GaiaTestCase):
         time.sleep(2)
 
         _ = setup_translations(self)
-        msg = "{} is not a Firefox Hello user yet. No problem! Just create a room and share it with him."
-        self.expected_reason = _(msg.format(self.test_contact['name']))
+        self.expected_reason = "{} {}".format(self.test_contact['name'], self.loop.not_a_loop_user)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
