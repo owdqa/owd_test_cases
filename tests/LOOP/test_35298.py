@@ -18,20 +18,15 @@ from tests.i18nsetup import setup_translations
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
-        # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.loop = Loop(self)
-
-        #
-        # Get details of our test contacts.
-        #
-        self.contact = MockContact()
-        self.UTILS.general.insertContact(self.contact)
-        self.data_layer.connect_to_wifi()
+        
+        self.room_subject = "Dummy"
+        self.test_contact = MockContact()
+        self.UTILS.general.insertContact(self.test_contact)
+        self.connect_to_network()
 
         result = self.loop.initial_test_checks()
 
@@ -44,41 +39,49 @@ class test_main(GaiaTestCase):
         time.sleep(2)
 
         _ = setup_translations(self)
-        self.expected_message = _("No problem! Just share the following link and they can call you back from"\
-                                  " any browser.")
+        msg = "{} is not a Firefox Hello user yet. No problem! Just create a room and share it with him."
+        self.expected_reason = _(msg.format(self.test_contact['name']))
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Launch contacts app.
-        #
         self.contacts.launch()
-        self.contacts.view_contact(self.contact['name'])
+        self.contacts.view_contact(self.test_contact['name'])
         video_btn = self.marionette.find_element(DOM.Contacts.view_contact_hello_option[0],
                                                  DOM.Contacts.view_contact_hello_option[1].format("video"))
         video_btn.tap()
+
+        self.apps.switch_to_displayed_app()
+        time.sleep(2)
+
+        self.wait_for_element_displayed(DOM.Loop.new_call_header[0], DOM.Loop.new_call_header[1], timeout=15)
+        self.loop.create_new_call(subject=self.room_subject, back_camera=False)
         self.loop.share_micro_and_camera()
-        self.wait_for_element_displayed(*DOM.Loop.not_a_user_explanation, timeout=10)
-        not_a_user_explanation = self.marionette.find_element(*DOM.Loop.not_a_user_explanation)
-        self.UTILS.test.test(not_a_user_explanation.text == self.expected_message, "Message found: {} (Expected: {}".\
-                             format(not_a_user_explanation.text, self.expected_message))
 
-        share_options = self.UTILS.element.getElements(DOM.Loop.share_link_options, "Sharing options")
-        self.UTILS.test.test(len(share_options) == 3, "There are {} sharing options (Expected: 3)".\
-                             format(len(share_options)))
-        share_by_sms = self.UTILS.element.getElement(DOM.Loop.share_panel_sms_share, "Share by SMS")
-        share_by_sms.tap()
+        self.wait_for_element_displayed(*DOM.Loop.new_call_fallback_message)
+        notif_reason = self.marionette.find_element(*DOM.Loop.new_call_fallback_message)
+        self.UTILS.test.test(notif_reason.text == self.expected_reason, "'Not a Firefox Hello user' message found")
 
-        # Check recipient and body
-        self.UTILS.iframe.switch_to_frame(*DOM.Messages.frame_locator)
+        # In 1.1.1, the fallback mechanism implies the creation of a brand new Room
+        self.wait_for_element_displayed(*DOM.Loop.new_call_fallback_new_room)
+        new_room = self.marionette.find_element(*DOM.Loop.new_call_fallback_new_room)
+        new_room.tap()
+
+        # After tapping on new room, the different options to reach our contact are shown
+        self.wait_for_element_displayed(DOM.Loop.fallback_options[0], DOM.Loop.fallback_options[1], timeout=15)
+        fallback_options = self.marionette.find_elements(*DOM.Loop.fallback_options)
+
+        sms_option = [option for option in fallback_options if option.text == self.test_contact["tel"]["value"]][0]
+        sms_option.tap()
+
+        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
         self.UTILS.element.getElement(DOM.Messages.target_numbers, "Message recipients")
         recipient_number = self.UTILS.element.getElement(DOM.Messages.target_numbers, "Recipient number")
-        self.UTILS.test.test(recipient_number.text == self.contact['name'], "Recipient number: {} "\
-                             "Expected: {}".format(recipient_number.text, self.contact['name']))
+        self.UTILS.test.test(recipient_number.text == self.test_contact['name'], "Recipient number: {} "\
+                             "Expected: {}".format(recipient_number.text, self.test_contact['name']))
         compose_msg = self.UTILS.element.getElement(DOM.Messages.input_message_area, "Composer message body")
-        expected_body = _("Click on the link and answer the call! https://hello.firefox.com/#call")
+        expected_body = _("""Join me for a video chat in my Firefox Hello room {}""".format(self.room_subject))
         self.UTILS.test.test(expected_body in compose_msg.text, "Message body: {} Expected: {}".\
                              format(compose_msg.text, expected_body))

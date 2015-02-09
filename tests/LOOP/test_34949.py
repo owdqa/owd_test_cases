@@ -28,18 +28,15 @@ class main(GaiaTestCase):
 
         if self.settings.is_fxa_logged_in():
             self.settings.fxa_log_out()
-        self.settings.fxa_log_in(self.fxa_user_1, self.fxa_pass_1)
-
         self.apps.kill_all()
         time.sleep(2)
 
         # First, login with the first fxa
         self.loop.launch()
         result = self.loop.wizard_or_login()
-
         if result:
-            self.loop.tap_on_firefox_login_button()
-
+            self.loop.firefox_login(self.fxa_user_1, self.fxa_pass_1)
+            self.loop.allow_permission_ffox_login()
             self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
             self.loop.open_settings()
             self.loop.logout()

@@ -23,9 +23,6 @@ class test_main(GaiaTestCase):
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        #
-        # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
@@ -35,12 +32,11 @@ class test_main(GaiaTestCase):
         self.email_add = self.UTILS.general.get_config_variable("gmail_2_email", "common")
         self.email_pass = self.UTILS.general.get_config_variable("gmail_2_pass", "common")
         self.email_user = self.UTILS.general.get_config_variable("gmail_2_user", "common")
-        #
-        # Get details of our test contacts.
-        #
-        self.contact = MockContact()
-        self.UTILS.general.insertContact(self.contact)
-        self.data_layer.connect_to_wifi()
+        self.room_subject = "Dummy subject"
+       
+        self.test_contact = MockContact()
+        self.UTILS.general.insertContact(self.test_contact)
+        self.data_layer.connect_to_cell_data()
 
         result = self.loop.initial_test_checks()
 
@@ -55,43 +51,54 @@ class test_main(GaiaTestCase):
         time.sleep(2)
 
         _ = setup_translations(self)
-        self.expected_message = _("No problem! Just share the following link and they can call you back from"\
-                                  " any browser.")
+        msg = "{} is not a Firefox Hello user yet. No problem! Just create a room and share it with him."
+        self.expected_reason = _(msg.format(self.test_contact['name']))
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Launch contacts app.
-        #
         self.contacts.launch()
-        self.contacts.view_contact(self.contact['name'])
+        self.contacts.view_contact(self.test_contact['name'])
         video_btn = self.marionette.find_element(DOM.Contacts.view_contact_hello_option[0],
                                                  DOM.Contacts.view_contact_hello_option[1].format("video"))
         video_btn.tap()
-        self.loop.share_micro_and_camera()
-        self.wait_for_element_displayed(*DOM.Loop.not_a_user_explanation, timeout=10)
-        not_a_user_explanation = self.marionette.find_element(*DOM.Loop.not_a_user_explanation)
-        self.UTILS.test.test(not_a_user_explanation.text == self.expected_message, "Message found: {} (Expected: {}".\
-                             format(not_a_user_explanation.text, self.expected_message))
 
-        share_options = self.UTILS.element.getElements(DOM.Loop.share_link_options, "Sharing options")
-        self.UTILS.test.test(len(share_options) == 3, "There are {} sharing options (Expected: 3)".\
-                             format(len(share_options)))
-        share_by_email = self.UTILS.element.getElement(DOM.Loop.share_panel_email_share, "Share by Email")
-        share_by_email.tap()
-        self.UTILS.iframe.switch_to_frame(*DOM.Email.frame_locator)
+        self.apps.switch_to_displayed_app()
+        time.sleep(2)
+
+        self.wait_for_element_displayed(DOM.Loop.new_call_header[0], DOM.Loop.new_call_header[1], timeout=15)
+        self.loop.create_new_call(subject=self.room_subject, back_camera=False)
+        self.loop.share_micro_and_camera()
+
+        self.wait_for_element_displayed(*DOM.Loop.new_call_fallback_message)
+        notif_reason = self.marionette.find_element(*DOM.Loop.new_call_fallback_message)
+        self.UTILS.test.test(notif_reason.text == self.expected_reason, "'Not a Firefox Hello user' message found")
+
+        # In 1.1.1, the fallback mechanism implies the creation of a brand new Room
+        self.wait_for_element_displayed(*DOM.Loop.new_call_fallback_new_room)
+        new_room = self.marionette.find_element(*DOM.Loop.new_call_fallback_new_room)
+        new_room.tap()
+
+        # After tapping on new room, the different options to reach our contact are shown
+        self.wait_for_element_displayed(DOM.Loop.fallback_options[0], DOM.Loop.fallback_options[1], timeout=15)
+        fallback_options = self.marionette.find_elements(*DOM.Loop.fallback_options)
+
+        email_option = [option for option in fallback_options if option.text == self.test_contact["email"]["value"]][0]
+        email_option.tap()
+
+        self.UTILS.iframe.switchToFrame(*DOM.Email.frame_locator)
         time.sleep(2)
 
         # Modify the message subject
         subject = self.UTILS.element.getElement(DOM.Email.compose_subject, "Subject input").get_attribute("value")
         self.UTILS.reporting.debug("*** Email Subject before editing: {}".format(subject))
-        new_subject = " Editing subject"
-        expected = subject + new_subject
-        self.UTILS.general.typeThis(DOM.Email.compose_subject, "Subject input area", new_subject, p_clear=False,
-                                    p_validate=False)
+        new_subject = "[NEW SUBJECT] "
+        expected = new_subject + subject
+
+        compose_subject = self.marionette.find_element(*DOM.Email.compose_subject)
+        compose_subject.send_keys(new_subject)
         subject_after = self.UTILS.element.getElement(DOM.Email.compose_subject, "Subject input").\
                                                         get_attribute("value")
         self.UTILS.test.test(expected == subject_after, "Expected subject: {} Actual subject: {}".\
@@ -100,10 +107,11 @@ class test_main(GaiaTestCase):
         # Modify the message body
         msg_body = self.UTILS.element.getElement(DOM.Email.compose_msg, "Input message area").text
         self.UTILS.reporting.debug("*** Email Body before editing: {}".format(msg_body))
-        new_text = " This is more test in the Email"
-        expected = msg_body + new_text
-        self.UTILS.general.typeThis(DOM.Email.compose_msg, "Input message area",
-                                   new_text, p_clear=False, p_validate=False)
+        new_text = "[NEW TEXT] "
+        expected = new_text + msg_body 
+
+        compose_msg = self.marionette.find_element(*DOM.Email.compose_msg)
+        compose_msg.send_keys(new_text)
         msg_body_after = self.UTILS.element.getElement(DOM.Email.compose_msg, "Input message area").text
         self.UTILS.test.test(expected == msg_body_after, "Expected text: {} Actual text: {}".\
                             format(expected, msg_body_after))
