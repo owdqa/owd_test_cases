@@ -46,7 +46,9 @@ class test_main(GaiaTestCase):
             self.UTILS.element.waitForElements(DOM.Loop.app_header, "Loop main view")
         self.apps.kill_all()
         time.sleep(2)
+
         _ = setup_translations(self)
+        self.expected_reason = "{} {}".format(self.test_contact['name'], self.loop.not_a_loop_user)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -58,11 +60,18 @@ class test_main(GaiaTestCase):
         video_btn = self.marionette.find_element(DOM.Contacts.view_contact_hello_option[0],
                                                  DOM.Contacts.view_contact_hello_option[1].format("video"))
         video_btn.tap()
+
+        self.apps.switch_to_displayed_app()
+        time.sleep(2)
+        self.wait_for_element_displayed(*DOM.Loop.new_call_header)
+        self.loop.create_new_call(subject="Dummy subject", back_camera=False)
         self.loop.share_micro_and_camera()
-        
-        not_user_str = _("Not a Firefox Hello user yet")
-        not_user_dom = (DOM.Loop.not_a_hello_user_msg[0], DOM.Loop.not_a_hello_user_msg[1].format(not_user_str))
-        self.wait_for_element_displayed(*not_user_dom, timeout=10)
-        not_a_user_msg = self.marionette.find_element(*not_user_dom)
-        self.UTILS.test.test(not_a_user_msg.text == not_user_str, "Message found: {} (Expected: {}".\
-                             format(not_a_user_msg.text, not_user_str))
+
+        self.wait_for_element_displayed(*DOM.Loop.new_call_fallback_message)
+        notif_reason = self.marionette.find_element(*DOM.Loop.new_call_fallback_message)
+        self.UTILS.test.test(notif_reason.text == self.expected_reason, "'Not a Firefox Hello user' message found")
+
+        # In 1.1.1, the fallback mechanism implies the creation of a brand new Room
+        self.wait_for_element_displayed(*DOM.Loop.new_call_fallback_new_room)
+        new_room = self.marionette.find_element(*DOM.Loop.new_call_fallback_new_room)
+        new_room.is_displayed()
