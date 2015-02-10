@@ -113,7 +113,6 @@ class test_main(GaiaTestCase):
         self.loop.tap_on_firefox_login_button()
 
         self.email.launch()
-        self.email.remove_accounts_and_restart()
         self.email.setupAccount(self.hot_user, self.hot_emailadd, self.hot_passwd)
         invitation = self.email.get_email("Firefox Hello")
         self.UTILS.reporting.debug("Room invitation received: {}".format(invitation))
