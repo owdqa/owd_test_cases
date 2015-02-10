@@ -452,5 +452,6 @@
     "36830": "Delete the revoked URL in Shared URL when there are more than one revoked URL - Clean Shared Links - Clean Just Disabled links",
     "36831": "Delete the revoked URL in Shared URL when there are more than one revoked URLs - Clean Shared Links - Clean All",
     "36834": "Delete Revoked and Available URLs in Shared URL when there are more than one revoked and availabe URL in different days - Clean Shared Links - Clean Just Disabled links",
-    "36835": "Delete Revoked and Available URLs in Shared URL when there are more than one revoked and availabe URL in different days - Clean Shared Links - Clean All links"
+    "36835": "Delete Revoked and Available URLs in Shared URL when there are more than one revoked and availabe URL in different days - Clean Shared Links - Clean All links",
+    "ROOMS126": "Verify that the user can rename a room"
 }
