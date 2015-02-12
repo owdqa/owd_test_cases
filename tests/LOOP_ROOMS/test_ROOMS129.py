@@ -1,27 +1,25 @@
 #===============================================================================
-# 126: Verify that the user can rename a room
+# 129: Verify that the new name for the room is shown in Rooms list
 #
 # Procedure:
-# --Owner
 # 1. On Rooms list tap on one room created by "A" (ER1)
 # 2. Tap on 'Edit' button (ER2)
 # 3. Change the room's name by adding or deleting any character, then tap on
 # Save (ER3)
 # 4. Go back to Rooms list by tapping on back button (<) (ER4).
-# --Invited user
-# 1. Check that there is no way to change the name of the room (ER5)
+# 5. Check whether the room name change is already visible for B user (ER5)
 #
 # Expected results:
-# --Owner
 # ER1. The Room details screen is open
-# ER2. The Edit name room screen is open allowing user to change the name of
-# the room
+# ER2. The Edit name room screen is open allowing user to change the name of the
+# room
 # ER3. The saving screen is shown and user is taken back to Room Detail screen
 # where the name is updated with the changes
 # ER4. The new name for the room is updated in the Rooms list
-# --Invited user
-# ER5. There should not be any way to change the name of the room
+# ER5. The new name for the room will be available for B user once he joins the
+# room again
 #===============================================================================
+
 
 import time
 from gaiatest import GaiaTestCase
@@ -30,7 +28,7 @@ from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.browser import Browser
 from OWDTestToolkit.apps.loop import Loop
 from OWDTestToolkit.apps.contacts import Contacts
-from OWDTestToolkit.apps.email import Email
+from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit import DOM
 
 
@@ -45,21 +43,10 @@ class test_main(GaiaTestCase):
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
         self.contacts = Contacts(self)
-        self.email = Email(self)
+        self.messages = Messages(self)
         self.browser = Browser(self)
 
         self.connect_to_network()
-
-        self.user = self.UTILS.general.get_config_variable("gmail_1_user", "common")
-        self.emailadd = self.UTILS.general.get_config_variable("gmail_1_email", "common")
-        self.passwd = self.UTILS.general.get_config_variable("gmail_1_pass", "common")
-        self.hot_user = self.UTILS.general.get_config_variable("hotmail_1_user", "common")
-        self.hot_emailadd = self.UTILS.general.get_config_variable("hotmail_1_email", "common")
-        self.hot_passwd = self.UTILS.general.get_config_variable("hotmail_1_pass", "common")
-        self.email.launch()
-        self.email.setupAccount(self.user, self.emailadd, self.passwd)
-        self.apps.kill_all()
-        time.sleep(2)
 
         self.loop.initial_test_checks()
 
@@ -69,7 +56,8 @@ class test_main(GaiaTestCase):
         self.new_name = self.test_room + "--New"
         self.fxa_user = self.UTILS.general.get_config_variable("fxa_user", "common")
         self.fxa_pass = self.UTILS.general.get_config_variable("fxa_pass", "common")
-        self.test_contact = MockContact(email={'type': 'Personal', 'value': self.fxa_user})
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.test_contact = MockContact(tel={'type': 'Mobile', 'value': self.phone_number})
         self.UTILS.general.insertContact(self.test_contact)
 
     def tearDown(self):
@@ -89,18 +77,24 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switchToFrame(*DOM.Loop.frame_locator)
         self.UTILS.reporting.debug("Creating room with name: {}".format(self.test_room))
         self.loop.create_room(self.test_room)
-        time.sleep(5)
+        time.sleep(3)
+        # Share the room with the user we have just created
+        self.loop.share_room(self.test_contact, by_sms=True)
+
+        self.apps.kill_all()
+        time.sleep(2)
+        self.loop.launch()
+        time.sleep(3)
+        self.loop.open_room_details(self.test_room)
+        time.sleep(2)
         self.loop.edit_room(self.new_name)
 
         # Check the new room name in the details view
-        time.sleep(5)
+        time.sleep(3)
         self.wait_for_element_displayed(*DOM.Loop.room_name)
         name = self.marionette.find_element(*DOM.Loop.room_name)
         self.UTILS.test.test(name.text == self.new_name, "New name for room is [{}]   Expected: [{}]".
                              format(name.text, self.new_name))
-
-        # Share the room with the user we have just created
-        self.loop.share_room(self.test_contact, by_sms=False)
 
         # Now logout and log in with another user
         self.marionette.find_element(*DOM.Loop.room_back_btn).tap()
@@ -111,18 +105,14 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switchToFrame(*DOM.Loop.frame_locator)
         self.loop.tap_on_firefox_login_button()
 
-        self.email.launch()
-        self.email.setupAccount(self.hot_user, self.hot_emailadd, self.hot_passwd)
-        invitation = self.email.get_email("Firefox Hello")
-        self.UTILS.reporting.debug("Room invitation received: {}".format(invitation))
-        invitation.tap()
-        self.email.wait_for_email_loaded("Firefox Hello")
-        link = self.marionette.find_element(*DOM.Loop.room_link_in_email)
-        self.UTILS.reporting.debug("Link found in email: {}".format(link.text))
+        # Open the messaging application and click the room link
+        self.messages.launch()
+        self.messages.openThread(self.test_contact['name'])
+        send_time = self.messages.last_sent_message_timestamp()
+        msg = self.messages.wait_for_message(send_time)
+        link = self.marionette.find_element(*DOM.Messages.link_in_msg, id=msg.id)
+        self.UTILS.reporting.debug("Link in message: {}".format(link.text))
         self.UTILS.element.simulateClick(link)
-
-        # Tap to open the link and join the room
-        self.marionette.find_element(*DOM.Loop.room_open_link_ok).tap()
 
         # Go to the browser iframe to look for the Join button
         time.sleep(2)
@@ -137,18 +127,10 @@ class test_main(GaiaTestCase):
         self.UTILS.iframe.switchToFrame(*DOM.Loop.frame_locator)
         self.loop.select_camera_and_join_room(back=False)
         self.loop.share_micro_and_camera()
+        time.sleep(2)
 
-        # Hang up the call and go back to the call log
-        self.loop.hangup_room()
-
-        # Open the room details and check there is no Edit button
-        self.UTILS.reporting.debug("Room closed")
-        room_dom = (DOM.Loop.room_entry[0], DOM.Loop.room_entry[1].format(self.new_name))
-        self.UTILS.reporting.debug("Searching room with DOM: {}".format(room_dom))
-        room_entry = self.marionette.find_element(*room_dom)
-        name = room_entry.get_attribute("data-room-name")
-        self.UTILS.test.test(name == self.new_name, "Room name: {}  Expected: {}".format(name, self.new_name))
-        self.marionette.find_element(*DOM.Loop.room_edit).tap()
-        self.wait_for_element_displayed(*DOM.Loop.room_detail_header)
-        self.wait_for_element_not_displayed(*DOM.Loop.room_detail_edit_btn, timeout=10)
-        self.UTILS.reporting.debug("No Edit button found, as expected")
+        self.wait_for_element_displayed(*DOM.Loop.room_call_name, timeout=20)
+        name = self.marionette.find_element(*DOM.Loop.room_call_name).text
+        self.UTILS.test.test(name == self.new_name, "Room name for user B: {}  Expected: {}".
+                             format(name, self.new_name))
+        time.sleep(3)
