@@ -14,7 +14,7 @@
 #       disable flight mode" and an "OK" button.
 #       ER3 When the "OK" button is pressed, the dialogue is closed and the user is returned to the call log.
 import time
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.dialer import Dialer
@@ -24,34 +24,38 @@ sys.path.insert(1, "./")
 from tests.i18nsetup import setup_translations
 
 
-class test_main(GaiaTestCase):
+class test_main(FireCTestCase):
 
     def setUp(self):
         # Set up child objects...
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.dialer = Dialer(self)
         _ = setup_translations(self)
 
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.target_number = self.UTILS.general.get_config_variable("target_call_number", "common")
 
         # Fill the call log with some entries
         self.dialer.launch()
-        self.dialer.createMultipleCallLogEntries(self.phone_number, 1)
-        self.data_layer.set_setting("airplaneMode.enabled", True)
+        self.dialer.createMultipleCallLogEntries(self.target_number, 1)
+        self.UTILS.statusbar.toggleViaStatusBar("airplane")
         self.wait_for_condition(lambda m: self.data_layer.get_setting("airplaneMode.enabled"),
                                 timeout=30, message="No airplane mode enabled")
+        self.apps.kill_all()
+        time.sleep(2)
 
     def tearDown(self):
-        self.data_layer.set_setting("airplaneMode.enabled", False)
+        self.UTILS.statusbar.toggleViaStatusBar("airplane")
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
+        self.dialer.launch()
         self.dialer.open_call_log()
 
-        elem = ("xpath", DOM.Dialer.call_log_number_xpath.format(self.phone_number))
-        entry = self.UTILS.element.getElement(elem, "The call log for number {}".format(self.phone_number))
+        elem = ("xpath", DOM.Dialer.call_log_number_xpath.format(self.target_number))
+        entry = self.UTILS.element.getElement(elem, "The call log for number {}".format(self.target_number))
         entry.tap()
 
         warning_header = (DOM.GLOBAL.confirmation_msg_header[0],

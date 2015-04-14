@@ -16,7 +16,7 @@
 import time
 import sys
 sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from tests.EMAIL.shared_test_functions.emailing import Emailing
 
 
@@ -49,7 +49,7 @@ class test_26339(Emailing):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
         self.send_email(self.user1, self.user2)

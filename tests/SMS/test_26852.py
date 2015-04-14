@@ -12,14 +12,14 @@
 # The SMS is successfully deleted
 #===============================================================================
 
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 import time
 
 
-class test_main(GaiaTestCase):
+class test_main(FireCTestCase):
 
     test_msgs = ["First message", "Second message", "Third message"]
 
@@ -27,20 +27,18 @@ class test_main(GaiaTestCase):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
-        #
-        # Establish which phone number to use.
-        #
+        self.pos_to_delete = [1]
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
         self.UTILS.statusbar.clearAllStatusBarNotifs()
@@ -70,14 +68,14 @@ class test_main(GaiaTestCase):
         #
         # Select the messages to be deleted.
         #
-        self.messages.deleteMessagesInThisThread([1])
+        self.messages.deleteMessagesInThisThread(self.pos_to_delete)
 
         #
         # Check message isn't there anymore.
         #
         x = self.UTILS.element.getElements(DOM.Messages.message_list, "Messages")
         final_count = len(x)
-        real_count = original_count - 1
-        self.UTILS.test.test(final_count == (original_count - 1),
+        real_count = original_count - len(self.pos_to_delete)
+        self.UTILS.test.test(final_count == real_count,
                         "After deleting the message, there were {} messages in this thread ({}) found).".\
                         format(real_count, final_count))

@@ -8,7 +8,7 @@
 # ** Expected Results
 #       The file is not deleted and the user returns to download list
 import time
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.browser import Browser
 from OWDTestToolkit.apps.settings import Settings
@@ -16,11 +16,11 @@ from OWDTestToolkit.apps.downloadmanager import DownloadManager
 from OWDTestToolkit import DOM
 
 
-class test_main(GaiaTestCase):
+class test_main(FireCTestCase):
 
     def setUp(self):
 
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
 
         self.browser = Browser(self)
@@ -30,14 +30,14 @@ class test_main(GaiaTestCase):
         self.file_name = "11MB.rar"
         self.data_url = "{}/{}".format(self.test_url, self.file_name)
 
-        self.connect_to_network()
+        self.data_layer.connect_to_wifi()
         self.settings.launch()
         self.settings.downloads()
         self.download_manager.clean_downloads_list()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
  

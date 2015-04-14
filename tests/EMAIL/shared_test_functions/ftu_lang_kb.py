@@ -7,7 +7,7 @@
 # Currently used by tests 42,43 and 44.
 #
 
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.apps import Ftu
 from OWDTestToolkit.utils.utils import UTILS
@@ -15,7 +15,7 @@ from OWDTestToolkit.utils.utils import UTILS
 import os
 
 
-class FtuLangKb(GaiaTestCase):
+class FtuLangKb(FireCTestCase):
 
     def __init__(self, parent, lang, sizes):
         self.lang = lang

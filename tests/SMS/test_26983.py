@@ -17,15 +17,18 @@
 # There should be an error message to warn user that a connection is needed
 #===============================================================================
 
-from gaiatest import GaiaTestCase
+import time
+import sys
+sys.path.insert(1, "./")
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.email import Email
-import time
+from tests.i18nsetup import setup_translations
 
 
-class test_main(GaiaTestCase):
+class test_main(FireCTestCase):
 
     def __init__(self, *args, **kwargs):
         kwargs['restart'] = True
@@ -35,7 +38,7 @@ class test_main(GaiaTestCase):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.email = Email(self)
@@ -47,10 +50,13 @@ class test_main(GaiaTestCase):
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.dest_email = self.UTILS.general.get_config_variable("gmail_2_email", "common")
         self.incoming_sms_num = self.UTILS.general.get_config_variable("sms_platform_numbers", "common")
+        _ = setup_translations(self)
+        self.expected_error_message = _(
+            'Unable to establish a connection with "imap.googlemail.com". There may be a problem with the network.')
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
         #
@@ -85,5 +91,4 @@ class test_main(GaiaTestCase):
         self.email.setupAccountFirstStep(self.email_user, self.email_address, self.email_pass)
 
         error = self.UTILS.element.getElement(DOM.Email.new_account_error_msg, "Error message")
-        self.UTILS.test.test(error.text == "This device is currently offline. Connect to a network and try again.",
-            "Verifying error message")
+        self.UTILS.test.test(error.text == self.expected_error_message, "Verifying error message")

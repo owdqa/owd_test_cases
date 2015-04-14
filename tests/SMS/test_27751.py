@@ -1,4 +1,4 @@
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
@@ -8,7 +8,7 @@ from OWDTestToolkit.utils.contacts import MockContact
 import time
 
 
-class test_main(GaiaTestCase):
+class test_main(FireCTestCase):
 
     test_msg = "Test."
 
@@ -16,7 +16,7 @@ class test_main(GaiaTestCase):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.contacts = Contacts(self)
@@ -24,7 +24,7 @@ class test_main(GaiaTestCase):
         #
         # Put the phone into airplane mode.
         #
-        self.data_layer.set_setting('airplaneMode.enabled', True)
+        self.UTILS.statusbar.toggleViaStatusBar('airplane')
 
         #
         # Prepare the contact we're going to insert.
@@ -36,8 +36,9 @@ class test_main(GaiaTestCase):
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact["tel"]["value"])
 
     def tearDown(self):
+        self.UTILS.statusbar.toggleViaStatusBar('airplane')
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
 
@@ -61,7 +62,7 @@ class test_main(GaiaTestCase):
         #
         # Click send.
         #
-        self.messages.sendSMS()
+        self.messages.sendSMS(check=False)
         time.sleep(3)
 
         #

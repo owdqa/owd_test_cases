@@ -11,14 +11,14 @@
 # The SMS app shows a list with all conversations held is displayed
 #===============================================================================
 
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.utils.contacts import MockContact
 
 
-class test_main(GaiaTestCase):
+class test_main(FireCTestCase):
 
     test_msg = "Test message."
 
@@ -26,7 +26,7 @@ class test_main(GaiaTestCase):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
@@ -41,7 +41,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
         #
@@ -52,7 +52,7 @@ class test_main(GaiaTestCase):
         #
         # Send a message to myself (long and short number to get a few threads).
         #
-        self.messages.create_and_send_sms(self.nums, "Test message")
+        self.messages.create_and_send_sms(self.nums, "Test message", sending_check=False)
 
         thread_names = self.UTILS.element.getElements(DOM.Messages.thread_target_names, "Threads target names")
 

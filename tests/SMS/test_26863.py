@@ -17,19 +17,19 @@
 # returned to the SMS thread view.
 #===============================================================================
 
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 import time
 
 
-class test_main(GaiaTestCase):
+class test_main(FireCTestCase):
 
     def setUp(self):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.target_num = self.UTILS.general.get_config_variable("phone_number", "custom")
@@ -37,8 +37,9 @@ class test_main(GaiaTestCase):
         self.data_layer.delete_all_sms()
 
     def tearDown(self):
-        self.UTILS.reporting.reportResults()
         self.UTILS.statusbar.toggleViaStatusBar('airplane')
+        self.UTILS.reporting.reportResults()
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
         #
@@ -90,7 +91,7 @@ class test_main(GaiaTestCase):
         #
         # Click send.
         #
-        self.messages.sendSMS()
+        self.messages.sendSMS(check=False)
 
         #
         # Check that popup appears.

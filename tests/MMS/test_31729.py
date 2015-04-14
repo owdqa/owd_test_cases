@@ -1,7 +1,7 @@
 #
 # TC_MMSTC-FEATR-012d
 # The device should support MPEG4 file format
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
@@ -9,7 +9,7 @@ from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.video import Video
 
 
-class test_main(GaiaTestCase):
+class test_main(FireCTestCase):
 
     test_msg = "Hello World"
 
@@ -17,7 +17,7 @@ class test_main(GaiaTestCase):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.video = Video(self)
@@ -30,7 +30,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
         self.messages.create_and_send_mms('video', [self.phone_number], self.test_msg)

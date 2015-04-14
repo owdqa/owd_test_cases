@@ -7,16 +7,16 @@
 # message sent between the two test accounts.
 #
 
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 
 
-class field_remove_toggle(GaiaTestCase):
+class field_remove_toggle(FireCTestCase):
 
     def setUp(self):
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
 

@@ -1,7 +1,8 @@
 #
 # 27754: Send a SMS to multiple contacts
 #
-from gaiatest import GaiaTestCase
+import time
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -9,13 +10,13 @@ from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.utils.contacts import MockContact
 
 
-class test_main(GaiaTestCase):
+class test_main(FireCTestCase):
 
     def setUp(self):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.messages = Messages(self)
@@ -23,16 +24,14 @@ class test_main(GaiaTestCase):
         #
         # Establish which phone number to use and set up the contacts.
         #
-        self.nums = [self.UTILS.general.get_config_variable("phone_number", "custom"),
-                        self.UTILS.general.get_config_variable("short_phone_number", "custom")]
-
-        self.test_contacts = [MockContact(tel={'type': 'Mobile', 'value': self.nums[i]}) for i in range(2)]
+        self.test_contacts = [MockContact() for i in range(2)]
+        self.test_contacts[0]['tel']['value'] = self.UTILS.general.get_config_variable("phone_number", "custom")
         map(self.UTILS.general.insertContact, self.test_contacts)
         self.data_layer.delete_all_sms()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
         #
@@ -54,7 +53,8 @@ class test_main(GaiaTestCase):
 
         test_msg = "Test message."
         self.messages.enterSMSMsg(test_msg)
-        self.messages.sendSMS()
+        time.sleep(2)
+        self.messages.sendSMS(check=False)
 
         # Since the destination number is the own, we will only receive one message, so we check it once
         self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)

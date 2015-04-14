@@ -2,7 +2,7 @@
 import time
 import sys
 sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.loop import Loop
 from OWDTestToolkit.apps.settings import Settings
@@ -11,10 +11,10 @@ from tests.i18nsetup import setup_translations
 from OWDTestToolkit.utils.contacts import MockContact
 
 
-class main(GaiaTestCase):
+class main(FireCTestCase):
 
     def setUp(self):
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
         self.settings = Settings(self)
@@ -22,7 +22,7 @@ class main(GaiaTestCase):
         self.fxa_user = self.UTILS.general.get_config_variable("fxa_user", "common")
         self.fxa_pass = self.UTILS.general.get_config_variable("fxa_pass", "common")
 
-        self.connect_to_network()
+        self.data_layer.connect_to_wifi()
         self.UTILS.general.insertContact(self.test_contact)
         # Clean start
         if not self.loop.is_installed():
@@ -42,7 +42,7 @@ class main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
         # First, login

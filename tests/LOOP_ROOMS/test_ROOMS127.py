@@ -24,7 +24,7 @@
 
 
 import time
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit.utils.contacts import MockContact
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.browser import Browser
@@ -34,21 +34,21 @@ from OWDTestToolkit.apps.email import Email
 from OWDTestToolkit import DOM
 
 
-class test_main(GaiaTestCase):
+class test_main(FireCTestCase):
 
     def __init__(self, *args, **kwargs):
         kwargs['restart'] = True
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
         self.contacts = Contacts(self)
         self.email = Email(self)
         self.browser = Browser(self)
 
-        self.connect_to_network()
+        self.data_layer.connect_to_wifi()
 
         self.user = self.UTILS.general.get_config_variable("gmail_1_user", "common")
         self.emailadd = self.UTILS.general.get_config_variable("gmail_1_email", "common")
@@ -74,7 +74,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
         # First, login

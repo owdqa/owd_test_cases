@@ -20,7 +20,7 @@
 # ER2. All contacts previously selected should be unselected at once
 #===============================================================================
 
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
@@ -30,13 +30,13 @@ from OWDTestToolkit.utils.contacts import MockContact
 import time
 
 
-class test_main(GaiaTestCase):
+class test_main(FireCTestCase):
 
     def setUp(self):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.settings = Settings(self)
@@ -52,14 +52,14 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
 
         #
         # Set up to use data connection.
         #
-        self.connect_to_network()
+        self.data_layer.connect_to_wifi()
 
         self.contacts.launch()
 

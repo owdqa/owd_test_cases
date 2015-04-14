@@ -10,7 +10,7 @@
 import time
 import sys
 sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.email import Email
@@ -19,11 +19,11 @@ from OWDTestToolkit.apps.browser import Browser
 from tests.i18nsetup import setup_translations
 
 
-class Emailing(GaiaTestCase):
+class Emailing(FireCTestCase):
 
     def setUpEmail(self):
 
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
 
         self.Email = Email(self)

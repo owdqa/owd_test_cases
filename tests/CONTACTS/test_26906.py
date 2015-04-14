@@ -1,6 +1,6 @@
 import sys
 sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.utils.contacts import MockContact

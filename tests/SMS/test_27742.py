@@ -2,12 +2,12 @@
 # 27742
 #
 from OWDTestToolkit import DOM
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 
 
-class test_main(GaiaTestCase):
+class test_main(FireCTestCase):
 
     test_msg = "This text has multiple spaces 1  2  3  4  5."
 
@@ -15,7 +15,7 @@ class test_main(GaiaTestCase):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
@@ -28,7 +28,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
         self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)

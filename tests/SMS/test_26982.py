@@ -13,14 +13,14 @@
 #===============================================================================
 
 import time
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.email import Email
 
 
-class test_main(GaiaTestCase):
+class test_main(FireCTestCase):
 
     def __init__(self, *args, **kwargs):
         kwargs['restart'] = True
@@ -30,7 +30,7 @@ class test_main(GaiaTestCase):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.Email = Email(self)
@@ -44,14 +44,14 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
 
         #
         # Set up email account.
         #
-        self.connect_to_network()
+        self.data_layer.connect_to_wifi()
 
         self.Email.launch()
         self.Email.setupAccount(self.email_user, self.email_address, self.email_pass)

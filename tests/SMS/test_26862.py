@@ -20,14 +20,14 @@
 # The new SMS thread must be created.
 #===============================================================================
 
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 import time
 
 
-class test_main(GaiaTestCase):
+class test_main(FireCTestCase):
 
     test_msg = "Test."
 
@@ -35,7 +35,7 @@ class test_main(GaiaTestCase):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
@@ -43,14 +43,14 @@ class test_main(GaiaTestCase):
         #
         # Put the phone into airplane mode.
         #
-        self.data_layer.set_setting('airplaneMode.enabled', True)
+        self.UTILS.statusbar.toggleViaStatusBar('airplane')
         self.data_layer.delete_all_sms()
         self.UTILS.statusbar.clearAllStatusBarNotifs()
 
     def tearDown(self):
-        self.data_layer.set_setting('airplaneMode.enabled', False)
+        self.UTILS.statusbar.toggleViaStatusBar('airplane')
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
 
@@ -74,7 +74,7 @@ class test_main(GaiaTestCase):
         #
         # Click send.
         #
-        self.messages.sendSMS()
+        self.messages.sendSMS(check=False)
 
         time.sleep(3)
 

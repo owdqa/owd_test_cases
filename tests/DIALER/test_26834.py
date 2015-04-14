@@ -21,34 +21,34 @@
 
 import sys
 sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.dialer import Dialer
 from tests.i18nsetup import setup_translations
 
 
-class test_main(GaiaTestCase):
+class test_main(FireCTestCase):
 
     def setUp(self):
         # Set up child objects...
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.dialer = Dialer(self)
         _ = setup_translations(self)
-        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.target_number = self.UTILS.general.get_config_variable("target_call_number", "common")
 
     def tearDown(self):
-        self.data_layer.set_setting("airplaneMode.enabled", False)
+        self.UTILS.statusbar.toggleViaStatusBar("airplane")
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
-        self.data_layer.set_setting("airplaneMode.enabled", True)
+        self.UTILS.statusbar.toggleViaStatusBar("airplane")
         self.wait_for_condition(lambda m: self.data_layer.get_setting("airplaneMode.enabled"),
                                 timeout=30, message="No airplane mode enabled")
         self.dialer.launch()
-        self.dialer.enterNumber(self.phone_number)
+        self.dialer.enterNumber(self.target_number)
         call_button = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call number button")
         call_button.tap()
 
@@ -67,5 +67,5 @@ class test_main(GaiaTestCase):
 
         phone_field = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number field", False)
         dialer_number = phone_field.get_attribute("value")
-        self.UTILS.test.test(str(self.phone_number) in dialer_number,
-                             "After cancelling, phone number field still contains '{}'".format(self.phone_number))
+        self.UTILS.test.test(str(self.target_number) in dialer_number,
+                             "After cancelling, phone number field still contains '{}'".format(self.target_number))

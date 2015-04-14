@@ -6,7 +6,7 @@
 # ** Expected result
 #       Tapping on the Call button retrieves the most recent outgoing number from the call log
 
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
@@ -14,14 +14,14 @@ from OWDTestToolkit.apps.dialer import Dialer
 from OWDTestToolkit.utils.contacts import MockContact
 
 
-class test_main(GaiaTestCase):
+class test_main(FireCTestCase):
 
     def setUp(self):
 
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.dialer = Dialer(self)
@@ -31,7 +31,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
         self.dialer.launch()
@@ -42,6 +42,9 @@ class test_main(GaiaTestCase):
         # Call each number
         map(self._do_the_call, self.test_numbers)
 
+        self.apps.switch_to_displayed_app()
+        self.dialer.clear_dialer_all()
+        
         # Tapping call button
         x = self.UTILS.element.getElement(DOM.Dialer.call_number_button, "Call button")
         x.tap()
@@ -51,6 +54,8 @@ class test_main(GaiaTestCase):
         dialer_num = x.get_attribute("value")
 
         self.UTILS.reporting.logResult('info', "Dialer num: {}".format(dialer_num))
+        self.UTILS.reporting.logResult('info', "Contact num: {}".format(str(self.test_contacts[-1]["tel"]["value"])))
+
         self.UTILS.test.test(str(self.test_contacts[-1]["tel"]["value"]) == dialer_num,
                              "After calling several contacts, if we press 'Call' button, we get the last one's phone_number")
 

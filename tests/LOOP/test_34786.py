@@ -6,7 +6,7 @@
 import sys
 sys.path.insert(1, "./")
 import time
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.loop import Loop
 from OWDTestToolkit.apps.settings import Settings
@@ -14,16 +14,16 @@ from OWDTestToolkit import DOM
 from tests.i18nsetup import setup_translations
 
 
-class main(GaiaTestCase):
+class main(FireCTestCase):
 
     def setUp(self):
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
         self.settings = Settings(self)
         _ = setup_translations(self)
 
-        self.connect_to_network()
+        self.data_layer.connect_to_wifi()
         self.loop.initial_test_checks()
 
         self.apps.kill_all()
@@ -31,7 +31,7 @@ class main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
         # First, login

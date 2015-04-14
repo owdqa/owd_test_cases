@@ -12,15 +12,15 @@
 #       activating Airplane mode should deactivate all radio functionalities
 
 import time
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 
 
-class test_main(GaiaTestCase):
+class test_main(FireCTestCase):
 
     def setUp(self):
-        GaiaTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
 
     def tearDown(self):
@@ -30,7 +30,7 @@ class test_main(GaiaTestCase):
         self.UTILS.test.test(not self.data_layer.get_setting('ril.radio.disabled'), "Radio comms is again enabled.")
 
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
         if self.data_layer.get_setting('ril.radio.disabled'):
