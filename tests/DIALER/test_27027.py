@@ -34,7 +34,7 @@ class test_main(FireCTestCase):
         self.contacts = Contacts(self)
         _ = setup_translations(self)
 
-        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.phone_number = self.UTILS.general.get_config_variable("target_call_number", "common")
         self.test_contact = MockContact()
 
         # Generate an entry in the call log

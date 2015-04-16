@@ -9,6 +9,7 @@
 #       5. The mail does not appears on inbox
 #   EXPECTED RESULT
 #       E-mail is correctly deleted from device Inbox.
+import time
 from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
@@ -41,7 +42,8 @@ class test_main(FireCTestCase):
 
         self.email.launch()
         self.email.setupAccount(self.user1, self.email1, self.passwd1)
-
+        self.email.wait_for_sync_completed()
+        time.sleep(5)
         _subject = self.marionette.find_elements(*DOM.Email.folder_subject_list)[1].text
         self.UTILS.reporting.logComment("Deleting email with subject '" + _subject + "'.")
         self.email.deleteEmail(_subject)

@@ -25,32 +25,26 @@ class test_main(FireCTestCase):
         self.settings.wifi()
         self.settings.wifi_switchOn()
 
-        x = self.UTILS.element.getElements(DOM.Settings.wifi_available_networks, "Available networks", False)
+        self.UTILS.reporting.logResult('info', 'ready to look for networks')
+        cuca = self.UTILS.element.getElements(
+            DOM.Settings.wifi_available_networks, "Available networks", False)
+        available_networks = [n.text for n in cuca]
+        self.UTILS.reporting.logResult("info", "Found {} networks".format(len(available_networks)))
+        
+        screenshot = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult('info', "Screenshot", screenshot)
 
-        self.UTILS.reporting.logResult("info", "Found %s networks" % len(x))
-
-        for i in x:
-            _secure1 = False
-            _secure2 = False
-
-            try:
-                i.find_element("xpath", ".//aside[contains(@class,'secured')]")
-                _secure1 = True
-            except:
-                pass
-
-            try:
-                i.find_element("xpath", ".//small[contains(text(), 'Secured')]")
-                _secure2 = True
-            except:
-                pass
+        for index, network in enumerate(available_networks):
+            self.UTILS.reporting.logResult('info', 'Iterating over network #{}'.format(index))
+            # self.UTILS.element.scroll_into_view(network)
 
             try:
-                _name = i.find_element("xpath", ".//a").text
+                # network.find_element(*("css selector", "aside.secured"))
+                # network.find_element(*("css selector", "small[data-l10n-id='securedBy']"))
+                self.marionette.find_element(
+                    *('xpath', '//li//a[text()="{}"]//..//aside[contains(@class, "secured")]'.format(network)))
+                self.marionette.find_element(
+                    *('xpath', '//li//a[text()="{}"]//..//small[@data-l10n-id="securedBy"]'.format(network)))
+                self.UTILS.reporting.logResult('info', "Network [{}] is secured".format(network))
             except:
-                _name = False
-
-            if _name:
-                self.UTILS.test.test(_secure1 == _secure2,
-                                     "Network '{}' has matching 'network is secured' details ({} "\
-                                     "for icon and {} for description).".format(_name, _secure1, _secure2))
+                self.UTILS.reporting.logResult('info', "Network [{}] is NOT secured".format(network))

@@ -92,7 +92,7 @@ class test_main(FireCTestCase):
         x = self.UTILS.element.getElement(DOM.Email.email_not_setup_ok, "Set up account confirmation")
         x.tap()
 
-        self.email.setupAccount(self.email_user, self.email_address, self.email_pass)
+        self.email.setupAccount(self.email_user, self.email_address, self.email_pass, via_activity=True)
 
         #
         # Verify the email address is in the To field.

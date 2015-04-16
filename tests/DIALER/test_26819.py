@@ -11,7 +11,7 @@ class test_main(FireCTestCase):
         FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.dialer = Dialer(self)
-        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.target_call_number = self.UTILS.general.get_config_variable("target_call_number", "common")
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -19,5 +19,5 @@ class test_main(FireCTestCase):
 
     def test_run(self):
         self.dialer.launch()
-        self.dialer.createMultipleCallLogEntries(self.phone_number, 4)
+        self.dialer.createMultipleCallLogEntries(self.target_call_number, 4)
         self.dialer.callLog_clearAll()

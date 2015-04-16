@@ -26,7 +26,7 @@ class test_main(FireCTestCase):
         self.dialer = Dialer(self)
         self.contacts = Contacts(self)
 
-        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.target_call_number = self.UTILS.general.get_config_variable("target_call_number", "common")
 
         #
         # Create a call log entry
@@ -34,7 +34,7 @@ class test_main(FireCTestCase):
         self.dialer.launch()
         self.dialer.callLog_clearAll()
     
-        self.dialer.createMultipleCallLogEntries(self.phone_number, 2)
+        self.dialer.createMultipleCallLogEntries(self.target_call_number, 2)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -52,11 +52,11 @@ class test_main(FireCTestCase):
         #
         # Now tap the number and verify that we're not taken to the menu,
         #
-        entry = self.UTILS.element.getElement(("xpath", DOM.Dialer.call_log_number_xpath.format(self.phone_number)),
-                                              "The call log for number {}".format(self.phone_number))
+        entry = self.UTILS.element.getElement(("xpath", DOM.Dialer.call_log_number_xpath.format(self.target_call_number)),
+                                              "The call log for number {}".format(self.target_call_number))
         entry.tap()
 
         self.UTILS.reporting.logResult("info", "Checking that the call to [{}] is not set up".
-                                       format(self.phone_number))
+                                       format(self.target_call_number))
         self.apps.switch_to_displayed_app()
         self.UTILS.element.waitForNotElements(DOM.Dialer.hangup_bar_locator, "Not calling in edit mode", timeout=10)

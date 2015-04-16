@@ -35,6 +35,8 @@ class test_main(FireCTestCase):
         self.contacts.enable_FB_import()
 
         self.facebook.login(self.fb_user, self.fb_pass)
+        screenshot = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult('info', "Screenshot", screenshot)
 
         # Import facebook contacts.
         self.contacts.switch_to_facebook()

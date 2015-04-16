@@ -31,7 +31,7 @@ class test_main(FireCTestCase):
         self.dialer = Dialer(self)
         self.contacts = Contacts(self)
 
-        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.target_call_number = self.UTILS.general.get_config_variable("target_call_number", "common")
 
         self.test_contact = MockContact()
         self.UTILS.general.insertContact(self.test_contact)
@@ -39,7 +39,7 @@ class test_main(FireCTestCase):
         # Generate an entry in the call log
         self.dialer.launch()
         self.dialer.callLog_clearAll()
-        self.dialer.createMultipleCallLogEntries(self.phone_number, 2)
+        self.dialer.createMultipleCallLogEntries(self.target_call_number, 2)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -49,7 +49,7 @@ class test_main(FireCTestCase):
         #
         # Add to our contact.
         #
-        self.dialer.callLog_addToContact(self.phone_number, self.test_contact["name"])
+        self.dialer.callLog_addToContact(self.target_call_number, self.test_contact["name"])
 
         #
         # Verify that this contact has been modified in contacts.
@@ -57,5 +57,5 @@ class test_main(FireCTestCase):
         self.contacts.launch()
         self.contacts.view_contact(self.test_contact["name"])
 
-        self.UTILS.element.waitForElements(("xpath", DOM.Contacts.view_contact_tels_xpath.format(self.phone_number)),
-                                           "Telephone phone_numberber {} in contact".format(self.phone_number))
+        self.UTILS.element.waitForElements(("xpath", DOM.Contacts.view_contact_tels_xpath.format(self.target_call_number)),
+                                           "Telephone phone_numberber {} in contact".format(self.target_call_number))

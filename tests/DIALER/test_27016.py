@@ -40,6 +40,7 @@ class test_main(FireCTestCase):
         self.dialer.launch()
         self.dialer.callLog_clearAll()
         self.dialer.createMultipleCallLogEntries(self.phone_number_short, 1)
+        time.sleep(10)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()

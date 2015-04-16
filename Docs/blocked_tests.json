@@ -8,5 +8,6 @@
     "26885": "Pending review",
     "28542": "Pending review",
     "26973": "Pending review",
-    "26907": "Unable to figure out how to detect how not the keyboard is displayed (previously opened)"
+    "26907": "Unable to figure out how to detect how not the keyboard is displayed (previously opened)",
+    "26780": "Automation issue: after tapping on 'Search or enter address' bar, keyboard appears and disappears"
 }

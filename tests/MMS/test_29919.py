@@ -31,6 +31,7 @@ class test_main(FireCTestCase):
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.video = Video(self)
+
         self.test_msg = "Hello World"
 
         #
@@ -38,12 +39,12 @@ class test_main(FireCTestCase):
         #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
-        self.UTILS.general.add_file_to_device('./tests/_resources/MP4.mp4', destination='/SD/mus')
+        self.UTILS.general.add_file_to_device('./tests/_resources/mpeg4.mp4', destination='/SD/mus')
         self.data_layer.delete_all_sms()
         self.UTILS.statusbar.clearAllStatusBarNotifs()
 
     def tearDown(self):
-        self.UTILS.general.remove_file('MP4.mp4', '/SD/mus')
+        self.UTILS.general.remove_file('mpeg4.mp4', '/SD/mus')
         self.UTILS.reporting.reportResults()
         FireCTestCase.tearDown(self)
 

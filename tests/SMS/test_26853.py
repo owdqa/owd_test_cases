@@ -46,6 +46,7 @@ class test_main(FireCTestCase):
         # Go into edit mode..
         #
         x = self.UTILS.element.getElement(DOM.Messages.edit_messages_icon, "Edit button")
+        time.sleep(1)
         x.tap()
 
         #
