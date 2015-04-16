@@ -9,16 +9,10 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(FireCTestCase):
 
     def setUp(self):
-        #
-        # Set up child objects...
-        #
         FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
 
-        #
-        # Create test contacts.
-        #
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
 
@@ -27,32 +21,18 @@ class test_main(FireCTestCase):
         FireCTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Launch contacts app.
-        #
         self.contacts.launch()
 
-        #
-        # View our contact.
-        #
         self.contacts.view_contact(self.contact['name'])
 
-        #
-        # Edit our contact.
-        #
         self.contacts.press_edit_contact_button()
 
-        #
         # Delete our contact.
-        #
         self.contacts.press_delete_contact_button()
 
-        #
         # Cancel deletion.
-        #
         cancel_deletion = self.UTILS.element.getElement(DOM.Contacts.cancel_delete_btn, "Cancel button")
         cancel_deletion.tap()
-
 
         #
         # Cancel contact edition
@@ -63,7 +43,6 @@ class test_main(FireCTestCase):
         #
         # Go back to contacts start page
         #
-    
         back = self.UTILS.element.getElement(DOM.Contacts.details_back_button, "Back button")
         self.UTILS.element.simulateClick(back)
 
