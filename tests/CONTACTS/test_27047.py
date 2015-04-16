@@ -10,17 +10,11 @@ from OWDTestToolkit.utils.contacts import MockContact
 class test_main(FireCTestCase):
 
     def setUp(self):
-        #
-        # Set up child objects...
-        #
         FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.settings = Settings(self)
 
-        #
-        # Create test contacts.
-        #
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
 
@@ -29,22 +23,18 @@ class test_main(FireCTestCase):
         FireCTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Launch contacts app.
-        #
         self.contacts.launch()
-        x = self.UTILS.element.getElement(DOM.Contacts.settings_button, "Settings button")
-        x.tap()
+        settings_btn = self.UTILS.element.getElement(DOM.Contacts.settings_button, "Settings button")
+        settings_btn.tap()
 
-        x = self.UTILS.element.getElement(DOM.Contacts.import_contacts, "Import button")
-        x.tap()
+        import_btn = self.UTILS.element.getElement(DOM.Contacts.import_contacts, "Import button")
+        import_btn.tap()
 
-        #
         # Wait for the Hotmail button.
-        #
-        x = self.UTILS.element.getElement(DOM.Contacts.hotmail_button, "Hotmail button")
-        x_dis = x.get_attribute("disabled")
-        self.UTILS.test.test(x_dis == "true", "The Hotmail button is disabled ('disabled' was set to '{}').".format(x_dis))
+        hotmail_btn = self.UTILS.element.getElement(DOM.Contacts.hotmail_button, "Hotmail button")
+        btn_disabled = hotmail_btn.get_attribute("disabled")
+        self.UTILS.test.test(btn_disabled == "disabled", "Hotmail button not disabled ('disabled' was set to '{}').".\
+                             format(btn_disabled))
 
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot and details", x)
+        screenshot = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot and details", screenshot)

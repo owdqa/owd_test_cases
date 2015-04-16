@@ -48,11 +48,11 @@ class test_main(FireCTestCase):
 
         self.contacts.import_gmail_login(self.gmail_user, self.gmail_passwd)
 
-        x = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list", False)
+        contact_list = self.UTILS.element.getElements(DOM.Contacts.import_conts_list, "Contact list", False)
 
         gmail_contacts = []
-        for y in x:
-            contact_name = y.get_attribute("data-search")
+        for contact in contact_list:
+            contact_name = contact.get_attribute("data-search")
             if '#search#' not in contact_name:
                 self.UTILS.reporting.logResult("info", "Adding '{}' to the list of available contacts.".\
                                     format(contact_name))
@@ -91,5 +91,5 @@ class test_main(FireCTestCase):
 
         time.sleep(2)
 
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot and details", x)
+        screenshot = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot and details", screenshot)
