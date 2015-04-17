@@ -1,4 +1,4 @@
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.pixi_testcase import PixiTestCase
 
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
@@ -6,7 +6,7 @@ from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.utils.contacts import MockContact
 
 
-class test_main(GaiaTestCase):
+class test_main(PixiTestCase):
 
     num_contacts = 10
 
@@ -14,7 +14,7 @@ class test_main(GaiaTestCase):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        PixiTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
 
@@ -29,7 +29,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        PixiTestCase.tearDown(self)
 
     def test_run(self):
         #

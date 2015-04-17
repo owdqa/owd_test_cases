@@ -1,4 +1,4 @@
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.pixi_testcase import PixiTestCase
 
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
@@ -6,20 +6,20 @@ from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.settings import Settings
 import time
 
-class test_main(GaiaTestCase):
+class test_main(PixiTestCase):
 
     def setUp(self):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        PixiTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.settings = Settings(self)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        PixiTestCase.tearDown(self)
 
     def test_run(self):
         #

@@ -20,7 +20,7 @@
 # ER3 The app is launched successfully
 #===============================================================================
 
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.pixi_testcase import PixiTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.everythingme import EverythingMe
 from OWDTestToolkit.apps.settings import Settings
@@ -28,7 +28,7 @@ from OWDTestToolkit import DOM
 import time
 
 
-class test_main(GaiaTestCase):
+class test_main(PixiTestCase):
 
     _group_name = "Games"
     _group_games_id = "207"
@@ -41,7 +41,7 @@ class test_main(GaiaTestCase):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        PixiTestCase.setUp(self)
 
         self.UTILS = UTILS(self)
         self.settings = Settings(self)
@@ -58,7 +58,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        PixiTestCase.tearDown(self)
 
     def test_run(self):
         #

@@ -1,17 +1,17 @@
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.pixi_testcase import PixiTestCase
 from OWDTestToolkit.apps.video import Video
 from OWDTestToolkit.apps.camera import Camera
 from OWDTestToolkit.utils.utils import UTILS
 import time
 
 
-class test_main(GaiaTestCase):
+class test_main(PixiTestCase):
 
     def setUp(self):
         #
         # Set up child objects.
         #
-        GaiaTestCase.setUp(self)
+        PixiTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.camera = Camera(self)
         self.video = Video(self)
@@ -20,7 +20,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        PixiTestCase.tearDown(self)
 
     def test_run(self):
         # Record a test video.

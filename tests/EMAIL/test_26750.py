@@ -9,13 +9,13 @@
 #       5. The mail does not appears on inbox
 #   EXPECTED RESULT
 #       E-mail is correctly deleted from device Inbox.
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.pixi_testcase import PixiTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.email import Email
 
 
-class test_main(GaiaTestCase):
+class test_main(PixiTestCase):
 
     def __init__(self, *args, **kwargs):
         kwargs['restart'] = True
@@ -23,7 +23,7 @@ class test_main(GaiaTestCase):
 
     def setUp(self):
 
-        GaiaTestCase.setUp(self)
+        PixiTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.email = Email(self)
 
@@ -35,7 +35,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        PixiTestCase.tearDown(self)
 
     def test_run(self):
 

@@ -1,21 +1,21 @@
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.pixi_testcase import PixiTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.browser import Browser
 
 
-class test_main(GaiaTestCase):
+class test_main(PixiTestCase):
 
     def setUp(self):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        PixiTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.browser = Browser(self)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        PixiTestCase.tearDown(self)
 
     def test_run(self):
         test_url = "http://qatecnico.blogspot.com.es/search/label/Automatizaci%C3%B3n%20de%20Pruebas"

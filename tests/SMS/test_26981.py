@@ -13,7 +13,7 @@
 # ER2 will not be highlighted for each email address and the user can't click on it
 #===============================================================================
 
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.pixi_testcase import PixiTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -21,13 +21,13 @@ from OWDTestToolkit.apps.email import Email
 import time
 
 
-class test_main(GaiaTestCase):
+class test_main(PixiTestCase):
 
     def setUp(self):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        PixiTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.Email = Email(self)
@@ -41,7 +41,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        PixiTestCase.tearDown(self)
 
     def test_run(self):
         #

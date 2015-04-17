@@ -11,17 +11,17 @@
 #       The video is not saved and you cannot see it in the gallery.
 
 import time
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.pixi_testcase import PixiTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.camera import Camera
 from OWDTestToolkit.apps.gallery import Gallery
 
 
-class test_main(GaiaTestCase):
+class test_main(PixiTestCase):
 
     def setUp(self):
-        GaiaTestCase.setUp(self)
+        PixiTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.camera = Camera(self)
         self.gallery = Gallery(self)
@@ -36,7 +36,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        PixiTestCase.tearDown(self)
 
     def test_run(self):
         self.camera.launch()

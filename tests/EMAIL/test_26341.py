@@ -18,7 +18,7 @@
 import time
 import sys
 sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.pixi_testcase import PixiTestCase
 from tests.EMAIL.shared_test_functions.emailing import Emailing
 
 
@@ -51,7 +51,7 @@ class test_26341(Emailing):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        PixiTestCase.tearDown(self)
 
     def test_run(self):
         self.send_email(self.user1, self.user2)

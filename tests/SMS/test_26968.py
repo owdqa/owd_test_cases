@@ -1,11 +1,11 @@
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.pixi_testcase import PixiTestCase
 
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.browser import Browser
 
 
-class test_main(GaiaTestCase):
+class test_main(PixiTestCase):
 
     link = "www.wikipedia.o"
     test_msg = "Test " + link + " this."
@@ -14,7 +14,7 @@ class test_main(GaiaTestCase):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        PixiTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.browser = Browser(self)
@@ -27,7 +27,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        PixiTestCase.tearDown(self)
 
     def test_run(self):
         self.connect_to_network()

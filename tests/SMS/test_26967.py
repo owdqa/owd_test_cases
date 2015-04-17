@@ -1,4 +1,4 @@
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.pixi_testcase import PixiTestCase
 
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
@@ -7,7 +7,7 @@ from OWDTestToolkit.apps.browser import Browser
 import time
 
 
-class test_main(GaiaTestCase):
+class test_main(PixiTestCase):
 
     link = "www.google.com"
     test_msg = "Test " + link + " this."
@@ -16,7 +16,7 @@ class test_main(GaiaTestCase):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        PixiTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.browser = Browser(self)
@@ -29,7 +29,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        PixiTestCase.tearDown(self)
 
     def test_run(self):
         self.connect_to_network()

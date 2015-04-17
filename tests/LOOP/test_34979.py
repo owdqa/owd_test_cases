@@ -3,17 +3,17 @@
 # using Firefox Accounts. Verify that ID is the corresponding email
 # FxAccount
 import time
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.pixi_testcase import PixiTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.loop import Loop
 from OWDTestToolkit.apps.settings import Settings
 from OWDTestToolkit import DOM
 
 
-class main(GaiaTestCase):
+class main(PixiTestCase):
 
     def setUp(self):
-        GaiaTestCase.setUp(self)
+        PixiTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
         self.settings = Settings(self)
@@ -30,7 +30,7 @@ class main(GaiaTestCase):
     def tearDown(self):
         self.logout_fxa()
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        PixiTestCase.tearDown(self)
 
     def test_run(self):
         # First, login

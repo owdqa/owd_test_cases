@@ -19,14 +19,14 @@
 # ER3. The message is sent correctly
 #===============================================================================
 
-from gaiatest  import GaiaTestCase
+from gaiatest  import PixiTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
 
 
-class test_main(GaiaTestCase):
+class test_main(PixiTestCase):
 
     test_msg = "Hello World"
 
@@ -34,7 +34,7 @@ class test_main(GaiaTestCase):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        PixiTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.gallery = Gallery(self)
@@ -49,7 +49,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        PixiTestCase.tearDown(self)
 
     def test_run(self):
         #

@@ -11,13 +11,13 @@
 # The app is installed with the right icon
 #===============================================================================
 
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.pixi_testcase import PixiTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.marketplace import Marketplace
 from OWDTestToolkit.apps.settings import Settings
 
 
-class test_main(GaiaTestCase):
+class test_main(PixiTestCase):
 
     APP_NAME = 'Wikipedia'
     APP_AUTHOR = 'Wikimedia Foundation'
@@ -26,14 +26,14 @@ class test_main(GaiaTestCase):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        PixiTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.market = Marketplace(self)
         self.settings = Settings(self)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        PixiTestCase.tearDown(self)
 
     def test_run(self):
 

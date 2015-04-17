@@ -1,4 +1,4 @@
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.pixi_testcase import PixiTestCase
 
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
@@ -8,10 +8,10 @@ from OWDTestToolkit.utils.contacts import MockContact
 import time
 
 
-class test_main(GaiaTestCase):
+class test_main(PixiTestCase):
 
     def setUp(self):
-        GaiaTestCase.setUp(self)
+        PixiTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.dialer = Dialer(self)
@@ -30,7 +30,7 @@ class test_main(GaiaTestCase):
         # Delete the contact. (REVISAR)
         #
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        PixiTestCase.tearDown(self)
 
     def test_run(self):
         # Launch dialer app.

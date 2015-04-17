@@ -22,7 +22,7 @@
 
 
 import time
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.pixi_testcase import PixiTestCase
 from OWDTestToolkit.utils.contacts import MockContact
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.browser import Browser
@@ -32,14 +32,14 @@ from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit import DOM
 
 
-class test_main(GaiaTestCase):
+class test_main(PixiTestCase):
 
     def __init__(self, *args, **kwargs):
         kwargs['restart'] = True
         super(test_main, self).__init__(*args, **kwargs)
 
     def setUp(self):
-        GaiaTestCase.setUp(self)
+        PixiTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
         self.contacts = Contacts(self)
@@ -62,7 +62,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        PixiTestCase.tearDown(self)
 
     def test_run(self):
         # First, login

@@ -18,7 +18,7 @@
 #===============================================================================
 
 import time
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.pixi_testcase import PixiTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -27,7 +27,7 @@ from OWDTestToolkit.apps.music import Music
 from OWDTestToolkit.apps.video import Video
 
 
-class test_main(GaiaTestCase):
+class test_main(PixiTestCase):
 
     test_msg = "Hello World {}".format(time.time())
 
@@ -35,7 +35,7 @@ class test_main(GaiaTestCase):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        PixiTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.gallery = Gallery(self)
@@ -61,7 +61,7 @@ class test_main(GaiaTestCase):
         self.UTILS.general.remove_file('mpeg4.mp4', '/SD/vid')
         self.UTILS.general.remove_file('80x60.jpg', 'DCIM/100MZLLA')
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        PixiTestCase.tearDown(self)
 
     def test_run(self):
 

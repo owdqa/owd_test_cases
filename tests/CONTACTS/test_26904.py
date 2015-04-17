@@ -1,6 +1,6 @@
 import sys
 sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.pixi_testcase import PixiTestCase
 
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.utils.contacts import MockContact

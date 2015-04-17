@@ -13,7 +13,7 @@
 # The ev.me page must be empty
 #===============================================================================
 
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.pixi_testcase import PixiTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.everythingme import EverythingMe
@@ -21,7 +21,7 @@ from OWDTestToolkit.apps.settings import Settings
 from marionette import Actions
 
 
-class test_main(GaiaTestCase):
+class test_main(PixiTestCase):
 
     def __init__(self, *args, **kwargs):
         kwargs['restart'] = True
@@ -31,7 +31,7 @@ class test_main(GaiaTestCase):
         #
         # Set up child objects...
         #
-        GaiaTestCase.setUp(self)
+        PixiTestCase.setUp(self)
 
         self.UTILS = UTILS(self)
         self.settings = Settings(self)
@@ -47,9 +47,9 @@ class test_main(GaiaTestCase):
     def tearDown(self):
         # Restart device to restore collections
         self.device.restart_b2g()
-        GaiaTestCase.setUp(self)
+        PixiTestCase.setUp(self)
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        PixiTestCase.tearDown(self)
 
     def test_run(self):
         self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
