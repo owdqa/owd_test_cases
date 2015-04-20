@@ -36,6 +36,8 @@ class test_main(PixiTestCase):
         self.browser = Browser(self)
         self.messages = Messages(self)
 
+        self.UTILS.app.setPermission('Browser', 'geolocation', 'deny')
+
         self.num = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.cp_incoming_number = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
         self.data_layer.delete_all_sms()
