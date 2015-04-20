@@ -25,28 +25,28 @@ class test_main(PixiTestCase):
         self.settings.wifi()
         self.settings.wifi_switchOn()
 
-        x = self.UTILS.element.getElements(DOM.Settings.wifi_available_networks, "Available networks", False)
+        available_nets = self.UTILS.element.getElements(DOM.Settings.wifi_available_networks, "Available networks",
+                                                        False)
 
-        self.UTILS.reporting.logResult("info", "Found %s networks" % len(x))
+        self.UTILS.reporting.logResult("info", "Found {} networks".format(len(available_nets)))
 
-        for i in x:
+        for net in available_nets:
             _secure1 = False
             _secure2 = False
 
             try:
-                i.find_element("xpath", ".//aside[contains(@class,'secured')]")
-                _secure1 = True
+                _secure1 = 'secured' in net.get_attribute('class')
             except:
                 pass
 
             try:
-                i.find_element("xpath", ".//small[contains(text(), 'Secured')]")
+                net.find_element("xpath", "../small[contains(text(), 'Secured')]")
                 _secure2 = True
             except:
                 pass
 
             try:
-                _name = i.find_element("xpath", ".//a").text
+                _name = net.find_element("xpath", "../a").text
             except:
                 _name = False
 
