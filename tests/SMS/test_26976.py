@@ -50,13 +50,13 @@ class test_main(PixiTestCase):
         #
         self.messages.create_and_send_sms([self.phone_number], self.test_msg)
         send_time = self.messages.last_sent_message_timestamp()
-        x = self.messages.wait_for_message(send_time=send_time)
+        msg = self.messages.wait_for_message(send_time=send_time)
 
         #
         # Long press the 2nd email link.
         #
-        link = x.find_elements("tag name", "a")
-        link[1].tap()
+        link = msg.find_elements(*DOM.Messages.email_info_in_msg)
+        self.UTILS.element.simulateClick(link[1])
 
         #
         # Click 'create new contact'.

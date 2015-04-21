@@ -53,8 +53,8 @@ class test_main(PixiTestCase):
         #
         # Tap the email link.
         #
-        link = last_msg.find_element("tag name", "a")
-        link.tap()
+        link = last_msg.find_element(*DOM.Messages.email_info_in_msg)
+        self.UTILS.element.simulateClick(link)
 
         edit_btn = self.UTILS.element.getElement(DOM.Messages.header_send_email_btn, "Edit button")
         edit_btn.tap()

@@ -3,6 +3,7 @@ from OWDTestToolkit.pixi_testcase import PixiTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.browser import Browser
+import time
 
 
 class test_main(PixiTestCase):
@@ -19,6 +20,7 @@ class test_main(PixiTestCase):
         PixiTestCase.tearDown(self)
 
     def test_run(self):
+        time.sleep(5)
         self.UTILS.test.test(not self.UTILS.network.is_network_type_enabled("data"),
                              "Data mode is disabled before we start this test.")
 

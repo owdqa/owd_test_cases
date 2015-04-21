@@ -30,14 +30,7 @@ class test_main(PixiTestCase):
         PixiTestCase.tearDown(self)
 
     def test_run(self):
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
-
-        #
         # Create and send a new test message containing all of our numbers..
-        #
         nums = ["12345678", "123456789", "01234567", "012345678"]
         sms_msg = "Test numbers {}".format(", ".join(nums))
         self.UTILS.messages.create_incoming_sms(self.phone_number, sms_msg)
@@ -49,10 +42,11 @@ class test_main(PixiTestCase):
         #
         # Tap the numbers to call.
         #
-        msg_nums = sms.find_elements("tag name", "a")
+        msg_nums = sms.find_elements(*DOM.Messages.phone_info_in_msg)
 
         for i in range(len(msg_nums)):
             num = msg_nums[i]
+            self.UTILS.reporting.info("************ TAPPING NUMBER {}: {}".format(i, num.text))
             num.tap()
             num_text = num.text
 
@@ -65,17 +59,25 @@ class test_main(PixiTestCase):
             # Dialer is started with the number already filled in.
             #
             time.sleep(1)
-            x = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number")
-            self.UTILS.test.test(num_text == x.get_attribute("value"),
+            phone_number = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number")
+            self.UTILS.test.test(num_text == phone_number.get_attribute("value"),
                             "The dialer number contains '{}' (expected '{}').".\
-                            format(num_text, x.get_attribute("value")))
+                            format(num_text, phone_number.get_attribute("value")))
 
+            time.sleep(3)
             #
             # Switch back to messaging app (without killing anything) etc ...
             #
+            running_apps = [app.origin for app in self.apps.running_apps(True)]
             self.messages.launch()
+            self.UTILS.reporting.info("********* RUNNING APPS: {}".format(running_apps))
+            if not 'app://sms.gaiamobile.org' in running_apps:
+                self.UTILS.reporting.info("****************** SMS Not running, opening thread")
+                self.messages.openThread(title)
+            else:
+                self.UTILS.reporting.info("****************** SMS RUNNING")
 
             # We need to recover the last message and the numbers, since the reference is lost in
             # the frame changes
             sms = self.messages.last_message_in_this_thread()
-            msg_nums = sms.find_elements("tag name", "a")
+            msg_nums = sms.find_elements(*DOM.Messages.phone_info_in_msg)

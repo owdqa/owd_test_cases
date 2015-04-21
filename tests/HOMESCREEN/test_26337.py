@@ -64,6 +64,8 @@ class test_main(PixiTestCase):
         self.UTILS.test.test(self.market.install_app(self.APP_NAME, self.APP_AUTHOR),
                         "Successfully installed application '" + self.APP_NAME + "'.", True)
 
+        self.UTILS.home.holdHomeButton()
+
         #
         # Launch the app from the homescreen.
         #

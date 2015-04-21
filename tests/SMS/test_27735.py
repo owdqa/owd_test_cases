@@ -81,15 +81,15 @@ class test_main(PixiTestCase):
         #
         # Examine the carrier.
         #
-        expect = self.contact["tel"]["type"]
+        expected = self.contact["tel"]["type"]
         actual = self.messages.threadType()
-        self.UTILS.test.test(expect == actual, "The type is listed as: '{}' (subheader was '{}').".\
-                             format(expect, actual))
+        self.UTILS.test.test(expected == actual, "The type expected is: '{}' (found '{}').".\
+                             format(expected, actual))
 
         #
         # Phone Number is shown instead of carrier as the secondary header
         #
-        expect = self.contact["tel"]["value"]
+        expected = self.contact["tel"]["value"]
         actual = self.messages.threadCarrier()
-        self.UTILS.test.test(expect == actual, "The telephone number is: '{}' (subheader was '{}').".\
-                             format(expect, actual))
+        self.UTILS.test.test(expected == actual, "The telephone number expected is: '{}' (found '{}').".\
+                             format(expected, actual))
