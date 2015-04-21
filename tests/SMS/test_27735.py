@@ -29,7 +29,7 @@ class test_main(PixiTestCase):
         # Prepare the contact we're going to insert.
         #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
-        self.contact = MockContact(tel={'type': '', 'value': self.phone_number})
+        self.contact = MockContact(tel={'type': 'Mobile', 'value': self.phone_number})
 
         self.UTILS.general.insertContact(self.contact)
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact["tel"]["value"])

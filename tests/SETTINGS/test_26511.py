@@ -15,25 +15,25 @@
 # functionalities are disabled according to this mode
 #===============================================================================
 import time
-from OWDTestToolkit.pixi_testcase import PixiTestCase
+from OWDTestToolkit.firec_testcase import FireCTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
 
 
-class test_main(PixiTestCase):
+class test_main(FireCTestCase):
 
     def setUp(self):
         #
         # Set up child objects...
         #
-        PixiTestCase.setUp(self)
+        FireCTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.settings = Settings(self)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        PixiTestCase.tearDown(self)
+        FireCTestCase.tearDown(self)
 
     def test_run(self):
         self.settings.launch()
@@ -43,14 +43,14 @@ class test_main(PixiTestCase):
 
         self.UTILS.reporting.logResult("info", "Turning airplane mode on ...")
         self.UTILS.test.test(True, "Getting airplane mode switch")
-        airplane_switch = self.UTILS.element.getElement(DOM.Settings.airplane_mode_switch, "Airplane mode switch")
-        self.UTILS.test.test(True, "Airplane mode switch: {}".format(airplane_switch))
+        x = self.UTILS.element.getElement(DOM.Settings.airplane_mode_switch, "Airplane mode switch")
+        self.UTILS.test.test(True, "Airplane mode switch: {}".format(x))
         time.sleep(5)
-        airplane_switch.tap()
-        time.sleep(5)
+        x.tap()
+
         self.UTILS.network.wait_for_network_item_enabled("airplane")
 
         self.UTILS.test.test(self.UTILS.network.is_network_type_enabled("airplane") == True,
-                           "Airplane mode is now enabled.")
+                             "Airplane mode is now enabled.")
         self.UTILS.test.test(self.data_layer.get_setting('ril.radio.disabled') == True,
-                          "Radio functionality is now disabled.")
+                             "Radio functionality is now disabled.")

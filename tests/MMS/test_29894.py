@@ -14,7 +14,6 @@
 #===============================================================================
 
 from OWDTestToolkit.pixi_testcase import PixiTestCase
-
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
