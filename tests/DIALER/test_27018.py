@@ -40,8 +40,5 @@ class test_main(PixiTestCase):
         # You should now see the error message.
         #
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
-        self.UTILS.element.waitForElements( ("xpath", "//*[contains(text(), 'Cannot add to contact')]"), 
+        self.UTILS.element.waitForElements( ("xpath", "//*[contains(text(), 'Cannot add contact')]"), 
                                     "Warning that there are no contacts.", True, 5, False)
-
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screen shot of current position:", x)

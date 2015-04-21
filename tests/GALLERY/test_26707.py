@@ -36,5 +36,5 @@ class test_main(PixiTestCase):
         self.gallery.delete_thumbnails([0])
 
         current_thumbs = self.gallery.get_number_of_thumbnails()
-        self.UTILS.test.test(current_thumbs == self.previous_thumbs + 1,
-                             "After taking a picture, there's one item more in the gallery")
+        self.UTILS.test.test(current_thumbs == self.previous_thumbs,
+                             "After deleting a picture, there's one item more in the gallery")

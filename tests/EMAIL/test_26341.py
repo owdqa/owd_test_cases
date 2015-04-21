@@ -37,14 +37,14 @@ class test_26341(Emailing):
         #
         # Email parameters
         #
-        self.username1 = self.UTILS.general.get_config_variable(self.testType.upper() + "_1_user", "common")
-        self.email1 = self.UTILS.general.get_config_variable(self.testType.upper() + "_1_email", "common")
-        self.passwd1 = self.UTILS.general.get_config_variable(self.testType.upper() + "_1_pass", "common")
+        self.username1 = self.UTILS.general.get_config_variable(self.testType + "_1_user", "common")
+        self.email1 = self.UTILS.general.get_config_variable(self.testType + "_1_email", "common")
+        self.passwd1 = self.UTILS.general.get_config_variable(self.testType + "_1_pass", "common")
         self.user1 = {"username": self.username1, "email": self.email1, "pass": self.passwd1}
 
-        self.username2 = self.UTILS.general.get_config_variable(self.testType.upper() + "_2_user", "common")
-        self.email2 = self.UTILS.general.get_config_variable(self.testType.upper() + "_2_email", "common")
-        self.passwd2 = self.UTILS.general.get_config_variable(self.testType.upper() + "_2_pass", "common")
+        self.username2 = self.UTILS.general.get_config_variable(self.testType + "_2_user", "common")
+        self.email2 = self.UTILS.general.get_config_variable(self.testType + "_2_email", "common")
+        self.passwd2 = self.UTILS.general.get_config_variable(self.testType + "_2_pass", "common")
         self.user2 = {"username": self.username2, "email": self.email2, "pass": self.passwd2}
 
         self.data_layer.connect_to_wifi()

@@ -65,6 +65,6 @@ class test_main(PixiTestCase):
         title = self.UTILS.element.getElement(DOM.Gallery.file_name_header, "File name header")
         self.UTILS.test.test(title.text == self.file_name, "File name matches in Gallery")
 
-        is_loaded = self.UTILS.element.waitForElements(DOM.Gallery.current_image_pic,
+        is_loaded = self.UTILS.element.waitForElements(DOM.Gallery.download_manager_preview,
                                                        "Waiting for image to be loaded")
         self.UTILS.test.test(is_loaded, "Image has been loaded")
