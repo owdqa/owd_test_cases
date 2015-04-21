@@ -85,16 +85,7 @@ class test_main(PixiTestCase):
         self.UTILS.element.simulateClick(search_field)
     
         search_input = self.UTILS.element.getElement(DOM.Contacts.search_contact_input, "Search Contact input")
-        self.UTILS.element.simulateClick(search_input)
-
-        self.marionette.switch_to_frame()
-        self.wait_for_element_displayed('css selector', 'iframe[src*=keyboard]', timeout=15)
-        keyboard = self.marionette.find_element('css selector', 'iframe[src*=keyboard]')
-        self.UTILS.test.test(keyboard, "ER1: Keyboard found after tapping search input")
-        keyboard.send_keys(search_name)
-
-        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
-        self.UTILS.iframe.switchToFrame(*DOM.Contacts.hotmail_import_frame, via_root_frame=False)
+        search_input.send_keys(search_name)
         search_input = self.UTILS.element.getElement(DOM.Contacts.search_contact_result_input,
                                                      "Search Contact results input")
         self.UTILS.test.test(search_input.get_attribute("value") == search_name, "ER2: Text and numbers in search box")

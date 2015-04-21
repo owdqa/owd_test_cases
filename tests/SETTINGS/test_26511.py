@@ -43,14 +43,14 @@ class test_main(PixiTestCase):
 
         self.UTILS.reporting.logResult("info", "Turning airplane mode on ...")
         self.UTILS.test.test(True, "Getting airplane mode switch")
-        airplane_switch = self.UTILS.element.getElement(DOM.Settings.airplane_mode_switch, "Airplane mode switch")
-        self.UTILS.test.test(True, "Airplane mode switch: {}".format(airplane_switch))
+        x = self.UTILS.element.getElement(DOM.Settings.airplane_mode_switch, "Airplane mode switch")
+        self.UTILS.test.test(True, "Airplane mode switch: {}".format(x))
         time.sleep(5)
-        airplane_switch.tap()
-        time.sleep(5)
+        x.tap()
+
         self.UTILS.network.wait_for_network_item_enabled("airplane")
 
         self.UTILS.test.test(self.UTILS.network.is_network_type_enabled("airplane") == True,
-                           "Airplane mode is now enabled.")
+                             "Airplane mode is now enabled.")
         self.UTILS.test.test(self.data_layer.get_setting('ril.radio.disabled') == True,
-                          "Radio functionality is now disabled.")
+                             "Radio functionality is now disabled.")

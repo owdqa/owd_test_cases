@@ -43,7 +43,7 @@ class Emailing(PixiTestCase):
         #
         if "gmail" in self.testType.lower():
             self.UTILS.reporting.logComment("Gmail account being used.")
-            self.sentFolderName = _("Sent Mail")
+            self.sentFolderName = _("Sent")
         elif "exchange" in self.testType.lower():
             self.UTILS.reporting.logComment("Exchange account being used.")
             self.sentFolderName = _("Sent Items")

@@ -19,7 +19,7 @@
 # ER3. The message is sent correctly
 #===============================================================================
 
-from gaiatest  import PixiTestCase
+from OWDTestToolkit.pixi_testcase import PixiTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages

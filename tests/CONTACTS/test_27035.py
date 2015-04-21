@@ -23,6 +23,10 @@ class test_main(PixiTestCase):
         #
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
+        try:
+            self.data_layer.disable_cell_data()
+        except:
+            pass
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
