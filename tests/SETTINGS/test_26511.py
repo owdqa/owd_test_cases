@@ -15,25 +15,25 @@
 # functionalities are disabled according to this mode
 #===============================================================================
 import time
-from OWDTestToolkit.firec_testcase import FireCTestCase
+from OWDTestToolkit.pixi_testcase import PixiTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
 
 
-class test_main(FireCTestCase):
+class test_main(PixiTestCase):
 
     def setUp(self):
         #
         # Set up child objects...
         #
-        FireCTestCase.setUp(self)
+        PixiTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.settings = Settings(self)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        FireCTestCase.tearDown(self)
+        PixiTestCase.tearDown(self)
 
     def test_run(self):
         self.settings.launch()
