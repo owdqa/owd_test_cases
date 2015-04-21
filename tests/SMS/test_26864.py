@@ -39,8 +39,8 @@ class test_main(PixiTestCase):
 
         self.contacts.launch()
         self.contacts.view_contact(self.contact["name"])
-        x = self.UTILS.element.getElement(DOM.Contacts.sms_button, "SMS button")
-        x.tap()
+        sms_btn = self.UTILS.element.getElement(DOM.Contacts.sms_button, "SMS button")
+        sms_btn.tap()
 
         time.sleep(2)
         self.marionette.switch_to_frame()

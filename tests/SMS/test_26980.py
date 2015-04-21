@@ -5,7 +5,7 @@ from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.email import Email
 from OWDTestToolkit.utils.contacts import MockContact
-#import time
+# import time
 
 
 class test_main(PixiTestCase):
@@ -24,11 +24,11 @@ class test_main(PixiTestCase):
         self.email_user = self.UTILS.general.get_config_variable("gmail_1_user", "common")
         self.email_address = self.UTILS.general.get_config_variable("gmail_1_email", "common")
         self.email_pass = self.UTILS.general.get_config_variable("gmail_1_pass", "common")
- 
+
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
         self.emailAddy = self.UTILS.general.get_config_variable("gmail_2_email", "common")
 
-        self.contact = MockContact(email = {'type': 'Personal', 'value': self.emailAddy})
+        self.contact = MockContact(email={'type': 'Personal', 'value': self.emailAddy})
 
         self.UTILS.general.insertContact(self.contact)
 
@@ -44,7 +44,7 @@ class test_main(PixiTestCase):
 
         self.Email.launch()
         self.Email.setupAccount(self.email_user, self.email_address, self.email_pass)
- 
+
         #
         # Launch messages app.
         #
@@ -54,13 +54,13 @@ class test_main(PixiTestCase):
         # Create and send a new test message.
         #
         self.messages.create_and_send_sms([self.phone_number], "Email {} one.".format(self.emailAddy))
-        x = self.messages.wait_for_message()
+        msg = self.messages.wait_for_message()
 
         #
         # Tap the email link.
         #
-        link = x.find_element("tag name", "a")
-        link.tap()
+        link = msg.find_element(*DOM.Messages.email_info_in_msg)
+        self.UTILS.element.simulateClick(link)
 
         #
         # Press 'add to existing contact' button.
@@ -72,6 +72,6 @@ class test_main(PixiTestCase):
         # Switch to email frame and verify the email address is in the To field.
         #
         self.UTILS.iframe.switchToFrame(*DOM.Email.frame_locator)
-        x = self.UTILS.element.getElement(DOM.Email.compose_to_from_contacts, "To field")
-        self.UTILS.test.test(x.text == self.emailAddy, 
+        to_field = self.UTILS.element.getElement(DOM.Email.compose_to_from_contacts, "To field")
+        self.UTILS.test.test(to_field.text == self.emailAddy,
                         "To field contains '{}' (it was '{}').".format(self.emailAddy, self.emailAddy))

@@ -44,12 +44,10 @@ class test_main(PixiTestCase):
         #
         # Tap the message area.
         #
-        x = self.UTILS.element.getElement(DOM.Messages.input_message_area, "Message body input field")
-        x.tap()
+        message_body = self.UTILS.element.getElement(DOM.Messages.input_message_area, "Message body input field")
+        message_body.tap()
 
-        #
-        # Check the 'Send button isn't enabled yet.
-        #
-        x = self.UTILS.element.getElement(DOM.Messages.send_message_button, "Send message button")
-        self.UTILS.test.test(not x.is_enabled(), 
-                        "Send button is not enabled after target number is supplied, but message still empty.")
+        send_btn = self.UTILS.element.getElement(DOM.Messages.send_message_button, "Send message button")
+        send_btn.tap()
+        empty_warning = self.UTILS.element.getElement(DOM.Messages.empty_msg_body_warning, "Empty message warning")
+        self.UTILS.test.test(empty_warning, "Warning message expected")

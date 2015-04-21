@@ -79,5 +79,5 @@ class test_main(PixiTestCase):
         self.UTILS.element.waitForElements(DOM.EME.launched_button_bookmark, "Button bar - bookmark button")
         self.UTILS.element.waitForElements(DOM.EME.launched_button_close, "Button bar - close button")
 
-        x = self.UTILS.debug.screenShotOnErr()
-        self.UTILS.reporting.logResult("info", "Screenshot of the button bar:", x)
+        screenshot = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot of the button bar:", screenshot)

@@ -55,18 +55,16 @@ class test_main(PixiTestCase):
         # Wait for the last message in this thread to be a 'received' one
         # and click the link.
         #
-        x = self.messages.wait_for_message()
-        self.UTILS.test.test(x, "Received a message.", True)
+        msg = self.messages.wait_for_message()
+        self.UTILS.test.test(msg, "Received a message.", True)
 
-        a = x.find_element("tag name", "a")
-
-        a.tap()
+        link = msg.find_element(*DOM.Messages.email_info_in_msg)
+        self.UTILS.element.simulateClick(link)
 
         #
         # Press 'add to existing contact' button.
         #
-        w = self.UTILS.element.getElement(DOM.Messages.header_add_to_contact_btn,
-                                    "Add to existing contact button")
+        w = self.UTILS.element.getElement(DOM.Messages.header_add_to_contact_btn, "Add to existing contact button")
         w.tap()
 
         #

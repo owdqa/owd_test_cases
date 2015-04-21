@@ -64,11 +64,11 @@ class test_main(PixiTestCase):
         time.sleep(1)
 
         #
-        # Tap the 2nd email link.
+        # Tap the email link.
         #
         self.UTILS.reporting.logResult("info", u"Click the email address in this message: '{}'.".format(sms.text))
-        _link = sms.find_element("tag name", "a")
-        _link.tap()
+        _link = sms.find_element(*DOM.Messages.email_info_in_msg)
+        self.UTILS.element.simulateClick(_link)
 
         x = self.UTILS.element.getElement(DOM.Messages.header_send_email_btn, "Send email button")
         x.tap()

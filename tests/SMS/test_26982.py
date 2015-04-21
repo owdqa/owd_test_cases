@@ -76,8 +76,8 @@ class test_main(PixiTestCase):
         # Tap the 2nd email link.
         #
         self.UTILS.reporting.logResult("info", "Click the email address in this message: '{}'.".format(sms.text))
-        _link = sms.find_elements("tag name", "a")[1]
-        _link.tap()
+        _link = sms.find_elements(*DOM.Messages.email_info_in_msg)[1]
+        self.UTILS.element.simulateClick(_link)
 
         #
         # Click on "Send email" button from the overlay
@@ -89,6 +89,6 @@ class test_main(PixiTestCase):
         # Switch to email frame and verify the email address is in the To field.
         #
         self.UTILS.iframe.switchToFrame(*DOM.Email.frame_locator)
-        x = self.UTILS.element.getElement(DOM.Email.compose_to_from_contacts, "To field")
-        self.UTILS.test.test(x.text == self.emailAddy,
+        to_field = self.UTILS.element.getElement(DOM.Email.compose_to_from_contacts, "To field")
+        self.UTILS.test.test(to_field.text == self.emailAddy,
                              "To field contains '{}' (it was '{}').".format(self.emailAddy, self.emailAddy))

@@ -75,8 +75,8 @@ class test_main(PixiTestCase):
         #
         # Check message isn't there anymore.
         #
-        x = self.UTILS.element.getElements(DOM.Messages.message_list, "Messages")
-        final_count = len(x)
+        msg_list = self.UTILS.element.getElements(DOM.Messages.message_list, "Messages")
+        final_count = len(msg_list)
         real_count = original_count - 1
         self.UTILS.test.test(final_count == (original_count - 1),
                         "After deleting the message, there were {} messages in this thread ({}) found).".\

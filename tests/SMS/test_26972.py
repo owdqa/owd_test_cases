@@ -64,21 +64,23 @@ class test_main(PixiTestCase):
         # Create and send a new test message.
         self.messages.create_and_send_sms([self.phone_number], "Hello {} old bean.".format(self.emailAddy))
         send_time = self.messages.last_sent_message_timestamp()
-        x = self.messages.wait_for_message(send_time=send_time)
+        msg = self.messages.wait_for_message(send_time=send_time)
 
-        link = x.find_element("tag name", "a")
-        link.tap()
+        link = msg.find_element(*DOM.Messages.email_info_in_msg)
+        self.UTILS.element.simulateClick(link)
 
         # Click 'create new contact'.
         self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
-        x = self.UTILS.element.getElement(DOM.Messages.header_create_new_contact_btn, "Create new contact button")
-        x.tap()
+        create_btn = self.UTILS.element.getElement(DOM.Messages.header_create_new_contact_btn,
+                                                   "Create new contact button")
+        create_btn.tap()
 
         # Verify that the email is in the email field.
         self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
-        x = self.UTILS.element.getElement(DOM.Contacts.email_field, "Email field")
-        x_txt = x.get_attribute("value")
-        self.UTILS.test.test(x_txt == self.emailAddy, "Email is '{}' (expected '{}')".format(x_txt, self.emailAddy))
+        email_field = self.UTILS.element.getElement(DOM.Contacts.email_field, "Email field")
+        email_field_txt = email_field.get_attribute("value")
+        self.UTILS.test.test(email_field_txt == self.emailAddy, "Email is '{}' (expected '{}')".
+                             format(email_field_txt, self.emailAddy))
 
         # Put the contact details into each of the fields (this method
         # clears each field first).

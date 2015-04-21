@@ -3,19 +3,22 @@ from OWDTestToolkit.pixi_testcase import PixiTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.browser import Browser
+import time
+
 
 class test_main(PixiTestCase):
 
     def setUp(self):
         PixiTestCase.setUp(self)
-        self.UTILS     = UTILS(self)
-        self.browser   = Browser(self)
+        self.UTILS = UTILS(self)
+        self.browser = Browser(self)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
         PixiTestCase.tearDown(self)
 
     def test_run(self):
+        time.sleep(5)
         self.UTILS.test.test(not self.UTILS.network.is_network_type_enabled("data"),
                          "Data mode is disabled before we start this test.")
 
@@ -30,4 +33,3 @@ class test_main(PixiTestCase):
         self.wait_for_condition(lambda m: not self.data_layer.is_cell_data_connected,
                                 timeout=20, message="Device attached to data connection")
         self.UTILS.element.waitForNotElements(DOM.Statusbar.dataConn, "Data icon in statusbar")
-

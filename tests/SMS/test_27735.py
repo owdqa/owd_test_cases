@@ -1,3 +1,4 @@
+# coding=utf-8
 #
 # 27735: Verify that If the name of the contact is not empty,
 # no carrier information is linked to the phone, and
@@ -29,7 +30,7 @@ class test_main(PixiTestCase):
         # Prepare the contact we're going to insert.
         #
         self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
-        self.contact = MockContact(tel={'type': '', 'value': self.phone_number})
+        self.contact = MockContact(tel={'type': u'Móvil', 'value': self.phone_number})
 
         self.UTILS.general.insertContact(self.contact)
         self.UTILS.reporting.logComment("Using target telephone number " + self.contact["tel"]["value"])
@@ -81,15 +82,15 @@ class test_main(PixiTestCase):
         #
         # Examine the carrier.
         #
-        expect = self.contact["tel"]["type"]
+        expected = self.contact["tel"]["type"]
         actual = self.messages.threadType()
-        self.UTILS.test.test(expect == actual, "The type is listed as: '{}' (subheader was '{}').".\
-                             format(expect, actual))
+        self.UTILS.test.test(expected == actual, u"The type expected is: '{}' (found '{}').".\
+                             format(expected, actual))
 
         #
         # Phone Number is shown instead of carrier as the secondary header
         #
-        expect = self.contact["tel"]["value"]
+        expected = self.contact["tel"]["value"]
         actual = self.messages.threadCarrier()
-        self.UTILS.test.test(expect == actual, "The telephone number is: '{}' (subheader was '{}').".\
-                             format(expect, actual))
+        self.UTILS.test.test(expected == actual, u"The telephone number expected is: '{}' (found '{}').".\
+                             format(expected, actual))

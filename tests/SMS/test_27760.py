@@ -68,10 +68,7 @@ class test_main(PixiTestCase):
         msg_area = self.UTILS.element.getElement(DOM.Messages.input_message_area, "Message area")
         self.UTILS.test.test(msg_area.text == "", "Message area is clear after deleting all characters in it.")
 
-        #
-        # Check the Send button isn't enabled any more.
-        #
         send_btn = self.UTILS.element.getElement(DOM.Messages.send_message_button, "Send message button")
-        self.UTILS.test.test(not send_btn.is_enabled(), 
-                        "Send button is not enabled after target number is supplied, but message still empty.")
-
+        send_btn.tap()
+        empty_warning = self.UTILS.element.getElement(DOM.Messages.empty_msg_body_warning, "Empty message warning")
+        self.UTILS.test.test(empty_warning, "Warning message expected")
