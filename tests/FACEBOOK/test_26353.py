@@ -23,7 +23,7 @@ class test_main(PixiTestCase):
 
         self.contact = MockContact()
         self.UTILS.general.insertContact(self.contact)
-        self.connect_to_network()
+        self.data_layer.connect_to_wifi()
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
@@ -35,6 +35,8 @@ class test_main(PixiTestCase):
         self.contacts.enable_FB_import()
 
         self.facebook.login(self.fb_user, self.fb_pass)
+        screenshot = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult('info', "Screenshot", screenshot)
 
         # Import facebook contacts.
         self.contacts.switch_to_facebook()

@@ -49,7 +49,6 @@ class test_main(PixiTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        self.data_layer.disable_cell_data()
         PixiTestCase.tearDown(self)
 
     def test_run(self):
