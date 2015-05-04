@@ -14,6 +14,7 @@ class test_main(PixiTestCase):
         self.UTILS = UTILS(self)
         self.settings = Settings(self)
         self.Browser = Browser(self)
+        self.UTILS.app.setPermission('Browser', 'geolocation', 'deny')
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()

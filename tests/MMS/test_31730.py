@@ -49,7 +49,7 @@ class test_main(PixiTestCase):
         self.UTILS.reporting.logComment("Sending mms to telephone number " + self.phone_number)
         self.data_layer.delete_all_sms()
         self.UTILS.statusbar.clearAllStatusBarNotifs()
-        self.expected_sizes = ["4.8", "62.3", "175.6"]
+        self.expected_sizes = ["4.8", "62.3", "39.5"]
         self.expected_names = ["80x60.jpg", "30k_basic_AMR.amr", "mpeg4.3gp"]
 
         self.UTILS.general.add_file_to_device('./tests/_resources/80x60.jpg', destination='DCIM/100MZLLA')
@@ -91,6 +91,6 @@ class test_main(PixiTestCase):
         # Check the names and sizes of all attachments are as expected
         for (i, att) in enumerate(attachments):
             self.UTILS.test.test(self.expected_names[i] == att["name"] and self.expected_sizes[i] == att["size"],
-                                 "Attachment [{}] ({}kb)     Expected [{}] ({}kb)".\
-                                 format(self.expected_names[i], self.expected_sizes[i],
-                                        att["name"], att["size"]))
+                                 "Attachment [{}] ({}kb)     Expected [{}] ({}kb)".
+                                 format(att["name"], att["size"],
+                                        self.expected_names[i], self.expected_sizes[i]))

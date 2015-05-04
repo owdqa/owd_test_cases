@@ -24,12 +24,14 @@ class test_main(PixiTestCase):
             'app': self.apps.launch("Gallery"),
             'card': (DOM.Home.app_card[0], DOM.Home.app_card[1].format("gallery")),
         }
+        time.sleep(5)
         self.radio_app = {
             'name': "FM Radio",
             'app': self.apps.launch("FM Radio"),
             'card': (DOM.Home.app_card[0], DOM.Home.app_card[1].format("fm")),
         }
 
+        time.sleep(5)
         self.UTILS.home.touchHomeButton()
 
     def tearDown(self):
