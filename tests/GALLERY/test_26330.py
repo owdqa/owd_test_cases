@@ -5,17 +5,17 @@
 #       3. Browse photos in gallery
 # ** Expected Results
 #       You can see each picture in your sd card
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.spreadtrum_testcase import SpreadtrumTestCase
 from OWDTestToolkit.apps.gallery import Gallery
 from OWDTestToolkit.utils.utils import UTILS
 
 
-class test_main(GaiaTestCase):
+class test_main(SpreadtrumTestCase):
 
     img_list = ('img1.jpg', 'img2.jpg', 'img3.jpg', 'img4.jpg', 'img5.jpg')
 
     def setUp(self):
-        GaiaTestCase.setUp(self)
+        SpreadtrumTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.gallery = Gallery(self)
 
@@ -24,7 +24,7 @@ class test_main(GaiaTestCase):
     def tearDown(self):
         self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        SpreadtrumTestCase.tearDown(self)
 
     def test_run(self):
         # Load sample images into the gallery.

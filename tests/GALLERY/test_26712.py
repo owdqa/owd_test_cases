@@ -9,7 +9,7 @@
 #       7- Close Gallery app
 # ** Expected Results
 #       It is possible to open Camera app and take a picture by pressing Camera key/icon in Gallery app
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.spreadtrum_testcase import SpreadtrumTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.apps.camera import Camera
 from OWDTestToolkit.apps.gallery import Gallery
@@ -17,10 +17,10 @@ from OWDTestToolkit.utils.utils import UTILS
 import time
 
 
-class test_main(GaiaTestCase):
+class test_main(SpreadtrumTestCase):
 
     def setUp(self):
-        GaiaTestCase.setUp(self)
+        SpreadtrumTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.gallery = Gallery(self)
         self.camera = Camera(self)
@@ -30,7 +30,7 @@ class test_main(GaiaTestCase):
     def tearDown(self):
         self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        SpreadtrumTestCase.tearDown(self)
 
     def test_run(self):
         self.gallery.launch()

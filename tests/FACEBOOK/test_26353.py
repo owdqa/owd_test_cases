@@ -1,5 +1,5 @@
 import time
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.spreadtrum_testcase import SpreadtrumTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.facebook import Facebook
@@ -8,11 +8,11 @@ from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.utils.contacts import MockContact
 
 
-class test_main(GaiaTestCase):
+class test_main(SpreadtrumTestCase):
 
     def setUp(self):
 
-        GaiaTestCase.setUp(self)
+        SpreadtrumTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.facebook = Facebook(self)
@@ -27,7 +27,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        SpreadtrumTestCase.tearDown(self)
 
     def test_run(self):
         self.contacts.launch()

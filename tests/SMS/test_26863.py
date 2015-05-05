@@ -17,18 +17,18 @@
 # returned to the SMS thread view.
 #===============================================================================
 
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.spreadtrum_testcase import SpreadtrumTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 import time
 
 
-class test_main(GaiaTestCase):
+class test_main(SpreadtrumTestCase):
 
     def setUp(self):
 
         # Set up child objects...
-        GaiaTestCase.setUp(self)
+        SpreadtrumTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.target_num = self.UTILS.general.get_config_variable("phone_number", "custom")

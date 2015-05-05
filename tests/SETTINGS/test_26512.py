@@ -11,12 +11,12 @@
 #===============================================================================
 
 import time
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.spreadtrum_testcase import SpreadtrumTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
 
 
-class test_main(GaiaTestCase):
+class test_main(SpreadtrumTestCase):
 
     def __init__(self, *args, **kwargs):
         kwargs['restart'] = True
@@ -25,7 +25,7 @@ class test_main(GaiaTestCase):
     def setUp(self):
 
         # Set up child objects...
-        GaiaTestCase.setUp(self)
+        SpreadtrumTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.settings = Settings(self)
 
@@ -34,7 +34,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        SpreadtrumTestCase.tearDown(self)
 
     def test_run(self):
         self.settings.launch()

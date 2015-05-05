@@ -5,7 +5,7 @@
 import time
 import sys
 sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.spreadtrum_testcase import SpreadtrumTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.loop import Loop
 from OWDTestToolkit.apps.settings import Settings
@@ -15,10 +15,10 @@ from OWDTestToolkit.utils.contacts import MockContact
 from tests.i18nsetup import setup_translations
 
 
-class main(GaiaTestCase):
+class main(SpreadtrumTestCase):
 
     def setUp(self):
-        GaiaTestCase.setUp(self)
+        SpreadtrumTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.loop = Loop(self)
         self.contacts = Contacts(self)
@@ -48,7 +48,7 @@ class main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        SpreadtrumTestCase.tearDown(self)
 
     def test_run(self):
         # First, login

@@ -8,13 +8,13 @@
 # Expected results:
 # Wi-Fi HotSpot is disabled by default when switching on the device
 #===============================================================================
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.spreadtrum_testcase import SpreadtrumTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.settings import Settings
 
 
-class test_main(GaiaTestCase):
+class test_main(SpreadtrumTestCase):
 
     def __init__(self, *args, **kwargs):
         kwargs['restart'] = True
@@ -22,13 +22,13 @@ class test_main(GaiaTestCase):
 
     def setUp(self):
         # Set up child objects...
-        GaiaTestCase.setUp(self)
+        SpreadtrumTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.settings = Settings(self)
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        SpreadtrumTestCase.tearDown(self)
 
     def test_run(self):
 

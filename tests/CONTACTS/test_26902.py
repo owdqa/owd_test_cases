@@ -1,6 +1,6 @@
 import sys
 sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.spreadtrum_testcase import SpreadtrumTestCase
 
 from OWDTestToolkit.utils.contacts import MockContact
 from tests.CONTACTS.shared_test_functions import field_remove_toggle

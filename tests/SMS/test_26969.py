@@ -29,14 +29,14 @@
 # Every URL opened is actived in each tab browser.
 #===============================================================================
 
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.spreadtrum_testcase import SpreadtrumTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.browser import Browser
 import time
 
 
-class test_main(GaiaTestCase):
+class test_main(SpreadtrumTestCase):
 
     links = ["www.google.com", "www.hotmail.com", "www.wikipedia.org"]
     test_msg = "Test " + " ".join(links) + " this."
@@ -44,7 +44,7 @@ class test_main(GaiaTestCase):
     def setUp(self):
 
         # Set up child objects...
-        GaiaTestCase.setUp(self)
+        SpreadtrumTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.browser = Browser(self)
@@ -55,7 +55,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        SpreadtrumTestCase.tearDown(self)
 
     def test_run(self):
 

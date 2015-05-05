@@ -15,7 +15,7 @@
 # ER3. The message is sent correctly
 #===============================================================================
 
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.spreadtrum_testcase import SpreadtrumTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -23,12 +23,12 @@ from marionette import Actions
 import time
 
 
-class test_main(GaiaTestCase):
+class test_main(SpreadtrumTestCase):
 
     def setUp(self):
 
         # Set up child objects...
-        GaiaTestCase.setUp(self)
+        SpreadtrumTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
 
@@ -42,7 +42,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        SpreadtrumTestCase.tearDown(self)
 
     def test_run(self):
         self.UTILS.statusbar.clearAllStatusBarNotifs()

@@ -1,20 +1,20 @@
 #
 # 31727: Sending PNG file
 #
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.spreadtrum_testcase import SpreadtrumTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.gallery import Gallery
 
 
-class test_main(GaiaTestCase):
+class test_main(SpreadtrumTestCase):
 
     test_msg = "Hello World"
 
     def setUp(self):
 
         # Set up child objects...
-        GaiaTestCase.setUp(self)
+        SpreadtrumTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.gallery = Gallery(self)
@@ -27,7 +27,7 @@ class test_main(GaiaTestCase):
     def tearDown(self):
         self.UTILS.general.remove_files()
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        SpreadtrumTestCase.tearDown(self)
 
     def test_run(self):
         self.messages.launch()

@@ -17,7 +17,7 @@
 # There should be an error message to warn user that a connection is needed
 #===============================================================================
 
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.spreadtrum_testcase import SpreadtrumTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
@@ -25,7 +25,7 @@ from OWDTestToolkit.apps.email import Email
 import time
 
 
-class test_main(GaiaTestCase):
+class test_main(SpreadtrumTestCase):
 
     def __init__(self, *args, **kwargs):
         kwargs['restart'] = True
@@ -34,7 +34,7 @@ class test_main(GaiaTestCase):
     def setUp(self):
 
         # Set up child objects...
-        GaiaTestCase.setUp(self)
+        SpreadtrumTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
         self.email = Email(self)
@@ -49,7 +49,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        SpreadtrumTestCase.tearDown(self)
 
     def test_run(self):
 

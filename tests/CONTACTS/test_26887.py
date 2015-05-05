@@ -11,7 +11,7 @@
 # Favourite button changes from active to inactive state.
 #===============================================================================
 
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.spreadtrum_testcase import SpreadtrumTestCase
 
 from OWDTestToolkit.utils.contacts import MockContact
 from OWDTestToolkit import DOM
@@ -20,13 +20,13 @@ from OWDTestToolkit.apps.contacts import Contacts
 import time
 
 
-class test_main(GaiaTestCase):
+class test_main(SpreadtrumTestCase):
 
     add_fav_str = "Add as Favorite"
     remove_fav_str = "Remove as Favorite"
 
     def setUp(self):
-        GaiaTestCase.setUp(self)
+        SpreadtrumTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
 
@@ -35,7 +35,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        SpreadtrumTestCase.tearDown(self)
 
     def test_run(self):
         self.contacts.launch()

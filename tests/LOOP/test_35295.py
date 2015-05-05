@@ -7,7 +7,7 @@
 import sys
 sys.path.insert(1, "./")
 import time
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.spreadtrum_testcase import SpreadtrumTestCase
 from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.contacts import MockContact
 from OWDTestToolkit.utils.utils import UTILS
@@ -17,7 +17,7 @@ from OWDTestToolkit.apps.loop import Loop
 from tests.i18nsetup import setup_translations
 
 
-class test_main(GaiaTestCase):
+class test_main(SpreadtrumTestCase):
 
     def __init__(self, *args, **kwargs):
         kwargs['restart'] = True
@@ -26,7 +26,7 @@ class test_main(GaiaTestCase):
     def setUp(self):
 
         # Set up child objects...
-        GaiaTestCase.setUp(self)
+        SpreadtrumTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.contacts = Contacts(self)
         self.email = Email(self)
@@ -59,7 +59,7 @@ class test_main(GaiaTestCase):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        SpreadtrumTestCase.tearDown(self)
 
     def test_run(self):
 

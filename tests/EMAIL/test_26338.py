@@ -17,7 +17,7 @@
 import time
 import sys
 sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
+from OWDTestToolkit.spreadtrum_testcase import SpreadtrumTestCase
 from tests.EMAIL.shared_test_functions.emailing import Emailing
 
 
@@ -48,7 +48,7 @@ class test_26338(Emailing):
 
     def tearDown(self):
         self.UTILS.reporting.reportResults()
-        GaiaTestCase.tearDown(self)
+        SpreadtrumTestCase.tearDown(self)
 
     def test_run(self):
         self.UTILS.reporting.logResult('info', 'Account info: {}'.format(self.user1))
