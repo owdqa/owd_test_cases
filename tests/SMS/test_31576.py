@@ -22,7 +22,7 @@
 from gaiatest import GaiaTestCase
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
-from marionette import Actions
+from marionette_driver.marionette import Actions
 
 
 class test_main(GaiaTestCase):

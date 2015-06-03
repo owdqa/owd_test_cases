@@ -17,7 +17,7 @@ from OWDTestToolkit import DOM
 from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.messages import Messages
 from OWDTestToolkit.apps.contacts import Contacts
-from marionette import Actions
+from marionette_driver.marionette import Actions
 
 
 class test_main(GaiaTestCase):
