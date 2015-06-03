@@ -1,52 +1,39 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
-#
-# Imports particular to this test case.
-#
-from tests._mock_data.contacts import MockContacts
-import time
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.utils.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
+
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.settings   = Settings(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
 
-        #
-        # Get details of our test contacts.
-        #
-        self.cont = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.cont)
-        
-        
+        # Create our test contacts.
+        self.contact = MockContact()
+        self.UTILS.general.insertContact(self.contact)
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        
-        #
+
         # Set up to use data connection.
-        #
-        self.UTILS.getNetworkConnection()
-        
-        #
+        self.connect_to_network()
+
         # Launch contacts app.
-        #
         self.contacts.launch()
-        
-        x = self.contacts.import_GmailLogin("wrongname", "wrongpass")
-        
-        self.UTILS.TEST(x == False, "Login failed.")
 
+        x = self.contacts.import_gmail_login("wrongname", "wrongpass")
 
+        self.UTILS.test.test(x == False, "Login failed.")

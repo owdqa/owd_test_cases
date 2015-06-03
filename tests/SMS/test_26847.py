@@ -1,89 +1,82 @@
+#===============================================================================
+# 26847: Select some conversations and press delete
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Access to SMS app
+# 2- Press edit button
+# 3- Select multiple conversations
+# 4- Press delete button
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+# Expected result:
+# The selected conversations are successfully deleted
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
-from tests._mock_data.contacts import MockContacts
+import time
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.utils.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
-    
-    _TestMsg     = "Test message."
-    _RESTART_DEVICE = True
-    
+
+    test_msg = "Test message."
+
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        
-        
-        #
-        # Prepare the contact we're going to insert.
-        #
-        self.contact_1 = MockContacts().Contact_1
-        self.contact_2 = MockContacts().Contact_2
-        self.contact_3 = MockContacts().Contact_longName
-        
-        #
-        # Add this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
-        #
-        self.data_layer.insert_contact(self.contact_1)
-        self.data_layer.insert_contact(self.contact_2)
-        self.data_layer.insert_contact(self.contact_3)
-        
-        
-        
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.incoming_sms_num = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
+
+        # Import details of our test contacts.
+        self.test_contacts = [MockContact() for i in range(3)]
+        self.test_contacts[0]["tel"] = {'type': 'Mobile', 'value': self.phone_number}
+        self.test_contacts[1]["tel"] = {'type': 'Mobile', 'value': self.incoming_sms_num[0]}
+        self.test_contacts[2]["tel"] = {'type': 'Mobile', 'value': self.incoming_sms_num[1]}
+
+        map(self.UTILS.general.insertContact, self.test_contacts)
+        self.data_layer.delete_all_sms()
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        
-        #
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
+
         # Launch messages app.
-        #
         self.messages.launch()
-        
-        #
-        # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
-        #
-#         self.messages.deleteAllThreads()
-        
-        #
+
         # Create and send a new test message.
-        #
-        self.messages.createAndSendSMS([self.contact_1["tel"]["value"]], self._TestMsg)
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
-        self.messages.createAndSendSMS([self.contact_2["tel"]["value"]], self._TestMsg)
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
-        self.messages.createAndSendSMS([self.contact_3["tel"]["value"]], self._TestMsg)
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
-        
-        #
+        self.UTILS.reporting.debug("*** Sending SMS to {}".format(self.test_contacts[0]["tel"]["value"]))
+        self.messages.create_and_send_sms([self.test_contacts[0]["tel"]["value"]], self.test_msg)
+        self.messages.go_back()
+
+        for i in range(2):
+            self.test_msg = "Test message {} at {}".format(i, time.time())
+            self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)
+            self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
+
+        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+
         # Delete all threads, except the last one.
-        #
-        x = self.UTILS.getElement(DOM.Messages.edit_threads_button, "Edit threads button")
-        x.tap()
-        
-        x = self.UTILS.getElements(DOM.Messages.threads, "Message thread checkboxes")
-        for i in range(0,len(x)-1):
-            x[i].tap()
-        
+        self.messages.threadEditModeON()
+        edit_btn = self.UTILS.element.getElement(DOM.Messages.edit_threads_button, "Edit threads button")
+        edit_btn.tap()
+
+        select_btn = self.UTILS.element.getElement(DOM.Messages.edit_msgs_select_threads_btn, "Select messages button")
+        select_btn.tap()
+
+        thread_list = self.UTILS.element.getElements(DOM.Messages.threads_list, "Message threads")
+        for i in range(len(thread_list) - 1):
+            thread_list[i].tap()
+
         self.messages.deleteSelectedThreads()
-        
-        #
+
         # Check there is now only 1 thread.
-        #
-        x = self.UTILS.getElements(DOM.Messages.threads, "Message thread checkboxes")
-        self.UTILS.TEST(len(x) == 1, "Only 1 thread is left after deleting the other two.")
-        
+        msgs = self.UTILS.element.getElements(DOM.Messages.threads_list, "Message threads after deletion")
+        self.UTILS.test.test(len(msgs) == 1, "Only 1 thread is left after deleting the other two.")

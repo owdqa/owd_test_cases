@@ -1,74 +1,52 @@
 #
-# Imports which are standard for all test cases.
+# 27744: Introduce a valid SMS and click on Back option
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
 
-#
-# Imports particular to this test case.
-#
 
 class test_main(GaiaTestCase):
-    
-    def setUp(self):
-        #
-        # Set up child objects...
-        #
-        GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        
-        #
-        # Establish which phone number to use.
-        #
-        self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Sending sms to telephone number " + self.target_telNum)
-        
-    def tearDown(self):
-        self.UTILS.reportResults()
-        
-    def test_run(self):
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
-        
-        #
-        # Start a new sms.
-        #
-        self.messages.startNewSMS()
-        
-        #
-        # Enter a number in the target field.
-        #
-        self.messages.addNumbersInToField([self.target_telNum])
 
-        #
+    def setUp(self):
+
+        # Set up child objects...
+        GaiaTestCase.setUp(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+
+        # Establish which phone number to use.
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
+        self.data_layer.delete_all_sms()
+
+    def tearDown(self):
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
+    def test_run(self):
+
+        # Launch messages app.
+        self.messages.launch()
+
+        # Start a new sms.
+        self.messages.startNewSMS()
+
+        # Enter a number in the target field.
+        self.messages.addNumbersInToField([self.phone_number])
+
         # Enter a message the message area.
-        #
-        x = self.messages.enterSMSMsg("xxx")
-        
-        #
+        self.messages.enterSMSMsg("xxx")
+
         # Click the back button.
-        #
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
-        
-        #
-        # Check for the 'discard confirmation' popup.
-        #
-        orig_frame = self.UTILS.currentIframe()
-        self.marionette.switch_to_frame()
-        x = self.UTILS.getElement( ("xpath", "//*[text()='Are you sure you want to discard this message?']"),
-                                   "Discard confirmation message", True, 5, False)
-        x = self.UTILS.getElement( ("id", "modal-dialog-confirm-ok"), "OK button", True, 5, False)
-        x.tap()
-        self.UTILS.switchToFrame("src", orig_frame)
-        
-        #
+        self.messages.go_back()
+
+        # Check for the save/discard popup.
+        discard_btn = self.UTILS.element.getElement(DOM.Messages.discard_msg_btn, "Discard button")
+        discard_btn.tap()
+
         # Verify that we're now in the correct place.
-        #
-        self.UTILS.headerCheck("Messages")
-        
+        self.UTILS.element.headerCheck("Messages")
+        threads = self.UTILS.element.getElement(DOM.Messages.no_threads_message, "No threads message")
+        self.UTILS.test.test(threads, "There are no threads, as expected")

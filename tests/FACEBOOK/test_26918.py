@@ -1,87 +1,77 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+# OWD-26918
+# Unlink all Facebook contacts in the address book in a single step and
+# verify the contacts who was linked to a facebook contacts
 
+# ** Procedure
+#       1. Create a Contact With The name "Test"
+#       2. Link contact with a contact in Facebook
+#       3. Open settings contact list
+#       4. Press the toggle to delete all facebook contacts
+#       5. Press Remove
 #
-# Imports particular to this test case.
-#
-from tests._mock_data.contacts import MockContacts
+# ** Expected Results
+# FB contacts are deleted. If a contact was linked to one of Facebook.
+# The contact is displayed as if you had unlinked
+
 import time
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.apps.facebook import Facebook
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.utils.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
+
     def setUp(self):
-        #
-        # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.facebook   = Facebook(self)
-                
-        #
-        # Import details of our test contacts.
-        #
-        self.Contact_1 = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.Contact_1)
-    
-        
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.facebook = Facebook(self)
+
+        self.fb_user = self.UTILS.general.get_config_variable("gmail_1_email", "common")
+        self.fb_pass = self.UTILS.general.get_config_variable("gmail_1_pass", "common")
+        self.fb_email = self.UTILS.general.get_config_variable("gmail_2_email", "common")
+
+        self.test_contact = MockContact()
+        self.UTILS.general.insertContact(self.test_contact)
+
+        self.connect_to_network()
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-    
-        self.UTILS.getNetworkConnection()
-        
-        #
-        # Launch contacts app and enable facebook import.
-        #
         self.contacts.launch()
-
         self.contacts.tapSettingsButton()
-        
-        self.contacts.enableFBImport()        
-        fb_user = self.UTILS.get_os_variable("T19180_FB_USERNAME")
-        fb_pass = self.UTILS.get_os_variable("T19180_FB_PASSWORD")
-        self.facebook.login(fb_user, fb_pass)
-        
-        #
-        # Import facebook contacts.
-        #
-        self.contacts.switchToFacebook()
-        friend_count = self.facebook.importAll()
+        self.contacts.enable_FB_import()
+        self.facebook.login(self.fb_user, self.fb_pass)
 
-        #
+        # Import all
+        self.contacts.switch_to_facebook()
+        self.facebook.importAll()
+
+        # Go back to "All contacts" screen
+        back_btn = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Details 'done' button")
+        back_btn.tap()
+
         # View the contact details.
-        #
-        self.contacts.launch()
-        self.contacts.viewContact(self.Contact_1['name'])
-         
-        #
+        self.contacts.view_contact(self.test_contact['givenName'])
+
         # Press the link button.
-        #
         self.contacts.tapLinkContact()
- 
-        #
+
         # Select the contact to link.
-        #
-        fb_email = self.UTILS.get_os_variable("T19180_FB_LINK_EMAIL_ADDRESS")
+        self.facebook.link_contact(self.fb_email)
 
-        self.facebook.LinkContact(fb_email)
-         
-        #
         # Check we're back at our contact.
-        #
-        self.UTILS.headerCheck(self.Contact_1['name'])
- 
-        #
+        self.UTILS.element.headerCheck(self.test_contact['name'])
+
         # Verify that we're now linked.
-        #
-        self.contacts.verifyLinked(self.Contact_1['name'], fb_email)
-
-
-
+        self.contacts.verify_linked(self.test_contact['givenName'], self.fb_email)

@@ -1,50 +1,35 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
-#
-# Imports particular to this test case.
-#
-from tests._mock_data.contacts import MockContacts
-import time
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.utils.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        
-        #
-        # Get details of our test contacts.
-        #
-        self.Contact_1 = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.Contact_1)
-        
-        
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+
+        # Create our test contacts.
+        self.contact = MockContact()
+        self.UTILS.general.insertContact(self.contact)
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        #
+
         # Launch contacts app.
-        #
         self.contacts.launch()
 
-        #
         # Search for our new contact.
-        #
-        self.contacts.search(self.Contact_1["tel"]["value"])
-        
-        #
+        self.contacts.search(self.contact["tel"]["value"])
+
         # Verify our contact is listed.
-        #
-        self.contacts.checkSearchResults(self.Contact_1["givenName"], True)
-        
+        self.contacts.check_search_results(self.contact["givenName"], True)

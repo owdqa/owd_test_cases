@@ -1,86 +1,84 @@
+#===============================================================================
+# 26983: Click on an email address when data and wifi are off
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# Data and wifi are off
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+# Procedure:
+# 1. Send a sms from "device A" to "device B" which contains an email address
+# 2. Open the thread view in the device A
+# 3. Click on the email address
+# 4. Select "Send email" option from the overlay
+# 5. Select "OK" to confirm the setup of an email account
+# 6. Fill in the form
+# 7. Click on "Next" button
+#
+# Expected results:
+# There should be an error message to warn user that a connection is needed
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.email import Email
+import time
+
 
 class test_main(GaiaTestCase):
-    
-    _TestMsg     = "Test message."
-    
-    def setUp(self):
-        #
-        # Set up child objects...
-        #
-        GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.Email      = Email(self)
 
-        self.USER1  = self.UTILS.get_os_variable("GMAIL_1_USER")
-        self.EMAIL1 = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
-        self.PASS1  = self.UTILS.get_os_variable("GMAIL_1_PASS")
-         
-        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.emailAddy = self.UTILS.get_os_variable("GMAIL_2_EMAIL")
-        
-        
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
+
+    def setUp(self):
+
+        # Set up child objects...
+        GaiaTestCase.setUp(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.email = Email(self)
+
+        self.email_user = self.UTILS.general.get_config_variable("gmail_1_user", "common")
+        self.email_address = self.UTILS.general.get_config_variable("gmail_1_email", "common")
+        self.email_pass = self.UTILS.general.get_config_variable("gmail_1_pass", "common")
+
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.dest_email = self.UTILS.general.get_config_variable("gmail_2_email", "common")
+        self.incoming_sms_num = self.UTILS.general.get_config_variable("sms_platform_numbers", "common")
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        
-        #
-        # Set up email account.
-        #
-        self.UTILS.getNetworkConnection()        
-        self.Email.launch()
-        self.Email.setupAccount(self.USER1, self.EMAIL1, self.PASS1)
- 
-        #
-        # Disable the network connection.
-        #
-        self.UTILS.disableAllNetworkSettings()
- 
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
-        
-        #
+
         # Create and send a new test message.
-        #
-        self.messages.createAndSendSMS([self.num1], "Email addy %s test." % self.emailAddy)
-        x = self.messages.waitForReceivedMsgInThisThread()
-        
-        #
+        test_msg = "email address {} test at {}".format(self.dest_email, time.time())
+        self.data_layer.send_sms(self.phone_number, test_msg)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)
+        self.UTILS.statusbar.click_on_notification_detail(test_msg, DOM.Messages.frame_locator)
+        sms = self.messages.last_message_in_this_thread()
+        time.sleep(1)
+
         # Tap the 2nd email link.
-        #
-        self.UTILS.logResult("info", "Click the email address in this message: '%s'." % x.text)
-        _link = x.find_element("tag name", "a")
+        self.UTILS.reporting.logResult("info", u"Click the email address in this message: '{}'.".format(sms.text))
+        _link = sms.find_element("tag name", "a")
         _link.tap()
-        
-        #
-        # The email application should not be launched.
-        #
-        self.UTILS.logResult("info", "<b>When you know what the 'no network' warning looks like, replace this test with that one.</b>")
-        time.sleep(2)
-        self.marionette.switch_to_frame()
-        self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@src,'email')]"),
-                                       "Email app iframe", True, 5, False)
-        
-        try:
-            elNam = ("xpath", "//iframe[contains(@src,'email')]")
-            self.wait_for_element_present(*elNam, timeout=2)
-            x = self.marionette.find_element(*elNam)
-            self.marionette.switch_to_frame(x)
-            x = self.UTILS.screenShotOnErr()
-            self.UTILS.logResult("info", "<b>Screenshot of email app:</b> ", x)
-        except:
-            pass
+
+        send_btn = self.UTILS.element.getElement(DOM.Messages.header_send_email_btn, "Send email button")
+        send_btn.tap()
+
+        time.sleep(4)
+
+        self.UTILS.iframe.switchToFrame(*DOM.Email.frame_locator)
+        setup_confirm = self.UTILS.element.getElement(DOM.Email.email_not_setup_ok, "Set up account confirmation")
+        setup_confirm.tap()
+
+        # Try to set up the account - Since there is no connection, it will fail.
+        self.email.setup_account_first_step(self.email_user, self.email_address)
+
+        time.sleep(5)
+        self.UTILS.iframe.switch_to_frame("data-url", "google")
+        self.UTILS.element.getElement(('css selector', 'h1[data-l10n-id=unable-to-connect]'),
+                                      "Unable to connect message")

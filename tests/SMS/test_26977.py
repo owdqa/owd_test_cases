@@ -1,70 +1,66 @@
+#===============================================================================
+# 26977: Verify that when in edit mode, adding email contact from sms is disabled
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Send a sms from "device A" to "device B" which contains an email address
+# 2. Open sms app in the device A.
+# 3. Tap on edit icon
+# 4. Tap on the email in the sms view
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+# Expected results:
+# Nothing should happen as in edit mode this functionality is disabled
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
-
-from tests._mock_data.contacts import MockContacts
+import time
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.contacts import Contacts
+from marionette_driver.marionette import Actions
 
 
 class test_main(GaiaTestCase):
-    
-    _TestMsg     = "Test message."
 
     def setUp(self):
-        #
-        # Set up child objects...
-        #
-        GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
 
-        self.contacts   = Contacts(self)
-        
-        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.emailAddy = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
+        # Set up child objects...
+        GaiaTestCase.setUp(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+
+        self.contacts = Contacts(self)
+
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.emailAddy = self.UTILS.general.get_config_variable("gmail_1_email", "common")
+        self.test_msg = "Hello {} old bean at {}.".format(self.emailAddy, time.time())
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
 
-        #
         # Launch messages app.
-        #
         self.messages.launch()
-        
-        #
-        # Create and send a new test message.
-        #
 
-        self.messages.createAndSendSMS([self.num1], "Hello " + self.emailAddy + " old bean.")
-        x=self.messages.waitForReceivedMsgInThisThread()
-        
-        #
+        # Create and send a new test message.
+        self.messages.create_and_send_sms([self.phone_number], self.test_msg)
+        send_time = self.messages.last_sent_message_timestamp()
+        msg = self.messages.wait_for_message(send_time=send_time)
+        self.messages.check_last_message_contents(self.test_msg)
+
         # Tap on edit mode.
-        #
-        y=self.UTILS.getElement(DOM.Messages.edit_messages_icon, "Edit button")
-        y.tap()  
-         
-        #
+        edit_btn = self.UTILS.element.getElement(DOM.Messages.edit_messages_icon, "Edit button")
+        edit_btn.tap()
+
+        select_btn = self.UTILS.element.getElement(DOM.Messages.edit_msgs_select_btn, "Select button")
+        select_btn.tap()
+
         # Long press the email link.
-        #    
-        _link = x.find_element("tag name", "a")
-        self.actions    = Actions(self.marionette)
-        self.actions.long_press(_link,2).perform() 
-        
-        #
+        _link = msg.find_element("tag name", "a")
+        self.actions = Actions(self.marionette)
+        self.actions.long_press(_link, 2).perform()
+
         # Check the email address is not a link in edit mode.
-        #
-        self.UTILS.waitForNotElements( ("xpath", "//button[text()='Create new contact']"),
-                                   "Create new contact button")
-        self.messages.createAndSendSMS([self.num1], "Email addy %s test." % self.emailAddy)
-        x = self.messages.waitForReceivedMsgInThisThread()
-        
+        self.UTILS.element.waitForNotElements(DOM.Messages.header_create_new_contact_btn, "Create new contact button")

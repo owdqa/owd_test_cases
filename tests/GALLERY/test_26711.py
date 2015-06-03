@@ -1,57 +1,52 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+# OWD-26711: Select multiple pictures and delete them 
+# ** Procedure
+#       1- Open Gallery app
+#       2- Using the option given, select multiple pictures
+#       3- Delete the selected pictures
+#       4- Check that the pictures have been properly removed
+#       5- Close Gallery app
+# ** Expected Results
+#       The pictures are correctly deleted so they are not shown in Gallery app anymore
 
-#
-# Imports particular to this test case.
-#
-import os, time
+import time
+from gaiatest import GaiaTestCase
+from OWDTestToolkit.apps.gallery import Gallery
+from OWDTestToolkit.utils.utils import UTILS
+
 
 class test_main(GaiaTestCase):
-    
-    _img_list = ('img1.jpg',
-                 'img2.jpg',
-                 'img3.jpg',
-                 'img4.jpg',
-                 'img5.jpg')
-                 
-    _img_sizes = (68056,51735,47143,59955,60352)
 
-    
+    img_list = ('img1.jpg', 'img2.jpg', 'img3.jpg', 'img4.jpg', 'img5.jpg')
     def setUp(self):
-        # Set up child objects...
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.gallery    = Gallery(self)
+        self.UTILS = UTILS(self)
+        self.gallery = Gallery(self)
 
-        
-        
-    def tearDown(self):
-        self.UTILS.reportResults()
-        
-    def test_run(self):
-        
-        #
+        self.length = len(self.img_list)
         # Load sample images into the gallery.
-        #
-        for i in self._img_list:
-            self.UTILS.addFileToDevice('./tests/_resources/' + i, destination='DCIM/100MZLLA')
-            
-        #
-        # Open the gallery application.
-        #
+        for i in self.img_list:
+            self.UTILS.general.add_file_to_device('./tests/_resources/' + i)
+
         self.gallery.launch()
-        
-        #
-        # Takes a few seconds for the thumbs to appear...
-        #
-        self.gallery.waitForThumbnails(len(self._img_list))
-        
-        #
-        # Delete the first 3 thumbnails.
-        #
-        self.gallery.deleteThumbnails( (0,1,2) )
+        time.sleep(2)
+        self.previous_thumbs = self.gallery.get_number_of_thumbnails()
+        self.apps.kill_all()
+        time.sleep(2)
+
+    def tearDown(self):
+        self.UTILS.general.remove_files()
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
+    def test_run(self):
+        self.gallery.launch()
+        self.gallery.wait_for_thumbnails_number(self.length)
+
+        positions_to_delete = (0, 1, 2)
+        self.gallery.delete_thumbnails(positions_to_delete)
+
+        current_thumbs = self.gallery.get_number_of_thumbnails()
+        self.UTILS.reporting.logResult('info', 'current_thumbs: {}'.format(current_thumbs))
+        self.UTILS.reporting.logResult('info', 'previous_thumbs: {}'.format(self.previous_thumbs))
+        self.UTILS.test.test(current_thumbs == self.previous_thumbs - len(positions_to_delete),
+                             "After deleting {} picture/s we have the rest".format(len(positions_to_delete)))

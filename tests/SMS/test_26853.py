@@ -1,85 +1,81 @@
+#===============================================================================
+# 26853: Delete all SMS in a conversation with several sms
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Send some sms to our device
+# 2- Open SMS app
+# 3- Open the conversation created with the last sms
+# 4- Press edit button
+# 5- Press Select all button
+# 6- Press Delete button
+# 7- Press OK
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest import GaiaTestCase
-from OWDTestToolkit import *
+# Expected results:
+# All SMS are deleted successfully and the conversation is deleted
+# automatically
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
+
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+import time
+
 
 class test_main(GaiaTestCase):
-    _TestMsg1 = "First message."
-    _TestMsg2 = "Second message"
-    _TestMsg3 = "Third message"
-    
-    _RESTART_DEVICE = True
+    test_msgs = ["First message", "Second message", "Third message"]
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
         self.UTILS = UTILS(self)
         self.messages = Messages(self)
-        
-        
-        #
-        # Establish which phone number to use.
-        #
-        self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Sending sms to telephone number " + self.target_telNum)
-        
-        
-        
-    def tearDown(self):
-        self.UTILS.reportResults()
-        
-    def test_run(self):
-    
-        #
-        # Launch messages app & delete all Threads
-        # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
-        #
-        self.messages.launch()
-#         self.messages.deleteAllThreads()
-        
-        #
-        # Create and send some new tests messages.
-        #
-        self.messages.createAndSendSMS([self.target_telNum], self._TestMsg1)
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.messages.enterSMSMsg(self._TestMsg2)
-        self.messages.sendSMS()
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.messages.enterSMSMsg(self._TestMsg3)
-        self.messages.sendSMS()
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
- 
-        #
-        # Go into edit mode..
-        #
-        x= self.UTILS.getElement(DOM.Messages.edit_messages_icon, "Edit button" )
-        x.tap()
-        
-        #
-        # Tap Selected all
-        #
-        x = self.UTILS.getElement(DOM.Messages.edit_msgs_sel_all_btn, "Select all button")
-        x.tap()
 
-        #
+        # Establish which phone number to use.
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
+        self.data_layer.delete_all_sms()
+
+    def tearDown(self):
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
+    def test_run(self):
+        """
+        Launch messages app & delete all Threads
+        Make sure we have no threads
+        """
+
+        self.messages.launch()
+
+        for i in range(3):
+            self.UTILS.reporting.debug("** Sending [{}]".format(self.test_msgs[i]))
+            self.data_layer.send_sms(self.phone_number, self.test_msgs[i])
+            self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msgs[i], timeout=120)
+
+        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+        self.messages.openThread(self.phone_number)
+
+        # Go into edit mode..
+        edit_btn = self.UTILS.element.getElement(DOM.Messages.edit_messages_icon, "Edit button")
+        edit_btn.tap()
+
+        select_btn = self.UTILS.element.getElement(DOM.Messages.edit_msgs_select_btn, "Select messages button")
+        select_btn.tap()
+
+        # Select all
+        select_all_btn = self.UTILS.element.getElement(DOM.Messages.check_all_messages_btn, "Select all button")
+        select_all_btn.tap()
+
         # Tap delete
-        #
         self.messages.deleteSelectedMessages()
-        
-        #
+
         # Check conversation isn't there anymore.
-        #
-        self.UTILS.waitForNotElements(("xpath", DOM.Messages.thread_selector_xpath % self.target_telNum),"Thread")
- 
+        self.UTILS.element.waitForNotElements(("xpath",
+            DOM.Messages.thread_selector_xpath.format(self.phone_number)), "Thread")
+
         time.sleep(1)
-        fnam = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot of final position:", fnam)  
+        fnam = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot of final position:", fnam)

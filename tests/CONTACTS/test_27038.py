@@ -1,76 +1,50 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.apps.settings import Settings
+from OWDTestToolkit.utils.contacts import MockContact
 
-#
-# Imports particular to this test case.
-#
-from tests._mock_data.contacts import MockContacts
-import time
 
 class test_main(GaiaTestCase):
-    
-    _RESTART_DEVICE = True
+
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
+
+    _gmail_pseudo_locator = ("data-url", "google")
 
     def setUp(self):
-        #
-        # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.settings   = Settings(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.settings = Settings(self)
 
-        self.gmail_u = self.UTILS.get_os_variable("GMAIL_1_USER")
-        self.gmail_p = self.UTILS.get_os_variable("GMAIL_1_PASS")
+        self.gmail_user = self.UTILS.general.get_config_variable("gmail_1_user", "common")
+        self.gmail_passwd = self.UTILS.general.get_config_variable("gmail_1_pass", "common")
 
-        #
-        # Get details of our test contacts.
-        #
-        self.cont = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.cont)
-        
-        
+        self.contact = MockContact()
+        self.UTILS.general.insertContact(self.contact)
+        self.connect_to_network()
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        
-        #
-        # Set up to use data connection.
-        #
-        self.UTILS.getNetworkConnection()
-        
-        #
-        # Launch contacts app.
-        #
         self.contacts.launch()
-        self.contacts.import_GmailLogin(self.gmail_u, self.gmail_p, False)
-        
-        #
-        # Cancel the login.
-        #
-        self.marionette.switch_to_frame()
-        x = self.UTILS.getElement(DOM.Contacts.import_cancel_login, "Cancel icon")
-        x.tap()
-        
-        #
-        # Verify that the gmail frame is closed.
-        #
-        self.marionette.switch_to_frame()
-        self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@%s, '%s')]" % \
-                                        (DOM.Contacts.gmail_frame[0], DOM.Contacts.gmail_frame[1])),
-                                      "Gmail login frame")
-        
-        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
-        
-        self.UTILS.waitForElements( ("xpath", "//h1[text()='Settings']"), "Settings header")
-        
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot and details", x)
+        self.contacts.import_gmail_login(self.gmail_user, self.gmail_passwd, False)
 
+        # Cancel the login
+        self.marionette.switch_to_frame()
+        cancel = self.UTILS.element.getElement(('xpath', '//h1[contains(text(), "Google")]/..'), "Cancel icon")
+        # TODO: Change this when ShadowDOM marionette bug fixed (Bug 1061698)
+        cancel.tap(25, 25)
 
+        self.marionette.switch_to_frame()
+        self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@{}, '{}')]".\
+                                    format(self._gmail_pseudo_locator[0], self._gmail_pseudo_locator[1])),
+                                   "Gmail login iframe")
+
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+        self.UTILS.element.waitForElements(DOM.Contacts.import_contacts_header, "Import contacts header")

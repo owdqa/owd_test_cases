@@ -27,11 +27,19 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26712</td><td  align=left>Tap on Camera option to open Camera app</td>
+  </tr>
+
+  <tr>
     <td  align=center>26711</td><td  align=left>Select multiple pictures and delete them</td>
   </tr>
 
   <tr>
     <td  align=center>26330</td><td  align=left>Browse photos in gallery - verify you can see each picture of your sdcard</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26707</td><td  align=left>Delete a picture</td>
   </tr>
 
   <tr>
@@ -43,7 +51,39 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26823</td><td  align=left>Add a contact and verify that user is returned to the dialer</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26817</td><td  align=left>Create a contact with a number that is in the call log and is not linked to any contact before</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26809</td><td  align=left>Open Call Log using a navigation bar in the dialer application</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26799</td><td  align=left>Make a call by typing a phone number of a contact</td>
+  </tr>
+
+  <tr>
     <td  align=center>27012</td><td  align=left>Add dialed number as new contact</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27009</td><td  align=left>No match at 4th digit</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26819</td><td  align=left>Delete entire call log when it has several calls, All tab</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26835</td><td  align=left>Make a call by selecting an entry in the log (airplane mode enabled)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26797</td><td  align=left>Make a call by selecting a contact</td>
   </tr>
 
   <tr>
@@ -52,6 +92,14 @@ TESTS COVERED
 
   <tr>
     <td  align=center>27018</td><td  align=left>Add dialed number to existing contact when Contacts is empty</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26834</td><td  align=left>Make a call by entering manually the phone number and clicking the 'dial button' afterwards (airplane mode enabled)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26798</td><td  align=left>Make a call by typing a telephone number (mobile) which is not a contact. Use country prefix (0034, 0039,+34)</td>
   </tr>
 
   <tr>
@@ -71,7 +119,31 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26811</td><td  align=left>Open Address Book using a navigation bar in the dialer application</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26807</td><td  align=left>Make a call by typing a telephone number (landline) which is not a contact. Don't use country prefix.</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26829</td><td  align=left>Verify that If the call log is empty, edit button is disabled</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26820</td><td  align=left>Delete some entries from the call log when it has several calls, All tab</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27007</td><td  align=left>Call contact from overlay</td>
+  </tr>
+
+  <tr>
     <td  align=center>27030</td><td  align=left>Verify the call log is updated after 'Adding to an existing contact'</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26805</td><td  align=left>End the call before the call is answered</td>
   </tr>
 
   <tr>
@@ -79,11 +151,51 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>27010</td><td  align=left>Start dialing a number which match with one contact's number with prefix</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27006</td><td  align=left>No match at 5th digit</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27023</td><td  align=left>Call log entry already in contacts</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26791</td><td  align=left>Tap in a log entry corresponding to an incoming call without a contact linked to add the number to an existing contact</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26822</td><td  align=left>Write a phone number and verify that the add contact button is enabled</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26788</td><td  align=left>Tap in a log entry corresponding to an outgoing call with a contact with photo linked to perform a call to this number</td>
+  </tr>
+
+  <tr>
     <td  align=center>27013</td><td  align=left>Add dialed number to existing contact without phone numbers</td>
   </tr>
 
   <tr>
+    <td  align=center>26838</td><td  align=left>Verify that the call log shows the ellipsis ('...') when contact has long names and that shows correctly the number of entries in call log groups</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26810</td><td  align=left>Open Dial Pad using a navigation bar in the dialer application</td>
+  </tr>
+
+  <tr>
     <td  align=center>27021</td><td  align=left>Add call log entry to existing contact (with more phone numbers) and contacts not empty</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26836</td><td  align=left>Make a call by tapping on a phone number linked to a contact from address book (airplane mode enabled)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27005</td><td  align=left>Three matches at 4th digit</td>
   </tr>
 
   <tr>
@@ -95,7 +207,23 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26804</td><td  align=left>End the call during a call (speaker and mute OFF)</td>
+  </tr>
+
+  <tr>
     <td  align=center>27025</td><td  align=left>Call log in edit mode</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26824</td><td  align=left>Cancel the operation add a contact and verify that user is returned to the dialer</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26905</td><td  align=left>Remove some contact phone numbers and verify that appears is marked as 'temporarily removed' with a dark shadow and an icon that will allow to restore it for each deleted field</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26903</td><td  align=left>Remove the contact Phone number and verify that appears is marked as 'temporarily removed' with a dark shadow and an icon that will allow to restore it</td>
   </tr>
 
   <tr>
@@ -104,6 +232,10 @@ TESTS COVERED
 
   <tr>
     <td  align=center>26317</td><td  align=left>Send an email to a contact from the contact details (Contact with multiple emails)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26898</td><td  align=left>Create a contact with only Name and Last name</td>
   </tr>
 
   <tr>
@@ -123,7 +255,15 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26894</td><td  align=left>The 'done' button in new contact mode (phone number parameter)</td>
+  </tr>
+
+  <tr>
     <td  align=center>26882</td><td  align=left>Search by text string (UPPER CASE) that matches the last name</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27058</td><td  align=left>Edit a contact that has been imported from Hotmail</td>
   </tr>
 
   <tr>
@@ -135,11 +275,27 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26872</td><td  align=left>Search by text string that matches the end of a contact last name and name</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26402</td><td  align=left>Send an email to a contact from the contact details (email account not configured)</td>
+  </tr>
+
+  <tr>
     <td  align=center>26323</td><td  align=left>Add new contact filling all the fields - verify the contact is added with the correct values for each field</td>
   </tr>
 
   <tr>
-    <td  align=center>26895</td><td  align=left>The &quot;done&quot; button in new contact mode (email parameter)</td>
+    <td  align=center>26895</td><td  align=left>The 'done' button in new contact mode (email parameter)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27050</td><td  align=left>Cancel while the contact list is being obtained</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26876</td><td  align=left>Verify that for each contact the user see phone numbers (and types) and primary communication (star feeds)</td>
   </tr>
 
   <tr>
@@ -151,11 +307,35 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26868</td><td  align=left>Check that the contact list contains the name and last name when the user has no photo added</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26887</td><td  align=left>Remove a contact from the favorites list</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26873</td><td  align=left>Verify that the search results are updated at each letter</td>
+  </tr>
+
+  <tr>
     <td  align=center>27044</td><td  align=left>Import all contacts at once</td>
   </tr>
 
   <tr>
     <td  align=center>26899</td><td  align=left>Delete a contact from the contact details(all the fields filled)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26875</td><td  align=left>Verify that for each contact the user see contact name</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26870</td><td  align=left>Search by text string that matches the middle of a contact last name</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26889</td><td  align=left>add a new contact to the address book with the following info: name, phone numbers and emails</td>
   </tr>
 
   <tr>
@@ -179,6 +359,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26884</td><td  align=left>Select the option to edit a contact from contact details</td>
+  </tr>
+
+  <tr>
     <td  align=center>27049</td><td  align=left>Use the Search box to introduce characters in order to look for contacts</td>
   </tr>
 
@@ -191,11 +375,35 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26908</td><td  align=left>Delete a contact and verify that a confirmation is shown (accept the confirmation)</td>
+  </tr>
+
+  <tr>
     <td  align=center>26885</td><td  align=left>Add multiple emails addresses</td>
   </tr>
 
   <tr>
     <td  align=center>26325</td><td  align=left>Send an sms from a contact detail - Verify the contact receives the SMS</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26893</td><td  align=left>The 'done' button in new contact mode (name parameter)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26867</td><td  align=left>Browse the contacts list of (10 contacts aprox)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26897</td><td  align=left>Configure a contact as a favourite and verify that a icon(star) is shown next to contact name in contact details</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26902</td><td  align=left>Remove the contact picture and verify that appears is marked as 'temporarily removed' with a dark shadow and an icon that will allow to restore it</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27051</td><td  align=left>Verify that the number of contacts to be imported is shown</td>
   </tr>
 
   <tr>
@@ -223,6 +431,10 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26888</td><td  align=left>Verify that the favourite contacts will be listed on the top of the full contact list</td>
+  </tr>
+
+  <tr>
     <td  align=center>27047</td><td  align=left>Import from Hotmail option is disabled when data and wifi is disabled</td>
   </tr>
 
@@ -235,7 +447,23 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26880</td><td  align=left>Verify that the list of contact contains first name, last name and the available picture</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26869</td><td  align=left>Search by text string that matches the beginning of a contact name</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26906</td><td  align=left>Remove and restore a contact phone number</td>
+  </tr>
+
+  <tr>
     <td  align=center>26890</td><td  align=left>Delete all characters to the name and surname fields</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26871</td><td  align=left>Search by text string that matches the middle of a contact last name and name</td>
   </tr>
 
   <tr>
@@ -251,6 +479,14 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26878</td><td  align=left>Verify that when looking at the details of a contact, the user can make a call to the contact (mobile phone)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26910</td><td  align=left>Verify that changing the option to sort the list of contacts (from family name to given name) works fine</td>
+  </tr>
+
+  <tr>
     <td  align=center>27041</td><td  align=left>Tap on Select All option to Select all contacts</td>
   </tr>
 
@@ -259,11 +495,39 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>27064</td><td  align=left>Type a number to look for a contact which is bookmarked</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26866</td><td  align=left>Access to editing a contact from the contact details</td>
+  </tr>
+
+  <tr>
+    <td  align=center>27057</td><td  align=left>Tap on Cancel ('x') option after selecting some contacts</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26896</td><td  align=left>The 'done' button in new contact mode (note parameter)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26904</td><td  align=left>Remove the contact email addres and verify that appears is marked as 'temporarily removed' with a dark shadow and an icon that will allow to restore it</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26879</td><td  align=left>Verify that when looking at the details of a contact, the user can make a call to the contact (phone with prefix)</td>
+  </tr>
+
+  <tr>
     <td  align=center>26324</td><td  align=left>Edit a contact changing the name and the phone number - verify that the values modified in the contact appear when viewing the updated contact</td>
   </tr>
 
   <tr>
     <td  align=center>27056</td><td  align=left>Import all contacts at once</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26892</td><td  align=left>Verify that the favorite section is created</td>
   </tr>
 
   <tr>
@@ -279,7 +543,27 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26568</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26568)</td>
+  </tr>
+
+  <tr>
     <td  align=center>26332</td><td  align=left>Load a website via Wifi - verify the site loads in the browser correctly</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26567</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26567)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26571</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26571)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26566</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26566)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26565</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26565)</td>
   </tr>
 
   <tr>
@@ -296,6 +580,18 @@ TESTS COVERED
 
   <tr>
     <td  align=center>26348</td><td  align=left>Add an alarm - verify the alarm was added with the correct date and time</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26512</td><td  align=left>Wi-Fi- verify its status and that can be activated from this menu</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26513</td><td  align=left>Data connection- Activation/Deactivation</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26511</td><td  align=left>Airplane Mode- verify its functionality</td>
   </tr>
 
   <tr>
@@ -319,7 +615,27 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26684</td><td  align=left>View</td>
+  </tr>
+
+  <tr>
     <td  align=center>26347</td><td  align=left>Add and view an event to an offline calendar in each calendar view - verify the event is shown on each calendar view with the correct title, location, and event time length</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26686</td><td  align=left>Move to next/previous day, week, month</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26685</td><td  align=left>Selecting different views (day, week, month)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26417</td><td  align=left>Verify the behaviour of Home key</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26463</td><td  align=left>Status bar- Radio: Airplane mode icon</td>
   </tr>
 
   <tr>
@@ -331,7 +647,27 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26458</td><td  align=left>Status bar- Radio: bluetooth icon</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26412</td><td  align=left>As a user, I want to be able to enable/disable WiFi from the utility tray</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26410</td><td  align=left>As a user, I want to be able to enable/disable Bluetooth from the utility tray</td>
+  </tr>
+
+  <tr>
     <td  align=center>26408</td><td  align=left>Activate/Deactivate airplane mode from Utility tray icon</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26550</td><td  align=left>Connectivity icon</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26416</td><td  align=left>Long press on home key</td>
   </tr>
 
   <tr>
@@ -339,11 +675,47 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26561</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26561)</td>
+  </tr>
+
+  <tr>
     <td  align=center>26553</td><td  align=left>Receiving SMS during a Wi-Fi session</td>
   </tr>
 
   <tr>
+    <td  align=center>26535</td><td  align=left>Verify that Wi-Fi HotSpot is disable by default</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26536</td><td  align=left>Verify that it is possible to turn Wi-Fi HotSpot on/off using the dedicated icon when the device has data on or it is connected to a Wi-Fi network</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26560</td><td  align=left>Connected Network Details Dialog</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26538</td><td  align=left>Try to turn Wi-Fi HotSpot on when the device has Data connection off</td>
+  </tr>
+
+  <tr>
     <td  align=center>26552</td><td  align=left>Sending SMS during a Wi-Fi session</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26551</td><td  align=left>WEB connection during a Wi-Fi session</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26556</td><td  align=left>Lock/unlock the device during a Wi-Fi session</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26562</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26562)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26544</td><td  align=left>Enable/disable Wi-Fi from settings</td>
   </tr>
 
   <tr>
@@ -355,15 +727,27 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26783</td><td  align=left>Add all the categories</td>
+  </tr>
+
+  <tr>
     <td  align=center>26779</td><td  align=left>Verify that if no connection available when selecting a category in everything.me the user will be notified about the need to have a network connection to use this functionality</td>
   </tr>
 
   <tr>
-    <td  align=center>26774</td><td  align=left>Verify that user can click on &quot;Add more categories&quot; in everything.me grid so I am shown again the list and can add more categories</td>
+    <td  align=center>26774</td><td  align=left>Verify that user can click on 'Add more categories' in everything.me grid so I am shown again the list and can add more categories</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26782</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26782)</td>
   </tr>
 
   <tr>
     <td  align=center>26776</td><td  align=left>Verify that when the user navigates to everything.me page, dock is hidden</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26785</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26785)</td>
   </tr>
 
   <tr>
@@ -383,6 +767,14 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26780</td><td  align=left>Verify that when an app is launched from everything.me a bottom bar is shown so that the user can go back, go forward, refresh, bookmark and close the bottom bar</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26772</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26772)</td>
+  </tr>
+
+  <tr>
     <td  align=center>26346</td><td  align=left>Delete a packaged app - verify the app was successfully removed from the homescreen</td>
   </tr>
 
@@ -391,7 +783,19 @@ TESTS COVERED
   </tr>
 
   <tr>
+    <td  align=center>26768</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26768)</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26761</td><td  align=left>(Unable to get description from https://jirapdi.tid.es/browse/OWD-26761)</td>
+  </tr>
+
+  <tr>
     <td  align=center>26337</td><td  align=left>Launch market installed hosted app - verify the app is launched successfully from the homescreen</td>
+  </tr>
+
+  <tr>
+    <td  align=center>26775</td><td  align=left>Verify that user can click on any app shown by everything.me and launch the application</td>
   </tr>
 
   <tr>
@@ -407,7 +811,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>27001</td><td  align=left>Verify that if the user accepts  &quot;Add to an existing contact&quot; from the “Edit contact” form, contact is correctly updated and he is returned to the SMS thread view</td>
+    <td  align=center>27001</td><td  align=left>Verify that if the user accepts  'Add to an existing contact' from the “Edit contact” form, contact is correctly updated and he is returned to the SMS thread view</td>
   </tr>
 
   <tr>
@@ -423,7 +827,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>28100</td><td  align=left>Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:&quot;Test1 656565678 number&quot;)</td>
+    <td  align=center>28100</td><td  align=left>Verify what happens if the SMS contains text follows by another number (NOT phone number) follows by blank and a valid phone number (e.g.:'Test1 656565678 number')</td>
   </tr>
 
   <tr>
@@ -475,7 +879,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26999</td><td  align=left>Verify the user can cancel the &quot;Create new contact&quot; operation from the Contacts APP returning to the SMS thread view</td>
+    <td  align=center>26999</td><td  align=left>Verify the user can cancel the 'Create new contact' operation from the Contacts APP returning to the SMS thread view</td>
   </tr>
 
   <tr>
@@ -603,7 +1007,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26970</td><td  align=left>Verify that when tapping on the URL in the &quot;Edit Mode&quot;, the Browser APP is not launched </td>
+    <td  align=center>26970</td><td  align=left>Verify that when tapping on the URL in the 'Edit Mode', the Browser APP is not launched </td>
   </tr>
 
   <tr>
@@ -647,7 +1051,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>27000</td><td  align=left>Verify that if the user accepts  &quot;Create new Contact&quot; from the “Add contact” form, the form is closed and the user is returned to the SMS thread view</td>
+    <td  align=center>27000</td><td  align=left>Verify that if the user accepts  'Create new Contact' from the “Add contact” form, the form is closed and the user is returned to the SMS thread view</td>
   </tr>
 
   <tr>
@@ -655,7 +1059,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26979</td><td  align=left>Click on an email address and verify that email app is launched with &quot;To&quot; field pre-filled in with the selected e-mail address(no contact)</td>
+    <td  align=center>26979</td><td  align=left>Click on an email address and verify that email app is launched with 'To' field pre-filled in with the selected e-mail address(no contact)</td>
   </tr>
 
   <tr>
@@ -675,7 +1079,7 @@ TESTS COVERED
   </tr>
 
   <tr>
-    <td  align=center>26975</td><td  align=left>Click on an email address, press on &quot;Add to existing contact&quot; (contacts lists is empty)</td>
+    <td  align=center>26975</td><td  align=left>Click on an email address, press on 'Add to existing contact' (contacts lists is empty)</td>
   </tr>
 
   <tr>

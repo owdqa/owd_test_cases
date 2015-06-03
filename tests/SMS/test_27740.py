@@ -1,66 +1,44 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
-#
-# Imports particular to this test case.
-#
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+import time
+
 
 class test_main(GaiaTestCase):
-    
-    _fake_num    = "12435"
-    
+
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+
         # Start with no SMS.
         self.data_layer.delete_all_sms()
-        
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        #
+
         # Launch messages app.
-        #
         self.messages.launch()
-        
-        #
-        # Send a message to an invalid number to create a thread with just an
-        # outgoing message..
-        #
+        """
+        Send a message to an invalid number to create a thread with just an
+        outgoing message..
+        """
+
         msg_text = str(time.time())
-        self.messages.createAndSendSMS([self._fake_num], msg_text)
-         
-        #
-        # Click ok in the alert.
-        #
-        time.sleep(5)
-        self.marionette.switch_to_frame()
-        x = self.UTILS.getElement(DOM.GLOBAL.modal_ok_button, "OK button in question dialog")
-        x.tap()
-        self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
+        self.messages.create_and_send_sms([self.phone_number], msg_text)
 
-        #
-        # Return to the threads view.
-        #
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
+        self.messages.go_back()
 
-        #
         # Get the preview txt for our test.
-        #
-        preview_text = self.messages.getThreadText(self._fake_num)
-        
-        self.UTILS.TEST(preview_text in msg_text, 
-                        "Preview text (" + preview_text + ") is in the original message text(" + msg_text + ").")
-        
+        preview_text = self.messages.getThreadText(self.phone_number)
+
+        self.UTILS.test.test(preview_text in msg_text,
+                        "Preview text ({}) is in the original message text({}).".format(preview_text, msg_text))

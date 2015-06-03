@@ -1,110 +1,69 @@
+#===============================================================================
+# 26844: Open SMS app after send and receive some SMS from different
+# numbers (contacts and no contacts)
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Send some sms to our device from phone numbers who are contacts
+# 1- Send some sms to our device from phone numbers who are not contacts
+# 2- Opem SMS app
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+# Expected results:
+# The user can see in the conversation list the number/contact the
+# conversation was held with, the date/time of last message exchange and
+# an excerpt of the last message exchanged
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
-from tests._mock_data.contacts import MockContacts
+import time
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.utils.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
-    
-    _TestMsg     = "Test message."
-    
-    _RESTART_DEVICE = True
-    
-    def setUp(self):
-        #
-        # Set up child objects...
-        #
-        GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        
-        #
-        # Establish which phone number to use and set up the contact.
-        #
-        self.contact_1 = MockContacts().Contact_1
-        
-        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.num2 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
-        
-        self.contact_1["tel"]["value"] = self.num1
 
-        self.data_layer.insert_contact(self.contact_1)
+    def setUp(self):
+
+        # Set up child objects...
+        GaiaTestCase.setUp(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+
+        # Establish which phone number to use and set up the contact.
+        self.num1 = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.incoming_sms_num = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
+        self.contact = MockContact(tel={'type': 'Mobile', 'value': self.num1})
+
+        self.UTILS.general.insertContact(self.contact)
+        self.data_layer.delete_all_sms()
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        
-        #
+
         # Launch messages app.
-        #
         self.messages.launch()
-         
-        #
+
+        self.test_msg = "Test message at {}".format(time.time())
+
         # Send a message to myself (long and short number to get a few threads).
-        #
-        self.messages.createAndSendSMS([self.num1,self.num2], "Test message")
-        
-        # Waiting for the replies isn't really part of the test, so just continue...
-        
-        x = self.UTILS.getElements(DOM.Messages.threads_list, "Threads")
-        bool_1_target_ok  = False
-        bool_2_target_ok  = False
-        bool_1_time_ok    = False
-        bool_2_time_ok    = False
-        bool_1_snippet_ok = False
-        bool_2_snippet_ok = False
-        counter           = 1
-        for i in x:
-            #
-            # Target details.
-            #
-            y = i.find_element('xpath', './/p[@class="name"]')
-            self.UTILS.logResult("info", "Thread target: " + y.text)
-            if y.text == self.contact_1["name"]:
-                bool_1_target_ok = True
-            if y.text == self.num2:
-                bool_2_target_ok = True
-                
-            #
-            # Time details.
-            #
-            y = i.find_element('tag name', 'time')
-            self.UTILS.logResult("info", "Thread time: " + y.text)
-            if counter == 1:
-                bool_1_time_ok = True
-            else:
-                bool_2_time_ok = True
-                
-            #
-            # Conversation snippet details.
-            #
-            y = i.find_element('xpath', './/span[@class="body-text"]')
-            self.UTILS.logResult("info", "Thread conversation snippet: " + y.text)
-            if counter == 1:
-                bool_1_snippet_ok = True
-            else:
-                bool_2_snippet_ok = True
-            
-            #
-            # Increment the counter.
-            #    
-            counter = counter + 1
-            
-        self.UTILS.TEST(bool_1_target_ok, "A thread exists for target " + self.contact_1["name"])
-        self.UTILS.TEST(bool_2_target_ok, "A thread exists for target " + str(self.num2))
-        
-        self.UTILS.TEST(bool_1_time_ok, "A timestamp exists for thread 1.")
-        self.UTILS.TEST(bool_2_time_ok, "A timestamp exists for thread 2.")
-        
-        self.UTILS.TEST(bool_1_snippet_ok, "A conversation snippet exists for thread 1.")
-        self.UTILS.TEST(bool_2_snippet_ok, "A conversation snippet exists for thread 2.")
-        
-        
+        self.messages.create_and_send_sms([self.num1], self.test_msg)
+        self.UTILS.messages.create_incoming_sms(self.num1, self.test_msg)
+        self.messages.go_back()
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
+        incoming_num = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.incoming_sms_num,
+                                                frame_to_change=DOM.Messages.frame_locator, timeout=5)
+
+        # Check the threads for the required elements: name, time and excerpt
+        for num in [self.contact["name"], incoming_num]:
+            thread = self.UTILS.element.getElementByXpath(DOM.Messages.thread_selector_xpath.format(num))
+            name = self.marionette.find_element(*DOM.Messages.threads, id=thread.id).text
+            self.UTILS.test.test(num == name, "Expected thread name: {} Actual value: {}".format(num, name))
+            thread_time = self.marionette.find_element('css selector', 'p.summary time', id=thread.id).text
+            self.UTILS.test.test(thread_time, "Thread time found: {}".format(thread_time))
+            excerpt = self.marionette.find_element('css selector', 'p.summary span.body-text', id=thread.id)
+            self.UTILS.test.test(excerpt, "Thread excerpt found: {}".format(excerpt))

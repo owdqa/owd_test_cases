@@ -1,67 +1,56 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
-#
-# Imports particular to this test case.
-#
-from tests._mock_data.contacts import MockContacts
+import time
+from OWDTestToolkit import DOM
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.utils.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
-    
+
     def setUp(self):
-        #
-        # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.contacts   = Contacts(self)
-        
-        #
-        # Remove number and import contact.
-        #
-        self.Contact_1 = MockContacts().Contact_1
-        self.Contact_1["tel"] = None
-        self.data_layer.insert_contact(self.Contact_1)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.contacts = Contacts(self)
+
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.contact = MockContact(tel={'type': '', 'value': ''})
+        self.UTILS.general.insertContact(self.contact)
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        #
-        # Launch messages app.
-        #
+
         self.messages.launch()
-        
-        #
-        # Type a message containing the required string 
-        #
+
+        # Type a message containing the required string
         self.messages.startNewSMS()
         self.messages.enterSMSMsg("Test message")
-        
-        #
+
         # Search for our contact.
-        #
-        orig_iframe = self.messages.selectAddContactButton()
-        
-        #
+        self.messages.selectAddContactButton()
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+
         # Search the contacts list for our contact.
-        #
-        x = self.UTILS.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
-        for i in x:
-            if i.text == self.Contact_1["name"]:
-                self.UTILS.logResult("info", "Tapping ...")
-                i.tap()
+        contact_list = self.UTILS.element.getElements(DOM.Contacts.view_all_contact_list, "Contacts list")
+        for c in contact_list:
+            if c.text == self.contact["name"]:
+                self.UTILS.reporting.logResult("info", "Tapping ...")
+                c.tap()
                 break
-        
-        self.UTILS.waitForElements(DOM.Messages.contact_no_phones_msg, "Message saying this contact has no phones")
-        x = self.UTILS.getElement(DOM.Messages.contact_no_phones_ok, "OK button")
-        x.tap()
-        
-        self.UTILS.headerCheck("Select contact")
-          
+
+        time.sleep(2)
+        self.apps.switch_to_displayed_app()
+        self.messages.checkIsInToField("", True)
+
+        # self.UTILS.element.waitForElements(DOM.Messages.contact_no_phones_msg, "Message saying this contact has no phones")
+        # x = self.UTILS.element.getElement(DOM.Messages.contact_no_phones_ok, "OK button")
+        # x.tap()
+        #
+        # self.UTILS.element.headerCheck("Select contact")

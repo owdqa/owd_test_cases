@@ -1,72 +1,47 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.utils.contacts import MockContact
 
-#
-# Imports particular to this test case.
-#
-from tests._mock_data.contacts import MockContacts
-import time
 
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
-        # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-                
-        #
-        # Import details of our test contacts.
-        #
-        self.Contact_1 = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.Contact_1)
-    
-    def tearDown(self):
-        self.UTILS.reportResults()
-        
-    def test_run(self):
-        #
-        # Launch contacts app.
-        #
-        self.contacts.launch()
-        
-        #
-        # View our contact.
-        #
-        self.contacts.viewContact(self.Contact_1['name'])
-           
-        #
-        # Edit our contact.
-        #
-        self.contacts.pressEditContactButton()
-         
-        #
-        # Delete our contact.
-        #
-        self.contacts.pressDeleteContactButton()
-         
-        #
-        # Cancel deletion.
-        #
-        x = self.UTILS.getElement(DOM.Contacts.cancel_delete_btn, "Cancel button")        
-        x.tap()
-         
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
 
-        
-        #
-        # Relaunch the app.
-        #
+        # Create test contacts.
+        self.contact = MockContact()
+        self.UTILS.general.insertContact(self.contact)
+
+    def tearDown(self):
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
+    def test_run(self):
+        # Launch contacts app.
         self.contacts.launch()
-         
-        #
+
+        # View our contact.
+        self.contacts.view_contact(self.contact['name'])
+
+        # Edit our contact.
+        self.contacts.press_edit_contact_button()
+
+        # Delete our contact.
+        self.contacts.press_delete_contact_button()
+
+        # Cancel deletion.
+        cancel_deletion = self.UTILS.element.getElement(DOM.Contacts.cancel_delete_btn, "Cancel button")
+        cancel_deletion.tap()
+
+        # Cancel contact edition
+        self.contacts.press_cancel_edit_button()
+
+        # Go back to contacts start page
+        self.contacts.go_back_from_contact_details()
+
         # Now actually delete our contact.
-        #
-        self.contacts.deleteContact(self.Contact_1['name'])
- 
+        self.contacts.delete_contact(self.contact['name'])

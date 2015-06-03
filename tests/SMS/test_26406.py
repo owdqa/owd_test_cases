@@ -1,58 +1,43 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
-import time
+from gaiatest import GaiaTestCase
 
-#
-# Imports particular to this test case.
-#
-from tests._mock_data.contacts import MockContacts
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.utils.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
-    
+
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.messages   = Messages(self)
-        
-        #
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.messages = Messages(self)
+
         # Import contact (adjust the correct number).
-        #
-        self.cont = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.cont)
+        self.contact = MockContact()
+        self.UTILS.general.insertContact(self.contact)
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
         self.messages.launch()
-        
-        #
+
         # Start a new SMS and add the message and contact name.
-        #
         self.messages.startNewSMS()
-    
         self.messages.selectAddContactButton()
-        self.contacts.viewContact(self.cont["familyName"], False)
-        self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
-        self.messages.checkIsInToField(self.cont["name"], True)
-        
-        #
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+        self.contacts.view_contact(self.contact["givenName"], False)
+        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+        self.messages.checkIsInToField(self.contact["name"], True)
+
         # Remove it.
-        #
-        self.messages.removeContactFromToField(self.cont["name"])
-        
-        #
-        # Verify the contact name is present before removing it.
-        #
-        self.messages.checkIsInToField(self.cont["name"], False)
-        
-        
+        self.messages.removeContactFromToField(self.contact["name"])
+
+        # Verify the contact name is no longer present before removing it.
+        self.messages.checkIsInToField(self.contact["name"], False)

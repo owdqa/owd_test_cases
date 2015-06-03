@@ -1,0 +1,20 @@
+{
+	"26347": "BUG 867987",
+	"26348": "Automation issue: cannot work out how to automate the scroll for setting the alarm time.",
+	"26412": "Wifi symbol does not appear. It works doing it manually.",
+	"26473": "BUG 867987",
+	"26761": "Scroll homescreen does not work now with vertical home",
+	"26781": "BUG 885238",
+	"26983": "Cannot switch to error frame",
+	"26838": "Ellipsis problem. Ask German",
+	"26902": "Funcionality no longer available. Ask Massimo if we can delete this test.",
+	"26903": "Funcionality no longer available. Ask Massimo if we can delete this test.",
+	"26904": "Funcionality no longer available. Ask Massimo if we can delete this test.",
+	"26905": "Funcionality no longer available. Ask Massimo if we can delete this test.",
+	"26906": "Funcionality no longer available. Ask Massimo if we can delete this test.",
+	"26907": "Unable to figure out how to detect how not the keyboard is displayed (previously opened)",
+	"27057": "Bug 932804. Unable to do .tap() on gaia-header close icon.",
+	"36669": "Automation misbehavior when using Mobile ID login, server connection error, retry",
+	"36834": "When you have disabled and available shared_links, there's a bug -> all revoked",
+	"36835": "When you have disabled and available shared_links, there's a bug -> all revoked"
+}

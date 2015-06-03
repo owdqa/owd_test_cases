@@ -1,73 +1,43 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
 
-#
-# Imports particular to this test case.
-#
 
 class test_main(GaiaTestCase):
-    
+
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        
-        #
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+
         # Establish which phone number to use.
-        #
-        self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Sending sms to telephone number " + self.target_telNum)
-        
-        
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
+        self.data_layer.delete_all_sms()
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        #
+
         # Sometimes causes a problem if not cleared.
-        #
-        self.UTILS.clearAllStatusBarNotifs()
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
 
-        #
         # Create message - 20 x 10 chars.
-        #
-        sms_message = ""
-        for i in range(0,20):
-            sms_message = sms_message + "0123456789"
-            
-        sms_message_length = len(sms_message)
-        self.UTILS.logComment("Message length sent: " + str(sms_message_length))
-        
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
-        
-        #
-        # Create and send a new test message.
-        #
-        self.messages.createAndSendSMS([self.target_telNum], sms_message)
-        
-        #
-        # Wait for the last message in this thread to be a 'recieved' one.
-        #
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.TEST(returnedSMS, "A receieved message appeared in the thread.", True)
-        
-        #
-        # TEST: The returned message is as expected (caseless in case user typed it manually).
-        #
-        sms_text = returnedSMS.text
-        self.UTILS.TEST((sms_text.lower() == sms_message.lower()), 
-            "SMS text received matches the SMS text sent.")
+        sms_message = "0123456789" * 20
 
-        self.UTILS.TEST(len(sms_text) == sms_message_length,
-                        "Receieved sms is " + str(sms_message_length) + " characters long.")
+        # Launch messages app.
+        self.messages.launch()
+
+        # Create and send a new test message.
+        self.messages.create_and_send_sms([self.phone_number], sms_message)
+        send_time = self.messages.last_sent_message_timestamp()
+
+        # Wait for the last message in this thread to be a 'received' one.
+        returnedSMS = self.messages.wait_for_message(send_time=send_time)
+        self.UTILS.test.test(returnedSMS, "A received message appeared in the thread.", True)
+
+        self.messages.check_last_message_contents(sms_message)

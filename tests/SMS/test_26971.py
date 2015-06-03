@@ -1,75 +1,59 @@
+#===============================================================================
+# 26971: Verify that in the sms thread view, valid e-mail addresses will
+# be highlighted or shown with a special visual indication
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Send a sms from "device A" to "device B" who contains an email address
+# 2. Send a sms from "device B" to "device A" who contains an email address
+# 3. Open the thread view in the device A
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+# Expected results:
+# The email addresses will be highlighted or shown with a special visual
+# indication
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+import time
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.browser import Browser
+
+
 class test_main(GaiaTestCase):
-        
-    _email        = "owdqatestone@gmail.com"
-    _TestMsg     = "Test " + _email + " this."
-    
-    _RESTART_DEVICE = True
-    
+
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.browser    = Browser(self)
-        
-        #
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.browser = Browser(self)
+
         # Establish which phone number to use.
-        #
-        self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Sending sms to telephone number " + self.target_telNum)
-        
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.incoming_number = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
+        self.emails = ["email1@test.com", "email2@test.com"]
+        self.test_msg = "Test with email addresses: {} and {} at {}".format(self.emails[0], self.emails[1],
+                                                                            time.time())
+        self.data_layer.delete_all_sms()
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        self.UTILS.getNetworkConnection()
-        
-        
-        #
-        # Launch messages app.
-        #
+        self.connect_to_network()
+
         self.messages.launch()
-        self.messages.deleteAllThreads() 
-        
-        #
-        # Create and send a new test message.
-        #
-        self.messages.createAndSendSMS([self.target_telNum], self._TestMsg)
-         
-        #
-        # Wait for the last message in this thread to be a 'received' one
-        # and click the link.
-        #
-        x = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.TEST(x, "Received a message.", True) 
-        
-        #
+
+        self.messages.create_and_send_sms([self.phone_number], self.test_msg)
+        send_time = self.messages.last_sent_message_timestamp()
+        msg = self.messages.wait_for_message(send_time=send_time)
+
         #Verify that a valid URL appears highlight on message received.
-        #
-        y=x.find_element("tag name", "a")
-        self.UTILS.TEST(y.text==self._email , "The email link is in the message received")
-        
-        #
-        # Get the link of the first message
-        #    
-        w = self.UTILS.getElement( ("id", "message-1"), "Message sent")
-        
-        #
-        #Verify that a valid URL appears highlight
-        #
-        z=w.find_element("tag name", "a")
-        self.UTILS.TEST(z.text==self._email , "The email link is in the message sent")
-                
+        email_elems = msg.find_elements("tag name", "a")
+        emails = [email.text for email in email_elems]
+        all_found = all([email in emails for email in self.emails])
+        self.UTILS.test.test(all_found, "All emails were found in the message")

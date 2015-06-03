@@ -1,60 +1,55 @@
 #
-# Imports which are standard for all test cases.
+# 27746: Verify that If the name of the contact is not empty, the type of the
+# phone and the phone carrier (as defined in the address book) as the secondary
+# header
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.utils.contacts import MockContact
 
-#
-# Imports particular to this test case.
-#
-from tests._mock_data.contacts import MockContacts
 
 class test_main(GaiaTestCase):
-    
+
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        
-        #
-        # Import contact (adjust to the correct number).
-        #
-        self.Contact_1 = MockContacts().Contact_1
-        self.Contact_1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Using target telephone number " + self.Contact_1["tel"]["value"])
-        self.data_layer.insert_contact(self.Contact_1)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+
+        # Prepare the contact we're going to insert.
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.contact = MockContact(tel={'type': '', 'value': self.phone_number})
+
+        self.UTILS.general.insertContact(self.contact)
+        self.UTILS.reporting.logComment("Using target telephone number " + self.contact["tel"]["value"])
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
-    def test_run(self):
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
-        #
-        # Send a message to create a thread (use number, not name as this
-        # avoids some blocking bugs just now). 
-        #
-        self.messages.createAndSendSMS( [self.Contact_1["tel"]["value"]], "Test message.")
-        returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-        
-        #
+    def test_run(self):
+
+        # Launch messages app.
+        self.messages.launch()
+        """
+        Send a message to create a thread (use number, not name as this
+        avoids some blocking bugs just now).
+        """
+
+        self.messages.create_and_send_sms([self.contact["tel"]["value"]],
+                                        "Test message.")
+        send_time = self.messages.last_sent_message_timestamp()
+        self.messages.wait_for_message(send_time=send_time)
+
         # Examine the carrier.
-        #
-        x = self.UTILS.getElement(DOM.Messages.type_and_carrier_field, "Type and carrier information")
-        
-        expect = self.Contact_1["tel"]["type"]
+        expect = self.contact["tel"]["type"]
         actual = self.messages.threadType()
-        self.UTILS.TEST(expect == actual, "The type is listed as: '" + expect + "' (subheader was '" + actual + "').")
-        
-        expect = self.Contact_1["tel"]["carrier"]
+        self.UTILS.test.test(expect == actual, "The type is listed as: '{}' (subheader was '{}').".\
+                             format(expect, actual))
+
+        expect = self.contact["tel"]["value"]
         actual = self.messages.threadCarrier()
-        self.UTILS.TEST(expect == actual, "The carrier is listed as: '" + expect + "' (subheader was '" + actual + "').")
-        
+        self.UTILS.test.test(expect == actual, "The carrier is listed as: '{}' (subheader was '{}').".\
+                             format(expect, actual))

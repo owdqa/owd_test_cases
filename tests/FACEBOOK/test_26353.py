@@ -1,79 +1,59 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+import time
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.apps.facebook import Facebook
+from OWDTestToolkit.apps.settings import Settings
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.utils.contacts import MockContact
 
-#
-# Imports particular to this test case.
-#
-from tests._mock_data.contacts import MockContacts
 
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
-        # Set up child objects...
-        #
-        GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.facebook   = Facebook(self)
-        self.settings   = Settings(self)
-                
-        #
-        # Get details of our test contacts.
-        #
-        self.Contact_1 = MockContacts().Contact_1
 
-        #
-        # We're not testing adding a contact, so just stick one 
-        # into the database.
-        #
-        self.data_layer.insert_contact(self.Contact_1)
-        
-        
+        GaiaTestCase.setUp(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.facebook = Facebook(self)
+        self.settings = Settings(self)
+
+        self.fb_user = self.UTILS.general.get_config_variable("gmail_1_email", "common")
+        self.fb_pass = self.UTILS.general.get_config_variable("gmail_1_pass", "common")
+
+        self.contact = MockContact()
+        self.UTILS.general.insertContact(self.contact)
+        self.connect_to_network()
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        #
-        # Set up a network connection.
-        #
-        self.UTILS.getNetworkConnection()
-        
-        #
-        # Launch contacts app.
-        #
         self.contacts.launch()
-        
-        #
-        # Enable facebook and log in.
-        #
         self.contacts.tapSettingsButton()
-        self.contacts.enableFBImport()
-        fb_user = self.UTILS.get_os_variable("T19392_FB_USERNAME")
-        fb_pass = self.UTILS.get_os_variable("T19392_FB_PASSWORD")
-        self.facebook.login(fb_user, fb_pass)
-         
-        #
+        self.contacts.enable_FB_import()
+
+        self.facebook.login(self.fb_user, self.fb_pass)
+
         # Import facebook contacts.
-        #
-        self.contacts.switchToFacebook()
+        self.contacts.switch_to_facebook()
         friend_count = self.facebook.importAll()
- 
-        x = self.UTILS.getElements(DOM.Contacts.social_network_contacts, "Social network contact list", True, 20, False)
-    
-    
-        self.UTILS.TEST(len(x) == friend_count, 
-                        str(friend_count) + " social network friends listed (there were " + str(len(x)) + ").")
-         
+
+        # Go back to "All contacts" screen
+        backBTN = self.UTILS.element.getElement(DOM.Contacts.settings_done_button, "Details 'done' button")
+        backBTN.tap()
+
+        fb_contacts = self.UTILS.element.getElements(DOM.Contacts.social_network_contacts,
+                                                     "Social network contact list", True, 20, False)
+
+        self.UTILS.test.test(
+            len(fb_contacts) == friend_count, "Checking all contacts ({}) have been imported".format(friend_count))
+
+        time.sleep(2)
         self.contacts.tapSettingsButton()
-                 
-        x = self.UTILS.getElement(DOM.Facebook.totals, "Facebook totals")
-        y = str(friend_count) + "/" + str(friend_count) + " friends imported"
-        self.UTILS.TEST(x.text == y, "After import, import details = '" + y + "' (it was '" + x.text + "').")
-         
-           
+
+        total_fb = self.UTILS.element.getElement(DOM.Facebook.totals, "Facebook totals")
+        shown_msg = str(friend_count) + "/" + str(friend_count) + " friends imported"
+        self.UTILS.test.test(
+            total_fb.text == shown_msg, "Check that the message actually matches the number of contacts imported")

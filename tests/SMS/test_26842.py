@@ -1,67 +1,60 @@
+#===============================================================================
+# 26842: Open SMS app after send and receive some SMS from different
+# numbers (no contacts)
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Send some sms to phone numbers who are not contacts
+# 2- Send some sms to our device from phone numbers who are not contacts
+# 2- Opem SMS app
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+# Expected results:
+# The SMS app shows a list with all conversations held
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+import time
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+
 
 class test_main(GaiaTestCase):
-    
-    _TestMsg     = "Test message."
-    
-    _RESTART_DEVICE = True
-    
+
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        
-        #
-        # Establish which phone number to use.
-        #
-        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.num2 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
-        
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+
+        self.own_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.nums = [self.own_number, self.UTILS.general.get_config_variable("short_phone_number", "custom")]
+        self.data_layer.delete_all_sms()
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        #
-        # Make sure we have no contacts.
-        #
         self.data_layer.remove_all_contacts()
-        
-        #
+
         # Launch messages app.
-        #
         self.messages.launch()
-         
-        #
-        # Send a message to myself (long and short number to get a few threads).
-        #
-        self.messages.createAndSendSMS([self.num1,self.num2], "Test message")
-        
-        x = self.UTILS.getElements(DOM.Messages.thread_target_names, "Threads target names")
-        bool_1_ok=False
-        bool_2_ok=False
-        for i in x:
-            self.UTILS.logResult("info", "Thread: " + i.text)
-            if i.text == self.num1:
-                bool_1_ok = True
-            if i.text == self.num2:
-                bool_2_ok = True
-                
-        self.UTILS.TEST(bool_1_ok, "A thread exists for " + str(self.num1))
-        self.UTILS.TEST(bool_2_ok, "A thread exists for " + str(self.num2))
-        
-        
-        
-        
+
+        for num in self.nums:
+            test_msg = "Test message at {} for {}".format(time.time(), num)
+            self.messages.create_and_send_sms([num], test_msg)
+            if num == self.own_number:
+                send_time = self.messages.last_sent_message_timestamp()
+                self.messages.wait_for_message(send_time=send_time)
+            else:
+                self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)
+                self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+            self.messages.go_back()
+
+        target_names = self.UTILS.element.getElements(DOM.Messages.thread_target_names, "Threads target names")
+
+        bools = [title.text in self.nums for title in target_names]
+        msgs = ["A thread exists for {}".format(elem) for elem in self.nums]
+        map(self.UTILS.test.test, bools, msgs)

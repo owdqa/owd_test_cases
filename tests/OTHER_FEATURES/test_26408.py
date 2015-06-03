@@ -1,52 +1,26 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
 
-#
-# Imports particular to this test case.
-#
-import time
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+
 
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
-        # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS     = UTILS(self)
-        
+        self.UTILS = UTILS(self)
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        #
-        # Data conn icon is not in status bar yet.
-        #
-        self.UTILS.TEST(self.UTILS.isNetworkTypeEnabled("airplane") == False,
-                         "Airplane mode is disabled before we start this test.")
-        
-        #
-        # Enable airplane mode.
-        #
-        self.UTILS.toggleViaStatusBar("airplane")
-        
-        #
-        # Data icon is no longer visible in status bar.
-        #
-        self.UTILS.waitForElements(DOM.Statusbar.airplane, "Airplane icon in statusbar", True, 20, False)
-        
-        #
-        # Disable airplane mode.
-        #
-        self.UTILS.toggleViaStatusBar("airplane")
-        
-        #
-        # Data icon is no longer visible in status bar.
-        #
-        self.UTILS.waitForNotElements(DOM.Statusbar.airplane, "Airplane icon in statusbar")
-        
+        self.UTILS.test.test(not self.UTILS.network.is_network_type_enabled("airplane"),
+                             "Airplane mode is disabled before we start this test.")
+
+        self.UTILS.statusbar.toggleViaStatusBar("airplane")
+        self.marionette.switch_to_frame()
+        self.UTILS.element.waitForElements(DOM.Statusbar.airplane, "Airplane icon in statusbar", True, 20, True)
+
+        self.UTILS.statusbar.toggleViaStatusBar("airplane")
+        self.UTILS.element.waitForNotElements(DOM.Statusbar.airplane, "Airplane icon in statusbar")

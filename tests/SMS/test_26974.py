@@ -1,130 +1,121 @@
+#===============================================================================
+# 26974: Click on an email address and Add to an existing contact without email
+# address added
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Send a sms from "device A" to "device B" who contains an email address
+# 2. Open sms app in the device A.
+# 3. Hold on the email address contained in the sms
+# 4. Click on "Add to existing contact" button
+# 5. Select a contact without email address inserted
+# 5. Insert contact photo, name, surname, company, phone number, address
+# comment and other email address.
+# 6. Press save button
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+# Expected results:
+# Contact is created and The user returns to sms app in the conversation screen
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
+
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.utils.contacts import MockContact
 import time
-from tests._mock_data.contacts import MockContacts
+
 
 class test_main(GaiaTestCase):
-    
-    _link        = "owdqatestone@gmail.com"
-    _TestMsg     = "Test " + _link + " this."
-    
-    
+
+    link = "owdqatestone@gmail.com"
+    test_msg = "Test " + link + " this."
+
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.contacts   = Contacts(self)
-        
-        #
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.contacts = Contacts(self)
+
         # Insert a contact without email addresses
-        # 
-        self.UTILS.addFileToDevice('./tests/_resources/contact_face.jpg', destination='DCIM/100MZLLA')        
-        self.Contact_1 = MockContacts().Contact_1
-        self.Contact_1["email"]["value"] = ""
-        self.data_layer.insert_contact(self.Contact_1)
-   
-        #
+        self.UTILS.general.add_file_to_device('./tests/_resources/contact_face.jpg')
+        self.contact = MockContact(email={'type': 'Personal', 'value': ''})
+
+        self.UTILS.general.insertContact(self.contact)
+
         # Establish which phone number to use.
-        #
-        self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Sending sms to telephone number " + self.target_telNum)
-        
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
-    def test_run(self):     
-        #
+        self.UTILS.general.remove_files()
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
+    def test_run(self):
+
         # Launch messages app.
-        #
         self.messages.launch()
-          
-        #
+
         # Create and send a new test message.
-        #
-        self.messages.createAndSendSMS([self.target_telNum], self._TestMsg)
-          
-        #
-        # Wait for the last message in this thread to be a 'received' one
-        # and click the link.
-        #
-        x = self.messages.waitForReceivedMsgInThisThread()
-        self.UTILS.TEST(x, "Received a message.", True)
-        
-        a=x.find_element("tag name", "a")
-        
-        self.actions=Actions(self.marionette)
-        self.actions.long_press(a,5).perform()
-        
-        #
+        self.messages.create_and_send_sms([self.phone_number], self.test_msg)
+        """
+        Wait for the last message in this thread to be a 'received' one
+        and click the link.
+        """
+
+        x = self.messages.wait_for_message()
+        self.UTILS.test.test(x, "Received a message.", True)
+
+        a = x.find_element("tag name", "a")
+
+        a.tap()
+
         # Press 'add to existing contact' button.
-        #
-        w = self.UTILS.getElement(DOM.Messages.header_add_to_contact_btn, "Add to existing contact button")
+        w = self.UTILS.element.getElement(DOM.Messages.header_add_to_contact_btn,
+                                    "Add to existing contact button")
         w.tap()
-                
-        #
+
         # Switch to Contacts app.
-        #
         time.sleep(2)
         self.marionette.switch_to_frame()
-        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
-        
-        #
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+
         # Select the contact.
-        #
-        z = self.UTILS.getElement( ("xpath", "//p[@data-order='%s']" % self.Contact_1["name"].replace(" ", "")),
-                                   "Search item")
-        z.tap()   
-         
-        #
+        prepopulated_contact = (DOM.Contacts.view_all_contact_specific_contact[0],
+                                DOM.Contacts.view_all_contact_specific_contact[1].format("OWD"))
+
+        contact = self.UTILS.element.getElement(prepopulated_contact, "Search item")
+        contact.tap()
+
         # Fill out all the other details.
-        #
-        contFields = self.contacts.getContactFields()
-        
-        #
-        # Put the contact details into each of the fields (this method
-        # clears each field first).
-        #
-        self.contacts.replaceStr(contFields['givenName'  ] , self.Contact_1["givenName"]+"bis")
-        self.contacts.replaceStr(contFields['familyName' ] , self.Contact_1["familyName"]+"bis")
-        self.contacts.replaceStr(contFields['tel'        ] , self.Contact_1["tel"]["value"]+"bis")
-        self.contacts.replaceStr(contFields['street'     ] , self.Contact_1["adr"]["streetAddress"]+"bis")
-        self.contacts.replaceStr(contFields['zip'        ] , self.Contact_1["adr"]["postalCode"]+"bis")
-        self.contacts.replaceStr(contFields['city'       ] , self.Contact_1["adr"]["locality"]+"bis")
-        self.contacts.replaceStr(contFields['country'    ] , self.Contact_1["adr"]["countryName"]+"bis")
-        self.contacts.replaceStr(contFields['comment'    ] , self.Contact_1["comment"]+"bis")
-        self.contacts.addGalleryImageToContact(0)
-                
-        #
+        contFields = self.contacts.get_contact_fields()
+        """
+        Put the contact details into each of the fields (this method
+        clears each field first).
+        """
+
+        self.contacts.replace_str(contFields['givenName'], self.contact["givenName"] + "bis")
+        self.contacts.replace_str(contFields['familyName'], self.contact["familyName"] + "bis")
+        self.contacts.replace_str(contFields['tel'], self.contact["tel"]["value"] + "bis")
+        self.contacts.replace_str(contFields['street'], self.contact["addr"]["streetAddress"] + "bis")
+        self.contacts.replace_str(contFields['zip'], self.contact["addr"]["postalCode"] + "bis")
+        self.contacts.replace_str(contFields['city'], self.contact["addr"]["locality"] + "bis")
+        self.contacts.replace_str(contFields['country'], self.contact["addr"]["countryName"] + "bis")
+        self.contacts.add_gallery_image_to_contact(0)
+
         # Add another email address.
-        #
-        self.contacts.addAnotherEmailAddress(self.Contact_1["email"]["value"])
-        
-        #
+        self.contacts.add_another_email_address(self.contact["email"]["value"])
+
         # Press the Done button.
-        #
-        done_button = self.UTILS.getElement(DOM.Contacts.done_button, "'Done' button")
+        done_button = self.UTILS.element.getElement(DOM.Contacts.done_button, "'Done' button")
         done_button.tap()
 
-        #
         # Check that the contacts iframe is now gone.
-        #
         self.marionette.switch_to_frame()
-        self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@src,'contacts')]"),
-                                       "Contact app iframe")
-        
-        #
+        self.UTILS.element.waitForNotElements(("xpath", "//iframe[contains(@src,'contacts')]"), "Contact app iframe")
+
         # Now return to the SMS app.
-        #
-        self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
+        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)

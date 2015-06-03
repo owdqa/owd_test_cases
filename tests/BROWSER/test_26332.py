@@ -1,76 +1,41 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.browser import Browser
+from OWDTestToolkit.apps.settings import Settings
 
-#
-# Imports particular to this test case.
-#
 
 class test_main(GaiaTestCase):
-    
+
     def setUp(self):
         # Set up child objects...
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.Settings   = Settings(self)
-        self.Browser    = Browser(self)
-        self.wifi_name  = self.UTILS.get_os_variable("GLOBAL_WIFI_NAME")
-        self.testURL    = self.UTILS.get_os_variable("GLOBAL_TEST_URL")
-        self.wifi_user  = self.UTILS.get_os_variable("GLOBAL_WIFI_USERNAME")
-        self.wifi_pass  = self.UTILS.get_os_variable("GLOBAL_WIFI_PASSWORD")
+        self.UTILS = UTILS(self)
+        self.settings = Settings(self)
+        self.browser = Browser(self)
+
+        self.wifi_name = self.UTILS.general.get_config_variable("ssid", "wifi")
+        self.wifi_pass = self.UTILS.general.get_config_variable("password", "wifi")
+
+        self.testURL = self.UTILS.general.get_config_variable("test_url", "common")
+        self.apps.set_permission_by_url(Browser.search_manifest_url, 'geolocation', 'deny')
+
+        # switch off keyboard FTU screen
+        self.data_layer.set_setting("keyboard.ftu.enabled", False)
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        #
-        # Forget all networks (so we have to chose one).
-        # Roy- *might* want this, but if we're already connected then this is a 'pass' anyway.
-        #self.data_layer.forget_all_networks()
-        
-        #
-        # Open the Settings application.
-        #
-        self.Settings.launch()
-        
-        #
-        # Tap Wi-Fi.
-        #
-        self.Settings.wifi()
 
-        #
-        # Make sure wifi is set to 'on'.
-        #
-        self.Settings.turn_wifi_on()
-        
-        #
+        # Open the settings application.
+        self.settings.launch()
+
         # Connect to the wifi.
-        #
-        self.Settings.tap_wifi_network_name(self.wifi_name, self.wifi_user, self.wifi_pass)
-        
-        #
-        # Tap specific wifi network (if it's not already connected).
-        #
-        self.UTILS.TEST(
-                self.Settings.checkWifiLisetedAsConnected(self.wifi_name),
-                "Wifi '" + self.wifi_name + "' is listed as 'connected' in wifi settings.", True)
-            
-        #
+        self.settings.wifi()
+        self.settings.connect_to_wifi(self.wifi_name, self.wifi_pass)
+
         # Open the browser app.
-        #
-        self.Browser.launch()
-        
-        #
+        self.browser.launch()
         # Open our URL.
-        #
-        self.Browser.open_url(self.testURL)
-
-        
-        
-        
-        
-
+        self.browser.open_url(self.testURL)

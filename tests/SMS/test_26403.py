@@ -1,82 +1,66 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
-#
-# Imports particular to this test case.
-#
-from tests._mock_data.contacts import MockContacts
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.utils.contacts import MockContact
+import time
+
 
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.messages   = Messages(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.messages = Messages(self)
 
-        #
         # Get details of our test contacts.
-        #
-        self.Contact_1 = MockContacts().Contact_multiplePhones
+        self.contact = MockContact(tel=[{'type': 'Mobile', 'value': '11111111'},
+                                    {'type': 'Mobile', 'value': '222222222'}])
+        """
+        We're not testing adding a contact, so just stick one
+        into the database.
+        """
 
-        #
-        # We're not testing adding a contact, so just stick one 
-        # into the database.
-        #
-        self.data_layer.insert_contact(self.Contact_1)
-        
-        
+        self.UTILS.general.insertContact(self.contact)
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
-    def test_run(self):
-        #
-        # Launch contacts app.
-        #
-        self.contacts.launch()
-        
-        #
-        # Select our contact.
-        #
-        #
-        # View the details of our contact.
-        #
-        self.contacts.viewContact(self.Contact_1['name'])
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
-        #
+    def test_run(self):
+
+        # Launch contacts app.
+        self.contacts.launch()
+
+        # Select our contact.
+
+        # View the details of our contact.
+        self.contacts.view_contact(self.contact['name'])
+
         # Tap the 2nd sms button (index=1) in the view details screen to go to the sms page.
-        #
-        smsBTN = self.UTILS.getElement( ("id", DOM.Contacts.sms_button_specific_id % 1), 
+        smsBTN = self.UTILS.element.getElement(("id", DOM.Contacts.sms_button_specific_id.format(1)),
                                         "2nd send SMS button")
         smsBTN.tap()
+        """
+        Switch to the 'Messages' app frame (or marionette will still be watching the
+        'Contacts' app!).
+        """
 
-        #
-        # Switch to the 'Messages' app frame (or marionette will still be watching the
-        # 'Contacts' app!).
-        #
         self.marionette.switch_to_frame()
-#         self.UTILS.waitForElements(("xpath", "//iframe[@src='" + DOM.Messages.frame_locator[1] + "']"), 
-#                                    "Messaging app frame", False, 20)
-        self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
+        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
         time.sleep(3)
+        """
+        test: this automatically opens the 'send SMS' screen, so
+        check the correct name is in the header of this sms.
+        """
 
-        #
-        # TEST: this automatically opens the 'send SMS' screen, so
-        # check the correct name is in the header of this sms.
-        #
-        self.UTILS.headerCheck("1 recipient")
-    
+        self.UTILS.element.headerCheck("1 recipient")
 
-        #
         # Check this is the right number.
-        #
-        self.messages.checkIsInToField(self.Contact_1["name"])
-        self.messages.checkNumberIsInToField(self.Contact_1["tel"][1]["value"])
+        self.messages.checkIsInToField(self.contact["name"])
+        self.messages.checkNumberIsInToField(self.contact["tel"][1]["value"])

@@ -1,61 +1,58 @@
+#===============================================================================
+# 27060: Type a two digits number and check the list of contacts shown
 #
-# Imports which are standard for all test cases.
+# Pre-requisites:
+# To have several contacts stored on the Address Book List any of them
+# matching the number introduced
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+# Procedure:
+# 1. Open Contacts app
+# 2. Tap on Search box
+# 3. Insert two numbers
+#
+# Expected results:
+# The contacts whose phone's numbers have the numbers inserted are displayed
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
-from tests._mock_data.contacts import MockContacts
-import time
+from gaiatest import GaiaTestCase
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.utils.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
+
     def setUp(self):
-        #
-        # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        
-        #
-        # Get details of our test contacts.
-        #
-        self.cont1 = MockContacts().Contact_1
-        self.cont2 = MockContacts().Contact_2
-        self.cont3 = MockContacts().Contact_3
-        
-        self.cont1["tel"]["value"] = "123111111"
-        self.cont2["tel"]["value"] = "123222222"
-        self.cont3["tel"]["value"] = "133333333"
-        
-        self.data_layer.insert_contact(self.cont1)
-        self.data_layer.insert_contact(self.cont2)
-        self.data_layer.insert_contact(self.cont3)
-        
-        
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+
+        self.phones = ["177111111", "177222222", "133333333"]
+        self.given_names = ["Contact"] * len(self.phones)
+        self.family_names = map(str, range(1, len(self.phones) + 1))
+
+        self.test_contacts = [MockContact(tel={'type': 'Mobile', 'value': self.phones[i]},
+                                          givenName=self.given_names[i],
+                                          familyName=self.family_names[i],
+                                          name="{} {}".format(self.given_names[i], self.family_names[i]))
+                              for i in range(len(self.phones))]
+        map(self.UTILS.general.insertContact, self.test_contacts)
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        #
-        # Launch contacts app.
-        #
         self.contacts.launch()
 
-        #
         # Search for our new contact.
-        #
-        self.contacts.search("12")
-        
-        #
+        self.contacts.search("77")
+
         # Verify our contact is listed.
-        #
-        self.contacts.checkSearchResults(self.cont1["givenName"], True)
-        self.contacts.checkSearchResults(self.cont2["givenName"], True)
-        self.contacts.checkSearchResults(self.cont3["givenName"], False)
-        
+        conditions = [True, True, False]
+        names = [c["familyName"] for c in self.test_contacts]
+        map(self.contacts.check_search_results, names, conditions)

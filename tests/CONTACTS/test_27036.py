@@ -1,79 +1,69 @@
+#===============================================================================
+# 27036: Go back (Cancel ('x')) on Account web log-in page
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Open Contacts app
+# 2. Go to Settings
+# 3. Tap on Import from Gmail
+# 4. Verify the log in screen is shown
+# 5. Go back to Settings
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+# Expected results:
+# It should be possible to go back to Settings from the authentication login
+# screen
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
-from tests._mock_data.contacts import MockContacts
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
 import time
+from OWDTestToolkit.utils.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
 
     def setUp(self):
-        #
-        # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.settings   = Settings(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
 
-        #
-        # Get details of our test contacts.
-        #
-        self.cont = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.cont)
-        
-        
+        self.contact = MockContact()
+        self.UTILS.general.insertContact(self.contact)
+
+        self.data_layer.connect_to_wifi()
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        
-        #
-        # Set up to use data connection.
-        #
-        self.UTILS.getNetworkConnection()
-        
-        #
-        # Launch contacts app.
-        #
         self.contacts.launch()
-        x = self.UTILS.getElement(DOM.Contacts.settings_button, "Settings button")
-        x.tap()
-        
-        #
-        # Press the Gmail button and go to the gmail frame.
-        #
-        x = self.UTILS.getElement(DOM.Contacts.gmail_button, "Gmail button")
-        x.tap()
-        
-        self.UTILS.logResult("info", "Check that the gmail login frame is present ...")
+        settings_btn = self.UTILS.element.getElement(DOM.Contacts.settings_button, "Settings button")
+        settings_btn.tap()
+
+        import_btn = self.UTILS.element.getElement(DOM.Contacts.import_contacts, "Import button")
+        time.sleep(1)
+        import_btn.tap()
+
+        gmail_btn = self.UTILS.element.getElement(DOM.Contacts.gmail_button, "Gmail button")
+        time.sleep(1)
+        gmail_btn.tap()
+
+        self.UTILS.reporting.logResult("info", "Check that the gmail login frame is present ...")
         self.marionette.switch_to_frame()
-        self.UTILS.waitForElements( ("xpath", "//iframe[contains(@%s, '%s')]" % \
-                                     (DOM.Contacts.gmail_frame[0],DOM.Contacts.gmail_frame[1])),
-                                   "Gmail login iframe")
-        x = self.UTILS.getElement(DOM.Contacts.import_cancel_login, "Cancel button")
-        x.tap()
+        self.UTILS.element.waitForElements(DOM.Contacts.gmail_frame, "Gmail login iframe")
+        time.sleep(1)
         
-        self.UTILS.logResult("info", "Check that the gmail login frame is no longer present ...")
+        cancel = self.UTILS.element.getElement(('xpath', '//h1[contains(text(), "Google")]/..'), "Cancel icon")
+        # TODO: Change this when ShadowDOM marionette bug fixed (Bug 1061698)
+        cancel.tap(25, 25)
+
+        self.UTILS.reporting.logResult("info", "Check that the gmail login frame is no longer present ...")
         self.marionette.switch_to_frame()
-        self.UTILS.waitForNotElements( ("xpath", "//iframe[contains(@%s, '%s')]" % \
-                                     (DOM.Contacts.gmail_frame[0],DOM.Contacts.gmail_frame[1])),
-                                   "Gmail login iframe")
+        self.UTILS.element.waitForNotElements(DOM.Contacts.gmail_frame, "Gmail login iframe")
 
-        self.UTILS.logResult("info", "Check that the contacts app is now visible again ...")
-        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
-        
-        #
-        # Press the cancel icon.
-        #
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot and details", x)
+        self.UTILS.reporting.logResult("info", "Check that the contacts app is now visible again ...")
+        self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
 
-
+        self.UTILS.element.waitForElements(DOM.Contacts.import_contacts_header, "Import contacts header")

@@ -1,62 +1,56 @@
+#===============================================================================
+# 26773: Verify that the user can uninstall a everything.me app through
+# the grid edit mode
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- open home screen
+# 2- open edit mode
+# 3- press X on app installed from everything.me
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
-from marionette import Actions
+# Expected results:
+# The user can uninstall a everything.me app through the grid edit mode
+#===============================================================================
+
+from gaiatest import GaiaTestCase
+
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.everythingme import EverythingMe
+from OWDTestToolkit.apps.settings import Settings
+from OWDTestToolkit import DOM
+from marionette_driver.marionette import Actions
 
 
 class test_main(GaiaTestCase):
-    
-    _appName = "Wikipedia"
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.actions    = Actions(self.marionette)
-        self.settings   = Settings(self)
-        self.eme        = EverythingMe(self)
-        
+        self.UTILS = UTILS(self)
+        self.actions = Actions(self.marionette)
+        self.settings = Settings(self)
+        self.eme = EverythingMe(self)
+        self.cat_id = "207"
+        self.app_name = "Pacman"
+
+        try:
+            self.apps.set_permission('Homescreen', 'geolocation', 'deny')
+            self.apps.set_permission('Smart Collections', 'geolocation', 'deny')
+        except:
+            self.UTILS.reporting.logComment("Unable to automatically set geolocation permission.")
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        
-        #
-        # Get a conection.
-        #
-        self.UTILS.getNetworkConnection()
-        self.UTILS.uninstallApp(self._appName)
-                
-        #
-        # Get the app.
-        #
-        self.eme.launch()
-        x = self.eme.searchForApp(self._appName)
-        
-        self.UTILS.TEST(x, "Icon for " + self._appName + " is found.", True)
-        
-        #
-        # Long-press the app to install it to the homescreen.
-        #
-        x = self.UTILS.getElement( ("xpath", DOM.EME.search_result_icon_xpath % self._appName),
-                                   self._appName + " icon")
-        
-        self.actions.press(x).wait(2).release()
-        self.actions.perform()
-        
-        self.marionette.switch_to_frame()
-        x = self.UTILS.getElement(DOM.GLOBAL.modal_ok_button1, "OK button")
-        x.tap()
-        
-        time.sleep(2)
-        self.UTILS.goHome()
-        
-        self.UTILS.uninstallApp(self._appName)
-        
-        
+        self.data_layer.connect_to_wifi()
+
+        self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
+
+        # First of all, make sure an application is installed
+        self.eme.install_app(self.cat_id, self.app_name)
+        self.UTILS.home.goHome()
+
+        # Then, proceed to uninstall the application through the Edit mode
+        self.UTILS.app.uninstallApp(self.app_name)

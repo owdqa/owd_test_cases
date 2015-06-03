@@ -1,98 +1,80 @@
+#===============================================================================
+# 26859: Verify the timestamp (received message) when the SMS has
+# been sent from a different timezone
 #
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+# Expected result:
+# The device must show the timestamp according to the date/time configured in
+# settings.
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.settings import Settings
+import time
+
 
 class test_main(GaiaTestCase):
-    
-    _TestMsg     = "Test message."
-    
-    _RESTART_DEVICE = True
 
     def setUp(self):
-        #
-        # Set up child objects...
-        #
-        GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.settings   = Settings(self)
-        
-        
-        self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        
-    def tearDown(self):
-        self.UTILS.reportResults()
-        
-    def test_run(self):
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
-        
-        #
-        # Make sure we have no threads (currently blocked - use _RESTART_DEVICE instead).
-        #
-#         self.messages.deleteAllThreads()
-        
-        #
-        # Create and send a new test message.
-        #
-        self.messages.createAndSendSMS([self.target_telNum], self._TestMsg)
-        
-        #
-        # Check the time of this message.
-        #
-        _ORIG_MSG_TIMESTAMP = self.messages.timeOfLastMessageInThread()
-        self.UTILS.logResult("info", "(original message timestamp = '" + _ORIG_MSG_TIMESTAMP + "'.)")
-        
-        #
-        # Return to the threads screen and check the time of this thread.
-        #
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
-        time.sleep(1)
-        
-        #
-        # Get the time of this thread.
-        #
-        _ORIG_THREAD_TIMESTAMP = self.messages.timeOfThread(self.target_telNum)
-        self.UTILS.logResult("info", "(original thread timestamp = '" + _ORIG_THREAD_TIMESTAMP + "'.)")
-        
-        #
-        # Change to a (unlikely!) timezone.
-        #
-        self.apps.kill_all()
-        self.UTILS.setTimeToNow("Antarctica", "Casey")
 
-        #
+        # Set up child objects...
+        GaiaTestCase.setUp(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.settings = Settings(self)
+
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.cp_incoming_number = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
+        self.test_msg = "Test message."
+        self.data_layer.delete_all_sms()
+
+    def tearDown(self):
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
+    def test_run(self):
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
+
+        self.UTILS.date_and_time.set_time_to_now("Europe", "Madrid")
+
+        # Create and send a new test message.
+        self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)
+        title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.cp_incoming_number, timeout=5)
+        self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
+
+        # Check the time of this message.
+        time.sleep(2)
+        _orig_msg_timestamp = self.messages.time_of_last_message_in_thread()
+        self.UTILS.reporting.debug("*** original message timestamp = '{}'".format(_orig_msg_timestamp))
+
+        # Return to the threads screen and check the time of this thread.
+        self.messages.go_back()
+        time.sleep(1)
+
+        # Get the time of this thread.
+        _orig_thread_timestamp = self.messages.time_of_thread(title)
+        self.UTILS.reporting.debug("*** original thread timestamp = '{}'".format(_orig_thread_timestamp))
+
+        # Change to a (unlikely!) timezone.
+        self.apps.kill_all()
+        self.UTILS.date_and_time.set_time_to_now("Antarctica", "Casey")
+
         # Open the sms app again.
-        #
         self.messages.launch()
-        
-        #
+
         # Get the new thread time.
-        #
-        _NEW_THREAD_TIMESTAMP = self.messages.timeOfThread(self.target_telNum)
-        self.UTILS.logResult("info", "(new thread timestamp = '" + _NEW_THREAD_TIMESTAMP + "'.)")
-        
-        #
+        _new_thread_timestamp = self.messages.time_of_thread(title)
+        self.UTILS.reporting.debug("*** new thread timestamp = '{}'".format(_new_thread_timestamp))
+
         # Open our thread.
-        #
-        self.messages.openThread(self.target_telNum)
-        
-        #
+        self.messages.openThread(title)
+
         # Get the new message time.
-        #
-        _NEW_MSG_TIMESTAMP = self.messages.timeOfLastMessageInThread()
-        self.UTILS.logResult("info", "(new message timestamp = '" + _NEW_MSG_TIMESTAMP + "'.)")
-        
-        self.UTILS.TEST(_ORIG_THREAD_TIMESTAMP != _NEW_THREAD_TIMESTAMP, "Thread timestamp has changed.")
-        self.UTILS.TEST(_ORIG_MSG_TIMESTAMP    != _NEW_MSG_TIMESTAMP   , "Message timestamp has changed.")
+        _new_msg_timestamp = self.messages.time_of_last_message_in_thread()
+        self.UTILS.reporting.debug("*** new message timestamp = '{}'".format(_new_msg_timestamp))
+
+        self.UTILS.test.test(_orig_thread_timestamp != _new_thread_timestamp, "Thread timestamp has changed.")
+        self.UTILS.test.test(_orig_msg_timestamp != _new_msg_timestamp, "Message timestamp has changed.")

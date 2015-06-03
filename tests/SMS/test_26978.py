@@ -1,84 +1,100 @@
+#===============================================================================
+# 26978: Click on an email address and send an email (any email account
+# configured in the email app)(gmail account)
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Send a sms from "device A" to "device B" who contains an email address
+# 2. Open the thread view in the device A
+# 3. Click on the email address
+# 4. Tap on "Send email" button from the overlay
+# ER1
+# 5. Confirm we want to configure an email account
+# 6. configure an gmail acount
+# ER2
+# 7. write a email text
+# 8. Press send button
+# ER3
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+# Expected results:
+# ER1. email app is launched to configure an email acount
+# ER2. new message screen is launched with the email charged in the "to:" label
+# ER3. the email is sent
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.email import Email
+import time
+
 
 class test_main(GaiaTestCase):
-    
-    _TestMsg     = "Test message."
-    
+
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
+
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.Email      = Email(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.email = Email(self)
 
-        self.USER1  = self.UTILS.get_os_variable("GMAIL_1_USER")
-        self.EMAIL1 = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
-        self.PASS1  = self.UTILS.get_os_variable("GMAIL_1_PASS")
-         
-        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.emailAddy = self.UTILS.get_os_variable("GMAIL_2_EMAIL")
-        
-        
+        self.email_user = self.UTILS.general.get_config_variable("gmail_1_user", "common")
+        self.email_address = self.UTILS.general.get_config_variable("gmail_1_email", "common")
+        self.email_pass = self.UTILS.general.get_config_variable("gmail_1_pass", "common")
+
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.dest_email = self.UTILS.general.get_config_variable("gmail_2_email", "common")
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        
-        #
+
         # Set up email account.
-        #
-        self.UTILS.getNetworkConnection()
-        
-        self.Email.launch()
-        self.Email.setupAccount(self.USER1, self.EMAIL1, self.PASS1)
- 
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
-        
-        #
+        self.connect_to_network()
+
         # Create and send a new test message.
-        #
-        self.messages.createAndSendSMS([self.num1], "Email address %s test." % self.emailAddy)
-        x = self.messages.waitForReceivedMsgInThisThread()
-        
-        #
+        test_msg = "email address {} test at {}".format(self.dest_email, time.time())
+        self.data_layer.send_sms(self.phone_number, test_msg)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)
+        self.UTILS.statusbar.click_on_notification_detail(test_msg, DOM.Messages.frame_locator)
+        sms = self.messages.last_message_in_this_thread()
+        time.sleep(1)
+
         # Tap the 2nd email link.
-        #
-        self.UTILS.logResult("info", "Click the email address in this message: '%s'." % x.text)
-        _link = x.find_element("tag name", "a")
+        self.UTILS.reporting.logResult("info", "Click the email address in this message: '{}'.".format(sms.text))
+        _link = sms.find_element("tag name", "a")
         _link.tap()
-        
-        #
-        # Switch to email frame and verify the email address is in the To field.
-        #
-        self.UTILS.switchToFrame(*DOM.Email.frame_locator)
-        x = self.UTILS.getElement(DOM.Email.compose_to_from_contacts, "To field")
-        self.UTILS.TEST(x.text == self.emailAddy, 
-                        "To field contains '%s' (it was '%s')." %
-                        (self.emailAddy, self.emailAddy))
-        
-        #
+
+        # Tap on "Send email" button from the overlay
+        send_btn = self.UTILS.element.getElement(DOM.Messages.header_send_email_btn, "Send email button")
+        send_btn.tap()
+
+        time.sleep(4)
+        self.UTILS.iframe.switchToFrame(*DOM.Email.frame_locator)
+
+        # Confirm we want to setUp our email account
+        confirm = self.UTILS.element.getElement(DOM.Email.email_not_setup_ok, "Set up account confirmation")
+        confirm.tap()
+
+        self.email.setup_account(self.email_user, self.email_address, self.email_pass, via_activity=True)
+
+        # Verify the email address is in the To field.
+        to_field = self.UTILS.element.getElement(DOM.Email.compose_to_from_contacts, "To field")
+        self.UTILS.test.test(to_field.text == self.dest_email,
+                             "To field contains '{0}' (it was '{0}').".format(self.dest_email))
+
         # Fill in the details and send the email.
-        #
-        self.UTILS.typeThis(DOM.Email.compose_subject, "'Subject' field", "Test email", True, False)
-        self.UTILS.typeThis(DOM.Email.compose_msg    , "Message field"  , "Just a test", True, False, False)
+        self.UTILS.general.typeThis(DOM.Email.compose_subject, "'Subject' field", "Test email", True, False)
+        self.UTILS.general.typeThis(DOM.Email.compose_msg, "Message field", "Just a test", True, False, False)
 
-        self.Email.sendTheMessage()
-
-        
-        
-        
+        send_btn = self.UTILS.element.getElement(DOM.Email.compose_send_btn, "Send button")
+        send_btn.tap()
+        self.UTILS.element.waitForNotElements(DOM.Messages.send_email_failed, "Sending email error message",
+                                              timeout=10)

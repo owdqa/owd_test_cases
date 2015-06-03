@@ -1,71 +1,38 @@
 #
-# Imports which are standard for all test cases.
+# 26851: Receive a sms while device is locked(Vibration alert), screen off
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
 
-#
-# Imports particular to this test case.
-#
 
 class test_main(GaiaTestCase):
-    
-    _TestMsg     = "Test message."
-    
+
+    test_msg = "Test message."
+
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        
-        
-        self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Sending sms to telephone number " + self.target_telNum)
-                
-        
-        
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
+        self.cp_incoming_number = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
+        self.data_layer.delete_all_sms()
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
-        
-        #
-        # Create and send a new test message.
-        #
-        self.messages.startNewSMS()
-        
-        #
-        # Enter the number.
-        #
-        self.messages.addNumbersInToField([self.target_telNum])
-         
-        #
-        # Enter the message.
-        #
-        self.messages.enterSMSMsg(self._TestMsg)
-        
-        #
-        # Send the SMS.
-        #
-        sendBtn = self.UTILS.getElement(DOM.Messages.send_message_button, "Send sms button")
-        sendBtn.tap()
-        
-        #
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
+
+        self.UTILS.messages.create_incoming_sms(self.phone_number, self.test_msg)
+
         # Lock the phone immediately.
-        #
-        self.lockscreen.lock()
-        
-        #
+        self.data_layer.set_setting("lockscreen.enabled", True)
+
         # Wait for the notification.
-        #
-        x = self.UTILS.getElement(("xpath", DOM.Messages.lockscreen_notif_xpath % self.target_telNum), 
-                                   "New message notification while screen is locked", False, 120, False)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(self.test_msg, timeout=120)

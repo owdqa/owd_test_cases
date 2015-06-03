@@ -1,71 +1,65 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
 
-#
-# Imports particular to this test case.
-#
-from tests._mock_data.contacts import MockContacts
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.apps.settings import Settings
 import time
+from OWDTestToolkit.utils.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
-    
+
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
+
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.settings   = Settings(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.settings = Settings(self)
 
-        self.gmail_u = self.UTILS.get_os_variable("GMAIL_1_USER")
-        self.gmail_p = self.UTILS.get_os_variable("GMAIL_1_PASS")
+        self.gmail_user = self.UTILS.general.get_config_variable("gmail_1_user", "common")
+        self.gmail_passwd = self.UTILS.general.get_config_variable("gmail_1_pass", "common")
 
-        #
-        # Get details of our test contacts.
-        #
-        self.cont = MockContacts().Contact_1
-        self.data_layer.insert_contact(self.cont)
-        
-        
+        # Create test contacts.
+        self.contact = MockContact()
+        self.UTILS.general.insertContact(self.contact)
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        
-        #
+
         # Set up to use data connection.
-        #
-        self.UTILS.getNetworkConnection()
-        
+        self.connect_to_network()
+
         self.contacts.launch()
-        self.contacts.import_GmailLogin(self.gmail_u, self.gmail_p)
-        
-        x = self.UTILS.getElements(DOM.Contacts.import_conts_list, "Contact list")
-        gmail_contact = x[0].get_attribute("data-search")
-        
-        self.contacts.import_toggleSelectContact(1)
-        
-        self.marionette.execute_script("document.getElementById('%s').click()" % DOM.Contacts.import_import_btn[1])
+        self.contacts.import_gmail_login(self.gmail_user, self.gmail_passwd)
+
+        self.contacts.import_toggle_select_contact(1)
+
+        self.marionette.execute_script("document.getElementById('{}').click()".format(DOM.Contacts.import_import_btn[1]))
         time.sleep(1)
 
-        self.UTILS.switchToFrame(*DOM.Contacts.frame_locator)
-        
-        #
+        self.apps.kill_all()
+        time.sleep(2)
+        self.contacts.launch()
+
         # Check our two contacts are in the list.
-        #
-        self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_all_contact_name_xpath % self.cont["familyName"]),
-                                   "Contact '%s'" % self.cont["familyName"])
-        
-        self.UTILS.waitForElements( ("xpath", DOM.Contacts.view_all_contact_name_xpath % gmail_contact),
-                                   "Contact '%s'" % gmail_contact)
-        
-        x = self.UTILS.screenShotOnErr()
-        self.UTILS.logResult("info", "Screenshot and details", x)
+        prepopulated_contact = (DOM.Contacts.view_all_contact_specific_contact[0],
+                                DOM.Contacts.view_all_contact_specific_contact[1].format("OWD"))
 
+        self.UTILS.element.waitForElements(prepopulated_contact, "Prepopulated Contact")
 
+        gmail_imported = (DOM.Contacts.view_all_contact_specific_contact[0],
+                                DOM.Contacts.view_all_contact_specific_contact[1].format("roy"))
+
+        self.UTILS.element.waitForElements(gmail_imported, "Gmail imported contact")
+
+        screenshot = self.UTILS.debug.screenShotOnErr()
+        self.UTILS.reporting.logResult("info", "Screenshot and details", screenshot)

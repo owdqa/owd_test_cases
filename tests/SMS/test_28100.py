@@ -1,98 +1,102 @@
+#===============================================================================
+# 28100: Verify what happens if the SMS contains text followed by
+# another number (NOT phone number) followed by blank and a valid
+# phone number (e.g.:"Test1 656565678 number")
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1. Send from another device to DUT an SMS containing text followed by
+# another number (NOT phone number) followed by blank and a valid phone
+# number (e.g. "Test1 656565656 number")
+# 2. Open in DUT the SMS APP and tap on the received SMS
+# 3. In the SMS thread view tap on the highlighted phone number
+# 4. Press "Call" button from options overlay
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+# Expected results:
+# 1.The SMS is received on the DUT.
+# 2.ONLY the valid phone number (9 digits) are shown highlighted as a
+# valid phone number.
+# 3.The Dialer App is launched with the phone number highlighted pre-filled
+# in at the top of the screen but the call is not automatically established
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+import time
+
 
 class test_main(GaiaTestCase):
-    
-    _TestMsg     = "Test message."
-    
-    _RESTART_DEVICE = True
-    
+
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.Dialer      = Dialer(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
 
-        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.incoming_sms_num = self.UTILS.general.get_config_variable("sms_platform_numbers", "common").split(',')
+        self.UTILS.reporting.logComment("Sending messages to telephone number " + self.phone_number)
+        self.data_layer.delete_all_sms()
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        
-        #
+
         # Create and send a new test message containing all of our CORRECT numbers..
-        #
-        self.UTILS.logResult("info", "<b>Check CORRECT numbers are ok ...</b>")
-        nums = ["12345678", "123456789"]        
-        self._testAll(nums, len(nums))
+        self.UTILS.reporting.logResult("info", "<b>Check CORRECT numbers are ok ...</b>")
+        nums = ["12345678", "123456789"]
+        self.check_numbers(nums, range(2))
 
-        self.UTILS.logResult("info", "<b>Check INCORRECT numbers are ok ...</b>")
-        nums = ["123", "1234"]        
-        self._testAll(nums, 0)
+        self.UTILS.reporting.logResult("info", "<b>Check INCORRECT numbers are ok ...</b>")
+        nums = ["123", "1234"]
+        self.check_numbers(nums, [])
 
-    def _testAll(self, nums, tappable_count):
-        sms_nums = ""
-        
-        for i in range(0,len(nums)):
-            sms_nums = "%s, test%s %s" % (sms_nums, str(i), nums[i])
-            
-        sms_msg = "Test numbers: %s." % sms_nums
-        
-        #
-        # Start from clean for each test run.
-        #
+        self.UTILS.reporting.logResult("info", "<b>Check MIXED numbers are ok ...</b>")
+        nums = ["123", "12345678", "1234"]
+        self.check_numbers(nums, [1])
+
+    def check_numbers(self, nums, tappables):
+
+        # Generate a string of the type: "Test0 <number> Test1 <number>...."
+        fill_text = ["Test{}".format(i) for i in range(len(nums))]
+        sms_msg = "Test numbers: {}".format(" ".join([item for sublist in map(None, fill_text, nums)
+                                                      for item in sublist]))
+
+        # Start each test run from scratch.
         self.apps.kill_all()
-        time.sleep(2)
-        self.messages.launch()
-        self.messages.createAndSendSMS([self.num1], sms_msg)
-        x = self.messages.waitForReceivedMsgInThisThread()
+        self.UTILS.messages.create_incoming_sms(self.phone_number, sms_msg)
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(sms_msg, timeout=120)
+        title = self.UTILS.statusbar.wait_for_notification_toaster_with_titles(self.incoming_sms_num, timeout=5)
+        self.UTILS.statusbar.click_on_notification_title(title, DOM.Messages.frame_locator)
+        sms = self.messages.last_message_in_this_thread()
 
-        #
-        # Tap the number to call.
-        #
-        msg_nums = x.find_elements("tag name", "a")
-        
-        self.UTILS.TEST(len(msg_nums) == tappable_count,
-                        "There are <b>%s</b> numbers highlighted in the received text (there were <b>%s</b>)." % \
-                        (tappable_count, len(msg_nums)))
-        
-        for i in range(0,len(msg_nums)):
+        # Get the numbers in the SMS
+        msg_nums = sms.find_elements("tag name", "a")
+
+        description = "There are <b>{}</b> numbers highlighted in the received text (expected <b>{}</b>)."
+        self.UTILS.test.test(len(msg_nums) == len(tappables), description.format(len(msg_nums), len(tappables)))
+        for i in range(len(msg_nums)):
             msg_nums[i].tap()
-            
-            self.UTILS.switchToFrame(*DOM.Dialer.frame_locator)
-            
-            #
-            # Dialler is started with the number already filled in.
-            #
-            x = self.UTILS.getElement(DOM.Dialer.phone_number, "Phone number")
-            self.UTILS.TEST(nums[i] in x.get_attribute("value"), 
-                            "The phone number contains '%s' (it was '%s')." % (nums[i], x.get_attribute("value")))
-            
-            #
-            # Kill everything, then re-launch the messaging app etc ...
-            #
-            self.UTILS.switchToApp("Messages")
-            
-            # In case we're not in the thread already.
-            try:
-                self.wait_for_element_present(*DOM.Messages.threads_list, timeout=1)
-                self.messages.openThread(self.num1)
-            except:
-                pass
-                
-            x = self.messages.waitForReceivedMsgInThisThread()
-            msg_nums = x.find_elements("tag name", "a")
 
+            # Press Call button from options overlay
+            x = self.UTILS.element.getElement(DOM.Messages.header_call_btn, "Call button")
+            x.tap()
+
+            self.UTILS.iframe.switchToFrame(*DOM.Dialer.frame_locator)
+
+            # Dialer is started with the number already filled in.
+            time.sleep(1)
+            number = self.UTILS.element.getElement(DOM.Dialer.phone_number, "Phone number").get_attribute("value")
+            description = "The phone number is '{}' (expected '{}').".format(number, nums[tappables[i]])
+            self.UTILS.test.test(nums[tappables[i]] == number, description)
+
+            # Kill everything, then re-launch the messaging app etc ...
+            self.messages.launch()
+
+            sms = self.messages.last_message_in_this_thread()
+            msg_nums = sms.find_elements("tag name", "a")

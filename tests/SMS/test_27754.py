@@ -1,96 +1,61 @@
 #
-# Imports which are standard for all test cases.
+# 27754: Send a SMS to multiple contacts
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
-import time
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.utils.contacts import MockContact
 
-#
-# Imports particular to this test case.
-#
-from tests._mock_data.contacts import MockContacts
 
 class test_main(GaiaTestCase):
-    
-    def setUp(self):
-        #
-        # Set up child objects...
-        #
-        GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.messages   = Messages(self)
-        
-        #
-        # Import contacts (adjust to the correct numbers.
-        #
-        self.Contact_1 = MockContacts().Contact_1
-        self.Contact_2 = MockContacts().Contact_2
-        
-        self.Contact_1["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.Contact_2["tel"]["value"] = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM_SHORT")
 
-        self.UTILS.logComment("Using target telephone number " + self.Contact_1["tel"]["value"])
-        self.UTILS.logComment("Using target telephone number " + self.Contact_2["tel"]["value"])
-        
-        self.data_layer.insert_contact(self.Contact_1)
-        self.data_layer.insert_contact(self.Contact_2)
+    def setUp(self):
+        GaiaTestCase.setUp(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.messages = Messages(self)
+
+        # Establish which phone number to use and set up the contacts.
+        self.nums = [self.UTILS.general.get_config_variable("phone_number", "custom"),
+                        self.UTILS.general.get_config_variable("short_phone_number", "custom")]
+
+        self.test_contacts = [MockContact(tel={'type': 'Mobile', 'value': self.nums[i]}) for i in range(2)]
+        map(self.UTILS.general.insertContact, self.test_contacts)
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        #
-        # First, we need to make sure there are no statusbar notifs.
-        #
-        self.UTILS.clearAllStatusBarNotifs()
-        
-        #
-        # Now create and send an sms to both contacts.
-        #
+        self.UTILS.statusbar.clearAllStatusBarNotifs()
+
+        # Now create and send a SMS to both contacts.
         self.messages.launch()
         self.messages.startNewSMS()
-        
-        self.messages.selectAddContactButton()
-    
-        self.contacts.viewContact(self.Contact_1["name"], False)
-        self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
-        self.messages.checkIsInToField(self.Contact_1["name"], True)
-        
-        self.messages.selectAddContactButton()
-        self.contacts.viewContact(self.Contact_2["name"], False)
-        self.UTILS.switchToFrame(*DOM.Messages.frame_locator)
-        self.messages.checkIsInToField(self.Contact_2["name"], True)
 
-        self.messages.enterSMSMsg("Test message.")
+        for i in range(len(self.test_contacts)):
+            self.messages.selectAddContactButton()
+            self.UTILS.iframe.switchToFrame(*DOM.Contacts.frame_locator)
+            self.contacts.view_contact(self.test_contacts[i]["name"], False)
+            self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+            self.messages.checkIsInToField(self.test_contacts[i]["name"], True)
+
+        test_msg = "Test message."
+        self.messages.enterSMSMsg(test_msg)
         self.messages.sendSMS()
-        
-        #
-        # Wait for all statusbar notifs to arrive.
-        # Because both sms's are to this device (via different numbers), both
-        # messages will probably end up going to the same thread. So just do a count
-        # based on the contact with the short number (since this is the one
-        # it always comes to).
-        #
-        self.marionette.switch_to_frame()
-        statusBarCheck = (DOM.Messages.statusbar_new_sms[0], 
-                          DOM.Messages.statusbar_new_sms[1] % self.Contact_1["name"])
-        
-        # Loop for 2 minutes (the 2nd one can take a long time!).
-        boolOK = False
-        for i in range(1,120):
-            # No verification because it's okay if the element's not there yet.
-            try:
-                self.wait_for_element_present(*statusBarCheck, timeout=1)
-                x = self.marionette.find_elements(*statusBarCheck)
-                if len(x) == 2:
-                    boolOK = True
-                    break
-            except:
-                pass
-            
-            time.sleep(1)
-            
-        self.UTILS.TEST(boolOK, "Two messages were returned for this device within 2 minutes (there were " + str(len(x)) + ").")
+
+        # Since the destination number is the own, we will only receive one message, so we check it once
+        self.UTILS.statusbar.wait_for_notification_toaster_detail(test_msg, timeout=120)
+
+        self.UTILS.iframe.switchToFrame(*DOM.Messages.frame_locator)
+
+        # We will also check there is one thread for each contact in the To field
+        name_xpath = DOM.Messages.thread_selector_xpath.format(self.test_contacts[0]['name'])
+        thread = self.UTILS.element.getElementByXpath(name_xpath)
+        self.UTILS.test.test(thread, "Thread for {} found".format(self.test_contacts[0]['name']))
+        name_xpath = DOM.Messages.thread_selector_xpath.format(self.test_contacts[1]['name'])
+        thread = self.UTILS.element.getElementByXpath(name_xpath)
+        self.UTILS.test.test(thread, "Thread for {} found".format(self.test_contacts[1]['name']))

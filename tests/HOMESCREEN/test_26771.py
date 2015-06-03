@@ -1,90 +1,76 @@
+#===============================================================================
+# 26771: Launch a intallation doing a long-tap on any app shown
+# by everything.me and press Yes button
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Open everything.me
+# 2- open a category or search by text
+# 3- do a long-tap on any app shown by everything.me
+# ER1
+# 4-Press Yes button
+# ER2
 #
-from OWDTestToolkit.global_imports import *
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+# Expected results:
+# ER1- The app installation is launched and a confirmation is displayed
+# ER2- The application is installed, that means that an icon is placed
+# on the last position available on the application grid with the application
+# name label.
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
+
+from gaiatest import GaiaTestCase
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.everythingme import EverythingMe
+from OWDTestToolkit.apps.settings import Settings
+from OWDTestToolkit import DOM
+import time
+
 
 class test_main(GaiaTestCase):
-    
-    _GROUP_NAME  = "Games"
+
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
+
+    _GROUP_NAME = "Games"
 
     def setUp(self):
-        #
+
         # Set up child objects...
-        #
         GaiaTestCase.setUp(self)
-        
-        self.UTILS      = UTILS(self)
-        self.Settings   = Settings(self)
-        self.EME        = EverythingMe(self)
-        
-        #
-        # Don't prompt me for geolocation (this was broken recently in Gaia, so 'try' it).
-        #
+
+        self.UTILS = UTILS(self)
+        self.settings = Settings(self)
+        self.EME = EverythingMe(self)
+
+        # Don't prompt me for geolocation
         try:
             self.apps.set_permission('Homescreen', 'geolocation', 'deny')
+            self.apps.set_permission('Smart Collections', 'geolocation', 'deny')
         except:
-            self.UTILS.logComment("(Just FYI) Unable to automatically set Homescreen geolocation permission.")
+            self.UTILS.reporting.logComment("Unable to automatically set geolocation permission.")
 
-        
+        self.cat_id = "289"
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        #
-        # Make sure 'things' are as we expect them to be first.
-        #
-        self.UTILS.getNetworkConnection()
-         
-        #
-        # First, get the name of the app we're going to install.
-        #
-        self.EME.launch()
-        
-        
-        self.UTILS.TEST(self.EME.pickGroup(self._GROUP_NAME),
-                        "Group '" + self._GROUP_NAME + "' exists in EverythingME.",
-                        True)
-         
-        x = self.UTILS.getElements(DOM.EME.apps, "The first game that is not installed already")[0]
-        self._APP_NAME = x.get_attribute("data-name")
-        self.UTILS.goHome()
- 
-         
-        #
-        # Make sure our app isn't installed already.
-        #
-        self.UTILS.uninstallApp(self._APP_NAME)
-                
-        #
-        # Launch the 'everything.me' app.
-        #
-        self.EME.launch()
-        
-        #
-        # Pick a group.
-        #
-        self.UTILS.TEST(self.EME.pickGroup(self._GROUP_NAME),
-                        "Group '" + self._GROUP_NAME + "' exists in EverythingME.",
-                        True)
-        
-        
-        #
-        # Add the app to the homescreen.
-        #
-        self.UTILS.TEST(self.EME.addAppToHomescreen(self._APP_NAME),
-                        "Application '" + self._APP_NAME + "' is added to the homescreen.",
-                        True)
- 
-        #
-        # Check if message is here and app was installed.
-        #
-        self.UTILS.waitForElements(DOM.EME.app_installed_banner,"Notification message",False)
-        self.UTILS.isAppInstalled(self._APP_NAME)
+        self.data_layer.connect_to_wifi()
+
+        self.UTILS.iframe.switchToFrame(*DOM.Home.frame_locator)
+        self.EME.pick_group(self.cat_id)
+        self.UTILS.iframe.switchToFrame(*DOM.EME.frame_locator)
+        app_name = self.UTILS.element.getElementByXpath(DOM.EME.app_to_install.format("Line")).text
+        self.EME.add_app_to_homescreen(app_name)
+
+        self.UTILS.iframe.switchToFrame(*DOM.EME.bookmark_frame_locator)
+        time.sleep(2)
+        add_btn = self.UTILS.element.getElement(DOM.EME.add_to_homescreen_done_btn,
+                                                "Add bookmark to Home Screen Button")
+        add_btn.tap()
+        time.sleep(4)
+
+        self.UTILS.home.goHome()
+        self.UTILS.app.uninstallApp(app_name)

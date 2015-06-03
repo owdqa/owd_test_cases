@@ -1,60 +1,37 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
 
-#
-# Imports particular to this test case.
-#
 
 class test_main(GaiaTestCase):
-    
-    _TestMsg     = "Test."
-    
-    def setUp(self):
-        #
-        # Set up child objects...
-        #
-        GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        
-        
-        #
-        # Establish which phone number to use.
-        #
-        self.target_telNum = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.UTILS.logComment("Sending sms to telephone number " + self.target_telNum)
-        
-        
-    def tearDown(self):
-        self.UTILS.reportResults()
-        
-    def test_run(self):
-        
-        #
-        # Launch messages app.
-        #
-        self.messages.launch()
-        
-        #
-        # Create and send a new test message.
-        #
-        self.messages.createAndSendSMS([self.target_telNum], self._TestMsg)
-        
-#         #
-#         # Wait for the last message in this thread to be a 'recieved' one.
-#         #
-#         returnedSMS = self.messages.waitForReceivedMsgInThisThread()
-#         self.UTILS.TEST(returnedSMS, "A receieved message appeared in the thread.", True)
-#         
-#         #
-#         # TEST: The returned message is as expected (caseless in case user typed it manually).
-#         #
-#         sms_text = returnedSMS.text
-#         self.UTILS.TEST((sms_text.lower() == self._TestMsg.lower()), 
-#             "SMS text = '" + self._TestMsg + "' (it was '" + sms_text + "').")
 
+    def setUp(self):
+
+        # Set up child objects...
+        GaiaTestCase.setUp(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+
+        # Establish which phone number to use.
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.UTILS.reporting.logComment("Sending sms to telephone number " + self.phone_number)
+        self.test_msg = "Test."
+
+    def tearDown(self):
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
+    def test_run(self):
+
+        # Launch messages app.
+        self.messages.launch()
+
+        # Create and send a new test message.
+        self.messages.create_and_send_sms([self.phone_number], self.test_msg)
+        send_time = self.messages.last_sent_message_timestamp()
+
+        # Wait for the last message in this thread to be a 'received' one.
+        returnedSMS = self.messages.wait_for_message(send_time=send_time)
+        self.UTILS.test.test(returnedSMS, "A received message appeared in the thread.", True)
+
+        self.messages.check_last_message_contents(self.test_msg)

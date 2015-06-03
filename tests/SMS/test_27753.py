@@ -1,69 +1,65 @@
+#===============================================================================
+# 27753: Delete a contact and verify that the SMS list now shows the number
 #
-# Imports which are standard for all test cases.
+# Procedure:
+# 1- Send a sms to our device from phone number who is a contact
+# 2- Open SMS app
+# ER1
+# 3- delete the contact name who sended the last sms
+# 4- Open SMS app
+# ER2
 #
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
-import time
+# Expected results:
+# ER1- verify that the SMS list shows the name
+# ER2- verify that the SMS list now shows the phone number
+#===============================================================================
 
-#
-# Imports particular to this test case.
-#
-from tests._mock_data.contacts import MockContacts
+from gaiatest import GaiaTestCase
+
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.contacts import Contacts
+from OWDTestToolkit.utils.contacts import MockContact
+
 
 class test_main(GaiaTestCase):
-    
-    _TestMsg     = "Test."
 
     def setUp(self):
-        #
-        # Set up child objects...
-        #
-        GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.contacts   = Contacts(self)
-        self.messages   = Messages(self)
-        
-        #
-        # Prepare the contact we're going to insert.
-        #
-        self.contact_1 = MockContacts().Contact_1
 
-        #
-        # Establish which phone number to use.
-        #
-        self.num = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.contact_1["tel"]["value"] = self.num
-        self.UTILS.logComment("Using target telephone number " + self.contact_1["tel"]["value"])
-        
-        #
-        # Import this contact (quick'n'dirty method - we're just testing sms, no adding a contact).
-        #
-        self.data_layer.insert_contact(self.contact_1)
+        # Set up child objects...
+        GaiaTestCase.setUp(self)
+        self.UTILS = UTILS(self)
+        self.contacts = Contacts(self)
+        self.messages = Messages(self)
+
+        # Prepare the contact we're going to insert.
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.contact = MockContact(tel={'type': '', 'value': self.phone_number})
+        self.test_msg = "Test."
+
+        self.UTILS.general.insertContact(self.contact)
+        self.UTILS.reporting.logComment("Using target telephone number " + self.contact["tel"]["value"])
+        self.data_layer.delete_all_sms()
 
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
         msgapp = self.messages.launch()
-        self.messages.createAndSendSMS([self.num], "Test")
-        self.messages.waitForReceivedMsgInThisThread()
-        
-        x = self.UTILS.getElement(DOM.Messages.header_back_button, "Back button")
-        x.tap()
-        self.messages.openThread(self.contact_1["name"])
-        
-        #
+        self.messages.create_and_send_sms([self.phone_number], "Test")
+        send_time = self.messages.last_sent_message_timestamp()
+        self.messages.wait_for_message(send_time=send_time)
+
+        self.messages.go_back()
+        self.messages.openThread(self.contact["name"])
+
         # Delete the contact
-        #
         self.apps.kill(msgapp)
         self.contacts.launch()
-        self.contacts.deleteContact(self.contact_1["name"])
-        
-        #
-        # Go back to SMS app and try to open the thread by phone number
-        #
-        self.messages.launch()
-        self.messages.openThread(self.contact_1["tel"]["value"])
+        self.contacts.delete_contact(self.contact["name"])
 
+        # Go back to SMS app and try to open the thread by phone number
+        self.messages.launch()
+        self.messages.openThread(self.contact["tel"]["value"])

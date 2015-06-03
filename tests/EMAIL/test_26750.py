@@ -1,60 +1,48 @@
+# OWD-26750
+# Deleting of a e-mail in Inbox
 #
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-
+#   PROCEDURE
+#       1. Open Mail app
+#       2. Choose a mail from inbox
+#       3. Delete an e-mail from Inbox.
+#       4. Check inbox
+#       5. The mail does not appears on inbox
+#   EXPECTED RESULT
+#       E-mail is correctly deleted from device Inbox.
 from gaiatest import GaiaTestCase
-from OWDTestToolkit import *
-
-#
-# Imports particular to this test case.
-#
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.email import Email
+import time
 
 class test_main(GaiaTestCase):
- 
+
+    def __init__(self, *args, **kwargs):
+        kwargs['restart'] = True
+        super(test_main, self).__init__(*args, **kwargs)
+
     def setUp(self):
-            
-        #
-        # Set up child objects...
-        #
+
         GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.Email      = Email(self)
-        
+        self.UTILS = UTILS(self)
+        self.email = Email(self)
+
+        self.user1 = self.UTILS.general.get_config_variable("gmail_2_user", "common")
+        self.email1 = self.UTILS.general.get_config_variable("gmail_2_email", "common")
+        self.passwd1 = self.UTILS.general.get_config_variable("gmail_2_pass", "common")
+
+        self.data_layer.connect_to_wifi()
+
     def tearDown(self):
-        self.UTILS.reportResults()
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
 
     def test_run(self):
-        self.UTILS.getNetworkConnection()
+        self.email.launch()
+        self.email.setup_account(self.user1, self.email1, self.passwd1)
 
-        self.USER1  = self.UTILS.get_os_variable("GMAIL_2_USER")
-        self.EMAIL1 = self.UTILS.get_os_variable("GMAIL_2_EMAIL")
-        self.PASS1  = self.UTILS.get_os_variable("GMAIL_2_PASS")
-        
-        self.UTILS.logComment("Using username '" + self.USER1 + "'")
-        self.UTILS.logComment("Using password '" + self.PASS1 + "'")
-        self.UTILS.logComment("Using email    '" + self.EMAIL1 + "'")
-
-        #
-        # Launch Email app.
-        #
-        self.Email.launch()
-                
-        #
-        # Login.
-        #
-        self.Email.setupAccount(self.USER1, self.EMAIL1, self.PASS1)
-        
-        #
-        # Return to the Inbox.
-        #
-        self.Email.openMailFolder("Inbox")
-        
-        #
-        # Delete the first email we come across.
-        #
-        _subject = self.marionette.find_elements(*DOM.Email.folder_subject_list)[0].text
-        self.UTILS.logComment("Deleting email with subject '" + _subject + "'.")
-
-        self.Email.deleteEmail(_subject)
+        # Let's erase the first visible mail
+        first_mail = self.email.mails()[0]
+        _subject = first_mail.find_element(*DOM.Email.folder_subject_list).text
+        self.UTILS.reporting.logComment("Deleting email with subject '" + _subject + "'.")
+        self.email.delete_email(_subject)

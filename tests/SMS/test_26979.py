@@ -1,70 +1,58 @@
-#
-# Imports which are standard for all test cases.
-#
-import sys
-sys.path.insert(1, "./")
-from gaiatest   import GaiaTestCase
-from OWDTestToolkit import *
+from gaiatest import GaiaTestCase
+from OWDTestToolkit import DOM
+from OWDTestToolkit.utils.utils import UTILS
+from OWDTestToolkit.apps.messages import Messages
+from OWDTestToolkit.apps.email import Email
 
-#
-# Imports particular to this test case.
-#
 
 class test_main(GaiaTestCase):
-    
-    _TestMsg     = "Test message."
-    
-    def setUp(self):
-        #
-        # Set up child objects...
-        #
-        GaiaTestCase.setUp(self)
-        self.UTILS      = UTILS(self)
-        self.messages   = Messages(self)
-        self.Email      = Email(self)
 
-        self.USER1  = self.UTILS.get_os_variable("GMAIL_1_USER")
-        self.EMAIL1 = self.UTILS.get_os_variable("GMAIL_1_EMAIL")
-        self.PASS1  = self.UTILS.get_os_variable("GMAIL_1_PASS")
-         
-        self.num1 = self.UTILS.get_os_variable("GLOBAL_TARGET_SMS_NUM")
-        self.emailAddy = self.UTILS.get_os_variable("GMAIL_2_EMAIL")
-        
-        
+    test_msg = "Test message."
+
+    def setUp(self):
+
+        # Set up child objects...
+        GaiaTestCase.setUp(self)
+        self.UTILS = UTILS(self)
+        self.messages = Messages(self)
+        self.Email = Email(self)
+
+        self.email_user = self.UTILS.general.get_config_variable("gmail_1_user", "common")
+        self.email_address = self.UTILS.general.get_config_variable("gmail_1_email", "common")
+        self.email_pass = self.UTILS.general.get_config_variable("gmail_1_pass", "common")
+
+        self.phone_number = self.UTILS.general.get_config_variable("phone_number", "custom")
+        self.emailAddy = self.UTILS.general.get_config_variable("gmail_2_email", "common")
+
     def tearDown(self):
-        self.UTILS.reportResults()
-        
+        self.UTILS.reporting.reportResults()
+        GaiaTestCase.tearDown(self)
+
     def test_run(self):
-        #
+
         # Set up email account.
-        #
-        self.UTILS.getNetworkConnection()
-        
+        self.connect_to_network()
+
         self.Email.launch()
-        self.Email.setupAccount(self.USER1, self.EMAIL1, self.PASS1)
- 
-        #
+        self.Email.setup_account(self.email_user, self.email_address, self.email_pass)
+
         # Launch messages app.
-        #
         self.messages.launch()
-        
-        #
+
         # Create and send a new test message.
-        #
-        self.messages.createAndSendSMS([self.num1], "Email %s one." % self.emailAddy)
-        x = self.messages.waitForReceivedMsgInThisThread()
-        
-        #
+        self.messages.create_and_send_sms([self.phone_number], "Email {} one.".format(self.emailAddy))
+        send_time = self.messages.last_sent_message_timestamp()
+        last_msg = self.messages.wait_for_message(send_time)
+
         # Tap the email link.
-        #
-        _link = x.find_element("tag name", "a")
-        _link.tap()
-        
-        #
+        link = last_msg.find_element("tag name", "a")
+        link.tap()
+
+        edit_btn = self.UTILS.element.getElement(DOM.Messages.header_send_email_btn, "Edit button")
+        edit_btn.tap()
+
         # Switch to email frame and verify the email address is in the To field.
-        #
-        self.UTILS.switchToFrame(*DOM.Email.frame_locator)
-        x = self.UTILS.getElement(DOM.Email.compose_to_from_contacts, "To field")
-        self.UTILS.TEST(x.text == self.emailAddy, 
-                        "To field contains '%s' (it was '%s')." %
-                        (self.emailAddy, self.emailAddy))
+        self.UTILS.iframe.switchToFrame(*DOM.Email.frame_locator)
+        to_field = self.UTILS.element.getElement(DOM.Email.compose_to_from_contacts, "To field")
+        self.UTILS.test.test(to_field.text == self.emailAddy,
+                        "To field contains '{0}' (it was '{0}').".format(self.emailAddy))
