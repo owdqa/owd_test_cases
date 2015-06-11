@@ -13,7 +13,7 @@ from OWDTestToolkit.utils.utils import UTILS
 from OWDTestToolkit.apps.contacts import Contacts
 from OWDTestToolkit.apps.dialer import Dialer
 from OWDTestToolkit.utils.contacts import MockContact
-from marionette_driver.marionette import Actions
+from marionette import Actions
 
 
 class test_main(GaiaTestCase):
