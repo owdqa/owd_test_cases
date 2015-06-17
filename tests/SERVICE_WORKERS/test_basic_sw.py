@@ -1,6 +1,10 @@
 #===============================================================================
 # Basic SW test
 #===============================================================================
+import os
+import sys
+sys.path.insert(1, os.path.dirname(__file__))
+
 import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
@@ -46,8 +50,8 @@ class test_main(GaiaTestCase):
         self.settings.developer_settings()
         time.sleep(2)
         self.settings.service_workers_menu()
-        dom = (DOM.Settings.service_worker_header[0], DOM.Settings.service_worker_header[1].format(self.sw_scope))
-        header = self.UTILS.element.getElement(dom, "Service worker header")
+        header_dom = (DOM.Settings.service_worker_header[0], DOM.Settings.service_worker_header[1].format(self.sw_scope))
+        header = self.UTILS.element.getElement(header_dom, "Service worker header")
         self.UTILS.test.test(header.text == self.sw_header, "Header found [{}] Expected [{}]".
                              format(header.text, self.sw_header))
 
