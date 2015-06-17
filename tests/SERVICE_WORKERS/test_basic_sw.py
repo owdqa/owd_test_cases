@@ -1,8 +1,10 @@
 #===============================================================================
 # Basic SW test
 #===============================================================================
+import os
 import sys
-sys.path.insert(1, ".")
+sys.path.insert(1, os.path.dirname(__file__))
+
 import time
 from gaiatest import GaiaTestCase
 from OWDTestToolkit import DOM
