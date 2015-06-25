@@ -50,22 +50,27 @@ class test_main(GaiaTestCase):
         self.settings.developer_settings()
         time.sleep(2)
         self.settings.service_workers_menu()
-        header_dom = (DOM.Settings.service_worker_header[0], DOM.Settings.service_worker_header[1].format(self.sw_scope))
-        header = self.UTILS.element.getElement(header_dom, "Service worker header")
+
+        div_dom = (DOM.Settings.service_worker_div[0], DOM.Settings.service_worker_div[1].format(self.sw_scope))
+        div_elem = self.UTILS.element.getElement(div_dom, "Service worker div")
+        self.UTILS.element.scroll_into_view(div_elem)
+
+        header = div_elem.find_element(*DOM.Settings.service_worker_header)
         self.UTILS.test.test(header.text == self.sw_header, "Header found [{}] Expected [{}]".
                              format(header.text, self.sw_header))
 
-        scope = self.UTILS.element.getElement(DOM.Settings.service_worker_scope, "Service worker scope")
+        scope = div_elem.find_element(*DOM.Settings.service_worker_scope)
         self.UTILS.test.test(self.sw_scope == scope.text, "Scope found [{}] Expected [{}]".
                              format(scope.text, self.sw_scope))
-        script_spec = self.UTILS.element.getElement(DOM.Settings.service_worker_script_spec,
-                                                    "Service worker script spec")
+
+        script_spec = div_elem.find_element(*DOM.Settings.service_worker_script_spec)
         self.UTILS.test.test(self.script_spec == script_spec.text, "Script spec found [{}] Expected [{}]".
                              format(script_spec.text, self.script_spec))
-        worker_url = self.UTILS.element.getElement(DOM.Settings.service_worker_current_url,
-                                                   "Service worker current url")
+
+        worker_url = div_elem.find_element(*DOM.Settings.service_worker_current_url)
         self.UTILS.test.test(self.script_spec == worker_url.text, "URL found [{}] Expected [{}]".
                              format(worker_url.text, self.script_spec))
-        unregister_btn = self.UTILS.element.getElement(DOM.Settings.service_worker_unregister_btn,
-                                                       "Unregister button")
+
+        unregister_btn = div_elem.find_element(*DOM.Settings.service_worker_unregister_btn)
         unregister_btn.tap()
+        

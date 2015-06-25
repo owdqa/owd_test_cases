@@ -9,4 +9,6 @@ unregister = ('id', 'unregister-registration')
 
 # https://acperez.github.io/gecko-sw-test/
 acperez_register_btn_dom = ('id', 'register_btn')
+acperez_unregister = ('id', 'unregister_one_btn')
+
 
