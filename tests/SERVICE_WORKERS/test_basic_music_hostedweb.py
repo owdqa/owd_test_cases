@@ -1,5 +1,5 @@
 #===============================================================================
-# Basic SW test http://jaoo.es/service-worker-testing/index.html
+# Basic SW test https://music.hostedweb.tid.es/
 #===============================================================================
 import os
 import sys
@@ -28,10 +28,10 @@ class test_main(GaiaTestCase):
         self.data_layer.is_wifi_connected()
 
         self.apps.kill_all()
-        self.url = "http://jaoo.github.io/service-worker-testing/index.html"
-        self.sw_scope = "http://jaoo.es/service-worker-testing/"
-        self.sw_header = "http://jaoo.es!appId=22&inBrowser=1"
-        self.script_spec = "http://jaoo.es/service-worker-testing/service.js"
+        self.url = "https://music.hostedweb.tid.es/"
+        self.sw_scope = "https://music.hostedweb.tid.es/"
+        self.sw_header = "https://music.hostedweb.tid.es!appId=22&inBrowser=1"
+        self.script_spec = "https://music.hostedweb.tid.es/offliner-worker.js"
 
     def tearDown(self):
         self.data_layer.disable_wifi()
@@ -42,8 +42,8 @@ class test_main(GaiaTestCase):
         self.browser.launch()
         self.browser.open_url(self.url)
 
-        register_btn = self.UTILS.element.getElement(dom.register_btn_dom, "Register Worker button")
-        register_btn.tap()
+        #register_btn = self.UTILS.element.getElement(dom.acperez_register_btn_dom, "Register Worker button")
+        #register_btn.tap()
 
         self.settings.launch()
         time.sleep(2)
@@ -73,4 +73,5 @@ class test_main(GaiaTestCase):
 
         unregister_btn = div_elem.find_element(*DOM.Settings.service_worker_unregister_btn)
         unregister_btn.tap()
+
 
